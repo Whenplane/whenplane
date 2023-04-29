@@ -1,13 +1,33 @@
+<script>
+	import {getNextWAN} from "../lib/timeUtils";
+	import Twitch from "../lib/Twitch.svelte";
+	import Youtube from "../lib/Youtube.svelte";
+	import ShowCountdown from "../lib/ShowCountdown.svelte";
+	import StreamStatus from "../lib/StreamStatus.svelte";
+	import {browser} from "$app/environment";
+</script>
+
 <!-- YOU CAN DELETE EVERYTHING IN THIS PAGE -->
 
 <div class="container h-full mx-auto flex justify-center items-center">
 	<div class="space-y-5">
-		<h1>Let's get cracking bones!</h1>
-		<p>Start by exploring:</p>
-		<ul>
-			<li><code>/src/routes/+layout.svelte</code> - barebones layout, the CSS import order is critical!</li>
-			<li><code>/src/app.postcss</code> - minimal css to make the page full screen, may not be relevant for your project</li>
-			<li><code>/src/routes/+page.svelte</code> - this page, you can replace the contents</li>
-		</ul>
+		<div class="text-center">
+			<div class="card p-4 inline-block countdown-box text-left">
+				Wan show is (supposed) to start in
+				<h1 class="text-center"><ShowCountdown/></h1>
+				Next WAN:
+				{#if browser} <!-- dont SSR next wan date, as server timezone and locale is probably different than the users' -->
+					{getNextWAN().toLocaleString()}
+				{/if}
+			</div>
+		</div>
+		<StreamStatus/>
 	</div>
 </div>
+
+<style>
+	.countdown-box {
+		min-width: 23em;
+		margin-left: auto;
+	}
+</style>
