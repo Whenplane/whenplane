@@ -1,6 +1,7 @@
 <script>
     import Youtube from "./Youtube.svelte";
     import Twitch from "./Twitch.svelte";
+    import Floatplane from "./Floatplane.svelte";
 </script>
 
 <div class="logo-cloud grid-cols-1 lg:!grid-cols-3 gap-1">
@@ -19,11 +20,11 @@
 				</span>
     </a>
     <a class="logo-item" href="/">
-        <span>(icon)</span>
+        <span><Floatplane/></span>
         <span>
-					Floatplane<br>
-					<span class="status opacity-50">(offline)</span>
-				</span>
+            Floatplane<br>
+            <span class="status opacity-50">(offline)</span>
+        </span>
     </a>
 </div>
 <style>

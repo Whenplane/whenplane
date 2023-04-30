@@ -13,7 +13,7 @@
 	<div class="space-y-5">
 		<div class="text-center">
 			<div class="card p-4 inline-block countdown-box text-left">
-				Wan show is (supposed) to start in
+				The WAN show is (supposed) to start in
 				<h1 class="text-center"><ShowCountdown/></h1>
 				Next WAN:
 				{#if browser} <!-- dont SSR next wan date, as server timezone and locale is probably different than the users' -->
