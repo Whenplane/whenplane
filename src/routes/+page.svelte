@@ -1,11 +1,39 @@
 <script>
 	import {getNextWAN} from "../lib/timeUtils";
-	import Twitch from "../lib/Twitch.svelte";
-	import Youtube from "../lib/Youtube.svelte";
 	import ShowCountdown from "../lib/ShowCountdown.svelte";
 	import StreamStatus from "../lib/StreamStatus.svelte";
 	import {browser} from "$app/environment";
+	import {invalidateAll} from "$app/navigation";
+
+	export let data;
+
+	// Periodically invalidate the data so that sveltekit goes and fetches it again for us
+	let invalidationInterval;
+	let lastInvalidation = Date.now();
+	function invalidate() {
+		lastInvalidation = Date.now();
+		invalidateAll();
+	}
+
+	function startInvalidationInterval() {
+		clearInterval(invalidationInterval);
+		invalidationInterval = setInterval(invalidate, 5e3);
+
+		// go ahead and invalidate if it's been a bit since the last one
+		if(Date.now() - lastInvalidation > 5e3) {
+			invalidate();
+		}
+
+
+	}
+
+	if(browser) startInvalidationInterval();
+
 </script>
+<svelte:window
+		on:focus={startInvalidationInterval}
+		on:blur={() => {clearInterval(invalidationInterval);console.log("clearing interval")}}
+/>
 
 <!-- YOU CAN DELETE EVERYTHING IN THIS PAGE -->
 
@@ -21,7 +49,7 @@
 				{/if}
 			</div>
 		</div>
-		<StreamStatus/>
+		<StreamStatus {data}/>
 	</div>
 </div>
 
