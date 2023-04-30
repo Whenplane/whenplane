@@ -32,10 +32,8 @@
 </script>
 <svelte:window
 		on:focus={startInvalidationInterval}
-		on:blur={() => {clearInterval(invalidationInterval);console.log("clearing interval")}}
+		on:blur={() => clearInterval(invalidationInterval)}
 />
-
-<!-- YOU CAN DELETE EVERYTHING IN THIS PAGE -->
 
 <div class="container h-full mx-auto flex justify-center items-center">
 	<div class="space-y-5">
