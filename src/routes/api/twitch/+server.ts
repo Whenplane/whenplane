@@ -26,14 +26,12 @@ export const GET = (async ({platform, url}) => {
     if(!env.TWITCH_CLIENT_ID) throw error(503, "Missing twitch client id!");
     if(!env.TWITCH_SECRET) throw error(503, "Missing twitch client secret!");
 
-    console.log("before kv update", Math.floor((Date.now() - fastCache.lastFetch)) / 1000)
     if(Date.now() - fastCache.lastFetch < cacheTime) { // before refreshing, fetch cache from KV
         const newCache = await cache.get("wheniswan:twitch:cache", {type: "json"});
         if(newCache) {
             fastCache = newCache;
         }
     }
-    console.log("after kv update", Math.floor((Date.now() - fastCache.lastFetch)) / 1000)
 
     if(Date.now() - fastCache.lastFetch < cacheTime) {
         const isLive = fastCache.lastFetchData.data.length != 0;
