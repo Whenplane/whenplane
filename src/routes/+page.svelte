@@ -47,7 +47,9 @@
 				{/if}
 			</div>
 		</div>
-		<StreamStatus {data}/>
+		<div class="mx-4">
+			<StreamStatus {data}/>
+		</div>
 	</div>
 </div>
 
@@ -55,5 +57,8 @@
 	.countdown-box {
 		min-width: 23em;
 		margin-left: auto;
+	}
+	.status-container {
+		max-width: 90vw;
 	}
 </style>

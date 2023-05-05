@@ -1,7 +1,10 @@
 <script>
-    import Youtube from "./Youtube.svelte";
-    import Twitch from "./Twitch.svelte";
-    import Floatplane from "./Floatplane.svelte";
+    import Youtube from "./svg/Youtube.svelte";
+    import Twitch from "./svg/Twitch.svelte";
+    import Floatplane from "./svg/Floatplane.svelte";
+    import {popup} from "@skeletonlabs/skeleton";
+    import {browser} from "$app/environment";
+    import Info from "$lib/svg/Info.svelte";
 
     export let data;
 </script>
@@ -11,7 +14,7 @@
         <span><Twitch/></span>
         <span>
             Twitch<br>
-            <span class="status opacity-50" class:wan={data.liveStatus.twitch.isWAN}>
+            <span class="status opacity-50 fp-info" class:wan={data.liveStatus.twitch.isWAN}>
                 {#if data.liveStatus.twitch.isLive}
                     {#if data.liveStatus.twitch.isWAN}
                         (live)
@@ -44,8 +47,32 @@
     <a class="logo-item" href="https://beta.floatplane.com/channel/linustechtips/live" target="_blank" rel="noreferrer">
         <span><Floatplane/></span>
         <span>
-            Floatplane<br>
-            <span class="status opacity-50" class:wan={data.liveStatus.floatplane.isWAN}>
+            Floatplane
+            {#if browser} <!-- Don't SSR info button since it wont work without client-side JS -->
+                <span
+                        class="text-surface inline-block fp-info [&>*]:pointer-events-none"
+                        use:popup={{
+                            event: 'hover',
+                            target: 'floatplaneInfo',
+                            placement: 'top'
+                        }}
+                >
+                    <Info/>
+                </span>
+            {/if}
+            <br>
+            <span class="status opacity-50" class:wan={data.liveStatus.twitch.isWAN}>
+                {#if data.liveStatus.twitch.isLive}
+                    {#if data.liveStatus.twitch.isWAN}
+                        (probably live)
+                    {:else}
+                        (probably live non-WAN)
+                    {/if}
+                {:else}
+                    (probably offline)
+                {/if}
+            </span>
+            <!--<span class="status opacity-50" class:wan={data.liveStatus.floatplane.isWAN}>
                 {#if data.liveStatus.floatplane.isLive}
                     {#if data.liveStatus.floatplane.isWAN}
                         (live)
@@ -55,19 +82,35 @@
                 {:else}
                     (offline)
                 {/if}
-            </span>
+            </span>-->
         </span>
     </a>
+</div>
+<div class="card p-4 whitespace-nowrap shadow-x1 z-10 font-normal" data-popup="floatplaneInfo">
+    Floatplane does not have a (public) way to tell if LTT is streaming live.<br>
+    So, instead we guess based on if twitch is live or not.<br>
+    <br>
+    There might be a way around this in the future.<br>
+    If that happens, this will no longer say "probably"
 </div>
 <style>
     .status {
         font-weight: normal;
         font-size: 0.9em;
     }
-    .logo-cloud {
-        min-width: 700px;
+
+    .logo-item {
+        padding-left: 2em;
+        padding-right: 2em;
     }
+
     .wan {
         color: green
+    }
+
+    @media (pointer: coarse) {
+        .fp-info {
+            display: none;
+        }
     }
 </style>
