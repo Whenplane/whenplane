@@ -22,7 +22,7 @@ export const GET = (async ({fetch, platform, url}) => {
 
     const cacheTime = twitchIsWAN ? liveCacheTime : notLiveCacheTime;
 
-    if(Date.now() - fastCache.lastFetch < cacheTime) { // before refreshing, fetch cache from KV
+    if(Date.now() - fastCache.lastFetch > cacheTime) { // before refreshing, fetch cache from KV
         const newCache = await cache.get("wheniswan:floatplane:cache", {type: "json"});
         if(newCache) {
             fastCache = newCache;
