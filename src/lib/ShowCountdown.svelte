@@ -5,6 +5,7 @@
     let nextWan = getNextWAN();
 
     export let isLate = false;
+    export let data;
 
     let countdownText = "";
 
@@ -16,9 +17,23 @@
     updateCountdown();
 
     function updateCountdown() {
-        const timeUntil = getTimeUntil(nextWan);
-        countdownText = timeUntil.string
-        isLate = timeUntil.late;
+        if(data.isMainShow || data.isPreShow) {
+            const started = new Date(data.mainShowStarted ?? data.preShowStarted);
+            isLate = false;
+            countdownText = getTimeUntil(started).string;
+        } else {
+            const timeUntil = getTimeUntil(nextWan);
+            countdownText = timeUntil.string
+            isLate = timeUntil.late;
+        }
     }
 </script>
-{countdownText}
+<span>
+    {countdownText}
+</span>
+
+<style>
+    span {
+        font-family: monospace;
+    }
+</style>

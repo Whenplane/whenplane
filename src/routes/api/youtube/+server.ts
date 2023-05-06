@@ -12,7 +12,11 @@ const lastLive = {
 }
 
 // is KV enforced because workers basically never last more than 10 minutes
-let liveTitle = {
+let liveTitle: {
+    lastCheck: number,
+    isWAN: boolean,
+    started?: string
+} = {
     lastCheck: 0,
     isWAN: false
 }
@@ -28,7 +32,8 @@ export const GET = (async ({platform, url, fetch}) => {
             cachedTitle: false,
             lastFetch: lastLive.lastCheck,
             isLive: lastLive.isLive,
-            isWAN: false
+            isWAN: lastLive.isLive && liveTitle.isWAN,
+            started: lastLive.isLive ? liveTitle.started : undefined
         })
     }
 
@@ -60,7 +65,8 @@ export const GET = (async ({platform, url, fetch}) => {
             cachedTitle: true,
             lastFetch: liveTitle.lastCheck,
             isLive,
-            isWAN: liveTitle.isWAN
+            isWAN: liveTitle.isWAN,
+            started: liveTitle.started
         })
     }
 
@@ -83,14 +89,17 @@ export const GET = (async ({platform, url, fetch}) => {
     }
 
     const isWAN = liveData.items[0].snippet.title.includes("WAN");
+    const started = liveData.items[0].snippet.publishTime;
 
     liveTitle.isWAN = isWAN;
+    liveTitle.started = started;
 
     await cache.put("wheniswan:youtube:title", JSON.stringify(liveTitle));
 
     return json({
         isLive,
-        isWAN
+        isWAN,
+        started
     })
 
 

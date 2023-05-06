@@ -38,6 +38,7 @@ export const GET = (async ({platform, url}) => {
         const isWAN = isLive && fastCache.lastFetchData.data[0].title.includes("WAN") && new Date().getDay() === 5;
 
         const twitchData = url.searchParams.has("short") ? undefined : fastCache.lastFetchData;
+        const started = isLive ? fastCache.lastFetchData.data[0].started_at : undefined;
 
         return json(
             {
@@ -45,7 +46,8 @@ export const GET = (async ({platform, url}) => {
                 lastFetch: fastCache.lastFetch,
                 twitchData,
                 isLive,
-                isWAN
+                isWAN,
+                started
             }
         )
     }
@@ -130,13 +132,15 @@ export const GET = (async ({platform, url}) => {
     const isWAN = isLive && twitchJSON.data[0].title.includes("WAN") && new Date().getDay() === 5;
 
     const twitchData = url.searchParams.has("short") ? undefined : twitchJSON;
+    const started = isLive ? twitchJSON.data[0].started_at : undefined;
 
     return json(
         {
             debug,
             twitchData,
             isLive,
-            isWAN
+            isWAN,
+            started
         }
     )
 }) satisfies RequestHandler;

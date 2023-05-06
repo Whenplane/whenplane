@@ -1,13 +1,16 @@
 <script>
-	import {getNextWAN} from "../lib/timeUtils";
-	import ShowCountdown from "../lib/ShowCountdown.svelte";
-	import StreamStatus from "../lib/StreamStatus.svelte";
+	import {getNextWAN} from "$lib/timeUtils";
+	import ShowCountdown from "$lib/ShowCountdown.svelte";
+	import StreamStatus from "$lib/StreamStatus.svelte";
 	import {browser} from "$app/environment";
 	import {invalidateAll} from "$app/navigation";
 
 	export let data;
 
+	let isAfterStartTime;
 	let isLate;
+
+	$: isLate = isAfterStartTime && !data.isPreShow && !data.isMainShow;
 
 	// Periodically invalidate the data so that sveltekit goes and fetches it again for us
 	let invalidationInterval;
@@ -29,8 +32,6 @@
 
 	}
 
-	$: console.log({isLate})
-
 	if(browser) startInvalidationInterval();
 
 </script>
@@ -45,15 +46,24 @@
 			<div class="card p-4 inline-block countdown-box text-left">
 				{#if isLate}
 					The WAN show is currently <span class="red">late</span> by
+
+				{:else if data.mainShowStarted}
+					The WAN show has been live for
+				{:else if data.preShowStarted}
+					The pre-WAN show has been live for
 				{:else}
 					The WAN show is (supposed) to start in
 				{/if}
 				<h1 class="text-center" class:red={isLate}>
-					<ShowCountdown bind:isLate={isLate}/>
+					<ShowCountdown bind:isLate={isAfterStartTime} {data}/>
 				</h1>
-				Next WAN:
-				{#if browser} <!-- dont SSR next wan date, as server timezone and locale is probably different than the users' -->
-					{getNextWAN().toLocaleString()}
+				{#if !isAfterStartTime}
+					Next WAN:
+					{#if browser} <!-- dont SSR next wan date, as server timezone and locale is probably different than the users' -->
+						{getNextWAN().toLocaleString()}
+					{/if}
+				{:else if isLate}
+					It usually <i>actually</i> starts around 1.5 to 2 hours late
 				{/if}
 			</div>
 		</div>
