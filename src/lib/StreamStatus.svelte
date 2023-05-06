@@ -14,7 +14,7 @@
         <span><Twitch/></span>
         <span>
             Twitch<br>
-            <span class="status opacity-50 fp-info" class:wan={data.liveStatus.twitch.isWAN}>
+            <span class="status opacity-50" class:wan={data.liveStatus.twitch.isWAN}>
                 {#if data.liveStatus.twitch.isLive}
                     {#if data.liveStatus.twitch.isWAN}
                         (live)
