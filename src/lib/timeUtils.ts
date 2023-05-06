@@ -19,7 +19,8 @@ export function getNextWAN(): Date {
         wanDate.setUTCDate(wanDate.getUTCDate() + 1);
     }
 
-    if(isBefore(wanDate, now)) {
+    // only say next week is next WAN 4 hours after WAN time
+    if(isBefore(wanDate, now) && now.getTime() - wanDate.getTime() > 4 * 60 * 60 * 1e3) {
         wanDate.setUTCDate(wanDate.getUTCDate() + 7);
     }
 
@@ -27,9 +28,11 @@ export function getNextWAN(): Date {
 }
 
 export function getTimeUntil(date: Date) {
-    const distance = date.getTime() - Date.now();
-    if(distance < 0 || typeof distance == 'undefined') {
-        return "now";
+    let distance = date.getTime() - Date.now();
+    let late = false;
+    if(distance < 0) {
+        late = true;
+        distance = Math.abs(distance)
     }
     const days = Math.floor(distance / (1000 * 60 * 60 * 24));
     const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
@@ -44,5 +47,8 @@ export function getTimeUntil(date: Date) {
         minutesS = minutes+" minute" + (minutes === 1 ? " " : "s ");
         secondsS = "";
     }
-    return daysS + hoursS + minutesS + secondsS;
+    return {
+        string: daysS + hoursS + minutesS + secondsS,
+        late
+    };
 }

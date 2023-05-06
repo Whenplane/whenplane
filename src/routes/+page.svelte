@@ -7,6 +7,8 @@
 
 	export let data;
 
+	let isLate;
+
 	// Periodically invalidate the data so that sveltekit goes and fetches it again for us
 	let invalidationInterval;
 	let lastInvalidation = Date.now();
@@ -27,6 +29,8 @@
 
 	}
 
+	$: console.log({isLate})
+
 	if(browser) startInvalidationInterval();
 
 </script>
@@ -39,8 +43,14 @@
 	<div class="space-y-5">
 		<div class="text-center">
 			<div class="card p-4 inline-block countdown-box text-left">
-				The WAN show is (supposed) to start in
-				<h1 class="text-center"><ShowCountdown/></h1>
+				{#if isLate}
+					The WAN show is currently <span class="red">late</span> by
+				{:else}
+					The WAN show is (supposed) to start in
+				{/if}
+				<h1 class="text-center" class:red={isLate}>
+					<ShowCountdown bind:isLate={isLate}/>
+				</h1>
 				Next WAN:
 				{#if browser} <!-- dont SSR next wan date, as server timezone and locale is probably different than the users' -->
 					{getNextWAN().toLocaleString()}
@@ -58,7 +68,7 @@
 		min-width: 23em;
 		margin-left: auto;
 	}
-	.status-container {
-		max-width: 90vw;
+	.red {
+		color: red;
 	}
 </style>

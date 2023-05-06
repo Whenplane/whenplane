@@ -4,6 +4,8 @@
 
     let nextWan = getNextWAN();
 
+    export let isLate = false;
+
     let countdownText = "";
 
     onMount(() => {
@@ -14,7 +16,9 @@
     updateCountdown();
 
     function updateCountdown() {
-        countdownText = getTimeUntil(nextWan)
+        const timeUntil = getTimeUntil(nextWan);
+        countdownText = timeUntil.string
+        isLate = timeUntil.late;
     }
 </script>
 {countdownText}
