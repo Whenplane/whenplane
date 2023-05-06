@@ -16,12 +16,19 @@
     })
     updateCountdown();
 
+    let showPlayed = false;
+
     function updateCountdown() {
         if(data.isMainShow || data.isPreShow) {
             const started = new Date(data.mainShowStarted ?? data.preShowStarted);
             isAfterStartTime = true;
+            showPlayed = true;
             countdownText = getTimeUntil(started).string;
         } else {
+            if(showPlayed) {
+                showPlayed = false;
+                nextWan = getNextWAN();
+            }
             const timeUntil = getTimeUntil(nextWan);
             countdownText = timeUntil.string
             isAfterStartTime = timeUntil.late;
