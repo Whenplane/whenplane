@@ -1,9 +1,10 @@
 import type {RequestHandler} from "@sveltejs/kit";
 import {error, json} from "@sveltejs/kit";
 import {env} from "$env/dynamic/private";
+import {dev} from "$app/environment";
 
 const scrapeCacheTime = 5000;
-const apiCacheTime = 10 * 60e3; // 10 minutes
+const apiCacheTime = dev ? 30 * 60e3 : 10 * 60e3; // 10 minutes (30 minutes on dev)
 
 // not KV enforced because youtube can handle the tiny bit of extra traffic when the worker restarts
 const lastLive = {
@@ -21,7 +22,7 @@ let liveTitle: {
     isWAN: false
 }
 
-export const GET = (async ({platform, url, fetch}) => {
+export const GET = (async ({platform, fetch}) => {
 
     const cache = platform?.env?.CACHE;
     if(!cache) throw error(503, "Cache not available");

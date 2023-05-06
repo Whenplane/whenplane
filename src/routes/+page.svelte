@@ -58,7 +58,7 @@
 					The WAN show is (supposed) to start in
 				{/if}
 				<h1 class="text-center" class:red={isLate}>
-					<ShowCountdown bind:isLate={isAfterStartTime} {data}/>
+					<ShowCountdown bind:isAfterStartTime={isAfterStartTime} {data}/>
 				</h1>
 				{#if !isAfterStartTime}
 					Next WAN:

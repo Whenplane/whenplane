@@ -4,7 +4,7 @@
 
     let nextWan = getNextWAN();
 
-    export let isLate = false;
+    export let isAfterStartTime = false;
     export let data;
 
     let countdownText = "";
@@ -19,12 +19,12 @@
     function updateCountdown() {
         if(data.isMainShow || data.isPreShow) {
             const started = new Date(data.mainShowStarted ?? data.preShowStarted);
-            isLate = false;
+            isAfterStartTime = true;
             countdownText = getTimeUntil(started).string;
         } else {
             const timeUntil = getTimeUntil(nextWan);
             countdownText = timeUntil.string
-            isLate = timeUntil.late;
+            isAfterStartTime = timeUntil.late;
         }
     }
 </script>
