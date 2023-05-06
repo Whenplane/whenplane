@@ -129,7 +129,7 @@ export const GET = (async ({platform, url}) => {
     }
 
     const isLive = twitchJSON.data.length != 0;
-    const isWAN = isLive && twitchJSON.data[0].title.includes("WAN") && new Date().getDay() === 5;
+    const isWAN = isLive && twitchJSON.data[0].title.includes("WAN");
 
     const twitchData = url.searchParams.has("short") ? undefined : twitchJSON;
     const started = isLive ? twitchJSON.data[0].started_at : undefined;
