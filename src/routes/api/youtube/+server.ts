@@ -83,13 +83,23 @@ export const GET = (async ({platform, url, fetch}) => {
         "&key=" + env.YOUTUBE_KEY
     ).then(r => r.json());
 
+    const specificData = await fetch("https://www.googleapis.com/youtube/v3/videos" +
+        "?part=liveStreamingDetails" +
+        "&id=" + liveData.items[0].id.videoId +
+        "&maxResults=1" +
+        "&order=date" +
+        "&type=video" +
+        "&eventType=live" +
+        "&key=" + env.YOUTUBE_KEY
+    ).then(r => r.json())
+
     if(liveData.items.length == 0) {
         lastLive.lastCheck = Date.now();
         lastLive.isLive = false;
     }
 
     const isWAN = liveData.items[0].snippet.title.includes("WAN");
-    const started = liveData.items[0].snippet.publishTime;
+    const started = specificData.items[0].liveStreamingDetails.actualStartTime;
 
     liveTitle.isWAN = isWAN;
     liveTitle.started = started;
