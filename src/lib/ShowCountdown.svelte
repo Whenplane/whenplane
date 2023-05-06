@@ -4,6 +4,8 @@
 
     let nextWan = getNextWAN();
 
+    let showPlayed = false;
+
     export let isAfterStartTime = false;
     export let data;
 
@@ -15,8 +17,6 @@
         return () => clearInterval(updateInterval);
     })
     updateCountdown();
-
-    let showPlayed = false;
 
     function updateCountdown() {
         if(data.isMainShow || data.isPreShow) {
