@@ -35,7 +35,7 @@ export const GET = (async ({platform, url}) => {
 
     if(Date.now() - fastCache.lastFetch < cacheTime) {
         const isLive = fastCache.lastFetchData.data.length != 0;
-        const isWAN = isLive && fastCache.lastFetchData.data[0].title.includes("WAN") && new Date().getDay() === 5;
+        const isWAN = isLive && fastCache.lastFetchData.data[0].title.includes("WAN");
 
         const twitchData = url.searchParams.has("short") ? undefined : fastCache.lastFetchData;
         const started = isLive ? fastCache.lastFetchData.data[0].started_at : undefined;

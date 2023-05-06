@@ -57,7 +57,7 @@ export const GET = (async ({fetch, platform, url}) => {
     const fpData = url.searchParams.has("short") ? undefined : fpResponse;
 
     const isLive = !!livestream;
-    const isWAN = isLive && livestream.title.includes("WAN") && new Date().getDay() === 5;
+    const isWAN = isLive && livestream.title.includes("WAN");
 
     return json(
         {

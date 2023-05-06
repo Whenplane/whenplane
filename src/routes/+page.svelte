@@ -12,7 +12,7 @@
 
 	$: isLate = isAfterStartTime && !data.isPreShow && !data.isMainShow;
 
-	// Periodically invalidate the data so that sveltekit goes and fetches it again for us
+	// Periodically invalidate the data so that SvelteKit goes and fetches it again for us
 	let invalidationInterval;
 	let lastInvalidation = Date.now();
 	function invalidate() {
@@ -39,6 +39,9 @@
 		on:focus={startInvalidationInterval}
 		on:blur={() => clearInterval(invalidationInterval)}
 />
+<svelte:head>
+	<title>When is WAN?</title>
+</svelte:head>
 
 <div class="container h-full mx-auto flex justify-center items-center">
 	<div class="space-y-5">
