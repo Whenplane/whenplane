@@ -8,7 +8,7 @@ export const fallBackPlatformToMiniFlareInDev = async (_platform: App.Platform |
     const mf = new Miniflare({
         log: new Log(LogLevel.INFO),
         kvPersist: './kv-data',
-        kvNamespaces: ['CACHE'],
+        kvNamespaces: ['CACHE', 'HISTORY'],
         globalAsyncIO: true,
         globalTimers: true,
         globalRandom: true,

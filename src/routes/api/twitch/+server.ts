@@ -2,8 +2,14 @@ import type {RequestHandler} from "@sveltejs/kit";
 import {error, json} from "@sveltejs/kit";
 import {env} from "$env/dynamic/private";
 import {dev} from "$app/environment";
+import {getClosestWan, getUTCDate} from "../../../lib/timeUtils";
 
 const cacheTime = 5000; // maximum fetch from twitch api once every 5 seconds
+
+const makeAlwaysWAN = dev ? true : false;
+
+let savedStartTime: boolean | undefined = undefined;
+let savedEndTime: boolean | undefined = undefined;
 
 let fastCache: {
     lastFetch: number,
@@ -21,7 +27,9 @@ let lastToken = {
 export const GET = (async ({platform, url}) => {
 
     const cache = platform?.env?.CACHE;
+    const history = platform?.env?.HISTORY;
     if(!cache) throw error(503, "Cache not available");
+    if(!history) throw error(503, "History not available");
 
     if(!env.TWITCH_CLIENT_ID) throw error(503, "Missing twitch client id!");
     if(!env.TWITCH_SECRET) throw error(503, "Missing twitch client secret!");
@@ -33,9 +41,12 @@ export const GET = (async ({platform, url}) => {
         }
     }
 
-    if(Date.now() - fastCache.lastFetch < cacheTime) {
+    const fast = !!url.searchParams.get("fast");
+
+    // With the fast flag (added for initial page load requests), always fetch cached data if its from within the past 5 hours
+    if(Date.now() - fastCache.lastFetch < cacheTime || (fast && Date.now() - fastCache.lastFetch < 5 * 60 * 60e3)) {
         const isLive = fastCache.lastFetchData.data.length != 0;
-        const isWAN = isLive && fastCache.lastFetchData.data[0].title.includes("WAN");
+        const isWAN = isLive && (fastCache.lastFetchData.data[0].title.includes("WAN") || makeAlwaysWAN);
 
         const twitchData = url.searchParams.has("short") ? undefined : fastCache.lastFetchData;
         const started = isLive ? fastCache.lastFetchData.data[0].started_at : undefined;
@@ -111,6 +122,43 @@ export const GET = (async ({platform, url}) => {
     if(twitchJSON.message) console.warn("Got message in twitch response: ", twitchJSON.message)
 
     fastCache.lastFetch = Date.now();
+
+    const isLive = twitchJSON.data.length != 0;
+    const isWAN = isLive && (twitchJSON.data[0].title.includes("WAN") || makeAlwaysWAN);
+
+    if(savedStartTime && !isLive) savedStartTime = false;
+    if(savedEndTime && fastCache.lastFetchData.data.length == 0) savedEndTime = false;
+
+    const twitchData = url.searchParams.has("short") ? undefined : twitchJSON;
+    const started = isLive ? twitchJSON.data[0].started_at : undefined;
+
+    if(!savedStartTime && started && isWAN) {
+        const kvStartTime = await history.get(getUTCDate(getClosestWan()) + ":preShowStart");
+        if(!kvStartTime) {
+            await history.put(getUTCDate(getClosestWan()) + ":preShowStart", started, {
+                // Expire this key after 15 days to save space over time.
+                // It should be collapsed into a single object at the end of the stream, so no data should be lost.
+                // The collapsing is done in a scheduled worker
+                expirationTtl: 15 * 24 * 60 * 60
+            });
+        }
+        savedStartTime = true;
+    }
+
+    console.log(!savedEndTime + " " + !isLive + " " + (fastCache.lastFetchData.data.length != 0))
+    if(!savedEndTime && !isLive && fastCache.lastFetchData.data.length != 0) {
+        const kvEndTime = await history.get(getUTCDate(getClosestWan()) + ":showEnd");
+        if(!kvEndTime) {
+            await history.put(getUTCDate(getClosestWan()) + ":showEnd", new Date().toISOString(), {
+                // Expire this key after 15 days to save space over time.
+                // It should be collapsed into a single object at the end of the stream, so no data should be lost.
+                // The collapsing is done in a scheduled worker
+                expirationTtl: 15 * 24 * 60 * 60
+            });
+        }
+        savedEndTime = true;
+    }
+
     if(!twitchJSON.message) {
         fastCache.lastFetchData = twitchJSON;
         await cache.put("wheniswan:twitch:cache", JSON.stringify(fastCache))
@@ -127,12 +175,6 @@ export const GET = (async ({platform, url}) => {
                 .toLocaleString('en-US', {timeZone: "America/Phoenix"})
         }
     }
-
-    const isLive = twitchJSON.data.length != 0;
-    const isWAN = isLive && twitchJSON.data[0].title.includes("WAN");
-
-    const twitchData = url.searchParams.has("short") ? undefined : twitchJSON;
-    const started = isLive ? twitchJSON.data[0].started_at : undefined;
 
     return json(
         {

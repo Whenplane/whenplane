@@ -7,13 +7,7 @@ export function isBefore(a: Date, b: Date): boolean {
 
 export function getNextWAN(): Date {
     const now = new Date();
-    const dst = isBefore(getDSTStart(), now) && isBefore(now, getDSTEnd());
-    const offset = dst ? 7 : 8;
-    const wanDate = new Date();
-    wanDate.setUTCHours(6 - offset);
-    wanDate.setUTCMinutes(30);
-    wanDate.setUTCSeconds(0);
-    wanDate.setUTCMilliseconds(0);
+    const wanDate = getLooseWAN();
 
     while(wanDate.getUTCDay() !== 5) {
         wanDate.setUTCDate(wanDate.getUTCDate() + 1);
@@ -25,6 +19,47 @@ export function getNextWAN(): Date {
     }
 
     return wanDate;
+}
+
+export function getPreviousWAN(): Date {
+    const wanDate = getLooseWAN();
+
+    while(wanDate.getUTCDay() !== 5) {
+        wanDate.setUTCDate(wanDate.getUTCDate() - 1);
+    }
+
+    if(isBefore(new Date(), wanDate)) {
+        wanDate.setUTCDate(wanDate.getUTCDate() - 7);
+    }
+
+    return wanDate;
+}
+
+function getLooseWAN() {
+    const now = new Date();
+    const dst = isBefore(getDSTStart(), now) && isBefore(now, getDSTEnd());
+    const offset = dst ? 7 : 8;
+    const wanDate = new Date();
+    wanDate.setUTCHours(6 - offset);
+    wanDate.setUTCMinutes(30);
+    wanDate.setUTCSeconds(0);
+    wanDate.setUTCMilliseconds(0);
+
+    return wanDate
+}
+
+export function getClosestWan() {
+    const next = getNextWAN();
+    const previous = getPreviousWAN();
+
+    const distanceToNext = next.getTime() - Date.now();
+    const distanceToPrevious = Date.now() - previous.getTime();
+
+    if(distanceToNext > distanceToPrevious) {
+        return previous;
+    } else {
+        return next;
+    }
 }
 
 export function getTimeUntil(date: Date) {
@@ -51,4 +86,8 @@ export function getTimeUntil(date: Date) {
         string: daysS + hoursS + minutesS + secondsS,
         late
     };
+}
+
+export function getUTCDate(date = new Date()) {
+    return date.getUTCFullYear() + "/" + date.getUTCMonth() + "/" + date.getUTCDate();
 }

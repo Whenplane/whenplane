@@ -8,6 +8,7 @@ declare namespace App {
     interface Platform {
         env?: {
             CACHE: KVNamespace;
+            HISTORY: KVNamespace;
         }
     }
 }
