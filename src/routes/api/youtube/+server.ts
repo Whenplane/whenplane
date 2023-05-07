@@ -7,8 +7,7 @@ import {getClosestWan, getUTCDate} from "../../../lib/timeUtils";
 const scrapeCacheTime = 5000;
 const apiCacheTime = dev ? 30 * 60e3 : 10 * 60e3; // 10 minutes (30 minutes on dev)
 
-// not KV enforced because youtube can handle the tiny bit of extra traffic when the worker restarts
-const lastLive = {
+let lastLive = {
     lastCheck: 0,
     isLive: false,
 }
@@ -25,7 +24,7 @@ let liveTitle: {
 
 let savedStartTime: boolean | undefined = undefined;
 
-export const GET = (async ({platform, fetch}) => {
+export const GET = (async ({platform, fetch, url}) => {
 
     const cache = platform?.env?.CACHE;
     const history = platform?.env?.HISTORY;
@@ -33,6 +32,16 @@ export const GET = (async ({platform, fetch}) => {
     if(!history) throw error(503, "History not available");
 
     if(Date.now() - lastLive.lastCheck < scrapeCacheTime) {
+        const newLiveData = await cache.get("wheniswan:youtube:live", {type: "json"})
+        if(newLiveData) {
+            lastLive = newLiveData;
+        }
+    }
+
+    const fast = url.searchParams.get("fast") === "true";
+
+    // With the fast flag (added for initial page load requests), always fetch cached data if its from within the past 5 hours
+    if(Date.now() - lastLive.lastCheck < scrapeCacheTime || (fast && Date.now() - lastLive.lastCheck < 5 * 60 * 60e3)) {
         return json({
             cached: true,
             cachedTitle: false,
@@ -50,6 +59,8 @@ export const GET = (async ({platform, fetch}) => {
     const isLive = pageData.includes("\"iconType\":\"LIVE\"");
 
     lastLive.isLive = isLive;
+
+    await cache.put("wheniswan:youtube:live", JSON.stringify(lastLive));
 
     if(!isLive) {
         savedStartTime = false;
