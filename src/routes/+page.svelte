@@ -4,6 +4,7 @@
 	import StreamStatus from "$lib/StreamStatus.svelte";
 	import {browser} from "$app/environment";
 	import {invalidateAll} from "$app/navigation";
+	import {onMount} from "svelte";
 
 	export let data;
 
@@ -28,11 +29,14 @@
 		if(Date.now() - lastInvalidation > 5e3) {
 			invalidate();
 		}
-
-
 	}
 
-	if(browser) startInvalidationInterval();
+	onMount(() => {
+		startInvalidationInterval();
+
+		return () => clearInterval(invalidationInterval);
+	})
+
 
 </script>
 <svelte:window
@@ -81,6 +85,9 @@
 			<StreamStatus {data}/>
 		</div>
 	</div>
+</div>
+<div class="absolute bottom-0 right-0 p-2">
+	<a href="/about">About</a>
 </div>
 
 <style>
