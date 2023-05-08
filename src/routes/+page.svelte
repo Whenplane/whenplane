@@ -84,6 +84,11 @@
 		<div class="mx-4">
 			<StreamStatus {data}/>
 		</div>
+		<div class="text-center">
+			<a href="/history" class="btn variant-ghost-surface">
+				History
+			</a>
+		</div>
 	</div>
 </div>
 <div class="absolute bottom-0 right-0 p-2">

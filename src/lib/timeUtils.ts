@@ -5,9 +5,8 @@ export function isBefore(a: Date, b: Date): boolean {
     return a.getTime() < b.getTime()
 }
 
-export function getNextWAN(): Date {
-    const now = new Date();
-    const wanDate = getLooseWAN();
+export function getNextWAN(now = new Date()): Date {
+    const wanDate = getLooseWAN(now);
 
     while(wanDate.getUTCDay() !== 5) {
         wanDate.setUTCDate(wanDate.getUTCDate() + 1);
@@ -21,22 +20,21 @@ export function getNextWAN(): Date {
     return wanDate;
 }
 
-export function getPreviousWAN(): Date {
-    const wanDate = getLooseWAN();
+export function getPreviousWAN(now = new Date()): Date {
+    const wanDate = getLooseWAN(now);
 
     while(wanDate.getUTCDay() !== 5) {
         wanDate.setUTCDate(wanDate.getUTCDate() - 1);
     }
 
-    if(isBefore(new Date(), wanDate)) {
+    if(isBefore(now, wanDate)) {
         wanDate.setUTCDate(wanDate.getUTCDate() - 7);
     }
 
     return wanDate;
 }
 
-function getLooseWAN() {
-    const now = new Date();
+function getLooseWAN(now = new Date()) {
     const dst = isBefore(getDSTStart(), now) && isBefore(now, getDSTEnd());
     const offset = dst ? 7 : 8;
     const wanDate = new Date();
@@ -48,12 +46,18 @@ function getLooseWAN() {
     return wanDate
 }
 
-export function getClosestWan() {
-    const next = getNextWAN();
-    const previous = getPreviousWAN();
+export function getClosestWan(now = new Date()) {
+    const next = getNextWAN(now);
+    const previous = getPreviousWAN(now);
 
-    const distanceToNext = next.getTime() - Date.now();
-    const distanceToPrevious = Date.now() - previous.getTime();
+    const distanceToNext = next.getTime() - now.getTime();
+    const distanceToPrevious = now.getTime() - previous.getTime();
+
+    console.log({
+        now,
+        next, distanceToNext,
+        previous, distanceToPrevious
+    })
 
     if(distanceToNext > distanceToPrevious) {
         return previous;
@@ -72,8 +76,8 @@ function addZero(thing: number): string {
     return thing > 9 ? "" + thing : "0" + thing
 }
 
-export function getTimeUntil(date: Date) {
-    let distance = date.getTime() - Date.now();
+export function getTimeUntil(date: Date, now = Date.now()) {
+    let distance = date.getTime() - now;
     let late = false;
     if(distance < 0) {
         late = true;

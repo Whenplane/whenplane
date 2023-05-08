@@ -12,3 +12,15 @@ declare namespace App {
         }
     }
 }
+
+type KVListResponse = {
+    keys: {
+        name: string,
+        metadata: {
+            submitted: number,
+            [key: string]: string
+        }
+    }[],
+    list_complete: boolean,
+    cursor: string
+}
