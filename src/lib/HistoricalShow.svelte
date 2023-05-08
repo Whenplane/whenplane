@@ -8,7 +8,6 @@
     const showEnd = show.metadata.showEnd ? new Date(show.metadata.showEnd) : show.metadata.showEnd;
 
     const showDate = getClosestWan(new Date(preShowStart));
-    console.log({showDate})
 
     const preShowLength = preShowStart && mainShowStart ? getTimeUntil(mainShowStart, preShowStart.getTime()).string : null;
     const mainShowLength = mainShowStart && showEnd ? getTimeUntil(showEnd, mainShowStart.getTime()).string : null;
@@ -18,7 +17,7 @@
 </script>
 
 <div class="card inline-block limit p-3 m-2">
-    <h3>{show.name}</h3>
+    <h3>{showDate.toLocaleDateString()}</h3>
     <hr>
     <div class="inline-block mr-2">
         <h4>Pre Show</h4>

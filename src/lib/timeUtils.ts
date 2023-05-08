@@ -5,7 +5,7 @@ export function isBefore(a: Date, b: Date): boolean {
     return a.getTime() < b.getTime()
 }
 
-export function getNextWAN(now = new Date()): Date {
+export function getNextWAN(now = new Date(), buffer = true): Date {
     const wanDate = getLooseWAN(now);
 
     while(wanDate.getUTCDay() !== 5) {
@@ -13,7 +13,7 @@ export function getNextWAN(now = new Date()): Date {
     }
 
     // only say next week is next WAN 4 hours after WAN time
-    if(isBefore(wanDate, now) && now.getTime() - wanDate.getTime() > 4 * 60 * 60 * 1e3) {
+    if(isBefore(wanDate, now) && (buffer ? now.getTime() - wanDate.getTime() > 4 * 60 * 60 * 1e3 : true)) {
         wanDate.setUTCDate(wanDate.getUTCDate() + 7);
     }
 
@@ -47,7 +47,7 @@ function getLooseWAN(now = new Date()) {
 }
 
 export function getClosestWan(now = new Date()) {
-    const next = getNextWAN(now);
+    const next = getNextWAN(now, false);
     const previous = getPreviousWAN(now);
 
     const distanceToNext = next.getTime() - now.getTime();
@@ -67,7 +67,7 @@ export function getClosestWan(now = new Date()) {
 }
 
 export function getUTCDate(date = new Date()) {
-    const month = addZero(date.getUTCMonth());
+    const month = addZero(date.getUTCMonth() + 1);
     const day = addZero(date.getUTCDate());
     return date.getUTCFullYear() + "/" + month + "/" + day;
 }
