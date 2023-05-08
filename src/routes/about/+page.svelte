@@ -1,3 +1,6 @@
+<svelte:head>
+    <title>About WhenIsWan</title>
+</svelte:head>
 <div class="container h-full mx-auto flex justify-center items-center limit">
     <div class="space-y-5">
         <div class="card p-4 inline-block countdown-box text-left m-2">
