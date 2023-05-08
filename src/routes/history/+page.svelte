@@ -12,7 +12,6 @@
 <div class="text-center">
     <h1 class="text-center mt-4">WAN Show History</h1>
 
-    <h2>{new Date().getFullYear()}</h2>
     {#each data.history.currentYear as show}
         <HistoricalShow {show}/><br>
     {:else}
