@@ -1,6 +1,6 @@
-// returns true if A is before B
 import {getDSTEnd, getDSTStart} from "./dstUtils";
 
+// returns true if A is before B
 export function isBefore(a: Date, b: Date): boolean {
     return a.getTime() < b.getTime()
 }
@@ -62,6 +62,16 @@ export function getClosestWan() {
     }
 }
 
+export function getUTCDate(date = new Date()) {
+    const month = addZero(date.getUTCMonth());
+    const day = addZero(date.getUTCDate());
+    return date.getUTCFullYear() + "/" + month + "/" + day;
+}
+
+function addZero(thing: number): string {
+    return thing > 9 ? "" + thing : "0" + thing
+}
+
 export function getTimeUntil(date: Date) {
     let distance = date.getTime() - Date.now();
     let late = false;
@@ -86,8 +96,4 @@ export function getTimeUntil(date: Date) {
         string: daysS + hoursS + minutesS + secondsS,
         late
     };
-}
-
-export function getUTCDate(date = new Date()) {
-    return date.getUTCFullYear() + "/" + date.getUTCMonth() + "/" + date.getUTCDate();
 }
