@@ -70,7 +70,7 @@
 						{getNextWAN().toLocaleString()}
 					{/if}
 				{:else if isLate}
-					It usually <i>actually</i> starts around 1.5 to 2 hours late\
+					It usually <i>actually</i> starts around 1.5 to 2 hours late
 				{:else if data.isMainShow || data.isPreShow}
 					{#if data.isPreShow}
 						Pre-show started
