@@ -12,11 +12,12 @@
 <div class="text-center">
     <h1 class="text-center mt-4">WAN Show History</h1>
 
-    {#each data.history.currentYear as show}
-        <HistoricalShow {show}/><br>
-    {:else}
-        None yet!
-    {/each}
-    <br>
-    <OldHistory/>
+    <div class="inline-block">
+        {#each data.history.currentYear as show}
+            <HistoricalShow {show}/><br>
+        {:else}
+            None yet!
+        {/each}
+        <OldHistory/>
+    </div>
 </div>

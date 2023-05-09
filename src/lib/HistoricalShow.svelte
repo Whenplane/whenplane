@@ -16,7 +16,7 @@
     const onTime = mainShowStart ? getTimeUntil(showDate, mainShowStart.getTime()) : null;
 </script>
 
-<div class="card inline-block limit p-3 m-2">
+<div class="card inline-block limit p-3 m-2 w-full">
     <h3>{showDate.toLocaleDateString()}</h3>
     <hr>
     <div class="inline-block mr-2">
