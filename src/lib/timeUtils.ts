@@ -37,13 +37,13 @@ export function getPreviousWAN(now = new Date()): Date {
 function getLooseWAN(now = new Date()) {
     const dst = isBefore(getDSTStart(), now) && isBefore(now, getDSTEnd());
     const offset = dst ? 7 : 8;
-    const wanDate = new Date();
+    const wanDate = new Date(now);
     wanDate.setUTCHours(6 - offset);
     wanDate.setUTCMinutes(30);
     wanDate.setUTCSeconds(0);
     wanDate.setUTCMilliseconds(0);
 
-    return wanDate
+    return wanDate;
 }
 
 export function getClosestWan(now = new Date()) {
