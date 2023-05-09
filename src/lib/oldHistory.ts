@@ -46,6 +46,14 @@ export const history: HistoricalEntry[] = [
             mainShowStart: "2023-04-01T01:21:06.000Z",
             showEnd: "2023-04-01T05:47:14.000Z"
         }
+    },
+    {
+        name: "2023/3/24",
+        metadata: {
+            preShowStart: "2023-03-25T02:43:17.000Z",
+            mainShowStart: "2023-03-25T02:53:10.000Z",
+            showEnd: "2023-03-25T07:16:07.000Z"
+        }
     }
 ];
 
