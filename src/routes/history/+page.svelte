@@ -16,8 +16,6 @@
     <div class="inline-block">
         {#each data.history.currentYear as show}
             <HistoricalShow {show}/><br>
-        {:else}
-            None yet!
         {/each}
         {#if dev}
             <hr>
