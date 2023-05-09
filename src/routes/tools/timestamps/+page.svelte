@@ -5,6 +5,7 @@
     const previousWAN = getPreviousWAN();
 
     let date = previousWAN.getFullYear() + "-" + addZero(previousWAN.getMonth() + 1) + "-" + addZero(previousWAN.getDate());
+    $: dateDate = new Date(date);
 
     let timeStamp = 0;
     let timeAtTimeStamp = "16:25";
@@ -53,9 +54,14 @@
     <br>
     <div class="card text-left mx-auto">
         <pre>
-            preShowStart: "{startsAt.toISOString()}",
-            mainShowStart: "{preEndsAt.toISOString()}",
-            showEnd: "{endsAt.toISOString()}"
+            &#123;
+                name: "{dateDate.getUTCFullYear()}/{dateDate.getUTCMonth() + 1}/{dateDate.getUTCDate()}"
+                metadata: &#123;
+                    preShowStart: "{startsAt.toISOString()}",
+                    mainShowStart: "{preEndsAt.toISOString()}",
+                    showEnd: "{endsAt.toISOString()}"
+                &#125;
+            &#125;
         </pre>
     </div>
 </div>
