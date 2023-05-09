@@ -53,12 +53,6 @@ export function getClosestWan(now = new Date()) {
     const distanceToNext = next.getTime() - now.getTime();
     const distanceToPrevious = now.getTime() - previous.getTime();
 
-    console.log({
-        now,
-        next, distanceToNext,
-        previous, distanceToPrevious
-    })
-
     if(distanceToNext > distanceToPrevious) {
         return previous;
     } else {

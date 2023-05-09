@@ -1,6 +1,7 @@
 <script>
     import HistoricalShow from "../../lib/HistoricalShow.svelte";
     import OldHistory from "../../lib/OldHistory.svelte";
+    import {dev} from "$app/environment";
 
     export let data;
 
@@ -18,6 +19,12 @@
         {:else}
             None yet!
         {/each}
+        {#if dev}
+            <hr>
+        {/if}
         <OldHistory/>
+        <br>
+        <br>
+        <br>
     </div>
 </div>
