@@ -96,9 +96,6 @@
     {/if}
 </div>
 <style>
-    .limit {
-        max-width: 800px;
-    }
     .red {
         color: red;
     }

@@ -23,8 +23,3 @@
 <div class="absolute bottom-0 right-0 p-2">
     <a href="/">Back to Countdown</a>
 </div>
-<style>
-    .limit {
-        max-width: 800px;
-    }
-</style>

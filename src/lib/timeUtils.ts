@@ -72,7 +72,7 @@ export function getUTCDate(date = new Date()) {
     return date.getUTCFullYear() + "/" + month + "/" + day;
 }
 
-function addZero(thing: number): string {
+export function addZero(thing: number): string {
     return thing > 9 ? "" + thing : "0" + thing
 }
 
