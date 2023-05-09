@@ -1,9 +1,13 @@
 <script>
-    import {browser} from "$app/environment";
     import HistoricalShow from "./HistoricalShow.svelte";
+    import {onMount} from "svelte";
 
     // eslint-disable-next-line @typescript-eslint/no-empty-function
-    const fetchingHistory = browser ? import("./oldHistory.ts") : new Promise(() => {})
+    let fetchingHistory = new Promise(() => {});
+
+    onMount(() => {
+        fetchingHistory = import("./oldHistory.ts");
+    })
 </script>
 {#await fetchingHistory}
     <span class="opacity-50">
