@@ -6,6 +6,7 @@
 
     const yesterday = new Date();
     yesterday.setDate(yesterday.getDate() - 1);
+
 </script>
 <div class="limit mx-auto">
     <br>
@@ -16,9 +17,18 @@
     <br>
     <br>
 
-    Closest to now: {getClosestWan()}
-    <br>
-    Closest to tomorrow: {getClosestWan(tomorrow)}
-    <br>
-    Closest to yesterday: {getClosestWan(tomorrow)}
+    <table>
+        <tr>
+            <td>Closest to yesterday: </td>
+            <td>{getClosestWan(yesterday)}</td>
+        </tr>
+        <tr>
+            <td>Closest to now:</td>
+            <td>{getClosestWan()}</td>
+        </tr>
+        <tr>
+            <td>Closest to tomorrow:</td>
+            <td>{getClosestWan(tomorrow)}</td>
+        </tr>
+    </table>
 </div>
