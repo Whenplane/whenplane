@@ -39,6 +39,7 @@
 	},
 	"type": "module",
 	"dependencies": {
-		"@floating-ui/dom": "^1.2.7"
+		"@floating-ui/dom": "^1.2.7",
+		"luxon": "^3.3.0"
 	}
 }

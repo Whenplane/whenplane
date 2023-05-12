@@ -1,4 +1,4 @@
-import {getDSTEnd, getDSTStart} from "./dstUtils";
+import {DateTime} from "luxon";
 
 // returns true if A is before B
 export function isBefore(a: Date, b: Date): boolean {
@@ -6,43 +6,48 @@ export function isBefore(a: Date, b: Date): boolean {
 }
 
 export function getNextWAN(now = new Date(), buffer = true): Date {
-    const wanDate = getLooseWAN(now);
+    let wanDate = getLooseWAN(now);
 
-    while(wanDate.getUTCDay() !== 5) {
-        wanDate.setUTCDate(wanDate.getUTCDate() + 1);
+    while(wanDate.weekday !== 5) {
+        wanDate = wanDate.plus({days: 1});
     }
 
     // only say next week is next WAN 4 hours after WAN time
-    if(isBefore(wanDate, now) && (buffer ? now.getTime() - wanDate.getTime() > 4 * 60 * 60 * 1e3 : true)) {
-        wanDate.setUTCDate(wanDate.getUTCDate() + 7);
+    if(isBefore(wanDate.toJSDate(), now) && (buffer ? now.getTime() - wanDate.toJSDate().getTime() > 4 * 60 * 60 * 1e3 : true)) {
+        wanDate = wanDate.plus({days: 7});
     }
 
-    return wanDate;
+    return wanDate.toJSDate();
 }
 
 export function getPreviousWAN(now = new Date()): Date {
-    const wanDate = getLooseWAN(now);
+    let wanDate = getLooseWAN(now);
 
-    while(wanDate.getUTCDay() !== 5) {
-        wanDate.setUTCDate(wanDate.getUTCDate() - 1);
+    while(wanDate.weekday !== 5) {
+        wanDate = wanDate.minus({days: 1});
     }
 
-    if(isBefore(now, wanDate)) {
-        wanDate.setUTCDate(wanDate.getUTCDate() - 7);
+    if(isBefore(now, wanDate.toJSDate())) {
+        wanDate = wanDate.plus({days: 7});
     }
 
-    return wanDate;
+    return wanDate.toJSDate();
 }
 
 function getLooseWAN(now = new Date()) {
-    const dst = isBefore(getDSTStart(), now) && isBefore(now, getDSTEnd());
-    const offset = dst ? 7 : 8;
-    const wanDate = new Date(now);
-    wanDate.setUTCHours(6 - offset);
-    wanDate.setUTCMinutes(30);
-    wanDate.setUTCSeconds(0);
-    wanDate.setUTCMilliseconds(0);
+    const wanDate = DateTime.fromObject(
+        {
+            year: now.getFullYear(),
+            month: now.getMonth()+1,
+            day: now.getDate(),
+            hour: 16,
+            minute: 30
+        }, {
+            zone: "America/Vancouver"
+        }
+        );
 
+    console.log({looseWan: wanDate});
     return wanDate;
 }
 
@@ -84,12 +89,9 @@ export function getTimeUntil(date: Date, now = Date.now()) {
 
     const daysS = days > 0 ? days+"d " : "";
     const hoursS = hours > 0 ? hours+"h " : "";
-    let minutesS = minutes > 0 ? minutes+"m " : "";
-    let secondsS = seconds+"s ";
-    if(typeof location !== 'undefined' && location.pathname === "/rmtv") {
-        minutesS = minutes+" minute" + (minutes === 1 ? " " : "s ");
-        secondsS = "";
-    }
+    const minutesS = minutes > 0 ? minutes+"m " : "";
+    const secondsS = seconds+"s ";
+
     return {
         string: daysS + hoursS + minutesS + secondsS,
         late
