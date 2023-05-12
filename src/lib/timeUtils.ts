@@ -28,7 +28,7 @@ export function getPreviousWAN(now = new Date()): Date {
     }
 
     if(isBefore(now, wanDate.toJSDate())) {
-        wanDate = wanDate.plus({days: 7});
+        wanDate = wanDate.minus({days: 7});
     }
 
     return wanDate.toJSDate();
