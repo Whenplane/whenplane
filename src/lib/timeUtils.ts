@@ -56,7 +56,9 @@ export function getClosestWan(now = new Date()) {
     const previous = getPreviousWAN(now);
 
     const distanceToNext = next.getTime() - now.getTime();
-    const distanceToPrevious = now.getTime() - previous.getTime();
+    const distanceToPrevious = previous.getTime() - now.getTime();
+
+    console.log({now, next, previous, distanceToNext, distanceToPrevious})
 
     if(distanceToNext > distanceToPrevious) {
         return previous;
