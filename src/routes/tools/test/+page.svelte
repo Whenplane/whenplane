@@ -10,6 +10,9 @@
 </script>
 <div class="limit mx-auto">
     <br>
+    Now: {new Date()}
+    <br>
+    <br>
 
     Next: {getNextWAN()}
     <br>
