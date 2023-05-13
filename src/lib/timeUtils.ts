@@ -8,14 +8,20 @@ export function isBefore(a: Date, b: Date): boolean {
 export function getNextWAN(now = new Date(), buffer = true): Date {
     let wanDate = getLooseWAN(now);
 
+    console.debug("Loose WAN: ", wanDate.toJSDate().toString())
+
     while(wanDate.weekday !== 5) {
         wanDate = wanDate.plus({days: 1});
     }
+
+    console.debug("Day-fixed WAN: ", wanDate.toJSDate().toString())
 
     // only say next week is next WAN 5 hours after WAN time
     if(isBefore(wanDate.toJSDate(), now) && (buffer ? now.getTime() - wanDate.toJSDate().getTime() > 5 * 60 * 60 * 1e3 : true)) {
         wanDate = wanDate.plus({days: 7});
     }
+
+    console.debug("After-fixed WAN: ", wanDate.toJSDate().toString())
 
     return wanDate.toJSDate();
 }
