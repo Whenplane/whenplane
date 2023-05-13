@@ -77,7 +77,10 @@
 					{:else}
 						Started
 					{/if}
-					at {new Date(data.mainShowStarted ?? data.preShowStarted).toLocaleTimeString()}
+					at
+					{#if browser}
+						{new Date(data.mainShowStarted ?? data.preShowStarted).toLocaleTimeString()}
+					{/if}
 				{/if}
 			</div>
 		</div>
