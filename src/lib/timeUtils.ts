@@ -45,7 +45,7 @@ function getLooseWAN(now = new Date()) {
         {
             year: now.getFullYear(),
             month: now.getMonth()+1,
-            day: now.getHours() < 1 ? now.getDate()-1 : now.getDate(),
+            day: now.getHours() <= 3 ? now.getDate()-1 : now.getDate(),
             hour: 16,
             minute: 30
         }, {
