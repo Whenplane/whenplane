@@ -2,11 +2,11 @@ import type {RequestHandler} from "@sveltejs/kit";
 import {error, json} from "@sveltejs/kit";
 import {env} from "$env/dynamic/private";
 import {dev} from "$app/environment";
-import {getClosestWan, getUTCDate} from "../../../lib/timeUtils";
+import {getClosestWan, getUTCDate} from "$lib/timeUtils";
 
 const cacheTime = 5000; // maximum fetch from twitch api once every 5 seconds
 
-const makeAlwaysWAN = dev ? true : false;
+const makeAlwaysWAN = dev;
 
 let savedStartTime: boolean | undefined = undefined;
 let savedEndTime: boolean | undefined = undefined;
@@ -133,30 +133,40 @@ export const GET = (async ({platform, url}) => {
     const started = isLive ? twitchJSON.data[0].started_at : undefined;
 
     if(!savedStartTime && started && isWAN) {
-        const kvStartTime = await history.get(getUTCDate(getClosestWan()) + ":preShowStart");
-        if(!kvStartTime) {
-            await history.put(getUTCDate(getClosestWan()) + ":preShowStart", started, {
-                // Expire this key after 15 days to save space over time.
-                // It should be collapsed into a single object at the end of the stream, so no data should be lost.
-                // The collapsing is done in a scheduled worker
-                expirationTtl: 15 * 24 * 60 * 60
-            });
+        const closestWAN = getClosestWan();
+        const distance = Math.abs(Date.now() - closestWAN.getTime())
+        // Only record preshow start time if we are within 7 hours of the closest wan
+        if(distance < 7 * 60 * 60 * 1000) {
+            const kvStartTime = await history.get(getUTCDate(closestWAN) + ":preShowStart");
+            if(!kvStartTime) {
+                await history.put(getUTCDate(getClosestWan()) + ":preShowStart", started, {
+                    // Expire this key after 15 days to save space over time.
+                    // It should be collapsed into a single object at the end of the stream, so no data should be lost.
+                    // The collapsing is done in a scheduled worker
+                    expirationTtl: 15 * 24 * 60 * 60
+                });
+            }
+            savedStartTime = true;
         }
-        savedStartTime = true;
     }
 
     console.log(!savedEndTime + " " + !isLive + " " + (fastCache.lastFetchData.data?.length != 0))
     if(!savedEndTime && !isLive && fastCache.lastFetchData.data?.length != 0) {
-        const kvEndTime = await history.get(getUTCDate(getClosestWan()) + ":showEnd");
-        if(!kvEndTime) {
-            await history.put(getUTCDate(getClosestWan()) + ":showEnd", new Date().toISOString(), {
-                // Expire this key after 15 days to save space over time.
-                // It should be collapsed into a single object at the end of the stream, so no data should be lost.
-                // The collapsing is done in a scheduled worker
-                expirationTtl: 15 * 24 * 60 * 60
-            });
+        const closestWAN = getClosestWan();
+        const distance = Date.now() - closestWAN.getTime()
+        // Only record ending time if we are within 7 hours of the closest wan
+        if(distance > 0 && distance < 7 * 60 * 60 * 1000) {
+            const kvEndTime = await history.get(getUTCDate(closestWAN) + ":showEnd");
+            if(!kvEndTime) {
+                await history.put(getUTCDate(getClosestWan()) + ":showEnd", new Date().toISOString(), {
+                    // Expire this key after 15 days to save space over time.
+                    // It should be collapsed into a single object at the end of the stream, so no data should be lost.
+                    // The collapsing is done in a scheduled worker
+                    expirationTtl: 15 * 24 * 60 * 60
+                });
+            }
+            savedEndTime = true;
         }
-        savedEndTime = true;
     }
 
     if(!twitchJSON.message) {

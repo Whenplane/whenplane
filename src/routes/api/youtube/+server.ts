@@ -120,16 +120,21 @@ export const GET = (async ({platform, fetch, url}) => {
     const started = specificData.items[0].liveStreamingDetails.actualStartTime;
 
     if(!savedStartTime && isWAN) {
-        const kvStartTime = await history.get(getUTCDate(getClosestWan()) + ":mainShowStart");
-        if(!kvStartTime) {
-            await history.put(getUTCDate(getClosestWan()) + ":mainShowStart", started, {
-                // Expire this key after 15 days to save space over time.
-                // It should be collapsed into a single object at the end of the stream, so no data should be lost.\
-                // The collapsing is done in a scheduled worker
-                expirationTtl: 15 * 24 * 60 * 60
-            });
+        const closestWAN = getClosestWan();
+        const distance = Math.abs(Date.now() - closestWAN.getTime())
+        // Only record preshow start time if we are within 7 hours of the closest wan
+        if(distance < 7 * 60 * 60 * 1000) {
+            const kvStartTime = await history.get(getUTCDate(closestWAN) + ":mainShowStart");
+            if(!kvStartTime) {
+                await history.put(getUTCDate(getClosestWan()) + ":mainShowStart", started, {
+                    // Expire this key after 15 days to save space over time.
+                    // It should be collapsed into a single object at the end of the stream, so no data should be lost.\
+                    // The collapsing is done in a scheduled worker
+                    expirationTtl: 15 * 24 * 60 * 60
+                });
+            }
+            savedStartTime = true;
         }
-        savedStartTime = true;
     }
 
     liveTitle.isWAN = isWAN;
