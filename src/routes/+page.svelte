@@ -1,4 +1,4 @@
-<script>
+<script lang="ts">
 	import {getNextWAN} from "$lib/timeUtils";
 	import ShowCountdown from "$lib/ShowCountdown.svelte";
 	import StreamStatus from "$lib/StreamStatus.svelte";
@@ -8,13 +8,13 @@
 
 	export let data;
 
-	let isAfterStartTime;
-	let isLate;
+	let isAfterStartTime: boolean | undefined;
+	let isLate: boolean | undefined;
 
 	$: isLate = isAfterStartTime && !data.isPreShow && !data.isMainShow;
 
 	// Periodically invalidate the data so that SvelteKit goes and fetches it again for us
-	let invalidationInterval;
+	let invalidationInterval: number | undefined;
 	let lastInvalidation = Date.now();
 	function invalidate() {
 		lastInvalidation = Date.now();
@@ -23,7 +23,8 @@
 
 	function startInvalidationInterval() {
 		clearInterval(invalidationInterval);
-		invalidationInterval = setInterval(invalidate, 5e3);
+		// VS code is getting the setInterval type from NodeJS, so we need to override it
+		invalidationInterval = setInterval(invalidate, 5e3) as unknown as number;
 
 		// go ahead and invalidate if it's been a bit since the last one
 		if(Date.now() - lastInvalidation > 5e3) {
