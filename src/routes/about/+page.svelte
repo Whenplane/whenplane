@@ -12,6 +12,15 @@
             <a href="https://github.com/ajgeiss0702/wheniswan" target="_blank" rel="noreferrer">
                 open-sourced</a>.
             Feel free to make contributions!
+
+            <br>
+            <br>
+            <div class="text-center w-full">
+                <h2 class="text-center">Why does the website say 4:30?</h2>
+                <img class="mx-auto" src="/430.png" alt="Dan confirming 4:30"/>
+                <i>always has been</i>
+            </div>
+
             <div class="text-right">
                 <a class="btn variant-ghost-primary" href="https://about.ajg0702.us" target="_blank" rel="noreferrer">
                     Made by aj

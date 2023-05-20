@@ -13,7 +13,7 @@
 
 	$: isLate = isAfterStartTime && !data.isPreShow && !data.isMainShow;
 
-	// Periodically invalidate the data so that SvelteKit goes and fetches it again for us
+
 	let invalidationInterval: number | undefined;
 	let lastInvalidation = Date.now();
 	function invalidate() {
@@ -21,6 +21,7 @@
 		invalidateAll();
 	}
 
+	// Periodically invalidate the data so that SvelteKit goes and fetches it again for us
 	function startInvalidationInterval() {
 		clearInterval(invalidationInterval);
 		// VS code is getting the setInterval type from NodeJS, so we need to override it
