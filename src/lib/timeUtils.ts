@@ -10,9 +10,11 @@ export function getNextWAN(now = new Date(), buffer = true): Date {
 
     console.debug("Loose WAN: ", wanDate.toJSDate().toString())
 
-    while(wanDate.weekday !== 5) {
+    while(wanDate.weekday !== 5 && !isNaN(wanDate.weekday)) {
         wanDate = wanDate.plus({days: 1});
     }
+
+    if(isNaN(wanDate.weekday)) throw new Error("Bad weekday from " + wanDate.toString())
 
     console.debug("Day-fixed WAN: ", wanDate.toJSDate().toString())
 
@@ -41,11 +43,18 @@ export function getPreviousWAN(now = new Date()): Date {
 }
 
 function getLooseWAN(now = new Date()) {
+    let month = now.getMonth() + 1;
+    let day = now.getUTCHours() <= 3 ? now.getUTCDate() - 1 : now.getUTCDate();
+
+    if(day <= 0) {
+        month -= 1;
+        day = daysInMonth(now.getFullYear(), month);
+    }
     const wanDate = DateTime.fromObject(
         {
             year: now.getFullYear(),
-            month: now.getMonth() + 1,
-            day: now.getUTCHours() <= 3 ? now.getUTCDate() - 1 : now.getUTCDate(),
+            month,
+            day,
             hour: 16,
             minute: 30
         }, {
@@ -105,3 +114,5 @@ export function getTimeUntil(date: Date, now = Date.now()) {
         late
     };
 }
+
+const daysInMonth = (year: number, month: number) => new Date(year, month, 0).getDate();
