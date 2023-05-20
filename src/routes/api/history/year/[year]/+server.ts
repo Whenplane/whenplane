@@ -10,7 +10,7 @@ export const GET = (async ({platform, params}) => {
 
     const keyNames: string[] = []
 
-    const keys: {
+    let keys: {
         name: string,
         metadata: {
             [key: string]: string | number
@@ -46,6 +46,8 @@ export const GET = (async ({platform, params}) => {
         list_complete = list.list_complete;
         cursor = list.cursor;
     }
+
+    keys = keys.sort((a, b) => new Date(b.name).getTime() - new Date(a.name).getTime());
 
     return json(keys);
 
