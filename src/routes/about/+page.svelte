@@ -17,7 +17,7 @@
             <br>
             <div class="text-center w-full">
                 <h2 class="text-center">Why does the website say 4:30?</h2>
-                <img class="mx-auto" src="/430.png" alt="Dan confirming 4:30"/>
+                <img class="mx-auto" src="/430.webp" alt="Dan confirming 4:30"/>
                 <i>always has been</i>
             </div>
 
