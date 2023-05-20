@@ -24,7 +24,7 @@ and record the start date
 (from the api to account for the delay between the stream starting and it being checked)
 
 Once a pre-show is started, it is recorded in a temporary key in
-[Workers KV](https://developers.cloudflare.com/workers/learning/how-kv-works/).\
+[Workers KV](https://developers.cloudflare.com/workers/learning/how-kv-works/).
 
 A similar process is used to determining the main show start time,
 however this time using the YouTube API instead of twitch.
@@ -62,8 +62,8 @@ It also saves disk space if you have multiple projects with the same dependencie
 The [SvelteKit docs](https://kit.svelte.dev/docs/project-structure) are a great way to
 learn the structure of the project, as well as what certain files/folders are there for.
 
-I would also recommend going through (at least the intro) [Svelte Tutorial](https://svelte.dev/tutorial/basics)
-to understand svelte components. If you already know HTML/JS/CSS, it's easy!
+I would also recommend going through the [Svelte Tutorial](https://svelte.dev/tutorial/basics)
+(at least the intro) to understand svelte components. If you already know HTML/JS/CSS, it's easy!
 (I actually had *fun* while learning svelte)
 
 ## Starting a dev server
