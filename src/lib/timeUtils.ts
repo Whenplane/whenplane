@@ -44,8 +44,8 @@ function getLooseWAN(now = new Date()) {
     const wanDate = DateTime.fromObject(
         {
             year: now.getFullYear(),
-            month: now.getMonth()+1,
-            day: now.getHours() <= 3 ? now.getDate()-1 : now.getDate(),
+            month: now.getMonth() + 1,
+            day: now.getUTCHours() <= 3 ? now.getUTCDate() - 1 : now.getUTCDate(),
             hour: 16,
             minute: 30
         }, {
