@@ -44,7 +44,7 @@
             </span>
         </span>
     </a>
-    <a class="logo-item" href="https://beta.floatplane.com/channel/linustechtips/live" target="_blank" rel="noreferrer">
+    <a class="logo-item" href="https://www.floatplane.com/channel/linustechtips/live" target="_blank" rel="noreferrer">
         <span><Floatplane/></span>
         <span>
             Floatplane
