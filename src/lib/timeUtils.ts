@@ -43,13 +43,14 @@ export function getPreviousWAN(now = new Date()): Date {
 }
 
 function getLooseWAN(now = new Date()) {
-    let month = now.getMonth() + 1;
+    let month = now.getUTCMonth() + 1;
     let day = now.getUTCHours() <= 3 ? now.getUTCDate() - 1 : now.getUTCDate();
 
     if(day <= 0) {
         month -= 1;
-        day = daysInMonth(now.getFullYear(), month);
+        day = daysInMonth(now.getFullYear(), month) + day;
     }
+    console.debug({getLooseWANDebug: {now, month, day}})
     const wanDate = DateTime.fromObject(
         {
             year: now.getFullYear(),
@@ -73,7 +74,7 @@ export function getClosestWan(now = new Date()) {
     const distanceToNext = Math.abs(next.getTime() - now.getTime());
     const distanceToPrevious = Math.abs(previous.getTime() - now.getTime());
 
-    console.log({now, next, previous, distanceToNext, distanceToPrevious})
+    console.debug({now, next, previous, distanceToNext, distanceToPrevious})
 
     if(distanceToNext > distanceToPrevious) {
         return previous;
