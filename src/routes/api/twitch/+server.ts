@@ -157,7 +157,8 @@ export const GET = (async ({platform, url}) => {
         // Only record ending time if we are within 7 hours of the closest wan
         if(distance > 0 && distance < 7 * 60 * 60 * 1000) {
             const kvEndTime = await history.get(getUTCDate(closestWAN) + ":showEnd");
-            if(!kvEndTime) {
+            const kvStartTime = await history.get(getUTCDate(closestWAN) + ":mainShowStart");
+            if(!kvEndTime && kvStartTime) {
                 await history.put(getUTCDate(getClosestWan()) + ":showEnd", new Date().toISOString(), {
                     // Expire this key after 15 days to save space over time.
                     // It should be collapsed into a single object at the end of the stream, so no data should be lost.
