@@ -18,6 +18,7 @@
 
 <div class="card inline-block limit p-3 m-2 w-full">
     <h3>{showDate.toLocaleDateString()}</h3>
+    <span class="hidden">name date (for debugging purposes): {show.name}</span>
     <hr>
     <div class="inline-block mr-2">
         <h4>Pre Show</h4>
