@@ -38,6 +38,12 @@ export const GET = (async ({platform, params}) => {
                         showEnd: await history.get(parts[0] + ":showEnd")
                     }
                 });
+            } else if(!k.metadata) {
+                keyNames.push(k.name);
+                keys.push({
+                    name: k.name,
+                    metadata: await history.get(k.name, {type: 'json'})
+                });
             } else {
                 keyNames.push(k.name)
                 keys.push(k)
