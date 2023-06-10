@@ -1,8 +1,10 @@
-import type {Load} from "@sveltejs/kit";
+import type {PageLoad} from "./$types";
 import {browser} from "$app/environment";
 
-export const load = (async ({fetch}) => {
-    const liveStatus = await fetch("/api/aggregate?fast=" + !browser)
+
+export const load = (async ({fetch, url}) => {
+    const fast = (!browser || (location && location.pathname !== "/"));
+    const liveStatus = await fetch("/api/aggregate?fast=" + fast)
         .then(r => r.json());
 
     const isPreShow = !liveStatus.youtube.isWAN && liveStatus.twitch.isWAN;
@@ -16,6 +18,7 @@ export const load = (async ({fetch}) => {
         isMainShow,
         liveStatus,
         preShowStarted,
-        mainShowStarted
+        mainShowStarted,
+        fast
     }
-}) satisfies Load;
+}) satisfies PageLoad;
