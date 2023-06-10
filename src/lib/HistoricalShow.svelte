@@ -22,21 +22,25 @@
     <hr>
     <div class="inline-block mr-2">
         <h4>Pre Show</h4>
-        {#if preShowStart}
-            {preShowStart.toLocaleTimeString(undefined, {timeStyle: "short"})}
-        {:else}
-            <span class="opacity-50">
-                N/A
-            </span>
-        {/if}
+        <span class="time">
+            {#if preShowStart}
+                {preShowStart.toLocaleTimeString(undefined, {timeStyle: "short"})}
+            {:else}
+                <span class="opacity-50">
+                    N/A
+                </span>
+            {/if}
+        </span>
         -
-        {#if mainShowStart}
-            {mainShowStart.toLocaleTimeString(undefined, {timeStyle: "short"})}
-        {:else}
-            <span class="opacity-50">
-                N/A
-            </span>
-        {/if}
+        <span class="time">
+            {#if mainShowStart}
+                {mainShowStart.toLocaleTimeString(undefined, {timeStyle: "short"})}
+            {:else}
+                <span class="opacity-50">
+                    N/A
+                </span>
+            {/if}
+        </span>
         <br>
         {#if preShowLength}
             {preShowLength}
@@ -48,21 +52,25 @@
     </div>
     <div class="inline-block ml-2">
         <h4>Main Show</h4>
-        {#if mainShowStart}
-            {mainShowStart.toLocaleTimeString(undefined, {timeStyle: "short"})}
-        {:else}
-            <span class="opacity-50">
-                N/A
-            </span>
-        {/if}
+        <span class="time">
+            {#if mainShowStart}
+                {mainShowStart.toLocaleTimeString(undefined, {timeStyle: "short"})}
+            {:else}
+                <span class="opacity-50">
+                    N/A
+                </span>
+            {/if}
+        </span>
         -
-        {#if showEnd}
-            {showEnd.toLocaleTimeString(undefined, {timeStyle: "short"})}
-        {:else}
-            <span class="opacity-50">
-                N/A
-            </span>
-        {/if}
+        <span class="time">
+            {#if showEnd}
+                {showEnd.toLocaleTimeString(undefined, {timeStyle: "short"})}
+            {:else}
+                <span class="opacity-50">
+                    N/A
+                </span>
+            {/if}
+        </span>
         <br>
         {#if mainShowLength}
             {mainShowLength}
@@ -102,5 +110,9 @@
     }
     .green {
         color: green;
+    }
+    .time {
+        font-size: 1.25em;
+        font-family: monospace;
     }
 </style>
