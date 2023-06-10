@@ -17,13 +17,14 @@
 	let invalidationInterval: number | undefined;
 	let lastInvalidation = Date.now();
 	function invalidate() {
+		console.log("invalidated")
 		lastInvalidation = Date.now();
 		invalidateAll();
 	}
 
 	// Periodically invalidate the data so that SvelteKit goes and fetches it again for us
 	function startInvalidationInterval() {
-		clearInterval(invalidationInterval);
+		if(invalidationInterval) clearInterval(invalidationInterval);
 		// VS code is getting the setInterval type from NodeJS, so we need to override it
 		invalidationInterval = setInterval(invalidate, 5e3) as unknown as number;
 
@@ -35,8 +36,12 @@
 
 	onMount(() => {
 		startInvalidationInterval();
+		if(data.fast) setTimeout(invalidate, 500);
+		console.log({fast: data.fast})
 
-		return () => clearInterval(invalidationInterval);
+		return () => {
+			if (invalidationInterval) clearInterval(invalidationInterval)
+		};
 	})
 
 
