@@ -28,7 +28,7 @@ export function getNextWAN(now = new Date(), buffer = true): Date {
     return wanDate.toJSDate();
 }
 
-export function getPreviousWAN(now = new Date()): Date {
+export function getPreviousWAN(now = new Date(), luxon = false): Date | DateTime {
     let wanDate = getLooseWAN(now);
 
     while(wanDate.weekday !== 5) {
@@ -39,7 +39,7 @@ export function getPreviousWAN(now = new Date()): Date {
         wanDate = wanDate.minus({days: 7});
     }
 
-    return wanDate.toJSDate();
+    return luxon ? wanDate : wanDate.toJSDate();
 }
 
 function getLooseWAN(now = new Date()) {
@@ -68,8 +68,8 @@ function getLooseWAN(now = new Date()) {
 }
 
 export function getClosestWan(now = new Date()) {
-    const next = getNextWAN(now, false);
-    const previous = getPreviousWAN(now);
+    const next = getNextWAN(now, false) as Date;
+    const previous = getPreviousWAN(now) as Date;
 
     const distanceToNext = Math.abs(next.getTime() - now.getTime());
     const distanceToPrevious = Math.abs(previous.getTime() - now.getTime());
