@@ -27,7 +27,7 @@
         }, {
             zone: "America/Vancouver"
         })
-        startsAt.minus({seconds: timeStamp})
+        startsAt = startsAt.minus({seconds: timeStamp})
     }
 
     let showStartTimestamp = 5 * 60;
