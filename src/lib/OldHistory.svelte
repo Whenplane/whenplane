@@ -10,7 +10,7 @@
     })
 </script>
 {#await fetchingHistory}
-    <span class="opacity-50">
+    <span class="opacity-50 old-show-loading">
         Loading older shows..
     </span>
 {:then {history}}
@@ -32,3 +32,9 @@
         More older shows will be added here eventually
     </span>
 {/await}
+
+<style>
+    .old-show-loading {
+        padding-bottom: 90vh;
+    }
+</style>
