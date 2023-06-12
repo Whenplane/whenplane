@@ -15,9 +15,19 @@
     let timeAtTimeStamp = "16:25";
     let startsAt: DateTime | undefined;
     $: {
-        startsAt = DateTime.fromISO(date + "T" + timeAtTimeStamp)
+        let dateParts = date.split("-");
+        let timeParts = timeAtTimeStamp.split(":");
+        startsAt = DateTime.fromObject({
+            year: Number(dateParts[0]),
+            month: Number(dateParts[1]),
+            day: Number(dateParts[2]),
+            hour: Number(timeParts[0]),
+            minute: Number(timeParts[1]),
+            second: Number(timeParts[2]) || 0
+        }, {
+            zone: "America/Vancouver"
+        })
         startsAt.minus({seconds: timeStamp})
-        console.log({startsAt})
     }
 
     let showStartTimestamp = 5 * 60;
