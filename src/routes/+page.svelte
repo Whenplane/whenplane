@@ -5,6 +5,7 @@
 	import {browser} from "$app/environment";
 	import {invalidateAll} from "$app/navigation";
 	import {onMount} from "svelte";
+	import Late from "../lib/Late.svelte";
 
 	export let data;
 
@@ -59,7 +60,7 @@
 		<div class="text-center">
 			<div class="card p-4 inline-block countdown-box text-left">
 				{#if isLate}
-					The WAN show is currently <span class="red">late</span> by
+					The WAN show is currently <span class="red"><Late/></span> by
 
 				{:else if data.mainShowStarted}
 					The WAN show has been live for

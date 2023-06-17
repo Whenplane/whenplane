@@ -1,5 +1,6 @@
 <script>
     import {getClosestWan, getTimeUntil} from "./timeUtils";
+    import Late from "./Late.svelte";
 
     export let show;
 
@@ -90,7 +91,7 @@
         {:else}
             {#if onTime.late}
                 <span class="red">
-                    {onTime.string} late
+                    {onTime.string} <Late/>
                 </span>
             {:else}
                 <span class="green">
