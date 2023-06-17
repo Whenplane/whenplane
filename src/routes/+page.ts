@@ -4,7 +4,8 @@ import {browser} from "$app/environment";
 
 export const load = (async ({fetch, url}) => {
     const fast = (!browser || (location && location.pathname !== "/"));
-    const liveStatus = await fetch("/api/aggregate?fast=" + fast)
+    const cacheBuster = fast ? "" : "&r=" + Date.now();
+    const liveStatus = await fetch("/api/aggregate?fast=" + fast + cacheBuster)
         .then(r => r.json());
 
     const isPreShow = !liveStatus.youtube.isWAN && liveStatus.twitch.isWAN;
