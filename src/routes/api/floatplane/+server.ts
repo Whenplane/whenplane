@@ -17,6 +17,7 @@ export const GET = (async ({fetch, platform, url}) => {
 
     const cache = platform?.env?.CACHE;
     if(!cache) throw error(503, "Cache not available");
+    if(!platform?.context) throw error(503, "Request context not available!");
 
     const twitchIsWAN = (await fetch("/api/twitch?short").then(r => r.json())).isWAN;
 
@@ -50,7 +51,7 @@ export const GET = (async ({fetch, platform, url}) => {
     fastCache.lastFetch = Date.now();
     fastCache.lastFetchData = fpResponse;
 
-    await cache.put("wheniswan:floatplane:cache", JSON.stringify(fastCache))
+    platform.context.waitUntil(cache.put("wheniswan:floatplane:cache", JSON.stringify(fastCache)));
 
     const livestream = fpResponse.length != 0 ? fpResponse[0].liveStream : null;
 

@@ -9,6 +9,13 @@ declare namespace App {
         env?: {
             CACHE: KVNamespace;
             HISTORY: KVNamespace;
+        },
+        context?: {
+            /**
+             * Waits for the promise to complete without blocking.
+             * @param promise The promise that is ensured completion
+             */
+            waitUntil: (promise: Promise) => void
         }
     }
 }

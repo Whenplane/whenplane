@@ -2,7 +2,7 @@ import type {RequestHandler} from "@sveltejs/kit";
 import {error, json} from "@sveltejs/kit";
 import {env} from "$env/dynamic/private";
 import {dev} from "$app/environment";
-import {getClosestWan, getUTCDate} from "../../../lib/timeUtils";
+import {getClosestWan, getUTCDate} from "$lib/timeUtils";
 
 const scrapeCacheTime = 5000;
 const apiCacheTime = dev ? 30 * 60e3 : 10 * 60e3; // 10 minutes (30 minutes on dev)
@@ -30,6 +30,8 @@ export const GET = (async ({platform, fetch, url}) => {
     const history = platform?.env?.HISTORY;
     if(!cache) throw error(503, "Cache not available");
     if(!history) throw error(503, "History not available");
+    if(!platform?.context) throw error(503, "Request context not available!");
+
 
     if(Date.now() - lastLive.lastCheck < scrapeCacheTime) {
         const newLiveData = await cache.get("wheniswan:youtube:live", {type: "json"})
@@ -54,13 +56,14 @@ export const GET = (async ({platform, fetch, url}) => {
 
     lastLive.lastCheck = Date.now();
 
-    const pageData = await fetch("https://www.youtube.com/linustechtips").then(r => r.text());
+    // We use the live path because it appears to be smaller than the main channel page
+    const pageData = await fetch("https://www.youtube.com/linustechtips/live").then(r => r.text());
 
     const isLive = pageData.includes("\"iconType\":\"LIVE\"");
 
     lastLive.isLive = isLive;
 
-    await cache.put("wheniswan:youtube:live", JSON.stringify(lastLive));
+    platform.context.waitUntil(cache.put("wheniswan:youtube:live", JSON.stringify(lastLive)));
 
     if(!isLive) {
         savedStartTime = false;
@@ -124,15 +127,17 @@ export const GET = (async ({platform, fetch, url}) => {
         const distance = Math.abs(Date.now() - closestWAN.getTime())
         // Only record preshow start time if we are within 7 hours of the closest wan
         if(distance < 7 * 60 * 60 * 1000) {
-            const kvStartTime = await history.get(getUTCDate(closestWAN) + ":mainShowStart");
-            if(!kvStartTime) {
-                await history.put(getUTCDate(getClosestWan()) + ":mainShowStart", started, {
-                    // Expire this key after 15 days to save space over time.
-                    // It should be collapsed into a single object at the end of the stream, so no data should be lost.\
-                    // The collapsing is done in a scheduled worker
-                    expirationTtl: 15 * 24 * 60 * 60
-                });
-            }
+            platform.context.waitUntil(async () => {
+                const kvStartTime = await history.get(getUTCDate(closestWAN) + ":mainShowStart");
+                if(!kvStartTime) {
+                    await history.put(getUTCDate(getClosestWan()) + ":mainShowStart", started, {
+                        // Expire this key after 15 days to save space over time.
+                        // It should be collapsed into a single object at the end of the stream, so no data should be lost.\
+                        // The collapsing is done in a scheduled worker
+                        expirationTtl: 15 * 24 * 60 * 60
+                    });
+                }
+            });
             savedStartTime = true;
         }
     }
@@ -140,7 +145,7 @@ export const GET = (async ({platform, fetch, url}) => {
     liveTitle.isWAN = isWAN;
     liveTitle.started = started;
 
-    await cache.put("wheniswan:youtube:title", JSON.stringify(liveTitle));
+    platform.context.waitUntil(cache.put("wheniswan:youtube:title", JSON.stringify(liveTitle)));
 
     return json({
         isLive,

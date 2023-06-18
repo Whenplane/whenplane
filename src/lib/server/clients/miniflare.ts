@@ -9,6 +9,7 @@ export const fallBackPlatformToMiniFlareInDev = async (_platform: App.Platform |
         log: new Log(LogLevel.INFO),
         kvPersist: './kv-data',
         kvNamespaces: ['CACHE', 'HISTORY'],
+        d1Databases: [],
         globalAsyncIO: true,
         globalTimers: true,
         globalRandom: true,
@@ -25,5 +26,11 @@ export const fallBackPlatformToMiniFlareInDev = async (_platform: App.Platform |
     });
 
     const env = await mf.getBindings();
-    return {env} as App.Platform;
+    const context = {
+        // eslint-disable-next-line @typescript-eslint/no-unused-vars
+        waitUntil: (promise: Promise<never>) => {
+            if(!dev) console.error("Attempted to use dev waitUntil in non-dev environment!");
+        }
+    }
+    return {env, context} as App.Platform;
 };

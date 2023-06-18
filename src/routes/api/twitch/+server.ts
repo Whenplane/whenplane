@@ -30,6 +30,7 @@ export const GET = (async ({platform, url}) => {
     const history = platform?.env?.HISTORY;
     if(!cache) throw error(503, "Cache not available");
     if(!history) throw error(503, "History not available");
+    if(!platform?.context) throw error(503, "Request context not available!");
 
     if(!env.TWITCH_CLIENT_ID) throw error(503, "Missing twitch client id!");
     if(!env.TWITCH_SECRET) throw error(503, "Missing twitch client secret!");
@@ -104,7 +105,7 @@ export const GET = (async ({platform, url}) => {
             token: access_token,
             validUntil: Date.now() + (expires_in * 1000) - 30 // fetch new token 30 seconds before it's supposed to expire
         }
-        await cache.put("wheniswan:twitch:token", JSON.stringify(lastToken));
+        platform.context.waitUntil(cache.put("wheniswan:twitch:token", JSON.stringify(lastToken)))
     }
 
     const twitchResponse = await fetch(
@@ -137,42 +138,45 @@ export const GET = (async ({platform, url}) => {
         const distance = Math.abs(Date.now() - closestWAN.getTime())
         // Only record preshow start time if we are within 7 hours of the closest wan
         if(distance < 7 * 60 * 60 * 1000) {
-            const kvStartTime = await history.get(getUTCDate(closestWAN) + ":preShowStart");
-            if(!kvStartTime) {
-                await history.put(getUTCDate(getClosestWan()) + ":preShowStart", started, {
-                    // Expire this key after 15 days to save space over time.
-                    // It should be collapsed into a single object at the end of the stream, so no data should be lost.
-                    // The collapsing is done in a scheduled worker
-                    expirationTtl: 15 * 24 * 60 * 60
-                });
-            }
+            platform.context.waitUntil(async () => {
+                const kvStartTime = await history.get(getUTCDate(closestWAN) + ":preShowStart");
+                if(!kvStartTime) {
+                    await history.put(getUTCDate(getClosestWan()) + ":preShowStart", started, {
+                        // Expire this key after 15 days to save space over time.
+                        // It should be collapsed into a single object at the end of the stream, so no data should be lost.
+                        // The collapsing is done in a scheduled worker
+                        expirationTtl: 15 * 24 * 60 * 60
+                    });
+                }
+            })
             savedStartTime = true;
         }
     }
 
-    console.log(!savedEndTime + " " + !isLive + " " + (fastCache.lastFetchData.data?.length != 0))
     if(!savedEndTime && !isLive && fastCache.lastFetchData.data?.length != 0) {
         const closestWAN = getClosestWan();
         const distance = Date.now() - closestWAN.getTime()
         // Only record ending time if we are within 7 hours of the closest wan
         if(distance > 0 && distance < 7 * 60 * 60 * 1000) {
-            const kvEndTime = await history.get(getUTCDate(closestWAN) + ":showEnd");
-            const kvStartTime = await history.get(getUTCDate(closestWAN) + ":mainShowStart");
-            if(!kvEndTime && kvStartTime) {
-                await history.put(getUTCDate(getClosestWan()) + ":showEnd", new Date().toISOString(), {
-                    // Expire this key after 15 days to save space over time.
-                    // It should be collapsed into a single object at the end of the stream, so no data should be lost.
-                    // The collapsing is done in a scheduled worker
-                    expirationTtl: 15 * 24 * 60 * 60
-                });
-            }
+            platform.context.waitUntil(async () => {
+                const kvEndTime = await history.get(getUTCDate(closestWAN) + ":showEnd");
+                const kvStartTime = await history.get(getUTCDate(closestWAN) + ":mainShowStart");
+                if(!kvEndTime && kvStartTime) {
+                    await history.put(getUTCDate(getClosestWan()) + ":showEnd", new Date().toISOString(), {
+                        // Expire this key after 15 days to save space over time.
+                        // It should be collapsed into a single object at the end of the stream, so no data should be lost.
+                        // The collapsing is done in a scheduled worker
+                        expirationTtl: 15 * 24 * 60 * 60
+                    });
+                }
+            });
             savedEndTime = true;
         }
     }
 
     if(!twitchJSON.message) {
         fastCache.lastFetchData = twitchJSON;
-        await cache.put("wheniswan:twitch:cache", JSON.stringify(fastCache))
+        platform.context.waitUntil(cache.put("wheniswan:twitch:cache", JSON.stringify(fastCache)))
     }
 
     let debug;
