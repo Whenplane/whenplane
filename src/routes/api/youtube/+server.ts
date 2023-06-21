@@ -57,7 +57,7 @@ export const GET = (async ({platform, fetch, url}) => {
     lastLive.lastCheck = Date.now();
 
     // We use the live path because it appears to be smaller than the main channel page
-    const pageData = await fetch("https://www.youtube.com/linustechtips/live").then(r => r.text());
+    const pageData = await fetch("https://www.youtube.com/linustechtips/streams").then(r => r.text());
 
     const isLive = pageData.includes("\"iconType\":\"LIVE\"");
 
