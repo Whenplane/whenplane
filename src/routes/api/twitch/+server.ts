@@ -133,22 +133,26 @@ export const GET = (async ({platform, url}) => {
     const twitchData = url.searchParams.has("short") ? undefined : twitchJSON;
     const started = isLive ? twitchJSON.data[0].started_at : undefined;
 
+    console.log({savedStartTime, started, isWAN})
     if(!savedStartTime && started && isWAN) {
         const closestWAN = getClosestWan();
         const distance = Math.abs(Date.now() - closestWAN.getTime())
+        console.log({distance})
         // Only record preshow start time if we are within 7 hours of the closest wan
         if(distance < 7 * 60 * 60 * 1000) {
-            platform.context.waitUntil(async () => {
+            console.log("waitUntil :)")
+            platform.context.waitUntil((async () => {
+                console.log("inside waitUnti")
                 const kvStartTime = await history.get(getUTCDate(closestWAN) + ":preShowStart");
                 if(!kvStartTime) {
-                    await history.put(getUTCDate(getClosestWan()) + ":preShowStart", started, {
+                    await history.put(getUTCDate(closestWAN) + ":preShowStart", started, {
                         // Expire this key after 15 days to save space over time.
                         // It should be collapsed into a single object at the end of the stream, so no data should be lost.
                         // The collapsing is done in a scheduled worker
                         expirationTtl: 15 * 24 * 60 * 60
                     });
                 }
-            })
+            })())
             savedStartTime = true;
         }
     }
@@ -158,7 +162,7 @@ export const GET = (async ({platform, url}) => {
         const distance = Date.now() - closestWAN.getTime()
         // Only record ending time if we are within 7 hours of the closest wan
         if(distance > 0 && distance < 7 * 60 * 60 * 1000) {
-            platform.context.waitUntil(async () => {
+            platform.context.waitUntil((async () => {
                 const kvEndTime = await history.get(getUTCDate(closestWAN) + ":showEnd");
                 const kvStartTime = await history.get(getUTCDate(closestWAN) + ":mainShowStart");
                 if(!kvEndTime && kvStartTime) {
@@ -169,7 +173,7 @@ export const GET = (async ({platform, url}) => {
                         expirationTtl: 15 * 24 * 60 * 60
                     });
                 }
-            });
+            })());
             savedEndTime = true;
         }
     }

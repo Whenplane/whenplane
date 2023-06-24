@@ -8,7 +8,7 @@ export function isBefore(a: Date, b: Date): boolean {
 export function getNextWAN(now = new Date(), buffer = true): Date {
     let wanDate = getLooseWAN(now);
 
-    console.debug("Loose WAN: ", wanDate.toJSDate().toString())
+    // console.debug("Loose WAN: ", wanDate.toJSDate().toString())
 
     while(wanDate.weekday !== 5 && !isNaN(wanDate.weekday)) {
         wanDate = wanDate.plus({days: 1});
@@ -16,14 +16,14 @@ export function getNextWAN(now = new Date(), buffer = true): Date {
 
     if(isNaN(wanDate.weekday)) throw new Error("Bad weekday from " + wanDate.toString())
 
-    console.debug("Day-fixed WAN: ", wanDate.toJSDate().toString())
+    // console.debug("Day-fixed WAN: ", wanDate.toJSDate().toString())
 
     // only say next week is next WAN 4 hours after WAN time
     if(isBefore(wanDate.toJSDate(), now) && (buffer ? now.getTime() - wanDate.toJSDate().getTime() > 4 * 60 * 60 * 1e3 : true)) {
         wanDate = wanDate.plus({days: 7});
     }
 
-    console.debug("After-fixed WAN: ", wanDate.toJSDate().toString())
+    // console.debug("After-fixed WAN: ", wanDate.toJSDate().toString())
 
     return wanDate.toJSDate();
 }
@@ -50,7 +50,7 @@ function getLooseWAN(now = new Date()) {
         month -= 1;
         day = daysInMonth(now.getFullYear(), month) + day;
     }
-    console.debug({getLooseWANDebug: {now, month, day}})
+    // console.debug({getLooseWANDebug: {now, month, day}})
     const wanDate = DateTime.fromObject(
         {
             year: now.getFullYear(),
@@ -63,7 +63,7 @@ function getLooseWAN(now = new Date()) {
         }
         );
 
-    console.log({looseWan: wanDate});
+    // console.log({looseWan: wanDate});
     return wanDate;
 }
 

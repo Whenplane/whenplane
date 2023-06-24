@@ -127,7 +127,7 @@ export const GET = (async ({platform, fetch, url}) => {
         const distance = Math.abs(Date.now() - closestWAN.getTime())
         // Only record preshow start time if we are within 7 hours of the closest wan
         if(distance < 7 * 60 * 60 * 1000) {
-            platform.context.waitUntil(async () => {
+            platform.context.waitUntil((async () => {
                 const kvStartTime = await history.get(getUTCDate(closestWAN) + ":mainShowStart");
                 if(!kvStartTime) {
                     await history.put(getUTCDate(getClosestWan()) + ":mainShowStart", started, {
@@ -137,7 +137,7 @@ export const GET = (async ({platform, fetch, url}) => {
                         expirationTtl: 15 * 24 * 60 * 60
                     });
                 }
-            });
+            })());
             savedStartTime = true;
         }
     }
