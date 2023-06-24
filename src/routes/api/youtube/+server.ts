@@ -104,9 +104,17 @@ export const GET = (async ({platform, fetch, url}) => {
         "&key=" + env.YOUTUBE_KEY
     ).then(r => r.json());
 
+    const items = liveData?.items;
+    if(!items || items.length < 1) {
+        console.error("No items in ", liveData);
+    }
+    const videoId = liveData?.items[0].id?.videoId;
+    if(!videoId) console.error("No id in ", liveData)
+
+
     const specificData = await fetch("https://www.googleapis.com/youtube/v3/videos" +
         "?part=liveStreamingDetails" +
-        "&id=" + liveData.items[0].id.videoId +
+        "&id=" + videoId +
         "&maxResults=1" +
         "&order=date" +
         "&type=video" +
