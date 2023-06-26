@@ -21,7 +21,7 @@ export const GET = (async ({platform, params}) => {
 
     while(!list_complete) {
         const list: KVListResponse = await history.list({
-            prefix: year+"",
+            prefix: year == "all" ? undefined : year+"",
             cursor
         })
 
