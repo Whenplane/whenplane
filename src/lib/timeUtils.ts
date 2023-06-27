@@ -112,7 +112,8 @@ export function getTimeUntil(date: Date, now = Date.now()) {
 
     return {
         string: daysS + hoursS + minutesS + secondsS,
-        late
+        late,
+        distance
     };
 }
 
