@@ -1,6 +1,9 @@
 lockfileVersion: '6.0'
 
 dependencies:
+  '@dimfeld/svelte-lazyload':
+    specifier: ^0.0.4
+    version: 0.0.4
   '@floating-ui/dom':
     specifier: ^1.2.7
     version: 1.2.7
@@ -92,6 +95,10 @@ packages:
   /@cloudflare/workers-types@4.20230419.0:
     resolution: {integrity: sha512-MfNBlHrI/ekRkbLtdAo23D4hkXF+3QD92OCwuXxCUK73HtMHuBqkMp9T/8KFbKNRCnz7PzUderc7Jr5m3eeW3g==}
     dev: true
+
+  /@dimfeld/svelte-lazyload@0.0.4:
+    resolution: {integrity: sha512-S5yxQeegZivmBx2SounQT/9mucFKhcUQLGBd7r0vqYf0ohomrbVR6n0o36r3a3sQy9GgLRdd0UarzRBSdslPyA==}
+    dev: false
 
   /@esbuild/android-arm64@0.17.18:
     resolution: {integrity: sha512-/iq0aK0eeHgSC3z55ucMAHO05OIqmQehiGay8eP5l/5l+iEr4EIbh4/MI8xD9qRFjqzgkc0JkX0LculNC9mXBw==}

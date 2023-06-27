@@ -41,6 +41,7 @@
 	"type": "module",
 	"dependencies": {
 		"@floating-ui/dom": "^1.2.7",
+		"@dimfeld/svelte-lazyload": "^0.0.4",
 		"luxon": "^3.3.0"
 	}
 }
