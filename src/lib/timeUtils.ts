@@ -100,6 +100,17 @@ export function getTimeUntil(date: Date, now = Date.now()) {
         late = true;
         distance = Math.abs(distance)
     }
+
+    const string = timeString(distance);
+
+    return {
+        string,
+        late,
+        distance
+    };
+}
+
+export function timeString(distance: number) {
     const days = Math.floor(distance / (1000 * 60 * 60 * 24));
     const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
     const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
@@ -110,11 +121,7 @@ export function getTimeUntil(date: Date, now = Date.now()) {
     const minutesS = minutes > 0 ? minutes+"m " : "";
     const secondsS = seconds+"s ";
 
-    return {
-        string: daysS + hoursS + minutesS + secondsS,
-        late,
-        distance
-    };
+    return daysS + hoursS + minutesS + secondsS;
 }
 
 const daysInMonth = (year: number, month: number) => new Date(year, month, 0).getDate();

@@ -19,7 +19,7 @@
 
 
     setTimeout(() => {
-        setInterval(newPhrase, 30e3);
+        setInterval(newPhrase, 45e3);
         newPhrase();
     }, 15e3);
 

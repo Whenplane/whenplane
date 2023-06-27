@@ -34,8 +34,8 @@ async function putRecords(meta: KVNamespace) {
     const prodData = await fetch("https://wheniswan.pages.dev/api/history/records")
         .then(r => r.json());
 
-    await meta.put("closest", prodData.closest);
-    await meta.put("longestPreShow", prodData.longestPreShow);
-    await meta.put("longestShow", prodData.longestShow);
-    await meta.put("mostLate", prodData.mostLate);
+    await meta.put("closest", JSON.stringify(prodData.closest));
+    await meta.put("longestPreShow", JSON.stringify(prodData.longestPreShow));
+    await meta.put("longestShow", JSON.stringify(prodData.longestShow));
+    await meta.put("mostLate", JSON.stringify(prodData.mostLate));
 }
