@@ -147,7 +147,7 @@ export const history: HistoricalEntry[] = [
 
 
 
-type HistoricalEntry = {
+export type HistoricalEntry = {
     name: string,
     metadata: {
         preShowStart: string,

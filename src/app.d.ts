@@ -9,6 +9,7 @@ declare namespace App {
         env?: {
             CACHE: KVNamespace;
             HISTORY: KVNamespace;
+            META: KVNamespace;
         },
         context?: {
             /**
@@ -31,3 +32,8 @@ type KVListResponse = {
     list_complete: boolean,
     cursor: string
 }
+
+type BestShow = {
+    name: string,
+    distance: number
+} | undefined;
