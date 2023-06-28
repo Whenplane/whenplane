@@ -73,7 +73,7 @@
     <div class="card text-left mx-auto">
         <pre>
             &#123;
-                name: "{jsDateDate.getUTCFullYear()}/{jsDateDate.getUTCMonth() + 1}/{jsDateDate.getUTCDate()}",
+                name: "{dateDate.year}/{dateDate.month}/{dateDate.day}",
                 metadata: &#123;
                     preShowStart: "{startsAt?.toUTC().toISO()}",
                     mainShowStart: "{preEndsAt?.toUTC().toISO()}",
