@@ -2,7 +2,9 @@
 // for information about these interfaces
 // and what to do when importing types
 declare namespace App {
-	// interface Locals {}
+	interface Locals {
+        addTiming: (timing: TimingEntry) => void
+    }
 	// interface PageData {}
 	// interface Error {}
     interface Platform {
@@ -37,3 +39,9 @@ type BestShow = {
     name: string,
     distance: number
 } | undefined;
+
+type TimingEntry = {
+    id: string,
+    duration: number,
+    description?: string
+}
