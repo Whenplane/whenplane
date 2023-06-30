@@ -194,9 +194,9 @@ export const history: HistoricalEntry[] = [
     {
         name: "2022/11/11",
         metadata: {
-            preShowStart: "2022-11-13T00:44:19.000Z",
-            mainShowStart: "2022-11-13T01:15:19.000Z",
-            showEnd: "2022-11-13T03:32:43.000Z"
+            preShowStart: "2022-11-12T00:44:19.000Z",
+            mainShowStart: "2022-11-12T01:15:19.000Z",
+            showEnd: "2022-11-12T03:32:43.000Z"
         }
     },
     {
