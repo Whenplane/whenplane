@@ -16,7 +16,7 @@
                 <Late/>
             {/if}
             {#if early}
-                early!
+                early
             {/if}
         </span>
         <br>
