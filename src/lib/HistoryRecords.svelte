@@ -4,13 +4,10 @@
 
     export let records;
 
-    let closest: BestShow = records.closest;
+    let closest: BestShowTime = records.closest;
     let mostLate: BestShow = records.mostLate;
     let longestPreShow: BestShow = records.longestPreShow;
     let longestShow: BestShow = records.longestShow;
-
-    if(closest) closest.distance = Math.abs(closest.distance);
-
 
 </script>
 <div class="p-1">

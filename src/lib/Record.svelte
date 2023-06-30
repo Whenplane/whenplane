@@ -11,7 +11,7 @@
     <h3><slot/></h3>
     {#if record}
         <span class:late={late} class:early={early}>
-            {timeString(record.distance)}
+            {timeString(Math.abs(record.distance))}
             {#if late}
                 <Late/>
             {/if}

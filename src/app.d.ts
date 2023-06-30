@@ -39,6 +39,12 @@ type BestShow = {
     name: string,
     distance: number
 } | undefined;
+type BestShowTime = {
+    name: string,
+    distance: number,
+    time: number
+} | undefined;
+
 
 type TimingEntry = {
     id: string,
