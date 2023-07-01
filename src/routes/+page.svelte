@@ -1,11 +1,12 @@
 <script lang="ts">
 	import {getNextWAN} from "$lib/timeUtils";
-	import ShowCountdown from "$lib/ShowCountdown.svelte";
+	import ShowCountdown, {mainLate} from "$lib/ShowCountdown.svelte";
 	import StreamStatus from "$lib/StreamStatus.svelte";
 	import {browser} from "$app/environment";
 	import {invalidateAll} from "$app/navigation";
 	import {onMount} from "svelte";
 	import Late from "../lib/Late.svelte";
+	import type {Writable} from "svelte/store";
 
 	export let data;
 
@@ -13,6 +14,10 @@
 	let isLate: boolean | undefined;
 
 	$: isLate = isAfterStartTime && !data.isPreShow && !data.isMainShow;
+
+	(mainLate as Writable<never>).subscribe((v) => {
+		console.log(v);
+	});
 
 
 	let invalidationInterval: number | undefined;
@@ -72,6 +77,14 @@
 				<h1 class="text-center" class:red={isLate}>
 					<ShowCountdown bind:isAfterStartTime={isAfterStartTime} {data}/>
 				</h1>
+				{#if $mainLate.isMainLate}
+					<div class="text-center">
+						The main show is late by
+						<span class="mono">
+							{$mainLate.string}
+						</span>
+					</div>
+				{/if}
 				{#if !isAfterStartTime}
 					Next WAN:
 					{#if browser} <!-- dont SSR next wan date, as server timezone and locale is probably different than the users' -->
@@ -113,5 +126,8 @@
 	}
 	.red {
 		color: red;
+	}
+	.mono {
+		font-family: monospace;
 	}
 </style>
