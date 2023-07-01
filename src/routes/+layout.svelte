@@ -12,4 +12,8 @@
     storePopup.set({ computePosition, autoUpdate, flip, shift, offset, arrow });
 </script>
 
+<svelte:head>
+    <meta name="description" content="When is WAN? Who knows! At least you can look at when it started before..">
+</svelte:head>
+
 <slot />
