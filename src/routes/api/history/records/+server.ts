@@ -9,7 +9,8 @@ const cacheTtl = 60 * 60 * 2;
 export const GET = (async ({platform, locals}) => {
     const meta = platform?.env?.META;
     if(!meta) throw error(503, "KV not available!");
-    const times: {[key: string]: number} = {};
+
+    const totalStart = Date.now();
 
     const closest = await (async () => {
         const start = Date.now();
@@ -43,10 +44,12 @@ export const GET = (async ({platform, locals}) => {
         return r;
     })();
 
-    return json({
+    const r = {
         closest: await closest,
         longestPreShow: await longestPreShow,
         longestShow: await longestShow,
         mostLate: await mostLate
-    })
+    };
+    locals.addTiming({id: "total", duration: Date.now() - totalStart});
+    return json(r)
 }) satisfies RequestHandler;
