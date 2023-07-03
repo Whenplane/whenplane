@@ -64,7 +64,7 @@
                     Longest pre-show
                 </LoadingRecord>
             {:then record}
-                <Record {record} late={true}>
+                <Record {record}>
                     Longest pre-show
                 </Record>
             {/await}
@@ -73,7 +73,7 @@
                     Longest main show
                 </LoadingRecord>
             {:then record}
-                <Record {record} late={true}>
+                <Record {record}>
                     Longest main show
                 </Record>
             {/await}
