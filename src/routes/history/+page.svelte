@@ -3,8 +3,12 @@
     import OldHistory from "$lib/OldHistory.svelte";
     import {dev} from "$app/environment";
     import HistoryRecords from "$lib/HistoryRecords.svelte";
+    import Record from "$lib/Record.svelte";
+    import LoadingRecord from "$lib/LoadingRecord.svelte";
 
     export let data;
+
+    console.log({data})
 
 </script>
 <svelte:head>
@@ -14,7 +18,7 @@
 <div class="text-center">
     <h1 class="text-center">WAN Show History</h1>
 
-    <HistoryRecords records={data.history.records}/>
+    <HistoryRecords {data}/>
 
     <br>
 

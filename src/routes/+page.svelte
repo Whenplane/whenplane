@@ -66,7 +66,6 @@
 			<div class="card p-4 inline-block countdown-box text-left">
 				{#if isLate}
 					The WAN show is currently <span class="red"><Late/></span> by
-
 				{:else if data.mainShowStarted}
 					The WAN show has been live for
 				{:else if data.preShowStarted}
@@ -74,6 +73,7 @@
 				{:else}
 					The WAN show is (supposed) to start in
 				{/if}
+
 				<h1 class="text-center" class:red={isLate}>
 					<ShowCountdown bind:isAfterStartTime={isAfterStartTime} {data}/>
 				</h1>
@@ -85,6 +85,7 @@
 						</span>
 					</div>
 				{/if}
+
 				{#if !isAfterStartTime}
 					Next WAN:
 					{#if browser} <!-- dont SSR next wan date, as server timezone and locale is probably different than the users' -->

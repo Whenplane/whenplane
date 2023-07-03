@@ -5,6 +5,8 @@
     export let record: BestShow;
     export let late = false;
     export let early = false;
+
+    export let loading = false;
 </script>
 
 <div class="box">
@@ -23,6 +25,9 @@
         <span class="small">
             {getClosestWan(new Date(record.name)).toLocaleDateString()}
         </span>
+    {:else if loading}
+        <span class="placeholder animate-pulse inline-block w-48"></span>
+        <span class="small placeholder animate-pulse inline-block w-32"></span>
     {:else}
         <span class="opacity-50">N/A</span>
     {/if}
@@ -43,5 +48,9 @@
     }
     .early {
         color: green;
+    }
+
+    .placeholder {
+        height: 1.25em !important;
     }
 </style>
