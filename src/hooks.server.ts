@@ -17,8 +17,12 @@ export const handle: Handle = async ({ event, resolve }) => {
     let id = event.cookies.get("id");
     if(!id) {
         id = crypto.randomUUID();
+        const expires = new Date();
+        expires.setDate(expires.getDate() + 30);
+
         event.cookies.set("id", id, {
-            path: "/"
+            path: "/",
+            expires
         });
     }
 
