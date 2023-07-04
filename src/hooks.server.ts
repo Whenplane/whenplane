@@ -17,7 +17,9 @@ export const handle: Handle = async ({ event, resolve }) => {
     let id = event.cookies.get("id");
     if(!id) {
         id = crypto.randomUUID();
-        event.cookies.set("id", id);
+        event.cookies.set("id", id, {
+            path: "/"
+        });
     }
 
     const response = await resolve(event);
