@@ -14,6 +14,12 @@ export const handle: Handle = async ({ event, resolve }) => {
         timings.push(timing)
     }
 
+    let id = event.cookies.get("id");
+    if(!id) {
+        id = crypto.randomUUID();
+        event.cookies.set("id", id);
+    }
+
     const response = await resolve(event);
 
     if(timings.length > 0) {
@@ -35,6 +41,25 @@ export const handle: Handle = async ({ event, resolve }) => {
         }
 
         response.headers.append("Server-Timing", timingStrings.join(","));
+    }
+
+    if(event.platform?.context?.waitUntil) {
+        const data = {
+            site: "wheniswan",
+            ua: event.request.headers.get("User-Agent"),
+            url: event.url,
+            id
+        };
+        if(!dev) {
+            event.platform.context.waitUntil(
+                fetch("https://stats.ajg0702.us/report", {
+                    method: "POST",
+                    body: JSON.stringify(data)
+                })
+            );
+        } else {
+            console.log({data});
+        }
     }
 
     return response;
