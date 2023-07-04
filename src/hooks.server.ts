@@ -1,6 +1,8 @@
 import type {Handle} from "@sveltejs/kit";
 import {dev} from "$app/environment";
 
+const reportedIds: {[key: string]: number} = {};
+
 export const handle: Handle = async ({ event, resolve }) => {
     // KV in dev
     if (dev) {
@@ -58,10 +60,14 @@ export const handle: Handle = async ({ event, resolve }) => {
         };
         if(!dev) {
             event.platform.context.waitUntil(
-                fetch("https://stats.ajg0702.us/report", {
-                    method: "POST",
-                    body: JSON.stringify(data)
-                })
+                (async () => {
+                    if(reportedIds[id] && reportedIds[id] > Date.now() - (1000 * 60)) return;
+                    reportedIds[id] = Date.now();
+                    await fetch("https://stats.ajg0702.us/report", {
+                        method: "POST",
+                        body: JSON.stringify(data)
+                    })
+                })()
             );
         } else {
             console.log({data});
