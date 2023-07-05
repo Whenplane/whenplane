@@ -59,7 +59,7 @@ export const handle: Handle = async ({ event, resolve }) => {
             id
         };
         if(!data.ua) {
-            console.log({headers: event.request.headers})
+            console.log({headers: event.request.headers.keys()})
         }
         if(!dev) {
             event.platform.context.waitUntil(
