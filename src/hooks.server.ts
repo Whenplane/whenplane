@@ -5,6 +5,7 @@ const reportedIds: {[key: string]: number} = {};
 
 export const handle: Handle = async ({ event, resolve }) => {
 
+
     let id = event.cookies.get("id");
     if(!id) {
         id = crypto.randomUUID();
@@ -59,7 +60,8 @@ export const handle: Handle = async ({ event, resolve }) => {
         response.headers.append("Server-Timing", timingStrings.join(","));
     }
 
-    if(event.platform?.context?.waitUntil) {
+    // don't try reporting if we don't have access to waitUntil, or if the request isnt from the browser
+    if(event.platform?.context?.waitUntil && event.request.headers.get("host")) {
         if(!dev && report_data.ua) {
             event.platform.context.waitUntil(
                 (async () => {
