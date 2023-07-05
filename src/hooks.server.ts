@@ -60,7 +60,7 @@ export const handle: Handle = async ({ event, resolve }) => {
     }
 
     if(event.platform?.context?.waitUntil) {
-        if(!dev) {
+        if(!dev && report_data.ua) {
             event.platform.context.waitUntil(
                 (async () => {
                     if(reportedIds[id] && reportedIds[id] + (1000 * 60) > Date.now()) return;
@@ -71,6 +71,8 @@ export const handle: Handle = async ({ event, resolve }) => {
                     })
                 })()
             );
+        } else if(!report_data.ua) {
+            console.warn("UA is falsy! ", report_data)
         }
     }
 
