@@ -5,7 +5,24 @@ const reportedIds: {[key: string]: number} = {};
 
 export const handle: Handle = async ({ event, resolve }) => {
 
-    console.log({headers: Object.fromEntries(event.request.headers)})
+    let id = event.cookies.get("id");
+    if(!id) {
+        id = crypto.randomUUID();
+        const expires = new Date();
+        expires.setDate(expires.getDate() + 30);
+
+        event.cookies.set("id", id, {
+            path: "/",
+            expires
+        });
+    }
+
+    const report_data = {
+        site: "wheniswan",
+        ua: event.request.headers.get("User-Agent"),
+        url: event.url,
+        id
+    };
 
     // KV in dev
     if (dev) {
@@ -17,18 +34,6 @@ export const handle: Handle = async ({ event, resolve }) => {
 
     event.locals.addTiming = (timing: TimingEntry) => {
         timings.push(timing)
-    }
-
-    let id = event.cookies.get("id");
-    if(!id) {
-        id = crypto.randomUUID();
-        const expires = new Date();
-        expires.setDate(expires.getDate() + 30);
-
-        event.cookies.set("id", id, {
-            path: "/",
-            expires
-        });
     }
 
     const response = await resolve(event);
@@ -55,12 +60,6 @@ export const handle: Handle = async ({ event, resolve }) => {
     }
 
     if(event.platform?.context?.waitUntil) {
-        const data = {
-            site: "wheniswan",
-            ua: event.request.headers.get("User-Agent"),
-            url: event.url,
-            id
-        };
         if(!dev) {
             event.platform.context.waitUntil(
                 (async () => {
@@ -68,7 +67,7 @@ export const handle: Handle = async ({ event, resolve }) => {
                     reportedIds[id] = Date.now();
                     await fetch("https://stats.ajg0702.us/report", {
                         method: "POST",
-                        body: JSON.stringify(data)
+                        body: JSON.stringify(report_data)
                     })
                 })()
             );
