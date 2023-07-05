@@ -4,6 +4,9 @@ import {dev} from "$app/environment";
 const reportedIds: {[key: string]: number} = {};
 
 export const handle: Handle = async ({ event, resolve }) => {
+
+    console.log({headers: Object.fromEntries(event.request.headers)})
+
     // KV in dev
     if (dev) {
         const { fallBackPlatformToMiniFlareInDev } = await import('$lib/server/clients/miniflare');
@@ -58,9 +61,6 @@ export const handle: Handle = async ({ event, resolve }) => {
             url: event.url,
             id
         };
-        if(!data.ua) {
-            console.log({headers: Object.fromEntries(event.request.headers)})
-        }
         if(!dev) {
             event.platform.context.waitUntil(
                 (async () => {
