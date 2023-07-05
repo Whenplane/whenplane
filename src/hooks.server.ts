@@ -19,7 +19,7 @@ export const handle: Handle = async ({ event, resolve }) => {
 
     const report_data = {
         site: "wheniswan",
-        ua: event.request.headers.get("User-Agent"),
+        ua: event.request.headers.get("user-agent"),
         url: event.url,
         id
     };
