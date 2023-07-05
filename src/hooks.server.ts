@@ -58,6 +58,7 @@ export const handle: Handle = async ({ event, resolve }) => {
             url: event.url,
             id
         };
+        console.log({data});
         if(!dev) {
             event.platform.context.waitUntil(
                 (async () => {
