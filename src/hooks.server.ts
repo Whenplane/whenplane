@@ -61,7 +61,7 @@ export const handle: Handle = async ({ event, resolve }) => {
         if(!dev) {
             event.platform.context.waitUntil(
                 (async () => {
-                    if(reportedIds[id] && reportedIds[id] > Date.now() - (1000 * 60)) return;
+                    if(reportedIds[id] && reportedIds[id] + (1000 * 60) > Date.now()) return;
                     reportedIds[id] = Date.now();
                     await fetch("https://stats.ajg0702.us/report", {
                         method: "POST",
@@ -69,8 +69,6 @@ export const handle: Handle = async ({ event, resolve }) => {
                     })
                 })()
             );
-        } else {
-            console.log({data});
         }
     }
 
