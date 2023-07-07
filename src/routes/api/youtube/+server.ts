@@ -7,14 +7,16 @@ import {getClosestWan, getUTCDate} from "$lib/timeUtils";
 const scrapeCacheTime = 5000;
 const apiCacheTime = dev ? 60 * 60e3 : 30 * 60e3; // 30 minutes (1 hour on dev)
 
-let lastLive = {
+let scrapeCache = {
     lastCheck: 0,
+    liveCount: 0,
     isLive: false,
 }
 
-// is KV enforced because workers basically never last more than 10 minutes
-let liveTitle: {
+// is KV enforced because workers might not last the full cache time
+let apiCache: {
     lastCheck: number,
+    liveCount?: number,
     isWAN: boolean,
     started?: string
 } = {
@@ -33,37 +35,39 @@ export const GET = (async ({platform, fetch, url}) => {
     if(!platform?.context) throw error(503, "Request context not available!");
 
 
-    if(Date.now() - lastLive.lastCheck < scrapeCacheTime) {
+    if(Date.now() - scrapeCache.lastCheck < scrapeCacheTime) {
         const newLiveData = await cache.get("wheniswan:youtube:live", {type: "json"})
         if(newLiveData) {
-            lastLive = newLiveData;
+            scrapeCache = newLiveData;
         }
     }
 
     const fast = url.searchParams.get("fast") === "true";
 
     // With the fast flag (added for initial page load requests), always fetch cached data if its from within the past 5 hours
-    if(Date.now() - lastLive.lastCheck < scrapeCacheTime || (fast && Date.now() - lastLive.lastCheck < 5 * 60 * 60e3)) {
+    if(Date.now() - scrapeCache.lastCheck < scrapeCacheTime || (fast && Date.now() - scrapeCache.lastCheck < 5 * 60 * 60e3)) {
         return json({
             cached: true,
             cachedTitle: false,
-            lastFetch: lastLive.lastCheck,
-            isLive: lastLive.isLive,
-            isWAN: lastLive.isLive && liveTitle.isWAN,
-            started: lastLive.isLive ? liveTitle.started : undefined
+            lastFetch: scrapeCache.lastCheck,
+            isLive: scrapeCache.isLive,
+            isWAN: scrapeCache.isLive && apiCache.isWAN,
+            started: scrapeCache.isLive ? apiCache.started : undefined
         })
     }
 
-    lastLive.lastCheck = Date.now();
+    scrapeCache.lastCheck = Date.now();
 
     // We use the live path because it appears to be smaller than the main channel page
     const pageData = await fetch("https://www.youtube.com/linustechtips/streams").then(r => r.text());
 
-    const isLive = pageData.includes("\"iconType\":\"LIVE\"");
+    const liveCount = (pageData.match(/"iconType":"LIVE"/g) || []).length
+    const isLive = liveCount > 0;
 
-    lastLive.isLive = isLive;
+    scrapeCache.liveCount = liveCount;
+    scrapeCache.isLive = isLive;
 
-    platform.context.waitUntil(cache.put("wheniswan:youtube:live", JSON.stringify(lastLive)));
+    platform.context.waitUntil(cache.put("wheniswan:youtube:live", JSON.stringify(scrapeCache)));
 
     if(!isLive) {
         savedStartTime = false;
@@ -73,25 +77,25 @@ export const GET = (async ({platform, fetch, url}) => {
         })
     }
 
-    if(Date.now() - liveTitle.lastCheck < apiCacheTime) {
+    if(Date.now() - apiCache.lastCheck < apiCacheTime && scrapeCache.liveCount == (apiCache.liveCount || 0)) {
         const newTitleData = await cache.get("wheniswan:youtube:title", {type: "json"})
         if(newTitleData) {
-            liveTitle = newTitleData;
+            apiCache = newTitleData;
         }
     }
 
-    if(Date.now() - liveTitle.lastCheck < apiCacheTime) {
+    if(Date.now() - apiCache.lastCheck < apiCacheTime && scrapeCache.liveCount == (apiCache.liveCount || 0)) {
         return json({
             cached: true,
             cachedTitle: true,
-            lastFetch: liveTitle.lastCheck,
+            lastFetch: apiCache.lastCheck,
             isLive,
-            isWAN: liveTitle.isWAN,
-            started: liveTitle.started
+            isWAN: apiCache.isWAN,
+            started: apiCache.started
         })
     }
 
-    liveTitle.lastCheck = Date.now();
+    apiCache.lastCheck = Date.now();
 
     const liveData = await fetch(
         "https://www.googleapis.com/youtube/v3/search" +
@@ -109,6 +113,8 @@ export const GET = (async ({platform, fetch, url}) => {
         console.error("No items in ", liveData);
     }
 
+    apiCache.liveCount = items.length;
+
     let isWAN;
     let videoId;
 
@@ -121,8 +127,8 @@ export const GET = (async ({platform, fetch, url}) => {
     if(!videoId) console.error("No id in ", liveData)
 
     if(liveData.items.length == 0) {
-        lastLive.lastCheck = Date.now();
-        lastLive.isLive = false;
+        scrapeCache.lastCheck = Date.now();
+        scrapeCache.isLive = false;
     }
 
     const specificData = await fetch("https://www.googleapis.com/youtube/v3/videos" +
@@ -157,10 +163,10 @@ export const GET = (async ({platform, fetch, url}) => {
         }
     }
 
-    liveTitle.isWAN = isWAN;
-    liveTitle.started = started;
+    apiCache.isWAN = isWAN;
+    apiCache.started = started;
 
-    platform.context.waitUntil(cache.put("wheniswan:youtube:title", JSON.stringify(liveTitle)));
+    platform.context.waitUntil(cache.put("wheniswan:youtube:title", JSON.stringify(apiCache)));
 
     return json({
         isLive,
