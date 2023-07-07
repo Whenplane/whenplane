@@ -5,7 +5,7 @@ import {dev} from "$app/environment";
 import {getClosestWan, getUTCDate} from "$lib/timeUtils";
 
 const scrapeCacheTime = 5000;
-const apiCacheTime = dev ? 30 * 60e3 : 10 * 60e3; // 10 minutes (30 minutes on dev)
+const apiCacheTime = dev ? 60 * 60e3 : 30 * 60e3; // 30 minutes (1 hour on dev)
 
 let lastLive = {
     lastCheck: 0,
@@ -108,9 +108,22 @@ export const GET = (async ({platform, fetch, url}) => {
     if(!items || items.length < 1) {
         console.error("No items in ", liveData);
     }
-    const videoId = liveData?.items[0].id?.videoId;
+
+    let isWAN;
+    let videoId;
+
+    for (const item of items) {
+        isWAN = item.snippet.title.includes("WAN");
+        videoId = item.id?.videoId
+        if(isWAN) break;
+    }
+
     if(!videoId) console.error("No id in ", liveData)
 
+    if(liveData.items.length == 0) {
+        lastLive.lastCheck = Date.now();
+        lastLive.isLive = false;
+    }
 
     const specificData = await fetch("https://www.googleapis.com/youtube/v3/videos" +
         "?part=liveStreamingDetails" +
@@ -122,12 +135,6 @@ export const GET = (async ({platform, fetch, url}) => {
         "&key=" + env.YOUTUBE_KEY
     ).then(r => r.json())
 
-    if(liveData.items.length == 0) {
-        lastLive.lastCheck = Date.now();
-        lastLive.isLive = false;
-    }
-
-    const isWAN = liveData.items[0].snippet.title.includes("WAN");
     const started = specificData.items[0].liveStreamingDetails.actualStartTime;
 
     if(!savedStartTime && isWAN) {
