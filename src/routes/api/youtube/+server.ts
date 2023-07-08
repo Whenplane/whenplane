@@ -82,6 +82,12 @@ export const GET = (async ({platform, fetch, url}) => {
             started: "2023-07-08T02:10:30Z"
         })
     }
+    if(liveCount == 1) {
+        return json({
+            isLive: true,
+            isWAN: false,
+        })
+    }
 
     if(!isLive) {
         savedStartTime = false;
