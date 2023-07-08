@@ -77,14 +77,14 @@ export const GET = (async ({platform, fetch, url}) => {
         })
     }
 
-    if(Date.now() - apiCache.lastCheck < apiCacheTime && scrapeCache.liveCount == (apiCache.liveCount || 0)) {
+    if(Date.now() - apiCache.lastCheck < apiCacheTime && scrapeCache.liveCount == (apiCache.liveCount || scrapeCache.liveCount)) {
         const newTitleData = await cache.get("wheniswan:youtube:title", {type: "json"})
         if(newTitleData) {
             apiCache = newTitleData;
         }
     }
 
-    if(Date.now() - apiCache.lastCheck < apiCacheTime && scrapeCache.liveCount == (apiCache.liveCount || 0)) {
+    if(Date.now() - apiCache.lastCheck < apiCacheTime && scrapeCache.liveCount == (apiCache.liveCount || scrapeCache.liveCount)) {
         return json({
             cached: true,
             cachedTitle: true,
@@ -95,7 +95,7 @@ export const GET = (async ({platform, fetch, url}) => {
         })
     }
 
-    if(scrapeCache.liveCount != (apiCache.liveCount || 0) && !dev) {
+    if(scrapeCache.liveCount != (apiCache.liveCount || scrapeCache.liveCount) && !dev) {
         platform.context.waitUntil(
             fetch(
                 "https://discord.com/api/webhooks/1127049810130767872/whyw4qbC3UR3iPxIlmITuXBdpBitfVCk-vSpANp6Pt74m0vr40wrwlKGFf2_6_mRv2lI",
@@ -122,7 +122,7 @@ export const GET = (async ({platform, fetch, url}) => {
         "&order=date" +
         "&type=video" +
         "&eventType=live" +
-        "&key=" + (env.YOUTUBE_KEY_2 ?? env.YOUTUBE_KEY)
+        "&key=" + (env.YOUTUBE_KEY_3 ?? env.YOUTUBE_KEY_2 ?? env.YOUTUBE_KEY)
     ).then(r => r.json());
 
     const items = liveData?.items;
@@ -155,7 +155,7 @@ export const GET = (async ({platform, fetch, url}) => {
         "&order=date" +
         "&type=video" +
         "&eventType=live" +
-        "&key=" + env.YOUTUBE_KEY
+        "&key=" + (env.YOUTUBE_KEY_3 ?? env.YOUTUBE_KEY_2 ?? env.YOUTUBE_KEY)
     ).then(r => r.json())
 
     const started = specificData.items[0].liveStreamingDetails.actualStartTime;
