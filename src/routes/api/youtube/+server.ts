@@ -105,7 +105,7 @@ export const GET = (async ({platform, fetch, url}) => {
         "&order=date" +
         "&type=video" +
         "&eventType=live" +
-        "&key=" + env.YOUTUBE_KEY
+        "&key=" + (env.YOUTUBE_KEY_2 ?? env.YOUTUBE_KEY)
     ).then(r => r.json());
 
     const items = liveData?.items;
