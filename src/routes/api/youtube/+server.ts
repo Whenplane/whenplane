@@ -95,6 +95,23 @@ export const GET = (async ({platform, fetch, url}) => {
         })
     }
 
+    if(scrapeCache.liveCount != (apiCache.liveCount || 0) && !dev) {
+        platform.context.waitUntil(
+            fetch(
+                "https://discord.com/api/webhooks/1127049810130767872/whyw4qbC3UR3iPxIlmITuXBdpBitfVCk-vSpANp6Pt74m0vr40wrwlKGFf2_6_mRv2lI",
+                {
+                    method: "POST",
+                    body: JSON.stringify({
+                        message: "liveCount difference: " + scrapeCache.liveCount + " - " + apiCache.liveCount
+                    }),
+                    headers: {
+                        "content-type": "application/json"
+                    }
+                }
+            )
+        )
+    }
+
     apiCache.lastCheck = Date.now();
 
     const liveData = await fetch(
