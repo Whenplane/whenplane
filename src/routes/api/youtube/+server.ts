@@ -44,6 +44,8 @@ export const GET = (async ({platform, fetch, url}) => {
 
     const fast = url.searchParams.get("fast") === "true";
 
+    const now = new Date();
+
     // With the fast flag (added for initial page load requests), always fetch cached data if its from within the past 5 hours
     if(Date.now() - scrapeCache.lastCheck < scrapeCacheTime || (fast && Date.now() - scrapeCache.lastCheck < 5 * 60 * 60e3)) {
         return json({
@@ -51,8 +53,8 @@ export const GET = (async ({platform, fetch, url}) => {
             cachedTitle: false,
             lastFetch: scrapeCache.lastCheck,
             isLive: scrapeCache.isLive,
-            isWAN: scrapeCache.isLive && apiCache.isWAN,
-            started: scrapeCache.isLive ? apiCache.started : undefined
+            isWAN: (now.getUTCDate() == 8 && scrapeCache.liveCount > 1) ? true : (scrapeCache.isLive && apiCache.isWAN),
+            started: (now.getUTCDate() == 8 && scrapeCache.liveCount > 1) ? "2023-07-08T02:10:30Z" : (scrapeCache.isLive ? apiCache.started : undefined)
         })
     }
 
@@ -69,8 +71,9 @@ export const GET = (async ({platform, fetch, url}) => {
 
     platform.context.waitUntil(cache.put("wheniswan:youtube:live", JSON.stringify(scrapeCache)));
 
+    console.log({liveCount})
+
     // temporary
-    const now = new Date();
     if(now.getUTCDate() == 8 && liveCount > 1) {
         console.log("!!!!!! temporary wan live !!!!!!")
         return json({
