@@ -77,6 +77,19 @@ export const GET = (async ({platform, fetch, url}) => {
         })
     }
 
+    console.log({liveCount});
+
+    // temporary
+    const now = new Date();
+    if(now.getUTCDate() == 8 && liveCount > 1) {
+        console.log("!!!!!! temporary wan live !!!!!!")
+        return json({
+            isLive: true,
+            isWAN: true,
+            started: "2023-07-08T02:10:30Z"
+        })
+    }
+
     if(Date.now() - apiCache.lastCheck < apiCacheTime && scrapeCache.liveCount == (apiCache.liveCount || scrapeCache.liveCount)) {
         const newTitleData = await cache.get("wheniswan:youtube:title", {type: "json"})
         if(newTitleData) {
