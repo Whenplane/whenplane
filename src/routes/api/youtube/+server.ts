@@ -77,8 +77,6 @@ export const GET = (async ({platform, fetch, url}) => {
         })
     }
 
-    console.log({liveCount});
-
     // temporary
     const now = new Date();
     if(now.getUTCDate() == 8 && liveCount > 1) {
