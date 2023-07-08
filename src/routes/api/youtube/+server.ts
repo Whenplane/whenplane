@@ -102,7 +102,7 @@ export const GET = (async ({platform, fetch, url}) => {
                 {
                     method: "POST",
                     body: JSON.stringify({
-                        message: "liveCount difference: " + scrapeCache.liveCount + " - " + apiCache.liveCount
+                        content: "liveCount difference: " + scrapeCache.liveCount + " - " + apiCache.liveCount
                     }),
                     headers: {
                         "content-type": "application/json"
