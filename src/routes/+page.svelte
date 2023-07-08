@@ -15,15 +15,10 @@
 
 	$: isLate = isAfterStartTime && !data.isPreShow && !data.isMainShow;
 
-	(mainLate as Writable<never>).subscribe((v) => {
-		console.log(v);
-	});
-
 
 	let invalidationInterval: number | undefined;
 	let lastInvalidation = Date.now();
 	function invalidate() {
-		console.log("invalidated")
 		lastInvalidation = Date.now();
 		invalidateAll();
 	}

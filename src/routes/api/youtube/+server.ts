@@ -44,7 +44,6 @@ export const GET = (async ({platform, fetch, url}) => {
 
     const fast = url.searchParams.get("fast") === "true";
 
-    const now = new Date();
 
     // With the fast flag (added for initial page load requests), always fetch cached data if its from within the past 5 hours
     if(Date.now() - scrapeCache.lastCheck < scrapeCacheTime || (fast && Date.now() - scrapeCache.lastCheck < 5 * 60 * 60e3)) {
@@ -53,8 +52,8 @@ export const GET = (async ({platform, fetch, url}) => {
             cachedTitle: false,
             lastFetch: scrapeCache.lastCheck,
             isLive: scrapeCache.isLive,
-            isWAN: (now.getUTCDate() == 8 && scrapeCache.liveCount > 1) ? true : (scrapeCache.isLive && apiCache.isWAN),
-            started: (now.getUTCDate() == 8 && scrapeCache.liveCount > 1) ? "2023-07-08T02:10:30Z" : (scrapeCache.isLive ? apiCache.started : undefined)
+            isWAN: scrapeCache.isLive && apiCache.isWAN,
+            started: scrapeCache.isLive ? apiCache.started : undefined
         })
     }
 
@@ -70,24 +69,6 @@ export const GET = (async ({platform, fetch, url}) => {
     scrapeCache.isLive = isLive;
 
     platform.context.waitUntil(cache.put("wheniswan:youtube:live", JSON.stringify(scrapeCache)));
-
-    console.log({liveCount})
-
-    // temporary
-    if(now.getUTCDate() == 8 && liveCount > 1) {
-        console.log("!!!!!! temporary wan live !!!!!!")
-        return json({
-            isLive: true,
-            isWAN: true,
-            started: "2023-07-08T02:10:30Z"
-        })
-    }
-    if(liveCount == 1) {
-        return json({
-            isLive: true,
-            isWAN: false,
-        })
-    }
 
     if(!isLive) {
         savedStartTime = false;
@@ -143,7 +124,7 @@ export const GET = (async ({platform, fetch, url}) => {
         "&order=date" +
         "&type=video" +
         "&eventType=live" +
-        "&key=" + (env.YOUTUBE_KEY_3 ?? env.YOUTUBE_KEY_2 ?? env.YOUTUBE_KEY)
+        "&key=" + getKey()
     ).then(r => r.json());
 
     const items = liveData?.items;
@@ -162,11 +143,21 @@ export const GET = (async ({platform, fetch, url}) => {
         if(isWAN) break;
     }
 
+    apiCache.isWAN = isWAN;
+
     if(!videoId) console.error("No id in ", liveData)
 
     if(liveData.items.length == 0) {
         scrapeCache.lastCheck = Date.now();
         scrapeCache.isLive = false;
+    }
+
+    if(!isWAN) {
+        platform.context.waitUntil(cache.put("wheniswan:youtube:title", JSON.stringify(apiCache)));
+        return json({
+            isLive,
+            isWAN
+        })
     }
 
     const specificData = await fetch("https://www.googleapis.com/youtube/v3/videos" +
@@ -176,7 +167,7 @@ export const GET = (async ({platform, fetch, url}) => {
         "&order=date" +
         "&type=video" +
         "&eventType=live" +
-        "&key=" + (env.YOUTUBE_KEY_3 ?? env.YOUTUBE_KEY_2 ?? env.YOUTUBE_KEY)
+        "&key=" + getKey()
     ).then(r => r.json())
 
     const started = specificData.items[0].liveStreamingDetails.actualStartTime;
@@ -201,7 +192,6 @@ export const GET = (async ({platform, fetch, url}) => {
         }
     }
 
-    apiCache.isWAN = isWAN;
     apiCache.started = started;
 
     platform.context.waitUntil(cache.put("wheniswan:youtube:title", JSON.stringify(apiCache)));
@@ -214,3 +204,24 @@ export const GET = (async ({platform, fetch, url}) => {
 
 
 }) satisfies RequestHandler;
+
+const keys = [
+    env.YOUTUBE_KEY,
+    env.YOUTUBE_KEY_2,
+    env.YOUTUBE_KEY_3
+]
+let keyIndex = Math.floor(Math.random() * keys.length);
+
+function getKey() {
+    let key = undefined;
+    let i = 0;
+    while(key == undefined) {
+        keyIndex++;
+        if(keyIndex >= keys.length) {
+            keyIndex = 0;
+        }
+        key = keys[keyIndex];
+        if(i++ > 50) return undefined;
+    }
+    return key;
+}

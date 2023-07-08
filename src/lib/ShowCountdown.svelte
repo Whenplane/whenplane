@@ -27,7 +27,6 @@
 
     function updateCountdown() {
         if(data.isMainShow || data.isPreShow) {
-            console.log({data})
             if(!data.isMainShow && data.isPreShow) {
                 const mainScheduledStart = getClosestWan()
                 mainScheduledStart.setMinutes(mainScheduledStart.getMinutes() + 30);
