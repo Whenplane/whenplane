@@ -69,14 +69,6 @@ export const GET = (async ({platform, fetch, url}) => {
 
     platform.context.waitUntil(cache.put("wheniswan:youtube:live", JSON.stringify(scrapeCache)));
 
-    if(!isLive) {
-        savedStartTime = false;
-        return json({
-            isLive,
-            isWAN: false
-        })
-    }
-
     // temporary
     const now = new Date();
     if(now.getUTCDate() == 8 && liveCount > 1) {
@@ -87,6 +79,15 @@ export const GET = (async ({platform, fetch, url}) => {
             started: "2023-07-08T02:10:30Z"
         })
     }
+
+    if(!isLive) {
+        savedStartTime = false;
+        return json({
+            isLive,
+            isWAN: false
+        })
+    }
+
 
     if(Date.now() - apiCache.lastCheck < apiCacheTime && scrapeCache.liveCount == (apiCache.liveCount || scrapeCache.liveCount)) {
         const newTitleData = await cache.get("wheniswan:youtube:title", {type: "json"})
