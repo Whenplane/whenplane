@@ -5,7 +5,7 @@ export function isBefore(a: Date, b: Date): boolean {
     return a.getTime() < b.getTime()
 }
 
-export function getNextWAN(now = new Date(), buffer = true): Date {
+export function getNextWAN(now = new Date(), buffer = true, hasDone?: boolean): Date {
     let wanDate = getLooseWAN(now);
 
     // console.debug("Loose WAN: ", wanDate.toJSDate().toString())
@@ -16,14 +16,25 @@ export function getNextWAN(now = new Date(), buffer = true): Date {
 
     if(isNaN(wanDate.weekday)) throw new Error("Bad weekday from " + wanDate.toString())
 
-    // console.debug("Day-fixed WAN: ", wanDate.toJSDate().toString())
+    let shouldStay: boolean;
+    if (buffer) {
+        if (typeof hasDone != 'undefined') {
+            shouldStay = !hasDone;
+        } else {
+            shouldStay = now.getTime() - wanDate.toJSDate().getTime() > 5 * 60 * 60 * 1e3;
+        }
+    } else {
+        shouldStay = false;
+    }
 
-    // only say next week is next WAN 5 hours after WAN time
-    if(isBefore(wanDate.toJSDate(), now) && (buffer ? now.getTime() - wanDate.toJSDate().getTime() > 5 * 60 * 60 * 1e3 : true)) {
+
+    if(isBefore(wanDate.toJSDate(), now) && !shouldStay) {
         wanDate = wanDate.plus({days: 7});
     }
 
-    // console.debug("After-fixed WAN: ", wanDate.toJSDate().toString())
+    if(wanDate.toJSDate().getTime() - now.getTime()  > 3 * 24 * 60 * 60e3 && shouldStay) {
+        wanDate = wanDate.minus({days: 7})
+    }
 
     return wanDate.toJSDate();
 }
@@ -108,6 +119,19 @@ export function getTimeUntil(date: Date, now = Date.now()) {
         late,
         distance
     };
+}
+
+
+const hasDoneCache: {
+    lastFetch: {
+        [key: string]: number
+    },
+    values: {
+        [key: string]: boolean
+    }
+} = {
+    lastFetch: {},
+    values: {}
 }
 
 export function timeString(distance: number) {

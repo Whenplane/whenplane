@@ -8,8 +8,9 @@
 <script>
     import {onMount} from "svelte";
     import {getClosestWan, getNextWAN, getTimeUntil} from "./timeUtils";
+    import {page} from "$app/stores";
 
-    let nextWan = getNextWAN();
+    let nextWan = getNextWAN(undefined, undefined, $page.data.hasDone);
 
     let showPlayed = false;
 
@@ -45,7 +46,7 @@
         } else {
             if(showPlayed) {
                 showPlayed = false;
-                nextWan = getNextWAN();
+                nextWan = getNextWAN(undefined, undefined, $page.data.hasDone);
             }
             const timeUntil = getTimeUntil(nextWan);
             countdownText = timeUntil.string
