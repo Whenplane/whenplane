@@ -1,6 +1,5 @@
 import type {RequestHandler} from "@sveltejs/kit";
 import {error, json} from "@sveltejs/kit";
-import {env} from "$env/dynamic/private";
 import {getClosestWan, getUTCDate} from "$lib/timeUtils";
 
 const cacheTime = 5000; // Fetch from fetcher no more than once ever 5 seconds
@@ -46,7 +45,7 @@ export const GET = (async ({platform, fetch, url}) => {
     if(!savedStartTime && isWAN) {
         const closestWAN = getClosestWan();
         const distance = Math.abs(Date.now() - closestWAN.getTime())
-        // Only record preshow start time if we are within 7 hours of the closest wan
+        // Only record show start time if we are within 7 hours of the closest wan
         if(distance < 7 * 60 * 60 * 1000) {
             platform.context.waitUntil((async () => {
                 const kvStartTime = await history.get(getUTCDate(closestWAN) + ":mainShowStart");
@@ -75,24 +74,3 @@ export const GET = (async ({platform, fetch, url}) => {
     return json(result)
 
 }) satisfies RequestHandler;
-
-const keys = [
-    env.YOUTUBE_KEY,
-    env.YOUTUBE_KEY_2,
-    env.YOUTUBE_KEY_3
-]
-let keyIndex = Math.floor(Math.random() * keys.length);
-
-function getKey() {
-    let key = undefined;
-    let i = 0;
-    while(key == undefined) {
-        keyIndex++;
-        if(keyIndex >= keys.length) {
-            keyIndex = 0;
-        }
-        key = keys[keyIndex];
-        if(i++ > 50) return undefined;
-    }
-    return key;
-}
