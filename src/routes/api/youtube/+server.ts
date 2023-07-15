@@ -38,7 +38,7 @@ export const GET = (async ({platform, fetch, url}) => {
     const id = await fetcher.idFromName("youtube")
     const stub = await fetcher.get(id, {locationHint: 'wnam'});
 
-    const {isLive, isWAN, started} = await stub.fetch()
+    const {isLive, isWAN, started} = await stub.fetch("https://DO/youtube")
 
     if(!savedStartTime && isWAN) {
         const closestWAN = getClosestWan();
