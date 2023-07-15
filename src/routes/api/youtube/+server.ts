@@ -1,27 +1,20 @@
 import type {RequestHandler} from "@sveltejs/kit";
 import {error, json} from "@sveltejs/kit";
 import {env} from "$env/dynamic/private";
-import {dev} from "$app/environment";
 import {getClosestWan, getUTCDate} from "$lib/timeUtils";
 
-const scrapeCacheTime = 5000;
-const apiCacheTime = dev ? 60 * 60e3 : 30 * 60e3; // 30 minutes (1 hour on dev)
+const cacheTime = 5000; // Fetch from fetcher no more than once ever 5 seconds
 
-let scrapeCache = {
-    lastCheck: 0,
-    liveCount: 0,
-    isLive: false,
-}
 
-// is KV enforced because workers might not last the full cache time
-let apiCache: {
-    lastCheck: number,
-    liveCount?: number,
-    isWAN: boolean,
-    started?: string
+const cache: {
+    lastFetch: number,
+    value?: {
+        isLive: boolean,
+        isWAN: boolean,
+        started?: string
+    }
 } = {
-    lastCheck: 0,
-    isWAN: false
+    lastFetch: 0
 }
 
 let savedStartTime: boolean | undefined = undefined;
@@ -30,147 +23,22 @@ export const GET = (async ({platform, fetch, url}) => {
 
     const cache = platform?.env?.CACHE;
     const history = platform?.env?.HISTORY;
+    const fetcher = platform?.env?.FETCHER;
     if(!cache) throw error(503, "Cache not available");
+    if(!fetcher) throw error(503, "Fetcher not available");
     if(!history) throw error(503, "History not available");
     if(!platform?.context) throw error(503, "Request context not available!");
 
-
-    if(Date.now() - scrapeCache.lastCheck < scrapeCacheTime) {
-        const newLiveData = await cache.get("wheniswan:youtube:live", {type: "json"})
-        if(newLiveData) {
-            scrapeCache = newLiveData;
-        }
+    if(Date.now() - cache.lastFetch < cacheTime) {
+        return json(cache.value);
     }
 
-    const fast = url.searchParams.get("fast") === "true";
+    cache.lastFetch = Date.now();
 
+    const id = await fetcher.idFromName("youtube")
+    const stub = await fetcher.get(id, {locationHint: 'wnam'});
 
-    // With the fast flag (added for initial page load requests), always fetch cached data if its from within the past 5 hours
-    if(Date.now() - scrapeCache.lastCheck < scrapeCacheTime || (fast && Date.now() - scrapeCache.lastCheck < 5 * 60 * 60e3)) {
-        return json({
-            cached: true,
-            cachedTitle: false,
-            lastFetch: scrapeCache.lastCheck,
-            isLive: scrapeCache.isLive,
-            isWAN: scrapeCache.isLive && apiCache.isWAN,
-            started: scrapeCache.isLive ? apiCache.started : undefined
-        })
-    }
-
-    scrapeCache.lastCheck = Date.now();
-
-    // We use the live path because it appears to be smaller than the main channel page
-    const pageData = await fetch("https://www.youtube.com/linustechtips/streams").then(r => r.text());
-
-    const liveCount = (pageData.match(/"iconType":"LIVE"/g) || []).length
-    const isLive = liveCount > 0;
-
-    scrapeCache.liveCount = liveCount;
-    scrapeCache.isLive = isLive;
-
-    platform.context.waitUntil(cache.put("wheniswan:youtube:live", JSON.stringify(scrapeCache)));
-
-    if(!isLive) {
-        savedStartTime = false;
-        return json({
-            isLive,
-            isWAN: false
-        })
-    }
-
-
-    if(Date.now() - apiCache.lastCheck < apiCacheTime && scrapeCache.liveCount == (apiCache.liveCount || scrapeCache.liveCount)) {
-        const newTitleData = await cache.get("wheniswan:youtube:title", {type: "json"})
-        if(newTitleData) {
-            apiCache = newTitleData;
-        }
-    }
-
-    if(Date.now() - apiCache.lastCheck < apiCacheTime && scrapeCache.liveCount == (apiCache.liveCount || scrapeCache.liveCount)) {
-        return json({
-            cached: true,
-            cachedTitle: true,
-            lastFetch: apiCache.lastCheck,
-            isLive,
-            isWAN: apiCache.isWAN,
-            started: apiCache.started
-        })
-    }
-
-    if(scrapeCache.liveCount != (apiCache.liveCount || scrapeCache.liveCount) && !dev) {
-        platform.context.waitUntil(
-            fetch(
-                "https://discord.com/api/webhooks/1127049810130767872/whyw4qbC3UR3iPxIlmITuXBdpBitfVCk-vSpANp6Pt74m0vr40wrwlKGFf2_6_mRv2lI",
-                {
-                    method: "POST",
-                    body: JSON.stringify({
-                        content: "liveCount difference: " + scrapeCache.liveCount + " - " + apiCache.liveCount
-                    }),
-                    headers: {
-                        "content-type": "application/json"
-                    }
-                }
-            )
-        )
-    }
-
-    apiCache.lastCheck = Date.now();
-
-    const liveData = await fetch(
-        "https://www.googleapis.com/youtube/v3/search" +
-        "?part=snippet" +
-        "&channelId=UCXuqSBlHAE6Xw-yeJA0Tunw" +
-        "&maxResults=1" +
-        "&order=date" +
-        "&type=video" +
-        "&eventType=live" +
-        "&key=" + getKey()
-    ).then(r => r.json());
-
-    const items = liveData?.items;
-    if(!items || items.length < 1) {
-        console.error("No items in ", liveData);
-    }
-
-    apiCache.liveCount = items.length;
-
-    let isWAN;
-    let videoId;
-
-    for (const item of items) {
-        isWAN = item.snippet.title.includes("WAN");
-        videoId = item.id?.videoId
-        if(isWAN) break;
-    }
-
-    apiCache.isWAN = isWAN;
-
-    if(!videoId) console.error("No id in ", liveData)
-
-    if(liveData.items.length == 0) {
-        scrapeCache.lastCheck = Date.now();
-        scrapeCache.isLive = false;
-    }
-
-    if(!isWAN) {
-        platform.context.waitUntil(cache.put("wheniswan:youtube:title", JSON.stringify(apiCache)));
-        return json({
-            isLive,
-            isWAN
-        })
-    }
-
-    const specificData = await fetch("https://www.googleapis.com/youtube/v3/videos" +
-        "?part=liveStreamingDetails" +
-        "&id=" + videoId +
-        "&maxResults=1" +
-        "&order=date" +
-        "&type=video" +
-        "&eventType=live" +
-        "&key=" + getKey()
-    ).then(r => r.json())
-
-    const started = specificData.items[0].liveStreamingDetails.actualStartTime;
+    const {isLive, isWAN, started} = await stub.fetch()
 
     if(!savedStartTime && isWAN) {
         const closestWAN = getClosestWan();
@@ -192,16 +60,16 @@ export const GET = (async ({platform, fetch, url}) => {
         }
     }
 
-    apiCache.started = started;
 
-    platform.context.waitUntil(cache.put("wheniswan:youtube:title", JSON.stringify(apiCache)));
-
-    return json({
+    const result = {
         isLive,
         isWAN,
         started
-    })
+    };
 
+    cache.value = result
+
+    return json(result)
 
 }) satisfies RequestHandler;
 

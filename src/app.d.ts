@@ -12,6 +12,7 @@ declare namespace App {
             CACHE: KVNamespace;
             HISTORY: KVNamespace;
             META: KVNamespace;
+            FETCHER: DurableObjectNamespace;
         },
         context?: {
             /**
