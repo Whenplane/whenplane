@@ -30,7 +30,7 @@ export const GET = (async ({platform, fetch, url}) => {
     if(!platform?.context) throw error(503, "Request context not available!");
 
     if(Date.now() - cache.lastFetch < cacheTime) {
-        return json(cache.value);
+        return json({...cache.value, cached: true});
     }
 
     cache.lastFetch = Date.now();
