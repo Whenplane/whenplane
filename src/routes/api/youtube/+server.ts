@@ -39,6 +39,9 @@ export const GET = (async ({platform, fetch, url}) => {
     const stub = await fetcher.get(id, {locationHint: 'wnam'});
 
     const {isLive, isWAN, started} = await stub.fetch("https://DO/youtube")
+        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+        //@ts-ignore
+        .then(r => r.json());
 
     if(!savedStartTime && isWAN) {
         const closestWAN = getClosestWan();
