@@ -11,7 +11,7 @@
             The site is
             <a href="https://github.com/ajgeiss0702/wheniswan" target="_blank" rel="noreferrer">
                 open-sourced</a>.
-            Feel free to make contributions!
+            Feel free to make contributions! Would you like to help adding adding data on shows? You can do this <a href="https://api.janishutz.com/wanshow" target="_blank" rel="noreferrer">here</a>
 
             <br>
             <br>
