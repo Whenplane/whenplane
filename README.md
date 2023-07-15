@@ -49,7 +49,9 @@ This data is recorded by going through and looking at VODs.
 The process of adding older shows takes a lot of time,
 which is why it takes so long for older shows to be added.
 
-At some point, I will have instructions on how you will be able to contribute to the list.
+### Contributing to older times
+
+I've written [a page describing how **you** can help by contributing old times](https://github.com/ajgeiss0702/wheniswan/wiki/Contributing-old-times).
 
 # Developing
 
@@ -78,7 +80,6 @@ Next, you need to set your API credentials. Create a `.env` file and fill in the
 ```env
 TWITCH_CLIENT_ID=...
 TWITCH_SECRET=...
-YOUTUBE_KEY=...
 ```
 
 The `.env` file should be ignored by git, but still take caution to ensure that secrets do not make it into any commits!
