@@ -40,6 +40,7 @@ Long after the show will have ended, a simple [scheduled Worker](https://github.
 will come along and collapse those 3 temporary keys (pre-show start, main show start, and show end times)
 into one key for the day.
 
+
 ## How older start/end times are displayed
 You might have noticed that shows much older than this site are
 still displayed on the [history page](https://www.whenplane.com/history).
@@ -49,7 +50,10 @@ This data is recorded by going through and looking at VODs.
 The process of adding older shows takes a lot of time,
 which is why it takes so long for older shows to be added.
 
-At some point, I will have instructions on how you will be able to contribute to the list.
+
+## Helping to add old data
+Visit [https://api.janishutz.com/wanshow](https://api.janishutz.com/wanshow) and follow the instructions given there.
+
 
 # Developing
 
@@ -83,7 +87,7 @@ YOUTUBE_KEY=...
 
 The `.env` file should be ignored by git, but still take caution to ensure that secrets do not make it into any commits!
 
-The `.env` file is only used during development. Variables in production are set in the cloudflare dashboard.
+The `.env` file is only used during development. Variables in production are set in the Cloudflare dashboard.
 
 After setting up your credentials, you can start a dev server and preview your changes:
 ```bash

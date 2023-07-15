@@ -83,7 +83,7 @@
 
 				{#if !isAfterStartTime}
 					Next WAN:
-					{#if browser} <!-- dont SSR next wan date, as server timezone and locale is probably different than the users' -->
+					{#if browser} <!-- dont SSR next wan date, as server timezone and locale is probably different from the users' -->
 						{getNextWAN().toLocaleString()}
 					{/if}
 				{:else if isLate}

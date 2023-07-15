@@ -48,7 +48,7 @@
                 nextWan = getNextWAN();
             }
             const timeUntil = getTimeUntil(nextWan);
-            countdownText = timeUntil.string
+            countdownText = timeUntil.string;
             isAfterStartTime = timeUntil.late;
             mainLate.set({isMainLate: false});
         }
