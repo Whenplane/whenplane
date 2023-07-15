@@ -160,8 +160,8 @@ export const GET = (async ({platform, url}) => {
     if(!savedEndTime && !isLive && fastCache.lastFetchData.data?.length != 0) {
         const closestWAN = getClosestWan();
         const distance = Date.now() - closestWAN.getTime()
-        // Only record ending time if we are within 7 hours of the closest wan
-        if(distance > 0 && distance < 7 * 60 * 60 * 1000) {
+        // Only record ending time if we are within 12 hours of the closest wan
+        if(distance > 0 && distance < 12 * 60 * 60 * 1000) {
             platform.context.waitUntil((async () => {
                 const kvEndTime = await history.get(getUTCDate(closestWAN) + ":showEnd");
                 const kvStartTime = await history.get(getUTCDate(closestWAN) + ":mainShowStart");
