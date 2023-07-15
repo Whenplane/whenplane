@@ -18,8 +18,8 @@ export function getNextWAN(now = new Date(), buffer = true): Date {
 
     // console.debug("Day-fixed WAN: ", wanDate.toJSDate().toString())
 
-    // only say next week is next WAN 4 hours after WAN time
-    if(isBefore(wanDate.toJSDate(), now) && (buffer ? now.getTime() - wanDate.toJSDate().getTime() > 4 * 60 * 60 * 1e3 : true)) {
+    // only say next week is next WAN 5 hours after WAN time
+    if(isBefore(wanDate.toJSDate(), now) && (buffer ? now.getTime() - wanDate.toJSDate().getTime() > 5 * 60 * 60 * 1e3 : true)) {
         wanDate = wanDate.plus({days: 7});
     }
 
