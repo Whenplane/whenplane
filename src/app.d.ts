@@ -2,13 +2,17 @@
 // for information about these interfaces
 // and what to do when importing types
 declare namespace App {
-	// interface Locals {}
+	interface Locals {
+        addTiming: (timing: TimingEntry) => void
+    }
 	// interface PageData {}
 	// interface Error {}
     interface Platform {
         env?: {
             CACHE: KVNamespace;
             HISTORY: KVNamespace;
+            META: KVNamespace;
+            FETCHER: DurableObjectNamespace;
         },
         context?: {
             /**
@@ -30,4 +34,21 @@ type KVListResponse = {
     }[],
     list_complete: boolean,
     cursor: string
+}
+
+type BestShow = {
+    name: string,
+    distance: number
+} | undefined;
+type BestShowTime = {
+    name: string,
+    distance: number,
+    time: number
+} | undefined;
+
+
+type TimingEntry = {
+    id: string,
+    duration: number,
+    description?: string
 }

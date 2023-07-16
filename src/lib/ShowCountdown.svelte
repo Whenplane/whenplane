@@ -1,8 +1,16 @@
+<script context="module" lang="ts">
+    import {writable} from "svelte/store";
+
+    export const mainLate = writable({isMainLate: false});
+
+</script>
+
 <script>
     import {onMount} from "svelte";
-    import {getNextWAN, getTimeUntil} from "./timeUtils";
+    import {getClosestWan, getNextWAN, getTimeUntil} from "./timeUtils";
+    import {page} from "$app/stores";
 
-    let nextWan = getNextWAN();
+    let nextWan = getNextWAN(undefined, undefined, $page.data.hasDone);
 
     let showPlayed = false;
 
@@ -20,6 +28,17 @@
 
     function updateCountdown() {
         if(data.isMainShow || data.isPreShow) {
+            if(!data.isMainShow && data.isPreShow) {
+                const mainScheduledStart = getClosestWan()
+                mainScheduledStart.setMinutes(mainScheduledStart.getMinutes() + 30);
+
+                mainLate.set({
+                    isMainLate: true,
+                    ...getTimeUntil(mainScheduledStart)
+                })
+            } else {
+                mainLate.set({isMainLate: false});
+            }
             const started = new Date(data.mainShowStarted ?? data.preShowStarted);
             isAfterStartTime = true;
             showPlayed = true;
@@ -27,11 +46,12 @@
         } else {
             if(showPlayed) {
                 showPlayed = false;
-                nextWan = getNextWAN();
+                nextWan = getNextWAN(undefined, undefined, $page.data.hasDone);
             }
             const timeUntil = getTimeUntil(nextWan);
             countdownText = timeUntil.string
             isAfterStartTime = timeUntil.late;
+            mainLate.set({isMainLate: false});
         }
     }
 </script>

@@ -5,10 +5,8 @@ export function isBefore(a: Date, b: Date): boolean {
     return a.getTime() < b.getTime()
 }
 
-export function getNextWAN(now = new Date(), buffer = true): Date {
+export function getNextWAN(now = new Date(), buffer = true, hasDone?: boolean): Date {
     let wanDate = getLooseWAN(now);
-
-    // console.debug("Loose WAN: ", wanDate.toJSDate().toString())
 
     while(wanDate.weekday !== 5 && !isNaN(wanDate.weekday)) {
         wanDate = wanDate.plus({days: 1});
@@ -16,14 +14,31 @@ export function getNextWAN(now = new Date(), buffer = true): Date {
 
     if(isNaN(wanDate.weekday)) throw new Error("Bad weekday from " + wanDate.toString())
 
-    // console.debug("Day-fixed WAN: ", wanDate.toJSDate().toString())
+    let shouldStay: boolean;
+    if (buffer) {
+        if (typeof hasDone != 'undefined') {
+            shouldStay = !hasDone;
+        } else {
+            shouldStay = now.getTime() - wanDate.toJSDate().getTime() > 5 * 60 * 60 * 1e3;
+        }
+    } else {
+        shouldStay = false;
+    }
 
-    // only say next week is next WAN 4 hours after WAN time
-    if(isBefore(wanDate.toJSDate(), now) && (buffer ? now.getTime() - wanDate.toJSDate().getTime() > 4 * 60 * 60 * 1e3 : true)) {
+
+    if(isBefore(wanDate.toJSDate(), now) && !shouldStay) {
         wanDate = wanDate.plus({days: 7});
     }
 
-    // console.debug("After-fixed WAN: ", wanDate.toJSDate().toString())
+    // prevent counting down til next wan if current wan hasn't come yet
+    if(wanDate.toJSDate().getTime() - now.getTime() > 3 * 24 * 60 * 60e3 && shouldStay) {
+        wanDate = wanDate.minus({days: 7})
+    }
+
+    // LTX 2023's wan is on saturday instead of friday
+    if(wanDate.year == 2023 && wanDate.month == 7 && wanDate.day == 28) {
+        wanDate = wanDate.plus({days: 1})
+    }
 
     return wanDate.toJSDate();
 }
@@ -39,6 +54,11 @@ export function getPreviousWAN(now = new Date(), luxon = false): Date | DateTime
         wanDate = wanDate.minus({days: 7});
     }
 
+    // LTX 2023's wan is on saturday instead of friday
+    if(wanDate.year == 2023 && wanDate.month == 7 && wanDate.day == 28) {
+        wanDate = wanDate.plus({days: 1})
+    }
+
     return luxon ? wanDate : wanDate.toJSDate();
 }
 
@@ -50,8 +70,8 @@ function getLooseWAN(now = new Date()) {
         month -= 1;
         day = daysInMonth(now.getFullYear(), month) + day;
     }
-    // console.debug({getLooseWANDebug: {now, month, day}})
-    const wanDate = DateTime.fromObject(
+
+    return DateTime.fromObject(
         {
             year: now.getFullYear(),
             month,
@@ -61,10 +81,7 @@ function getLooseWAN(now = new Date()) {
         }, {
             zone: "America/Vancouver"
         }
-        );
-
-    // console.log({looseWan: wanDate});
-    return wanDate;
+    );
 }
 
 export function getClosestWan(now = new Date()) {
@@ -89,8 +106,8 @@ export function getUTCDate(date = new Date()) {
     return date.getUTCFullYear() + "/" + month + "/" + day;
 }
 
-export function addZero(thing: number): string {
-    return thing > 9 ? "" + thing : "0" + thing
+export function addZero(n: number): string {
+    return n > 9 ? "" + n : "0" + n
 }
 
 export function getTimeUntil(date: Date, now = Date.now()) {
@@ -100,6 +117,17 @@ export function getTimeUntil(date: Date, now = Date.now()) {
         late = true;
         distance = Math.abs(distance)
     }
+
+    const string = timeString(distance);
+
+    return {
+        string,
+        late,
+        distance
+    };
+}
+
+export function timeString(distance: number) {
     const days = Math.floor(distance / (1000 * 60 * 60 * 24));
     const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
     const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
@@ -110,11 +138,7 @@ export function getTimeUntil(date: Date, now = Date.now()) {
     const minutesS = minutes > 0 ? minutes+"m " : "";
     const secondsS = seconds+"s ";
 
-    return {
-        string: daysS + hoursS + minutesS + secondsS,
-        late,
-        distance
-    };
+    return daysS + hoursS + minutesS + secondsS;
 }
 
 const daysInMonth = (year: number, month: number) => new Date(year, month, 0).getDate();

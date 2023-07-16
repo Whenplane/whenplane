@@ -1,14 +1,11 @@
 <script>
     import HistoricalShow from "./HistoricalShow.svelte";
-    import {onMount} from "svelte";
+    import LazyLoad from '@dimfeld/svelte-lazyload';
 
     // eslint-disable-next-line @typescript-eslint/no-empty-function
     let fetchingHistory = new Promise(() => {});
-
-    onMount(() => {
-        fetchingHistory = import("./oldHistory.ts");
-    })
 </script>
+<LazyLoad on:visible={() => fetchingHistory = import("./oldHistory.ts")}/>
 {#await fetchingHistory}
     <span class="opacity-50 old-show-loading">
         Loading older shows..

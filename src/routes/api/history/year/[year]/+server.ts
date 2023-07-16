@@ -19,11 +19,15 @@ export const GET = (async ({platform, params}) => {
     let list_complete = false;
     let cursor: string | undefined = undefined;
 
+    let lists = 0;
+
     while(!list_complete) {
         const list: KVListResponse = await history.list({
             prefix: year == "all" ? undefined : year+"",
             cursor
-        })
+        });
+
+        lists++;
 
         for (const k of list.keys) {
             if(k.name.includes(":")) {
@@ -55,6 +59,10 @@ export const GET = (async ({platform, params}) => {
 
     keys = keys.sort((a, b) => new Date(b.name).getTime() - new Date(a.name).getTime());
 
-    return json(keys);
+    return json(keys, {
+        headers: {
+            "X-Lists": lists+""
+        }
+    });
 
 }) satisfies RequestHandler;

@@ -2,12 +2,13 @@
     import TimeInput from "$lib/TimeInput.svelte";
     import {getPreviousWAN, addZero} from "$lib/timeUtils";
     import {DateTime} from "luxon";
+    import {getClosestWan} from "../../../lib/timeUtils";
 
     const previousWAN: DateTime = getPreviousWAN(undefined, true);
     const previousWANUTC = previousWAN.toUTC();
 
     let date = previousWANUTC.year + "-" + addZero(previousWANUTC.month) + "-" + addZero(previousWANUTC.day);
-    $: dateDate = DateTime.fromISO(date);
+    $: dateDate = DateTime.fromJSDate(getClosestWan(new Date(date)));
     $: jsDateDate = dateDate.toJSDate();
 
 
@@ -53,7 +54,7 @@
     <br>
     <br>
     <input type="date" class="input w-48" bind:value={date}><br>
-    {date}
+    WAN of {dateDate.toLocaleString()}
     <br>
     <br>
     At timestamp <TimeInput bind:value={timeStamp}/>, the time is
@@ -72,7 +73,7 @@
     <div class="card text-left mx-auto">
         <pre>
             &#123;
-                name: "{jsDateDate.getUTCFullYear()}/{jsDateDate.getUTCMonth() + 1}/{jsDateDate.getUTCDate()}",
+                name: "{dateDate.year}/{dateDate.month}/{dateDate.day}",
                 metadata: &#123;
                     preShowStart: "{startsAt?.toUTC().toISO()}",
                     mainShowStart: "{preEndsAt?.toUTC().toISO()}",

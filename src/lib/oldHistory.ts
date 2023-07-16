@@ -142,12 +142,76 @@ export const history: HistoricalEntry[] = [
             mainShowStart: "2023-01-07T02:57:13.000Z",
             showEnd: "2023-01-07T06:04:32.000Z"
         }
+    },
+    {
+        name: "2022/12/30",
+        metadata: {
+            preShowStart: "2022-12-31T02:03:28.000Z",
+            mainShowStart: "2022-12-31T02:11:57.000Z",
+            showEnd: "2022-12-31T05:17:59.000Z"
+        }
+    },
+    {
+        name: "2022/12/23",
+        metadata: {
+            preShowStart: "2022-12-24T02:58:57.000Z",
+            mainShowStart: "2022-12-24T03:01:41.000Z",
+            showEnd: "2022-12-24T05:59:19.000Z"
+        }
+    },
+    {
+        name: "2022/12/9",
+        metadata: {
+            preShowStart: "2022-12-10T01:52:50.000Z",
+            mainShowStart: "2022-12-10T01:58:29.000Z",
+            showEnd: "2022-12-10T04:47:37.000Z"
+        }
+    },
+    {
+        name: "2022/12/2",
+        metadata: {
+            preShowStart: "2022-12-03T01:23:43.000Z",
+            mainShowStart: "2022-12-03T01:48:58.000Z",
+            showEnd: "2022-12-03T04:19:37.000Z"
+        }
+    },
+    {
+        name: "2022/11/25",
+        metadata: {
+            preShowStart: "2022-11-26T01:12:12.000Z",
+            mainShowStart: "2022-11-26T01:22:20.000Z",
+            showEnd: "2022-11-26T03:29:08.000Z"
+        }
+    },
+    {
+        name: "2022/11/18",
+        metadata: {
+            preShowStart: "2022-11-18T23:06:18.000Z",
+            mainShowStart: "2022-11-18T23:33:29.000Z",
+            showEnd: "2022-11-19T02:04:16.000Z"
+        }
+    },
+    {
+        name: "2022/11/11",
+        metadata: {
+            preShowStart: "2022-11-12T00:44:19.000Z",
+            mainShowStart: "2022-11-12T01:15:19.000Z",
+            showEnd: "2022-11-12T03:32:43.000Z"
+        }
+    },
+    {
+        name: "2022/11/4",
+        metadata: {
+            preShowStart: "2022-11-05T00:25:14.000Z",
+            mainShowStart: "2022-11-05T00:26:54.000Z",
+            showEnd: "2022-11-05T02:31:32.000Z"
+        }
     }
 ];
 
 
 
-type HistoricalEntry = {
+export type HistoricalEntry = {
     name: string,
     metadata: {
         preShowStart: string,
