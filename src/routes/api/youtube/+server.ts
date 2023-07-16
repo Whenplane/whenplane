@@ -43,27 +43,25 @@ export const GET = (async ({platform, locals, url}) => {
 
     console.log(1)
 
-    let f: typeof fetch;
+    let stub: {fetch: typeof fetch};
     if(fetcher) {
         console.log(2)
         const id = await fetcher.idFromName("youtube");
         console.log(3)
-        const stub = await fetcher.get(id, {locationHint: 'wnam'});
-        console.log(4)
-        f = stub.fetch;
+        stub = await fetcher.get(id, {locationHint: 'wnam'});
     } else if(dev) {
-        f = fetch;
+        stub = {fetch};
     } else {
         throw error(503, "Fetcher not available");
     }
-    console.log(5)
+    console.log(4)
 
     const doStart = Date.now();
-    const {isLive, isWAN, started} = await f("https://DO/youtube")
+    const {isLive, isWAN, started} = await stub.fetch("https://wheniswan-fetcher.ajg.workers.dev/youtube")
         // eslint-disable-next-line @typescript-eslint/ban-ts-comment
         //@ts-ignore
         .then(r => r.json());
-    console.log(6)
+    console.log(5)
     locals.addTiming({id: 'doFetch', duration: Date.now() - doStart})
 
     if(!savedStartTime && isWAN) {
