@@ -30,12 +30,13 @@ export const GET = (async ({platform, locals, url}) => {
 
     const fast = url.searchParams.get("fast") === "true";
 
+    const fetchDistance = Date.now() - cache.lastFetch;
     if(
-        Date.now() - cache.lastFetch < cacheTime ||
+        fetchDistance < cacheTime ||
         // With the fast flag (added for initial page load requests), always fetch cached data if its from within the past 5 hours
-        (fast && cache.value && Date.now() - cache.lastFetch < 5 * 60 * 60e3)
+        (fast && cache.value && fetchDistance < 5 * 60 * 60e3)
     ) {
-        return json({...cache.value, cached: true});
+        return json({...cache.value, cached: true, fetchDistance});
     }
 
     cache.lastFetch = Date.now();
