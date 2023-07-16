@@ -59,7 +59,7 @@ export const GET = (async ({platform, locals, url}) => {
     console.log(5)
 
     const doStart = Date.now();
-    const {isLive, isWAN, started} = await f("https://wheniswan-fetcher.ajg.workers.dev/youtube")
+    const {isLive, isWAN, started} = await f("https://DO/youtube")
         // eslint-disable-next-line @typescript-eslint/ban-ts-comment
         //@ts-ignore
         .then(r => r.json());
