@@ -41,27 +41,21 @@ export const GET = (async ({platform, locals, url}) => {
 
     cache.lastFetch = Date.now();
 
-    console.log(1)
-
     let stub: {fetch: typeof fetch};
     if(fetcher) {
-        console.log(2)
         const id = await fetcher.idFromName("youtube");
-        console.log(3)
         stub = await fetcher.get(id, {locationHint: 'wnam'});
     } else if(dev) {
         stub = {fetch};
     } else {
         throw error(503, "Fetcher not available");
     }
-    console.log(4)
 
     const doStart = Date.now();
     const {isLive, isWAN, started} = await stub.fetch("https://wheniswan-fetcher.ajg.workers.dev/youtube")
         // eslint-disable-next-line @typescript-eslint/ban-ts-comment
         //@ts-ignore
         .then(r => r.json());
-    console.log(5)
     locals.addTiming({id: 'doFetch', duration: Date.now() - doStart})
 
     if(!savedStartTime && isWAN) {
