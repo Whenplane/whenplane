@@ -16,7 +16,7 @@ export const GET = (async ({platform, locals}) => {
 
     const totalStart = Date.now();
 
-    const closest = await (async () => {
+    const closest = (async () => {
         const start = Date.now();
         if(dev) await wait(random(testMin, testMax))
         const r = await meta.get("closest", {type: "json", cacheTtl});
