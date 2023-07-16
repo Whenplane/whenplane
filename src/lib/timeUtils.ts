@@ -8,8 +8,6 @@ export function isBefore(a: Date, b: Date): boolean {
 export function getNextWAN(now = new Date(), buffer = true, hasDone?: boolean): Date {
     let wanDate = getLooseWAN(now);
 
-    // console.debug("Loose WAN: ", wanDate.toJSDate().toString())
-
     while(wanDate.weekday !== 5 && !isNaN(wanDate.weekday)) {
         wanDate = wanDate.plus({days: 1});
     }
@@ -32,7 +30,8 @@ export function getNextWAN(now = new Date(), buffer = true, hasDone?: boolean): 
         wanDate = wanDate.plus({days: 7});
     }
 
-    if(wanDate.toJSDate().getTime() - now.getTime()  > 3 * 24 * 60 * 60e3 && shouldStay) {
+    // prevent counting down til next wan if current wan hasn't come yet
+    if(wanDate.toJSDate().getTime() - now.getTime() > 3 * 24 * 60 * 60e3 && shouldStay) {
         wanDate = wanDate.minus({days: 7})
     }
 
@@ -71,8 +70,8 @@ function getLooseWAN(now = new Date()) {
         month -= 1;
         day = daysInMonth(now.getFullYear(), month) + day;
     }
-    // console.debug({getLooseWANDebug: {now, month, day}})
-    const wanDate = DateTime.fromObject(
+
+    return DateTime.fromObject(
         {
             year: now.getFullYear(),
             month,
@@ -82,10 +81,7 @@ function getLooseWAN(now = new Date()) {
         }, {
             zone: "America/Vancouver"
         }
-        );
-
-    // console.log({looseWan: wanDate});
-    return wanDate;
+    );
 }
 
 export function getClosestWan(now = new Date()) {
@@ -110,8 +106,8 @@ export function getUTCDate(date = new Date()) {
     return date.getUTCFullYear() + "/" + month + "/" + day;
 }
 
-export function addZero(thing: number): string {
-    return thing > 9 ? "" + thing : "0" + thing
+export function addZero(n: number): string {
+    return n > 9 ? "" + n : "0" + n
 }
 
 export function getTimeUntil(date: Date, now = Date.now()) {
@@ -129,19 +125,6 @@ export function getTimeUntil(date: Date, now = Date.now()) {
         late,
         distance
     };
-}
-
-
-const hasDoneCache: {
-    lastFetch: {
-        [key: string]: number
-    },
-    values: {
-        [key: string]: boolean
-    }
-} = {
-    lastFetch: {},
-    values: {}
 }
 
 export function timeString(distance: number) {

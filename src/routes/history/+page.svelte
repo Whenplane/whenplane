@@ -3,12 +3,10 @@
     import OldHistory from "$lib/OldHistory.svelte";
     import {dev} from "$app/environment";
     import HistoryRecords from "$lib/HistoryRecords.svelte";
-    import Record from "$lib/Record.svelte";
-    import LoadingRecord from "$lib/LoadingRecord.svelte";
 
     export let data;
 
-    console.log({data})
+    console.debug({data})
 
 </script>
 <svelte:head>

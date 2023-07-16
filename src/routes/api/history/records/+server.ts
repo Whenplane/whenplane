@@ -1,7 +1,7 @@
 import type {RequestHandler} from "@sveltejs/kit";
 import {error, json} from "@sveltejs/kit";
 import {dev} from "$app/environment";
-import {random, wait} from "../../../../lib/utils";
+import {random, wait} from "$lib/utils";
 
 // Cache in edge for 2 hours
 const cacheTtl = 60 * 60 * 2;
