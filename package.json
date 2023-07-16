@@ -14,7 +14,7 @@
 	},
 	"devDependencies": {
 		"@playwright/test": "^1.28.1",
-		"@skeletonlabs/skeleton": "^1.2.5",
+		"@skeletonlabs/skeleton": "^1.9.0",
 		"@sveltejs/adapter-auto": "^2.0.0",
 		"@sveltejs/adapter-cloudflare": "^2.2.2",
 		"@sveltejs/kit": "^1.20.4",
@@ -40,8 +40,8 @@
 	},
 	"type": "module",
 	"dependencies": {
-		"@floating-ui/dom": "^1.2.7",
 		"@dimfeld/svelte-lazyload": "^0.0.4",
+		"@floating-ui/dom": "^1.4.5",
 		"luxon": "^3.3.0"
 	}
 }
