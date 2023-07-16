@@ -1,6 +1,7 @@
 import type {RequestHandler} from "@sveltejs/kit";
 import {error, json} from "@sveltejs/kit";
 import {getClosestWan, getUTCDate} from "$lib/timeUtils";
+import {dev} from "$app/environment";
 
 const cacheTime = 5000; // Fetch from fetcher no more than once every 5 seconds
 
@@ -24,7 +25,6 @@ export const GET = (async ({platform, locals, url}) => {
     const history = platform?.env?.HISTORY;
     const fetcher = platform?.env?.FETCHER;
     if(!cache) throw error(503, "Cache not available");
-    if(!fetcher) throw error(503, "Fetcher not available");
     if(!history) throw error(503, "History not available");
     if(!platform?.context) throw error(503, "Request context not available!");
 
@@ -41,11 +41,19 @@ export const GET = (async ({platform, locals, url}) => {
 
     cache.lastFetch = Date.now();
 
-    const id = await fetcher.idFromName("youtube")
-    const stub = await fetcher.get(id, {locationHint: 'wnam'});
+    let f: typeof fetch;
+    if(fetcher) {
+        const id = await fetcher.idFromName("youtube")
+        const stub = await fetcher.get(id, {locationHint: 'wnam'});
+        f = stub.fetch;
+    } else if(dev) {
+        f = fetch;
+    } else {
+        throw error(503, "Fetcher not available");
+    }
 
     const doStart = Date.now();
-    const {isLive, isWAN, started} = await stub.fetch("https://DO/youtube")
+    const {isLive, isWAN, started} = await f("https://wheniswan-fetcher.ajg.workers.dev/youtube")
         // eslint-disable-next-line @typescript-eslint/ban-ts-comment
         //@ts-ignore
         .then(r => r.json());
