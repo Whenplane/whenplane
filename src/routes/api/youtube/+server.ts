@@ -2,7 +2,7 @@ import type {RequestHandler} from "@sveltejs/kit";
 import {error, json} from "@sveltejs/kit";
 import {getClosestWan, getUTCDate} from "$lib/timeUtils";
 
-const cacheTime = 5000; // Fetch from fetcher no more than once ever 5 seconds
+const cacheTime = 5000; // Fetch from fetcher no more than once every 5 seconds
 
 
 const cache: {
@@ -18,7 +18,7 @@ const cache: {
 
 let savedStartTime: boolean | undefined = undefined;
 
-export const GET = (async ({platform, fetch, url}) => {
+export const GET = (async ({platform, locals}) => {
 
     const cache = platform?.env?.CACHE;
     const history = platform?.env?.HISTORY;
@@ -37,10 +37,12 @@ export const GET = (async ({platform, fetch, url}) => {
     const id = await fetcher.idFromName("youtube")
     const stub = await fetcher.get(id, {locationHint: 'wnam'});
 
+    const doStart = Date.now();
     const {isLive, isWAN, started} = await stub.fetch("https://DO/youtube")
         // eslint-disable-next-line @typescript-eslint/ban-ts-comment
         //@ts-ignore
         .then(r => r.json());
+    locals.addTiming({id: 'doFetch', duration: Date.now() - doStart})
 
     if(!savedStartTime && isWAN) {
         const closestWAN = getClosestWan();
