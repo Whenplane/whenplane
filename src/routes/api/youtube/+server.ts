@@ -18,7 +18,7 @@ const cache: {
 
 let savedStartTime: boolean | undefined = undefined;
 
-export const GET = (async ({platform, locals}) => {
+export const GET = (async ({platform, locals, url}) => {
 
     const cache = platform?.env?.CACHE;
     const history = platform?.env?.HISTORY;
@@ -28,7 +28,13 @@ export const GET = (async ({platform, locals}) => {
     if(!history) throw error(503, "History not available");
     if(!platform?.context) throw error(503, "Request context not available!");
 
-    if(Date.now() - cache.lastFetch < cacheTime) {
+    const fast = url.searchParams.get("fast") === "true";
+
+    if(
+        Date.now() - cache.lastFetch < cacheTime ||
+        // With the fast flag (added for initial page load requests), always fetch cached data if its from within the past 5 hours
+        (fast && cache.value && Date.now() - cache.lastFetch < 5 * 60 * 60e3)
+    ) {
         return json({...cache.value, cached: true});
     }
 
