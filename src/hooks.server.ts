@@ -60,7 +60,7 @@ export const handle: Handle = async ({ event, resolve }) => {
         response.headers.append("Server-Timing", timingStrings.join(","));
     }
 
-    // don't try reporting if we don't have access to waitUntil, or if the request isnt from the browser
+    // don't try reporting if we don't have access to waitUntil, or if the request isn't from the browser
     if(event.platform?.context?.waitUntil && event.request.headers.get("host")) {
         if(!dev && report_data.ua) {
             event.platform.context.waitUntil(
