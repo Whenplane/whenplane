@@ -21,7 +21,8 @@ let fastCache: {
 
 let lastToken = {
     token: "",
-    validUntil: 0
+    validUntil: 0,
+    dateGenerated: 0
 }
 
 export const GET = (async ({platform, url}) => {
@@ -34,13 +35,6 @@ export const GET = (async ({platform, url}) => {
 
     if(!env.TWITCH_CLIENT_ID) throw error(503, "Missing twitch client id!");
     if(!env.TWITCH_SECRET) throw error(503, "Missing twitch client secret!");
-
-    if(Date.now() - fastCache.lastFetch < cacheTime) { // before refreshing, fetch cache from KV
-        const newCache = await cache.get("wheniswan:twitch:cache", {type: "json"});
-        if(newCache) {
-            fastCache = newCache;
-        }
-    }
 
     const fast = url.searchParams.get("fast") === "true";
 
@@ -103,7 +97,8 @@ export const GET = (async ({platform, url}) => {
 
         lastToken = {
             token: access_token,
-            validUntil: Date.now() + (expires_in * 1000) - 30 // fetch new token 30 seconds before it's supposed to expire
+            validUntil: Date.now() + (expires_in * 1000) - 30, // fetch new token 30 seconds before it's supposed to expire,
+            dateGenerated: Date.now()
         }
         platform.context.waitUntil(cache.put("wheniswan:twitch:token", JSON.stringify(lastToken)))
     }
@@ -133,16 +128,12 @@ export const GET = (async ({platform, url}) => {
     const twitchData = url.searchParams.has("short") ? undefined : twitchJSON;
     const started = isLive ? twitchJSON.data[0].started_at : undefined;
 
-    console.log({savedStartTime, started, isWAN})
     if(!savedStartTime && started && isWAN) {
         const closestWAN = getClosestWan();
         const distance = Math.abs(Date.now() - closestWAN.getTime())
-        console.log({distance})
         // Only record preshow start time if we are within 7 hours of the closest wan
         if(distance < 7 * 60 * 60 * 1000) {
-            console.log("waitUntil :)")
             platform.context.waitUntil((async () => {
-                console.log("inside waitUnti")
                 const kvStartTime = await history.get(getUTCDate(closestWAN) + ":preShowStart");
                 if(!kvStartTime) {
                     await history.put(getUTCDate(closestWAN) + ":preShowStart", started, {
@@ -180,7 +171,6 @@ export const GET = (async ({platform, url}) => {
 
     if(!twitchJSON.message) {
         fastCache.lastFetchData = twitchJSON;
-        platform.context.waitUntil(cache.put("wheniswan:twitch:cache", JSON.stringify(fastCache)))
     }
 
     let debug;
