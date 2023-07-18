@@ -1,7 +1,7 @@
 import type {RequestHandler} from "@sveltejs/kit";
 import {error, json} from "@sveltejs/kit";
 
-export const GET = (async ({platform, params}) => {
+export const GET = (async ({platform, params, locals}) => {
     const history = platform?.env?.HISTORY;
     if(!history) throw error(503, "History not available");
 
@@ -22,9 +22,16 @@ export const GET = (async ({platform, params}) => {
     let lists = 0;
 
     while(!list_complete) {
+        const start = Date.now();
         const list: KVListResponse = await history.list({
             prefix: year == "all" ? undefined : year+"",
             cursor
+        });
+
+        locals.addTiming({
+            id: "list" + lists,
+            description: "List #" + (lists + 1),
+            duration: Date.now() - start
         });
 
         lists++;
