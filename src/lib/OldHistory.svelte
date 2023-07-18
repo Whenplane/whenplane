@@ -26,7 +26,12 @@
 
     <span class="opacity-50">
         <h2>That's all for now!</h2>
-        More older shows will be added here eventually
+        More older shows will be added here eventually<br>
+        <br>
+        If you want to help add old shows,
+        <a href="https://github.com/ajgeiss0702/wheniswan/wiki/Contributing-old-times" target="_blank" rel="noreferrer">
+            you can!
+        </a>
     </span>
 {/await}
 
