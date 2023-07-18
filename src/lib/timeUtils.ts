@@ -31,7 +31,7 @@ export function getNextWAN(now = new Date(), buffer = true, hasDone?: boolean): 
     }
 
     // prevent counting down til next wan if current wan hasn't come yet
-    if(wanDate.toJSDate().getTime() - now.getTime() > 3 * 24 * 60 * 60e3 && shouldStay) {
+    if(wanDate.toJSDate().getTime() - now.getTime() < -3 * 24 * 60 * 60e3 && shouldStay) {
         wanDate = wanDate.minus({days: 7})
     }
 
@@ -90,8 +90,6 @@ export function getClosestWan(now = new Date()) {
 
     const distanceToNext = Math.abs(next.getTime() - now.getTime());
     const distanceToPrevious = Math.abs(previous.getTime() - now.getTime());
-
-    console.debug({now, next, previous, distanceToNext, distanceToPrevious})
 
     if(distanceToNext > distanceToPrevious) {
         return previous;
