@@ -21,8 +21,10 @@ export const GET = (async ({platform, params, locals}) => {
 
     let lists = 0;
 
+    const start = Date.now();
+
     while(!list_complete) {
-        const start = Date.now();
+        const listStart = Date.now();
         const list: KVListResponse = await history.list({
             prefix: year == "all" ? undefined : year+"",
             cursor
@@ -31,7 +33,7 @@ export const GET = (async ({platform, params, locals}) => {
         locals.addTiming({
             id: "list" + lists,
             description: "List #" + (lists + 1),
-            duration: Date.now() - start
+            duration: Date.now() - listStart
         });
 
         lists++;
@@ -70,6 +72,8 @@ export const GET = (async ({platform, params, locals}) => {
     }
 
     keys = keys.sort((a, b) => new Date(b.name).getTime() - new Date(a.name).getTime());
+
+    locals.addTiming({id: "total", duration: Date.now() - start});
 
     return json(keys, {
         headers: {
