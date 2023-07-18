@@ -10,12 +10,7 @@ export const GET = (async ({platform, params, locals}) => {
 
     const keyNames: string[] = []
 
-    let keys: {
-        name: string,
-        metadata: {
-            [key: string]: string | number
-        }
-    }[] = [];
+    const keyPromises: Promise<Key>[] = [];
     let list_complete = false;
     let cursor: string | undefined = undefined;
 
@@ -43,33 +38,38 @@ export const GET = (async ({platform, params, locals}) => {
                 const parts = k.name.split(":");
                 if(keyNames.includes(parts[0])) continue;
 
-                const preStart = history.get(parts[0] + ":preShowStart");
-                const mainStart = history.get(parts[0] + ":mainShowStart");
-                const mainEnd = history.get(parts[0] + ":showEnd");
-
                 keyNames.push(parts[0]);
-                keys.push({
-                    name: parts[0],
-                    metadata: {
-                        preShowStart: await preStart,
-                        mainShowStart: await mainStart,
-                        showEnd: await mainEnd
+                keyPromises.push((async () => {
+                    const preStart = history.get(parts[0] + ":preShowStart");
+                    const mainStart = history.get(parts[0] + ":mainShowStart");
+                    const mainEnd = history.get(parts[0] + ":showEnd");
+                    return {
+                        name: parts[0],
+                            metadata: {
+                                preShowStart: await preStart,
+                                mainShowStart: await mainStart,
+                                showEnd: await mainEnd
+                            }
                     }
-                });
+                })());
             } else if(!k.metadata) {
                 keyNames.push(k.name);
-                keys.push({
-                    name: k.name,
-                    metadata: await history.get(k.name, {type: 'json'})
-                });
+                keyPromises.push((async () => {
+                    return {
+                        name: k.name,
+                        metadata: await history.get(k.name, {type: 'json'})
+                    }
+                })());
             } else {
                 keyNames.push(k.name)
-                keys.push(k)
+                keyPromises.push(Promise.resolve(k));
             }
         }
         list_complete = list.list_complete;
         cursor = list.cursor;
     }
+
+    let keys = await Promise.all(keyPromises);
 
     keys = keys.sort((a, b) => new Date(b.name).getTime() - new Date(a.name).getTime());
 
@@ -82,3 +82,10 @@ export const GET = (async ({platform, params, locals}) => {
     });
 
 }) satisfies RequestHandler;
+
+type Key = {
+    name: string,
+    metadata: {
+        [key: string]: string | number
+    }
+}
