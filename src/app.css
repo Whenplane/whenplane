@@ -1,0 +1,21 @@
+/*place global styles here */
+html, body { @apply h-full; }
+
+.limit {
+    max-width: 800px;
+}
+
+h1,h2 {
+    margin-bottom: 0.25em;
+}
+
+#nprogress .spinner-icon {
+    border-top-color: #d4163c !important;
+    border-left-color: #d4163c !important;
+}
+#nprogress .peg {
+    box-shadow: 0 0 10px #d4163c, 0 0 5px #d4163c !important;
+}
+#nprogress .bar {
+    background: #d4163c !important;
+}

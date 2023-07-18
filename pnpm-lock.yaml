@@ -14,6 +14,9 @@ dependencies:
   luxon:
     specifier: ^3.3.0
     version: 3.3.0
+  nprogress:
+    specifier: ^0.2.0
+    version: 0.2.0
 
 devDependencies:
   '@playwright/test':
@@ -1854,6 +1857,10 @@ packages:
     dependencies:
       path-key: 4.0.0
     dev: true
+
+  /nprogress@0.2.0:
+    resolution: {integrity: sha512-I19aIingLgR1fmhftnbWWO3dXc0hSxqHQHQb3H8m+K3TnEn/iSeTZZOyvKXWqQESMwuUVnatlCnZdLBZZt2VSA==}
+    dev: false
 
   /npx-import@1.1.4:
     resolution: {integrity: sha512-3ShymTWOgqGyNlh5lMJAejLuIv3W1K3fbI5Ewc6YErZU3Sp0PqsNs8UIU1O8z5+KVl/Du5ag56Gza9vdorGEoA==}

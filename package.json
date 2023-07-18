@@ -40,8 +40,9 @@
 	},
 	"type": "module",
 	"dependencies": {
-		"@floating-ui/dom": "^1.2.7",
 		"@dimfeld/svelte-lazyload": "^0.0.4",
-		"luxon": "^3.3.0"
+		"@floating-ui/dom": "^1.2.7",
+		"luxon": "^3.3.0",
+		"nprogress": "^0.2.0"
 	}
 }

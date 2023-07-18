@@ -4,10 +4,36 @@
 	// If you have source.organizeImports set to true in VSCode, then it will auto change this ordering
 	import '@skeletonlabs/skeleton/styles/all.css';
 	// Most of your app wide CSS should be put in this file
-	import '../app.postcss';
+	import '../app.css';
 
     import { computePosition, autoUpdate, flip, shift, offset, arrow } from '@floating-ui/dom';
     import { storePopup } from '@skeletonlabs/skeleton';
+
+    import 'nprogress/nprogress.css';
+    import { navigating } from '$app/stores';
+    import NProgress from 'nprogress';
+
+    NProgress.configure({
+        // Full list: https://github.com/rstacruz/nprogress#configuration
+        minimum: 0.16,
+    });
+
+    let progressTimeout;
+
+    $: {
+        if ($navigating) {
+            if(progressTimeout) clearTimeout(progressTimeout);
+            progressTimeout = setTimeout(() => {
+                if ($navigating) {
+                    NProgress.start();
+                }
+            }, 150);
+        }
+        if (!$navigating) {
+            if(progressTimeout) clearTimeout(progressTimeout);
+            NProgress.done();
+        }
+    }
 
     storePopup.set({ computePosition, autoUpdate, flip, shift, offset, arrow });
 </script>
