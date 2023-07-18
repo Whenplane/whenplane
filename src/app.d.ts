@@ -13,6 +13,7 @@ declare namespace App {
             HISTORY: KVNamespace;
             META: KVNamespace;
             FETCHER: DurableObjectNamespace;
+            TWITCH_ANALYTICS?: AnalyticsEngineDataset;
         },
         context?: {
             /**

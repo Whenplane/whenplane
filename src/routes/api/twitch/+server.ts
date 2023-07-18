@@ -173,12 +173,25 @@ export const GET = (async ({platform, url}) => {
         fastCache.lastFetchData = twitchJSON;
     }
 
+    const remaining = twitchResponse.headers.get("Ratelimit-Remaining");
+
+    const analytics = platform.env?.TWITCH_ANALYTICS
+
+    if(analytics) {
+        analytics.writeDataPoint({
+            blobs: [],
+            doubles: [remaining],
+            indexes: []
+        });
+    }
+
+
     let debug;
     if(dev) {
         const reset = twitchResponse.headers.get("Ratelimit-Reset");
         debug = {
             limit: twitchResponse.headers.get("Ratelimit-Limit"),
-            remaining: twitchResponse.headers.get("Ratelimit-Remaining"),
+            remaining,
             reset,
             resetPretty: new Date(Number(reset) * 1000)
                 .toLocaleString('en-US', {timeZone: "America/Phoenix"})
