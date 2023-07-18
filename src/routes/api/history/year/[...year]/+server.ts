@@ -40,13 +40,18 @@ export const GET = (async ({platform, params, locals}) => {
             if(k.name.includes(":")) {
                 const parts = k.name.split(":");
                 if(keyNames.includes(parts[0])) continue;
+
+                const preStart = history.get(parts[0] + ":preShowStart");
+                const mainStart = history.get(parts[0] + ":mainShowStart");
+                const mainEnd = history.get(parts[0] + ":showEnd");
+
                 keyNames.push(parts[0]);
                 keys.push({
                     name: parts[0],
                     metadata: {
-                        preShowStart: await history.get(parts[0] + ":preShowStart"),
-                        mainShowStart: await history.get(parts[0] + ":mainShowStart"),
-                        showEnd: await history.get(parts[0] + ":showEnd")
+                        preShowStart: await preStart,
+                        mainShowStart: await mainStart,
+                        showEnd: await mainEnd
                     }
                 });
             } else if(!k.metadata) {
