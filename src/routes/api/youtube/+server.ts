@@ -21,10 +21,8 @@ let savedStartTime: boolean | undefined = undefined;
 
 export const GET = (async ({platform, locals, url}) => {
 
-    const cache = platform?.env?.CACHE;
     const history = platform?.env?.HISTORY;
     const fetcher = platform?.env?.FETCHER;
-    if(!cache) throw error(503, "Cache not available");
     if(!history) throw error(503, "History not available");
     if(!platform?.context) throw error(503, "Request context not available!");
 
