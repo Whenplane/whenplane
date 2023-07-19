@@ -33,6 +33,10 @@ export const GET = (async ({platform, params, locals}) => {
 
         lists++;
 
+        for(const k of list.keys) {
+            keyNames.push(k.name);
+        }
+
         for (const k of list.keys) {
             if(k.name.includes(":")) {
                 const parts = k.name.split(":");
@@ -53,7 +57,6 @@ export const GET = (async ({platform, params, locals}) => {
                     }
                 })());
             } else if(!k.metadata) {
-                keyNames.push(k.name);
                 keyPromises.push((async () => {
                     return {
                         name: k.name,
@@ -61,7 +64,6 @@ export const GET = (async ({platform, params, locals}) => {
                     }
                 })());
             } else {
-                keyNames.push(k.name)
                 keyPromises.push(Promise.resolve(k));
             }
         }
