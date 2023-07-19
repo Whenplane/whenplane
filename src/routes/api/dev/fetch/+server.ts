@@ -2,6 +2,7 @@ import type {RequestHandler} from "@sveltejs/kit";
 import {dev} from "$app/environment";
 import {error, json} from "@sveltejs/kit";
 import type {HistoricalEntry} from "$lib/oldHistory";
+import type {KVNamespace} from "@cloudflare/workers-types"
 
 /**
  * This route is for populating dev with data from prod

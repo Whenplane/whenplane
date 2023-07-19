@@ -19,6 +19,9 @@ dependencies:
     version: 0.2.0
 
 devDependencies:
+  '@cloudflare/workers-types':
+    specifier: ^4.20230717.0
+    version: 4.20230717.0
   '@playwright/test':
     specifier: ^1.28.1
     version: 1.28.1
@@ -99,8 +102,8 @@ packages:
     engines: {node: '>=10'}
     dev: true
 
-  /@cloudflare/workers-types@4.20230419.0:
-    resolution: {integrity: sha512-MfNBlHrI/ekRkbLtdAo23D4hkXF+3QD92OCwuXxCUK73HtMHuBqkMp9T/8KFbKNRCnz7PzUderc7Jr5m3eeW3g==}
+  /@cloudflare/workers-types@4.20230717.0:
+    resolution: {integrity: sha512-OJWM1s0n9Il+GjfHvZhEcUGC+qY9IsijMtzRBDRpwSUR2jTy1WdjS9+SEh7sJlNQX2WzHQCgJMGjH2lI/Tf+tQ==}
     dev: true
 
   /@dimfeld/svelte-lazyload@0.0.4:
@@ -615,7 +618,7 @@ packages:
     peerDependencies:
       '@sveltejs/kit': ^1.0.0
     dependencies:
-      '@cloudflare/workers-types': 4.20230419.0
+      '@cloudflare/workers-types': 4.20230717.0
       '@sveltejs/kit': 1.20.4(svelte@3.54.0)(vite@4.3.9)
       esbuild: 0.17.18
       worktop: 0.8.0-next.15
