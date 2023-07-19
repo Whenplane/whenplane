@@ -1,9 +1,21 @@
+<script>
+    import {fade} from "svelte/transition";
+    import {SlideToggle} from "@skeletonlabs/skeleton";
+    import {browser} from "$app/environment";
+
+    let scrollY = 0;
+
+    let noSpecialLateText = browser ? localStorage.getItem("no-special-late-text") === "true" : false;
+    $: if(browser) localStorage.setItem("no-special-late-text", noSpecialLateText + "");
+
+</script>
+<svelte:window bind:scrollY/>
 <svelte:head>
     <title>About WhenIsWan</title>
 </svelte:head>
 <div class="container h-full mx-auto flex justify-center items-center limit">
     <div class="space-y-5">
-        <div class="card p-4 inline-block countdown-box text-left m-2">
+        <div class="card p-4 inline-block text-left m-2">
             <h1 class="text-center">About</h1>
             This website was made so it can be easier to tell when the WAN is starting, without having to go back between twitch/youtube.
             <br>
@@ -29,11 +41,40 @@
         </div>
     </div>
 </div>
+
+
+<div class="limit mx-auto relative bottom-22 preferences-container text-center">
+    <div class="card p-4 inline-block text-left">
+        <h1 class="text-center">
+            Preferences
+        </h1>
+        <div class="text-center opacity-50 relative bottom-3">
+            {#if scrollY <= 10}
+                <span transition:fade>
+                    (scroll)
+                </span>
+            {:else}
+                &#8203;
+            {/if}
+        </div>
+
+        <SlideToggle active="bg-primary-500" size="sm" bind:checked={noSpecialLateText}>
+            Disable special "late" text
+        </SlideToggle>
+
+
+    </div>
+</div>
+
+
 <div class="absolute bottom-0 right-0 p-2">
     <a href="/">Back to Countdown</a>
 </div>
 <style>
     .danwan {
         height: 60px;
+    }
+    .preferences-container {
+
     }
 </style>

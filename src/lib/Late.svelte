@@ -1,5 +1,5 @@
 <script context="module" lang="ts">
-    import {writable} from "svelte/store";
+    import {get, writable} from "svelte/store";
     import {browser} from "$app/environment";
 
     const alternates = [
@@ -27,6 +27,13 @@
     }
 
     function newPhrase() {
+        const skip = localStorage.getItem("no-special-late-text") === "true";
+        if(skip && get(current) != "late") {
+            current.set("late");
+            return;
+        } else if(skip) {
+            return;
+        }
         current.set(alternates[Math.floor(Math.random() * alternates.length)]);
     }
 </script>

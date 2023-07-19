@@ -9,6 +9,10 @@ h1,h2 {
     margin-bottom: 0.25em;
 }
 
+.bottom-22 {
+    bottom: 5.5rem;
+}
+
 #nprogress .spinner-icon {
     border-top-color: #d4163c !important;
     border-left-color: #d4163c !important;
