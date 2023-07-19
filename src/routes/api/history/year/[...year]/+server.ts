@@ -69,7 +69,11 @@ export const GET = (async ({platform, params, locals}) => {
         cursor = list.cursor;
     }
 
+    const afterLoopStart = Date.now();
+
     let keys = await Promise.all(keyPromises);
+
+    locals.addTiming({id: "afterLoop", duration: Date.now() - afterLoopStart});
 
     keys = keys.sort((a, b) => new Date(b.name).getTime() - new Date(a.name).getTime());
 
