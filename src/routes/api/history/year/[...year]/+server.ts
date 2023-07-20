@@ -1,6 +1,8 @@
 import type {RequestHandler} from "@sveltejs/kit";
 import {error, json} from "@sveltejs/kit";
 
+const cacheTtl = 60 * 60 * 24 * 6; // cache single keys for 6 days if possible
+
 export const GET = (async ({platform, params, locals}) => {
     const history = platform?.env?.HISTORY;
     if(!history) throw error(503, "History not available");
@@ -44,9 +46,9 @@ export const GET = (async ({platform, params, locals}) => {
 
                 keyNames.push(parts[0]);
                 keyPromises.push((async () => {
-                    const preStart = history.get(parts[0] + ":preShowStart");
-                    const mainStart = history.get(parts[0] + ":mainShowStart");
-                    const mainEnd = history.get(parts[0] + ":showEnd");
+                    const preStart = history.get(parts[0] + ":preShowStart", {cacheTtl});
+                    const mainStart = history.get(parts[0] + ":mainShowStart", {cacheTtl});
+                    const mainEnd = history.get(parts[0] + ":showEnd", {cacheTtl});
                     return {
                         name: parts[0],
                             metadata: {
@@ -60,7 +62,7 @@ export const GET = (async ({platform, params, locals}) => {
                 keyPromises.push((async () => {
                     return {
                         name: k.name,
-                        metadata: await history.get(k.name, {type: 'json'})
+                        metadata: await history.get(k.name, {type: 'json', cacheTtl})
                     }
                 })());
             } else {
