@@ -24,7 +24,7 @@
     <br>
     <br>
 
-    <span class="opacity-50">
+    <span class="opacity-50 thats-all">
         <h2>That's all for now!</h2>
         More older shows will be added here eventually<br>
         <br>
@@ -38,5 +38,8 @@
 <style>
     .old-show-loading {
         padding-bottom: 90vh;
+    }
+    .thats-all {
+        padding-bottom: 20vh;
     }
 </style>
