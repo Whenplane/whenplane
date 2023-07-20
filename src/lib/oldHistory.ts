@@ -238,7 +238,48 @@ export const history: HistoricalEntry[] = [
             mainShowStart: "2022-10-07T23:40:38.000Z",
             showEnd: "2022-10-08T02:28:45.000Z"
         }
+    },
+    {
+        name: "2022/9/30",
+        metadata: {
+            preShowStart: "2022-10-01T01:53:56.000Z",
+            mainShowStart: "2022-10-01T02:02:27.000Z",
+            showEnd: "2022-10-01T04:54:40.000Z"
+        }
+    },
+    {
+        name: "2022/9/23",
+        metadata: {
+            preShowStart: "2022-09-24T00:45:03.000Z",
+            mainShowStart: "2022-09-24T00:59:11.000Z",
+            showEnd: "2022-09-24T03:37:43.000Z"
+        }
+    },
+    {
+        name: "2022/9/16",
+        metadata: {
+            preShowStart: "2022-09-17T00:29:29.000Z",
+            mainShowStart: "2022-09-17T00:41:47.000Z",
+            showEnd: "2022-09-17T03:25:52.000Z"
+        }
+    },
+    {
+        name: "2022/9/9",
+        metadata: {
+            preShowStart: "2022-09-10T00:31:24.000Z",
+            mainShowStart: "2022-09-10T00:43:03.000Z",
+            showEnd: "2022-09-10T03:34:17.000Z"
+        }
+    },
+    {
+        name: "2022/9/2",
+        metadata: {
+            preShowStart: "2022-09-03T00:43:37.000Z",
+            mainShowStart: "2022-09-03T01:08:32.000Z",
+            showEnd: "2022-09-03T03:23:10.000Z"
+        }
     }
+
 ];
 
 
