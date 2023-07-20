@@ -11,7 +11,7 @@ const makeAlwaysWAN = dev;
 let savedStartTime: boolean | undefined = undefined;
 let savedEndTime: boolean | undefined = undefined;
 
-let fastCache: {
+const fastCache: {
     lastFetch: number,
     lastFetchData: any
 } = {
@@ -181,7 +181,7 @@ export const GET = (async ({platform, url}) => {
     if(analytics) {
         analytics.writeDataPoint({
             blobs: [],
-            doubles: [remaining, (Number(reset) * 1000) - Date.now()],
+            doubles: [remaining, Math.max((Number(reset) * 1000) - Date.now(), 0)],
             indexes: []
         });
     }
