@@ -19,9 +19,9 @@
         let dateParts = date.split("-");
         let timeParts = timeAtTimeStamp.split(":");
         startsAt = DateTime.fromObject({
-            year: Number(dateParts[0]),
-            month: Number(dateParts[1]),
-            day: Number(dateParts[2]),
+            year: dateDate.year,
+            month: dateDate.month,
+            day: dateDate.day,
             hour: Number(timeParts[0]),
             minute: Number(timeParts[1]),
             second: Number(timeParts[2]) || 0
