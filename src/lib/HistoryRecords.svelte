@@ -31,7 +31,7 @@
                 Longest main show
             </LoadingRecord>
         {:then rec}
-            {#if dev && (!rec.closest || !rec.longestPreShow || !rec.longestShow || !rec.mostLate)}
+            {#if dev && (!rec.earliest || !rec.longestPreShow || !rec.longestShow || !rec.mostLate)}
             <span class="box">
                 <h2>Missing records</h2>
                 You're in dev but dont appear to have records loaded!<br>
@@ -40,7 +40,7 @@
             </span>
                 <br>
             {/if}
-            {#await rec.closest}
+            {#await rec.earliest}
                 <LoadingRecord>
                     Earliest Show
                 </LoadingRecord>

@@ -16,11 +16,11 @@ export const GET = (async ({platform, locals}) => {
 
     const totalStart = Date.now();
 
-    const closest = (async () => {
+    const earliest = (async () => {
         const start = Date.now();
         if(dev) await wait(random(testMin, testMax))
-        const r = await meta.get("closest", {type: "json", cacheTtl});
-        locals.addTiming({id: "closest", duration: Date.now() - start})
+        const r = await meta.get("earliest", {type: "json", cacheTtl});
+        locals.addTiming({id: "earliest", duration: Date.now() - start})
         return r;
     })()
 
@@ -49,7 +49,7 @@ export const GET = (async ({platform, locals}) => {
     })();
 
     const r = {
-        closest: await closest,
+        earliest: await earliest,
         longestPreShow: await longestPreShow,
         longestShow: await longestShow,
         mostLate: await mostLate
