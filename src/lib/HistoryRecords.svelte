@@ -45,7 +45,7 @@
                     Earliest Show
                 </LoadingRecord>
             {:then record}
-                <Record {record} late={record?.distance > 0} early={record?.distance <= 0}>
+                <Record {record} late={record?.distance < 0} early={record?.distance >= 0}>
                     Earliest show
                 </Record>
             {/await}
