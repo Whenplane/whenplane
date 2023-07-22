@@ -193,7 +193,10 @@ export const GET = (async ({platform, url}) => {
             remaining,
             reset,
             resetPretty: new Date(Number(reset) * 1000)
-                .toLocaleString('en-US', {timeZone: "America/Phoenix"})
+                .toLocaleString('en-US', {timeZone: "America/Phoenix"}),
+            other: {
+                ...Object.fromEntries(twitchResponse.headers)
+            }
         }
     }
 

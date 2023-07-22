@@ -2,11 +2,12 @@
 	import {getNextWAN} from "$lib/timeUtils";
 	import ShowCountdown, {mainLate} from "$lib/ShowCountdown.svelte";
 	import StreamStatus from "$lib/StreamStatus.svelte";
-	import {browser} from "$app/environment";
+	import {browser, dev} from "$app/environment";
 	import {invalidateAll} from "$app/navigation";
 	import {onMount} from "svelte";
 	import Late from "../lib/Late.svelte";
 	import type {Writable} from "svelte/store";
+	import {page} from "$app/stores";
 
 	export let data;
 
@@ -114,6 +115,20 @@
 <div class="absolute bottom-0 right-0 p-2">
 	<a href="/about">About</a>
 </div>
+
+
+{#if dev || $page.url.hostname === "wheniswan.pages.dev"}
+	<div class="fixed top-0 w-screen text-center">
+		<div class="card inline-block p-2 mt-2">
+			This site has a proper domain now!
+			<br>
+			<a href="https://whenplane.com">
+				Consider using it
+			</a>
+			:)
+		</div>
+	</div>
+{/if}
 
 <style>
 	.countdown-box {
