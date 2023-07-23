@@ -3,6 +3,7 @@
     import OldHistory from "$lib/OldHistory.svelte";
     import {dev} from "$app/environment";
     import HistoryRecords from "$lib/HistoryRecords.svelte";
+    import LinusFace from "$lib/LinusFace.svelte";
 
     export let data;
 
@@ -27,6 +28,7 @@
         {#if dev}
             <hr>
         {/if}
+        <LinusFace/>
         <OldHistory/>
         <br>
         <br>
