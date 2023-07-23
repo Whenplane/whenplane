@@ -1,6 +1,12 @@
-<div>
-    <img src="/linus.webp" alt="linus face">
-</div>
+<script>
+    import LazyLoad from "@dimfeld/svelte-lazyload";
+</script>
+
+<LazyLoad>
+    <div>
+        <img src="/linus.webp" alt="linus face">
+    </div>
+</LazyLoad>
 <style>
     div {
         display: inline-block;
