@@ -10,7 +10,7 @@
     import { storePopup } from '@skeletonlabs/skeleton';
 
     import 'nprogress/nprogress.css';
-    import { navigating } from '$app/stores';
+    import {navigating, page} from '$app/stores';
     import NProgress from 'nprogress';
 
     NProgress.configure({
@@ -39,7 +39,9 @@
 </script>
 
 <svelte:head>
-    <meta name="description" content="When is WAN? Who knows! At least you can look at when it started before..">
+    {#if !$page.url.pathname.startsWith("/history/show/")}
+        <meta name="description" content="When is WAN? Who knows! At least you can look at when it started before..">
+    {/if}
 </svelte:head>
 
 <slot />

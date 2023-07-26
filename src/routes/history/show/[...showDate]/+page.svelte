@@ -3,14 +3,20 @@
     import {getClosestWan} from "$lib/timeUtils";
     import Floatplane from "$lib/svg/Floatplane.svelte";
     import Youtube from "$lib/svg/Youtube.svelte";
+    import {getTimeUntil} from "$lib/timeUtils";
 
     export let data;
 
     const showDate = getClosestWan(new Date(data.metadata.preShowStart ?? data.metadata.mainShowStart));
+
+    let onTimeUntil = data.metadata.mainShowStart ? getTimeUntil(showDate, new Date(data.metadata.mainShowStart).getTime()) : null;
+
+    let onTimeString;
+    $: if(onTimeUntil) onTimeString = onTimeUntil.distance < 5 * 60e3 ? "on time!" : (onTimeUntil.late ? onTimeUntil.string + "late" : onTimeUntil.string + "early!");
 </script>
 <svelte:head>
     <title>{data.metadata.title ?? ""}{data.metadata.title ? " - " : ""}WAN Show {showDate.toLocaleDateString()}</title>
-    <meta name="description" content="WAN show from {showDate.toLocaleDateString(undefined, {dateStyle: 'long'})}">
+    <meta name="description" content="WAN show from {showDate.toLocaleDateString(undefined, {dateStyle: 'long'})}. {onTimeString ? 'It was ' + onTimeString : ''}">
 </svelte:head>
 
 <!--<pre>{JSON.stringify(data, null, "\t")}</pre>-->
@@ -25,7 +31,7 @@
         <h2>{data.metadata.title}</h2>
     {/if}
 
-    <HistoricalShow onlyTimes={true} show={data}/>
+    <HistoricalShow onlyTimes={true} show={data} bind:onTimeUntil={onTimeUntil}/>
     <br>
 
     {#if data.metadata.vods?.floatplane}

@@ -23,4 +23,6 @@ export const load = (async ({platform, params}) => {
         }
     }
 
+    return error(404, "Show not found")
+
 }) satisfies ServerLoad
