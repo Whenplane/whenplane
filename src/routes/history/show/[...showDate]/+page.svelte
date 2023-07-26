@@ -10,6 +10,7 @@
 </script>
 <svelte:head>
     <title>{data.metadata.title ?? ""}{data.metadata.title ? " - " : ""}WAN Show {showDate.toLocaleDateString()}</title>
+    <meta name="description" content="WAN show from {showDate.toLocaleDateString(undefined, {dateStyle: 'long'})}">
 </svelte:head>
 
 <!--<pre>{JSON.stringify(data, null, "\t")}</pre>-->
