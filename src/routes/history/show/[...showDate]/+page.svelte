@@ -17,6 +17,9 @@
 <svelte:head>
     <title>{data.metadata.title ?? ""}{data.metadata.title ? " - " : ""}WAN Show {showDate.toLocaleDateString()}</title>
     <meta name="description" content="WAN show from {showDate.toLocaleDateString(undefined, {dateStyle: 'long'})}. {onTimeString ? 'It was ' + onTimeString : ''}">
+    {#if data.metadata.snippet?.thumbnails?.maxres}
+        <meta property="og:image" content={data.metadata.snippet?.thumbnails?.maxres.url}>
+    {/if}
 </svelte:head>
 
 <!--<pre>{JSON.stringify(data, null, "\t")}</pre>-->
