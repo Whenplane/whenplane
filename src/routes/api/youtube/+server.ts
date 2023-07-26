@@ -50,7 +50,7 @@ export const GET = (async ({platform, locals, url}) => {
     }
 
     const doStart = Date.now();
-    const {isLive, isWAN, started} = await stub.fetch("https://wheniswan-fetcher.ajg.workers.dev/youtube")
+    const {isLive, isWAN, started, videoId} = await stub.fetch("https://wheniswan-fetcher.ajg.workers.dev/youtube")
         // eslint-disable-next-line @typescript-eslint/ban-ts-comment
         //@ts-ignore
         .then(r => r.json());
@@ -80,7 +80,8 @@ export const GET = (async ({platform, locals, url}) => {
     const result = {
         isLive,
         isWAN,
-        started
+        started,
+        videoId
     };
 
     cache.value = result
