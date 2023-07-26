@@ -13,6 +13,11 @@ h1,h2 {
     bottom: 5.5rem;
 }
 
+.hidden-link {
+    color: inherit !important;
+    text-decoration: inherit !important;
+}
+
 #nprogress .spinner-icon {
     border-top-color: #d4163c !important;
     border-left-color: #d4163c !important;

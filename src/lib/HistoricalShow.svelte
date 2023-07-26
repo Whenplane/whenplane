@@ -4,11 +4,15 @@
 
     export let show;
 
+    export let onlyTimes = false;
+
+    $: href = onlyTimes ? undefined : "/history/show/" + show.name;
+
     const preShowStart = new Date(show.metadata.preShowStart);
     const mainShowStart = show.metadata.mainShowStart ? new Date(show.metadata.mainShowStart) : show.metadata.mainShowStart;
     const showEnd = show.metadata.showEnd ? new Date(show.metadata.showEnd) : show.metadata.showEnd;
 
-    const showDate = getClosestWan(new Date(preShowStart));
+    const showDate = getClosestWan(new Date(preShowStart ?? mainShowStart));
 
     const preShowLength = preShowStart && mainShowStart ? getTimeUntil(mainShowStart, preShowStart.getTime()).string : null;
     const mainShowLength = mainShowStart && showEnd ? getTimeUntil(showEnd, mainShowStart.getTime()).string : null;
@@ -17,8 +21,13 @@
     const onTime = mainShowStart ? getTimeUntil(showDate, mainShowStart.getTime()) : null;
 </script>
 
-<div class="card inline-block limit p-3 m-2 w-full">
-    <h3>{showDate.toLocaleDateString()}</h3>
+<a class:card={!onlyTimes} class="inline-block limit p-3 m-2 w-full hidden-link" {href}>
+    {#if !onlyTimes}
+        <h3>{showDate.toLocaleDateString()}</h3>
+        {#if show.metadata.title}
+            <h4>{show.metadata.title}</h4>
+        {/if}
+    {/if}
     <span class="hidden">name date (for debugging purposes): {show.name}</span>
     <hr>
     <div class="inline-block mr-2">
@@ -104,7 +113,7 @@
             N/A
         </span>
     {/if}
-</div>
+</a>
 <style>
     .red {
         color: red;
