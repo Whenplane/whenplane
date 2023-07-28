@@ -50,7 +50,7 @@ export const GET = (async ({platform, locals, url}) => {
     }
 
     const doStart = Date.now();
-    const {isLive, isWAN, started, videoId} = await stub.fetch("https://wheniswan-fetcher.ajg.workers.dev/youtube")
+    const {isLive, isWAN, started, videoId, snippet} = await stub.fetch("https://wheniswan-fetcher.ajg.workers.dev/youtube")
         // eslint-disable-next-line @typescript-eslint/ban-ts-comment
         //@ts-ignore
         .then(r => r.json());
@@ -64,12 +64,14 @@ export const GET = (async ({platform, locals, url}) => {
             platform.context.waitUntil((async () => {
                 const kvStartTime = await history.get(getUTCDate(closestWAN) + ":mainShowStart");
                 if(!kvStartTime) {
-                    await history.put(getUTCDate(getClosestWan()) + ":mainShowStart", started, {
-                        // Expire this key after 15 days to save space over time.
-                        // It should be collapsed into a single object at the end of the stream, so no data should be lost.\
-                        // The collapsing is done in a scheduled worker
-                        expirationTtl: 15 * 24 * 60 * 60
-                    });
+                    // Expire these keys after 15 days to save space over time.
+                    // It should be collapsed into a single object at the end of the stream, so no data should be lost.
+                    // The collapsing is done in a scheduled worker
+                    const expirationTtl = 15 * 24 * 60 * 60
+                    const date = getUTCDate(getClosestWan());
+                    await history.put(date + ":mainShowStart", started, {expirationTtl});
+                    await history.put(date + ":videoId", videoId, {expirationTtl});
+                    await history.put(date + ":snippet", snippet, {expirationTtl});
                 }
             })());
             savedStartTime = true;
