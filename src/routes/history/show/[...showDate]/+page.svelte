@@ -37,6 +37,15 @@
     <HistoricalShow onlyTimes={true} show={data} bind:onTimeUntil={onTimeUntil}/>
     <br>
 
+    {#if !data.metadata.snippet}
+        This show doesn't currently have extra metadata (thumbnails, titles, and possibly vod links).
+        <br>
+        It may be added in the future. Feel free to ping aj asking him to add extra metadata for this show!
+        <br>
+        <br>
+        Shows after July 28th, 2023 should have this extra metadata added automatically, but if it broke somehow, please ping aj!
+    {/if}
+
     {#if data.metadata.vods?.floatplane}
         <a href="https://floatplane.com/post/{data.metadata.vods.floatplane}" target="_blank" rel="noreferrer">
             <Floatplane/> VOD on Floatplane
