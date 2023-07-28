@@ -116,7 +116,7 @@
 </div>
 
 
-{#if dev || $page.url.hostname === "wheniswan.pages.dev"}
+{#if dev || $page.url.hostname.includes("wheniswan.pages.dev")}
 	<div class="fixed top-0 w-screen text-center">
 		<div class="card inline-block p-2 mt-2">
 			This site has a proper domain now!

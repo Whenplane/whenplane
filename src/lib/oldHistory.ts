@@ -1,10 +1,42 @@
 export const history: HistoricalEntry[] = [
     {
-        name: "2023/05/05",
+        name: "2023/5/5",
         metadata: {
             preShowStart: "2023-05-06T00:47:34.000Z",
             mainShowStart: "2023-05-06T00:55:19.000Z",
-            showEnd: "2023-05-06T04:00:35.000Z"
+            showEnd: "2023-05-06T04:00:35.000Z",
+            title: "I'm Changing My Name",
+            vods: {
+                floatplane: "j13AAZkNwN",
+                youtube: "ZQ1EoGui-fA"
+            },
+            snippet: {
+                "publishedAt": "2023-05-06T04:15:34Z",
+                "channelId": "UCXuqSBlHAE6Xw-yeJA0Tunw",
+                "title": "I'm Changing My Name - WAN Show May 5, 2023",
+                "thumbnails": {
+                    "maxres": {
+                        "url": "https://i.ytimg.com/vi/ZQ1EoGui-fA/maxresdefault.jpg",
+                        "width": 1280,
+                        "height": 720
+                    }
+                },
+                "channelTitle": "Linus Tech Tips",
+                "tags": [
+                    "pcmr",
+                    "building",
+                    "competition",
+                    "gamers",
+                    "how to",
+                    "review",
+                    "intel",
+                    "amd",
+                    "cpu",
+                    "gpu",
+                    "gaming"
+                ],
+                "categoryId": "28",
+            }
         }
     },
     {
@@ -363,6 +395,33 @@ export type HistoricalEntry = {
     metadata: {
         preShowStart: string,
         mainShowStart: string,
-        showEnd: string
+        showEnd: string,
+        title?: string,
+        vods?: {
+            floatplane?: string,
+            youtube: string
+        },
+        snippet?: {
+            publishedAt: string,
+            channelId: string,
+            title: string,
+            description?: string,
+            thumbnails: {
+                default?: YoutubeThumbnail,
+                medium?: YoutubeThumbnail,
+                high?: YoutubeThumbnail,
+                standard?: YoutubeThumbnail,
+                maxres: YoutubeThumbnail
+            },
+            channelTitle: string,
+            tags?: string[],
+            categoryId?: string
+        }
     }
+}
+
+type YoutubeThumbnail = {
+    url: string,
+    width: number,
+    height: number
 }
