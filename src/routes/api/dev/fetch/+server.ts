@@ -26,8 +26,15 @@ async function putHistory(history: KVNamespace) {
     const prodData = await fetch("https://wheniswan.pages.dev/api/history/year/all")
         .then(r => r.json()) as HistoricalEntry[];
 
+
     for (const show of prodData) {
-        await history.put(show.name, JSON.stringify(show.metadata), {metadata: show.metadata})
+        const response = await fetch("https://wheniswan.pages.dev/api/history/show/" + show.name);
+        if(response.status != 200) {
+            console.warn("Skipping '" + show.name + "' due to " + response.status + " " + response.statusText);
+            continue;
+        }
+        const data = await response.json();
+        await history.put(show.name, JSON.stringify(data.value), {metadata: data.metadata})
     }
 }
 

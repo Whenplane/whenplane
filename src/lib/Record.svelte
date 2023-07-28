@@ -23,7 +23,9 @@
         </span>
         <br>
         <span class="small">
-            {getClosestWan(new Date(record.name)).toLocaleDateString()}
+            <a href="/history/show/{record.name}" class="hidden-link underline">
+                {getClosestWan(new Date(record.name)).toLocaleDateString()}
+            </a>
         </span>
     {:else if loading}
         <span class="placeholder animate-pulse inline-block w-48"></span>

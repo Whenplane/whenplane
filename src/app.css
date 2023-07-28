@@ -18,6 +18,10 @@ h1,h2 {
     text-decoration: inherit !important;
 }
 
+.hidden-link.underline:hover {
+    text-decoration: underline !important;
+}
+
 #nprogress .spinner-icon {
     border-top-color: #d4163c !important;
     border-left-color: #d4163c !important;

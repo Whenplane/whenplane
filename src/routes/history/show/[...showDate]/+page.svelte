@@ -17,8 +17,8 @@
 <svelte:head>
     <title>{data.metadata.title ?? ""}{data.metadata.title ? " - " : ""}WAN Show {showDate.toLocaleDateString()}</title>
     <meta name="description" content="WAN show from {showDate.toLocaleDateString(undefined, {dateStyle: 'long'})}. {onTimeString ? 'It was ' + onTimeString : ''}">
-    {#if data.metadata.snippet?.thumbnails?.maxres}
-        <meta property="og:image" content={data.metadata.snippet?.thumbnails?.maxres.url}>
+    {#if data.value?.snippet?.thumbnails?.maxres}
+        <meta property="og:image" content={data.value.snippet?.thumbnails?.maxres.url}>
     {/if}
 </svelte:head>
 
@@ -26,9 +26,9 @@
 
 <div class="text-center limit mx-auto big-wrapper">
     <h1>{showDate.toLocaleDateString(undefined, {dateStyle: "long"})}</h1>
-    {#if data.metadata.snippet?.thumbnails?.maxres}
+    {#if data.value?.snippet?.thumbnails?.maxres}
         <br>
-        <img class="thumbnail" src={data.metadata.snippet?.thumbnails?.maxres.url} alt="Thumbnail for show"/>
+        <img class="thumbnail" src={data.value?.snippet?.thumbnails?.maxres.url} alt="Thumbnail for show"/>
     {/if}
     {#if data.metadata.title}
         <h2>{data.metadata.title}</h2>
@@ -37,7 +37,7 @@
     <HistoricalShow onlyTimes={true} show={data} bind:onTimeUntil={onTimeUntil}/>
     <br>
 
-    {#if !data.metadata.snippet}
+    {#if !data.value?.snippet}
         This show doesn't currently have extra metadata (thumbnails, titles, and possibly vod links).
         <br>
         It may be added in the future. Feel free to ping aj asking him to add extra metadata for this show!
