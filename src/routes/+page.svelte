@@ -6,7 +6,6 @@
 	import {invalidateAll} from "$app/navigation";
 	import {onMount} from "svelte";
 	import Late from "../lib/Late.svelte";
-	import type {Writable} from "svelte/store";
 	import {page} from "$app/stores";
 
 	export let data;
@@ -27,7 +26,7 @@
 	// Periodically invalidate the data so that SvelteKit goes and fetches it again for us
 	function startInvalidationInterval() {
 		if(invalidationInterval) clearInterval(invalidationInterval);
-		// VS code is getting the setInterval type from NodeJS, so we need to override it
+		// VS code is getting the setInterval type from Node.js, so we need to override it
 		invalidationInterval = setInterval(invalidate, 5e3) as unknown as number;
 
 		// go ahead and invalidate if it's been a bit since the last one
