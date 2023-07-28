@@ -23,6 +23,7 @@ export const GET = (async ({platform, params}) => {
     const oldHistory = await import("$lib/oldHistory");
     for (const oldShow of oldHistory.history) {
         if(oldShow.name == params.showDate) {
+            oldShow.value = structuredClone(oldShow.metadata)
             return json(oldShow);
         }
     }
