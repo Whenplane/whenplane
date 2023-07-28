@@ -3,7 +3,7 @@ import {error, json} from "@sveltejs/kit";
 import {getClosestWan, getUTCDate} from "$lib/timeUtils";
 import {dev} from "$app/environment";
 
-const cacheTime = 5000; // Fetch from fetcher no more than once every 5 seconds
+const cacheTime = 4750; // Fetch from fetcher no more than once every (just under) 5 seconds
 
 
 const cache: {
@@ -51,8 +51,6 @@ export const GET = (async ({platform, locals, url}) => {
 
     const doStart = Date.now();
     const {isLive, isWAN, started, videoId, snippet} = await stub.fetch("https://wheniswan-fetcher.ajg.workers.dev/youtube")
-        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-        //@ts-ignore
         .then(r => r.json());
     locals.addTiming({id: 'doFetch', duration: Date.now() - doStart})
 
