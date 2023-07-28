@@ -10,7 +10,7 @@ export const GET = (async ({platform, params}) => {
 
     if(kvShowInfo.value) {
         if(!kvShowInfo.metadata) {
-            kvShowInfo.metadata = kvShowInfo.value;
+            kvShowInfo.metadata = structuredClone(kvShowInfo.value);
             kvShowInfo.metadata.snippet = undefined;
         }
         return json({
