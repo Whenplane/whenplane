@@ -9,6 +9,10 @@ export const GET = (async ({platform, params}) => {
     const kvShowInfo = await history.getWithMetadata(params.showDate, {type: 'json'});
 
     if(kvShowInfo.value) {
+        if(!kvShowInfo.metadata) {
+            kvShowInfo.metadata = kvShowInfo.value;
+            kvShowInfo.metadata.snippet = undefined;
+        }
         return json({
             name: params.showDate,
             metadata: kvShowInfo.metadata,
