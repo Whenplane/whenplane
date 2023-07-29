@@ -1,3 +1,5 @@
+import type {HistoricalEntry} from "$lib/utils";
+
 export const history: HistoricalEntry[] = [
     {
         name: "2023/5/5",
@@ -449,48 +451,4 @@ export const history: HistoricalEntry[] = [
             showEnd: "2022-07-02T02:00:49.000Z"
         }
     }
-
-
-
 ];
-
-
-
-export type HistoricalEntry = {
-    name: string,
-    metadata: OldShowMeta,
-    value?: OldShowMeta
-}
-
-type OldShowMeta = {
-    preShowStart: string,
-    mainShowStart: string,
-    showEnd: string,
-    title?: string,
-    vods?: {
-        floatplane?: string,
-        youtube: string
-    },
-    snippet?: {
-        publishedAt: string,
-        channelId: string,
-        title: string,
-        description?: string,
-        thumbnails: {
-            default?: YoutubeThumbnail,
-            medium?: YoutubeThumbnail,
-            high?: YoutubeThumbnail,
-            standard?: YoutubeThumbnail,
-            maxres: YoutubeThumbnail
-        },
-        channelTitle: string,
-        tags?: string[],
-        categoryId?: string
-    }
-}
-
-type YoutubeThumbnail = {
-    url: string,
-    width: number,
-    height: number
-}
