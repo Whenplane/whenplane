@@ -6,7 +6,12 @@ export function isBefore(a: Date, b: Date): boolean {
 }
 
 export function getNextWAN(now = new Date(), buffer = true, hasDone?: boolean): Date {
-    let wanDate = getLooseWAN(now);
+    const adjustedNow = now;
+    // Adjust 'now' for loose wan for LTX
+    if(adjustedNow.getFullYear() == 2023 && adjustedNow.getMonth() == 6 && adjustedNow.getDate() == 29) {
+        adjustedNow.setDate(adjustedNow.getDate() - 1);
+    }
+    let wanDate = getLooseWAN(adjustedNow);
 
     while(wanDate.weekday !== 5 && !isNaN(wanDate.weekday)) {
         wanDate = wanDate.plus({days: 1});
