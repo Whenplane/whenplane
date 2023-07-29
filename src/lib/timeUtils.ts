@@ -63,6 +63,7 @@ export function getPreviousWAN(now = new Date(), luxon = false): Date | DateTime
 }
 
 function getLooseWAN(now = new Date()) {
+    let year = now.getUTCFullYear();
     let month = now.getUTCMonth() + 1;
     let day = now.getUTCHours() <= 3 ? now.getUTCDate() - 1 : now.getUTCDate();
 
@@ -71,9 +72,15 @@ function getLooseWAN(now = new Date()) {
         day = daysInMonth(now.getFullYear(), month) + day;
     }
 
+    if(month <= 0) {
+        year -= 1;
+        month += 12;
+        day = daysInMonth(now.getFullYear(), month);
+    }
+
     return DateTime.fromObject(
         {
-            year: now.getFullYear(),
+            year,
             month,
             day,
             hour: 16,
