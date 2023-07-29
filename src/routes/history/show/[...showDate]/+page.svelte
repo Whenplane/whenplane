@@ -7,6 +7,12 @@
 
     export let data;
 
+    const thumbnail = data.value?.snippet?.thumbnails?.maxres ??
+        data.value?.snippet?.thumbnails?.standard ??
+        data.value?.snippet?.thumbnails?.high ??
+        data.value?.snippet?.thumbnails?.medium ??
+        data.value?.snippet?.thumbnails?.default
+
     const showDate = getClosestWan(new Date(data.metadata.preShowStart ?? data.metadata.mainShowStart));
 
     let onTimeUntil = data.metadata.mainShowStart ? getTimeUntil(showDate, new Date(data.metadata.mainShowStart).getTime()) : null;
@@ -17,8 +23,8 @@
 <svelte:head>
     <title>{data.metadata.title ?? ""}{data.metadata.title ? " - " : ""}WAN Show {showDate.toLocaleDateString()}</title>
     <meta name="description" content="WAN show from {showDate.toLocaleDateString(undefined, {dateStyle: 'long'})}. {onTimeString ? 'It was ' + onTimeString : ''}">
-    {#if data.value?.snippet?.thumbnails?.maxres}
-        <meta property="og:image" content={data.value.snippet?.thumbnails?.maxres.url}>
+    {#if thumbnail?.maxres}
+        <meta property="og:image" content={thumbnail.url}>
     {/if}
 </svelte:head>
 
@@ -26,9 +32,9 @@
 
 <div class="text-center limit mx-auto big-wrapper">
     <h1>{showDate.toLocaleDateString(undefined, {dateStyle: "long"})}</h1>
-    {#if data.value?.snippet?.thumbnails?.maxres}
+    {#if thumbnail}
         <br>
-        <img class="thumbnail" src={data.value?.snippet?.thumbnails?.maxres.url} alt="Thumbnail for show"/>
+        <img class="thumbnail" src={thumbnail.url} alt="Thumbnail for show"/>
     {/if}
     {#if data.metadata.title}
         <h2>{data.metadata.title}</h2>
