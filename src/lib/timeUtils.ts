@@ -111,6 +111,11 @@ export function getClosestWan(now = new Date()) {
 }
 
 export function getUTCDate(date = new Date()) {
+    date = new Date(date); // clone since it might be modified
+    if(date.getHours() < 2) {
+        // ensure the timezones dont mess with the date
+        date.setDate(date.getDate() - 1)
+    }
     const month = addZero(date.getUTCMonth() + 1);
     const day = addZero(date.getUTCDate());
     return date.getUTCFullYear() + "/" + month + "/" + day;

@@ -30,7 +30,11 @@ if(!await fileExists(youtubeDataPath)) {
     console.log("Youtube data already exists. Skipping download");
 }
 
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+// @ts-ignore
 const floatplaneData = (await import("./floatplane-wan-vods.json", {assert: {type: 'json'}})).default as unknown as {[key: string]: FloatplanePost};
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+// @ts-ignore
 const youtubeData = (await import("./youtube-wan-vods.json", {assert: {type: 'json'}})).default as unknown as {[key: string]: SpecificData};
 
 const floatplaneNumber = Object.keys(floatplaneData).length;
