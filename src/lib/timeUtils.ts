@@ -17,7 +17,7 @@ export function getNextWAN(now = new Date(), buffer = true, hasDone?: boolean): 
         wanDate = wanDate.plus({days: 1});
     }
 
-    if(isNaN(wanDate.weekday)) throw new Error("Bad weekday from " + wanDate.toString())
+    if(isNaN(wanDate.weekday)) throw new Error("Bad weekday from " + wanDate.toString() + " while processing " + now)
 
     let shouldStay: boolean;
     if (buffer) {
