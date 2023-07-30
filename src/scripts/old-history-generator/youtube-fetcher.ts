@@ -3,7 +3,7 @@
 import type {OldShowMeta} from "../../lib/utils.ts";
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-ignore
-import {getClosestWan, getUTCDate} from "../../lib/timeUtils.ts";
+import {getClosestWan, getPreviousWAN, getUTCDate} from "../../lib/timeUtils.ts";
 import fs from "node:fs/promises";
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-ignore
@@ -70,10 +70,13 @@ export async function fetchYoutubeShows() {
             const specificData = await specificResponse.json() as YoutubeSpecificResponse;
 
             for (const video of specificData.items) {
-                if(!video.liveStreamingDetails) continue;
                 const publishedAt = video.snippet?.publishedAt;
                 if(!publishedAt) continue;
-                const date = getClosestWan(new Date(publishedAt));
+                const date = getPreviousWAN(new Date(publishedAt)) as Date;
+
+                if(!video.liveStreamingDetails) {
+                    console.warn("Skipping " + getUTCDate(date) + " due to missing liveStreamingDetails!")
+                }
 
                 // Only record videos that were posted before auto-recording started
                 if(date.getTime() > 1683934200000) continue;

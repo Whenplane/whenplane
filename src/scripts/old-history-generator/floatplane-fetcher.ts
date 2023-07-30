@@ -3,7 +3,7 @@
 import {random, wait} from "../../lib/utils.ts";
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-ignore
-import {getClosestWan, getUTCDate} from "../../lib/timeUtils.ts";
+import {getClosestWan, getPreviousWAN, getUTCDate} from "../../lib/timeUtils.ts";
 import fs from 'node:fs/promises';
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-ignore
@@ -35,7 +35,7 @@ export async function fetchFloatplaneShows() {
             }
             for (const video of data) {
                 if(!video.title.includes("- WAN Show")) continue;
-                const date = getClosestWan(new Date(video.releaseDate));
+                const date = getPreviousWAN(new Date(video.releaseDate)) as Date;
 
                 // Only record videos that were posted before auto-recording started
                 if(date.getTime() > 1683934200000) continue;
