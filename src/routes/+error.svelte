@@ -1,11 +1,13 @@
 <script>
     import {page} from "$app/stores";
 
-    let alt = "\"This is Awkward\" - Thumbnail from March 21st, 2021"
+    let alt = "\"This is Awkward\" - Thumbnail from March 12th, 2021"
 </script>
 
-<div class="text-center">
-    <img src="/this_is_awkward.jpg" {alt} title={alt}/>
+<div class="text-center pt-16">
+    <a href="/history/show/2021/03/12" class="inline-block">
+        <img src="/this_is_awkward.jpg" {alt} title={alt}/>
+    </a>
     <h1>{$page.status}</h1>
     {$page.error.message}
 </div>
@@ -15,8 +17,6 @@
         margin-top: 2rem;
     }
     img {
-        margin-top: 4rem;
-        @apply mx-auto;
         height: 50vh;
     }
     
