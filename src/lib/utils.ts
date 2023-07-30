@@ -35,7 +35,7 @@ export type OldShowMeta = {
             medium?: YoutubeThumbnail,
             high?: YoutubeThumbnail,
             standard?: YoutubeThumbnail,
-            maxres: YoutubeThumbnail
+            maxres?: YoutubeThumbnail
         },
         channelTitle: string,
         tags?: string[],
