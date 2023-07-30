@@ -34,8 +34,23 @@ export async function fetchFloatplaneShows() {
                 break;
             }
             for (const video of data) {
-                if(!video.title.includes("- WAN Show")) continue;
-                const date = getPreviousWAN(new Date(video.releaseDate)) as Date;
+                let wanSplitter = "-";
+                if(!video.title.includes(wanSplitter + " WAN Show")) {
+                    wanSplitter = "–";
+                    if(!video.title.includes(wanSplitter + " WAN Show")) {
+                        console.log("'" + video.title + "' is not wan!")
+                        continue;
+                    }
+                }
+
+                let extractedDate = video.title.split(wanSplitter + " WAN Show ")[1];
+
+                // Some vods have stuff after the date we don't want, so we need to filter
+                const lastNumbers = last(extractedDate.match(/(20[1-9][0-9])/g) || []);
+                if(!lastNumbers) continue;
+                extractedDate = extractedDate.substring(0, extractedDate.lastIndexOf(lastNumbers) + 4);
+
+                const date = getClosestWan(new Date(extractedDate)) as Date;
 
                 // Only record videos that were posted before auto-recording started
                 if(date.getTime() > 1683934200000) continue;
@@ -61,6 +76,11 @@ export async function fetchFloatplaneShows() {
     await fs.writeFile(floatplaneDataPath, JSON.stringify(showVods, undefined, '\t'))
 
     console.log("Done fetching floatplane vods!");
+}
+
+function last<Type>(array: Type[]) {
+    if(array.length == 0) return undefined;
+    return array[array.length - 1];
 }
 
 export type FloatplanePost = {

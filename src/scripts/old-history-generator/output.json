@@ -1904,6 +1904,74 @@
 		}
 	},
 	{
+		"name": "2022/10/07",
+		"metadata": {
+			"preShowStart": "2022-10-07T23:32:42.000Z",
+			"mainShowStart": "2022-10-07T23:40:54Z",
+			"showEnd": "2022-10-08T02:28:50Z",
+			"title": "4K YouTube Is Getting PAYWALLED",
+			"vods": {
+				"floatplane": "9c8Dg8lKjx",
+				"youtube": "ltyntSIVsjA"
+			},
+			"snippet": {
+				"publishedAt": "2022-10-08T02:41:01Z",
+				"channelId": "UCXuqSBlHAE6Xw-yeJA0Tunw",
+				"title": "4K YouTube Is Getting PAYWALLED - WAN Show October 7, 2022",
+				"description": "Try Zoho One free for 30 days with no credit card required here: https://www.zoho.com/one/lp/linus.html\nSave 10% off your Savage Jerky order today with code WANSHOW22 at https://savagejerky.com/ltt\nVisit https://www.squarespace.com/WAN and use offer code WAN for 10% off\n\nPodcast Download: https://anchor.fm/thewanshowpodcast/episodes/4K-YouTube-Is-Getting-PAYWALLED---WAN-Show-October-7--2022-e1p2sgr\n\nTimestamps: (Courtesy of NoKi1119)\n0:00 Chapters\n0:50 Intro\n1:19 Topic #1 - YouTube restricts 4K to Premium\n3:58 2160p, 10 ads & YouTube's statement\n6:56 Chrome's Manifest V3\n10:06 4K as premium only? discussing FP, costs, services\n24:52 Lack of competition, accessibility, renting from a library\n40:49 LTTStore screw-top lid, golden ABC's plush, swim trunks sale\n44:10 Topic #2 - Intel Arc GPUs\n45:08 Pricing, unstable gaming experience\n47:46 Experience with iGPU, discussing past gens\n55:44 Intel is THE competitor, 30 day Arc challenge\n1:02:06 Luke hasn't seen any 4090 in person\n1:02:30 Sponsor - Zoho One\n1:03:27 Sponsor - Squarespace\n1:04:48 Sponsor - Savage Jerky\n1:06:34 Topic #3 - NVIDIA's ridiculously HUGE GPUs\n1:08:08 Luke reacts to the Founders Edition\n1:09:08 ASUS's ROG Strix series\n1:10:52 ZOTAC's GAMING series\n1:11:42 Linus returns with a 1080 to compare\n1:13:02 MSI's SUPRIM X series\n1:13:38 iGame's Vulcan series\n1:16:10 Thoughts on the sheer size & weight of the cards\n1:19:20 Comments on the AirPods 2 video, cruise control, voice auto-completion\n1:43:22 Topic #4 - Super Mario Bros movie trailer\n1:44:03 Watching the trailer, live commentary\n1:46:17 Thoughts on trailer & Chris Pratt\n1:47:55 Topic #5 - Overwatch 2's bad release\n1:49:44 Expensive cosmetics, game changes\n1:54:06 Topic #6 - Starforge computer review reaction\n1:57:54 Linus reaffirms the logo's C&B look\n1:59:32 Merch Messages #1\n1:59:46 Floatplane app for TVs & NVIDIA Shield\n2:00:32 Peer-to-peer to alleviate costs\n2:01:36 CDN for Floatplane\n2:07:52 Links of information from Labs\n2:17:04 Practical gauche to keep an eye out for\n2:18:32 AI on procedural generated gaming assets\n2:22:28 Recommending games\n2:23:10 How long until RISC-V goes x86-level mainstream?\n2:24:40 Nostalgic tech that sucked\n2:27:02 LMG's stability, impact on Linus's happiness\n2:28:34 Tech to be excited for\n2:30:00 Pimax 5K review idea\n2:30:56 Paternal tech Linus uses\n2:31:28 Linus on failed video ideas\n2:33:32 Predicting & planning for LMG's future\n2:35:23 Weirdest or coolest thing signed for fans\n2:36:46 Thoughts on Google Matter\n2:37:16 Rootkit development for gaming\n2:38:03 Making labs benchmarking tools public\n2:43:18 What does LMG do for power management?\n2:44:36 Hiring people from the US\n2:45:05 Items that are a must-have in cars\n2:47:25 Outro",
+				"thumbnails": {
+					"default": {
+						"url": "https://i.ytimg.com/vi/ltyntSIVsjA/default.jpg",
+						"width": 120,
+						"height": 90
+					},
+					"medium": {
+						"url": "https://i.ytimg.com/vi/ltyntSIVsjA/mqdefault.jpg",
+						"width": 320,
+						"height": 180
+					},
+					"high": {
+						"url": "https://i.ytimg.com/vi/ltyntSIVsjA/hqdefault.jpg",
+						"width": 480,
+						"height": 360
+					},
+					"standard": {
+						"url": "https://i.ytimg.com/vi/ltyntSIVsjA/sddefault.jpg",
+						"width": 640,
+						"height": 480
+					},
+					"maxres": {
+						"url": "https://i.ytimg.com/vi/ltyntSIVsjA/maxresdefault.jpg",
+						"width": 1280,
+						"height": 720
+					}
+				},
+				"channelTitle": "Linus Tech Tips",
+				"tags": [
+					"pcmr",
+					"building",
+					"competition",
+					"gamers",
+					"how to",
+					"review",
+					"intel",
+					"amd",
+					"cpu",
+					"gpu",
+					"gaming"
+				],
+				"categoryId": "28",
+				"liveBroadcastContent": "none",
+				"defaultLanguage": "en",
+				"localized": {
+					"title": "4K YouTube Is Getting PAYWALLED - WAN Show October 7, 2022",
+					"description": "Try Zoho One free for 30 days with no credit card required here: https://www.zoho.com/one/lp/linus.html\nSave 10% off your Savage Jerky order today with code WANSHOW22 at https://savagejerky.com/ltt\nVisit https://www.squarespace.com/WAN and use offer code WAN for 10% off\n\nPodcast Download: https://anchor.fm/thewanshowpodcast/episodes/4K-YouTube-Is-Getting-PAYWALLED---WAN-Show-October-7--2022-e1p2sgr\n\nTimestamps: (Courtesy of NoKi1119)\n0:00 Chapters\n0:50 Intro\n1:19 Topic #1 - YouTube restricts 4K to Premium\n3:58 2160p, 10 ads & YouTube's statement\n6:56 Chrome's Manifest V3\n10:06 4K as premium only? discussing FP, costs, services\n24:52 Lack of competition, accessibility, renting from a library\n40:49 LTTStore screw-top lid, golden ABC's plush, swim trunks sale\n44:10 Topic #2 - Intel Arc GPUs\n45:08 Pricing, unstable gaming experience\n47:46 Experience with iGPU, discussing past gens\n55:44 Intel is THE competitor, 30 day Arc challenge\n1:02:06 Luke hasn't seen any 4090 in person\n1:02:30 Sponsor - Zoho One\n1:03:27 Sponsor - Squarespace\n1:04:48 Sponsor - Savage Jerky\n1:06:34 Topic #3 - NVIDIA's ridiculously HUGE GPUs\n1:08:08 Luke reacts to the Founders Edition\n1:09:08 ASUS's ROG Strix series\n1:10:52 ZOTAC's GAMING series\n1:11:42 Linus returns with a 1080 to compare\n1:13:02 MSI's SUPRIM X series\n1:13:38 iGame's Vulcan series\n1:16:10 Thoughts on the sheer size & weight of the cards\n1:19:20 Comments on the AirPods 2 video, cruise control, voice auto-completion\n1:43:22 Topic #4 - Super Mario Bros movie trailer\n1:44:03 Watching the trailer, live commentary\n1:46:17 Thoughts on trailer & Chris Pratt\n1:47:55 Topic #5 - Overwatch 2's bad release\n1:49:44 Expensive cosmetics, game changes\n1:54:06 Topic #6 - Starforge computer review reaction\n1:57:54 Linus reaffirms the logo's C&B look\n1:59:32 Merch Messages #1\n1:59:46 Floatplane app for TVs & NVIDIA Shield\n2:00:32 Peer-to-peer to alleviate costs\n2:01:36 CDN for Floatplane\n2:07:52 Links of information from Labs\n2:17:04 Practical gauche to keep an eye out for\n2:18:32 AI on procedural generated gaming assets\n2:22:28 Recommending games\n2:23:10 How long until RISC-V goes x86-level mainstream?\n2:24:40 Nostalgic tech that sucked\n2:27:02 LMG's stability, impact on Linus's happiness\n2:28:34 Tech to be excited for\n2:30:00 Pimax 5K review idea\n2:30:56 Paternal tech Linus uses\n2:31:28 Linus on failed video ideas\n2:33:32 Predicting & planning for LMG's future\n2:35:23 Weirdest or coolest thing signed for fans\n2:36:46 Thoughts on Google Matter\n2:37:16 Rootkit development for gaming\n2:38:03 Making labs benchmarking tools public\n2:43:18 What does LMG do for power management?\n2:44:36 Hiring people from the US\n2:45:05 Items that are a must-have in cars\n2:47:25 Outro"
+				},
+				"defaultAudioLanguage": "en"
+			}
+		}
+	},
+	{
 		"name": "2022/09/30",
 		"metadata": {
 			"preShowStart": "2022-10-01T01:53:37.000Z",
@@ -5798,6 +5866,69 @@
 		}
 	},
 	{
+		"name": "2021/08/13",
+		"metadata": {
+			"preShowStart": "2021-08-14T00:44:10.000Z",
+			"mainShowStart": "2021-08-14T01:24:44Z",
+			"showEnd": "2021-08-14T02:47:23Z",
+			"title": "NVIDIA's CEO is FAKE",
+			"vods": {
+				"floatplane": "1S2qC557y7",
+				"youtube": "LFC2t5I_hLA"
+			},
+			"snippet": {
+				"publishedAt": "2021-08-14T02:53:06Z",
+				"channelId": "UCXuqSBlHAE6Xw-yeJA0Tunw",
+				"title": "NVIDIA's CEO is FAKE - WAN Show August 13, 2021",
+				"description": "Save 10% at Ridge Wallet with offer code WAN at https://www.ridge.com/WAN\n\nHoney automatically applies the best coupon codes to save you money at \ndifferent online checkouts, try it now at https://www.joinhoney.com/linus\n\nStart your build today at https://www.buildredux.com/linus\n\nPodcast Download: https://anchor.fm/thewanshowpodcast/episodes/NVIDIAs-CEO-is-FAKE---WAN-Show-August-13--2021-e160ov8\n\nCheck out our other Podcasts:\nCarpool Critics Movie Podcast: https://www.youtube.com/channel/UCt-oJR5teQIjOAxCmIQvcgA\n\nTimestamps (Courtesy of NoKi1119)\n[0:00] Chapters.\n[1:15] Intro.\n[1:44] Topic #1: Jensen was fake ALL ALONG!\n    3:42 How the keynote was created.\n    4:21 Nvidia's response to an article.\n    10:13 Poll: Which Jensen was fake.\n    20:52 Shrek \"deepfake\".\n    24:52 Steve promoting LTTstore ft. Linus's rant.\n[26:28] Topic #2: Gigabyte's PSUs catching fire.\n    27:13 Newegg bundling dangerous PSU's.\n    30:13 How bundling directly help companies.\n    39:12 Gigabyte's response.\n    42:26 Half of Steve's PSUs failed.\n    44:08 Discussing Newegg reviews.\n    46:06 Most those in ETU cheaped out on the PSU.\n[47:24] Sponsors.\n    47:33 Build Redux PC Builder.\n    48:31 Ridge Wallet.\n    49:15 Honey eCommerce Coupons.\n[--] Topic #2 Cont.: Gigabyte's PSUs catching fire.\n    49:52 Discussing PSU selections on ETU.\n    52:42 Anthony defends his PSU choice.\n[53:16] Topic #3: Do not sue, for Amazon pays for damages.\n[57:31] LTTstore new merch.\n[59:00] Topic #4: Facebook shuts down researchers.\n[1:00:19] Topic #4.5: House bill against Apple and Google.\n[1:03:29] Topic #5: Asus's RTX3070-8G-NOCTUA.\n    1:04:18 Noctua dethroned by Phanteks fans.\n    1:05:45 Discussing Samsung's new phones.\n[1:07:35] Superchats.\n[1:21:27] Wrapping up.\n[1:22:09] Outro.",
+				"thumbnails": {
+					"default": {
+						"url": "https://i.ytimg.com/vi/LFC2t5I_hLA/default.jpg",
+						"width": 120,
+						"height": 90
+					},
+					"medium": {
+						"url": "https://i.ytimg.com/vi/LFC2t5I_hLA/mqdefault.jpg",
+						"width": 320,
+						"height": 180
+					},
+					"high": {
+						"url": "https://i.ytimg.com/vi/LFC2t5I_hLA/hqdefault.jpg",
+						"width": 480,
+						"height": 360
+					},
+					"standard": {
+						"url": "https://i.ytimg.com/vi/LFC2t5I_hLA/sddefault.jpg",
+						"width": 640,
+						"height": 480
+					}
+				},
+				"channelTitle": "Linus Tech Tips",
+				"tags": [
+					"pcmr",
+					"building",
+					"competition",
+					"gamers",
+					"how to",
+					"review",
+					"intel",
+					"amd",
+					"cpu",
+					"gpu",
+					"gaming"
+				],
+				"categoryId": "28",
+				"liveBroadcastContent": "none",
+				"defaultLanguage": "en",
+				"localized": {
+					"title": "NVIDIA's CEO is FAKE - WAN Show August 13, 2021",
+					"description": "Save 10% at Ridge Wallet with offer code WAN at https://www.ridge.com/WAN\n\nHoney automatically applies the best coupon codes to save you money at \ndifferent online checkouts, try it now at https://www.joinhoney.com/linus\n\nStart your build today at https://www.buildredux.com/linus\n\nPodcast Download: https://anchor.fm/thewanshowpodcast/episodes/NVIDIAs-CEO-is-FAKE---WAN-Show-August-13--2021-e160ov8\n\nCheck out our other Podcasts:\nCarpool Critics Movie Podcast: https://www.youtube.com/channel/UCt-oJR5teQIjOAxCmIQvcgA\n\nTimestamps (Courtesy of NoKi1119)\n[0:00] Chapters.\n[1:15] Intro.\n[1:44] Topic #1: Jensen was fake ALL ALONG!\n    3:42 How the keynote was created.\n    4:21 Nvidia's response to an article.\n    10:13 Poll: Which Jensen was fake.\n    20:52 Shrek \"deepfake\".\n    24:52 Steve promoting LTTstore ft. Linus's rant.\n[26:28] Topic #2: Gigabyte's PSUs catching fire.\n    27:13 Newegg bundling dangerous PSU's.\n    30:13 How bundling directly help companies.\n    39:12 Gigabyte's response.\n    42:26 Half of Steve's PSUs failed.\n    44:08 Discussing Newegg reviews.\n    46:06 Most those in ETU cheaped out on the PSU.\n[47:24] Sponsors.\n    47:33 Build Redux PC Builder.\n    48:31 Ridge Wallet.\n    49:15 Honey eCommerce Coupons.\n[--] Topic #2 Cont.: Gigabyte's PSUs catching fire.\n    49:52 Discussing PSU selections on ETU.\n    52:42 Anthony defends his PSU choice.\n[53:16] Topic #3: Do not sue, for Amazon pays for damages.\n[57:31] LTTstore new merch.\n[59:00] Topic #4: Facebook shuts down researchers.\n[1:00:19] Topic #4.5: House bill against Apple and Google.\n[1:03:29] Topic #5: Asus's RTX3070-8G-NOCTUA.\n    1:04:18 Noctua dethroned by Phanteks fans.\n    1:05:45 Discussing Samsung's new phones.\n[1:07:35] Superchats.\n[1:21:27] Wrapping up.\n[1:22:09] Outro."
+				},
+				"defaultAudioLanguage": "en"
+			}
+		}
+	},
+	{
 		"name": "2021/08/20",
 		"metadata": {
 			"preShowStart": "2021-08-21T00:55:50.000Z",
@@ -6372,12 +6503,12 @@
 	{
 		"name": "2021/05/28",
 		"metadata": {
-			"preShowStart": "2021-05-29T01:07:09.000Z",
+			"preShowStart": "2021-05-29T00:57:56.000Z",
 			"mainShowStart": "2021-05-29T01:05:20Z",
 			"showEnd": "2021-05-29T02:27:27Z",
 			"title": "AMD's New CPU Socket Just Leaked!",
 			"vods": {
-				"floatplane": "Bmb0jBNnFG",
+				"floatplane": "dkWoyKv9yK",
 				"youtube": "-4u8_6TJPiQ"
 			},
 			"snippet": {
@@ -6427,6 +6558,69 @@
 				"localized": {
 					"title": "AMD's New CPU Socket Just Leaked! - WAN Show May 28, 2021",
 					"description": "Enter PDFelement Giveaway: https://bit.ly/3422y8f \nDownload PDFelement: https://bit.ly/2Q8u6FD\nBuy PDFelement with 50% off: https://bit.ly/2RDM8QK\n\nPre Order your Anker Nano II Charger today: https://lmg.gg/rN4pD\n\nGet your .TECH domain and help children get their start in computer science at: https://go.tech/WAN\n\nPodcast Download: https://anchor.fm/thewanshowpodcast/episodes/AMDs-New-CPU-Socket-Just-Leaked----WAN-Show-May-28--2021-e11trq4\n\nCheck out Other Podcasts:\nCarpool Critics Movie Podcast: https://www.youtube.com/channel/UCt-oJR5teQIjOAxCmIQvcgA\n\nTimestamps (Courtesy of Vulcānus)\n0:00    Intro and Topics\n3:06    AMD AM5, LGA, DDR5 and DDR4\n11:43  PCIE Gen 5, Intel Alder Lake\n19:49  PGA to LGA for AMD\n23:20  Facebook sues India\n32:23  Bill C10\n35:21  Super chats\n__\n38:30 Sponsors\nAnker Nano II Charger,  PDFelemnent, .TECH Domains\n__\n40:42  Personal stories of early interactions with tech\n42:45  DinoPark Tycoon\n43:57  USB C 2.1\n46:45  LTT Store, new shirt\n47:49  Winget\n54:33  New version of Windows incoming\n58:25  Steam leaks and hardware\n59:55  Amazon \"ZenBooth\"\n1:06:31  16gb iPads\n1:06:55  Super chats\n1:08:46  Scrapyard wars/PCMR\n1:14:58  Birds\n1:15:59  His hands...they are diamond\n1:19:01  Beat sabre bet\n1:21:46  Bye"
+				},
+				"defaultAudioLanguage": "en"
+			}
+		}
+	},
+	{
+		"name": "2021/05/21",
+		"metadata": {
+			"preShowStart": "2021-05-22T00:39:34.000Z",
+			"mainShowStart": "2021-05-22T00:53:34Z",
+			"showEnd": "2021-05-22T01:59:52Z",
+			"title": "Apple's 40-Core Desktop is Coming!",
+			"vods": {
+				"floatplane": "Bmb0jBNnFG",
+				"youtube": "v_DOqdyZEG0"
+			},
+			"snippet": {
+				"publishedAt": "2021-05-22T02:08:41Z",
+				"channelId": "UCXuqSBlHAE6Xw-yeJA0Tunw",
+				"title": "Apple's 40-Core Desktop is Coming! - WAN Show May 21, 2021",
+				"description": "Get a $100 60-day credit on your new account at: http://linode.com/wan\n\nBuy the CORSAIR Virtuoso RGB Wireless XT at https://geni.us/FWcQW\nOn Amazon (PAID LINK): https://geni.us/Tz9fbvJ\n\nGet your virtual desktop today at https://lmg.gg/ShellsWAN\n\nPodcast Download: https://anchor.fm/thewanshowpodcast/episodes/Apples-40-Core-Desktop-is-Coming----WAN-Show-May-21--2021-e11io0s\n\nCheck out Other Podcasts:\nCarpool Critics Movie Podcast: https://www.youtube.com/channel/UCt-oJR5teQIjOAxCmIQvcgA\n\nTimestamps (Courtesy of StarsMarsRadio)\n0:00    Intro/Topics\n1:39    Sponsors\n1:53    Apple topics\n3:51    Tangent into comments and Apple leading industry trends\n9:30    Back to new Apple products\n16:00  Airpods max doesn't support Apple's lossless quality\n23:00  Dr. Ian Cutress corrects DRAM market terminology\n32:17  Sponsors\n35:14  TV's aren't cheap anymore & Silicon shortage\n40:44  Sweaty boy discount\n42:15  AMD is working on 5000 refresh\n43:50  Bitcoin is down, Crypto topics\n46:40  Ford F150 Lightning\n51:09  Ford Lightning vs Cybertruck poll\n56:06  Superchats\n58:20  Bill C10\n1:03:43  Throwback\n1:05:51  Bye",
+				"thumbnails": {
+					"default": {
+						"url": "https://i.ytimg.com/vi/v_DOqdyZEG0/default.jpg",
+						"width": 120,
+						"height": 90
+					},
+					"medium": {
+						"url": "https://i.ytimg.com/vi/v_DOqdyZEG0/mqdefault.jpg",
+						"width": 320,
+						"height": 180
+					},
+					"high": {
+						"url": "https://i.ytimg.com/vi/v_DOqdyZEG0/hqdefault.jpg",
+						"width": 480,
+						"height": 360
+					},
+					"standard": {
+						"url": "https://i.ytimg.com/vi/v_DOqdyZEG0/sddefault.jpg",
+						"width": 640,
+						"height": 480
+					}
+				},
+				"channelTitle": "Linus Tech Tips",
+				"tags": [
+					"pcmr",
+					"building",
+					"competition",
+					"gamers",
+					"how to",
+					"review",
+					"intel",
+					"amd",
+					"cpu",
+					"gpu",
+					"gaming"
+				],
+				"categoryId": "28",
+				"liveBroadcastContent": "none",
+				"defaultLanguage": "en",
+				"localized": {
+					"title": "Apple's 40-Core Desktop is Coming! - WAN Show May 21, 2021",
+					"description": "Get a $100 60-day credit on your new account at: http://linode.com/wan\n\nBuy the CORSAIR Virtuoso RGB Wireless XT at https://geni.us/FWcQW\nOn Amazon (PAID LINK): https://geni.us/Tz9fbvJ\n\nGet your virtual desktop today at https://lmg.gg/ShellsWAN\n\nPodcast Download: https://anchor.fm/thewanshowpodcast/episodes/Apples-40-Core-Desktop-is-Coming----WAN-Show-May-21--2021-e11io0s\n\nCheck out Other Podcasts:\nCarpool Critics Movie Podcast: https://www.youtube.com/channel/UCt-oJR5teQIjOAxCmIQvcgA\n\nTimestamps (Courtesy of StarsMarsRadio)\n0:00    Intro/Topics\n1:39    Sponsors\n1:53    Apple topics\n3:51    Tangent into comments and Apple leading industry trends\n9:30    Back to new Apple products\n16:00  Airpods max doesn't support Apple's lossless quality\n23:00  Dr. Ian Cutress corrects DRAM market terminology\n32:17  Sponsors\n35:14  TV's aren't cheap anymore & Silicon shortage\n40:44  Sweaty boy discount\n42:15  AMD is working on 5000 refresh\n43:50  Bitcoin is down, Crypto topics\n46:40  Ford F150 Lightning\n51:09  Ford Lightning vs Cybertruck poll\n56:06  Superchats\n58:20  Bill C10\n1:03:43  Throwback\n1:05:51  Bye"
 				},
 				"defaultAudioLanguage": "en"
 			}
