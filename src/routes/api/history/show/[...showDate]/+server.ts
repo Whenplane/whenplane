@@ -9,15 +9,17 @@ export const GET = (async ({platform, params}) => {
     const kvShowInfo = await history.getWithMetadata(params.showDate, {type: 'json'});
 
     if(kvShowInfo.value) {
+        let generatedMetadata = false
         if(!kvShowInfo.metadata) {
             kvShowInfo.metadata = structuredClone(kvShowInfo.value);
             kvShowInfo.metadata.snippet = undefined;
+            generatedMetadata = true;
         }
         return json({
             name: params.showDate,
             metadata: kvShowInfo.metadata,
             value: kvShowInfo.value
-        });
+        }, {headers: {"X-Generated-Metadata": generatedMetadata+""}});
     }
 
     const oldHistory = await import("$lib/oldHistory");
