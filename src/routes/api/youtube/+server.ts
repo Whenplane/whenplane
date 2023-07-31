@@ -69,7 +69,7 @@ export const GET = (async ({platform, locals, url}) => {
                     const date = getUTCDate(getClosestWan());
                     await history.put(date + ":mainShowStart", started, {expirationTtl});
                     await history.put(date + ":videoId", videoId, {expirationTtl});
-                    await history.put(date + ":snippet", snippet, {expirationTtl});
+                    await history.put(date + ":snippet", JSON.stringify(snippet), {expirationTtl});
                 }
             })());
             savedStartTime = true;
