@@ -2,6 +2,8 @@ import type {RequestHandler} from "@sveltejs/kit";
 import {error, json} from "@sveltejs/kit";
 import {getClosestWan, getUTCDate} from "$lib/timeUtils";
 import {dev} from "$app/environment";
+import type {KVNamespace, DurableObjectNamespace, DurableObjectStub} from "@cloudflare/workers-types";
+import type {OldShowMeta} from "$lib/utils";
 
 const cacheTime = 4750; // Fetch from fetcher no more than once every (just under) 5 seconds
 
@@ -21,8 +23,8 @@ let savedStartTime: boolean | undefined = undefined;
 
 export const GET = (async ({platform, locals, url}) => {
 
-    const history = platform?.env?.HISTORY;
-    const fetcher = platform?.env?.FETCHER;
+    const history: KVNamespace = platform?.env?.HISTORY;
+    const fetcher: DurableObjectNamespace = platform?.env?.FETCHER;
     if(!history) throw error(503, "History not available");
     if(!platform?.context) throw error(503, "Request context not available!");
 
@@ -39,19 +41,19 @@ export const GET = (async ({platform, locals, url}) => {
 
     cache.lastFetch = Date.now();
 
-    let stub: {fetch: typeof fetch};
+    let stub: DurableObjectStub;
     if(fetcher) {
-        const id = await fetcher.idFromName("youtube");
-        stub = await fetcher.get(id, {locationHint: 'wnam'});
+        const id = fetcher.idFromName("youtube");
+        stub = fetcher.get(id, {locationHint: 'wnam'});
     } else if(dev) {
-        stub = {fetch};
+        stub = {fetch} as unknown as DurableObjectStub;
     } else {
         throw error(503, "Fetcher not available");
     }
 
     const doStart = Date.now();
     const {isLive, isWAN, started, videoId, snippet} = await stub.fetch("https://wheniswan-fetcher.ajg.workers.dev/youtube")
-        .then(r => r.json());
+        .then(r => r.json()) as DOResponse;
     locals.addTiming({id: 'doFetch', duration: Date.now() - doStart})
 
     if(!savedStartTime && isWAN) {
@@ -67,8 +69,8 @@ export const GET = (async ({platform, locals, url}) => {
                     // The collapsing is done in a scheduled worker
                     const expirationTtl = 15 * 24 * 60 * 60
                     const date = getUTCDate(getClosestWan());
-                    await history.put(date + ":mainShowStart", started, {expirationTtl});
-                    await history.put(date + ":videoId", videoId, {expirationTtl});
+                    if(started) await history.put(date + ":mainShowStart", started, {expirationTtl});
+                    if(videoId) await history.put(date + ":videoId", videoId, {expirationTtl});
                     await history.put(date + ":snippet", JSON.stringify(snippet), {expirationTtl});
                 }
             })());
@@ -89,3 +91,11 @@ export const GET = (async ({platform, locals, url}) => {
     return json(result)
 
 }) satisfies RequestHandler;
+
+type DOResponse = {
+    isLive: boolean,
+    isWAN: boolean,
+    started?: string,
+    videoId?: string,
+    snippet?: OldShowMeta["snippet"]
+}
