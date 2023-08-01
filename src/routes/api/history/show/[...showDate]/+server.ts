@@ -1,12 +1,17 @@
 import type {RequestHandler} from "@sveltejs/kit";
 import {error, json} from "@sveltejs/kit";
+import type {OldShowMeta} from "$lib/utils";
+import type {KVNamespace} from "@cloudflare/workers-types";
 
 export const GET = (async ({platform, params}) => {
 
-    const history = platform?.env?.HISTORY;
+    const history: KVNamespace = platform?.env?.HISTORY;
     if(!history) throw error(503, "History missing!");
 
-    const kvShowInfo = await history.getWithMetadata(params.showDate, {type: 'json'});
+    const showDate = params.showDate;
+    if(!showDate) throw error(400, "No show date!");
+
+    const kvShowInfo = await history.getWithMetadata<OldShowMeta, OldShowMeta>(showDate, {type: 'json'});
 
     if(kvShowInfo.value) {
         let generatedMetadata = false
@@ -20,6 +25,39 @@ export const GET = (async ({platform, params}) => {
             metadata: kvShowInfo.metadata,
             value: kvShowInfo.value
         }, {headers: {"X-Generated-Metadata": generatedMetadata+""}});
+    }
+
+    const preShowStartFragment = history.get(params.showDate + ":preShowStart");
+    const mainShowStartFragment = history.get(params.showDate + ":preShowStart");
+    const showEndFragment = history.get(params.showDate + ":preShowStart");
+    const snippetFragment = history.get(params.showDate + ":snippet", {type: 'json'});
+    const videoIdFragment = history.get(params.showDate + ":videoId");
+
+    if(await preShowStartFragment || await mainShowStartFragment || await showEndFragment || await snippetFragment || await videoIdFragment) {
+        const preShowStart = await preShowStartFragment;
+        const mainShowStart = await mainShowStartFragment;
+        const showEnd = await showEndFragment;
+        const snippet = await snippetFragment as OldShowMeta["snippet"] | undefined;
+        const videoId = await videoIdFragment;
+
+        const metadata = {
+            preShowStart,
+            mainShowStart,
+            showEnd,
+            thumbnails: snippet?.thumbnails,
+            vods: {
+                youtube: videoId
+            }
+        }
+        const value = {
+            ...metadata,
+            snippet
+        }
+        return json({
+            name: showDate,
+            metadata,
+            value
+        })
     }
 
     const oldHistory = await import("$lib/oldHistory");

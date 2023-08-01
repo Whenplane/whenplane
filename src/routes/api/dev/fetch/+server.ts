@@ -1,7 +1,7 @@
 import type {RequestHandler} from "@sveltejs/kit";
 import {dev} from "$app/environment";
 import {error, json} from "@sveltejs/kit";
-import type {HistoricalEntry} from "$lib/oldHistory";
+import type {HistoricalEntry} from "$lib/utils";
 import type {KVNamespace} from "@cloudflare/workers-types"
 
 /**
