@@ -43,15 +43,12 @@ into one key for the day.
 ## How older start/end times are displayed
 You might have noticed that shows much older than this site are
 still displayed on the [history page](https://www.whenplane.com/history).
-This is thanks to some [manual recording](https://github.com/ajgeiss0702/wheniswan/blob/master/src/lib/oldHistory.ts).
+This is thanks to fetching from the youtube and floatplane apis,
+combined with some manual recording to fill in the gaps
 
-This data is recorded by going through and looking at VODs.
-The process of adding older shows takes a lot of time,
-which is why it takes so long for older shows to be added.
-
-### Contributing to older times
-
-I've written [a page describing how **you** can help by contributing old times](https://github.com/ajgeiss0702/wheniswan/wiki/Contributing-old-times).
+Because YouTube's API lets you fetch live stream details, which includes the start and end times,
+we already have the main show's length. We then subtract that from the Floatplane VOD's length,
+and we have the lengths for both the pre and main show, as well as times for all three.
 
 # Developing
 
