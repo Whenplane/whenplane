@@ -23,7 +23,7 @@
 <svelte:head>
     <title>{data.metadata.title ?? ""}{data.metadata.title ? " - " : ""}WAN Show {showDate.toLocaleDateString()}</title>
     <meta name="description" content="WAN show from {showDate.toLocaleDateString(undefined, {dateStyle: 'long'})}. {onTimeString ? 'It was ' + onTimeString : ''}">
-    {#if thumbnail?.maxres}
+    {#if thumbnail}
         <meta property="og:image" content={thumbnail.url}>
     {/if}
 </svelte:head>
