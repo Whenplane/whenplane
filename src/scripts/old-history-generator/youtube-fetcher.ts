@@ -49,8 +49,11 @@ export async function fetchYoutubeShows() {
         let lastDate = "none";
 
         for (const video of data.items) {
-            if(!video.snippet?.title) continue;
-            if(!video.snippet.title.includes("WAN Show") && !video.snippet.title.includes("Linus Tech Tips Live Show")) continue;
+            if(!video.snippet?.title) {
+                console.warn("Skipping " + video.id.videoId + " due to missing snippet/title!")
+                continue;
+            }
+            if(!video.snippet.title.includes("WAN Show") && !video.snippet.title.includes("Linus Tech Tips Live Show")) continue
 
             const specificResponse = await fetch(
                 "https://youtube.googleapis.com/youtube/v3/videos" +
@@ -71,19 +74,22 @@ export async function fetchYoutubeShows() {
 
             for (const video of specificData.items) {
                 const publishedAt = video.snippet?.publishedAt;
-                if(!publishedAt) continue;
-                const date = getPreviousWAN(new Date(publishedAt)) as Date;
-
-                if(!video.liveStreamingDetails) {
-                    console.warn("Skipping " + getUTCDate(date) + " due to missing liveStreamingDetails!")
+                if(!publishedAt) {
+                    console.warn(video.id + " is missing a publishedAt date!")
+                    continue;
                 }
 
-                // Only record videos that were posted before auto-recording started
-                if(date.getTime() > 1683934200000) continue;
-
-                lastDate = publishedAt;
+                const date = getPreviousWAN(new Date(publishedAt)) as Date;
 
                 const dateName = getUTCDate(date);
+
+                // Only record videos that were posted before auto-recording started
+                if(date.getTime() > 1683934200000) {
+                    console.warn("Skipping " + dateName + " due to being after automatic recording cutoff")
+                    continue;
+                }
+
+                lastDate = publishedAt;
 
                 showVods[dateName] = video;
             }

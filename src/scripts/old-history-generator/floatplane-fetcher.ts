@@ -78,7 +78,7 @@ export async function fetchFloatplaneShows() {
     console.log("Done fetching floatplane vods!");
 }
 
-function last<Type>(array: Type[]) {
+export function last<Type>(array: Type[]) {
     if(array.length == 0) return undefined;
     return array[array.length - 1];
 }

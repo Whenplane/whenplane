@@ -7184,6 +7184,75 @@
 			"actualEndTime": "2021-01-30T02:42:35Z"
 		}
 	},
+	"2021/01/22": {
+		"kind": "youtube#video",
+		"etag": "X5zOAUuoFReAs60s_aUb-9A1mKY",
+		"id": "-_YBydPNp70",
+		"snippet": {
+			"publishedAt": "2021-01-23T02:41:16Z",
+			"channelId": "UCXuqSBlHAE6Xw-yeJA0Tunw",
+			"title": "Intel is Staging a BIG Comeback! - WAN Show January 22, 2021",
+			"description": "Try KernelCare Enterprise for free at https://hubs.ly/H0BNgj60\n\nRemotely monitor and manage your server or PC at https://lmg.gg/pulsewayteams and get 20% off Pulseway's Teams plan when you sign up.\n\nTry FreshBooks free, for 30 days, no credit card required at https://www.freshbooks.com/wan\n\nPodcast Download: https://anchor.fm/thewanshowpodcast/episodes/Intel-is-Staging-a-BIG-Comeback----WAN-Show-January-22--2021-epes7q\n\nCheck out Carpool Critics, our new movie podcast: https://www.youtube.com/channel/UCt-oJR5teQIjOAxCmIQvcgA\n\nTimestamps (Courtesy of MattDog_222):\n0:15 Topic Preview\n1:27 Intro\n2:07 Intel beats Q4 targets with records\n 3:11 Intel's Numbers were leaked \"hacked\" and officially released early\n 3:50 Glenn Hinton returns to Intel\n 5:15 Nehalem\n 7:53 Hinton's words on returning\n 9:17 Super smart people think of super smart things (LTTStore.com)\n 11:08 What Ian Cutress from Tech Tech Potato suspects\n 11:53 Luke interjects about business leadership\n 14:18 Linus/LMG's leadership perspective\n 16:28 Do Luke's paychecks clear?\n 17:30 Recognizing the people behind a company + Competition\n 20:07 You have to look at the motivation\n 21:28 Is this the first major move to combat AMD?\n 22:49 Key talent attracts key talent\n24:23 Google threatens to pull out of Australia over new link tax laws\n 25:05 Explanation of the 'link tax' law\n 26:40 Google is fearful of precedents set\n 27:11 Google tests value of Australian news\n 27:45 James' take + James \n 28:21 James currently banned on Twitter\n 28:54 James reaching out to Twitter (x2)\n 30:27 Argument about being paid for something\n 32:00 Concluding Google topic\n32:18 Sponsors\n 32:20 KernelCare Enterprise\n 33:25 FreshBooks\n 34:25 Pulseway\n35:19 LTT Store: Underwear in stock\n36:50 LTT Store: Special Edition Holofoil Shirt\n37:25 NVIDIA Max-Q changes \n 38:45 NVIDIA's Statement about the changes\n 40:38 Max-P isn't an official term\n42:57 Raspberry Pi Launches $4 Pi Pico\n 43:40 Pi Pico's Specs\n 45:51 Luke's next famous quote + Min-maxing Hardware\n 48:05 Explaining to the YouTube audience what a stream is\n49:00 LMG: Job Positions/Openings + Descriptions\n51:02 VIK-on YouTube mods RTX2070 to 16GB VRAM\n53:18 Twitter accused of profiting from CP + Trafficking \n56:11 Some LMG job links are bugged\n56:47 Superchats\n 56:55 Kirk or Picard (Star Trek) discussion\n 59:58 Luke's VR Setup & old living space revealed\n1:07:11 Conclusion + LTT Store reminder and Floatplane solving Luke's old videos\n1:09:00 Outro + Outro 2",
+			"thumbnails": {
+				"default": {
+					"url": "https://i.ytimg.com/vi/-_YBydPNp70/default.jpg",
+					"width": 120,
+					"height": 90
+				},
+				"medium": {
+					"url": "https://i.ytimg.com/vi/-_YBydPNp70/mqdefault.jpg",
+					"width": 320,
+					"height": 180
+				},
+				"high": {
+					"url": "https://i.ytimg.com/vi/-_YBydPNp70/hqdefault.jpg",
+					"width": 480,
+					"height": 360
+				},
+				"standard": {
+					"url": "https://i.ytimg.com/vi/-_YBydPNp70/sddefault.jpg",
+					"width": 640,
+					"height": 480
+				},
+				"maxres": {
+					"url": "https://i.ytimg.com/vi/-_YBydPNp70/maxresdefault.jpg",
+					"width": 1280,
+					"height": 720
+				}
+			},
+			"channelTitle": "Linus Tech Tips",
+			"tags": [
+				"pcmr",
+				"building",
+				"competition",
+				"gamers",
+				"nexus",
+				"jayztwocents",
+				"austin",
+				"evans",
+				"troubleshooting",
+				"how to",
+				"review",
+				"intel",
+				"amd",
+				"cpu",
+				"gpu",
+				"gaming"
+			],
+			"categoryId": "28",
+			"liveBroadcastContent": "none",
+			"defaultLanguage": "en",
+			"localized": {
+				"title": "Intel is Staging a BIG Comeback! - WAN Show January 22, 2021",
+				"description": "Try KernelCare Enterprise for free at https://hubs.ly/H0BNgj60\n\nRemotely monitor and manage your server or PC at https://lmg.gg/pulsewayteams and get 20% off Pulseway's Teams plan when you sign up.\n\nTry FreshBooks free, for 30 days, no credit card required at https://www.freshbooks.com/wan\n\nPodcast Download: https://anchor.fm/thewanshowpodcast/episodes/Intel-is-Staging-a-BIG-Comeback----WAN-Show-January-22--2021-epes7q\n\nCheck out Carpool Critics, our new movie podcast: https://www.youtube.com/channel/UCt-oJR5teQIjOAxCmIQvcgA\n\nTimestamps (Courtesy of MattDog_222):\n0:15 Topic Preview\n1:27 Intro\n2:07 Intel beats Q4 targets with records\n 3:11 Intel's Numbers were leaked \"hacked\" and officially released early\n 3:50 Glenn Hinton returns to Intel\n 5:15 Nehalem\n 7:53 Hinton's words on returning\n 9:17 Super smart people think of super smart things (LTTStore.com)\n 11:08 What Ian Cutress from Tech Tech Potato suspects\n 11:53 Luke interjects about business leadership\n 14:18 Linus/LMG's leadership perspective\n 16:28 Do Luke's paychecks clear?\n 17:30 Recognizing the people behind a company + Competition\n 20:07 You have to look at the motivation\n 21:28 Is this the first major move to combat AMD?\n 22:49 Key talent attracts key talent\n24:23 Google threatens to pull out of Australia over new link tax laws\n 25:05 Explanation of the 'link tax' law\n 26:40 Google is fearful of precedents set\n 27:11 Google tests value of Australian news\n 27:45 James' take + James \n 28:21 James currently banned on Twitter\n 28:54 James reaching out to Twitter (x2)\n 30:27 Argument about being paid for something\n 32:00 Concluding Google topic\n32:18 Sponsors\n 32:20 KernelCare Enterprise\n 33:25 FreshBooks\n 34:25 Pulseway\n35:19 LTT Store: Underwear in stock\n36:50 LTT Store: Special Edition Holofoil Shirt\n37:25 NVIDIA Max-Q changes \n 38:45 NVIDIA's Statement about the changes\n 40:38 Max-P isn't an official term\n42:57 Raspberry Pi Launches $4 Pi Pico\n 43:40 Pi Pico's Specs\n 45:51 Luke's next famous quote + Min-maxing Hardware\n 48:05 Explaining to the YouTube audience what a stream is\n49:00 LMG: Job Positions/Openings + Descriptions\n51:02 VIK-on YouTube mods RTX2070 to 16GB VRAM\n53:18 Twitter accused of profiting from CP + Trafficking \n56:11 Some LMG job links are bugged\n56:47 Superchats\n 56:55 Kirk or Picard (Star Trek) discussion\n 59:58 Luke's VR Setup & old living space revealed\n1:07:11 Conclusion + LTT Store reminder and Floatplane solving Luke's old videos\n1:09:00 Outro + Outro 2"
+			},
+			"defaultAudioLanguage": "en"
+		},
+		"liveStreamingDetails": {
+			"actualStartTime": "2021-01-23T01:23:45Z",
+			"actualEndTime": "2021-01-23T02:33:38Z"
+		}
+	},
 	"2021/01/15": {
 		"kind": "youtube#video",
 		"etag": "HD-RwcNbMjb6CDhEXQuy1uRHpJI",
@@ -9088,70 +9157,6 @@
 			"actualStartTime": "2020-06-27T01:25:22Z",
 			"actualEndTime": "2020-06-27T02:49:06Z",
 			"scheduledStartTime": "2020-06-27T01:25:00Z"
-		}
-	},
-	"2020/06/19": {
-		"kind": "youtube#video",
-		"etag": "4KjvwGqhCt-pChGYrIDrDu1-hjg",
-		"id": "u5DFBiy1V_I",
-		"snippet": {
-			"publishedAt": "2020-06-20T02:29:47Z",
-			"channelId": "UCXuqSBlHAE6Xw-yeJA0Tunw",
-			"title": "New Graphics Cards to Rain on PS5 Parade - WAN Show June 19, 2020",
-			"description": "** Some weird freezing at times. Not sure what happened, but hopefully will have it sorted out for next stream **\n\nHoney automatically applies the best coupon codes to save you money at \ndifferent online checkouts, try it now at https://www.joinhoney.com/linus\n\nRemotely monitor and manage your server or PC at https://lmg.gg/pulsewayteams and get 20% off Pulseway's Teams plan when you sign up.\n\nSave 15% today with offer code WAN on Displate at https://lmg.gg/displatewan\n\nBuy an LTT shirt, hoodie, hat, and even our own water bottle at https://lmg.gg/wanlttstore\n\nCheck out Carpool Critics, our new movie podcast: https://www.youtube.com/channel/UCt-oJR5teQIjOAxCmIQvcgA\n\nPodcast Download: TBD\n\nTimestamps: (Courtesy of Aryan Singh)\n\n1:44 Intro\n2:46 Nvidia Is going to change ti\n18:28 Battlefield V on Intel Xe Gpu         \n23:42 Raspberry Pi 4 with Pci    \n28:04  Amd Ryzen\n32:44 Problem Fixed \n 37:48Amd 5700Xt Compatible with any mother bard \n38:42 Sponsors \n41:42 LTT Store Promotion \n43:22 Boston Dynamics New Robot \n51:25 Superchat \n58:32 Intel makes  Gen2 Optane\n 58:16 Tournament of LTT \n57:58 Superchats   \n1:07:16 3d Sen released\n1:10:12 Superchats\n1:14:24 About Cameo",
-			"thumbnails": {
-				"default": {
-					"url": "https://i.ytimg.com/vi/u5DFBiy1V_I/default.jpg",
-					"width": 120,
-					"height": 90
-				},
-				"medium": {
-					"url": "https://i.ytimg.com/vi/u5DFBiy1V_I/mqdefault.jpg",
-					"width": 320,
-					"height": 180
-				},
-				"high": {
-					"url": "https://i.ytimg.com/vi/u5DFBiy1V_I/hqdefault.jpg",
-					"width": 480,
-					"height": 360
-				},
-				"standard": {
-					"url": "https://i.ytimg.com/vi/u5DFBiy1V_I/sddefault.jpg",
-					"width": 640,
-					"height": 480
-				},
-				"maxres": {
-					"url": "https://i.ytimg.com/vi/u5DFBiy1V_I/maxresdefault.jpg",
-					"width": 1280,
-					"height": 720
-				}
-			},
-			"channelTitle": "Linus Tech Tips",
-			"tags": [
-				"Google Pixel 4a",
-				"pixel 4a",
-				"headphone jack",
-				"hands on",
-				"specs",
-				"leak",
-				"leaks",
-				"leaked",
-				"price",
-				"399",
-				"release date",
-				"launch"
-			],
-			"categoryId": "28",
-			"liveBroadcastContent": "none",
-			"localized": {
-				"title": "New Graphics Cards to Rain on PS5 Parade - WAN Show June 19, 2020",
-				"description": "** Some weird freezing at times. Not sure what happened, but hopefully will have it sorted out for next stream **\n\nHoney automatically applies the best coupon codes to save you money at \ndifferent online checkouts, try it now at https://www.joinhoney.com/linus\n\nRemotely monitor and manage your server or PC at https://lmg.gg/pulsewayteams and get 20% off Pulseway's Teams plan when you sign up.\n\nSave 15% today with offer code WAN on Displate at https://lmg.gg/displatewan\n\nBuy an LTT shirt, hoodie, hat, and even our own water bottle at https://lmg.gg/wanlttstore\n\nCheck out Carpool Critics, our new movie podcast: https://www.youtube.com/channel/UCt-oJR5teQIjOAxCmIQvcgA\n\nPodcast Download: TBD\n\nTimestamps: (Courtesy of Aryan Singh)\n\n1:44 Intro\n2:46 Nvidia Is going to change ti\n18:28 Battlefield V on Intel Xe Gpu         \n23:42 Raspberry Pi 4 with Pci    \n28:04  Amd Ryzen\n32:44 Problem Fixed \n 37:48Amd 5700Xt Compatible with any mother bard \n38:42 Sponsors \n41:42 LTT Store Promotion \n43:22 Boston Dynamics New Robot \n51:25 Superchat \n58:32 Intel makes  Gen2 Optane\n 58:16 Tournament of LTT \n57:58 Superchats   \n1:07:16 3d Sen released\n1:10:12 Superchats\n1:14:24 About Cameo"
-			}
-		},
-		"liveStreamingDetails": {
-			"actualStartTime": "2020-06-20T00:36:45Z",
-			"actualEndTime": "2020-06-20T01:54:40Z",
-			"scheduledStartTime": "2020-06-20T00:40:00Z"
 		}
 	},
 	"2020/06/12": {

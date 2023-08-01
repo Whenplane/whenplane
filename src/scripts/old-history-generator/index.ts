@@ -37,38 +37,40 @@ const floatplaneData = (await import("./floatplane-wan-vods.json", {assert: {typ
 // @ts-ignore
 const youtubeData = (await import("./youtube-wan-vods.json", {assert: {type: 'json'}})).default as unknown as {[key: string]: SpecificData};
 
-const floatplaneNumber = Object.keys(floatplaneData).length;
+const youtubeNumber = Object.keys(youtubeData).length;
 
-console.log(floatplaneNumber + " floatplane videos");
-console.log(Object.keys(youtubeData).length + " youtube videos");
+console.log(Object.keys(floatplaneData).length + " floatplane videos");
+console.log(youtubeNumber + " youtube videos");
 
 const oldShows: HistoricalEntry[] = [];
 
 let i = 0;
-for (const date in floatplaneData) {
+for (const date in youtubeData) {
     const floatplaneVod = floatplaneData[date];
     const youtubeVod = youtubeData[date];
-
-    if(!youtubeVod) {
-        console.warn(date + " is missing youtube entry!")
-        continue;
-    }
 
     if(!youtubeVod.liveStreamingDetails) {
         console.warn(date + " is missing liveStreamingDetails!");
         continue;
     }
 
-    const floatplaneLength = floatplaneVod.metadata.videoDuration * 1000;
-    const youtubeLength = new Date(youtubeVod.liveStreamingDetails.actualEndTime).getTime() - new Date(youtubeVod.liveStreamingDetails.actualStartTime).getTime();
-
-    const preShowLength = floatplaneLength - youtubeLength;
+    if(!floatplaneVod) {
+        console.warn(date + " is missing floatplane entry!")
+    }
 
     const mainShowStart = youtubeVod.liveStreamingDetails.actualStartTime;
     const showEnd = youtubeVod.liveStreamingDetails.actualEndTime;
+    let preShowStart;
 
-    const preShowStart = new Date(mainShowStart);
-    preShowStart.setMilliseconds(preShowStart.getMilliseconds() - preShowLength);
+    if(floatplaneVod) {
+        const floatplaneLength = floatplaneVod.metadata.videoDuration * 1000;
+        const youtubeLength = new Date(youtubeVod.liveStreamingDetails.actualEndTime).getTime() - new Date(youtubeVod.liveStreamingDetails.actualStartTime).getTime();
+
+        const preShowLength = floatplaneLength - youtubeLength;
+
+        preShowStart = new Date(mainShowStart);
+        preShowStart.setMilliseconds(preShowStart.getMilliseconds() - preShowLength);
+    }
 
     const rawTitle = youtubeVod.snippet?.title;
     let title;
@@ -81,12 +83,12 @@ for (const date in floatplaneData) {
     oldShows.push({
         name: date,
         metadata: {
-            preShowStart: preShowStart.toISOString(),
+            preShowStart: preShowStart ? preShowStart.toISOString() : undefined,
             mainShowStart,
             showEnd,
             title,
             vods: {
-                floatplane: floatplaneVod.id,
+                floatplane: floatplaneVod ? floatplaneVod.id : undefined,
                 youtube: youtubeVod.id
             },
             snippet: youtubeVod.snippet
@@ -96,7 +98,7 @@ for (const date in floatplaneData) {
 
     i++;
     if(i % 50 == 0) {
-        console.log("Status: " + i + "/" + floatplaneNumber + " shows processed (" + (Math.floor((i/floatplaneNumber) * 1000) / 10) + "%)")
+        console.log("Status: " + i + "/" + youtubeNumber + " shows processed (" + (Math.floor((i/youtubeNumber) * 1000) / 10) + "%)")
     }
 }
 

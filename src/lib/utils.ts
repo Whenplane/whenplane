@@ -17,7 +17,7 @@ export type HistoricalEntry = {
 }
 
 export type OldShowMeta = {
-    preShowStart: string,
+    preShowStart?: string,
     mainShowStart: string,
     showEnd: string,
     title?: string,

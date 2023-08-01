@@ -8,7 +8,7 @@
 
     $: href = onlyTimes ? undefined : "/history/show/" + show.name;
 
-    const preShowStart = new Date(show.metadata.preShowStart);
+    const preShowStart = show.metadata.preShowStart ? new Date(show.metadata.preShowStart) : show.metadata.preShowStart;
     const mainShowStart = show.metadata.mainShowStart ? new Date(show.metadata.mainShowStart) : show.metadata.mainShowStart;
     const showEnd = show.metadata.showEnd ? new Date(show.metadata.showEnd) : show.metadata.showEnd;
 
