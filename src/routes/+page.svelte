@@ -49,7 +49,7 @@
 	})
 
 
-	$: averageLateness = timeString(Math.abs(data.averageLateness));
+	$: averageLateness = data.averageLateness ? timeString(Math.abs(data.averageLateness)) : undefined;
 
 
 </script>
@@ -113,12 +113,14 @@
 			<StreamStatus {data}/>
 		</div>
 		<div class="text-center">
-			<span class="card px-4 py-2 mb-4 inline-block">
-				<h3>Average lateness</h3>
-				<span class="opacity-75 text-90 relative bottom-1">from the last 5 shows</span>
-				<br>
-				{averageLateness} <Late/>
-			</span>
+			{#if averageLateness}
+				<span class="card px-4 py-2 mb-4 inline-block">
+					<h3>Average lateness</h3>
+					<span class="opacity-75 text-90 relative bottom-1">from the last 5 shows</span>
+					<br>
+						{averageLateness} <Late/>
+				</span>
+			{/if}
 			<br>
 			<a href="/history" class="btn variant-ghost-surface">
 				History
