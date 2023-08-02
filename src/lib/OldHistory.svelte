@@ -5,7 +5,12 @@
     // eslint-disable-next-line @typescript-eslint/no-empty-function
     let fetchingHistory = new Promise(() => {});
 </script>
-<LazyLoad on:visible={() => fetchingHistory = import("./oldHistory.ts")}/>
+<div style="height: 0;">
+    <div class="relative" style="bottom: 50em">
+        <LazyLoad on:visible={() => fetchingHistory = import("./oldHistory.ts")} height="50em"/>
+    </div>
+</div>
+
 {#await fetchingHistory}
     <span class="opacity-50 old-show-loading">
         Loading older shows..
