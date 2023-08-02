@@ -18,6 +18,10 @@ h1,h2 {
     text-decoration: inherit !important;
 }
 
+.text-90 {
+    font-size: 0.9em;
+}
+
 .hidden-link.underline:hover {
     text-decoration: underline !important;
 }

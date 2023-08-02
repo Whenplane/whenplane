@@ -1,5 +1,5 @@
 <script lang="ts">
-	import {getNextWAN} from "$lib/timeUtils";
+	import { getNextWAN, timeString } from "$lib/timeUtils";
 	import ShowCountdown, {mainLate} from "$lib/ShowCountdown.svelte";
 	import StreamStatus from "$lib/StreamStatus.svelte";
 	import {browser, dev} from "$app/environment";
@@ -47,6 +47,9 @@
 			if (invalidationInterval) clearInterval(invalidationInterval)
 		};
 	})
+
+
+	$: averageLateness = timeString(Math.abs(data.averageLateness));
 
 
 </script>
@@ -110,6 +113,13 @@
 			<StreamStatus {data}/>
 		</div>
 		<div class="text-center">
+			<span class="card px-4 py-2 mb-4 inline-block">
+				<h3>Average lateness</h3>
+				<span class="opacity-75 text-90 relative bottom-1">from the last 5 shows</span>
+				<br>
+				{averageLateness} <Late/>
+			</span>
+			<br>
 			<a href="/history" class="btn variant-ghost-surface">
 				History
 			</a>
@@ -121,7 +131,7 @@
 </div>
 
 
-{#if dev || $page.url.hostname.includes("wheniswan.pages.dev")}
+{#if $page.url.hostname.includes("wheniswan.pages.dev")}
 	<div class="fixed top-0 w-screen text-center">
 		<div class="card inline-block p-2 mt-2">
 			This site has a proper domain now!
