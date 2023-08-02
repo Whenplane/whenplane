@@ -5,7 +5,7 @@
 	import {browser, dev} from "$app/environment";
 	import {invalidateAll} from "$app/navigation";
 	import {onMount} from "svelte";
-	import Late from "../lib/Late.svelte";
+	import Late from "$lib/Late.svelte";
 	import {page} from "$app/stores";
 	import {fade} from "svelte/transition";
 

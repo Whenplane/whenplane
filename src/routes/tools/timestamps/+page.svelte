@@ -2,7 +2,7 @@
     import TimeInput from "$lib/TimeInput.svelte";
     import {getPreviousWAN, addZero} from "$lib/timeUtils";
     import {DateTime} from "luxon";
-    import {getClosestWan} from "../../../lib/timeUtils";
+    import {getClosestWan} from "$lib/timeUtils";
 
     const previousWAN: DateTime = getPreviousWAN(undefined, true);
     const previousWANUTC = previousWAN.toUTC();
@@ -16,7 +16,6 @@
     let timeAtTimeStamp = "16:25";
     let startsAt: DateTime | undefined;
     $: {
-        let dateParts = date.split("-");
         let timeParts = timeAtTimeStamp.split(":");
         startsAt = DateTime.fromObject({
             year: dateDate.year,
