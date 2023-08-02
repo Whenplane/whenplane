@@ -7,6 +7,7 @@
 	import {onMount} from "svelte";
 	import Late from "../lib/Late.svelte";
 	import {page} from "$app/stores";
+	import {fade} from "svelte/transition";
 
 	export let data;
 
@@ -35,10 +36,12 @@
 		}
 	}
 
+	let mounted = false;
 	onMount(() => {
+		mounted = true;
 		startInvalidationInterval();
 		if(data.fast) setTimeout(invalidate, 500);
-		console.log({fast: data.fast})
+		console.log({fast: data.fast});
 
 		return () => {
 			if (invalidationInterval) clearInterval(invalidationInterval)
@@ -83,8 +86,10 @@
 
 				{#if !isAfterStartTime}
 					Next WAN:
-					{#if browser} <!-- dont SSR next wan date, as server timezone and locale is probably different than the users' -->
-						{getNextWAN().toLocaleString()}
+					{#if mounted} <!-- dont SSR next wan date, as server timezone and locale is probably different than the users' -->
+						<span in:fade={{duration: 150}}>
+							{getNextWAN().toLocaleString()}
+						</span>
 					{/if}
 				{:else if isLate}
 					It usually <i>actually</i> starts between 1 and 2 hours late.

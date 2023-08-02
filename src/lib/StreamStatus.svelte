@@ -3,10 +3,14 @@
     import Twitch from "./svg/Twitch.svelte";
     import Floatplane from "./svg/Floatplane.svelte";
     import {popup} from "@skeletonlabs/skeleton";
-    import {browser} from "$app/environment";
     import Info from "$lib/svg/Info.svelte";
+    import {fade} from "svelte/transition";
+    import {onMount} from "svelte";
 
     export let data;
+
+    let mounted = false;
+    onMount(() => mounted = true);
 </script>
 
 <div class="logo-cloud grid-cols-1 lg:!grid-cols-3 gap-1">
@@ -48,7 +52,7 @@
         <span><Floatplane/></span>
         <span>
             Floatplane
-            {#if browser} <!-- Don't SSR info button since it wont work without client-side JS -->
+            {#if mounted} <!-- Don't SSR info button since it wont work without client-side JS -->
                 <span
                         class="text-surface inline-block fp-info [&>*]:pointer-events-none"
                         use:popup={{
@@ -56,6 +60,7 @@
                             target: 'floatplaneInfo',
                             placement: 'top'
                         }}
+                        in:fade={{duration: 150}}
                 >
                     <Info/>
                 </span>

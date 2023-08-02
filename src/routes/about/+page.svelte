@@ -20,6 +20,9 @@
             This website was made so it can be easier to tell when the WAN is starting, without having to go back between twitch/youtube.
             <br>
             <br>
+            This site is not affiliated with Linus Media Group. It is just a side project of a fan.
+            <br>
+            <br>
             The site is
             <a href="https://github.com/ajgeiss0702/wheniswan" target="_blank" rel="noreferrer">
                 open-sourced</a>.
