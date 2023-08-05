@@ -28,8 +28,8 @@ export const GET = (async ({platform, params}) => {
     }
 
     const preShowStartFragment = history.get(params.showDate + ":preShowStart");
-    const mainShowStartFragment = history.get(params.showDate + ":preShowStart");
-    const showEndFragment = history.get(params.showDate + ":preShowStart");
+    const mainShowStartFragment = history.get(params.showDate + ":mainShowStart");
+    const showEndFragment = history.get(params.showDate + ":showEnd");
     const snippetFragment = history.get(params.showDate + ":snippet", {type: 'json'});
     const videoIdFragment = history.get(params.showDate + ":videoId");
 
