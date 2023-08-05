@@ -40,10 +40,13 @@ export const GET = (async ({platform, params}) => {
         const snippet = await snippetFragment as OldShowMeta["snippet"] | undefined;
         const videoId = await videoIdFragment;
 
+        const title = snippet?.title ? snippet.title.split(" - ")[0] : undefined;
+
         const metadata = {
             preShowStart,
             mainShowStart,
             showEnd,
+            title,
             thumbnails: snippet?.thumbnails,
             vods: {
                 youtube: videoId
