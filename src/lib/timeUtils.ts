@@ -40,8 +40,12 @@ export function getNextWAN(now = new Date(), buffer = true, hasDone?: boolean): 
         wanDate = wanDate.minus({days: 7})
     }
 
-    // LTX 2023's wan is on saturday instead of friday
-    if(wanDate.year == 2023 && wanDate.month == 7 && wanDate.day == 28) {
+    // LTX wan is on saturday instead of friday
+    if(
+      (wanDate.year == 2023 && wanDate.month == 7 && wanDate.day == 28) ||
+      (wanDate.year == 2019 && wanDate.month == 7 && wanDate.day == 26)
+
+    ) {
         wanDate = wanDate.plus({days: 1})
     }
 
@@ -59,8 +63,12 @@ export function getPreviousWAN(now = new Date(), luxon = false): Date | DateTime
         wanDate = wanDate.minus({days: 7});
     }
 
-    // LTX 2023's wan is on saturday instead of friday
-    if(wanDate.year == 2023 && wanDate.month == 7 && wanDate.day == 28) {
+    // LTX wan is on saturday instead of friday
+    if(
+      (wanDate.year == 2023 && wanDate.month == 7 && wanDate.day == 28) ||
+      (wanDate.year == 2019 && wanDate.month == 7 && wanDate.day == 26)
+
+    ) {
         wanDate = wanDate.plus({days: 1})
     }
 
