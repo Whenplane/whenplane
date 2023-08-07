@@ -5,8 +5,8 @@
     // eslint-disable-next-line @typescript-eslint/no-empty-function
     let fetchingHistory = new Promise(() => {});
 </script>
-<div style="height: 0;">
-    <div class="relative" style="bottom: 50em">
+<div style="height: 0;" id="old-history">
+    <div class="relative pointer-events-none" style="bottom: 50em">
         <LazyLoad on:visible={() => fetchingHistory = import("./oldHistory.ts")} height="50em"/>
     </div>
 </div>

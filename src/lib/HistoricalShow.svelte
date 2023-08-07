@@ -21,7 +21,7 @@
     const onTime = mainShowStart ? getTimeUntil(showDate, mainShowStart.getTime()) : null;
 </script>
 
-<a class:card={!onlyTimes} class="inline-block limit p-3 m-2 w-full hidden-link" {href}>
+<a class:card={!onlyTimes} class="inline-block limit p-3 m-2 w-full hidden-link" {href} id={show.name}>
     {#if !onlyTimes}
         <h3>{showDate.toLocaleDateString()}</h3>
         {#if show.metadata.title}

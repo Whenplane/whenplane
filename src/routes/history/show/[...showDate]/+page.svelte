@@ -15,6 +15,8 @@
 
     const showDate = getClosestWan(new Date(data.metadata.preShowStart ?? data.metadata.mainShowStart));
 
+    const backHash = showDate.getTime() > 1683934200000 ? "#" + data.name : "#old-history";
+
     let onTimeUntil = data.metadata.mainShowStart ? getTimeUntil(showDate, new Date(data.metadata.mainShowStart).getTime()) : null;
 
     let onTimeString;
@@ -29,6 +31,7 @@
 </svelte:head>
 
 <!--<pre>{JSON.stringify(data, null, "\t")}</pre>-->
+<a href="/history{backHash}" class="pt-2 pl-2">Back to History</a>
 
 <div class="text-center limit mx-auto big-wrapper">
     <h1>{showDate.toLocaleDateString(undefined, {dateStyle: "long"})}</h1>
