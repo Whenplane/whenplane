@@ -2,7 +2,6 @@
 	import { getNextWAN, timeString } from "$lib/timeUtils";
 	import ShowCountdown, {mainLate} from "$lib/ShowCountdown.svelte";
 	import StreamStatus from "$lib/StreamStatus.svelte";
-	import {browser, dev} from "$app/environment";
 	import {invalidateAll} from "$app/navigation";
 	import {onMount} from "svelte";
 	import Late from "$lib/Late.svelte";
@@ -103,8 +102,10 @@
 						Started
 					{/if}
 					at
-					{#if browser}
-						{new Date(data.mainShowStarted ?? data.preShowStarted).toLocaleTimeString()}
+					{#if mounted}
+						<span in:fade={{duration: 150}}>
+							{new Date(data.mainShowStarted ?? data.preShowStarted).toLocaleTimeString()}
+						</span>
 					{/if}
 				{/if}
 			</div>
