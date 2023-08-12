@@ -1,7 +1,7 @@
 import type {PageLoad} from "./$types";
 import {browser} from "$app/environment";
 
-let cachedAvgLateness: number;
+let cachedLatenesses: number;
 let cachedHasDone: boolean;
 let cachedMainShowStarted: string;
 
@@ -21,29 +21,29 @@ export const load = (async ({fetch, url}) => {
 
     const hasDone = (await hasDonePromise).hasDone;
 
-    let averageLateness;
+    let latenesses;
 
     if(browser) {
-        if(!cachedAvgLateness && !cachedHasDone && !cachedMainShowStarted) {
-            cachedAvgLateness = await getAverageLateness(fetch);
+        if(!cachedLatenesses && !cachedHasDone && !cachedMainShowStarted) {
+            cachedLatenesses = await getAverageLateness(fetch);
             cachedHasDone = hasDone;
             cachedMainShowStarted = mainShowStarted;
 
-            averageLateness = cachedAvgLateness;
+            latenesses = cachedLatenesses;
         } else {
             if(hasDone == cachedHasDone && cachedMainShowStarted == mainShowStarted) {
-                averageLateness = cachedAvgLateness;
+                latenesses = cachedLatenesses;
             } else {
                 console.log({hasDone, cachedHasDone, cachedMainShowStarted, mainShowStarted})
-                cachedAvgLateness = await getAverageLateness(fetch);
+                cachedLatenesses = await getAverageLateness(fetch);
                 cachedHasDone = hasDone;
                 cachedMainShowStarted = mainShowStarted;
 
-                averageLateness = cachedAvgLateness;
+                latenesses = cachedLatenesses;
             }
         }
     } else {
-        averageLateness = await getAverageLateness(fetch);
+        latenesses = await getAverageLateness(fetch);
     }
 
     return {
@@ -54,13 +54,14 @@ export const load = (async ({fetch, url}) => {
         mainShowStarted,
         fast,
         hasDone,
-        averageLateness
+        averageLateness: latenesses.averageLateness,
+        medianLateness: latenesses.medianLateness
     }
 }) satisfies PageLoad;
 
 
 async function getAverageLateness(fetch: fetchFunction) {
-    return await fetch("/api/averageLateness")
+    return await fetch("/api/latenesses")
       .then(r => r.json());
 }
 

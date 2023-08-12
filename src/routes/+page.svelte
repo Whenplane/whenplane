@@ -49,6 +49,7 @@
 
 
 	$: averageLateness = data.averageLateness ? timeString(Math.abs(data.averageLateness)) : undefined;
+	$: medianLateness = data.medianLateness ? timeString(Math.abs(data.medianLateness)) : undefined;
 
 
 </script>
@@ -119,7 +120,15 @@
 					<h3>Average lateness</h3>
 					<span class="opacity-75 text-90 relative bottom-1">from the last 5 shows</span>
 					<br>
-						{averageLateness} <Late/>
+					{averageLateness} <Late/>
+				</span>
+			{/if}
+			{#if medianLateness}
+				<span class="card px-4 py-2 mb-4 inline-block">
+					<h3>Median lateness</h3>
+					<span class="opacity-75 text-90 relative bottom-1">from the last 5 shows</span>
+					<br>
+					{medianLateness} <Late/>
 				</span>
 			{/if}
 			<br>
