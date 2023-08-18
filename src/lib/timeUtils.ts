@@ -49,6 +49,11 @@ export function getNextWAN(now = new Date(), buffer = true, hasDone?: boolean): 
         wanDate = wanDate.plus({days: 1})
     }
 
+    // 7/18/2023 skipped due to production shutdown (from GN callout)
+    if(wanDate.year == 2023 && wanDate.month == 8 && wanDate.day == 18) {
+        wanDate = wanDate.plus({days: 7});
+    }
+
     return wanDate.toJSDate();
 }
 
@@ -70,6 +75,11 @@ export function getPreviousWAN(now = new Date(), luxon = false): Date | DateTime
 
     ) {
         wanDate = wanDate.plus({days: 1})
+    }
+
+    // 7/18/2023 skipped due to production shutdown (from GN callout)
+    if(wanDate.year == 2023 && wanDate.month == 8 && wanDate.day == 18) {
+        wanDate = wanDate.minus({days: 7});
     }
 
     return luxon ? wanDate : wanDate.toJSDate();
