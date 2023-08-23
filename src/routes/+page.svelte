@@ -77,7 +77,7 @@
 	<title>When is WAN?</title>
 </svelte:head>
 
-<div class="container h-full mx-auto flex justify-center items-center">
+<div class="container h-full mx-auto justify-center items-center">
 	<div class="space-y-5">
 		<div class="text-center">
 			<div class="card p-4 inline-block countdown-box text-left">
@@ -197,4 +197,16 @@
 	.mono {
 		font-family: monospace;
 	}
+
+	.container {
+		padding: 5em 1em 1em;
+	}
+	
+	@media (min-height: 790px) {
+		.container {
+			display: flex;
+			padding: 0;
+		}
+	}
+	
 </style>
