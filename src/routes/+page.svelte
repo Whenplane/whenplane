@@ -7,6 +7,7 @@
 	import Late from "$lib/Late.svelte";
 	import {page} from "$app/stores";
 	import {fade} from "svelte/transition";
+	import { dev } from "$app/environment";
 
 	export let data;
 
@@ -131,16 +132,16 @@
 			<StreamStatus {data}/>
 		</div>
 		<div class="text-center">
-			{#if averageLateness}
-				<span class="card px-4 py-2 mb-4 inline-block">
+			{#if averageLateness || dev}
+				<span class="card px-4 py-2 mb-4 mx-2 inline-block">
 					<h3>Average lateness</h3>
 					<span class="opacity-75 text-90 relative bottom-1">from the last 5 shows</span>
 					<br>
 					{averageLateness} <Late/>
 				</span>
 			{/if}
-			{#if medianLateness}
-				<span class="card px-4 py-2 mb-4 inline-block">
+			{#if medianLateness || dev}
+				<span class="card px-4 py-2 mb-4 mx-2 inline-block">
 					<h3>Median lateness</h3>
 					<span class="opacity-75 text-90 relative bottom-1">from the last 5 shows</span>
 					<br>
