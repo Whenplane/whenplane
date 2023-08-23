@@ -133,7 +133,7 @@
 		</div>
 		<div class="text-center">
 			{#if averageLateness || dev}
-				<span class="card px-4 py-2 mb-4 mx-2 inline-block">
+				<span class="card px-4 py-2 mb-4 inline-block lateness">
 					<h3>Average lateness</h3>
 					<span class="opacity-75 text-90 relative bottom-1">from the last 5 shows</span>
 					<br>
@@ -141,7 +141,7 @@
 				</span>
 			{/if}
 			{#if medianLateness || dev}
-				<span class="card px-4 py-2 mb-4 mx-2 inline-block">
+				<span class="card px-4 py-2 mb-4 inline-block lateness">
 					<h3>Median lateness</h3>
 					<span class="opacity-75 text-90 relative bottom-1">from the last 5 shows</span>
 					<br>
@@ -208,6 +208,10 @@
 			display: flex;
 			padding: 0;
 		}
+	}
+
+	.lateness {
+		min-width: 18em;
 	}
 	
 </style>
