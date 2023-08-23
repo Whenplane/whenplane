@@ -21,7 +21,23 @@
 	function invalidate() {
 		lastInvalidation = Date.now();
 		invalidateAll();
+
+		getDanGoingFor()
 	}
+
+	let danGoingFor = "";
+	function getDanGoingFor() {
+		if(data.dan?.isLive) {
+			const distance = Math.floor(Date.now() - new Date(data.dan.started).getTime());
+			const string = timeString(distance);
+			const parts = string.split(" ");
+			if(parts.pop() == "") parts.pop(); // remove seconds
+			danGoingFor = parts.join(" ");
+		} else {
+			danGoingFor = "";
+		}
+	}
+	getDanGoingFor();
 
 	// Periodically invalidate the data so that SvelteKit goes and fetches it again for us
 	function startInvalidationInterval() {
@@ -136,8 +152,23 @@
 				History
 			</a>
 		</div>
+		{#if data.dan?.isLive}
+			<a class="card border-2 p-2 !border-amber-600 !bg-opacity-20 !bg-amber-600 block relative" href="https://twitch.tv/buhdan">
+				<div class="absolute top-2 right-2 opacity-60">
+					Live for {danGoingFor}
+				</div>
+				<img src="/dan.png" class="inline-block placeholder-circle h-32" alt="Dan">
+				<div class="inline-flex h-32 items-center justify-center ml-4">
+					<div>
+						<h2>Dan is live!</h2>
+						{data.dan.title}
+					</div>
+				</div>
+			</a>
+		{/if}
 	</div>
 </div>
+<pre>{JSON.stringify(data.dan, undefined, '\t')}</pre>
 <div class="absolute bottom-0 right-0 p-2">
 	<a href="/about">About</a>
 </div>

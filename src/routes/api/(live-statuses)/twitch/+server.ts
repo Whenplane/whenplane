@@ -97,7 +97,7 @@ export const GET = (async ({platform, url}) => {
 
         lastToken = {
             token: access_token,
-            validUntil: Date.now() + (expires_in * 1000) - 30, // fetch new token 30 seconds before it's supposed to expire,
+            validUntil: Date.now() + (expires_in * 1000) - 30e3, // fetch new token 30 seconds before it's supposed to expire,
             dateGenerated: Date.now()
         }
         platform.context.waitUntil(cache.put("wheniswan:twitch:token", JSON.stringify(lastToken)))
