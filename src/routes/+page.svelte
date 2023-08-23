@@ -168,7 +168,6 @@
 		{/if}
 	</div>
 </div>
-<pre>{JSON.stringify(data.dan, undefined, '\t')}</pre>
 <div class="absolute bottom-0 right-0 p-2">
 	<a href="/about">About</a>
 </div>
