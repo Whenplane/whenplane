@@ -30,7 +30,7 @@ export const load = (async ({fetch, url}) => {
         })(),
         (async () => {
 
-            hasDone = await fetch("/api/hasDone").then(r => r.json());
+            hasDone = await fetch("/api/hasDone").then(r => r.json()).then(r => r.hasDone);
 
             if(browser) {
                 if(!cachedLatenesses && !cachedHasDone) {
