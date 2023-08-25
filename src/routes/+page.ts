@@ -86,6 +86,7 @@ export const load = (async ({fetch, url}) => {
         isPreShow,
         isMainShow,
         liveStatus,
+        isThereWan: liveStatus?.isThereWan,
         preShowStarted,
         mainShowStarted,
         fast,

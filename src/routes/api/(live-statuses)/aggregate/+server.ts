@@ -4,6 +4,8 @@ import {json} from "@sveltejs/kit";
 export const GET = (async ({url, fetch}) => {
     const fast = url.searchParams.get("fast");
 
+    const isThereWan = fetch("/api/isThereWan").then(r => r.json());
+
     const twitchStart = Date.now();
     const twitch = await fetch("/api/twitch?short&fast=" + fast)
         .then(r => r.json());
@@ -22,7 +24,8 @@ export const GET = (async ({url, fetch}) => {
     return json({
         twitch,
         // floatplane,
-        youtube
+        youtube,
+        isThereWan: await isThereWan
     }, {
         headers: {
             "Server-Timing": "twitch;dur=" + twitchTime + "," +
