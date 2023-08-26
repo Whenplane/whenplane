@@ -171,7 +171,7 @@
 			<div class="card border-2 p-2 !border-amber-600 !bg-opacity-20 !bg-amber-600 block text-center">
 				{data.isThereWan?.text ?? ""}
 				{#if data.isThereWan?.image || dev}
-					<img src={data.isThereWan.image} alt={data.isThereWan?.text ?? ""} style="height: 10em;">
+					<img src={data.isThereWan.image} alt={data.isThereWan?.text ?? ""} style="height: 10em;" class="mx-auto">
 				{/if}
 			</div>
 		{/if}
