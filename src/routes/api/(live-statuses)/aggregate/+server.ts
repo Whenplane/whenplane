@@ -42,8 +42,8 @@ export const GET = (async ({url, fetch, locals}) => {
         hasDone: await hasDone
     }
 
-    locals.addTiming({id: "twitch", duration: twitchTime || -1});
-    locals.addTiming({id: "youtube", duration: ytTime || -1});
+    locals.addTiming({id: "twitch", duration: twitchTime ?? -1});
+    locals.addTiming({id: "youtube", duration: ytTime ?? -1});
 
     return json(response)
 }) satisfies RequestHandler;
