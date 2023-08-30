@@ -1,23 +1,24 @@
 import type {PageLoad} from "./$types";
 import {browser} from "$app/environment";
 import { error } from "@sveltejs/kit";
+import type { Latenesses } from "./api/latenesses/+server";
+import type { AggregateResponse } from "./api/(live-statuses)/aggregate/+server";
 
 let cachedLatenesses: Latenesses;
-let cachedHasDone: boolean;
+let cachedLatenessesTime = 0 ;
 
 let danCache: {
     lastFetch: number,
     lastData?: DanResponse
 } = {lastFetch: 0}
 
-export const load = (async ({fetch, url}) => {
+export const load = (async ({fetch}) => {
     const fast = (!browser || (location && location.pathname !== "/"));
     const cacheBuster = fast ? "" : "&r=" + Date.now();
 
-    let hasDone;
-    let liveStatus: any;
-    let latenesses: Latenesses | undefined = undefined;
-    let dan: DanResponse;
+    let liveStatus: AggregateResponse | undefined;
+    let latenesses: Latenesses | undefined;
+    let dan: DanResponse | undefined;
 
     await Promise.all([
         (async () => {
@@ -30,24 +31,16 @@ export const load = (async ({fetch, url}) => {
         })(),
         (async () => {
 
-            hasDone = await fetch("/api/hasDone").then(r => r.json()).then(r => r.hasDone);
 
             if(browser) {
-                if(!cachedLatenesses && !cachedHasDone) {
+                // refresh latenesses once an hour
+                if(Date.now() - cachedLatenessesTime > (60 * 60e3)) {
                     cachedLatenesses = await getAverageLateness(fetch);
-                    cachedHasDone = hasDone;
+                    cachedLatenessesTime = Date.now()
 
                     latenesses = cachedLatenesses;
                 } else {
-                    if(JSON.stringify(hasDone) == JSON.stringify(cachedHasDone)) {
-                        latenesses = cachedLatenesses;
-                    } else {
-                        console.log({hasDone, cachedHasDone})
-                        cachedLatenesses = await getAverageLateness(fetch);
-                        cachedHasDone = hasDone;
-
-                        latenesses = cachedLatenesses;
-                    }
+                    latenesses = cachedLatenesses
                 }
             } else {
                 latenesses = await getAverageLateness(fetch);
@@ -73,7 +66,7 @@ export const load = (async ({fetch, url}) => {
         })()
     ]);
 
-    if(!liveStatus) throw error(500, "Missing liveStatus!")
+    if(!liveStatus) throw error(500, "Missing liveStatus!");
 
     const isPreShow = !liveStatus.youtube.isWAN && liveStatus.twitch.isWAN;
     const isMainShow = liveStatus.youtube.isWAN;
@@ -90,7 +83,7 @@ export const load = (async ({fetch, url}) => {
         preShowStarted,
         mainShowStarted,
         fast,
-        hasDone,
+        hasDone: liveStatus.hasDone,
         averageLateness: latenesses?.averageLateness,
         medianLateness: latenesses?.medianLateness,
         dan
@@ -109,9 +102,4 @@ type DanResponse = {
     isLive: boolean,
     started: string,
     title: string
-}
-
-type Latenesses = {
-    averageLateness: number,
-    medianLateness: number
 }

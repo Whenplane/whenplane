@@ -16,8 +16,14 @@ export const GET = (async ({platform, url}) => {
     const fullEntry = history.get(date);
     const partialEntry = history.get(date + ":mainShowStart");
 
-    return json({
-        hasDone: !!(await fullEntry) || !!( await partialEntry)
-    })
+    const response: HasDoneResponse = {
+        hasDone: !!(await fullEntry) || !!(await partialEntry)
+    };
+
+    return json(response)
 
 }) satisfies RequestHandler;
+
+export type HasDoneResponse = {
+    hasDone: boolean
+}

@@ -13,10 +13,10 @@ let savedEndTime: boolean | undefined = undefined;
 
 const fastCache: {
     lastFetch: number,
-    lastFetchData: any
+    lastFetchData: TwitchAPIResponse | undefined
 } = {
     lastFetch: 0,
-    lastFetchData: {}
+    lastFetchData: undefined
 };
 
 let lastToken = {
@@ -40,11 +40,11 @@ export const GET = (async ({platform, url}) => {
 
     // With the fast flag (added for initial page load requests), always fetch cached data if its from within the past 5 hours
     if(Date.now() - fastCache.lastFetch < cacheTime || (fast && Date.now() - fastCache.lastFetch < 5 * 60 * 60e3)) {
-        const isLive = fastCache.lastFetchData.data?.length != 0;
-        const isWAN = isLive && (fastCache.lastFetchData.data[0].title.includes("WAN") || makeAlwaysWAN);
+        const isLive = fastCache.lastFetchData?.data?.length != 0;
+        const isWAN = isLive && (fastCache.lastFetchData?.data[0].title.includes("WAN") || makeAlwaysWAN);
 
         const twitchData = url.searchParams.has("short") ? undefined : fastCache.lastFetchData;
-        const started = isLive ? fastCache.lastFetchData.data[0].started_at : undefined;
+        const started = isLive ? fastCache.lastFetchData?.data[0].started_at : undefined;
 
         return json(
             {
@@ -123,7 +123,7 @@ export const GET = (async ({platform, url}) => {
     const isWAN = isLive && (twitchJSON.data[0].title.includes("WAN") || makeAlwaysWAN);
 
     if(savedStartTime && !isLive) savedStartTime = false;
-    if(savedEndTime && fastCache.lastFetchData.data?.length == 0) savedEndTime = false;
+    if(savedEndTime && fastCache.lastFetchData?.data?.length == 0) savedEndTime = false;
 
     const twitchData = url.searchParams.has("short") ? undefined : twitchJSON;
     const started = isLive ? twitchJSON.data[0].started_at : undefined;
@@ -148,7 +148,7 @@ export const GET = (async ({platform, url}) => {
         }
     }
 
-    if(!savedEndTime && !isLive && fastCache.lastFetchData.data?.length != 0) {
+    if(!savedEndTime && !isLive && fastCache.lastFetchData?.data?.length != 0) {
         const closestWAN = getClosestWan();
         const distance = Date.now() - closestWAN.getTime()
         // Only record ending time if we are within 12 hours of the closest wan
@@ -200,13 +200,49 @@ export const GET = (async ({platform, url}) => {
         }
     }
 
-    return json(
-        {
-            debug,
-            twitchData,
-            isLive,
-            isWAN,
-            started
-        }
-    )
+    const response: TwitchResponse = {
+        debug,
+        twitchData,
+        isLive,
+        isWAN,
+        started
+    }
+
+    return json(response);
 }) satisfies RequestHandler;
+
+export type TwitchResponse = {
+    debug?: {
+        limit: string | null,
+        remaining: string | null,
+        reset: string | null,
+        resetPretty: string,
+        other: {
+            [header: string]: string
+        }
+    },
+    twitchData?: TwitchAPIResponse,
+    isLive: boolean,
+    isWAN: boolean,
+    started?: string
+}
+
+type TwitchAPIResponse = {
+    data: {
+        id: string,
+        user_id: string,
+        user_login: string,
+        user_name: string,
+        game_id: string,
+        game_name: string,
+        type: string,
+        title: string,
+        viewer_count: number,
+        started_at: string,
+        language: string,
+        thumbnail_url: string,
+        tag_ids: unknown[],
+        tags: string[],
+        is_mature: boolean
+    }[]
+}

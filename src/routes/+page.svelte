@@ -59,7 +59,14 @@
 		if(data.fast) setTimeout(invalidate, 500);
 		console.log({fast: data.fast});
 
+		let slowInvalidationInterval = setInterval(() => {
+			if(Date.now() - lastInvalidation > 5e3) {
+				invalidate();
+			}
+		}, 30 * 60e3); // update, even in the background, every 30 minutes
+
 		return () => {
+			clearInterval(slowInvalidationInterval)
 			if (invalidationInterval) clearInterval(invalidationInterval)
 		};
 	})

@@ -6,14 +6,19 @@ export const GET = (async ({platform}) => {
   const meta = platform?.env?.META;
   if(!meta) throw error(503, "Missing meta KV!");
 
-  const averageLateness = meta.get("averageLateness", {type: 'json'});
-  const medianLateness = meta.get("medianLateness", {type: 'json'});
+  const averageLateness = meta.get("averageLateness", {type: 'json'}) as Promise<number>;
+  const medianLateness = meta.get("medianLateness", {type: 'json'}) as Promise<number>;
 
-  return json(
-    {
-      averageLateness: await averageLateness,
-      medianLateness: await medianLateness
-    }
-  );
+  const response: Latenesses = {
+    averageLateness: await averageLateness,
+    medianLateness: await medianLateness
+  }
+
+  return json(response);
 
 }) satisfies RequestHandler;
+
+export type Latenesses = {
+  averageLateness?: number,
+  medianLateness?: number
+}

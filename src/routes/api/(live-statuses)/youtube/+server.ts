@@ -79,7 +79,7 @@ export const GET = (async ({platform, locals, url}) => {
     }
 
 
-    const result = {
+    const result: YoutubeResponse = {
         isLive,
         isWAN,
         started,
@@ -91,6 +91,13 @@ export const GET = (async ({platform, locals, url}) => {
     return json(result)
 
 }) satisfies RequestHandler;
+
+export type YoutubeResponse = {
+    isLive: boolean,
+    isWAN: boolean,
+    started?: string,
+    videoId?: string
+}
 
 type DOResponse = {
     isLive: boolean,
