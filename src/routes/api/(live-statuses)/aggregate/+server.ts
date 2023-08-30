@@ -11,31 +11,39 @@ export const GET = (async ({url, fetch, locals}) => {
     const isThereWan = fetch("/api/isThereWan").then(r => r.json());
     const hasDone = fetch("/api/hasDone").then(r => r.json());
 
-    const twitchStart = Date.now();
-    const twitch = await fetch("/api/twitch?short&fast=" + fast)
-        .then(r => r.json());
-    const twitchTime = Date.now() - twitchStart;
+    let twitchTime: number | undefined;
+    const twitch = (async () => {
+        const start = Date.now();
+        const response = await fetch("/api/twitch?short&fast=" + fast)
+          .then(r => r.json());
+        twitchTime = Date.now() - start;
+        return response;
+    })();
 
     // const fpStart = Date.now();
     // const floatplane = await fetch("/api/floatplane?short&fast=" + fast)
     //     .then(r => r.json());
     // const fpTime = Date.now() - fpStart;
 
-    const ytStart = Date.now();
-    const youtube = await fetch("/api/youtube?short&fast=" + fast)
-        .then(r => r.json());
-    const ytTime = Date.now() - ytStart;
-
-    locals.addTiming({id: "twitch", duration: twitchTime});
-    locals.addTiming({id: "youtube", duration: ytTime});
+    let ytTime: number | undefined;
+    const youtube = (async () => {
+        const start = Date.now();
+        const response = await fetch("/api/youtube?short&fast=" + fast)
+          .then(r => r.json());
+        ytTime = Date.now() - start;
+        return response;
+    })();
 
     const response: AggregateResponse = {
-        twitch,
+        twitch: await twitch,
         // floatplane,
-        youtube,
+        youtube: await youtube,
         isThereWan: await isThereWan,
         hasDone: await hasDone
     }
+
+    locals.addTiming({id: "twitch", duration: twitchTime || -1});
+    locals.addTiming({id: "youtube", duration: ytTime || -1});
 
     return json(response)
 }) satisfies RequestHandler;
