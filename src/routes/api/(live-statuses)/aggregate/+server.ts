@@ -9,7 +9,7 @@ export const GET = (async ({url, fetch, locals}) => {
     const fast = url.searchParams.get("fast");
 
     const isThereWan = fetch("/api/isThereWan").then(r => r.json());
-    const hasDone = fetch("/api/hasDone").then(r => r.json());
+    const hasDone = fetch("/api/hasDone").then(r => r.json()).then(r => r.hasDone);
 
     let twitchTime: number | undefined;
     const twitch = (async () => {

@@ -23,6 +23,7 @@ export function getNextWAN(now = new Date(), buffer = true, hasDone?: boolean): 
     if (buffer) {
         if (typeof hasDone != 'undefined') {
             shouldStay = !hasDone;
+            console.log({hasDone, shouldStay})
         } else {
             shouldStay = now.getTime() - wanDate.toJSDate().getTime() > 5 * 60 * 60 * 1e3;
         }
