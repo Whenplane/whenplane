@@ -134,7 +134,7 @@
     }
 
     img {
-        width: 30rem;
+        width: min(30rem, 95vw);
         aspect-ratio: 16 / 9;
         border-radius: var(--theme-rounded-base);
         object-fit: cover;
@@ -152,6 +152,6 @@
         font-family: monospace;
     }
     a {
-        width: 30rem;
+        width: min(30rem, 95vw);
     }
 </style>
