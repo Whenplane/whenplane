@@ -4,14 +4,13 @@
     import { browser, dev } from "$app/environment";
     import HistoryRecords from "$lib/HistoryRecords.svelte";
     import LinusFace from "$lib/LinusFace.svelte";
+    import { RadioGroup, RadioItem } from "@skeletonlabs/skeleton";
+    import { setCookie } from "$lib/cookieUtils";
 
     import ViewStacked from "svelte-bootstrap-icons/lib/ViewStacked.svelte"
     import CardImage from "svelte-bootstrap-icons/lib/CardImage.svelte"
     import Images from "svelte-bootstrap-icons/lib/Images.svelte"
     import Grid from "svelte-bootstrap-icons/lib/Grid.svelte"
-
-    import { RadioGroup, RadioItem } from "@skeletonlabs/skeleton";
-    import { setCookie } from "$lib/cookieUtils";
 
     export let data;
 
@@ -53,7 +52,7 @@
          class:old-layout={view === 2}
          class:thumbnailless-inline={view === 3}
     >
-        {#each data.history.currentYear as show}
+        {#each data.history.currentYear as show (show.name)}
             <HistoricalShow {show} withThumbnail={view < 2}/>
         {/each}
         <LinusFace/>

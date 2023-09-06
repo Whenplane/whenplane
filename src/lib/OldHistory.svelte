@@ -1,6 +1,8 @@
 <script>
     import HistoricalShow from "./HistoricalShow.svelte";
     import LazyLoad from '@dimfeld/svelte-lazyload';
+    import {fade} from "svelte/transition";
+    import { quadInOut } from "svelte/easing";
 
     export let withThumbnail = false;
 
@@ -18,8 +20,10 @@
         Loading older shows..
     </span>
 {:then {history}}
-    {#each history as show}
-        <HistoricalShow {show} {withThumbnail}/>
+    {#each history as show, i}
+        <span in:fade={{delay: i * 50, duration: 350, easing: quadInOut}}>
+            <HistoricalShow {show} {withThumbnail}/>
+        </span>
     {:else}
         <span class="opacity-50">
             No old shows?
