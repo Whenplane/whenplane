@@ -2,7 +2,7 @@
     import LazyLoad from "@dimfeld/svelte-lazyload";
 </script>
 
-<LazyLoad>
+<LazyLoad style="display: inline-block">
     <div>
         <img src="/linus.webp" alt="linus face">
     </div>
@@ -17,6 +17,8 @@
     img {
         width: 10em;
         opacity: 20%;
+        position: relative;
+        bottom: 20rem;
     }
     @media (max-width: 700px) {
         div {

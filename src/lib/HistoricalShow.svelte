@@ -3,10 +3,18 @@
     import Late from "./Late.svelte";
 
     export let show;
+    export let withThumbnail = false;
 
     export let onlyTimes = false;
 
     $: href = onlyTimes ? undefined : "/history/show/" + show.name;
+
+    const findThumbnailsAt = show.value?.snippet ?? show.metadata?.snippet ?? show.metadata
+    const thumbnail = findThumbnailsAt?.thumbnails?.maxres ??
+      findThumbnailsAt?.thumbnails?.standard ??
+      findThumbnailsAt?.thumbnails?.high ??
+      findThumbnailsAt?.thumbnails?.medium ??
+      findThumbnailsAt?.thumbnails?.default
 
     const preShowStart = show.metadata.preShowStart ? new Date(show.metadata.preShowStart) : show.metadata.preShowStart;
     const mainShowStart = show.metadata.mainShowStart ? new Date(show.metadata.mainShowStart) : show.metadata.mainShowStart;
@@ -21,8 +29,11 @@
     const onTime = mainShowStart ? getTimeUntil(showDate, mainShowStart.getTime()) : null;
 </script>
 
-<a class:card={!onlyTimes} class="inline-block limit p-3 m-2 w-full hidden-link" {href} id={show.name}>
+<a class:card={!onlyTimes} class="inline-block limit p-3 m-2 hidden-link" {href} id={show.name}>
     {#if !onlyTimes}
+        {#if withThumbnail && thumbnail}
+            <img src={thumbnail.url}>
+        {/if}
         <h3>{showDate.toLocaleDateString()}</h3>
         {#if show.metadata.title}
             <h4>{show.metadata.title}</h4>
@@ -115,6 +126,21 @@
     {/if}
 </a>
 <style>
+    :global(.old-layout) a {
+        display: block
+    }
+    :global(.thumbnail-list) a {
+        display: block
+    }
+
+    img {
+        width: 30rem;
+        aspect-ratio: 16 / 9;
+        border-radius: var(--theme-rounded-base);
+        object-fit: cover;
+    }
+
+
     .red {
         color: red;
     }
@@ -124,5 +150,8 @@
     .time {
         font-size: 1.25em;
         font-family: monospace;
+    }
+    a {
+        width: 30rem;
     }
 </style>

@@ -37,6 +37,10 @@ export const handle: Handle = async ({ event, resolve }) => {
         timings.push(timing)
     }
 
+    if(event.url.pathname === "/history") {
+        event.params.__c__viewType = event.cookies.get("historyViewType")
+    }
+
     const response = await resolve(event);
 
     if(timings.length > 0) {

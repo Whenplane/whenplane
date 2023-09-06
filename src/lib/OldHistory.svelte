@@ -2,10 +2,12 @@
     import HistoricalShow from "./HistoricalShow.svelte";
     import LazyLoad from '@dimfeld/svelte-lazyload';
 
+    export let withThumbnail = false;
+
     // eslint-disable-next-line @typescript-eslint/no-empty-function
     let fetchingHistory = new Promise(() => {});
 </script>
-<div style="height: 0;" id="old-history">
+<div style="height: 0; display: inline-block;" id="old-history">
     <div class="relative pointer-events-none" style="bottom: 50em">
         <LazyLoad on:visible={() => fetchingHistory = import("./oldHistory.ts")} height="50em"/>
     </div>
@@ -17,7 +19,7 @@
     </span>
 {:then {history}}
     {#each history as show}
-        <HistoricalShow {show}/><br>
+        <HistoricalShow {show} {withThumbnail}/>
     {:else}
         <span class="opacity-50">
             No old shows?

@@ -81,6 +81,9 @@ devDependencies:
   svelte:
     specifier: ^3.54.0
     version: 3.54.0
+  svelte-bootstrap-icons:
+    specifier: ^3.0.0
+    version: 3.0.0
   svelte-check:
     specifier: ^3.0.1
     version: 3.0.1(postcss@8.4.23)(svelte@3.54.0)
@@ -2583,6 +2586,10 @@ packages:
   /supports-preserve-symlinks-flag@1.0.0:
     resolution: {integrity: sha512-ot0WnXS9fgdkgIcePe6RHNk1WA8+muPa6cSjeR3V8K27q9BB1rTE3R1p7Hv0z1ZyAc8s6Vvv8DIyWf681MAt0w==}
     engines: {node: '>= 0.4'}
+    dev: true
+
+  /svelte-bootstrap-icons@3.0.0:
+    resolution: {integrity: sha512-KW4CHGy8kuSSYcmPhmR0DPpCDNHbUOoU7zdC3h4xQQZ46EZTZNW07ZzLDFKTwvTDb6ZJ21euS4pVOvgogxMimQ==}
     dev: true
 
   /svelte-check@3.0.1(postcss@8.4.23)(svelte@3.54.0):
