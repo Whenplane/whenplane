@@ -3,7 +3,7 @@ import {error, json} from "@sveltejs/kit";
 import {env} from "$env/dynamic/private";
 import {dev} from "$app/environment";
 
-const cacheTime = 30e3; // maximum fetch from twitch api once every 30 seconds
+const cacheTime = 29e3; // maximum fetch from twitch api once every 30 seconds
 
 const fastCache: {
   lastFetch: number,
@@ -48,6 +48,16 @@ export const GET = (async ({platform, url}) => {
         title
       }
     )
+  }
+
+  const now = new Date();
+  // don't check for dan streams on fridays after 4pm
+  if(now.getUTCDay() === 5 && now.getUTCHours() >= 11) {
+    return json({
+      isLive: false,
+      bypassed: true,
+      bypassed_by: "server"
+    });
   }
 
   if(lastToken.validUntil < Date.now()) {

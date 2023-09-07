@@ -50,17 +50,28 @@ export const load = (async ({fetch}) => {
         })(),
         (async () => {
 
-
-            if(Date.now() - danCache.lastFetch > 31e3) {
-                dan = (await fetch("/api/dan?short=true&fast=" + fast)
-                  .then(r => r.json())) as DanResponse;
-                danCache = {
-                    lastFetch: Date.now(),
-                    lastData: dan
+            const now = new Date();
+            // don't check for dan streams on fridays after 4pm
+            if(now.getUTCDay() === 5 && now.getUTCHours() >= 11) {
+                dan = {
+                    isLive: false,
+                    bypassed: true,
+                    bypassed_by: "page"
                 }
             } else {
-                dan = danCache.lastData;
+                if(Date.now() - danCache.lastFetch > 30e3) {
+                    dan = (await fetch("/api/dan?short=true&fast=" + fast + "&d=" + Date.now())
+                      .then(r => r.json())) as DanResponse;
+                    danCache = {
+                        lastFetch: Date.now(),
+                        lastData: dan
+                    }
+                } else {
+                    dan = danCache.lastData;
+                }
             }
+
+
 
 
         })()
@@ -100,6 +111,9 @@ type fetchFunction = typeof fetch
 
 type DanResponse = {
     isLive: boolean,
-    started: string,
-    title: string
+    started?: string,
+    title?: string,
+
+    bypassed?: boolean,
+    bypassed_by?: string
 }
