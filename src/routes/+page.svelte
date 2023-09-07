@@ -82,7 +82,7 @@
 		on:blur={() => clearInterval(invalidationInterval)}
 />
 <svelte:head>
-	<title>When is WAN?</title>
+	<title>When is WAN?  Whenplane</title>
 </svelte:head>
 
 <div class="container h-full mx-auto justify-center items-center">

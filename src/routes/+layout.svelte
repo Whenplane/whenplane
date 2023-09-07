@@ -40,7 +40,7 @@
 
 <svelte:head>
     {#if !$page.url.pathname.startsWith("/history/show/")}
-        <meta name="description" content="When is WAN? Who knows! At least you can look at when it started before..">
+        <meta name="description" content="When is WAN? Who knows! At least you can look at when it started before.. (spoiler: it's late)">
     {/if}
 </svelte:head>
 
