@@ -1,9 +1,11 @@
 <script>
     import {getClosestWan, getTimeUntil} from "./timeUtils";
     import Late from "./Late.svelte";
+    import LazyLoad from "@dimfeld/svelte-lazyload";
 
     export let show;
     export let withThumbnail = false;
+    export let lazyLoadThumbnail = false
 
     export let onlyTimes = false;
 
@@ -32,7 +34,13 @@
 <a class:card={!onlyTimes} class="inline-block limit p-3 m-2 hidden-link" {href} id={show.name}>
     {#if !onlyTimes}
         {#if withThumbnail && thumbnail}
-            <img src={thumbnail.url}>
+            {#if lazyLoadThumbnail}
+                <LazyLoad>
+                    <img src={thumbnail.url}>
+                </LazyLoad>
+            {:else}
+                <img src={thumbnail.url}>
+            {/if}
         {/if}
         <h3>{showDate.toLocaleDateString()}</h3>
         {#if show.metadata.title}
