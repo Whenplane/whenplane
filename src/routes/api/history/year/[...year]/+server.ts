@@ -51,7 +51,9 @@ export const GET = (async ({platform, params, locals, fetch}) => {
                     const mainEnd = history.get(parts[0] + ":showEnd", {cacheTtl});
                     const snippet = history.get(parts[0] + ":snippet", {cacheTtl, type: "json"});
                     let isCurrentlyLive: Promise<boolean>;
-                    if(Date.now() - new Date(parts[0]).getTime() < 24 * 60 * 60e3) {
+                    const distance = Date.now() - new Date(parts[0]).getTime();
+                    console.log({distance})
+                    if(distance < 24 * 60 * 60e3) {
                         isCurrentlyLive = fetch("/api/twitch").then(r => r.json())
                           .then(d => !!d.isWAN)
                     } else {
