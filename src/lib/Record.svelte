@@ -1,8 +1,8 @@
 <script lang="ts">
     import {getClosestWan, timeString} from "$lib/timeUtils.js";
     import Late from "$lib/Late.svelte";
-
-    export let record: BestShow;
+    export let record: BestShow | number;
+    export let color = true;
     export let late = false;
     export let early = false;
 
@@ -11,9 +11,12 @@
 
 <div class="box">
     <h3><slot/></h3>
+    <div>
+        <slot name="description"></slot>
+    </div>
     {#if record}
-        <span class:late={late} class:early={early}>
-            {timeString(Math.abs(record.distance))}
+        <span class:late={late && color} class:early={early && color}>
+            {timeString(Math.abs(typeof record === 'number' ? record : record.distance))}
             {#if late}
                 <Late/>
             {/if}
@@ -22,11 +25,13 @@
             {/if}
         </span>
         <br>
-        <span class="small">
-            <a href="/history/show/{record.name}" class="hidden-link underline">
-                {getClosestWan(new Date(record.name)).toLocaleDateString()}
-            </a>
-        </span>
+        {#if record.name}
+            <span class="small">
+                <a href="/history/show/{record.name}" class="hidden-link underline">
+                    {getClosestWan(new Date(record.name)).toLocaleDateString()}
+                </a>
+            </span>
+        {/if}
     {:else if loading}
         <span class="placeholder animate-pulse inline-block w-48"></span>
         <span class="small placeholder animate-pulse inline-block w-32"></span>

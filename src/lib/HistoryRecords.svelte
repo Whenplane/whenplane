@@ -2,6 +2,10 @@
     import {dev} from "$app/environment";
     import Record from "$lib/Record.svelte";
     import LoadingRecord from "$lib/LoadingRecord.svelte";
+    import { Accordion, AccordionItem } from "@skeletonlabs/skeleton";
+    import Late from "$lib/Late.svelte";
+    import { timeString } from "$lib/timeUtils";
+    import { onMount } from "svelte";
 
     export let records;
 
@@ -9,13 +13,23 @@
 
     $: if(data) records = data.history.records;
 
+    // eslint-disable-next-line @typescript-eslint/no-empty-function
+    let latenessesFetching = new Promise(() => {});
+    let latenessesFetched = false;
+
+    function fetchLatenesses() {
+        if(latenessesFetched) return;
+        latenessesFetched = true;
+        latenessesFetching = fetch("/api/latenesses").then(r => r.json());
+    }
+    onMount(() => {
+        if(dev) fetchLatenesses();
+    })
+
 </script>
 <div class="p-1">
     <div class="card limit mx-auto pb-4 pt-2">
         <h2>Records</h2>
-        Note that all of the WAN show times have not been recorded.<br>
-        These are only what can be seen on this page.
-        <br>
         {#await records}
             <LoadingRecord>
                 Earliest Show
@@ -30,6 +44,12 @@
             <LoadingRecord>
                 Longest main show
             </LoadingRecord>
+            <Accordion>
+                <AccordionItem>
+                    <svelte:fragment slot="summary">More records</svelte:fragment>
+                    <svelte:fragment slot="content">Loading...</svelte:fragment>
+                </AccordionItem>
+            </Accordion>
         {:then rec}
             {#if dev && (!rec.earliest || !rec.longestPreShow || !rec.longestShow || !rec.mostLate)}
             <span class="box">
@@ -59,24 +79,74 @@
                 </Record>
             {/await}
             <br>
-            {#await rec.longestPreShow}
-                <LoadingRecord>
-                    Longest pre-show
-                </LoadingRecord>
-            {:then record}
-                <Record {record}>
-                    Longest pre-show
-                </Record>
-            {/await}
-            {#await rec.longestShow}
-                <LoadingRecord>
-                    Longest main show
-                </LoadingRecord>
-            {:then record}
-                <Record {record}>
-                    Longest main show
-                </Record>
-            {/await}
+            <Accordion class="mx-4" spacing="" regionPanel="">
+                <AccordionItem open={dev} on:toggle={fetchLatenesses}>
+                    <svelte:fragment slot="summary">More records</svelte:fragment>
+                    <svelte:fragment slot="content">
+                        {#await rec.longestPreShow}
+                            <LoadingRecord>
+                                Longest pre-show
+                            </LoadingRecord>
+                        {:then record}
+                            <Record {record}>
+                                Longest pre-show
+                            </Record>
+                        {/await}
+                        {#await rec.longestShow}
+                            <LoadingRecord>
+                                Longest main show
+                            </LoadingRecord>
+                        {:then record}
+                            <Record {record}>
+                                Longest main show
+                            </Record>
+                        {/await}
+                        {#await rec.shortestPreShow}
+                            <LoadingRecord>
+                                Shortest pre-show
+                            </LoadingRecord>
+                        {:then record}
+                            <Record {record}>
+                                Shortest pre-show
+                            </Record>
+                        {/await}
+                        {#await rec.shortestShow}
+                            <LoadingRecord>
+                                Shortest main show
+                            </LoadingRecord>
+                        {:then record}
+                            <Record {record}>
+                                Shortest main show
+                            </Record>
+                        {/await}
+                        {#await latenessesFetching}
+                            <LoadingRecord>
+                                Average lateness
+                            </LoadingRecord>
+                            <LoadingRecord>
+                                Median lateness
+                            </LoadingRecord>
+                        {:then latenesses}
+                            {#if latenesses.averageLateness || dev}
+                                <Record record={latenesses.averageLateness} late={true} color={false}>
+                                    Average lateness
+                                    <svelte:fragment slot="description">
+                                        <span class="opacity-75 text-90 relative bottom-1">from the last 5 shows</span>
+                                    </svelte:fragment>
+                                </Record>
+                            {/if}
+                            {#if latenesses.medianLateness || dev}
+                                <Record record={latenesses.medianLateness} late={true} color={false}>
+                                    Median lateness
+                                    <svelte:fragment slot="description">
+                                        <span class="opacity-75 text-90 relative bottom-1">from the last 5 shows</span>
+                                    </svelte:fragment>
+                                </Record>
+                            {/if}
+                        {/await}
+                    </svelte:fragment>
+                </AccordionItem>
+            </Accordion>
         {/await}
     </div>
 </div>
