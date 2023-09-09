@@ -2,6 +2,7 @@
     import {getClosestWan, getTimeUntil} from "./timeUtils";
     import Late from "./Late.svelte";
     import LazyLoad from "@dimfeld/svelte-lazyload";
+    import Live from "$lib/Live.svelte";
 
     export let show;
     export let withThumbnail = false;
@@ -31,18 +32,30 @@
     const onTime = mainShowStart ? getTimeUntil(showDate, mainShowStart.getTime()) : null;
 </script>
 
-<a class:card={!onlyTimes} class="inline-block limit p-3 m-2 hidden-link" {href} id={show.name}>
+<a class:card={!onlyTimes} class="inline-block limit p-3 m-2 hidden-link relative" {href} id={show.name}>
     {#if !onlyTimes}
         {#if withThumbnail && thumbnail}
-            {#if lazyLoadThumbnail}
-                <LazyLoad>
+            <div class="thumbnail relative">
+                {#if lazyLoadThumbnail}
+                    <LazyLoad>
+                        <img src={thumbnail.url}>
+                    </LazyLoad>
+                {:else}
                     <img src={thumbnail.url}>
-                </LazyLoad>
-            {:else}
-                <img src={thumbnail.url}>
-            {/if}
+                {/if}
+                {#if show.metadata?.isCurrentlyLive}
+                    <div class="inline-block absolute bottom-3 right-3">
+                        <Live/>
+                    </div>
+                {/if}
+            </div>
         {/if}
         <h3>{showDate.toLocaleDateString()}</h3>
+        {#if !(withThumbnail && thumbnail) && show.metadata?.isCurrentlyLive}
+            <div class="inline-block absolute top-3 right-3">
+                <Live/>
+            </div>
+        {/if}
         {#if show.metadata.title}
             <h4>{show.metadata.title}</h4>
         {/if}
@@ -143,9 +156,13 @@
 
     img {
         width: min(30rem, 95vw);
-        aspect-ratio: 16 / 9;
-        border-radius: var(--theme-rounded-base);
         object-fit: cover;
+        border-radius: var(--theme-rounded-base);
+        aspect-ratio: 16 / 9;
+    }
+
+    .thumbnail {
+
     }
 
 

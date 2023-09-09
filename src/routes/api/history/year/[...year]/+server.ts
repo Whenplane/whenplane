@@ -3,7 +3,7 @@ import {error, json} from "@sveltejs/kit";
 
 const cacheTtl = 60 * 60 * 24 * 6; // cache single keys for 6 days if possible
 
-export const GET = (async ({platform, params, locals}) => {
+export const GET = (async ({platform, params, locals, fetch}) => {
     const history = platform?.env?.HISTORY;
     if(!history) throw error(503, "History not available");
 
@@ -50,6 +50,13 @@ export const GET = (async ({platform, params, locals}) => {
                     const mainStart = history.get(parts[0] + ":mainShowStart", {cacheTtl});
                     const mainEnd = history.get(parts[0] + ":showEnd", {cacheTtl});
                     const snippet = history.get(parts[0] + ":snippet", {cacheTtl, type: "json"});
+                    let isCurrentlyLive: Promise<boolean>;
+                    if(new Date(parts[0]).getDate() === new Date().getDate()) {
+                        isCurrentlyLive = fetch("/api/twitch").then(r => r.json())
+                          .then(d => !!d.isWAN)
+                    } else {
+                        isCurrentlyLive = Promise.resolve(false);
+                    }
                     return {
                         name: parts[0],
                         metadata: {
@@ -64,7 +71,8 @@ export const GET = (async ({platform, params, locals}) => {
                                 const parts = rawTitle.split(" - ");
                                 parts.pop(); // do a pop to only remove the stuff after the *last* dash
                                 return parts.join(" - ");
-                            })()
+                            })(),
+                            isCurrentlyLive: await isCurrentlyLive
                         }
                     }
                 })());
@@ -104,6 +112,6 @@ export const GET = (async ({platform, params, locals}) => {
 type Key = {
     name: string,
     metadata: {
-        [key: string]: string | number
+        [key: string]: string | number | boolean
     }
 }

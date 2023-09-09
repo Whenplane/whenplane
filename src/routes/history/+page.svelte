@@ -11,6 +11,7 @@
     import CardImage from "svelte-bootstrap-icons/lib/CardImage.svelte"
     import Images from "svelte-bootstrap-icons/lib/Images.svelte"
     import Grid from "svelte-bootstrap-icons/lib/Grid.svelte"
+    import Live from "$lib/Live.svelte";
 
     export let data;
 
