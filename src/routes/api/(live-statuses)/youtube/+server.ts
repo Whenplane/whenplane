@@ -80,7 +80,7 @@ export const GET = (async ({platform, locals, url, fetch}) => {
 
     // ignore youtube saying that wan is still live even though it is no longer live
     if(isWAN) {
-        isWAN = await fetch("/api/twitch").then(r => r.json())
+        isWAN = await fetch("/api/twitch?fast=true").then(r => r.json())
           .then(d => !!d.isWAN);
     }
 
