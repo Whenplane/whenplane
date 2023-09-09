@@ -91,7 +91,45 @@ export async function fetchYoutubeShows() {
 
                 lastDate = publishedAt;
 
-                showVods[dateName] = video;
+                if(showVods[dateName]) {
+                    // handle multiple parts
+
+                    const thisStart = video.liveStreamingDetails?.actualStartTime;
+                    const thisEnd = video.liveStreamingDetails?.actualEndTime;
+                    const existingStart = showVods[dateName].liveStreamingDetails?.actualStartTime;
+                    const existingEnd = showVods[dateName].liveStreamingDetails?.actualEndTime;
+
+                    if(thisStart && existingStart) {
+                        const oldStart = new Date(existingStart);
+                        const newStart = new Date(thisStart);
+                        if(newStart.getTime() < oldStart.getTime()) {
+                            // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+                            // @ts-ignore
+                            showVods[dateName].liveStreamingDetails
+                              .actualStartTime = thisStart;
+                        }
+                    }
+
+                    if(thisEnd && existingEnd) {
+                        const oldEnd = new Date(existingEnd);
+                        const newEnd = new Date(thisEnd);
+                        if(newEnd.getTime() > oldEnd.getTime()) {
+                            // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+                            // @ts-ignore
+                            showVods[dateName].liveStreamingDetails
+                              .actualEndTime = thisEnd;
+                        }
+                    }
+
+                    if(showVods[dateName].snippet?.title) {
+                        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+                        // @ts-ignore
+                        showVods[dateName].snippet.title = showVods[dateName].snippet.title.replaceAll(/\(PT [0-9]\)/g, "")
+                    }
+
+                } else {
+                    showVods[dateName] = video;
+                }
             }
         }
 
