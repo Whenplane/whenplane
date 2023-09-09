@@ -32,11 +32,27 @@ export const GET = (async ({platform, locals}) => {
         return r;
     })();
 
+    const shortestPreShow = (async () => {
+        const start = Date.now();
+        if(dev) await wait(random(testMin, testMax))
+        const r = await meta.get("shortestPreShow", {type: "json", cacheTtl});
+        locals.addTiming({id: "sps", duration: Date.now() - start})
+        return r;
+    })();
+
     const longestShow = (async () => {
         const start = Date.now();
         if(dev) await wait(random(testMin, testMax))
         const r = await meta.get("longestShow", {type: "json", cacheTtl});
         locals.addTiming({id: "ls", duration: Date.now() - start})
+        return r;
+    })();
+
+    const shortestShow = (async () => {
+        const start = Date.now();
+        if(dev) await wait(random(testMin, testMax))
+        const r = await meta.get("shortestShow", {type: "json", cacheTtl});
+        locals.addTiming({id: "ss", duration: Date.now() - start})
         return r;
     })();
 
@@ -51,7 +67,9 @@ export const GET = (async ({platform, locals}) => {
     const r = {
         earliest: await earliest,
         longestPreShow: await longestPreShow,
+        shortestPreShow: await shortestPreShow,
         longestShow: await longestShow,
+        shortestShow: await shortestShow,
         mostLate: await mostLate
     };
     locals.addTiming({id: "total", duration: Date.now() - totalStart});
