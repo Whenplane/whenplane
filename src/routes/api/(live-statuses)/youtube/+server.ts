@@ -78,10 +78,13 @@ export const GET = (async ({platform, locals, url, fetch}) => {
         }
     }
 
+    let forced = false;
+
     // ignore youtube saying that wan is still live even though it is no longer live
     if(isWAN) {
         isWAN = await fetch("/api/twitch?fast=true").then(r => r.json())
           .then(d => !!d.isWAN);
+        if(!isWAN) forced = true;
     }
 
 
@@ -89,7 +92,8 @@ export const GET = (async ({platform, locals, url, fetch}) => {
         isLive,
         isWAN,
         started,
-        videoId
+        videoId,
+        forced
     };
 
     cache.value = result
@@ -102,7 +106,8 @@ export type YoutubeResponse = {
     isLive: boolean,
     isWAN: boolean,
     started?: string,
-    videoId?: string
+    videoId?: string,
+    forced: boolean
 }
 
 type DOResponse = {
