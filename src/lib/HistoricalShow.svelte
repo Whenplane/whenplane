@@ -3,6 +3,7 @@
     import Late from "./Late.svelte";
     import LazyLoad from "@dimfeld/svelte-lazyload";
     import Live from "$lib/Live.svelte";
+    import { page } from "$app/stores";
 
     export let show;
     export let withThumbnail = false;
@@ -32,7 +33,13 @@
     const onTime = mainShowStart ? getTimeUntil(showDate, mainShowStart.getTime()) : null;
 </script>
 
-<a class:card={!onlyTimes} class="inline-block limit p-3 m-2 hidden-link relative" {href} id={show.name}>
+<a
+  class:card={!onlyTimes}
+  class="inline-block limit p-3 m-2 hidden-link relative"
+  {href}
+  id={show.name}
+  class:highlight={!onlyTimes && $page.url.hash === "#" + show.name}
+>
     {#if !onlyTimes}
         {#if withThumbnail && thumbnail}
             <div class="thumbnail relative">
@@ -161,8 +168,8 @@
         aspect-ratio: 16 / 9;
     }
 
-    .thumbnail {
-
+    .highlight {
+        border: 1px solid darkgoldenrod;
     }
 
 
