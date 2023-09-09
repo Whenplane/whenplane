@@ -21,7 +21,7 @@ const cache: {
 
 let savedStartTime: boolean | undefined = undefined;
 
-export const GET = (async ({platform, locals, url}) => {
+export const GET = (async ({platform, locals, url, fetch}) => {
 
     const history: KVNamespace = platform?.env?.HISTORY;
     const fetcher: DurableObjectNamespace = platform?.env?.FETCHER;
@@ -52,7 +52,7 @@ export const GET = (async ({platform, locals, url}) => {
     }
 
     const doStart = Date.now();
-    const {isLive, isWAN, started, videoId, snippet} = await stub.fetch("https://wheniswan-fetcher.ajg.workers.dev/youtube")
+    let {isLive, isWAN, started, videoId, snippet} = await stub.fetch("https://wheniswan-fetcher.ajg.workers.dev/youtube")
         .then(r => r.json()) as DOResponse;
     locals.addTiming({id: 'doFetch', duration: Date.now() - doStart})
 
@@ -76,6 +76,12 @@ export const GET = (async ({platform, locals, url}) => {
             })());
             savedStartTime = true;
         }
+    }
+
+    // ignore youtube saying that wan is still live even though it is no longer live
+    if(isWAN) {
+        isWAN = await fetch("/api/twitch").then(r => r.json())
+          .then(d => !!d.isWAN);
     }
 
 
