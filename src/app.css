@@ -36,3 +36,10 @@ h1,h2 {
 #nprogress .bar {
     background: #d4163c !important;
 }
+
+.anchor,.hover-underline {
+    text-decoration-line: none !important;
+}
+:is(.anchor,.hover-underline):hover {
+    text-decoration-line: underline !important;
+}

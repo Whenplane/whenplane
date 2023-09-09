@@ -31,7 +31,13 @@
 </svelte:head>
 
 <!--<pre>{JSON.stringify(data, null, "\t")}</pre>-->
-<a href="/history{backHash}" class="pt-2 pl-2">Back to History</a>
+<ol class="breadcrumb pt-2 pl-2">
+    <li class="crumb"><a class="anchor hover-underline" href="/">Whenplane</a></li>
+    <li class="crumb-separator" aria-hidden="true">&rsaquo;</li>
+    <li class="crumb"><a class="anchor hover-underline" href="/history">History</a></li>
+    <li class="crumb-separator" aria-hidden="true">&rsaquo;</li>
+    <li class="crumb"><a class="anchor hover-underline" href="/history{backHash}">{showDate.toLocaleDateString()}</a></li>
+</ol>
 
 <div class="text-center limit mx-auto big-wrapper">
     <h1>{showDate.toLocaleDateString(undefined, {dateStyle: "long"})}</h1>
