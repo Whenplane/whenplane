@@ -56,7 +56,15 @@ export const GET = (async ({platform, params, locals}) => {
                             preShowStart: await preStart,
                             mainShowStart: await mainStart,
                             showEnd: await mainEnd,
-                            snippet: await snippet
+                            snippet: await snippet,
+                            title: await (async () => {
+                                const rawTitle = (await snippet)?.title;
+                                if(!rawTitle) return rawTitle;
+
+                                const parts = rawTitle.split(" - ");
+                                parts.pop(); // do a pop to only remove the stuff after the *last* dash
+                                return parts.join(" - ");
+                            })()
                         }
                     }
                 })());
