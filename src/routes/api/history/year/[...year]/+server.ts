@@ -51,7 +51,7 @@ export const GET = (async ({platform, params, locals, fetch}) => {
                     const mainEnd = history.get(parts[0] + ":showEnd", {cacheTtl});
                     const snippet = history.get(parts[0] + ":snippet", {cacheTtl, type: "json"});
                     let isCurrentlyLive: Promise<boolean>;
-                    if(new Date(parts[0]).getDate() === new Date().getDate()) {
+                    if(new Date(parts[0]).getDate() === new Date().getUTCDate()) {
                         isCurrentlyLive = fetch("/api/twitch").then(r => r.json())
                           .then(d => !!d.isWAN)
                     } else {
