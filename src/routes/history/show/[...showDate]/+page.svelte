@@ -82,5 +82,8 @@
     .thumbnail {
         height: min(15em, 50vw);
         @apply mx-auto;
+        object-fit: cover;
+        border-radius: 8px;
+        aspect-ratio: 16 / 9;
     }
 </style>
