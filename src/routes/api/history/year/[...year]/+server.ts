@@ -49,13 +49,15 @@ export const GET = (async ({platform, params, locals}) => {
                     const preStart = history.get(parts[0] + ":preShowStart", {cacheTtl});
                     const mainStart = history.get(parts[0] + ":mainShowStart", {cacheTtl});
                     const mainEnd = history.get(parts[0] + ":showEnd", {cacheTtl});
+                    const snippet = history.get(parts[0] + ":snippet", {cacheTtl, type: "json"});
                     return {
                         name: parts[0],
-                            metadata: {
-                                preShowStart: await preStart,
-                                mainShowStart: await mainStart,
-                                showEnd: await mainEnd
-                            }
+                        metadata: {
+                            preShowStart: await preStart,
+                            mainShowStart: await mainStart,
+                            showEnd: await mainEnd,
+                            snippet: await snippet
+                        }
                     }
                 })());
             } else if(!k.metadata) {
