@@ -23,11 +23,17 @@
     $: {
         if ($navigating) {
             if(progressTimeout) clearTimeout(progressTimeout);
-            progressTimeout = setTimeout(() => {
+            const startBar = () => {
                 if ($navigating) {
                     NProgress.start();
                 }
-            }, 150);
+            };
+            const toURL: URL = $navigating.to.url;
+            if(toURL.pathname == "/history" && toURL.searchParams.has("old")) {
+                startBar();
+            } else {
+                progressTimeout = setTimeout(startBar, 150);
+            }
         }
         if (!$navigating) {
             if(progressTimeout) clearTimeout(progressTimeout);
