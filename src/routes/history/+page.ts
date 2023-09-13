@@ -3,7 +3,8 @@ import {wait} from "$lib/utils";
 import { browser } from "$app/environment";
 import { getCookie } from "$lib/cookieUtils";
 
-export const load = (async ({fetch, params}) => {
+export const load = (async ({fetch, params, url}) => {
+    const oldHistory = url.searchParams.has("old") ? import("$lib/oldHistory") : undefined;
     const records = fetch("/api/history/records").then(r => r.json());
     const currentYear = await fetch("/api/history/year/" + new Date().getFullYear()).then(r => r.json());
 
@@ -23,7 +24,8 @@ export const load = (async ({fetch, params}) => {
         history: {
             currentYear,
             records: recordsDone ? await records : records,
-            viewType
+            viewType,
+            oldHistory: oldHistory ? await oldHistory : undefined
         }
     }
 }) satisfies PageLoad;

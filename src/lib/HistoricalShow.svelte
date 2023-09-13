@@ -46,11 +46,13 @@
         {#if withThumbnail && thumbnail}
             <div class="thumbnail relative">
                 {#if lazyLoadThumbnail}
-                    <LazyLoad>
-                        <img src={thumbnail.url}>
-                    </LazyLoad>
+                    <div class="thumbnail-space">
+                        <LazyLoad>
+                            <img src={thumbnail.url} aria-hidden="true" alt="">
+                        </LazyLoad>
+                    </div>
                 {:else}
-                    <img src={thumbnail.url}>
+                    <img src={thumbnail.url} aria-hidden="true" alt="">
                 {/if}
                 {#if show.metadata?.isCurrentlyLive}
                     <div class="inline-block absolute bottom-3 right-3">
@@ -161,6 +163,12 @@
     }
     :global(.thumbnail-list) a {
         display: block
+    }
+
+    .thumbnail-space {
+        width: min(28.5rem, 95vw);
+        aspect-ratio: 16 / 9;
+        max-width: 100%;
     }
 
     img {

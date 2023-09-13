@@ -22,7 +22,7 @@
 
     const showDate = getClosestWan(new Date(preShowStart ?? mainShowStart ?? showEnd ?? snippet?.publishedAt));
 
-    const backHash = showDate.getTime() > 1683934200000 ? "#" + data.name : "#old-history";
+    const backHash = (showDate.getTime() > 1683934200000 ? "" : "?old") + "#" + data.name;
 
     let onTimeUntil = data.metadata.mainShowStart ? getTimeUntil(showDate, new Date(data.metadata.mainShowStart).getTime()) : null;
 

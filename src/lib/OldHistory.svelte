@@ -3,15 +3,31 @@
     import LazyLoad from '@dimfeld/svelte-lazyload';
     import {fade} from "svelte/transition";
     import { quadInOut } from "svelte/easing";
+    import { page } from "$app/stores";
 
     export let withThumbnail = false;
 
-    // eslint-disable-next-line @typescript-eslint/no-empty-function
-    let fetchingHistory = new Promise(() => {});
+    let alreadyLoaded = false;
+    let fetchingHistory = (() => {
+        if($page.data?.history?.oldHistory) {
+            alreadyLoaded = true;
+            return $page.data?.history?.oldHistory;
+        } else {
+            // eslint-disable-next-line @typescript-eslint/no-empty-function
+            return new Promise(() => {});
+        }
+    })();
+
+
+    function loadHistory() {
+        if(alreadyLoaded) return;
+        fetchingHistory = import("./oldHistory.ts");
+        alreadyLoaded = true;
+    }
 </script>
 <div style="height: 0; display: inline-block;" id="old-history">
     <div class="relative pointer-events-none" style="bottom: 50em">
-        <LazyLoad on:visible={() => fetchingHistory = import("./oldHistory.ts")} height="50em"/>
+        <LazyLoad on:visible={loadHistory} height="50em"/>
     </div>
 </div>
 
