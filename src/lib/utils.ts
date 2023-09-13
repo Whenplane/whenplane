@@ -18,8 +18,8 @@ export type HistoricalEntry = {
 
 export type OldShowMeta = {
     preShowStart?: string,
-    mainShowStart: string,
-    showEnd: string,
+    mainShowStart?: string,
+    showEnd?: string,
     title?: string,
     vods?: {
         floatplane?: string,

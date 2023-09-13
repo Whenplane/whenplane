@@ -4,6 +4,7 @@
     import Floatplane from "$lib/svg/Floatplane.svelte";
     import Youtube from "$lib/svg/Youtube.svelte";
     import {getTimeUntil} from "$lib/timeUtils";
+    import { dev } from "$app/environment";
 
     export let data;
 
@@ -13,7 +14,13 @@
         data.value?.snippet?.thumbnails?.medium ??
         data.value?.snippet?.thumbnails?.default
 
-    const showDate = getClosestWan(new Date(data.metadata.preShowStart ?? data.metadata.mainShowStart));
+    const snippet = data.value?.snippet ?? data.metadata?.snippet;
+
+    const preShowStart = data.metadata.preShowStart ? new Date(data.metadata.preShowStart) : data.metadata.preShowStart;
+    const mainShowStart = data.metadata.mainShowStart ? new Date(data.metadata.mainShowStart) : data.metadata.mainShowStart;
+    const showEnd = data.metadata.showEnd ? new Date(data.metadata.showEnd) : data.metadata.showEnd;
+
+    const showDate = getClosestWan(new Date(preShowStart ?? mainShowStart ?? showEnd ?? snippet?.publishedAt));
 
     const backHash = showDate.getTime() > 1683934200000 ? "#" + data.name : "#old-history";
 
@@ -30,7 +37,7 @@
     {/if}
 </svelte:head>
 
-<!--<pre>{JSON.stringify(data, null, "\t")}</pre>-->
+
 <ol class="breadcrumb pt-2 pl-2">
     <li class="crumb"><a class="anchor hover-underline" href="/">Whenplane</a></li>
     <li class="crumb-separator" aria-hidden="true">&rsaquo;</li>
@@ -73,6 +80,9 @@
         </a>
     {/if}
 </div>
+{#if dev}
+    <pre>{JSON.stringify(data, null, "\t")}</pre>
+{/if}
 
 <style>
     .big-wrapper {

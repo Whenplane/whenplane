@@ -51,20 +51,19 @@ for (const date in youtubeData) {
 
     if(!youtubeVod.liveStreamingDetails) {
         console.warn(date + " is missing liveStreamingDetails!");
-        continue;
     }
 
     if(!floatplaneVod) {
         console.warn(date + " is missing floatplane entry!")
     }
 
-    const mainShowStart = youtubeVod.liveStreamingDetails.actualStartTime;
-    const showEnd = youtubeVod.liveStreamingDetails.actualEndTime;
+    const mainShowStart = youtubeVod.liveStreamingDetails?.actualStartTime;
+    const showEnd = youtubeVod.liveStreamingDetails?.actualEndTime;
     let preShowStart;
 
-    if(floatplaneVod) {
+    if(floatplaneVod && mainShowStart && showEnd) {
         const floatplaneLength = floatplaneVod.metadata.videoDuration * 1000;
-        const youtubeLength = new Date(youtubeVod.liveStreamingDetails.actualEndTime).getTime() - new Date(youtubeVod.liveStreamingDetails.actualStartTime).getTime();
+        const youtubeLength = new Date(showEnd).getTime() - new Date(mainShowStart).getTime();
 
         const preShowLength = floatplaneLength - youtubeLength;
 
@@ -75,9 +74,30 @@ for (const date in youtubeData) {
     const rawTitle = youtubeVod.snippet?.title;
     let title;
     if(rawTitle) {
-        const parts = rawTitle.split(" - ");
-        parts.pop(); // do a pop to only remove the stuff after the *last* dash
-        title = parts.join(" - ");
+        if(rawTitle.toLowerCase().startsWith("the wan show")) {
+            const extraDebug = date === "2013/10/25";
+            if(extraDebug) console.log("Extra debug on", date)
+            // old shows started with "The WAN Show"
+            title = rawTitle.substring(14);
+            if(extraDebug) console.log({before: rawTitle, afterSnip: title})
+            if(title.includes(" - ")) {
+                const parts = title.split(" - ");
+                let endingDate = parts.pop(); // do a pop to only remove the stuff after the *last* dash
+                if(endingDate) endingDate = endingDate // filter out "st" from "1st" and other similar suffixes, since it messes up below check
+                  .replaceAll("st", "")
+                  .replaceAll("nd", "")
+                  .replaceAll("rd", "")
+                if(extraDebug) console.log({endingDate})
+                if(!isNaN(new Date(endingDate ?? "October 24, 2014").getDate())) { // only remove content after - if it is a date
+                    title = parts.join(" - ");
+                }
+                if(extraDebug) console.log({afterDateTrim: title})
+            }
+        } else {
+            const parts = rawTitle.split(" - ");
+            parts.pop(); // do a pop to only remove the stuff after the *last* dash
+            title = parts.join(" - ");
+        }
     }
 
     oldShows.push({
