@@ -13,7 +13,9 @@
 
     $: href = onlyTimes ? undefined : "/history/show/" + show.name;
 
-    const findThumbnailsAt = show.value?.snippet ?? show.metadata?.snippet ?? show.metadata
+    const snippet = show.value?.snippet ?? show.metadata?.snippet;
+
+    const findThumbnailsAt = snippet ?? show.metadata
     const thumbnail = findThumbnailsAt?.thumbnails?.maxres ??
       findThumbnailsAt?.thumbnails?.standard ??
       findThumbnailsAt?.thumbnails?.high ??
@@ -24,7 +26,7 @@
     const mainShowStart = show.metadata.mainShowStart ? new Date(show.metadata.mainShowStart) : show.metadata.mainShowStart;
     const showEnd = show.metadata.showEnd ? new Date(show.metadata.showEnd) : show.metadata.showEnd;
 
-    const showDate = getClosestWan(new Date(preShowStart ?? mainShowStart));
+    const showDate = getClosestWan(new Date(preShowStart ?? mainShowStart ?? showEnd ?? snippet?.publishedAt));
 
     const preShowLength = preShowStart && mainShowStart ? getTimeUntil(mainShowStart, preShowStart.getTime()).string : null;
     const mainShowLength = mainShowStart && showEnd ? getTimeUntil(showEnd, mainShowStart.getTime()).string : null;
