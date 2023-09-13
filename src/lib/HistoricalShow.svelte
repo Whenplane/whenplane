@@ -1,5 +1,5 @@
 <script>
-    import {getClosestWan, getTimeUntil} from "./timeUtils";
+    import { getClosestWan, getTimeUntil, timeString } from "./timeUtils";
     import Late from "./Late.svelte";
     import LazyLoad from "@dimfeld/svelte-lazyload";
     import Live from "$lib/Live.svelte";
@@ -28,8 +28,12 @@
 
     const showDate = getClosestWan(new Date(preShowStart ?? mainShowStart ?? showEnd ?? snippet?.publishedAt));
 
-    const preShowLength = preShowStart && mainShowStart ? getTimeUntil(mainShowStart, preShowStart.getTime()).string : null;
-    const mainShowLength = mainShowStart && showEnd ? getTimeUntil(showEnd, mainShowStart.getTime()).string : null;
+    const preShowLength = preShowStart && mainShowStart ?
+      getTimeUntil(mainShowStart, preShowStart.getTime()).string :
+      null;
+    const mainShowLength = mainShowStart && showEnd ?
+      getTimeUntil(showEnd, mainShowStart.getTime()).string :
+      (show.metadata?.mainShowLength ? timeString(show.metadata.mainShowLength) : null);
 
     const onTimeDistance = mainShowStart ? (showDate.getTime() - mainShowStart.getTime()) : null;
     const onTime = mainShowStart ? getTimeUntil(showDate, mainShowStart.getTime()) : null;

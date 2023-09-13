@@ -11,6 +11,7 @@ import {fetchYoutubeShows, SpecificData} from "./youtube-fetcher.ts";
 import 'dotenv/config'
 import type {HistoricalEntry} from "$lib/utils";
 import fs from "node:fs/promises";
+import { Duration } from "luxon";
 
 export const floatplaneDataPath = "src/scripts/old-history-generator/floatplane-wan-vods.json"
 export const youtubeDataPath = "src/scripts/old-history-generator/youtube-wan-vods.json";
@@ -71,6 +72,8 @@ for (const date in youtubeData) {
         preShowStart.setMilliseconds(preShowStart.getMilliseconds() - preShowLength);
     }
 
+    const mainShowLength = youtubeVod?.contentDetails?.duration ? Duration.fromISO(youtubeVod.contentDetails.duration).as("milliseconds") : undefined;
+
     const rawTitle = youtubeVod.snippet?.title;
     let title;
     if(rawTitle) {
@@ -107,6 +110,7 @@ for (const date in youtubeData) {
             mainShowStart,
             showEnd,
             title,
+            mainShowLength,
             vods: {
                 floatplane: floatplaneVod ? floatplaneVod.id : undefined,
                 youtube: youtubeVod.id

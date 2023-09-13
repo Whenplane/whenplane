@@ -21,6 +21,7 @@ export type OldShowMeta = {
     mainShowStart?: string,
     showEnd?: string,
     title?: string,
+    mainShowLength?: number
     vods?: {
         floatplane?: string,
         youtube: string

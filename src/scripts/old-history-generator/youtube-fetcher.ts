@@ -57,7 +57,7 @@ export async function fetchYoutubeShows() {
 
             const specificResponse = await fetch(
                 "https://youtube.googleapis.com/youtube/v3/videos" +
-                "?part=snippet%2CliveStreamingDetails" +
+                "?part=snippet%2CliveStreamingDetails%2CcontentDetails" +
                 "&id=" + encodeURIComponent(video.id.videoId) +
                 "&locale=en" +
                 "&key=" + process.env.YOUTUBE_KEY
@@ -158,7 +158,15 @@ type ListedYoutubeVideo = {
         kind: "youtube#video",
         videoId: string
     },
-    snippet: OldShowMeta["snippet"]
+    snippet: OldShowMeta["snippet"],
+    contentDetails: {
+        "duration": string,
+        "dimension": "2d" | "3d",
+        "definition": "hd" | "sd",
+        "caption": "true" | "false",
+        "licensedContent": boolean,
+        "projection": "rectangular" | "360"
+    }
 }
 
 type YoutubeSpecificResponse = {
@@ -179,5 +187,6 @@ export type SpecificData = {
     liveStreamingDetails?: {
         actualStartTime: string,
         actualEndTime: string
-    }
+    },
+    contentDetails: ListedYoutubeVideo["contentDetails"]
 }
