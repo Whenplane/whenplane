@@ -52,8 +52,8 @@
     <br>
 
     <span class="opacity-50 thats-all">
-        <h2>That's all for now!</h2>
-        More older shows will be added here eventually<br>
+        <h2>That's it!</h2>
+        You've reached the very beginning.<br>
     </span>
 {/await}
 
