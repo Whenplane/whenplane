@@ -11,7 +11,7 @@
 </script>
 <svelte:window bind:scrollY/>
 <svelte:head>
-    <title>About WhenIsWan</title>
+    <title>About Whenplane</title>
 </svelte:head>
 <div class="container h-full mx-auto flex justify-center items-center limit">
     <div class="space-y-5">
