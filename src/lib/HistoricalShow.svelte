@@ -39,7 +39,7 @@
     const onTime = mainShowStart ? getTimeUntil(showDate, mainShowStart.getTime()) : null;
 </script>
 
-<a
+<svelte:element this={href ? "a" : "div"}
   class:card={!onlyTimes}
   class="inline-block limit p-3 m-2 hidden-link relative"
   {href}
@@ -160,7 +160,7 @@
             N/A
         </span>
     {/if}
-</a>
+</svelte:element>
 <style>
     :global(.old-layout) a {
         display: block
