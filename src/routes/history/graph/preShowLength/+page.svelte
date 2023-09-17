@@ -8,7 +8,7 @@
 <svelte:head>
   <title>WAN Pre-show Length - Whenplane</title>
 </svelte:head>
-<h1>Pre-show lengths</h1>
+<h1>Pre-show length</h1>
 {#if browser}
   <StatChart shows={data.allShows.toReversed()} transformFunction={(show) => {
     const snippet = show.value?.snippet ?? show.metadata?.snippet;
