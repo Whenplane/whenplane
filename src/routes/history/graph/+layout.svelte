@@ -46,7 +46,7 @@
     </a>
   </div>
 
-  <div class="w-full h-screen overflow-auto px-1">
+  <div class="w-full h-screen overflow-auto p-2">
     <slot/>
   </div>
 </div>

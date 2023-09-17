@@ -2,9 +2,11 @@
   import { onMount } from "svelte";
   import { browser } from "$app/environment";
   import type { DataTransformFunction, HistoricalEntry } from "$lib/utils.js";
+  import { timeString } from "$lib/timeUtils";
 
   export let shows: HistoricalEntry[];
   export let transformFunction: DataTransformFunction;
+  export let yFormatter = timeString
 
   let chartDiv;
 
@@ -14,11 +16,15 @@
       width: browser ? document.documentElement.clientWidth/1.5 : undefined
     },
     series: [{
-      name: 'time',
       data: shows.map(transformFunction)
     }],
     xaxis: {
       categories: shows.map(value => value.name)
+    },
+    yaxis: {
+      labels: {
+        formatter: yFormatter
+      }
     }
   }
 
@@ -38,5 +44,6 @@
 <style>
   div {
       width: 50vw;
+      color: black;
   }
 </style>

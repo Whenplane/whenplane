@@ -1,6 +1,7 @@
 <script lang="ts">
   import StatChart from "$lib/StatChart.svelte";
   import { getClosestWan, getTimeUntil, timeString } from "$lib/timeUtils";
+  import { browser } from "$app/environment";
 
   export let data;
 </script>
@@ -8,7 +9,8 @@
   <title>WAN Pre-show Length - Whenplane</title>
 </svelte:head>
 <h1>Pre-show lengths</h1>
-<StatChart shows={data.allShows.toReversed()} transformFunction={(show) => {
+{#if browser}
+  <StatChart shows={data.allShows.toReversed()} transformFunction={(show) => {
     const snippet = show.value?.snippet ?? show.metadata?.snippet;
 
     const preShowStart = show.metadata.preShowStart ? new Date(show.metadata.preShowStart) : show.metadata.preShowStart;
@@ -23,3 +25,4 @@
 
     return preShowLength;
 }}/>
+{/if}
