@@ -49,3 +49,5 @@ type YoutubeThumbnail = {
     width: number,
     height: number
 }
+
+export type DataTransformFunction = (show: HistoricalEntry) => number

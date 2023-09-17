@@ -49,6 +49,7 @@
 	"dependencies": {
 		"@dimfeld/svelte-lazyload": "^0.0.4",
 		"@floating-ui/dom": "^1.2.7",
+		"apexcharts": "^3.42.0",
 		"luxon": "^3.3.0",
 		"nprogress": "^0.2.0"
 	}
