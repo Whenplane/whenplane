@@ -3,9 +3,8 @@
     import Record from "$lib/Record.svelte";
     import LoadingRecord from "$lib/LoadingRecord.svelte";
     import { Accordion, AccordionItem } from "@skeletonlabs/skeleton";
-    import Late from "$lib/Late.svelte";
-    import { timeString } from "$lib/timeUtils";
     import { onMount } from "svelte";
+    import GraphUp from "svelte-bootstrap-icons/lib/GraphUp.svelte";
 
     export let records;
 
@@ -28,7 +27,12 @@
 
 </script>
 <div class="p-1">
-    <div class="card limit mx-auto pb-4 pt-2">
+    <div class="card limit mx-auto pb-4 pt-2 relative">
+        {#if dev}
+            <a class="hidden-link absolute right-5 top-5" href="/history/graph">
+                <GraphUp/>
+            </a>
+        {/if}
         <h2>Records</h2>
         {#await records}
             <LoadingRecord>

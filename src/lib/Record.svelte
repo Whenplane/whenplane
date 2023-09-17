@@ -6,10 +6,12 @@
     export let late = false;
     export let early = false;
 
+    export let selected = false;
+
     export let loading = false;
 </script>
 
-<div class="box">
+<div class="box text-center" class:selected={selected}>
     <h3><slot/></h3>
     <div>
         <slot name="description"></slot>
@@ -59,5 +61,10 @@
 
     .placeholder {
         height: 1.25em !important;
+    }
+
+    .selected {
+        background-color: rgba(255, 255, 255, 0.05);
+        border-color: rgba(255, 255, 255, 0.2) !important;
     }
 </style>
