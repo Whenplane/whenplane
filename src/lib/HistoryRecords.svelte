@@ -29,11 +29,9 @@
 </script>
 <div class="p-1">
     <div class="card limit mx-auto pb-4 pt-2 relative">
-        {#if dev || $page.url.searchParams.has("graphLink")}
-            <a class="hidden-link absolute right-5 top-5" href="/history/graph">
-                <GraphUp/>
-            </a>
-        {/if}
+        <a class="hidden-link absolute right-5 top-5" href="/history/graph">
+            <GraphUp/>
+        </a>
         <h2>Records</h2>
         {#await records}
             <LoadingRecord>
