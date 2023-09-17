@@ -6,7 +6,7 @@
 
   export let shows: HistoricalEntry[];
   export let transformFunction: DataTransformFunction;
-  export let yFormatter = timeString
+  export let yFormatter = timeString;
 
   let chartDiv;
 
