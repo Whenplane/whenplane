@@ -10,16 +10,37 @@
 
   let chartDiv;
 
+  const showNames = shows.map(value => value.name);
+
   const options = {
     chart: {
       type: 'scatter',
-      width: browser ? document.documentElement.clientWidth/1.5 : undefined
+      width: browser ? document.documentElement.clientWidth/1.5 : undefined,
+      events: {
+        click: (event, chartContext, config) => {
+          const show = shows[config.dataPointIndex];
+          window.open("/history/show/" + show.name, "_blank");
+        }
+      }
     },
     series: [{
       data: shows.map(transformFunction)
     }],
+    tooltip: {
+      x: {
+        formatter: (i) => {
+          const show = shows[i-1]
+          const date = new Date(show.name);
+          const string = date.toLocaleDateString(undefined, { dateStyle: "long" });
+          return string + (show.metadata.title ? ": " + show.metadata.title : "");
+        }
+      }
+    },
     xaxis: {
-      categories: shows.map(value => value.name)
+      categories: showNames,
+      labels: {
+        formatter: (name) => new Date(name).toLocaleDateString()
+      }
     },
     yaxis: {
       labels: {
@@ -33,7 +54,6 @@
   let chart;
   onMount(async () => {
     ApexCharts = (await import("apexcharts")).default
-    console.log({ApexCharts})
     chart = new ApexCharts(chartDiv, options);
     chart.render()
   })
