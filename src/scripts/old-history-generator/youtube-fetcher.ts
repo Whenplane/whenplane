@@ -8,12 +8,20 @@ import fs from "node:fs/promises";
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-ignore
 import {youtubeDataPath} from "./index.ts";
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+// @ts-ignore
+import {fileExists} from "./utils.ts";
 
 
 export async function fetchYoutubeShows() {
 
     if(!process.env.YOUTUBE_KEY) {
         throw new Error("Missing youtube key!");
+    }
+
+    let oldData = {};
+    if(await fileExists(youtubeDataPath)) {
+        oldData = (await import("./youtube-wan-vods.json", {assert: {type: 'json'}})).default as unknown as {[key: string]: SpecificData};
     }
 
     let nextPage = undefined;
@@ -79,7 +87,15 @@ export async function fetchYoutubeShows() {
                     continue;
                 }
 
-                const date = getPreviousWAN(new Date(publishedAt)) as Date;
+                const publishDate = new Date(publishedAt);
+                if(publishDate.getUTCDay() === 5) {
+                    if(video.snippet?.title.includes(publishDate.getDate()+"")) {
+                        publishDate.setDate(publishDate.getDate() + 1);
+                    } else {
+                        publishDate.setDate(publishDate.getDate() - 2);
+                    }
+                }
+                const date = getPreviousWAN(publishDate) as Date;
 
                 const dateName = getUTCDate(date);
 
@@ -138,7 +154,15 @@ export async function fetchYoutubeShows() {
         nextPage = data.nextPageToken;
     }
 
-    await fs.writeFile(youtubeDataPath, JSON.stringify(showVods, undefined, '\t'))
+    const combinedData = {
+        ...oldData,
+        ...showVods
+    }
+
+    const sortedData = Object.fromEntries(
+      Object.entries(combinedData).sort(([a], [b]) => a > b ? 1 : a < b ? -1 : 0).reverse()
+    )
+    await fs.writeFile(youtubeDataPath, JSON.stringify(sortedData, undefined, '\t'))
 
 }
 

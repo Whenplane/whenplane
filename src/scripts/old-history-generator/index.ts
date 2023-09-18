@@ -24,11 +24,11 @@ if(!await fileExists(floatplaneDataPath)) {
     console.log("Floatplane data already exists. Skipping download");
 }
 
-if(!await fileExists(youtubeDataPath)) {
+if(!await fileExists(youtubeDataPath) || process.argv.includes("--download-yt-vods")) {
     console.log("Missing youtube vod data! I'm going to fetch it from youtube's api. This can take a bit");
     await fetchYoutubeShows()
 } else {
-    console.log("Youtube data already exists. Skipping download");
+    console.log("Youtube data already exists. Skipping download (use --download-yt-vods to override)");
 }
 
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
