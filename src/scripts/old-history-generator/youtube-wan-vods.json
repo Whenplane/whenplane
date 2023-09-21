@@ -74,7 +74,7 @@
 	},
 	"2023/04/28": {
 		"kind": "youtube#video",
-		"etag": "W4ZA8yxoQCp_bzrQp6cjKo5lXbM",
+		"etag": "nn94Pj-RQzyiSy5vd0zIilcEv4w",
 		"id": "CSOF8RFrihM",
 		"snippet": {
 			"publishedAt": "2023-04-29T04:51:55Z",
@@ -293,7 +293,7 @@
 	},
 	"2023/04/07": {
 		"kind": "youtube#video",
-		"etag": "xo84F6X-_bA6hV7SoSKWjKUjrfI",
+		"etag": "KrpR25KQLVFEg8_4bqvO08iz-64",
 		"id": "s-llzV_3LaE",
 		"snippet": {
 			"publishedAt": "2023-04-08T06:38:30Z",
@@ -366,7 +366,7 @@
 	},
 	"2023/03/31": {
 		"kind": "youtube#video",
-		"etag": "bj0R4K97ocZUkOyxBSJ9nMGuHZU",
+		"etag": "EbuzpyC6DIA_oEMdaJNnMsERATk",
 		"id": "LZOOVhu3T70",
 		"snippet": {
 			"publishedAt": "2023-04-01T06:15:13Z",
@@ -585,7 +585,7 @@
 	},
 	"2023/03/10": {
 		"kind": "youtube#video",
-		"etag": "k-tjz1XeNS38YRB7p6hb2SiKdsg",
+		"etag": "WMNhNeal5HKXndpRSCrpyE8GLXQ",
 		"id": "A6_UOejJ8Zk",
 		"snippet": {
 			"publishedAt": "2023-03-11T04:44:57Z",
@@ -658,7 +658,7 @@
 	},
 	"2023/03/03": {
 		"kind": "youtube#video",
-		"etag": "VFhMjmRNMh3j4vlqlSstmLp4Ps8",
+		"etag": "5_2pm4RAWOhazGVK5_gpmQNPc4o",
 		"id": "boPRXV0VmEk",
 		"snippet": {
 			"publishedAt": "2023-03-04T05:16:45Z",
@@ -731,7 +731,7 @@
 	},
 	"2023/02/24": {
 		"kind": "youtube#video",
-		"etag": "FtjDpoyUNAr9T9zh9YWZnxLLdlQ",
+		"etag": "oQet4YhPIhCjIxMGWU2YRCXsyg0",
 		"id": "_FqH1rqQrQg",
 		"snippet": {
 			"publishedAt": "2023-02-25T06:11:44Z",
@@ -804,7 +804,7 @@
 	},
 	"2023/02/17": {
 		"kind": "youtube#video",
-		"etag": "texdZDQUL4Pr0Mqlzm-ICY_aLw8",
+		"etag": "uHYuilq9B02qOGgypKlpgaV4ymc",
 		"id": "6x68X05ZLRE",
 		"snippet": {
 			"publishedAt": "2023-02-18T06:24:45Z",
@@ -877,7 +877,7 @@
 	},
 	"2023/02/10": {
 		"kind": "youtube#video",
-		"etag": "0Xjpa6SzJh5m2h3C9QBFULC1_h0",
+		"etag": "hMnzoGuLRN4HiBcsHg3T-GO8Czg",
 		"id": "AxAAJnp5yms",
 		"snippet": {
 			"publishedAt": "2023-02-11T06:26:22Z",
@@ -1964,7 +1964,7 @@
 	},
 	"2022/10/28": {
 		"kind": "youtube#video",
-		"etag": "70cL28Q_LeUjJxCRcMWG6W5bcsA",
+		"etag": "9TeaE3UZ0YBGAuafmreXT5FCqNg",
 		"id": "KEnd8OwRwbI",
 		"snippet": {
 			"publishedAt": "2022-10-29T03:43:08Z",
@@ -12590,8 +12590,17 @@
 				"description": "Save 10% at Ridge Wallet with offer code LINUS at https://www.ridge.com/Linus\n\nUse offer code LTT to save 10% on Savage Jerky at https://lmg.gg/savagejerky\n\nBuy the Corsair Virtuoso Wireless Gaming Headset\nOn Amazon (Paid Link): https://geni.us/QpBvRm\nOn NewEgg (Paid Link): https://lmg.gg/8KVjz\n\nBuy an LTT shirt, hoodie, hat, and even our own insulated water bottle at https://lmg.gg/wanlttstore \n\nPodcast Download: http://traffic.libsyn.com/linustechtips/China_Tries_to_Restrict_Gaming_-_WAN_Show_Nov_8_2019.mp3\n\nTimestamps (Courtesy of Ozgur Dru)\n\n4:35 china VG restrictions\n37:00 ads\n44:08 intel benchmark shittings\n48:05 general 1st party benchmark shittings\n50:53 james dean's CGI resurrection for a movie\n1:00:20 Microsoft Japan reports 4 working days results\n1:01:35 Superchat"
 			},
 			"defaultAudioLanguage": "en"
-		}
-	},
+		},
+        "contentDetails": {
+          "duration": "PT1H14M27S",
+          "dimension": "2d",
+          "definition": "hd",
+          "caption": "false",
+          "licensedContent": true,
+          "contentRating": {},
+          "projection": "rectangular"
+        }
+    },
 	"2019/11/01": {
 		"kind": "youtube#video",
 		"etag": "kdNUYALZlg6LLvnpigwVbQdUm7k",
@@ -14731,7 +14740,7 @@
 	},
 	"2019/02/15": {
 		"kind": "youtube#video",
-		"etag": "wPWiHQ6HTdJuZUD4QJOM2l1tY8k",
+		"etag": "sTUOkME6SOUakn38_f2NTfLGqjs",
 		"id": "Zzu1-VM7y6g",
 		"snippet": {
 			"publishedAt": "2019-02-16T03:13:53Z",

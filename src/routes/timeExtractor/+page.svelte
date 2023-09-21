@@ -87,6 +87,7 @@
             Modify Time
           </button>
         {/if}
+        <button formaction="?/skipShow" class="btn variant-ghost-warning w-6/12 mx-auto">Skip Show</button>
       </form>
     {:else}
       {#if data.downloading}

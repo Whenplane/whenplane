@@ -147,6 +147,10 @@ export const load = (async ({fetch}) => {
 }) satisfies ServerLoad;
 
 export const actions = {
+  skipShow: () => {
+    reset();
+  },
+
   noTime: () => {
     imageIndex++
   },
