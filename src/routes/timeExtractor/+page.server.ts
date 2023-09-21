@@ -73,7 +73,10 @@ export const load = (async ({fetch}) => {
   if(typeof downloadingPromise === "undefined") {
     console.log("starting download")
     downloadingPromise = download(videoId);
-    downloadingPromise.catch(console.log);
+    downloadingPromise.catch(e => {
+      console.log(e);
+      reset();
+    });
   }
 
   const isDoneDownloading = !!await Promise.any([downloadingPromise, wait(5)]);
@@ -87,7 +90,10 @@ export const load = (async ({fetch}) => {
 
   if(typeof processingPromise === "undefined") {
     processingPromise = process(videoId);
-    processingPromise.catch(console.log)
+    processingPromise.catch(e => {
+      console.log(e);
+      reset();
+    })
   }
 
   const isDoneProcessing = !!await Promise.any([processingPromise, wait(5)]);

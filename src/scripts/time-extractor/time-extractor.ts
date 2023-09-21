@@ -13,7 +13,7 @@ export async function download(id: string) {
   await fs.mkdir("static/time-extracting/" + id, {recursive: true});
   console.log(2);
   return new Promise<object>((resolve, reject) => {
-    const dl = execCallback(`youtube-dl --exec "mv {} tmp.mp4 && ffmpeg -init_hw_device vaapi=foo:/dev/dri/renderD128 -hwaccel vaapi -hwaccel_device foo -i tmp.mp4 -filter:v \\"crop=150:45:in_w-150:in_h-45\\" vid.mp4 && rm tmp.mp4" ${id}`, {
+    const dl = execCallback(`youtube-dl --exec "ffmpeg -init_hw_device vaapi=foo:/dev/dri/renderD128 -hwaccel vaapi -hwaccel_device foo -i {} -filter:v \\"crop=150:45:in_w-150:in_h-45\\" tmp.mp4 && mv tmp.mp4 vid.mp4 && rm {}" ${id}`, {
       cwd: "static/time-extracting/" + id
     })
     dl.stdout?.on('data', data => {
