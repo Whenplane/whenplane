@@ -10,7 +10,7 @@
 </svelte:head>
 <h1>Lateness</h1>
 {#if browser}
-  <StatChart shows={data.allShows.toReversed()} transformFunction={(show) => {
+  <StatChart shows={[...data.allShows].reverse()} transformFunction={(show) => {
     const snippet = show.value?.snippet ?? show.metadata?.snippet;
 
     const preShowStart = show.metadata.preShowStart ? new Date(show.metadata.preShowStart) : show.metadata.preShowStart;
