@@ -40,7 +40,11 @@ export type OldShowMeta = {
         },
         channelTitle: string,
         tags?: string[],
-        categoryId?: string
+        categoryId?: string,
+        localized?: {
+            title: string,
+            description: string
+        }
     }
 }
 
