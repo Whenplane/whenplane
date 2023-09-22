@@ -38,7 +38,7 @@ export async function process(id: string) {
   console.log(4)
   await fs.mkdir(`static/time-extracting/${id}/screenshots`);
   console.log(5)
-  const out = await exec(`ffmpeg -i vid.mp4 -vf fps=1/60 screenshots/img%d.jpg`, {
+  const out = await exec(`ffmpeg -i vid.mp4 -vf fps=1/30 screenshots/img%d.jpg`, {
     cwd: "static/time-extracting/" + id
   })
   console.log(6)

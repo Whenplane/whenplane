@@ -16,6 +16,17 @@
   let doti = 0;
   $: dot = dots[doti];
 
+  let images = [];
+  $: {
+    if(data.image?.length && data.show) {
+      for (let i = 1; i <= data.image.length; i++) {
+        images.push(i);
+      }
+    } else {
+      images = [];
+    }
+  }
+
   let imageOutdated = false;
 
   $: checkImage(data);
@@ -54,6 +65,7 @@
       image
       <img src="{data.image.path}" class="w-full" class:outdated={imageOutdated}/>
       <form method="POST" class="text-center" use:enhance={() => {
+        document.body.scrollTo({top: 0, left: 0})
         imageOutdated = true
         return async ({ update }) => {
                 await update({ reset: false });
@@ -88,6 +100,30 @@
           </button>
         {/if}
         <button formaction="?/skipShow" class="btn variant-ghost-warning w-6/12 mx-auto">Skip Show</button>
+
+        <br>
+        <br>
+        <br>
+        {#if data.image && data.show}
+          {#each images as imageNum}
+            <button formaction="?/selectImage&amp;image={imageNum}">
+
+              <img
+                src="/time-extracting/{data.show.metadata.vods.youtube}/screenshots/img{imageNum}.jpg"
+                alt="Image {imageNum}"
+                class="inline-block m-1"
+                class:outdated={imageOutdated}
+              >
+            </button>
+          {:else}
+            No images?
+          {/each}
+          <br>
+          <br>
+          <button formaction="?/skipShow" class="btn variant-ghost-warning w-6/12 mx-auto">Skip Show</button>
+          <br>
+          <br>
+        {/if}
       </form>
     {:else}
       {#if data.downloading}

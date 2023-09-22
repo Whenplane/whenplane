@@ -108,6 +108,15 @@ export const load = (async ({fetch}) => {
   const {fileExists} = dev ? await import("../../scripts/old-history-generator/utils") : {fileExists: undefined};
   if(!fileExists) throw new Error();
 
+  let imageLength = 0;
+  for (let i = 50; i < 1000; i++) {
+    const path = `time-extracting/${videoId}/screenshots/img${i}.jpg`;
+    if(!await fileExists("static/" + path)) {
+      imageLength = i-1;
+      break;
+    }
+  }
+
   let foundPossible = false;
   let path;
   while(!foundPossible) {
@@ -120,7 +129,7 @@ export const load = (async ({fetch}) => {
       .then(r => r.data.text);
     const strippedText = text
       .replaceAll("\n", "")
-      .replaceAll(" ", "")
+      .replaceAll(/\s/g, "")
 
     if(
       (
@@ -139,7 +148,8 @@ export const load = (async ({fetch}) => {
   return {
     image: {
       path: path,
-      promptText: true
+      promptText: true,
+      length: imageLength
     },
     show: currentShow
   }
@@ -157,40 +167,15 @@ export const actions = {
   hasTime: async ({fetch}) => {
     const data = await load({fetch} as unknown as ServerLoadEvent);
     const imagePath = `time-extracting/${data.show?.metadata.vods?.youtube}/screenshots/img${imageIndex}.jpg`;
-    const imageBase64 = await (dev ? ((await import("fs")).promises) : undefined)?.readFile("static/" + imagePath, {encoding: "base64"})
-    verifyImageText = {
-      imagePath,
-      text: fetch("https://vision.googleapis.com/v1/images:annotate?key=" + env.YOUTUBE_KEY, {
-        method: "POST",
-        body: JSON.stringify(
-          {
-            requests: [
-              {
-                image: {
-                  content: imageBase64
-                },
-                features: [
-                  {
-                    "type": "TEXT_DETECTION"
-                  }
-                ]
-              }
-            ]
-          }
-        )
-      })
-        .then(r => r.json())
-        .then(r => {console.log(r); return r;})
-        .then(r => {
-          const lines = r.responses[0].textAnnotations[0].description.split("\n");
-          for (const line of lines) {
-            if(line.includes("PM") || line.includes("AM")) {
-              return line;
-            }
-          }
-          return r.responses[0].textAnnotations[0].description;
-        })
-    }
+    const imageBase64 = await (dev ? ((await import("fs")).promises) : undefined)?.readFile("static/" + imagePath, {encoding: "base64"});
+    startGoogleOCR(imagePath, imageBase64 ?? "")
+  },
+  selectImage: async ({fetch, url}) => {
+    const image = Number(url.searchParams.get("image"));
+    const data = await load({fetch} as unknown as ServerLoadEvent);
+    const imagePath = `time-extracting/${data.show?.metadata.vods?.youtube}/screenshots/img${image}.jpg`;
+    const imageBase64 = await (dev ? ((await import("fs")).promises) : undefined)?.readFile("static/" + imagePath, {encoding: "base64"});
+    startGoogleOCR(imagePath, imageBase64 ?? "")
   },
 
   correctTime: async ({fetch}) => {
@@ -261,7 +246,7 @@ export const actions = {
       }
     );
 
-    const timeAtStart = timeInImage.minus({minute: imageIndex});
+    const timeAtStart = timeInImage.minus({minute: imageIndex/2});
     const timeAtEnd = timeAtStart.plus({millisecond: data.show.metadata.mainShowLength});
 
     const mainShowStart = timeAtStart.toISO();
@@ -284,6 +269,42 @@ export const actions = {
 
   }
 } satisfies Actions;
+
+function startGoogleOCR(imagePath: string, imageBase64: string) {
+  verifyImageText = {
+    imagePath,
+    text: fetch("https://vision.googleapis.com/v1/images:annotate?key=" + env.YOUTUBE_KEY, {
+      method: "POST",
+      body: JSON.stringify(
+        {
+          requests: [
+            {
+              image: {
+                content: imageBase64
+              },
+              features: [
+                {
+                  "type": "TEXT_DETECTION"
+                }
+              ]
+            }
+          ]
+        }
+      )
+    })
+      .then(r => r.json())
+      .then(r => {console.log(r); return r;})
+      .then(r => {
+        const lines = r.responses[0].textAnnotations[0].description.split("\n");
+        for (const line of lines) {
+          if(line.includes("PM") || line.includes("AM")) {
+            return line;
+          }
+        }
+        return r.responses[0].textAnnotations[0].description;
+      })
+  }
+}
 
 async function saveNewTime(show: string, timeOverride: TimeOverride) {
   const fs = dev ? ((await import("fs")).promises) : undefined;
