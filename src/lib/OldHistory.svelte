@@ -33,6 +33,7 @@
 
 {#await fetchingHistory}
     <span class="opacity-50 old-show-loading">
+        <br>
         Loading older shows..
     </span>
 {:then {history}}
