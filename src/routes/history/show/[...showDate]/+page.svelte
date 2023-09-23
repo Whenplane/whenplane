@@ -79,6 +79,16 @@
             <Youtube/> VOD on Youtube
         </a>
     {/if}
+    <br>
+    <br>
+    {#if data.metadata.vods?.youtubeParts && data.metadata.vods.youtubeParts.length > 0}
+        This show has multiple youtube VOD parts:
+        {#each data.metadata.vods?.youtubeParts as id, i}
+            <a href="https://youtube.com/watch?v={id}" target="_blank" rel="noreferrer">
+                Part {i+1}
+            </a>
+        {/each}
+    {/if}
 </div>
 {#if dev}
     <pre>{JSON.stringify(data, null, "\t")}</pre>

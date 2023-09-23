@@ -24,7 +24,8 @@ export type OldShowMeta = {
     mainShowLength?: number
     vods?: {
         floatplane?: string,
-        youtube: string
+        youtube: string,
+        youtubeParts?: string[]
     },
     snippet?: {
         publishedAt: string,
