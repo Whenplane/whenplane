@@ -71,9 +71,9 @@
             {/if}
             <br>
             {#if data.isWdbResponseValid}
-                <span class="status opacity-50" class:wan={$floatplaneState.live && $floatplaneState.details?.isWAN}>
+                <span class="status opacity-50" class:wan={$floatplaneState.live && $floatplaneState.isWAN}>
                     {#if $floatplaneState.live}
-                        {#if $floatplaneState.details?.isWAN}
+                        {#if $floatplaneState.isWAN}
                             (live)
                         {:else}
                             (live non-WAN)

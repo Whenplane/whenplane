@@ -12,7 +12,10 @@
       stomp.subscribe('/exchange/fp.notifications', (message) => {
         try {
           const body = JSON.parse(message.body) as WanDb_FloatplaneData;
-          floatplaneState.set(body);
+          floatplaneState.set({
+            ...body,
+            live: !body.offline
+          });
           message.ack()
         } catch (e) {
           message.nack();

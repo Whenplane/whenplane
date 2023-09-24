@@ -153,17 +153,19 @@ export type FloatplaneSubscription = {
 }
 
 export type WanDb_FloatplaneData = {
-    live: boolean,
-    details: {
-        id: string,
-        isWAN: boolean,
-        title: string,
-        description: string,
-        thumbnail: FloatplaneImage
-    } | Record<string, never>
+    live?: boolean,
+    offline?: boolean
+    id?: string,
+    isWAN?: boolean,
+    title?: string,
+    description?: string,
+    thumbnail?: FloatplaneImage
 };
 
 export type WanDb_FloatplaneAPIData = {
-    data: WanDb_FloatplaneData,
+    data: {
+        live: boolean,
+        details: WanDb_FloatplaneData
+    },
     duration: number
 }

@@ -49,7 +49,9 @@ export const load = (async ({fetch}) => {
                         "x-whenplane-version": version
                     }
                 }).then(r => r.json() as Promise<WanDb_FloatplaneAPIData>)
-                  .then(r => r.data);
+                  .then(r => {
+                      return { ...r.data.details, live: r.data.live };
+                  });
                 wdbFpCache = {
                     lastFetch: Date.now(),
                     lastData: response
