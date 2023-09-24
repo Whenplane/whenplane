@@ -24,13 +24,13 @@
             <br>
             <br>
             The site is
-            <a href="https://github.com/ajgeiss0702/wheniswan" target="_blank" rel="noreferrer">
+            <a href="https://github.com/ajgeiss0702/wheniswan" target="_blank" rel="noopener">
                 open-sourced</a>.
             Feel free to make contributions!
             <br>
             <br>
             Huge thanks to
-            <a href="https://thewandb.com/">
+            <a href="https://thewandb.com/" target="_blank" rel="noopener">
                 The WAN DB
             </a>
             for the floatplane live detection
@@ -45,7 +45,7 @@
             <br>
 
             <div class="text-right">
-                <a class="btn variant-ghost-primary" href="https://about.ajg0702.us" target="_blank" rel="noreferrer">
+                <a class="btn variant-ghost-primary" href="https://about.ajg0702.us" target="_blank" rel="noopener">
                     Made by aj
                 </a>
             </div>

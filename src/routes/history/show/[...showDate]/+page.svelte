@@ -69,13 +69,13 @@
     {/if}
 
     {#if data.metadata.vods?.floatplane}
-        <a href="https://floatplane.com/post/{data.metadata.vods.floatplane}" target="_blank" rel="noreferrer">
+        <a href="https://floatplane.com/post/{data.metadata.vods.floatplane}" target="_blank" rel="noopener">
             <Floatplane/> VOD on Floatplane
         </a>
     {/if}
     <br>
     {#if data.metadata.vods?.youtube}
-        <a href="https://youtube.com/watch?v={data.metadata.vods.youtube}" target="_blank" rel="noreferrer">
+        <a href="https://youtube.com/watch?v={data.metadata.vods.youtube}" target="_blank" rel="noopener">
             <Youtube/> VOD on Youtube
         </a>
     {/if}
@@ -84,7 +84,7 @@
     {#if data.metadata.vods?.youtubeParts && data.metadata.vods.youtubeParts.length > 0}
         This show has multiple youtube VOD parts:
         {#each data.metadata.vods?.youtubeParts as id, i}
-            <a href="https://youtube.com/watch?v={id}" target="_blank" rel="noreferrer">
+            <a href="https://youtube.com/watch?v={id}" target="_blank" rel="noopener">
                 Part {i+1}
             </a>
         {/each}

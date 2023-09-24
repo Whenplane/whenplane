@@ -18,7 +18,7 @@
 <WdbListener/>
 
 <div class="logo-cloud grid-cols-1 lg:!grid-cols-3 gap-1">
-    <a class="logo-item" href="https://www.twitch.tv/linustech" target="_blank" rel="noreferrer">
+    <a class="logo-item" href="https://www.twitch.tv/linustech" target="_blank" rel="noopener">
         <span><Twitch/></span>
         <span>
             Twitch<br>
@@ -35,7 +35,7 @@
             </span>
         </span>
     </a>
-    <a class="logo-item" href="https://www.youtube.com/linustechtips/live" target="_blank" rel="noreferrer">
+    <a class="logo-item" href="https://www.youtube.com/linustechtips/live" target="_blank" rel="noopener">
         <span><Youtube/></span>
         <span>
             Youtube<br>
@@ -52,7 +52,7 @@
             </span>
         </span>
     </a>
-    <a class="logo-item" href="https://www.floatplane.com/channel/linustechtips/live" target="_blank" rel="noreferrer">
+    <a class="logo-item" href="https://www.floatplane.com/channel/linustechtips/live" target="_blank" rel="noopener">
         <span><Floatplane/></span>
         <span>
             Floatplane
