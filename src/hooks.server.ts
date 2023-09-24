@@ -12,6 +12,11 @@ export const handle: Handle = async ({ event, resolve }) => {
         const expires = new Date();
         expires.setDate(expires.getDate() + 30);
 
+        // If the cookie is supposed to expire around wan day, delay it
+        if(expires.getUTCDay() === 5 || expires.getUTCDay() === 6) {
+            expires.setDate(expires.getDate() + 2);
+        }
+
         event.cookies.set("id", id, {
             path: "/",
             expires
