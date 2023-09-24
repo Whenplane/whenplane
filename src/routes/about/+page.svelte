@@ -27,6 +27,13 @@
             <a href="https://github.com/ajgeiss0702/wheniswan" target="_blank" rel="noreferrer">
                 open-sourced</a>.
             Feel free to make contributions!
+            <br>
+            <br>
+            Huge thanks to
+            <a href="https://thewandb.com/">
+                The WAN DB
+            </a>
+            for the floatplane live detection
 
             <br>
             <br>
@@ -34,11 +41,6 @@
                 <h2 class="text-center">Why does it say WAN starts at 4:30?</h2>
                 <img class="mx-auto danwan" src="/430.webp" alt="Dan confirming 4:30"/>
                 <i>always has been</i>
-            </div>
-            <br>
-            <div class="text-center w-full">
-                <h2 class="text-center">Will there ever be ads?</h2>
-                No. Ads suck.
             </div>
             <br>
 

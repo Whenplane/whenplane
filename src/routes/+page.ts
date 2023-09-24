@@ -1,8 +1,10 @@
 import type {PageLoad} from "./$types";
-import {browser} from "$app/environment";
+import { browser, version } from "$app/environment";
 import { error } from "@sveltejs/kit";
 import type { Latenesses } from "./api/latenesses/+server";
 import type { AggregateResponse } from "./api/(live-statuses)/aggregate/+server";
+import type { WanDb_FloatplaneAPIData, WanDb_FloatplaneData } from "$lib/utils.ts";
+import { floatplaneState } from "$lib/fpState.ts";
 
 let cachedLatenesses: Latenesses;
 let cachedLatenessesTime = 0 ;
@@ -12,6 +14,14 @@ let danCache: {
     lastData?: DanResponse
 } = {lastFetch: 0}
 
+// update every 10 minutes when in browser, otherwise 2x per second from ssr
+const wdb_fp_cache_time = browser ? 10 * 60e3 : 500;
+
+let wdbFpCache: {
+    lastFetch: number,
+    lastData?: WanDb_FloatplaneData
+} = {lastFetch: 0}
+
 export const load = (async ({fetch}) => {
     const fast = (!browser || (location && location.pathname !== "/"));
     const cacheBuster = fast ? "" : "&r=" + Date.now();
@@ -19,6 +29,7 @@ export const load = (async ({fetch}) => {
     let liveStatus: AggregateResponse | undefined;
     let latenesses: Latenesses | undefined;
     let dan: DanResponse | undefined;
+    let fpState: WanDb_FloatplaneData | undefined;
 
     await Promise.all([
         (async () => {
@@ -27,6 +38,28 @@ export const load = (async ({fetch}) => {
             liveStatus = await fetch("/api/aggregate?fast=" + fast + cacheBuster)
               .then(r => r.json());
 
+
+        })(),
+        (async () => {
+
+            if(Date.now() - wdbFpCache.lastFetch > wdb_fp_cache_time) {
+                const response = await fetch("https://api.thewandb.com/v1/live/floatplane", {
+                    headers: {
+                        "referer": "whenplane.com",
+                        "x-whenplane-version": version
+                    }
+                }).then(r => r.json() as Promise<WanDb_FloatplaneAPIData>)
+                  .then(r => r.data);
+                wdbFpCache = {
+                    lastFetch: Date.now(),
+                    lastData: response
+                }
+                fpState = response;
+
+                floatplaneState.set(fpState)
+            } else {
+                fpState = wdbFpCache.lastData;
+            }
 
         })(),
         (async () => {
@@ -85,11 +118,14 @@ export const load = (async ({fetch}) => {
     const preShowStarted = isPreShow ? liveStatus.twitch.started : undefined;
     const mainShowStarted = isMainShow ? liveStatus.youtube.started : undefined;
 
+    const isWdbResponseValid = typeof fpState?.live === "boolean";
 
     return {
         isPreShow,
         isMainShow,
         liveStatus,
+        isWdbResponseValid,
+        fpState,
         isThereWan: liveStatus?.isThereWan,
         preShowStarted,
         mainShowStarted,

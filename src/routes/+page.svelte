@@ -76,6 +76,9 @@
 	$: medianLateness = data.medianLateness ? timeString(Math.abs(data.medianLateness)) : undefined;
 
 
+	$: if(dev) console.log({data});
+
+
 </script>
 <svelte:window
 		on:focus={startInvalidationInterval}

@@ -20,11 +20,6 @@ export const GET = (async ({url, fetch, locals}) => {
         return response;
     })();
 
-    // const fpStart = Date.now();
-    // const floatplane = await fetch("/api/floatplane?short&fast=" + fast)
-    //     .then(r => r.json());
-    // const fpTime = Date.now() - fpStart;
-
     let ytTime: number | undefined;
     const youtube = (async () => {
         const start = Date.now();

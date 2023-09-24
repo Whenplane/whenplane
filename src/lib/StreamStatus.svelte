@@ -6,12 +6,16 @@
     import Info from "$lib/svg/Info.svelte";
     import {fade} from "svelte/transition";
     import {onMount} from "svelte";
+    import { floatplaneState } from "$lib/fpState";
+    import WdbListener from "$lib/WdbListener.svelte";
 
     export let data;
 
     let mounted = false;
     onMount(() => mounted = true);
 </script>
+
+<WdbListener/>
 
 <div class="logo-cloud grid-cols-1 lg:!grid-cols-3 gap-1">
     <a class="logo-item" href="https://www.twitch.tv/linustech" target="_blank" rel="noreferrer">
@@ -52,7 +56,7 @@
         <span><Floatplane/></span>
         <span>
             Floatplane
-            {#if mounted} <!-- Don't SSR info button since it wont work without client-side JS -->
+            {#if mounted && !data.isWdbResponseValid} <!-- Don't SSR info button since it wont work without client-side JS -->
                 <span
                         class="text-surface inline-block fp-info [&>*]:pointer-events-none"
                         use:popup={{
@@ -66,28 +70,31 @@
                 </span>
             {/if}
             <br>
-            <span class="status opacity-50" class:wan={data.liveStatus.twitch.isWAN}>
-                {#if data.liveStatus.twitch.isLive}
-                    {#if data.liveStatus.twitch.isWAN}
-                        (probably live)
+            {#if data.isWdbResponseValid}
+                <span class="status opacity-50" class:wan={$floatplaneState.live && $floatplaneState.details?.isWAN}>
+                    {#if $floatplaneState.live}
+                        {#if $floatplaneState.details?.isWAN}
+                            (live)
+                        {:else}
+                            (live non-WAN)
+                        {/if}
                     {:else}
-                        (probably live non-WAN)
+                        (offline)
                     {/if}
-                {:else}
-                    (probably offline)
-                {/if}
-            </span>
-            <!--<span class="status opacity-50" class:wan={data.liveStatus.floatplane.isWAN}>
-                {#if data.liveStatus.floatplane.isLive}
-                    {#if data.liveStatus.floatplane.isWAN}
-                        (live)
+                </span>
+            {:else}
+                <span class="status opacity-50" class:wan={data.liveStatus.twitch.isWAN}>
+                    {#if data.liveStatus.twitch.isLive}
+                        {#if data.liveStatus.twitch.isWAN}
+                            (probably live)
+                        {:else}
+                            (probably live non-WAN)
+                        {/if}
                     {:else}
-                        (live non-WAN)
+                        (probably offline)
                     {/if}
-                {:else}
-                    (offline)
-                {/if}
-            </span>-->
+                </span>
+            {/if}
         </span>
     </a>
 </div>
@@ -95,8 +102,9 @@
     Floatplane does not have a (public) way to tell if LTT is streaming live.<br>
     So, instead we guess based on if twitch is live or not.<br>
     <br>
-    There might be a way around this in the future.<br>
-    If that happens, this will no longer say "probably"
+    Normally we would use TheWanDb's reverse-engineering,<br>
+    but TheWanDb appears to be having issues right now,<br>
+    so we are falling back to twitch
 </div>
 <style>
     .status {

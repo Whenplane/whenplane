@@ -16,6 +16,9 @@ dependencies:
   nprogress:
     specifier: ^0.2.0
     version: 0.2.0
+  webstomp-client:
+    specifier: ^1.2.6
+    version: 1.2.6
 
 devDependencies:
   '@cloudflare/workers-types':
@@ -3280,6 +3283,10 @@ packages:
   /webidl-conversions@3.0.1:
     resolution: {integrity: sha512-2JAn3z8AR6rjK8Sm8orRC0h/bcl/DqL7tRPdGZ4I1CjdF+EaMLmYxBHyXuKL849eucPFhvBoxMsflfOb8kxaeQ==}
     dev: true
+
+  /webstomp-client@1.2.6:
+    resolution: {integrity: sha512-9HajO6Ki2ViEGIusLZtjM2lcO2VaQUvtXhLQQ4Cm543RLjfTCEgI3sFaiXts3TvfZgrtY/vI/+qUkm2qWD/NVg==}
+    dev: false
 
   /whatwg-url@5.0.0:
     resolution: {integrity: sha512-saE57nupxk6v3HY35+jzBwYa0rKSy0XR8JSxZPwgLr7ys0IBzhGviA1/TUGJLmSVqs8pb9AnvICXEuOHLprYTw==}
