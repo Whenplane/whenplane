@@ -3,6 +3,8 @@ import {dev} from "$app/environment";
 
 const reportedIds: {[key: string]: number} = {};
 
+let devBindings: App.Platform | undefined;
+
 export const handle: Handle = async ({ event, resolve }) => {
 
 
@@ -32,8 +34,11 @@ export const handle: Handle = async ({ event, resolve }) => {
 
     // KV in dev
     if (dev) {
-        const { fallBackPlatformToMiniFlareInDev } = await import('$lib/server/clients/miniflare');
-        event.platform = await fallBackPlatformToMiniFlareInDev(event.platform);
+        if(!devBindings) {
+            const { fallBackPlatformToMiniFlareInDev } = await import('$lib/server/clients/miniflare');
+            devBindings = await fallBackPlatformToMiniFlareInDev(event.platform);
+        }
+        event.platform = devBindings;
     }
 
     const timings: TimingEntry[] = [];
