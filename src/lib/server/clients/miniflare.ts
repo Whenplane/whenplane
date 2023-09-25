@@ -14,15 +14,8 @@ export const fallBackPlatformToMiniFlareInDev = async (_platform: App.Platform |
         globalTimers: true,
         globalRandom: true,
 
-        script: `
-		addEventListener("fetch", (event) => {
-			event.waitUntil(Promise.resolve(event.request.url));
-			event.respondWith(new Response(event.request.headers.get("X-Message")));
-		});
-		addEventListener("scheduled", (event) => {
-			event.waitUntil(Promise.resolve(event.scheduledTime));
-		});
-		`,
+        modules: true,
+        script: `export default { fetch() { return new Response(null, { status: 404 }) } } `,
     });
 
     const env = await mf.getBindings();
