@@ -195,7 +195,13 @@
 			<div>
 				<Accordion>
 					<AccordionItem open>
-						<svelte:fragment slot="summary"><h3>Lateness Voting</h3></svelte:fragment>
+						<svelte:fragment slot="summary">
+							<h3 class="inline">Lateness Voting</h3>
+							&nbsp;
+							{#if nowish.getTime() < 1696143600000} <!-- in case I forget to remove this -->
+								<span class="badge variant-filled">New</span>
+							{/if}
+						</svelte:fragment>
 						<svelte:fragment slot="content">
 							<LatenessVoting/>
 						</svelte:fragment>
