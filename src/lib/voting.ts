@@ -28,8 +28,8 @@ export const options: LatenessVotingOption[] = [
   }
 ];
 
-// How long a vote lasts (5 hours)
-export const vote_valid_for = 5 * 60 * 60e3;
+// How long a vote lasts (48 hours)
+export const vote_valid_for = 48 * 60 * 60e3;
 
 
 export type LatenessVotingOption = {
