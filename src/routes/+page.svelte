@@ -8,6 +8,8 @@
 	import {page} from "$app/stores";
 	import {fade} from "svelte/transition";
 	import { dev } from "$app/environment";
+	import LatenessVoting from "$lib/LatenessVoting.svelte";
+	import { Accordion, AccordionItem } from "@skeletonlabs/skeleton";
 
 	export let data;
 
@@ -23,8 +25,12 @@
 		lastInvalidation = Date.now();
 		invalidateAll();
 
-		getDanGoingFor()
+		getDanGoingFor();
+
+		nowish = new Date();
 	}
+
+	let nowish = new Date();
 
 	let danGoingFor = "";
 	function getDanGoingFor() {
@@ -89,7 +95,7 @@
 </svelte:head>
 
 <div class="container h-full mx-auto justify-center items-center">
-	<div class="space-y-5">
+	<div class="space-y-5 inner">
 		<div class="text-center">
 			<div class="card p-4 inline-block countdown-box text-left">
 				{#if isLate}
@@ -185,6 +191,18 @@
 				{/if}
 			</div>
 		{/if}
+		{#if (nowish.getUTCDay() === 5 || nowish.getUTCDay() === 6) && !data.hasDone}
+			<div>
+				<Accordion>
+					<AccordionItem open>
+						<svelte:fragment slot="summary"><h3>Lateness Voting</h3></svelte:fragment>
+						<svelte:fragment slot="content">
+							<LatenessVoting/>
+						</svelte:fragment>
+					</AccordionItem>
+				</Accordion>
+			</div>
+		{/if}
 	</div>
 </div>
 <div class="absolute bottom-0 right-0 p-2">
@@ -219,6 +237,12 @@
 
 	.container {
 		padding: 5em 1em 1em;
+	}
+
+	@media (max-height: 790px) {
+		.inner {
+			padding-bottom: 5em;
+		}
 	}
 	
 	@media (min-height: 790px) {

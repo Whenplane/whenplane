@@ -41,6 +41,8 @@ export const handle: Handle = async ({ event, resolve }) => {
         event.platform = devBindings;
     }
 
+    event.locals.id = id;
+
     const timings: TimingEntry[] = [];
 
     event.locals.addTiming = (timing: TimingEntry) => {

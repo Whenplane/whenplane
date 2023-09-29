@@ -3,7 +3,8 @@
 // and what to do when importing types
 declare namespace App {
 	interface Locals {
-        addTiming: (timing: TimingEntry) => void
+        addTiming: (timing: TimingEntry) => void,
+        id: string
     }
 	// interface PageData {}
 	// interface Error {}
@@ -14,6 +15,7 @@ declare namespace App {
             META: KVNamespace;
             FETCHER: DurableObjectNamespace;
             TWITCH_ANALYTICS?: AnalyticsEngineDataset;
+            DB: D1Database;
         },
         context?: {
             /**

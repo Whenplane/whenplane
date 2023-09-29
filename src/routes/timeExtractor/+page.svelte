@@ -68,9 +68,9 @@
         document.body.scrollTo({top: 0, left: 0})
         imageOutdated = true
         return async ({ update }) => {
-                await update({ reset: false });
-                imageOutdated = false
-            };
+          await update({ reset: false });
+          imageOutdated = false
+        };
       }}>
         {#if data.image.promptText}
           <button class="btn variant-ghost-success w-5/12" formaction="?/hasTime">

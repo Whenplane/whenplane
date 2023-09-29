@@ -4,12 +4,22 @@ import type { IsThereWanResponse } from "../isThereWan/+server";
 import type { HasDoneResponse } from "../../hasDone/+server";
 import type { TwitchResponse } from "../twitch/+server";
 import type { YoutubeResponse } from "../youtube/+server";
+import type { LatenessVotingOption } from "$lib/voting.ts";
 
 export const GET = (async ({url, fetch, locals}) => {
     const fast = url.searchParams.get("fast");
 
     const isThereWan = fetch("/api/isThereWan").then(r => r.json());
     const hasDone = fetch("/api/hasDone").then(r => r.json()).then(r => r.hasDone);
+
+    let votesTime: number | undefined;
+    const votes = (async () => {
+        const start = Date.now();
+        const response = await fetch("/api/latenessVoting/votes")
+          .then(r => r.json());
+        votesTime = Date.now() - start;
+        return response;
+    })();
 
     let twitchTime: number | undefined;
     const twitch = (async () => {
@@ -34,11 +44,13 @@ export const GET = (async ({url, fetch, locals}) => {
         // floatplane,
         youtube: await youtube,
         isThereWan: await isThereWan,
-        hasDone: await hasDone
+        hasDone: await hasDone,
+        votes: await votes
     }
 
     locals.addTiming({id: "twitch", duration: twitchTime ?? -1});
     locals.addTiming({id: "youtube", duration: ytTime ?? -1});
+    locals.addTiming({id: "votes", duration: votesTime ?? -1});
 
     return json(response)
 }) satisfies RequestHandler;
@@ -47,5 +59,6 @@ export type AggregateResponse = {
     twitch: TwitchResponse,
     youtube: YoutubeResponse,
     isThereWan: IsThereWanResponse,
-    hasDone: HasDoneResponse
+    hasDone: HasDoneResponse,
+    votes: LatenessVotingOption[]
 }
