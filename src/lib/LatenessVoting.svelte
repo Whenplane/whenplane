@@ -28,16 +28,18 @@ How late do you think the show will be?
   {#each $page.data.liveStatus?.votes as option}
     <button class="block w-full text-left background relative" formaction="?/vote&for={encodeURIComponent(option.name)}">
       <span class="block percent" style="width: {(option.votes / total) * 100}%">
-        {option.name}
-        {#if userVote && userVote.lastVoteFor === option.name && (Date.now() - userVote.lastVote < vote_valid_for)}
-          &nbsp;
-          <span class="opacity-75">
-          (your vote)
+        <span class="inline-block px-2">
+          {option.name}
+          {#if userVote && userVote.lastVoteFor === option.name && (Date.now() - userVote.lastVote < vote_valid_for)}
+            &nbsp;
+            <span class="opacity-75">
+              (your vote)
+            </span>
+          {/if}
         </span>
-        {/if}
         <span class="absolute right-2">
-        {Math.floor((option.votes / total) * 100)}%
-      </span>
+          {Math.floor((option.votes / total) * 100)}%
+        </span>
       </span>
     </button>
   {/each}
@@ -45,7 +47,6 @@ How late do you think the show will be?
 
 <style>
   .percent {
-      @apply px-2;
       background-color: rgba(100, 100, 255, 0.25);
       border-radius: 4px;
       overflow: visible;
