@@ -5,9 +5,8 @@
   import type { UserVote } from "$lib/voting";
   import { vote_valid_for } from "$lib/voting";
   import {enhance} from "$app/forms";
-  import { invalidateAll } from "$app/navigation";
 
-  const total = $page.data.liveStatus?.votes?.reduce((a, x) => a + x.votes, 0) || 1;
+  $: total = $page.data.liveStatus?.votes?.reduce((a, x) => a + x.votes, 0) || 1;
 
   let userVote = browser ? JSON.parse(localStorage.getItem("latenessVote") ?? "{\"lastVote\":0}") as UserVote : {lastVote:0}
 
