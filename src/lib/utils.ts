@@ -160,6 +160,7 @@ export type WanDb_FloatplaneData = {
     title?: string,
     description?: string,
     thumbnail?: FloatplaneImage
+    error?: any
 };
 
 export type WanDb_FloatplaneAPIData = {

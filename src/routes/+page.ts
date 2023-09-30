@@ -51,7 +51,8 @@ export const load = (async ({fetch}) => {
                 }).then(r => r.json() as Promise<WanDb_FloatplaneAPIData>)
                   .then(r => {
                       return { ...r.data.details, live: r.data.live };
-                  });
+                  }).catch(error => console.error("Error while fetching fp live status from thewandb:", error));
+                if(!response) return;
                 wdbFpCache = {
                     lastFetch: Date.now(),
                     lastData: response
@@ -120,7 +121,7 @@ export const load = (async ({fetch}) => {
     const preShowStarted = isPreShow ? liveStatus.twitch.started : undefined;
     const mainShowStarted = isMainShow ? liveStatus.youtube.started : undefined;
 
-    const isWdbResponseValid = typeof fpState?.live === "boolean";
+    const isWdbResponseValid = typeof fpState?.live === "boolean" && (liveStatus.twitch.isWAN == fpState.live);
 
     return {
         isPreShow,
