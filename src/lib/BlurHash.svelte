@@ -9,7 +9,7 @@
   let canvas;
   let imageURL;
 
-  const resolutionDecreaser = 10;
+  const resolutionDecreaser = 20;
 
   onMount(() => {
     const pixels = decode(blurhash.hash, blurhash.w/resolutionDecreaser, blurhash.h/resolutionDecreaser);
