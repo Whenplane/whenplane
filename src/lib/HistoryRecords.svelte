@@ -83,7 +83,7 @@
             {/await}
             <br>
             <Accordion class="mx-4" spacing="" regionPanel="">
-                <AccordionItem open={dev} on:toggle={fetchLatenesses}>
+                <AccordionItem on:toggle={fetchLatenesses}>
                     <svelte:fragment slot="summary">More records</svelte:fragment>
                     <svelte:fragment slot="content">
                         {#await rec.longestPreShow}

@@ -1,6 +1,7 @@
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-ignore
-import {fetchFloatplaneShows, FloatplanePost} from "./floatplane-fetcher.ts";
+import {fetchFloatplaneShows} from "./floatplane-fetcher.ts";
+import type {FloatplanePost} from "../../lib/utils";
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-ignore
 import {fileExists} from "./utils.ts";
@@ -9,9 +10,11 @@ import {fileExists} from "./utils.ts";
 import {fetchYoutubeShows, SpecificData} from "./youtube-fetcher.ts";
 
 import 'dotenv/config'
-import type {HistoricalEntry} from "$lib/utils";
+import type { HistoricalEntry, YoutubeThumbnail } from "../../lib/utils";
 import fs from "node:fs/promises";
 import { Duration } from "luxon";
+import sharp from "sharp";
+import { encode } from "blurhash";
 
 export const floatplaneDataPath = "src/scripts/old-history-generator/floatplane-wan-vods.json"
 export const youtubeDataPath = "src/scripts/old-history-generator/youtube-wan-vods.json";
@@ -101,6 +104,45 @@ for (const date in youtubeData) {
             parts.pop(); // do a pop to only remove the stuff after the *last* dash
             title = parts.join(" - ");
         }
+    }
+
+    if(youtubeVod.snippet?.thumbnails) {
+        const promises = [];
+        for (const thumbnailKey in youtubeVod.snippet?.thumbnails) {
+            promises.push((async () => {
+                const start = Date.now();
+                const thumbnail = (youtubeVod.snippet?.thumbnails as {[key: string]: YoutubeThumbnail})[thumbnailKey];
+                const image = await fetch(thumbnail.url)
+                  .then(r => r.arrayBuffer());
+                const {data, info} = await sharp(image)
+                  .raw()
+                  .ensureAlpha(0)
+                  .toBuffer({resolveWithObject: true})
+
+                const { width, height } = info;
+
+                if(typeof width == "undefined" || typeof height == "undefined") {
+                    console.warn("Thumbnail " + thumbnailKey + " for show " + date + " is missing width/height!");
+                    return;
+                }
+
+
+                const clamped = Uint8ClampedArray.from(data);
+
+                // console.log({url: thumbnail.url, length: clamped.length, width, height, area: width * height, properLength: width * height * 4})
+
+                const hash = encode(clamped, width, height, 4, 4);
+                (youtubeVod.snippet?.thumbnails as {[key: string]: YoutubeThumbnail})[thumbnailKey].blurhash = {
+                    hash,
+                    w: width,
+                    h: height,
+                    cX: 4,
+                    cY: 4
+                }
+                console.log(date+" " + thumbnailKey + " took " + (Date.now() - start) + "ms");
+            })())
+        }
+        await Promise.all(promises);
     }
 
     oldShows.push({

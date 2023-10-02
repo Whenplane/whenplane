@@ -37,6 +37,7 @@
 		"postcss": "^8.4.23",
 		"prettier": "^2.8.0",
 		"prettier-plugin-svelte": "^2.8.1",
+		"sharp": "^0.32.6",
 		"svelte": "^3.54.0",
 		"svelte-bootstrap-icons": "^3.0.0",
 		"svelte-check": "^3.0.1",
@@ -53,6 +54,8 @@
 		"@dimfeld/svelte-lazyload": "^0.0.4",
 		"@floating-ui/dom": "^1.2.7",
 		"apexcharts": "^3.42.0",
+		"blurhash": "^2.0.5",
+		"fast-blurhash": "^1.1.2",
 		"luxon": "^3.3.0",
 		"nprogress": "^0.2.0",
 		"webstomp-client": "^1.2.6"

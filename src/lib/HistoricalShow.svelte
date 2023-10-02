@@ -4,6 +4,7 @@
     import LazyLoad from "@dimfeld/svelte-lazyload";
     import Live from "$lib/Live.svelte";
     import { page } from "$app/stores";
+    import BlurHash from "$lib/BlurHash.svelte";
 
     export let show;
     export let withThumbnail = false;
@@ -50,10 +51,19 @@
         {#if withThumbnail && thumbnail}
             <div class="thumbnail relative">
                 {#if lazyLoadThumbnail}
-                    <div class="thumbnail-space">
-                        <LazyLoad>
-                            <img src={thumbnail.url} aria-hidden="true" alt="">
-                        </LazyLoad>
+                    <div class="thumbnail-space relative">
+                        <div class="absolute top-0 left-0 rounded">
+                            {#if thumbnail.blurhash}
+                                <LazyLoad>
+                                    <BlurHash blurhash={thumbnail.blurhash}/>
+                                </LazyLoad>
+                            {/if}
+                        </div>
+                        <div class="absolute top-0 left-0">
+                            <!--<LazyLoad>
+                                <img src={thumbnail.url} aria-hidden="true" alt="">
+                            </LazyLoad>-->
+                        </div>
                     </div>
                 {:else}
                     <img src={thumbnail.url} aria-hidden="true" alt="">
@@ -199,5 +209,9 @@
     }
     a {
         width: min(30rem, 95vw);
+    }
+    .rounded {
+        border-radius: var(--theme-rounded-base);
+        overflow: hidden;
     }
 </style>

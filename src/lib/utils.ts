@@ -49,10 +49,19 @@ export type OldShowMeta = {
     }
 }
 
-type YoutubeThumbnail = {
+export type YoutubeThumbnail = {
     url: string,
     width: number,
-    height: number
+    height: number,
+    blurhash?: BlurHash
+}
+
+export type BlurHash = {
+    hash: string,
+    h: number,
+    w: number,
+    cX: number,
+    cY: number
 }
 
 export type DataTransformFunction = (show: HistoricalEntry) => number

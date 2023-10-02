@@ -121,7 +121,7 @@ export const load = (async ({fetch}) => {
     const preShowStarted = isPreShow ? liveStatus.twitch.started : undefined;
     const mainShowStarted = isMainShow ? liveStatus.youtube.started : undefined;
 
-    const isWdbResponseValid = typeof fpState?.live === "boolean" && (liveStatus.twitch.isWAN == fpState.live);
+    const isWdbResponseValid = typeof fpState?.live === "boolean" && (liveStatus.twitch.isWAN == fpState.isWAN);
 
     return {
         isPreShow,

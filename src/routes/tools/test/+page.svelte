@@ -1,5 +1,6 @@
 <script>
     import {getClosestWan, getNextWAN, getPreviousWAN} from "$lib/timeUtils";
+    import BlurHash from "$lib/BlurHash.svelte";
 
     const tomorrow = new Date();
     tomorrow.setDate(tomorrow.getDate() + 1);
@@ -34,4 +35,9 @@
             <td>{getClosestWan(tomorrow)}</td>
         </tr>
     </table>
+
+    <br>
+    <br>
+    <br>
+    <BlurHash blurhash={{hash: "UCC?Q2_456RiyDNGVsn,whVsNtXSTJXSxHnj", w: 320, h: 200}}/>
 </div>
