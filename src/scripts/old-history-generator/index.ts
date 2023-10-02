@@ -131,12 +131,12 @@ for (const date in youtubeData) {
 
                 // console.log({url: thumbnail.url, length: clamped.length, width, height, area: width * height, properLength: width * height * 4})
 
-                const hash = encode(clamped, width, height, 4, 4);
+                const hash = encode(clamped, width, height, 5, 4);
                 (youtubeVod.snippet?.thumbnails as {[key: string]: YoutubeThumbnail})[thumbnailKey].blurhash = {
                     hash,
                     w: width,
                     h: height,
-                    cX: 4,
+                    cX: 5,
                     cY: 4
                 }
                 console.log(date+" " + thumbnailKey + " took " + (Date.now() - start) + "ms");
