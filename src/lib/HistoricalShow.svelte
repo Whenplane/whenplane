@@ -5,12 +5,15 @@
     import Live from "$lib/Live.svelte";
     import { page } from "$app/stores";
     import BlurHash from "$lib/BlurHash.svelte";
+    import {fade} from "svelte/transition";
 
     export let show;
     export let withThumbnail = false;
     export let lazyLoadThumbnail = false
 
     export let onlyTimes = false;
+
+    let thumbnailLoaded = !lazyLoadThumbnail;
 
     $: href = onlyTimes ? undefined : "/history/show/" + show.name;
 
@@ -52,18 +55,20 @@
             <div class="thumbnail relative">
                 {#if lazyLoadThumbnail}
                     <div class="thumbnail-space relative">
-                        <div class="absolute top-0 left-0 rounded">
-                            {#if thumbnail.blurhash}
-                                <LazyLoad>
-                                    <BlurHash blurhash={thumbnail.blurhash}/>
-                                </LazyLoad>
-                            {/if}
-                        </div>
                         <div class="absolute top-0 left-0">
-                            <!--<LazyLoad>
-                                <img src={thumbnail.url} aria-hidden="true" alt="">
-                            </LazyLoad>-->
+                            <LazyLoad>
+                                <img src={thumbnail.url} aria-hidden="true" alt="" on:load={() => thumbnailLoaded = true}>
+                            </LazyLoad>
                         </div>
+                        {#if !thumbnailLoaded}
+                            <div class="absolute top-0 left-0 rounded" out:fade={{duration: 400}}>
+                                {#if thumbnail.blurhash}
+                                    <LazyLoad>
+                                        <BlurHash blurhash={thumbnail.blurhash}/>
+                                    </LazyLoad>
+                                {/if}
+                            </div>
+                        {/if}
                     </div>
                 {:else}
                     <img src={thumbnail.url} aria-hidden="true" alt="">
