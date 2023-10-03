@@ -6,6 +6,7 @@
     import { page } from "$app/stores";
     import BlurHash from "$lib/BlurHash.svelte";
     import {fade} from "svelte/transition";
+    import LargerLazyLoad from "$lib/LargerLazyLoad.svelte";
 
     export let show;
     export let withThumbnail = false;
@@ -56,16 +57,16 @@
                 {#if lazyLoadThumbnail}
                     <div class="thumbnail-space relative">
                         <div class="absolute top-0 left-0">
-                            <LazyLoad>
+                            <LargerLazyLoad>
                                 <img src={thumbnail.url} aria-hidden="true" alt="" on:load={() => thumbnailLoaded = true}>
-                            </LazyLoad>
+                            </LargerLazyLoad>
                         </div>
                         {#if !thumbnailLoaded}
                             <div class="absolute top-0 left-0 rounded" out:fade={{duration: 400}}>
                                 {#if thumbnail.blurhash}
-                                    <LazyLoad>
+                                    <LargerLazyLoad>
                                         <BlurHash blurhash={thumbnail.blurhash}/>
-                                    </LazyLoad>
+                                    </LargerLazyLoad>
                                 {/if}
                             </div>
                         {/if}

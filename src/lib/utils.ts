@@ -179,3 +179,10 @@ export type WanDb_FloatplaneAPIData = {
     },
     duration: number
 }
+
+export type MainLate = {
+    isMainLate: boolean,
+    string?: string,
+    late?: boolean,
+    distance?: number
+}
