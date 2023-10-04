@@ -42,10 +42,15 @@
     }
 
     storePopup.set({ computePosition, autoUpdate, flip, shift, offset, arrow });
+
+    const pagesWithDescription = [
+      "/",
+      "/history"
+    ]
 </script>
 
 <svelte:head>
-    {#if !$page.url.pathname.startsWith("/history/show/")}
+    {#if !$page.url.pathname.startsWith("/history/show/") && !pagesWithDescription.includes($page.url.pathname)}
         <meta name="description" content="When is WAN? Who knows! At least you can look at when it started before.. (spoiler: it's late)">
     {/if}
 </svelte:head>

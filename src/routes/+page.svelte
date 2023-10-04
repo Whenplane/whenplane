@@ -92,6 +92,7 @@
 />
 <svelte:head>
 	<title>When is WAN?  Whenplane</title>
+	<meta name="description" content="Is the WAN show late? How late is the WAN show? Probably very! See a countdown to when WAN is supposed to start, as well as how late it's been before."/>
 </svelte:head>
 
 <div class="container h-full mx-auto justify-center items-center">
