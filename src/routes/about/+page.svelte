@@ -8,6 +8,9 @@
     let noSpecialLateText = browser ? localStorage.getItem("no-special-late-text") === "true" : false;
     $: if(browser) localStorage.setItem("no-special-late-text", noSpecialLateText + "");
 
+    let disableBlurHash = browser ? !(localStorage.getItem("disableBlurHash") !== "true") : false
+    $: if(browser) localStorage.setItem("disableBlurHash", disableBlurHash + "");
+
 </script>
 <svelte:window bind:scrollY/>
 <svelte:head>
@@ -71,6 +74,11 @@
 
         <SlideToggle active="bg-primary-500" size="sm" bind:checked={noSpecialLateText}>
             Disable special "late" text
+        </SlideToggle>
+        <br>
+
+        <SlideToggle active="bg-primary-500" size="sm" bind:checked={disableBlurHash}>
+            Disable "blur" on loading images
         </SlideToggle>
 
 

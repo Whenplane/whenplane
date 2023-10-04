@@ -7,6 +7,7 @@
     import BlurHash from "$lib/BlurHash.svelte";
     import {fade} from "svelte/transition";
     import LargerLazyLoad from "$lib/LargerLazyLoad.svelte";
+    import { browser } from "$app/environment";
 
     export let show;
     export let withThumbnail = false;
@@ -61,7 +62,7 @@
                                 <img src={thumbnail.url} aria-hidden="true" alt="" on:load={() => thumbnailLoaded = true}>
                             </LargerLazyLoad>
                         </div>
-                        {#if !thumbnailLoaded}
+                        {#if !thumbnailLoaded && browser && localStorage.getItem("disableBlurHash") !== "true"}
                             <div class="absolute top-0 left-0 rounded" out:fade={{duration: 400}}>
                                 {#if thumbnail.blurhash}
                                     <LargerLazyLoad>
