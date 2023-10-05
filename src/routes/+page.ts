@@ -4,7 +4,8 @@ import { error } from "@sveltejs/kit";
 import type { Latenesses } from "./api/latenesses/+server";
 import type { AggregateResponse } from "./api/(live-statuses)/aggregate/+server";
 import type { WanDb_FloatplaneAPIData, WanDb_FloatplaneData } from "$lib/utils.ts";
-import { floatplaneState } from "$lib/fpState.ts";
+import { floatplaneState } from "$lib/stores.ts";
+import { wait } from "$lib/utils.ts";
 
 let cachedLatenesses: Latenesses;
 let cachedLatenessesTime = 0 ;
@@ -43,7 +44,7 @@ export const load = (async ({fetch}) => {
         (async () => {
 
             if(Date.now() - wdbFpCache.lastFetch > wdb_fp_cache_time) {
-                const response = await fetch("https://api.thewandb.com/v1/live/floatplane", {
+                const responsePromise = fetch("https://api.thewandb.com/v1/live/floatplane", {
                     headers: {
                         "referer": "whenplane.com",
                         "x-whenplane-version": version
@@ -52,6 +53,8 @@ export const load = (async ({fetch}) => {
                   .then(r => {
                       return { ...r.data.details, live: r.data.live };
                   }).catch(error => console.error("Error while fetching fp live status from thewandb:", error));
+                // don't wait for more than 300ms for thewandb
+                const response = Promise.any([responsePromise, wait(300)]);
                 if(!response) return;
                 wdbFpCache = {
                     lastFetch: Date.now(),
