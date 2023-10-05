@@ -12,6 +12,7 @@
     import 'nprogress/nprogress.css';
     import {navigating, page} from '$app/stores';
     import NProgress from 'nprogress';
+  import { browser } from "$app/environment";
 
     NProgress.configure({
         // Full list: https://github.com/rstacruz/nprogress#configuration
@@ -20,7 +21,7 @@
 
     let progressTimeout;
 
-    $: {
+    $: if(browser) {
         if ($navigating) {
             if(progressTimeout) clearTimeout(progressTimeout);
             const startBar = () => {

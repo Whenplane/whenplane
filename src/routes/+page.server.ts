@@ -1,6 +1,8 @@
 import type { D1Database } from "@cloudflare/workers-types";
 import type { Actions } from "@sveltejs/kit";
 import { fail } from "@sveltejs/kit";
+import { latenessVotesCache } from "$lib/stores.ts";
+import { wait } from "$lib/utils.ts";
 
 
 export const actions = {
@@ -9,7 +11,13 @@ export const actions = {
     const votingFor = url.searchParams.get("for");
     if(!votingFor) return fail(400, {message: "Missing thing to vote for!"});
 
-    return await vote(locals.id, votingFor, platform?.env?.DB);
+    await vote(locals.id, votingFor, platform?.env?.DB);
+
+    // invalidate lateness voting cache
+    latenessVotesCache.lastFetch = 0;
+
+    // wait a few ms to ensure that the cache was invalidated
+    await wait(10);
 
   })
 } satisfies Actions;

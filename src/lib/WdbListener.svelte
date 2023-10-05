@@ -2,7 +2,7 @@
   import { onDestroy, onMount } from "svelte";
   import webstomp, { Client } from "webstomp-client";
   import type { WanDb_FloatplaneData } from "$lib/utils.ts";
-  import { floatplaneState } from "$lib/fpState.ts";
+  import { floatplaneState } from "$lib/stores.ts";
 
   let stomp: Client;
   onMount(() => {

@@ -6,7 +6,7 @@
     import Info from "$lib/svg/Info.svelte";
     import {fade} from "svelte/transition";
     import {onMount} from "svelte";
-    import { floatplaneState } from "$lib/fpState";
+    import { floatplaneState } from "$lib/stores";
     import WdbListener from "$lib/WdbListener.svelte";
 
     export let data;

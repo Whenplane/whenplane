@@ -192,16 +192,12 @@
 				{/if}
 			</div>
 		{/if}
-		{#if (nowish.getUTCDay() === 5 || nowish.getUTCDay() === 6) && !data.hasDone}
+		{#if (nowish.getUTCDay() === 5 || nowish.getUTCDay() === 6 || dev) && !data.hasDone}
 			<div>
 				<Accordion>
 					<AccordionItem open>
 						<svelte:fragment slot="summary">
 							<h3 class="inline">Lateness Voting</h3>
-							&nbsp;
-							{#if nowish.getTime() < 1696143600000} <!-- in case I forget to remove this -->
-								<span class="badge variant-filled">New</span>
-							{/if}
 						</svelte:fragment>
 						<svelte:fragment slot="content">
 							<LatenessVoting/>

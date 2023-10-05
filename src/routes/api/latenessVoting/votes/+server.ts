@@ -1,27 +1,24 @@
 import type { D1PreparedStatement, D1Result } from "@cloudflare/workers-types";
 import type { RequestHandler } from "@sveltejs/kit";
 import { error, json } from "@sveltejs/kit";
-import { type LatenessVotingOption, options, vote_valid_for } from "$lib/voting.ts";
+import { options, vote_valid_for } from "$lib/voting.ts";
 import { dev } from "$app/environment";
+import { latenessVotesCache } from "$lib/stores.ts";
 
 
 const names = options.map(o => o.name);
 
 // cache for (just under) 5 seconds to reduce requests to d1
 const cache_time = 4750;
-const cache: {
-  lastFetch: number,
-  lastData?: LatenessVotingOption[]
-} = {lastFetch: 0}
 
 export const GET = (async ({platform, url}) => {
 
   const fast = url.searchParams.get("fast") === "true";
 
-  if(Date.now() - cache.lastFetch < cache_time || (fast && Date.now() - cache.lastFetch < 5 * 60 * 60e3)) {
-    return json(cache.lastData);
+  if(Date.now() - latenessVotesCache.lastFetch < cache_time || (fast && Date.now() - latenessVotesCache.lastFetch < 5 * 60 * 60e3)) {
+    return json(latenessVotesCache.lastData);
   }
-  cache.lastFetch = Date.now();
+  latenessVotesCache.lastFetch = Date.now();
 
   const db = platform?.env?.DB;
 
@@ -34,7 +31,7 @@ export const GET = (async ({platform, url}) => {
     // for (let i = 0; i < 100; i++) {
     //   voteTotals[Math.floor(Math.random() * voteTotals.length)].votes += 1;
     // }
-    // cache.lastData = voteTotals;
+    // latenessVotesCache.lastData = voteTotals;
     // return json(voteTotals);
   }
 
@@ -60,7 +57,7 @@ export const GET = (async ({platform, url}) => {
 
   }
 
-  cache.lastData = voteTotals;
+  latenessVotesCache.lastData = voteTotals;
 
   return json(voteTotals);
 
