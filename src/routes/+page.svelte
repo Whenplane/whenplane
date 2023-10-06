@@ -200,7 +200,7 @@
 							<h3 class="inline">Lateness Voting</h3>
 						</svelte:fragment>
 						<svelte:fragment slot="content">
-							<LatenessVoting/>
+							<LatenessVoting {mainLate}/>
 						</svelte:fragment>
 					</AccordionItem>
 				</Accordion>

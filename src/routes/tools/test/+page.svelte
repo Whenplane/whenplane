@@ -2,6 +2,7 @@
     import {getClosestWan, getNextWAN, getPreviousWAN} from "$lib/timeUtils";
     import BlurHash from "$lib/BlurHash.svelte";
     import LargerLazyLoad from "$lib/LargerLazyLoad.svelte";
+    import LatenessVotingTest from "./LatenessVotingTest.svelte";
 
     const tomorrow = new Date();
     tomorrow.setDate(tomorrow.getDate() + 1);
@@ -39,6 +40,7 @@
 
     <br>
     <br>
+    <LatenessVotingTest/>
     <div style="height: 100vh;"></div>
     more<br>
     more<br>

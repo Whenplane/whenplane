@@ -2,7 +2,7 @@
     import {writable} from "svelte/store";
     import type { MainLate } from "$lib/utils.ts";
 
-    export const mainLate: MainLate = writable({isMainLate: false});
+    export const mainLate = writable<MainLate>({isMainLate: false});
 
 </script>
 
