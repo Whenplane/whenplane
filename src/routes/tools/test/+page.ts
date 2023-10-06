@@ -1,5 +1,6 @@
 import type { PageLoad } from "./$types";
 
+export const prerender = false;
 
 export let load = (async ({fetch}) => {
   return {
