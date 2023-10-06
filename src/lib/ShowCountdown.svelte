@@ -52,7 +52,12 @@
             const timeUntil = getTimeUntil(nextWan);
             countdownText = timeUntil.string
             isAfterStartTime = timeUntil.late;
-            mainLate.set({isMainLate: false});
+            if(timeUntil.late) {
+                mainLate.set({
+                    isMainLate: true,
+                      ...(timeUntil)
+                });
+            }
         }
     }
 </script>

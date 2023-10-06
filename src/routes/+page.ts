@@ -54,7 +54,7 @@ export const load = (async ({fetch}) => {
                       return { ...r.data.details, live: r.data.live };
                   }).catch(error => console.error("Error while fetching fp live status from thewandb:", error));
                 // don't wait for more than 300ms for thewandb
-                const response = Promise.any([responsePromise, wait(300)]);
+                const response = await Promise.any([responsePromise, wait(300)]);
                 if(!response) return;
                 wdbFpCache = {
                     lastFetch: Date.now(),

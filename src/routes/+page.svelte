@@ -112,7 +112,7 @@
 				<h1 class="text-center" class:red={isLate}>
 					<ShowCountdown bind:isAfterStartTime={isAfterStartTime} {data}/>
 				</h1>
-				{#if $mainLate.isMainLate}
+				{#if $mainLate.isMainLate && data.preShowStarted}
 					<div class="text-center">
 						The main show is late by
 						<span class="mono">
