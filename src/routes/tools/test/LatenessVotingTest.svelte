@@ -14,7 +14,7 @@
   }
 </script>
 
-<input type="range" class="input" min="0" max={24 * 60 * 60e3} step="1" bind:value={lateness}>
+<input type="range" class="input" min="0" max={24 * 60 * 60e3} step="1000" bind:value={lateness}>
 {mainLate.string}
 
 <LatenessVoting {mainLate}/>
