@@ -44,7 +44,11 @@ How late do you think the show will be?
           {/if}
         </span>
         <span class="absolute right-2">
-          {Math.floor((option.votes / total) * 100)}%
+          {#if total > 100 || dev}
+            {Math.floor((option.votes / total) * 1000)/10}%
+          {:else}
+            {Math.floor((option.votes / total) * 100)}%
+          {/if}
         </span>
       </span>
     </button>
