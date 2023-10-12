@@ -6,8 +6,10 @@
   import { vote_valid_for } from "$lib/voting";
   import {enhance} from "$app/forms";
   import type { MainLate } from "$lib/utils.ts";
+  import type { Writable } from "svelte/store";
+  import { nextFast } from "$lib/stores.ts";
 
-  export let mainLate: MainLate;
+  export let mainLate: Writable<MainLate>;
 
   $: total = $page.data.liveStatus?.votes?.reduce((a, x) => a + x.votes, 0) || 1;
 
@@ -21,15 +23,16 @@ How late do you think the show will be?
 <form method="POST" use:enhance={({action}) => {
         userVote = {
           lastVote: Date.now(),
-          lastVoteFor: action.searchParams.get("for")
+          lastVoteFor: action.searchParams.get("for") ?? undefined
         };
         localStorage.setItem("latenessVote", JSON.stringify(userVote));
+        nextFast.nextFast = true;
         return async ({ update }) => {
           await update({ reset: false });
         };
       }}>
   {#each $page.data.liveStatus?.votes as option}
-    {@const passed = Math.abs($mainLate.distance) > option.time}
+    {@const passed = Math.abs($mainLate.distance ?? 0) > option.time}
     <button class="block w-full text-left background relative" formaction="?/vote&for={encodeURIComponent(option.name)}" class:passed={passed}>
       <span class="block percent" style="width: {(option.votes / total) * 100}%">
         <span class="inline-block px-2">

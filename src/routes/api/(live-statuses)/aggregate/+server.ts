@@ -8,6 +8,7 @@ import type { LatenessVotingOption } from "$lib/voting.ts";
 
 export const GET = (async ({url, fetch, locals}) => {
     const fast = url.searchParams.get("fast");
+    const isNextFast = url.searchParams.get("isNextFast");
 
     const isThereWan = fetch("/api/isThereWan").then(r => r.json());
     const hasDone = fetch("/api/hasDone").then(r => r.json()).then(r => r.hasDone);
@@ -15,7 +16,7 @@ export const GET = (async ({url, fetch, locals}) => {
     let votesTime: number | undefined;
     const votes = (async () => {
         const start = Date.now();
-        const response = await fetch("/api/latenessVoting/votes")
+        const response = await fetch("/api/latenessVoting/votes?fast=" + (fast && !isNextFast))
           .then(r => r.json());
         votesTime = Date.now() - start;
         return response;

@@ -17,3 +17,5 @@ export type LatenessVotingCache = {
   lastFetch: number,
   lastData?: LatenessVotingOption[]
 };
+
+export const nextFast = {nextFast: false};

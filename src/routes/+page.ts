@@ -4,7 +4,7 @@ import { error } from "@sveltejs/kit";
 import type { Latenesses } from "./api/latenesses/+server";
 import type { AggregateResponse } from "./api/(live-statuses)/aggregate/+server";
 import type { WanDb_FloatplaneAPIData, WanDb_FloatplaneData } from "$lib/utils.ts";
-import { floatplaneState } from "$lib/stores.ts";
+import { floatplaneState, nextFast } from "$lib/stores.ts";
 import { wait } from "$lib/utils.ts";
 
 let cachedLatenesses: Latenesses;
@@ -24,8 +24,16 @@ let wdbFpCache: {
 } = {lastFetch: 0}
 
 export const load = (async ({fetch}) => {
-    const fast = (!browser || (location && location.pathname !== "/"));
+    let fast = (!browser || (location && location.pathname !== "/"));
     const cacheBuster = fast ? "" : "&r=" + Date.now();
+
+    let isNextFast = false;
+
+    if(nextFast.nextFast) {
+        nextFast.nextFast = false;
+        isNextFast = true;
+        fast = true;
+    }
 
     let liveStatus: AggregateResponse | undefined;
     let latenesses: Latenesses | undefined;
@@ -36,7 +44,7 @@ export const load = (async ({fetch}) => {
         (async () => {
 
 
-            liveStatus = await fetch("/api/aggregate?fast=" + fast + cacheBuster)
+            liveStatus = await fetch("/api/aggregate?fast=" + fast + cacheBuster + "&isNextFast=" + isNextFast)
               .then(r => r.json());
 
 
@@ -52,9 +60,15 @@ export const load = (async ({fetch}) => {
                 }).then(r => r.json() as Promise<WanDb_FloatplaneAPIData>)
                   .then(r => {
                       return { ...r.data.details, live: r.data.live };
-                  }).catch(error => console.error("Error while fetching fp live status from thewandb:", error));
+                  }).catch(error => {
+                      // retry in 30 seconds
+                      wdbFpCache = {
+                          lastFetch: Date.now() - wdb_fp_cache_time + 30e3
+                      }
+                      console.error("Error while fetching fp live status from thewandb:", error);
+                  });
                 // don't wait for more than 300ms for thewandb
-                const response = await Promise.any([responsePromise, wait(300)]);
+                const response = await Promise.race([responsePromise, wait(300)]);
                 if(!response) return;
                 wdbFpCache = {
                     lastFetch: Date.now(),
