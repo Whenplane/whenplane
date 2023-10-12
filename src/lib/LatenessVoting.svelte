@@ -8,6 +8,8 @@
   import type { MainLate } from "$lib/utils.ts";
   import type { Writable } from "svelte/store";
   import { nextFast } from "$lib/stores.ts";
+  import Info from "$lib/svg/Info.svelte";
+  import {popup} from "@skeletonlabs/skeleton";
 
   export let mainLate: Writable<MainLate>;
 
@@ -18,6 +20,24 @@
 </script>
 
 How late do you think the show will be?
+
+
+<div
+  class="text-surface pt-3 inline-block info [&>*]:pointer-events-none"
+  use:popup={{
+    event: 'hover',
+    target: 'latenessVotingInfo',
+    placement: 'top'
+  }}
+>
+  <Info/>
+</div>
+
+<div data-popup="latenessVotingInfo">
+  <div class="card p-4 whitespace-nowrap shadow-x1 z-10 font-normal">
+    Lateness voting starts every Friday at midnight UTC, and runs until the show starts.
+  </div>
+</div>
 <br>
 
 <form method="POST" use:enhance={({action}) => {
@@ -76,5 +96,11 @@ How late do you think the show will be?
       @apply my-3;
       background-color: rgba(0, 0, 0, 0.15);
       border-radius: 4px;
+  }
+
+  @media (pointer: coarse) {
+      .info {
+          display: none;
+      }
   }
 </style>
