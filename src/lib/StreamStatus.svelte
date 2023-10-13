@@ -1,4 +1,4 @@
-<script>
+<script lang="ts">
     import Youtube from "./svg/Youtube.svelte";
     import Twitch from "./svg/Twitch.svelte";
     import Floatplane from "./svg/Floatplane.svelte";
@@ -6,10 +6,12 @@
     import Info from "$lib/svg/Info.svelte";
     import {fade} from "svelte/transition";
     import {onMount} from "svelte";
-    import { floatplaneState } from "$lib/stores";
+    import { floatplaneState, wdbSocketState } from "$lib/stores";
     import WdbListener from "$lib/WdbListener.svelte";
 
     export let data;
+
+    $: useTwitchFallback = !data.isWdbResponseValid && (Date.now() - $wdbSocketState.lastReceive > 300e3)
 
     let mounted = false;
     onMount(() => mounted = true);
@@ -56,7 +58,7 @@
         <span><Floatplane/></span>
         <span>
             Floatplane
-            {#if mounted && !data.isWdbResponseValid} <!-- Don't SSR info button since it wont work without client-side JS -->
+            {#if mounted && useTwitchFallback} <!-- Don't SSR info button since it wont work without client-side JS -->
                 <span
                         class="text-surface inline-block fp-info [&>*]:pointer-events-none"
                         use:popup={{
@@ -70,7 +72,7 @@
                 </span>
             {/if}
             <br>
-            {#if data.isWdbResponseValid}
+            {#if !useTwitchFallback}
                 <span class="status opacity-50" class:wan={$floatplaneState.live && $floatplaneState.isWAN}>
                     {#if $floatplaneState.live}
                         {#if $floatplaneState.isWAN}

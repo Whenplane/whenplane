@@ -172,6 +172,10 @@ export type WanDb_FloatplaneData = {
     error?: any
 };
 
+export type WanDb_SocketState = {
+    lastReceive: number
+}
+
 export type WanDb_FloatplaneAPIData = {
     data: {
         live: boolean,
