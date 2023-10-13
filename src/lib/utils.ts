@@ -163,12 +163,10 @@ export type FloatplaneSubscription = {
 
 export type WanDb_FloatplaneData = {
     live?: boolean,
-    offline?: boolean
-    id?: string,
     isWAN?: boolean,
     title?: string,
     description?: string,
-    thumbnail?: FloatplaneImage
+    thumbnail?: string
     error?: any
 };
 
