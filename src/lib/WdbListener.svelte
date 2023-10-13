@@ -4,6 +4,17 @@
   import type { WanDb_FloatplaneData } from "$lib/utils.ts";
   import { floatplaneState, wdbSocketState } from "$lib/stores.ts";
 
+  // This is the message format that the WDB websocket sends to the client
+  interface WdbMessage {
+    live: boolean,
+    wan: boolean,
+    title: string,
+    description: string,
+    thumbnail: string,
+    imminence: 0 | 1 | 2 | 3,
+    textImminence: "Distant" | "Today" | "Soon" | "Imminent"
+  }
+
   let stomp: Client | undefined;
   onMount(() => {
     stomp = webstomp.client('wss://mq.thewandb.com/ws', {debug: false});
