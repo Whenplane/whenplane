@@ -17,7 +17,7 @@
 
   let stomp: Client | undefined;
   onMount(() => {
-    stomp = webstomp.client('ws://mq.thewandb.com/ws', {debug: false});
+    stomp = webstomp.client('wss://mq.thewandb.com/ws', {debug: false});
     stomp.connect({
         host: 'prod_whenplane_com',
         login: 'whenplane',
