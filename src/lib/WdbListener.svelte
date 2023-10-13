@@ -22,9 +22,8 @@
 
       stomp?.subscribe('/exchange/fp.notifications', (message) => {
         try {
-          // Ignore debugging / development messages
-          if(message.headers.env !== 'prod') return
-          const body = JSON.parse(message.body) as WanDb_FloatplaneData;
+          const body = JSON.parse(message.body) as WdbMessage ;
+
           floatplaneState.set({
             ...body,
             live: !body.offline
