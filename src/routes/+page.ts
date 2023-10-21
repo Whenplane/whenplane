@@ -1,5 +1,5 @@
 import type {PageLoad} from "./$types";
-import { browser, version } from "$app/environment";
+import { browser, dev, version } from "$app/environment";
 import { error } from "@sveltejs/kit";
 import type { Latenesses } from "./api/latenesses/+server";
 import type { AggregateResponse } from "./api/(live-statuses)/aggregate/+server";
@@ -65,14 +65,14 @@ export const load = (async ({fetch}) => {
                       }
                       console.error("Error while fetching fp live status from thewandb:", error);
                   });
-                // don't wait for more than 300ms for thewandb
-                const response = await Promise.race([responsePromise, wait(300)]);
+                // don't wait for more than 400ms for thewandb
+                const response = await Promise.race([responsePromise, wait(dev ? 1000 : 400)]) as WanDb_FloatplaneData;
                 if(!response) return;
                 wdbFpCache = {
                     lastFetch: Date.now(),
                     lastData: response
                 }
-                response.isWan = response.wan;
+                response.isWAN = response.wan;
                 delete response.wan;
                 fpState = response;
 
@@ -139,6 +139,14 @@ export const load = (async ({fetch}) => {
     const mainShowStarted = isMainShow ? liveStatus.youtube.started : undefined;
 
     const isWdbResponseValid = typeof fpState?.live === "boolean" && (liveStatus.twitch.isWAN == fpState.isWAN);
+    if(!isWdbResponseValid && dev) {
+        console.log("wdb api response invalid!", {
+            typeofLive: typeof fpState?.live,
+            twitch: liveStatus.twitch.isWAN,
+            fp: fpState?.isWAN,
+            fpState
+        })
+    }
 
     return {
         isPreShow,
