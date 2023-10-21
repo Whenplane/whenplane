@@ -3,7 +3,7 @@ import { browser, version } from "$app/environment";
 import { error } from "@sveltejs/kit";
 import type { Latenesses } from "./api/latenesses/+server";
 import type { AggregateResponse } from "./api/(live-statuses)/aggregate/+server";
-import type { WanDb_FloatplaneAPIData, WanDb_FloatplaneData } from "$lib/utils.ts";
+import type { WanDb_FloatplaneData } from "$lib/utils.ts";
 import { floatplaneState, nextFast } from "$lib/stores.ts";
 import { wait } from "$lib/utils.ts";
 
@@ -52,12 +52,12 @@ export const load = (async ({fetch}) => {
         (async () => {
 
             if(Date.now() - wdbFpCache.lastFetch > wdb_fp_cache_time) {
-                const responsePromise = fetch("https://api.thewandb.com/v1/live/floatplane", {
+                const responsePromise = fetch("https://edge.thewandb.com/v2/live/floatplane", {
                     headers: {
                         "referer": "whenplane.com",
                         "x-whenplane-version": version
                     }
-                }).then(r => r.json() as Promise<WanDb_FloatplaneAPIData>)
+                }).then(r => r.json() as Promise<WanDb_FloatplaneData>)
                   .then(r => {
                       return { ...r.data.details, live: r.data.live };
                   }).catch(error => {
@@ -74,6 +74,8 @@ export const load = (async ({fetch}) => {
                     lastFetch: Date.now(),
                     lastData: response
                 }
+                response.isWan = response.wan;
+                delete response.wan;
                 fpState = response;
 
                 floatplaneState.set(fpState)

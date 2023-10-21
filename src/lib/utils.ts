@@ -174,14 +174,6 @@ export type WanDb_SocketState = {
     lastReceive: number
 }
 
-export type WanDb_FloatplaneAPIData = {
-    data: {
-        live: boolean,
-        details: WanDb_FloatplaneData
-    },
-    duration: number
-}
-
 export type MainLate = {
     isMainLate: boolean,
     string?: string,
