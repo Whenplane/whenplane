@@ -32,7 +32,7 @@ export enum ImminenceEnumeration {
     </a>
     <div class="inline-flex h-32 items-center justify-center ml-4 mobile-full-width">
       <div>
-        <h2 class="!mb-0">The show is starting soon!</h2>
+        <h2 class="!mb-0">The show might start soon!</h2>
         The thumbnail has been updated.
         <div
           class="text-surface inline-block info [&>*]:pointer-events-none"
