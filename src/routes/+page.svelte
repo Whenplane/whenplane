@@ -10,6 +10,7 @@
 	import { dev } from "$app/environment";
 	import LatenessVoting from "$lib/LatenessVoting.svelte";
 	import { Accordion, AccordionItem } from "@skeletonlabs/skeleton";
+	import ImminentBox from "$lib/ImminentBox.svelte";
 
 	export let data;
 
@@ -97,6 +98,7 @@
 
 <div class="container h-full mx-auto justify-center items-center">
 	<div class="space-y-5 inner">
+		<ImminentBox hasDone={data.hasDone}/>
 		<div class="text-center">
 			<div class="card p-4 inline-block countdown-box text-left">
 				{#if isLate}

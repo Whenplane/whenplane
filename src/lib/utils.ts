@@ -167,7 +167,9 @@ export type WanDb_FloatplaneData = {
     title?: string,
     description?: string,
     thumbnail?: string
-    error?: any
+    error?: any,
+    imminence?: number,
+    textImminence?: string
 };
 
 export type WanDb_SocketState = {
