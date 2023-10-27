@@ -27,7 +27,9 @@ export enum ImminenceEnumeration {
 
 {#if !hasDone && !$floatplaneState.isWAN && $floatplaneState.imminence === 3 || dev}
   <div class="card border-2 p-2 !border-green-600 !bg-opacity-20 !bg-green-600 block relative pb-0 mobile-add-padding">
-    <img src={$floatplaneState.thumbnail} class="inline-block h-32 rounded-lg mobile-full-width" alt="Dan">
+    <a href={$floatplaneState.thumbnail} target="_blank" rel="noopener">
+      <img src={$floatplaneState.thumbnail} class="inline-block h-32 rounded-lg mobile-full-width" alt="Dan">
+    </a>
     <div class="inline-flex h-32 items-center justify-center ml-4 mobile-full-width">
       <div>
         <h2 class="!mb-0">The show is starting soon!</h2>
