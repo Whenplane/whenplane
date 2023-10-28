@@ -62,10 +62,10 @@
     {#if !data.value?.snippet}
         This show doesn't currently have extra metadata (thumbnails, titles, and possibly vod links).
         <br>
-        It may be added in the future. Feel free to ping aj asking him to add extra metadata for this show!
+        If this show is currently in the pre-show, this is normal.
         <br>
         <br>
-        Shows after July 28th, 2023 should have this extra metadata added automatically, but if it broke somehow, please ping aj!
+        If this show is either currently live or is a past show, please contact aj about this so he can fix it!
     {/if}
 
     {#if data.metadata.vods?.floatplane}
