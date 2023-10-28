@@ -10316,6 +10316,7 @@
 			"mainShowStart": "2021-05-22T00:53:34Z",
 			"showEnd": "2021-05-22T01:59:52Z",
 			"title": "Apple's 40-Core Desktop is Coming!",
+			"mainShowLength": 3988000,
 			"vods": {
 				"floatplane": "Bmb0jBNnFG",
 				"youtube": "v_DOqdyZEG0"
@@ -11135,6 +11136,98 @@
 		}
 	},
 	{
+		"name": "2021/03/19",
+		"metadata": {
+			"preShowStart": "2021-03-19T23:38:02.000Z",
+			"mainShowStart": "2021-03-20T00:06:39Z",
+			"showEnd": "2021-03-20T01:20:03Z",
+			"title": "NVIDIA gets Destroyed",
+			"mainShowLength": 4415000,
+			"vods": {
+				"floatplane": "aBJRrMWFP4",
+				"youtube": "sdiJVkshMIg"
+			},
+			"snippet": {
+				"publishedAt": "2021-03-20T01:25:11Z",
+				"channelId": "UCXuqSBlHAE6Xw-yeJA0Tunw",
+				"title": "NVIDIA gets Destroyed - WAN Show March 19, 2021",
+				"description": "Check out RemoteHQ at http://remotehq.co/wan and use code WAN\n\nGet at least 15% off site-wide and celebrate Ridge Wallet's 8th Anniversary at https://www.ridge.com/WAN\n\nGet Private Internet Access VPN at https://lmg.gg/piawan\n\nPodcast Download: https://anchor.fm/thewanshowpodcast/episodes/NVIDIA-gets-Destroyed---WAN-Show-March-19--2021-et8817\n\nCheck out Carpool Critics, our new movie podcast: https://www.youtube.com/channel/UCt-oJR5teQIjOAxCmIQvcgA\n\nTimestamps (Not sure who posted the original comment but thanks to Not Camy, jasons dad & Svgge for the repost!)\n00:00:01 --- Topics (Nvidia RTX 3060 “unhackable” mining limited drivers, AMD launching the RX 6700XT, 11th gen core line up, and Google slashes Play Store fees).\n\n00:01:11 --- Intro.\n\n00:01:34 --- Daylight savings time is the reason the WAN show is early today.\n\n00:01:54 --- The “unhackable” RTX 3060 has been hacked!\n\n00:14:49 --- Linus addresses the NiceHash sponsorship earlier this week.\n\n00:24:19 --- Sponsor Spot: Ridge Wallet.\n\n00:25:41 --- Sponsor Spot: Remote HQ.\n\n00:26:26 --- Sponsor Spot: Private Internet Access.\n\n00:30:56 --- Linus is extremely extremely gutted and disappointed about the issues that prevented Linus Media Group from getting a new headquarters.\n\n00:34:47 --- 11th gen core lineup unveiled as more reviews leak.\n\n00:42:08 --- AMD launches the RX 6700XT.\n\n00:42:45 --- Google slashes Play Store fees with a twist.\n\n00:50:41 --- SX8200 Pro bounty update.\n\n00:51:11 --- AMD refuses to limit cryptocurrency mining performance.\n\n00:52:02 --- Verified Actual Gamer Program Update.\n\n01:01:05 --- Super/Floatplane Chats.\n\n01:12:48 --- Outro.\n\n01:13:08 --- Outro/Intro animation.\n\n\n\nIndividual Super Chats and Floatplane Chats\n\n01:01:05 --- \"Scrapyard Wars L.M.G. vs DIY Perks when?\"\n\n01:01:31 --- \"L.M.G. should buy the whole building they are in and lease out the parts they don't use.\"\n\n01:03:30 --- \"Linus you inspire me daily, keep being you.\"\n\n01:03:37 --- Linus becomes more annoying in response to \"Hey Linus, hope you put your vacation to good use, you've become unprecedentedly annoying for the last month or so.\"\n\n01:04:27 --- \"Wouldn't tell you your business. If it saves the opportunity if Utility issues. Could monitize vids on DIY...\"\n\n01:05:06 --- \"Any plans to include some sort of code compilation benchmark in your toolkit?\"\n\n01:05:27 --- \"Dell update?\" and \"Shoe Dryer update?\"\n\n01:06:50 --- \"Mouse pad and desk pad update?\"\n\n01:07:28 --- \"Love your content and your beard looks really nice.\"\n\n01:07:42 --- \"Linus, please take care on your vacation, your skin is starting to look unhealthy recently.\"\n\n01:07:59 --- \"I'm a bit behind in the stream but in reply to the intent of crypto and its environmental impact, I think it's more worth talking about the reality instead of the ideals...\"\n\n01:08:22 --- \"Would you consider adding some sort of option to get notified when desk pad is on stock (i.e. email)?\"\n\n01:08:52 --- \"As an American I don't get to pick the tariffs. We deal with a price that is provided to us like anyone else...\"\n\n01:09:36 --- \"Did it ever dawn on you that you're buying cards that gamers could have and now are holding them for an excessive amount of time, how many are you holding?\"\n\n01:10:58 --- \"I want to know what else I should eat for dinner, skittles was a no go last time.\"\n\n01:11:16 --- \"Who is the best pony?\"",
+				"thumbnails": {
+					"default": {
+						"url": "https://i.ytimg.com/vi/sdiJVkshMIg/default.jpg",
+						"width": 120,
+						"height": 90,
+						"blurhash": {
+							"hash": "V9Dbm55YH??G0e]|59-;-:V@01oeSgIV}@AI^PM{E1tR",
+							"w": 120,
+							"h": 90,
+							"cX": 5,
+							"cY": 4
+						}
+					},
+					"medium": {
+						"url": "https://i.ytimg.com/vi/sdiJVkshMIg/mqdefault.jpg",
+						"width": 320,
+						"height": 180,
+						"blurhash": {
+							"hash": "VBFX-Z0.H??H0L]{0h?b?HVtBUNyIUIo}tMxt7%MR*t7",
+							"w": 320,
+							"h": 180,
+							"cX": 5,
+							"cY": 4
+						}
+					},
+					"high": {
+						"url": "https://i.ytimg.com/vi/sdiJVkshMIg/hqdefault.jpg",
+						"width": 480,
+						"height": 360,
+						"blurhash": {
+							"hash": "VADurR5XMc-:0f=W5S-;%MV@02t6S2Io}@El={M{IVt7",
+							"w": 480,
+							"h": 360,
+							"cX": 5,
+							"cY": 4
+						}
+					},
+					"standard": {
+						"url": "https://i.ytimg.com/vi/sdiJVkshMIg/sddefault.jpg",
+						"width": 640,
+						"height": 480,
+						"blurhash": {
+							"hash": "VADurR5XMc-:0f=W5S-;%MV@02t6S2Io}@El={M{IVt7",
+							"w": 640,
+							"h": 480,
+							"cX": 5,
+							"cY": 4
+						}
+					}
+				},
+				"channelTitle": "Linus Tech Tips",
+				"tags": [
+					"pcmr",
+					"building",
+					"competition",
+					"gamers",
+					"how to",
+					"review",
+					"intel",
+					"amd",
+					"cpu",
+					"gpu",
+					"gaming"
+				],
+				"categoryId": "28",
+				"liveBroadcastContent": "none",
+				"defaultLanguage": "en",
+				"localized": {
+					"title": "NVIDIA gets Destroyed - WAN Show March 19, 2021",
+					"description": "Check out RemoteHQ at http://remotehq.co/wan and use code WAN\n\nGet at least 15% off site-wide and celebrate Ridge Wallet's 8th Anniversary at https://www.ridge.com/WAN\n\nGet Private Internet Access VPN at https://lmg.gg/piawan\n\nPodcast Download: https://anchor.fm/thewanshowpodcast/episodes/NVIDIA-gets-Destroyed---WAN-Show-March-19--2021-et8817\n\nCheck out Carpool Critics, our new movie podcast: https://www.youtube.com/channel/UCt-oJR5teQIjOAxCmIQvcgA\n\nTimestamps (Not sure who posted the original comment but thanks to Not Camy, jasons dad & Svgge for the repost!)\n00:00:01 --- Topics (Nvidia RTX 3060 “unhackable” mining limited drivers, AMD launching the RX 6700XT, 11th gen core line up, and Google slashes Play Store fees).\n\n00:01:11 --- Intro.\n\n00:01:34 --- Daylight savings time is the reason the WAN show is early today.\n\n00:01:54 --- The “unhackable” RTX 3060 has been hacked!\n\n00:14:49 --- Linus addresses the NiceHash sponsorship earlier this week.\n\n00:24:19 --- Sponsor Spot: Ridge Wallet.\n\n00:25:41 --- Sponsor Spot: Remote HQ.\n\n00:26:26 --- Sponsor Spot: Private Internet Access.\n\n00:30:56 --- Linus is extremely extremely gutted and disappointed about the issues that prevented Linus Media Group from getting a new headquarters.\n\n00:34:47 --- 11th gen core lineup unveiled as more reviews leak.\n\n00:42:08 --- AMD launches the RX 6700XT.\n\n00:42:45 --- Google slashes Play Store fees with a twist.\n\n00:50:41 --- SX8200 Pro bounty update.\n\n00:51:11 --- AMD refuses to limit cryptocurrency mining performance.\n\n00:52:02 --- Verified Actual Gamer Program Update.\n\n01:01:05 --- Super/Floatplane Chats.\n\n01:12:48 --- Outro.\n\n01:13:08 --- Outro/Intro animation.\n\n\n\nIndividual Super Chats and Floatplane Chats\n\n01:01:05 --- \"Scrapyard Wars L.M.G. vs DIY Perks when?\"\n\n01:01:31 --- \"L.M.G. should buy the whole building they are in and lease out the parts they don't use.\"\n\n01:03:30 --- \"Linus you inspire me daily, keep being you.\"\n\n01:03:37 --- Linus becomes more annoying in response to \"Hey Linus, hope you put your vacation to good use, you've become unprecedentedly annoying for the last month or so.\"\n\n01:04:27 --- \"Wouldn't tell you your business. If it saves the opportunity if Utility issues. Could monitize vids on DIY...\"\n\n01:05:06 --- \"Any plans to include some sort of code compilation benchmark in your toolkit?\"\n\n01:05:27 --- \"Dell update?\" and \"Shoe Dryer update?\"\n\n01:06:50 --- \"Mouse pad and desk pad update?\"\n\n01:07:28 --- \"Love your content and your beard looks really nice.\"\n\n01:07:42 --- \"Linus, please take care on your vacation, your skin is starting to look unhealthy recently.\"\n\n01:07:59 --- \"I'm a bit behind in the stream but in reply to the intent of crypto and its environmental impact, I think it's more worth talking about the reality instead of the ideals...\"\n\n01:08:22 --- \"Would you consider adding some sort of option to get notified when desk pad is on stock (i.e. email)?\"\n\n01:08:52 --- \"As an American I don't get to pick the tariffs. We deal with a price that is provided to us like anyone else...\"\n\n01:09:36 --- \"Did it ever dawn on you that you're buying cards that gamers could have and now are holding them for an excessive amount of time, how many are you holding?\"\n\n01:10:58 --- \"I want to know what else I should eat for dinner, skittles was a no go last time.\"\n\n01:11:16 --- \"Who is the best pony?\""
+				},
+				"defaultAudioLanguage": "en"
+			}
+		}
+	},
+	{
 		"name": "2021/03/12",
 		"metadata": {
 			"preShowStart": "2021-03-13T03:53:12.000Z",
@@ -11233,6 +11326,110 @@
 				"localized": {
 					"title": "Our Sponsor Went Bankrupt... - WAN Show March 12, 2021",
 					"description": "Get a 15-day free trial for unlimited backup at https://backblaze.com/WAN\n\nTry FreshBooks free, for 30 days, no credit card required at https://www.freshbooks.com/wan\n\nHoney automatically applies the best coupon codes to save you money at different online checkouts, try it now at https://www.joinhoney.com/linus\n\nSee the full details of the Channel Super Fun Writer/Producer role at https://linusmediagroup.com/jobs \n\nPodcast Download: https://anchor.fm/thewanshowpodcast/episodes/Our-Sponsor-Went-Bankrupt------WAN-Show-March-12--2021-eskq0m\n\nCheck out Carpool Critics, our new movie podcast: https://www.youtube.com/channel/UCt-oJR5teQIjOAxCmIQvcgA\n\nTimestamps (Courtesy of BlackWings)\n0:00 Intro, intel extreme tech upgrade\n1:37 Broke sponsor \n3:27 Stalling for time\n4:37 New intro \n5:42 Broke sponsor continuation\n13:46 Clarification on Verified Actual Gamer Program\n15:57 XBOX game pass exclusivity\n30:39 Sponsor for WAN Show (Honey, BackBlaze, Freshbooks,)\n33:55 Channel SuperFun job openings  \n34:19 Radeon overhead and performance variations\n42:09 adata quietly swapping out XPGSX8200 SSD components to revise performance\n45:53 OVH data center destroyed in a massive fire\n52:04 Russia attempted to throttle twitter instead ended up throttling their entire internet\n52:30 NFT discussion \n56:33 GME stonks go brrr update\n1:00:28 Is AMD joining the GPU mining craze more?\n1:02:42 Superchats\n1:03:08 No virtual LTX 2021\n1:04:15 Major collab with tech youtubers, \"Tech trivia answered in the form of a question\"\n1:12:34 WAN Show go bye bye"
+				},
+				"defaultAudioLanguage": "en"
+			}
+		}
+	},
+	{
+		"name": "2021/03/05",
+		"metadata": {
+			"preShowStart": "2021-03-06T01:40:10.000Z",
+			"mainShowStart": "2021-03-06T01:45:03Z",
+			"showEnd": "2021-03-06T02:59:59Z",
+			"title": "You can buy Intel's Unreleased CPU RIGHT NOW",
+			"mainShowLength": 4505000,
+			"vods": {
+				"floatplane": "gBsoFBtgfU",
+				"youtube": "5A-gkT2uOeM"
+			},
+			"snippet": {
+				"publishedAt": "2021-03-06T03:09:55Z",
+				"channelId": "UCXuqSBlHAE6Xw-yeJA0Tunw",
+				"title": "You can buy Intel's Unreleased CPU RIGHT NOW - WAN Show March 5, 2021",
+				"description": "Visit https://www.squarespace.com/WAN and use offer code WAN for 10% off\n\nSave 10% at Ridge Wallet with offer code WAN at https://www.ridge.com/WAN\n\nStart your build today at https://www.buildredux.com/linus\n\nPodcast Download: https://anchor.fm/thewanshowpodcast/episodes/You-can-buy-Intels-Unreleased-CPU-RIGHT-NOW---WAN-Show-March-5--2021-es0d9v\n\nCheck out Carpool Critics, our new movie podcast: https://www.youtube.com/channel/UCt-oJR5teQIjOAxCmIQvcgA\n\nTimestamps (Courtesy of MMAPSFAWNMR)\n00:00:09 ----- Synopsis of Topics (AnandTechs 11700K review, Verified Actual Gamer Program, Google is a privacy company now, Arizona House Bill).\n00:01:45 ----- Intro.\n00:02:17 ----- Luke feels robbed and asks Linus where the new WAN Show intro is.\n00:02:40 ----- How AnandTech published their full review of the Intel Core i7-11700K nearly two weeks early and how NDAs work.\n00:03:14 ----- Quick sponsor announcement: Redux, Ridge Wallet, and Square Space.\n00:15:03 ----- Tech specs of the Intel Core i7-11700K.\n00:23:32 ----- Nvidia is working with GPU miners. The 3060 ATH mining limiter rumored to be on the 3080 Ti as well.\n00:32:26 ----- Big Reveal: Sometime next week, Linus Media Group will be launching the Verified Actual Gamer Program (not a giveaway).\n00:44:59 ----- Sponsor spot: Redux.\n00:45:54 ----- Sponsor spot: Ridge Wallet.\n00:46:32 ----- Sponsor spot: Square Space.\n00:48:53 ----- Questions about the Verified Actual Gamer Program.\n00:49:40 ----- Google is now a privacy company.\n00:55:01 ----- LTT Store new shirt.\n00:56:53 ----- AMDs 6700XT paper launcher.\n01:00:02 ----- 8-year-old Fortnite pro (Joseph Dean).\n01:02:19 ----- LTT Store desk pad update.\n01:02:51 ----- Arizona House Bill that would require an allowance for third party payment on app platforms.\n01:09:58 ----- Super Chats.",
+				"thumbnails": {
+					"default": {
+						"url": "https://i.ytimg.com/vi/5A-gkT2uOeM/default.jpg",
+						"width": 120,
+						"height": 90,
+						"blurhash": {
+							"hash": "V8C~xQSK00=|00Mcg4x]V@xu00%MtR9Z}[X-xFRPNasA",
+							"w": 120,
+							"h": 90,
+							"cX": 5,
+							"cY": 4
+						}
+					},
+					"medium": {
+						"url": "https://i.ytimg.com/vi/5A-gkT2uOeM/mqdefault.jpg",
+						"width": 320,
+						"height": 180,
+						"blurhash": {
+							"hash": "V7F5gWNZ00^k008wb_.8V@%g7y-=D%0d}s57-Vt7EL=|",
+							"w": 320,
+							"h": 180,
+							"cX": 5,
+							"cY": 4
+						}
+					},
+					"high": {
+						"url": "https://i.ytimg.com/vi/5A-gkT2uOeM/hqdefault.jpg",
+						"width": 480,
+						"height": 360,
+						"blurhash": {
+							"hash": "V8DI%nNa00=|00DhkX%NV@xv00%MtR9Z}[giw]M_S2r?",
+							"w": 480,
+							"h": 360,
+							"cX": 5,
+							"cY": 4
+						}
+					},
+					"standard": {
+						"url": "https://i.ytimg.com/vi/5A-gkT2uOeM/sddefault.jpg",
+						"width": 640,
+						"height": 480,
+						"blurhash": {
+							"hash": "V8DI%nNZ00=|00DhkX%NV@x]00%MtR9Z}[cFw]M_S2r?",
+							"w": 640,
+							"h": 480,
+							"cX": 5,
+							"cY": 4
+						}
+					},
+					"maxres": {
+						"url": "https://i.ytimg.com/vi/5A-gkT2uOeM/maxresdefault.jpg",
+						"width": 1280,
+						"height": 720,
+						"blurhash": {
+							"hash": "V7F5gWJ600^k004Tb_?cVs%g7z-=D%0d}Z56-Vt7EL=|",
+							"w": 1280,
+							"h": 720,
+							"cX": 5,
+							"cY": 4
+						}
+					}
+				},
+				"channelTitle": "Linus Tech Tips",
+				"tags": [
+					"pcmr",
+					"building",
+					"competition",
+					"gamers",
+					"how to",
+					"review",
+					"intel",
+					"amd",
+					"cpu",
+					"gpu",
+					"gaming"
+				],
+				"categoryId": "28",
+				"liveBroadcastContent": "none",
+				"defaultLanguage": "en",
+				"localized": {
+					"title": "You can buy Intel's Unreleased CPU RIGHT NOW - WAN Show March 5, 2021",
+					"description": "Visit https://www.squarespace.com/WAN and use offer code WAN for 10% off\n\nSave 10% at Ridge Wallet with offer code WAN at https://www.ridge.com/WAN\n\nStart your build today at https://www.buildredux.com/linus\n\nPodcast Download: https://anchor.fm/thewanshowpodcast/episodes/You-can-buy-Intels-Unreleased-CPU-RIGHT-NOW---WAN-Show-March-5--2021-es0d9v\n\nCheck out Carpool Critics, our new movie podcast: https://www.youtube.com/channel/UCt-oJR5teQIjOAxCmIQvcgA\n\nTimestamps (Courtesy of MMAPSFAWNMR)\n00:00:09 ----- Synopsis of Topics (AnandTechs 11700K review, Verified Actual Gamer Program, Google is a privacy company now, Arizona House Bill).\n00:01:45 ----- Intro.\n00:02:17 ----- Luke feels robbed and asks Linus where the new WAN Show intro is.\n00:02:40 ----- How AnandTech published their full review of the Intel Core i7-11700K nearly two weeks early and how NDAs work.\n00:03:14 ----- Quick sponsor announcement: Redux, Ridge Wallet, and Square Space.\n00:15:03 ----- Tech specs of the Intel Core i7-11700K.\n00:23:32 ----- Nvidia is working with GPU miners. The 3060 ATH mining limiter rumored to be on the 3080 Ti as well.\n00:32:26 ----- Big Reveal: Sometime next week, Linus Media Group will be launching the Verified Actual Gamer Program (not a giveaway).\n00:44:59 ----- Sponsor spot: Redux.\n00:45:54 ----- Sponsor spot: Ridge Wallet.\n00:46:32 ----- Sponsor spot: Square Space.\n00:48:53 ----- Questions about the Verified Actual Gamer Program.\n00:49:40 ----- Google is now a privacy company.\n00:55:01 ----- LTT Store new shirt.\n00:56:53 ----- AMDs 6700XT paper launcher.\n01:00:02 ----- 8-year-old Fortnite pro (Joseph Dean).\n01:02:19 ----- LTT Store desk pad update.\n01:02:51 ----- Arizona House Bill that would require an allowance for third party payment on app platforms.\n01:09:58 ----- Super Chats."
 				},
 				"defaultAudioLanguage": "en"
 			}
@@ -11437,6 +11634,108 @@
 				"localized": {
 					"title": "Your Memory is Getting its OWN CPU?? - WAN Show February 19, 2021",
 					"description": "Check out RemoteHQ at http://remotehq.co/wan and use code WAN\n\nVisit https://www.squarespace.com/WAN and use offer code WAN for 10% off\n\nSave 10% at Ridge Wallet with offer code LINUS at https://www.ridge.com/Linus\n\nPodcast Download: https://anchor.fm/thewanshowpodcast/episodes/Your-Memory-is-Getting-its-OWN-CPU-----WAN-Show-February-19--2021-eqp8nn\n\nCheck out Carpool Critics, our new movie podcast: https://www.youtube.com/channel/UCt-oJR5teQIjOAxCmIQvcgA\n\nTimestamps (Courtesy of AD)\nTopics: 0:06\nIntro: 1:57\nSponsors: 2:20\nSamsung calming 1st high bandwidth memory and AI processing: 2:30\nNvidia slows the mining performance of up coming 3060: 13:37\nNew floatplane video (Buying counterfeit LTT Merch): 19:35\nSponsors: 24:35\nReacting to xQc’s reaction to Linus’s reaction of xQc building his PC : 28:56\nLinus drawing: 49:05\nLinus confession: 1:09:38\nLinus talks about his “bone-head move”: 1:11:08\nLinus “overall response” to the reaction: 1:13:28\nLinus talk about Twitch streaming and streamers: 1:14:17\nReturn to other topics :\nFacebook: 1:16:31\nXbox series x got an update: 1:21:56\nSuperChats: 1:26:04\nOutro: 1:28:46"
+				},
+				"defaultAudioLanguage": "en"
+			}
+		}
+	},
+	{
+		"name": "2021/02/12",
+		"metadata": {
+			"mainShowStart": "2021-02-13T02:19:33Z",
+			"showEnd": "2021-02-13T03:29:46Z",
+			"title": "Old Video Cards are ALL You Can Get",
+			"mainShowLength": 4221000,
+			"vods": {
+				"youtube": "RnVXqajXok8"
+			},
+			"snippet": {
+				"publishedAt": "2021-02-13T03:36:14Z",
+				"channelId": "UCXuqSBlHAE6Xw-yeJA0Tunw",
+				"title": "Old Video Cards are ALL You Can Get - WAN Show February 12, 2021",
+				"description": "Check out Seasonic's PRIME 850 W Titanium on Amazon at https://lmg.gg/seasonicprime\n\nGet Private Internet Access VPN at https://lmg.gg/piawan\n\nGet a 15-day free trial for unlimited backup at https://backblaze.com/WAN\n\nPodcast Download: https://anchor.fm/thewanshowpodcast/episodes/Old-Video-Cards-are-ALL-You-Can-Get---WAN-Show-February-12--2021-eqga8t\n\nCheck out Carpool Critics, our new movie podcast: https://www.youtube.com/channel/UCt-oJR5teQIjOAxCmIQvcgA\n\nTimestamps (Courtesy of MattDog_222)\n0:22 Why the show is late (Painting)\n1:42 Andy, an employee, wanted Linus to paint during Intel Extreme Tech Upgrade\n3:16 Andy's setup and how Linus broke the bed\n6:16 Further explanation/reactions to the bed story\n7:31 Topic Previews\n9:22 Roll that intro!\n9:41 Linus getting Rick-rolled\n10:51 Headline: NVIDIA (supposedly) Restarting production of 1050TIs\n 12:29 Explaining GPU 'wafers' during production\n 13:58 The reason they are remaking it\n 16:25 Digression to RTX not being popular\n 18:09 Valve's user hardware related data\n19:17 Intel caught 'fudging' benchmarks:\n 21:29 The \"Fun part\" (Luke). \n 23:07 Watching the video together with Linus\n 24:51 Pausing and discussing Intel Evo Branding\n 26:32 Evo: What is it?\n 28:06 Jon (Rettinger) should not be the the spokesperson (Linus)\n 30:47 You don't market your product by crapping on the other (Linus)\n 33:22 Evo standard doesn't even include USB Type A ports (Luke)\n 35:02 Linus's AMD story about product marketing issues\n 37:10 LTT responsible for canning an agency\n 38:51 The nature of the industry with marketing agencies\n 41:07 Luke's favorite marketing people to work with\n 41:58 Asking Jon about the video\n43:48 Sponsor: Backblaze\n44:42 Sponsor: Private Internet Access (PIA)\n45:25 Sponsor: Seasonic\n46:37 Plugging Jon's channel\n47:31 CD Projekt Red Source Code Leaks\n49:59 Related cyber threats\n51:49 Linus suspects someone actually bought it\n52:50 Twitter explores payed subscriptions\n 53:05 Facebook's ad implementation by comparison\n 55:09 Twitter's homefeed (and ads)\n 56:58 Twitter subscription model discussion\n 58:19 What you get from it (Including editing tweets)\n 59:55 Ability to tip users\n 1:01:12 Art\n1:02:05 Affordable Intel CPUs\n1:03:37 Interesting how this + 1050TI is happening at the the same time (Luke)\n1:04:50 Replying to chats\n1:07:41 Linus upgrading Luke's PC + the catch\n1:09:09 Conclusion + LTT Store\n1:09:54 Outro",
+				"thumbnails": {
+					"default": {
+						"url": "https://i.ytimg.com/vi/RnVXqajXok8/default.jpg",
+						"width": 120,
+						"height": 90,
+						"blurhash": {
+							"hash": "V8CF*P^*4:NJ5Q00ShR*V?of0LNb-VxD=y~W$$s:J9R*",
+							"w": 120,
+							"h": 90,
+							"cX": 5,
+							"cY": 4
+						}
+					},
+					"medium": {
+						"url": "https://i.ytimg.com/vi/RnVXqajXok8/mqdefault.jpg",
+						"width": 320,
+						"height": 180,
+						"blurhash": {
+							"hash": "V8E2h7~V0LI=0y00OFNHVst7Yko#-A$z^Pm+-UkD5QSN",
+							"w": 320,
+							"h": 180,
+							"cX": 5,
+							"cY": 4
+						}
+					},
+					"high": {
+						"url": "https://i.ytimg.com/vi/RnVXqajXok8/hqdefault.jpg",
+						"width": 480,
+						"height": 360,
+						"blurhash": {
+							"hash": "V8CPR}^*4:NI5Q00ShR*V@og0MNb-VxD=y~W$zs:J8Rj",
+							"w": 480,
+							"h": 360,
+							"cX": 5,
+							"cY": 4
+						}
+					},
+					"standard": {
+						"url": "https://i.ytimg.com/vi/RnVXqajXok8/sddefault.jpg",
+						"width": 640,
+						"height": 480,
+						"blurhash": {
+							"hash": "V8CPR}^*4:NI5Q00SiR*V@og0MNb-VxD=y~W$zs:J8Rj",
+							"w": 640,
+							"h": 480,
+							"cX": 5,
+							"cY": 4
+						}
+					},
+					"maxres": {
+						"url": "https://i.ytimg.com/vi/RnVXqajXok8/maxresdefault.jpg",
+						"width": 1280,
+						"height": 720,
+						"blurhash": {
+							"hash": "V9EC5%^*0eI=0z00OFNHVst7loo#$%$g^5e8-UkD5RS4",
+							"w": 1280,
+							"h": 720,
+							"cX": 5,
+							"cY": 4
+						}
+					}
+				},
+				"channelTitle": "Linus Tech Tips",
+				"tags": [
+					"pcmr",
+					"building",
+					"competition",
+					"gamers",
+					"how to",
+					"review",
+					"intel",
+					"amd",
+					"cpu",
+					"gpu",
+					"gaming"
+				],
+				"categoryId": "28",
+				"liveBroadcastContent": "none",
+				"defaultLanguage": "en",
+				"localized": {
+					"title": "Old Video Cards are ALL You Can Get - WAN Show February 12, 2021",
+					"description": "Check out Seasonic's PRIME 850 W Titanium on Amazon at https://lmg.gg/seasonicprime\n\nGet Private Internet Access VPN at https://lmg.gg/piawan\n\nGet a 15-day free trial for unlimited backup at https://backblaze.com/WAN\n\nPodcast Download: https://anchor.fm/thewanshowpodcast/episodes/Old-Video-Cards-are-ALL-You-Can-Get---WAN-Show-February-12--2021-eqga8t\n\nCheck out Carpool Critics, our new movie podcast: https://www.youtube.com/channel/UCt-oJR5teQIjOAxCmIQvcgA\n\nTimestamps (Courtesy of MattDog_222)\n0:22 Why the show is late (Painting)\n1:42 Andy, an employee, wanted Linus to paint during Intel Extreme Tech Upgrade\n3:16 Andy's setup and how Linus broke the bed\n6:16 Further explanation/reactions to the bed story\n7:31 Topic Previews\n9:22 Roll that intro!\n9:41 Linus getting Rick-rolled\n10:51 Headline: NVIDIA (supposedly) Restarting production of 1050TIs\n 12:29 Explaining GPU 'wafers' during production\n 13:58 The reason they are remaking it\n 16:25 Digression to RTX not being popular\n 18:09 Valve's user hardware related data\n19:17 Intel caught 'fudging' benchmarks:\n 21:29 The \"Fun part\" (Luke). \n 23:07 Watching the video together with Linus\n 24:51 Pausing and discussing Intel Evo Branding\n 26:32 Evo: What is it?\n 28:06 Jon (Rettinger) should not be the the spokesperson (Linus)\n 30:47 You don't market your product by crapping on the other (Linus)\n 33:22 Evo standard doesn't even include USB Type A ports (Luke)\n 35:02 Linus's AMD story about product marketing issues\n 37:10 LTT responsible for canning an agency\n 38:51 The nature of the industry with marketing agencies\n 41:07 Luke's favorite marketing people to work with\n 41:58 Asking Jon about the video\n43:48 Sponsor: Backblaze\n44:42 Sponsor: Private Internet Access (PIA)\n45:25 Sponsor: Seasonic\n46:37 Plugging Jon's channel\n47:31 CD Projekt Red Source Code Leaks\n49:59 Related cyber threats\n51:49 Linus suspects someone actually bought it\n52:50 Twitter explores payed subscriptions\n 53:05 Facebook's ad implementation by comparison\n 55:09 Twitter's homefeed (and ads)\n 56:58 Twitter subscription model discussion\n 58:19 What you get from it (Including editing tweets)\n 59:55 Ability to tip users\n 1:01:12 Art\n1:02:05 Affordable Intel CPUs\n1:03:37 Interesting how this + 1050TI is happening at the the same time (Luke)\n1:04:50 Replying to chats\n1:07:41 Linus upgrading Luke's PC + the catch\n1:09:09 Conclusion + LTT Store\n1:09:54 Outro"
 				},
 				"defaultAudioLanguage": "en"
 			}
@@ -11657,6 +11956,7 @@
 			"mainShowStart": "2021-01-23T01:23:45Z",
 			"showEnd": "2021-01-23T02:33:38Z",
 			"title": "Intel is Staging a BIG Comeback!",
+			"mainShowLength": 4202000,
 			"vods": {
 				"youtube": "-_YBydPNp70"
 			},
@@ -14840,6 +15140,107 @@
 		}
 	},
 	{
+		"name": "2020/06/19",
+		"metadata": {
+			"mainShowStart": "2020-06-20T00:36:45Z",
+			"showEnd": "2020-06-20T01:54:40Z",
+			"title": "New Graphics Cards to Rain on PS5 Parade",
+			"mainShowLength": 4501000,
+			"vods": {
+				"youtube": "u5DFBiy1V_I"
+			},
+			"snippet": {
+				"publishedAt": "2020-06-20T02:29:47Z",
+				"channelId": "UCXuqSBlHAE6Xw-yeJA0Tunw",
+				"title": "New Graphics Cards to Rain on PS5 Parade - WAN Show June 19, 2020",
+				"description": "** Some weird freezing at times. Not sure what happened, but hopefully will have it sorted out for next stream **\n\nHoney automatically applies the best coupon codes to save you money at \ndifferent online checkouts, try it now at https://www.joinhoney.com/linus\n\nRemotely monitor and manage your server or PC at https://lmg.gg/pulsewayteams and get 20% off Pulseway's Teams plan when you sign up.\n\nSave 15% today with offer code WAN on Displate at https://lmg.gg/displatewan\n\nBuy an LTT shirt, hoodie, hat, and even our own water bottle at https://lmg.gg/wanlttstore\n\nCheck out Carpool Critics, our new movie podcast: https://www.youtube.com/channel/UCt-oJR5teQIjOAxCmIQvcgA\n\nPodcast Download: TBD\n\nTimestamps: (Courtesy of Aryan Singh)\n\n1:44 Intro\n2:46 Nvidia Is going to change ti\n18:28 Battlefield V on Intel Xe Gpu         \n23:42 Raspberry Pi 4 with Pci    \n28:04  Amd Ryzen\n32:44 Problem Fixed \n 37:48Amd 5700Xt Compatible with any mother bard \n38:42 Sponsors \n41:42 LTT Store Promotion \n43:22 Boston Dynamics New Robot \n51:25 Superchat \n58:32 Intel makes  Gen2 Optane\n 58:16 Tournament of LTT \n57:58 Superchats   \n1:07:16 3d Sen released\n1:10:12 Superchats\n1:14:24 About Cameo",
+				"thumbnails": {
+					"default": {
+						"url": "https://i.ytimg.com/vi/u5DFBiy1V_I/default.jpg",
+						"width": 120,
+						"height": 90,
+						"blurhash": {
+							"hash": "VEH_oc8_9F%g?^^%NeWBj[sl00.9%MV?L~o#xZWBozNH",
+							"w": 120,
+							"h": 90,
+							"cX": 5,
+							"cY": 4
+						}
+					},
+					"medium": {
+						"url": "https://i.ytimg.com/vi/u5DFBiy1V_I/mqdefault.jpg",
+						"width": 320,
+						"height": 180,
+						"blurhash": {
+							"hash": "VJKUD?4n9F%g?^?ZJBWBj@sl00%hxtoIU^?boyRjo|Rj",
+							"w": 320,
+							"h": 180,
+							"cX": 5,
+							"cY": 4
+						}
+					},
+					"high": {
+						"url": "https://i.ytimg.com/vi/u5DFBiy1V_I/hqdefault.jpg",
+						"width": 480,
+						"height": 360,
+						"blurhash": {
+							"hash": "VEH_od4n9F%g?^?GNeWBj[sl00.9%MV?L~t9xYaeozNH",
+							"w": 480,
+							"h": 360,
+							"cX": 5,
+							"cY": 4
+						}
+					},
+					"standard": {
+						"url": "https://i.ytimg.com/vi/u5DFBiy1V_I/sddefault.jpg",
+						"width": 640,
+						"height": 480,
+						"blurhash": {
+							"hash": "VEH_rk4n9FyD?^?GNeWBj[sl00.9%MV?L~t9xYaeozNH",
+							"w": 640,
+							"h": 480,
+							"cX": 5,
+							"cY": 4
+						}
+					},
+					"maxres": {
+						"url": "https://i.ytimg.com/vi/u5DFBiy1V_I/maxresdefault.jpg",
+						"width": 1280,
+						"height": 720,
+						"blurhash": {
+							"hash": "VJKdue4n9FyD.m?FJBWBj@sl00%hxtoIU^?boyRjo|Rj",
+							"w": 1280,
+							"h": 720,
+							"cX": 5,
+							"cY": 4
+						}
+					}
+				},
+				"channelTitle": "Linus Tech Tips",
+				"tags": [
+					"Google Pixel 4a",
+					"pixel 4a",
+					"headphone jack",
+					"hands on",
+					"specs",
+					"leak",
+					"leaks",
+					"leaked",
+					"price",
+					"399",
+					"release date",
+					"launch"
+				],
+				"categoryId": "28",
+				"liveBroadcastContent": "none",
+				"localized": {
+					"title": "New Graphics Cards to Rain on PS5 Parade - WAN Show June 19, 2020",
+					"description": "** Some weird freezing at times. Not sure what happened, but hopefully will have it sorted out for next stream **\n\nHoney automatically applies the best coupon codes to save you money at \ndifferent online checkouts, try it now at https://www.joinhoney.com/linus\n\nRemotely monitor and manage your server or PC at https://lmg.gg/pulsewayteams and get 20% off Pulseway's Teams plan when you sign up.\n\nSave 15% today with offer code WAN on Displate at https://lmg.gg/displatewan\n\nBuy an LTT shirt, hoodie, hat, and even our own water bottle at https://lmg.gg/wanlttstore\n\nCheck out Carpool Critics, our new movie podcast: https://www.youtube.com/channel/UCt-oJR5teQIjOAxCmIQvcgA\n\nPodcast Download: TBD\n\nTimestamps: (Courtesy of Aryan Singh)\n\n1:44 Intro\n2:46 Nvidia Is going to change ti\n18:28 Battlefield V on Intel Xe Gpu         \n23:42 Raspberry Pi 4 with Pci    \n28:04  Amd Ryzen\n32:44 Problem Fixed \n 37:48Amd 5700Xt Compatible with any mother bard \n38:42 Sponsors \n41:42 LTT Store Promotion \n43:22 Boston Dynamics New Robot \n51:25 Superchat \n58:32 Intel makes  Gen2 Optane\n 58:16 Tournament of LTT \n57:58 Superchats   \n1:07:16 3d Sen released\n1:10:12 Superchats\n1:14:24 About Cameo"
+				}
+			}
+		}
+	},
+	{
 		"name": "2020/06/12",
 		"metadata": {
 			"mainShowStart": "2020-06-13T00:30:03Z",
@@ -15441,6 +15842,107 @@
 				"localized": {
 					"title": "Has AMD Become the Monster they Slayed?? - WAN Show May 8, 2020",
 					"description": "Get 10% Off XSplit Vcam with offer code LINUSTECHTIPS at https://xspl.it/lttvcam\n\nSign up for Private Internet Access VPN at https://lmg.gg/piawan\n\nSave 15% today with offer code LTT on Displate at https://lmg.gg/displatewan\n\nBuy an LTT shirt, hoodie, hat, and even our own water bottle at https://lmg.gg/wanlttstore\n\nCheck out Carpool Critics, our new movie podcast: https://www.youtube.com/channel/UCt-oJR5teQIjOAxCmIQvcgA\n\nPodcast Download: https://dts.podtrac.com/redirect.mp3/traffic.libsyn.com/secure/linustechtips/Has_AMD_Become_the_Monster_they_Slayed_-_WAN_Show_May_8_2020.mp3\n\nTimestamps: TBD"
+				}
+			}
+		}
+	},
+	{
+		"name": "2020/05/01",
+		"metadata": {
+			"mainShowStart": "2020-05-02T00:16:58Z",
+			"showEnd": "2020-05-02T01:34:54Z",
+			"title": "Watch Out, Losers! AMD is Making Video Cards for PHONES",
+			"mainShowLength": 4686000,
+			"vods": {
+				"youtube": "cwPOtPDUlU8"
+			},
+			"snippet": {
+				"publishedAt": "2020-05-02T01:41:19Z",
+				"channelId": "UCXuqSBlHAE6Xw-yeJA0Tunw",
+				"title": "Watch Out, Losers! AMD is Making Video Cards for PHONES - WAN Show May 1, 2020",
+				"description": "Save 10% at Ridge Wallet with offer code LINUS at https://www.ridge.com/Linus\n\nUse code LTT at MechanicalKeyboards at https://geni.us/VNixUn\n\nSign up for Private Internet Access VPN at https://lmg.gg/piawan\n\nBuy LTX 2020 Presented by Intel Tickets: https://lmg.gg/ltx20tickets\nLearn more about LTX 2020: https://www.ltxexpo.com/\nLTX 2020 Activities: https://www.ltxexpo.com/attractions\nLTX 2020 Special Guests: https://www.ltxexpo.com/guests\n\nBuy an LTT shirt, hoodie, hat, and even our own water bottle at https://lmg.gg/wanlttstore\n\nCheck out Carpool Critics, our new movie podcast: https://www.youtube.com/channel/UCt-oJR5teQIjOAxCmIQvcgA\n\nPodcast Download: http://dts.podtrac.com/redirect.mp3/traffic.libsyn.com/linustechtips/Watch_Out_Losers_AMD_is_Making_Video_Cards_for_PHONES_-_WAN_Show_May_1_2020.mp3\n\nTimestamps: (Courtesy of Sylonce)\n\n00:38 Topics/intro/good lol times rambling\n11:45 Linus' joystick sounds like leather\n15:55 Intro\n16:37 Samsung's new SoC with AMD GPU\n29:52 Assassin's Creed Valhalla single purchase same brand cross-console play\n44:10 mechanicalkeyboards.com (sponsor) use code LTT\n44:52 ridge.com/linus (sponsor) use code LINUS for 10% off \n45:40 lmg.gg/piawan Private Internet Access (sponsor)\n46:12 Quick question: Linus, have you ever p* games when you were younger?\n57:31 Intel launches 10th gen desktop CPUs\n1:01:35 UPS blowing up story update\n1:02:38 Intel's 10nm profitability\n1:07:40 Superchats\n1:09:00 LMG's hiring!\n1:10:20 Superchats",
+				"thumbnails": {
+					"default": {
+						"url": "https://i.ytimg.com/vi/cwPOtPDUlU8/default.jpg",
+						"width": 120,
+						"height": 90,
+						"blurhash": {
+							"hash": "VCEorg_NIAIo%z?G-;xuRjt700RikVVsMxOFM_R%t7M{",
+							"w": 120,
+							"h": 90,
+							"cX": 5,
+							"cY": 4
+						}
+					},
+					"medium": {
+						"url": "https://i.ytimg.com/vi/cwPOtPDUlU8/mqdefault.jpg",
+						"width": 320,
+						"height": 180,
+						"blurhash": {
+							"hash": "VGGuj;_NIAIo%z?G.8xuRjxtELtQRjMxVs%gxtozofRP",
+							"w": 320,
+							"h": 180,
+							"cX": 5,
+							"cY": 4
+						}
+					},
+					"high": {
+						"url": "https://i.ytimg.com/vi/cwPOtPDUlU8/hqdefault.jpg",
+						"width": 480,
+						"height": 360,
+						"blurhash": {
+							"hash": "VCEouo?wIAIo%g-o-;xuRjt700RikVVsMxS%M_R*t7M{",
+							"w": 480,
+							"h": 360,
+							"cX": 5,
+							"cY": 4
+						}
+					},
+					"standard": {
+						"url": "https://i.ytimg.com/vi/cwPOtPDUlU8/sddefault.jpg",
+						"width": 640,
+						"height": 480,
+						"blurhash": {
+							"hash": "VCEyGG?wIAIo%g-o-;xuRjt700RikVVsMxS%M_R%t7M{",
+							"w": 640,
+							"h": 480,
+							"cX": 5,
+							"cY": 4
+						}
+					},
+					"maxres": {
+						"url": "https://i.ytimg.com/vi/cwPOtPDUlU8/maxresdefault.jpg",
+						"width": 1280,
+						"height": 720,
+						"blurhash": {
+							"hash": "VGG+8j_4DjIo%z-o.8xuRjxtELtQRjMxVs%gxtozs:RP",
+							"w": 1280,
+							"h": 720,
+							"cX": 5,
+							"cY": 4
+						}
+					}
+				},
+				"channelTitle": "Linus Tech Tips",
+				"tags": [
+					"Google Pixel 4a",
+					"pixel 4a",
+					"headphone jack",
+					"hands on",
+					"specs",
+					"leak",
+					"leaks",
+					"leaked",
+					"price",
+					"399",
+					"release date",
+					"launch"
+				],
+				"categoryId": "28",
+				"liveBroadcastContent": "none",
+				"localized": {
+					"title": "Watch Out, Losers! AMD is Making Video Cards for PHONES - WAN Show May 1, 2020",
+					"description": "Save 10% at Ridge Wallet with offer code LINUS at https://www.ridge.com/Linus\n\nUse code LTT at MechanicalKeyboards at https://geni.us/VNixUn\n\nSign up for Private Internet Access VPN at https://lmg.gg/piawan\n\nBuy LTX 2020 Presented by Intel Tickets: https://lmg.gg/ltx20tickets\nLearn more about LTX 2020: https://www.ltxexpo.com/\nLTX 2020 Activities: https://www.ltxexpo.com/attractions\nLTX 2020 Special Guests: https://www.ltxexpo.com/guests\n\nBuy an LTT shirt, hoodie, hat, and even our own water bottle at https://lmg.gg/wanlttstore\n\nCheck out Carpool Critics, our new movie podcast: https://www.youtube.com/channel/UCt-oJR5teQIjOAxCmIQvcgA\n\nPodcast Download: http://dts.podtrac.com/redirect.mp3/traffic.libsyn.com/linustechtips/Watch_Out_Losers_AMD_is_Making_Video_Cards_for_PHONES_-_WAN_Show_May_1_2020.mp3\n\nTimestamps: (Courtesy of Sylonce)\n\n00:38 Topics/intro/good lol times rambling\n11:45 Linus' joystick sounds like leather\n15:55 Intro\n16:37 Samsung's new SoC with AMD GPU\n29:52 Assassin's Creed Valhalla single purchase same brand cross-console play\n44:10 mechanicalkeyboards.com (sponsor) use code LTT\n44:52 ridge.com/linus (sponsor) use code LINUS for 10% off \n45:40 lmg.gg/piawan Private Internet Access (sponsor)\n46:12 Quick question: Linus, have you ever p* games when you were younger?\n57:31 Intel launches 10th gen desktop CPUs\n1:01:35 UPS blowing up story update\n1:02:38 Intel's 10nm profitability\n1:07:40 Superchats\n1:09:00 LMG's hiring!\n1:10:20 Superchats"
 				}
 			}
 		}
@@ -17947,7 +18449,7 @@
 		"metadata": {
 			"mainShowStart": "2019-10-12T00:26:16Z",
 			"showEnd": "2019-10-12T01:54:29Z",
-			"title": "Blizzard Boycott? ",
+			"title": "Blizzard Boycott?",
 			"mainShowLength": 2343000,
 			"vods": {
 				"youtube": "gfkBHJeMx2Y"
@@ -17955,7 +18457,7 @@
 			"snippet": {
 				"publishedAt": "2019-10-12T02:28:07Z",
 				"channelId": "UCXuqSBlHAE6Xw-yeJA0Tunw",
-				"title": "Blizzard Boycott?  - WAN Show Oct 11, 2019",
+				"title": "Blizzard Boycott? (PT 2) - WAN Show Oct 11, 2019",
 				"description": "Use offer code linustech to get 15% off MOS products at https://mosorganizer.com or on Amazon Canada at https://lmg.gg/moscanada\n\nHoney automatically applies the best coupon codes to save you money at \ndifferent online checkouts, try it now at https://www.joinhoney.com/linus\n\nSign up for Private Internet Access VPN at https://lmg.gg/piawan\n\nBuy an LTT shirt, hoodie, hat, and even our own insulated water bottle at https://lmg.gg/wanlttstore \n\nPodcast Download: http://traffic.libsyn.com/linustechtips/blizzard-boycott-pt-1-wan-show-oct-11-2019-1b87dfmymp3.mp3\n\nTimestamps (Courtesy of Cahenvels)\n\n5:48 Apple removes Hong Kong protest map\n11:33 Google has also removed Hong Kong Protestor game\n12:23 Steam to make local multiplayer games online (remote play together)\n13:45 LTTstore.com New water bottle colors\n14:07 Steam subject continues\n14:55 PT 2 high refresh rate latency test announcement ft. Michael Grzesiek (Shroud)\n17:17 Lan parties going 'retro'?\n18:45 Sponsor MOS Organizer\n20:17 Sponsor Honey\n22:09 Sponsor Private Internet Access\n23:51 Stadia 'thing' \n30:20 Superchats",
 				"thumbnails": {
 					"default": {
@@ -19277,6 +19779,81 @@
 		}
 	},
 	{
+		"name": "2019/06/14",
+		"metadata": {
+			"title": "AMD has GONE MAD... 64 Core Threadripper!",
+			"mainShowLength": 4862000,
+			"vods": {
+				"youtube": "HE97qIGhV0Y"
+			},
+			"snippet": {
+				"publishedAt": "2019-06-15T08:42:59Z",
+				"channelId": "UCXuqSBlHAE6Xw-yeJA0Tunw",
+				"title": "AMD has GONE MAD... 64 Core Threadripper! - WAN Show June 14, 2019",
+				"description": "Save 10% at Ridge Wallet with offer code LTTJune at https://www.ridgewallet.com/LTT \n\nBuy three bags jerky and get one free on Savage Jerky at https://lmg.gg/savagejerky\n\nCheck out Displate's metal posters at https://lmg.gg/displatewan\n\nGet LTX 2019 Featuring DreamHack tickets NOW at https://dh.je/ltx19\n\nPodcast Download: http://traffic.libsyn.com/linustechtips/AMD_has_GONE_MAD..._64_Core_Threadripper_-_WAN_Show_June_14_2019.mp3\n\nTimestamps: (Courtesy of Julian Grieco)\n\n0:10 - Luke in Asia and intro\n0:55 - Joking around, writer interviews\n2:40 - Changes with YouTube\n20:50 - LINUS MIGHT PHASE HIMSELF OUT!\n27:40 - Sponsor - Ridge Wallet\n29:43 - Sponsor - Savage Jerky\n31:02 - Sponsor - Displate\n32:10 - 64 core Ryzen Threadripper rumor\n41:00 - Xbox Scarlet announcement\n49:03 - Xbox Game Pass for PC\n58:58 - LTX 2019\n1:02:36 - Free Geek Vancouver\n1:04:42 - Super Chats\n1:04:57 - Linus collaborating with Gavin from The Slow Mo Guys\n1:09:20 - LTT merch store\n1:20:08 - whoops...\n1:20:14 - Outro",
+				"thumbnails": {
+					"default": {
+						"url": "https://i.ytimg.com/vi/HE97qIGhV0Y/default.jpg",
+						"width": 120,
+						"height": 90,
+						"blurhash": {
+							"hash": "VED8hLCAMoF6wQ[{BXstJWr_0xi^$|wGR~7X,ARz$JSb",
+							"w": 120,
+							"h": 90,
+							"cX": 5,
+							"cY": 4
+						}
+					},
+					"medium": {
+						"url": "https://i.ytimg.com/vi/HE97qIGhV0Y/mqdefault.jpg",
+						"width": 320,
+						"height": 180,
+						"blurhash": {
+							"hash": "VKFN*:CAMoF6w7|6BXx1JEr{xcOZ$%nhWAKPj[W9wHWT",
+							"w": 320,
+							"h": 180,
+							"cX": 5,
+							"cY": 4
+						}
+					},
+					"high": {
+						"url": "https://i.ytimg.com/vi/HE97qIGhV0Y/hqdefault.jpg",
+						"width": 480,
+						"height": 360,
+						"blurhash": {
+							"hash": "VFDbBICAMoF6w7[xBXstJWsE0yjD$|wGR~7Y,TRz$0SI",
+							"w": 480,
+							"h": 360,
+							"cX": 5,
+							"cY": 4
+						}
+					},
+					"standard": {
+						"url": "https://i.ytimg.com/vi/HE97qIGhV0Y/sddefault.jpg",
+						"width": 640,
+						"height": 480,
+						"blurhash": {
+							"hash": "VFDbBICAMoF6w7[xBXstJWsE0yjD$|wGR~7Y,TNW$0SI",
+							"w": 640,
+							"h": 480,
+							"cX": 5,
+							"cY": 4
+						}
+					}
+				},
+				"channelTitle": "Linus Tech Tips",
+				"categoryId": "28",
+				"liveBroadcastContent": "none",
+				"defaultLanguage": "en",
+				"localized": {
+					"title": "AMD has GONE MAD... 64 Core Threadripper! - WAN Show June 14, 2019",
+					"description": "Save 10% at Ridge Wallet with offer code LTTJune at https://www.ridgewallet.com/LTT \n\nBuy three bags jerky and get one free on Savage Jerky at https://lmg.gg/savagejerky\n\nCheck out Displate's metal posters at https://lmg.gg/displatewan\n\nGet LTX 2019 Featuring DreamHack tickets NOW at https://dh.je/ltx19\n\nPodcast Download: http://traffic.libsyn.com/linustechtips/AMD_has_GONE_MAD..._64_Core_Threadripper_-_WAN_Show_June_14_2019.mp3\n\nTimestamps: (Courtesy of Julian Grieco)\n\n0:10 - Luke in Asia and intro\n0:55 - Joking around, writer interviews\n2:40 - Changes with YouTube\n20:50 - LINUS MIGHT PHASE HIMSELF OUT!\n27:40 - Sponsor - Ridge Wallet\n29:43 - Sponsor - Savage Jerky\n31:02 - Sponsor - Displate\n32:10 - 64 core Ryzen Threadripper rumor\n41:00 - Xbox Scarlet announcement\n49:03 - Xbox Game Pass for PC\n58:58 - LTX 2019\n1:02:36 - Free Geek Vancouver\n1:04:42 - Super Chats\n1:04:57 - Linus collaborating with Gavin from The Slow Mo Guys\n1:09:20 - LTT merch store\n1:20:08 - whoops...\n1:20:14 - Outro"
+				},
+				"defaultAudioLanguage": "en"
+			}
+		}
+	},
+	{
 		"name": "2019/06/07",
 		"metadata": {
 			"title": "Let's talk about the Mac Stand...",
@@ -19993,6 +20570,7 @@
 			"mainShowStart": "2019-04-12T23:58:03Z",
 			"showEnd": "2019-04-13T00:57:45Z",
 			"title": "Facebook NEVER learns",
+			"mainShowLength": 3584000,
 			"vods": {
 				"youtube": "jcE3NG8Z1Fg"
 			},
@@ -21850,6 +22428,81 @@
 		}
 	},
 	{
+		"name": "2018/11/02",
+		"metadata": {
+			"mainShowStart": "2018-11-03T00:03:58Z",
+			"showEnd": "2018-11-03T01:03:09Z",
+			"title": "Walmart makes Gaming PCs???",
+			"mainShowLength": 3553000,
+			"vods": {
+				"youtube": "w7GKENEMNeo"
+			},
+			"snippet": {
+				"publishedAt": "2018-11-03T01:40:26Z",
+				"channelId": "UCXuqSBlHAE6Xw-yeJA0Tunw",
+				"title": "Walmart makes Gaming PCs??? - The WAN Show Nov 2, 2018",
+				"description": "Freshbooks: For your unrestricted 30 days free trial, go to https://www.freshbooks.com/WAN and enter in “The WAN Show” in the how you heard about us section.    \n\nPrivate Internet Access: Sign up for Private Internet Access VPN at https://lmg.gg/piawan\n\nSquarespace: Visit https://www.squarespace.com/WAN and use offer code WAN to get 10% off\n\nForum Link: https://linustechtips.com/main/topic/990334-november-2-2018-wan-show-document/\n\nSoundcloud Link: https://soundcloud.com/thewanshow/walmart-makes-gaming-pcs-the-wan-show-nov-2-2018\n\nTimestamps courtesy of WestOfAsh\n\n0:00 WAN show time\n2:54 intro\n4:00 Wal-Mart ok pc\n11:25 straw poll\n14:00 keebler elf\n19:20 Apple slowed down iPhone again\n24:00 iPhone rant\n29:30 pixel 3 xl and Android gripes\n38:40 freshbooks\n39:30 squarespace\n40:30 pia sponsor\n43:00 breath of the wild\n46:00 note knee jerk reaction and twitch chat\n54:54 super chat",
+				"thumbnails": {
+					"default": {
+						"url": "https://i.ytimg.com/vi/w7GKENEMNeo/default.jpg",
+						"width": 120,
+						"height": 90,
+						"blurhash": {
+							"hash": "VEC=}KK+a6F|rw}uF|rwOZnm%MK5nOniaeO?nhWAs9oH",
+							"w": 120,
+							"h": 90,
+							"cX": 5,
+							"cY": 4
+						}
+					},
+					"medium": {
+						"url": "https://i.ytimg.com/vi/w7GKENEMNeo/mqdefault.jpg",
+						"width": 320,
+						"height": 180,
+						"blurhash": {
+							"hash": "VDCY%fO[4oNb9Z}uFzRRo0Nt?bK6R5wINZXmWBaKs:n~",
+							"w": 320,
+							"h": 180,
+							"cX": 5,
+							"cY": 4
+						}
+					},
+					"high": {
+						"url": "https://i.ytimg.com/vi/w7GKENEMNeo/hqdefault.jpg",
+						"width": 480,
+						"height": 360,
+						"blurhash": {
+							"hash": "VEDInHK+VxF|rw}uF|rvOZnm%NK6n5niaeO?nhWAsSn~",
+							"w": 480,
+							"h": 360,
+							"cX": 5,
+							"cY": 4
+						}
+					}
+				},
+				"channelTitle": "Linus Tech Tips",
+				"tags": [
+					"Linus",
+					"Tech",
+					"Tips",
+					"Car",
+					"Lambo",
+					"LTX",
+					"LTX2018",
+					"automobile",
+					"Honda",
+					"Civic"
+				],
+				"categoryId": "28",
+				"liveBroadcastContent": "none",
+				"localized": {
+					"title": "Walmart makes Gaming PCs??? - The WAN Show Nov 2, 2018",
+					"description": "Freshbooks: For your unrestricted 30 days free trial, go to https://www.freshbooks.com/WAN and enter in “The WAN Show” in the how you heard about us section.    \n\nPrivate Internet Access: Sign up for Private Internet Access VPN at https://lmg.gg/piawan\n\nSquarespace: Visit https://www.squarespace.com/WAN and use offer code WAN to get 10% off\n\nForum Link: https://linustechtips.com/main/topic/990334-november-2-2018-wan-show-document/\n\nSoundcloud Link: https://soundcloud.com/thewanshow/walmart-makes-gaming-pcs-the-wan-show-nov-2-2018\n\nTimestamps courtesy of WestOfAsh\n\n0:00 WAN show time\n2:54 intro\n4:00 Wal-Mart ok pc\n11:25 straw poll\n14:00 keebler elf\n19:20 Apple slowed down iPhone again\n24:00 iPhone rant\n29:30 pixel 3 xl and Android gripes\n38:40 freshbooks\n39:30 squarespace\n40:30 pia sponsor\n43:00 breath of the wild\n46:00 note knee jerk reaction and twitch chat\n54:54 super chat"
+				}
+			}
+		}
+	},
+	{
 		"name": "2018/10/26",
 		"metadata": {
 			"mainShowStart": "2018-10-27T00:05:54Z",
@@ -22375,6 +23028,7 @@
 			"mainShowStart": "2018-09-15T00:13:13Z",
 			"showEnd": "2018-09-15T01:18:39Z",
 			"title": "RTX Performance LEAKS",
+			"mainShowLength": 3923000,
 			"vods": {
 				"youtube": "FLkAeiqzp0A"
 			},
@@ -23731,6 +24385,7 @@
 		"name": "2018/05/18",
 		"metadata": {
 			"title": "Google Makes YouTube MORE Confusing!!",
+			"mainShowLength": 3294000,
 			"vods": {
 				"youtube": "BfKLTn-ROpc"
 			},
@@ -25068,6 +25723,7 @@
 		"name": "2018/01/26",
 		"metadata": {
 			"title": "Twitch Spammer Headed to JAIL!",
+			"mainShowLength": 4503000,
 			"vods": {
 				"youtube": "S0A8Lq1DVvI"
 			},
@@ -26509,6 +27165,7 @@
 		"name": "2017/09/08",
 		"metadata": {
 			"title": "iPhone 7 Headphone Jack Mod CONFIRMED",
+			"mainShowLength": 4359000,
 			"vods": {
 				"youtube": "YryGoLTTwfs"
 			},
@@ -26658,6 +27315,91 @@
 				"localized": {
 					"title": "NVIDIA Prototype Found in PAWN SHOP! - WAN Show September 1, 2017",
 					"description": "Head over to https://symless.com/synergy/linus25 and save 50% on Synergy today!\n\nSave 10% on Spektrum bluelight glasses using offer code LINUS at https://www.spektrumglasses.com/\n\nGet iFixit's Pro Tech Toolkit now for only $59.95 USD at http://ifixit.com/linus\n\nForum link: https://linustechtips.com/main/topic/829814-september-1-2017-the-wan-show-document/\n\nSoundcloud link: https://soundcloud.com/thewanshow/nvidia-prototype-found-in-pawn-shop-wan-show-september-1-2017\n\n\nTimestamps courtesy of JJMC89.\n\n00:04:34 - Threadripper 1900X\n00:13:12 - Instagram breach\n00:16:52 - Amazon turns thousands of Twitch streamers into product pitchmen\n00:22:42 - SanDisk launches 400GB MicroSD card\n00:28:23 - orbiTouch\n00:30:38 - Sponsor: Synergy\n00:32:33 - Sponsor: Spektrum Glasses\n00:34:25 - Sponsor: iFixit\n00:40:03 - Intel launches Xeon-W CPUs\n00:46:20 - Intel i7-8700K benchmarks leaked\n00:50:42 - Nvidia Shield Portable 2 prototype tuns up in a Canadian pawn shop\n00:53:09 - YouTube begins isolating offensive content\n00:54:49 - Juicero is shutting down\n00:56:32 - Pico Goblin"
+				},
+				"defaultAudioLanguage": "en"
+			}
+		}
+	},
+	{
+		"name": "2017/08/25",
+		"metadata": {
+			"title": "Intel 8th Gen CPUs ACTUALLY REBRANDS??",
+			"mainShowLength": 4226000,
+			"vods": {
+				"youtube": "GELp6QuMOtU"
+			},
+			"snippet": {
+				"publishedAt": "2017-08-26T01:59:46Z",
+				"channelId": "UCXuqSBlHAE6Xw-yeJA0Tunw",
+				"title": "Intel 8th Gen CPUs ACTUALLY REBRANDS?? - WAN Show August 25, 2017",
+				"description": "Head over to http://geni.us/savagejerky\nand offer code LTT to save 10% on Savage Jerky! All orders placed this weekend will receive a complimentary koozie or sticker with their order!\n\nFor your unrestricted 30 days free trial, go to https://www.freshbooks.com/techtips and enter in “The WAN Show” in the how you heard about us section.   \n\nForum link: https://linustechtips.com/main/topic/827012-august-25-2017-the-wan-show-documents/\n\nSoundcloud link: https://soundcloud.com/thewanshow/intel-8th-gen-cpus-actually-rebrands-wan-show-august-25-2017\n\nTimestamps courtesy of JJMC89.\n\n00:01:39 - Linus's New York trip\n00:14:34 - Is Floatplane dying?\n00:14:43 - Will WAN Show have to switch from XSplit to OBS?\n00:17:57 - CrashPlan for Home is going away\n00:22:48 - Half Life 2 Episode 3 story released, or is it just fan fiction?\n00:33:01 - Sponsor: Freshbooks\n00:34:40 - Sponsor: Savage Jerky\n00:37:04 - Intel first 8th generation mobile chips are just updated 7th generation chips (Kaby Lake)\n00:40:35 - Half Life (continued)\n00:46:03 - Vega shortage could continue until October\n00:56:42 - AMD outlined Threadripper and EPYC's MCM advantage, claims 41% cost reduction\n00:57:41 - Amazon made its first big move with Whole Foods\n00:59:53 - New Apple TV\n01:00:02 - [Rumor] Pixel 2 launching October 5\n01:02:45 - Floatplane Club",
+				"thumbnails": {
+					"default": {
+						"url": "https://i.ytimg.com/vi/GELp6QuMOtU/default.jpg",
+						"width": 120,
+						"height": 90,
+						"blurhash": {
+							"hash": "V9BpX,%MDj-UD*9ERjRjf5Wq0LjZoJNbsm?wWBWVR-xG",
+							"w": 120,
+							"h": 90,
+							"cX": 5,
+							"cY": 4
+						}
+					},
+					"medium": {
+						"url": "https://i.ytimg.com/vi/GELp6QuMOtU/mqdefault.jpg",
+						"width": 320,
+						"height": 180,
+						"blurhash": {
+							"hash": "V9DlvP%M4n-V9G00M|M|jYSh?wxaMxS#nN%$IoM{I:$*",
+							"w": 320,
+							"h": 180,
+							"cX": 5,
+							"cY": 4
+						}
+					},
+					"high": {
+						"url": "https://i.ytimg.com/vi/GELp6QuMOtU/hqdefault.jpg",
+						"width": 480,
+						"height": 360,
+						"blurhash": {
+							"hash": "VAB|1%xuD%%1E19ERjRjjZW;0MjZoJNvxD?wWBayR+xF",
+							"w": 480,
+							"h": 360,
+							"cX": 5,
+							"cY": 4
+						}
+					},
+					"standard": {
+						"url": "https://i.ytimg.com/vi/GELp6QuMOtU/sddefault.jpg",
+						"width": 640,
+						"height": 480,
+						"blurhash": {
+							"hash": "VAB|1*xuD%%1E18_RjRjjZW;0MjZoJNvxD?wWBayR+xF",
+							"w": 640,
+							"h": 480,
+							"cX": 5,
+							"cY": 4
+						}
+					}
+				},
+				"channelTitle": "Linus Tech Tips",
+				"tags": [
+					"Intel",
+					"8th gen",
+					"CPU",
+					"AMD",
+					"Vega",
+					"Tech",
+					"News",
+					"Podcast"
+				],
+				"categoryId": "28",
+				"liveBroadcastContent": "none",
+				"defaultLanguage": "en",
+				"localized": {
+					"title": "Intel 8th Gen CPUs ACTUALLY REBRANDS?? - WAN Show August 25, 2017",
+					"description": "Head over to http://geni.us/savagejerky\nand offer code LTT to save 10% on Savage Jerky! All orders placed this weekend will receive a complimentary koozie or sticker with their order!\n\nFor your unrestricted 30 days free trial, go to https://www.freshbooks.com/techtips and enter in “The WAN Show” in the how you heard about us section.   \n\nForum link: https://linustechtips.com/main/topic/827012-august-25-2017-the-wan-show-documents/\n\nSoundcloud link: https://soundcloud.com/thewanshow/intel-8th-gen-cpus-actually-rebrands-wan-show-august-25-2017\n\nTimestamps courtesy of JJMC89.\n\n00:01:39 - Linus's New York trip\n00:14:34 - Is Floatplane dying?\n00:14:43 - Will WAN Show have to switch from XSplit to OBS?\n00:17:57 - CrashPlan for Home is going away\n00:22:48 - Half Life 2 Episode 3 story released, or is it just fan fiction?\n00:33:01 - Sponsor: Freshbooks\n00:34:40 - Sponsor: Savage Jerky\n00:37:04 - Intel first 8th generation mobile chips are just updated 7th generation chips (Kaby Lake)\n00:40:35 - Half Life (continued)\n00:46:03 - Vega shortage could continue until October\n00:56:42 - AMD outlined Threadripper and EPYC's MCM advantage, claims 41% cost reduction\n00:57:41 - Amazon made its first big move with Whole Foods\n00:59:53 - New Apple TV\n01:00:02 - [Rumor] Pixel 2 launching October 5\n01:02:45 - Floatplane Club"
 				},
 				"defaultAudioLanguage": "en"
 			}
@@ -27336,6 +28078,95 @@
 				"localized": {
 					"title": "AMD VEGA.. IT'S NOT AMAZING YET - WAN Show June 30, 2017",
 					"description": "Check out EKWB's Fluid Gaming Lineup: http://geni.us/ekfluidgaming\n\nFor your unrestricted 30 days free trial, go to https://www.freshbooks.com/techtips and enter in “The WAN Show” in the how you heard about us section.\n\nGet your LTX 2017 Ticket here: http://www.ticketrocket.co/event/details/97246/ltx-2017\n\nForum link: https://linustechtips.com/main/topic/801090-june-30-2017-the-wan-show-document/\n\nSoundcloud link: https://soundcloud.com/thewanshow/amd-vega-its-not-amazing-wan-show-june-30-2017\n\nTimestamps courtesy of Brandon Axtmann and JJMC89.\n\n00:08:27 - PC Perspective: Vega Frontier Edition review\n00:19:02 - AMU announced new Ryzen Pro series\n00:29:46 - Sponsor: Freshbooks\n00:31:07 - LTX 2017\n00:32:45 - Sponsor: EK\n00:38:49 - Ryzen 3 1300 and 1200 details\n00:39:40 - Floatplane Club\n00:43:00 - Vivo (Qualcomm) beats Apple to an under display fingerprint reader\n00:47:23 - Ethereum could be using more than a country's worth of electricity\n00:50:36 - RIP Lexar memory cards\n00:53:40 - Techpowerup ad by AMD drew controversy\n01:05:30 - Toshiba produces the world's first 4-bit QLC NAND flash memory\n01:06:30 - X299 VRM disaster\n01:07:55 - Petya"
+				},
+				"defaultAudioLanguage": "en"
+			}
+		}
+	},
+	{
+		"name": "2017/06/23",
+		"metadata": {
+			"title": "ONE PLUS 5 CHEATING IN BENCHMARKS",
+			"mainShowLength": 4744000,
+			"vods": {
+				"youtube": "CUJ8Y-9wIDU"
+			},
+			"snippet": {
+				"publishedAt": "2017-06-24T01:42:03Z",
+				"channelId": "UCXuqSBlHAE6Xw-yeJA0Tunw",
+				"title": "ONE PLUS 5 CHEATING IN BENCHMARKS - WAN Show June 23, 2017",
+				"description": "Use offer code LTT to get $7 off a Comic Bento today at http://geni.us/1fP4CE\n\nShare your mouse and keyboard between multiple computers with Synergy! Save 50% here: https://symless.com/synergy/linus18\n\nFor your unrestricted 30 days free trial, go to https://www.freshbooks.com/techtips and enter in “The WAN Show” in the how you heard about us section.\n\nGet your LTX 2017 Ticket here: http://www.ticketrocket.co/event/details/97246/ltx-2017\n\nForum link: https://linustechtips.com/main/topic/797775-june-23-2017-the-wan-show-document/\n\nSoundcloud link: https://soundcloud.com/thewanshow/one-plus-5-cheating-in-benchmarks-wan-show-june-23-2017\n\nTimestamps courtesy of Brandon Axtmann and JJMC89.\n\n00:04:25 - iMac Pro may offer server-grade Intel 'Purley' processors with ARM coprocessor\n00:06:50 - AMD's future in servers: new 7000-Series CPUs launched and EPYC analysis\n00:13:09 - OnePlus 5 gets caught cheating at benchmarks\n00:19:54 - NSA Github\n00:22:53 - Ethereum flash crash\n00:27:05 - Netflix interactive TV\n00:31:36 - Sponsor: Synergy\n00:33:54 - Sponsor: Comic Bento\n00:36:09 - Sponsor: Freshbooks\n00:37:15 - LTX 2017\n00:38:15 - [Rumor] Mining graphics cards\n00:42:45 - Windows 10 source code leak\n00:50:00 - Asus releases XG-C100C 10GBASE-T NIC for $99\n00:53:07 - Razer invested $20 million in virtual currency\n00:56:29 - Valve gives Oculus the finger with five finger controller\n00:58:28 - Google launching new line of cameras for VR 180\n01:02:33 - [Rumor] Tesla creating music streaming service\n01:06:39 - RX Vega needs a lot of power\n01:08:22: - Floatplane Club",
+				"thumbnails": {
+					"default": {
+						"url": "https://i.ytimg.com/vi/CUJ8Y-9wIDU/default.jpg",
+						"width": 120,
+						"height": 90,
+						"blurhash": {
+							"hash": "V59G%H~W?G^*9Z^+aJMxR*M|019aD*E2$%0LS%tlt7%2",
+							"w": 120,
+							"h": 90,
+							"cX": 5,
+							"cY": 4
+						}
+					},
+					"medium": {
+						"url": "https://i.ytimg.com/vi/CUJ8Y-9wIDU/mqdefault.jpg",
+						"width": 320,
+						"height": 180,
+						"blurhash": {
+							"hash": "V7A,ax~W?G~B9Z~WVsITR*M{KkIWD*Ipv}ENNdW=ozxZ",
+							"w": 320,
+							"h": 180,
+							"cX": 5,
+							"cY": 4
+						}
+					},
+					"high": {
+						"url": "https://i.ytimg.com/vi/CUJ8Y-9wIDU/hqdefault.jpg",
+						"width": 480,
+						"height": 360,
+						"blurhash": {
+							"hash": "V59Z=l~W?G^*9G_2V?IUR*M|019aD*E2-A0KS%x]t7%2",
+							"w": 480,
+							"h": 360,
+							"cX": 5,
+							"cY": 4
+						}
+					},
+					"standard": {
+						"url": "https://i.ytimg.com/vi/CUJ8Y-9wIDU/sddefault.jpg",
+						"width": 640,
+						"height": 480,
+						"blurhash": {
+							"hash": "V59jWD~W?G^*4:_2V?IUR*M|019aD*E2-A0KS%x]t7%2",
+							"w": 640,
+							"h": 480,
+							"cX": 5,
+							"cY": 4
+						}
+					}
+				},
+				"channelTitle": "Linus Tech Tips",
+				"tags": [
+					"NSA",
+					"github",
+					"etherium",
+					"intel",
+					"amd",
+					"war",
+					"threadripper",
+					"epyc",
+					"i9",
+					"i7",
+					"i5",
+					"i3"
+				],
+				"categoryId": "28",
+				"liveBroadcastContent": "none",
+				"defaultLanguage": "en",
+				"localized": {
+					"title": "ONE PLUS 5 CHEATING IN BENCHMARKS - WAN Show June 23, 2017",
+					"description": "Use offer code LTT to get $7 off a Comic Bento today at http://geni.us/1fP4CE\n\nShare your mouse and keyboard between multiple computers with Synergy! Save 50% here: https://symless.com/synergy/linus18\n\nFor your unrestricted 30 days free trial, go to https://www.freshbooks.com/techtips and enter in “The WAN Show” in the how you heard about us section.\n\nGet your LTX 2017 Ticket here: http://www.ticketrocket.co/event/details/97246/ltx-2017\n\nForum link: https://linustechtips.com/main/topic/797775-june-23-2017-the-wan-show-document/\n\nSoundcloud link: https://soundcloud.com/thewanshow/one-plus-5-cheating-in-benchmarks-wan-show-june-23-2017\n\nTimestamps courtesy of Brandon Axtmann and JJMC89.\n\n00:04:25 - iMac Pro may offer server-grade Intel 'Purley' processors with ARM coprocessor\n00:06:50 - AMD's future in servers: new 7000-Series CPUs launched and EPYC analysis\n00:13:09 - OnePlus 5 gets caught cheating at benchmarks\n00:19:54 - NSA Github\n00:22:53 - Ethereum flash crash\n00:27:05 - Netflix interactive TV\n00:31:36 - Sponsor: Synergy\n00:33:54 - Sponsor: Comic Bento\n00:36:09 - Sponsor: Freshbooks\n00:37:15 - LTX 2017\n00:38:15 - [Rumor] Mining graphics cards\n00:42:45 - Windows 10 source code leak\n00:50:00 - Asus releases XG-C100C 10GBASE-T NIC for $99\n00:53:07 - Razer invested $20 million in virtual currency\n00:56:29 - Valve gives Oculus the finger with five finger controller\n00:58:28 - Google launching new line of cameras for VR 180\n01:02:33 - [Rumor] Tesla creating music streaming service\n01:06:39 - RX Vega needs a lot of power\n01:08:22: - Floatplane Club"
 				},
 				"defaultAudioLanguage": "en"
 			}
@@ -29408,6 +30239,100 @@
 				"localized": {
 					"title": "DID LINUS STEAL THE RAZER PROTOTYPE?? - WAN Show January 13, 2017",
 					"description": "iFixit: Head over to https://www.ifixit.com/linus and use offer code WANSHOW to save $5 off a purchase of $10 or more.\n\nFreshbooks: http://freshbooks.com/WAN and enter WAN in the “how did you hear about us” for your free trial \n\nForum link: https://linustechtips.com/main/topic/722638-january-13th-2017-the-wan-show-document/\n\nSoundcloud Link: https://soundcloud.com/thewanshow/did-linus-steal-the-razer-prototype-wan-show-january-13-2017\n\nTimestamps courtesy of JJMC89, Baxtmann and Sam Tilling\n\n00:02:22 - Nintendo Switch \n00:23:15 - Razer project was stolen from CES\n00:30:10 - Sponsor: iFixit\n00:36:00 - Sponsor: Freshbooks\n00:38:15 - Norway Becomes the First Country to Kill FM Radio\n00:43:28 - Nokia 6, Nokia’s First Android Smartphone is Official\n00:44:35 - HDMI 2.1 Announces at CES\n00:45:44 - US Army Wants Biodegradable Bullets that Sprout Plans\n00:47:10 - Consumer Reports Now Recommends the Macbook Pro\n00:49:35 - Slack Brings Their App to Windows Store for PCs\n00:50:00 - Chrysler Pulls a VW, Cheats Emissions Tests\n00:52:00 - (RUMOR) 1080ti Possible PAX East Release?\n00:56:05 - Floatplane club"
+				},
+				"defaultAudioLanguage": "en"
+			}
+		}
+	},
+	{
+		"name": "2017/01/06",
+		"metadata": {
+			"title": "HANDS ON AMD RYZEN & DELL 8K MONITOR",
+			"mainShowLength": 4187000,
+			"vods": {
+				"youtube": "uechD2E7f68"
+			},
+			"snippet": {
+				"publishedAt": "2017-01-07T11:44:49Z",
+				"channelId": "UCXuqSBlHAE6Xw-yeJA0Tunw",
+				"title": "HANDS ON AMD RYZEN & DELL 8K MONITOR - WAN Show January 6, 2017",
+				"description": "Forum link: https://linustechtips.com/main/topic/719046-january-6-2017-the-wan-show-document/\n\nFollow Austin Evans:\nYouTube: https://www.youtube.com/user/duncan33303\nTwitter: https://twitter.com/austinnotduncan\n\nSponsors:\n\nFreshbooks: Thanks to Freshbooks for sponsoring this video! Head over to http://freshbooks.com/techtips and don’t forget to enter Linus Tech Tips in the “How Did You Hear About Us” section when signing up for your free trial.\n\nSquarespace: Thanks to Squarespace for sponsoring this video! Head over to http://squarespace.com/ces for a free trial, and use offer code CES17 for 10% your first purchase\n\nAMD: Thanks to AMD for sponsoring this video! Learn more about Radeon Vega: http://ve.ga Follow AMD Radeon on Facebook: http://facebook.com/Radeon Learn more about Ryzen: http://www.amd.com/en-us/innovations/new-horizon\n   \nDBrand: Thanks to DBrand for sponsoring this CES video! Check out their awesome skins at www.dbrand.com/linusCES\n\nSymless: Save 25% off Synergy at http://symless.com/synergy/linus\n\nTimestamps courtesy of Brandon Axtmann, & JJMC89\n\n0:00:00 Wan Show start\n0:06:25 AMD RYZEN\n0:10:15 RYZEN vs 6900k in Battlefield 1\n0:18:25 AMD VEGA\n0:20:10 TV's\n0:36:50 Dell 8k monitor\n0:43:20 SPONSORS\n0:46:16 razer project Valerie\n0:51:50 predator 21x\n0:56:39 faraday future\n1:03:50 LG modular smartphone is dead",
+				"thumbnails": {
+					"default": {
+						"url": "https://i.ytimg.com/vi/uechD2E7f68/default.jpg",
+						"width": 120,
+						"height": 90,
+						"blurhash": {
+							"hash": "V5BfnX^+~9%2OA=]ahoGxttR01t6E2xt$*PD%KN1NZa0",
+							"w": 120,
+							"h": 90,
+							"cX": 5,
+							"cY": 4
+						}
+					},
+					"medium": {
+						"url": "https://i.ytimg.com/vi/uechD2E7f68/mqdefault.jpg",
+						"width": 320,
+						"height": 180,
+						"blurhash": {
+							"hash": "V7Db.$?b~8$+JP^HV]s%%1x[.S-:M{-o$$.T%KMyS1r?",
+							"w": 320,
+							"h": 180,
+							"cX": 5,
+							"cY": 4
+						}
+					},
+					"high": {
+						"url": "https://i.ytimg.com/vi/uechD2E7f68/hqdefault.jpg",
+						"width": 480,
+						"height": 360,
+						"blurhash": {
+							"hash": "V5Byst?b~8$+JP=rV^oGxatR01xZE2xt-APD%KN2NZVs",
+							"w": 480,
+							"h": 360,
+							"cX": 5,
+							"cY": 4
+						}
+					},
+					"standard": {
+						"url": "https://i.ytimg.com/vi/uechD2E7f68/sddefault.jpg",
+						"width": 640,
+						"height": 480,
+						"blurhash": {
+							"hash": "V5B:EL?b~8xbJP=rV^oGxatR01xZE2%1-APD%KN2NZVs",
+							"w": 640,
+							"h": 480,
+							"cX": 5,
+							"cY": 4
+						}
+					}
+				},
+				"channelTitle": "Linus Tech Tips",
+				"tags": [
+					"Dell",
+					"8K",
+					"Monitor",
+					"CES",
+					"HDMI 2.1",
+					"Acer",
+					"Predator 21X",
+					"HDR",
+					"TV",
+					"QLED",
+					"Samsung",
+					"LG",
+					"AMD",
+					"VEGA",
+					"RYZEN",
+					"unboxing",
+					"review",
+					"podcast"
+				],
+				"categoryId": "28",
+				"liveBroadcastContent": "none",
+				"localized": {
+					"title": "HANDS ON AMD RYZEN & DELL 8K MONITOR - WAN Show January 6, 2017",
+					"description": "Forum link: https://linustechtips.com/main/topic/719046-january-6-2017-the-wan-show-document/\n\nFollow Austin Evans:\nYouTube: https://www.youtube.com/user/duncan33303\nTwitter: https://twitter.com/austinnotduncan\n\nSponsors:\n\nFreshbooks: Thanks to Freshbooks for sponsoring this video! Head over to http://freshbooks.com/techtips and don’t forget to enter Linus Tech Tips in the “How Did You Hear About Us” section when signing up for your free trial.\n\nSquarespace: Thanks to Squarespace for sponsoring this video! Head over to http://squarespace.com/ces for a free trial, and use offer code CES17 for 10% your first purchase\n\nAMD: Thanks to AMD for sponsoring this video! Learn more about Radeon Vega: http://ve.ga Follow AMD Radeon on Facebook: http://facebook.com/Radeon Learn more about Ryzen: http://www.amd.com/en-us/innovations/new-horizon\n   \nDBrand: Thanks to DBrand for sponsoring this CES video! Check out their awesome skins at www.dbrand.com/linusCES\n\nSymless: Save 25% off Synergy at http://symless.com/synergy/linus\n\nTimestamps courtesy of Brandon Axtmann, & JJMC89\n\n0:00:00 Wan Show start\n0:06:25 AMD RYZEN\n0:10:15 RYZEN vs 6900k in Battlefield 1\n0:18:25 AMD VEGA\n0:20:10 TV's\n0:36:50 Dell 8k monitor\n0:43:20 SPONSORS\n0:46:16 razer project Valerie\n0:51:50 predator 21x\n0:56:39 faraday future\n1:03:50 LG modular smartphone is dead"
 				},
 				"defaultAudioLanguage": "en"
 			}
@@ -33195,6 +34120,102 @@
 		}
 	},
 	{
+		"name": "2016/03/04",
+		"metadata": {
+			"title": " Macs Can't Handle VR!!",
+			"mainShowLength": 4348000,
+			"vods": {
+				"youtube": "ig-ZcXY6qJk"
+			},
+			"snippet": {
+				"publishedAt": "2016-03-05T08:27:12Z",
+				"channelId": "UCXuqSBlHAE6Xw-yeJA0Tunw",
+				"title": "The WAN Show - Macs Can't Handle VR!! - Mar 4, 2016",
+				"description": "https://linustechtips.com/main/topic/559828-mar-4-2016-the-wan-show-document/\n\nSponsors!\n\nLynda.com Link: http://lynda.com/wanshow for a 10 day free trial\n\nJoin Dollar Shave Club: http://dollarshaveclub.com/linus\n\nSquarespace: http://squarespace.com/linus, offer code LINUS to save 10%.\n\nSoundcloud Link: https://soundcloud.com/thewanshow/the-wan-show-macs-cant-handle-vr-mar-4-2016\n\nTimestamps courtesy of Sam Tilling (IPickle), Brandon Axtmann, JJMC89 & Ghost.\n\n00:03:55 HTC Vive sells 15K units in 10 minutes.\n00:13:37 Samsung ships the world’s highest capacity SSD, with 15TB of storage.\n00:24:25  Oculus - Palmer Luckey: Rift will come to Mac if Apple “ever release a good computer”.\n00:28:55  Windows Store Games have Serious Limitations: won’t have VSync off, SLI/CrossFire, Fullscreen or Modding.\n00:34:25 Sponsor: Lynda.com\n00:36:20 Sponsor: Squarespace\n00:38:40 Sponsor: Dollar Shave Club\n00:41:10 John McAfee Reveals to FBI, On National TV, How to crack the iPhone (He doesn’t know how iPhones work)\n00:48:45 Showcase of the painted 980TI.\n00:59:40 Dow Chemicals & DuPont Merger.\n01:03:05 Apple patents magnetically detachable wireless earbuds for iPhone.\n01:04:55 #heruinedit\n01:06:15 ‘Happy Goggles’: McDonald’s Happy Meal box folds into a virtual reality headset.\n01:07:50 Quantum Break’s cutscenes require an internet connection to stream.\n01:09:22 Stream PS4 games to your PC or MAC with next system update.\n01:11:03 Far Cry Primal Map = Same Map as Farcry 4?",
+				"thumbnails": {
+					"default": {
+						"url": "https://i.ytimg.com/vi/ig-ZcXY6qJk/default.jpg",
+						"width": 120,
+						"height": 90,
+						"blurhash": {
+							"hash": "VCAv|Ls:D%s.E1DifkRjWCkC9ajuoJayxZ_Nj[jsfkV@",
+							"w": 120,
+							"h": 90,
+							"cX": 5,
+							"cY": 4
+						}
+					},
+					"medium": {
+						"url": "https://i.ytimg.com/vi/ig-ZcXY6qJk/mqdefault.jpg",
+						"width": 320,
+						"height": 180,
+						"blurhash": {
+							"hash": "VACiw4s:9Fs.4.00kCM{WBkW_Ns:MxjYwI_NkCM{WCa0",
+							"w": 320,
+							"h": 180,
+							"cX": 5,
+							"cY": 4
+						}
+					},
+					"high": {
+						"url": "https://i.ytimg.com/vi/ig-ZcXY6qJk/hqdefault.jpg",
+						"width": 480,
+						"height": 360,
+						"blurhash": {
+							"hash": "VCB3mIs:D%oLE19Fj]RjWVf+9aoLoJay$%_NbGj[f8aK",
+							"w": 480,
+							"h": 360,
+							"cX": 5,
+							"cY": 4
+						}
+					},
+					"standard": {
+						"url": "https://i.ytimg.com/vi/ig-ZcXY6qJk/sddefault.jpg",
+						"width": 640,
+						"height": 480,
+						"blurhash": {
+							"hash": "VCB3mIs:D%oKE19Fj]Rjayf+9aoLoJay$%_NbGj[a#aK",
+							"w": 640,
+							"h": 480,
+							"cX": 5,
+							"cY": 4
+						}
+					}
+				},
+				"channelTitle": "Linus Tech Tips",
+				"tags": [
+					"HTC",
+					"Vive",
+					"Samsung",
+					"SSD",
+					"Windows Store",
+					"Oculus",
+					"Rift",
+					"McAfee",
+					"iPhone",
+					"FBI",
+					"Dow Chemicals",
+					"DuPont Merger",
+					"Quantum Break",
+					"Happy Goggles",
+					"McDonalds",
+					"PS4",
+					"Stream",
+					"Gaming",
+					"unboxing",
+					"review",
+					"podcast"
+				],
+				"categoryId": "28",
+				"liveBroadcastContent": "none",
+				"localized": {
+					"title": "The WAN Show - Macs Can't Handle VR!! - Mar 4, 2016",
+					"description": "https://linustechtips.com/main/topic/559828-mar-4-2016-the-wan-show-document/\n\nSponsors!\n\nLynda.com Link: http://lynda.com/wanshow for a 10 day free trial\n\nJoin Dollar Shave Club: http://dollarshaveclub.com/linus\n\nSquarespace: http://squarespace.com/linus, offer code LINUS to save 10%.\n\nSoundcloud Link: https://soundcloud.com/thewanshow/the-wan-show-macs-cant-handle-vr-mar-4-2016\n\nTimestamps courtesy of Sam Tilling (IPickle), Brandon Axtmann, JJMC89 & Ghost.\n\n00:03:55 HTC Vive sells 15K units in 10 minutes.\n00:13:37 Samsung ships the world’s highest capacity SSD, with 15TB of storage.\n00:24:25  Oculus - Palmer Luckey: Rift will come to Mac if Apple “ever release a good computer”.\n00:28:55  Windows Store Games have Serious Limitations: won’t have VSync off, SLI/CrossFire, Fullscreen or Modding.\n00:34:25 Sponsor: Lynda.com\n00:36:20 Sponsor: Squarespace\n00:38:40 Sponsor: Dollar Shave Club\n00:41:10 John McAfee Reveals to FBI, On National TV, How to crack the iPhone (He doesn’t know how iPhones work)\n00:48:45 Showcase of the painted 980TI.\n00:59:40 Dow Chemicals & DuPont Merger.\n01:03:05 Apple patents magnetically detachable wireless earbuds for iPhone.\n01:04:55 #heruinedit\n01:06:15 ‘Happy Goggles’: McDonald’s Happy Meal box folds into a virtual reality headset.\n01:07:50 Quantum Break’s cutscenes require an internet connection to stream.\n01:09:22 Stream PS4 games to your PC or MAC with next system update.\n01:11:03 Far Cry Primal Map = Same Map as Farcry 4?"
+				}
+			}
+		}
+	},
+	{
 		"name": "2016/02/26",
 		"metadata": {
 			"title": " Is Piracy's Latest Victim.. LINUX???",
@@ -34847,6 +35868,7 @@
 		"name": "2015/10/23",
 		"metadata": {
 			"title": " YouTube Red.. Communism??",
+			"mainShowLength": 5027000,
 			"vods": {
 				"youtube": "cytwZTl2R9I"
 			},
@@ -35300,6 +36322,97 @@
 		}
 	},
 	{
+		"name": "2015/09/18",
+		"metadata": {
+			"title": " Doom & Gloom for AMD & an 8K TV! ",
+			"mainShowLength": 4902000,
+			"vods": {
+				"youtube": "uRQCDsrCQu0"
+			},
+			"snippet": {
+				"publishedAt": "2015-09-19T07:54:06Z",
+				"channelId": "UCXuqSBlHAE6Xw-yeJA0Tunw",
+				"title": "The WAN Show - Doom & Gloom for AMD & an 8K TV!  - September 18, 2015",
+				"description": "http://linustechtips.com/main/topic/452489-september-18-2015-the-wan-show-document/\n\nSponsors!\n\nSquarespace: http://squarespace.com/linus, offer code LINUS to save 10%.\n\nTunnelBear: http://tunnelbear.com/LTT - Browse privately and get your first 500MB for free!\n\niFixIt link: http://ifixit.com/Linus - Offer code WANSHOW\n\nSoundcloud Link: https://soundcloud.com/thewanshow/the-wan-show-doom-gloom-for-amd-an-8k-tv-september-18-2015\n\nSamsung S6 Edge+ phone giveaway link: http://linustechtips.com/main/topic/452296-samsung-galaxy-s6-edge-giveaway/\n\nTImestamps courtesy of Sam Tilling, cloclo8003, hihi217 and Ghost\n\n00:05:10 - Surface Pro 4 and new Windows 10 mobile phones may be revealed on October 6\n00:09:23 - First 8K TV to be put on sale by Sharp in October\n00:16:30 - Nvidia Gamestream Co-Op has entered beta\n00:31:57 - 14 year-old Ahmed Mohamed got arrested for building a clock\n00:36:40 - Qualcomm introduces Quick Charge 3.0\n00:44:10 - Computers don't improve results in school\n00:52:40 - Intel launches automotive security review board to ensure cybersecurity of cars\n00:54:45 - Sponsor: Squarespace\n00:56:20 - Sponsor: Tunnelbear\n00:58:18 - Sponsor: iFixit\n01:00:50 - Robot ethicist calls for sex robot ban\n01:04:40 - Sony Z5 Premium only renders media in 4k, everything else in 1080p for a \"2-day\" battery\n01:08:52 - AMD’s Jim Keller has left, is AMD really doomed?\n01:13:15 - Epson \"empty\" ink cartriges are actually still 20% full\n01:17:20 - Blackberry \"Venice\" Android phone pictures leaked\n01:19:35 - Google accidentally launches climate change feature",
+				"thumbnails": {
+					"default": {
+						"url": "https://i.ytimg.com/vi/uRQCDsrCQu0/default.jpg",
+						"width": 120,
+						"height": 90,
+						"blurhash": {
+							"hash": "V6ATTQ~CIV%MD*$ws:D%R*Rj00NGt8RQxa?vWqs.xGae",
+							"w": 120,
+							"h": 90,
+							"cX": 5,
+							"cY": 4
+						}
+					},
+					"medium": {
+						"url": "https://i.ytimg.com/vi/uRQCDsrCQu0/mqdefault.jpg",
+						"width": 320,
+						"height": 180,
+						"blurhash": {
+							"hash": "VCC6li?HIV%2IUs6ofITS2Rjbeoya%jGoL~pWXMwofRP",
+							"w": 320,
+							"h": 180,
+							"cX": 5,
+							"cY": 4
+						}
+					},
+					"high": {
+						"url": "https://i.ytimg.com/vi/uRQCDsrCQu0/hqdefault.jpg",
+						"width": 480,
+						"height": 360,
+						"blurhash": {
+							"hash": "V5Ambw~VD*-:9Zw?s:D$S1NG00I:t8RQ%1_NS4xZxGae",
+							"w": 480,
+							"h": 360,
+							"cX": 5,
+							"cY": 4
+						}
+					},
+					"standard": {
+						"url": "https://i.ytimg.com/vi/uRQCDsrCQu0/sddefault.jpg",
+						"width": 640,
+						"height": 480,
+						"blurhash": {
+							"hash": "V5Ambw~VD*-:9ZwYs:D$S2Rj00I:t8RQ%1_NS4xZxGae",
+							"w": 640,
+							"h": 480,
+							"cX": 5,
+							"cY": 4
+						}
+					}
+				},
+				"channelTitle": "Linus Tech Tips",
+				"tags": [
+					"Advanced Micro Devices (Venture Funded Company)",
+					"Zen",
+					"Jim Keller",
+					"8K Resolution",
+					"Television (Invention)",
+					"Computer",
+					"Game",
+					"Car",
+					"security",
+					"epson",
+					"ink",
+					"gamestream",
+					"coop",
+					"surface pro 4",
+					"qualcomm",
+					"quick charge"
+				],
+				"categoryId": "28",
+				"liveBroadcastContent": "none",
+				"localized": {
+					"title": "The WAN Show - Doom & Gloom for AMD & an 8K TV!  - September 18, 2015",
+					"description": "http://linustechtips.com/main/topic/452489-september-18-2015-the-wan-show-document/\n\nSponsors!\n\nSquarespace: http://squarespace.com/linus, offer code LINUS to save 10%.\n\nTunnelBear: http://tunnelbear.com/LTT - Browse privately and get your first 500MB for free!\n\niFixIt link: http://ifixit.com/Linus - Offer code WANSHOW\n\nSoundcloud Link: https://soundcloud.com/thewanshow/the-wan-show-doom-gloom-for-amd-an-8k-tv-september-18-2015\n\nSamsung S6 Edge+ phone giveaway link: http://linustechtips.com/main/topic/452296-samsung-galaxy-s6-edge-giveaway/\n\nTImestamps courtesy of Sam Tilling, cloclo8003, hihi217 and Ghost\n\n00:05:10 - Surface Pro 4 and new Windows 10 mobile phones may be revealed on October 6\n00:09:23 - First 8K TV to be put on sale by Sharp in October\n00:16:30 - Nvidia Gamestream Co-Op has entered beta\n00:31:57 - 14 year-old Ahmed Mohamed got arrested for building a clock\n00:36:40 - Qualcomm introduces Quick Charge 3.0\n00:44:10 - Computers don't improve results in school\n00:52:40 - Intel launches automotive security review board to ensure cybersecurity of cars\n00:54:45 - Sponsor: Squarespace\n00:56:20 - Sponsor: Tunnelbear\n00:58:18 - Sponsor: iFixit\n01:00:50 - Robot ethicist calls for sex robot ban\n01:04:40 - Sony Z5 Premium only renders media in 4k, everything else in 1080p for a \"2-day\" battery\n01:08:52 - AMD’s Jim Keller has left, is AMD really doomed?\n01:13:15 - Epson \"empty\" ink cartriges are actually still 20% full\n01:17:20 - Blackberry \"Venice\" Android phone pictures leaked\n01:19:35 - Google accidentally launches climate change feature"
+				}
+			}
+		}
+	},
+	{
 		"name": "2015/09/11",
 		"metadata": {
 			"title": " NO MORE TECHNICAL DIFFICULTIES!!",
@@ -35391,9 +36504,96 @@
 		}
 	},
 	{
+		"name": "2015/09/04",
+		"metadata": {
+			"title": " AMD and NVIDIA at it Again!",
+			"mainShowLength": 4874000,
+			"vods": {
+				"youtube": "39hFmrZPimQ"
+			},
+			"snippet": {
+				"publishedAt": "2015-09-05T08:40:34Z",
+				"channelId": "UCXuqSBlHAE6Xw-yeJA0Tunw",
+				"title": "The WAN Show - AMD and NVIDIA at it Again! - September 4, 2015",
+				"description": "http://linustechtips.com/main/topic/444331-the-wan-show-amd-and-nvidia-at-it-again-september-4-2015/\n\nSponsors!\n\nLynda.com Link: http://lynda.com/wanshow for a 10 day free trial\n\nSquarespace: http://squarespace.com/linus, offer code LINUS to save 10%.\n\nSoundcloud Link: https://soundcloud.com/thewanshow/the-wan-show-amd-and-nvidia-at-it-again-september-4-2015\n\nTimestamps courtesy of CP\n\n00:08:15 - Netflix is dropping thousands of titles\n00:12:15 - High-tech Gladiator fights approach reality\n00:19:09 - New federal requirements on surveillance\n00:24:18 - GDDR5X\n00:29:40 - Wikipedia editors turn to blackmail\n00:32:29 - EVGA will soon enter the market of gaming notebooks\n00:36:21 - ASUS Refreshes ROG Laptops With G752 and Liquid Cooled GX700 Series\n00:40:34 - Moto 360 (2015) Hands On: Design First, Tech Second\n00:45:05 - Sponsor - Lynda.com\n00:46:40 - Sponsor - SquareSpace\n00:48:48 - New Google logo (https://strawpoll.me/5402628/r)\n00:57:00 - ASUS unveils GTX 980 Ti Matrix Platinum\n00:59:46 - Ashes of the Singularity DX12\n01:06:16 - Samsung launches Care Mode for Galaxy app\n01:15:20 - Windows 10 activation rules change (https://strawpoll.me/5402773/r)",
+				"thumbnails": {
+					"default": {
+						"url": "https://i.ytimg.com/vi/39hFmrZPimQ/default.jpg",
+						"width": 120,
+						"height": 90,
+						"blurhash": {
+							"hash": "V7Cri~~DDj=fbJ5lShS2S2EL00em%1EexCyXW-VssV=|",
+							"w": 120,
+							"h": 90,
+							"cX": 5,
+							"cY": 4
+						}
+					},
+					"medium": {
+						"url": "https://i.ytimg.com/vi/39hFmrZPimQ/mqdefault.jpg",
+						"width": 320,
+						"height": 180,
+						"blurhash": {
+							"hash": "V9En*V~DDj]:S60}S5S3N[9trC-AwII.-9HWNtMxja$*",
+							"w": 320,
+							"h": 180,
+							"cX": 5,
+							"cY": 4
+						}
+					},
+					"high": {
+						"url": "https://i.ytimg.com/vi/39hFmrZPimQ/hqdefault.jpg",
+						"width": 480,
+						"height": 360,
+						"blurhash": {
+							"hash": "V7C=rT~DDj=fS61ISOS2SLEK00i^%1Ee$fyqW-V@sC=|",
+							"w": 480,
+							"h": 360,
+							"cX": 5,
+							"cY": 4
+						}
+					},
+					"standard": {
+						"url": "https://i.ytimg.com/vi/39hFmrZPimQ/sddefault.jpg",
+						"width": 640,
+						"height": 480,
+						"blurhash": {
+							"hash": "V7C=rU~DDj=fS61IS5S2SLEK00i^%1Ee$gyqW-V@sC=|",
+							"w": 640,
+							"h": 480,
+							"cX": 5,
+							"cY": 4
+						}
+					}
+				},
+				"channelTitle": "Linus Tech Tips",
+				"tags": [
+					"Nvidia (Venture Funded Company)",
+					"Advanced Micro Devices (Venture Funded Company)",
+					"Overclocking (Hobby)",
+					"Computer",
+					"google",
+					"netflix",
+					"moto 360",
+					"GDDR5X",
+					"Gladiator fights",
+					"tech",
+					"Ashes of the Singularity"
+				],
+				"categoryId": "28",
+				"liveBroadcastContent": "none",
+				"localized": {
+					"title": "The WAN Show - AMD and NVIDIA at it Again! - September 4, 2015",
+					"description": "http://linustechtips.com/main/topic/444331-the-wan-show-amd-and-nvidia-at-it-again-september-4-2015/\n\nSponsors!\n\nLynda.com Link: http://lynda.com/wanshow for a 10 day free trial\n\nSquarespace: http://squarespace.com/linus, offer code LINUS to save 10%.\n\nSoundcloud Link: https://soundcloud.com/thewanshow/the-wan-show-amd-and-nvidia-at-it-again-september-4-2015\n\nTimestamps courtesy of CP\n\n00:08:15 - Netflix is dropping thousands of titles\n00:12:15 - High-tech Gladiator fights approach reality\n00:19:09 - New federal requirements on surveillance\n00:24:18 - GDDR5X\n00:29:40 - Wikipedia editors turn to blackmail\n00:32:29 - EVGA will soon enter the market of gaming notebooks\n00:36:21 - ASUS Refreshes ROG Laptops With G752 and Liquid Cooled GX700 Series\n00:40:34 - Moto 360 (2015) Hands On: Design First, Tech Second\n00:45:05 - Sponsor - Lynda.com\n00:46:40 - Sponsor - SquareSpace\n00:48:48 - New Google logo (https://strawpoll.me/5402628/r)\n00:57:00 - ASUS unveils GTX 980 Ti Matrix Platinum\n00:59:46 - Ashes of the Singularity DX12\n01:06:16 - Samsung launches Care Mode for Galaxy app\n01:15:20 - Windows 10 activation rules change (https://strawpoll.me/5402773/r)"
+				}
+			}
+		}
+	},
+	{
 		"name": "2015/08/21",
 		"metadata": {
 			"title": " Broadcasting Live from the LMG Meet Up!",
+			"mainShowLength": 5060000,
 			"vods": {
 				"youtube": "QikYb7D7COI"
 			},
@@ -36584,6 +37784,97 @@
 		}
 	},
 	{
+		"name": "2015/05/08",
+		"metadata": {
+			"title": " Windows 10 the LAST Windows & Apple Anti-Competitive?? ",
+			"mainShowLength": 5468000,
+			"vods": {
+				"youtube": "YJta8Zpb9s0"
+			},
+			"snippet": {
+				"publishedAt": "2015-05-09T06:11:39Z",
+				"channelId": "UCXuqSBlHAE6Xw-yeJA0Tunw",
+				"title": "The WAN Show - Windows 10 the LAST Windows & Apple Anti-Competitive??  - May 8, 2015",
+				"description": "http://linustechtips.com/main/topic/363108-may-8-2015-the-wan-show-document/\n\nSponsors!\n\nLynda.com Link: http://lynda.com/wanshow for a 10 day free trial\n\nMassdrop link: http://dro.ps/WANshow - Sweet deals on all kinds of cool stuff!\n\nFreshbooks: Head over to http://freshbooks.com/wan and don’t forget to enter WAN in the “How Did You Hear About Us” section when signing up for your free trial.\n\nSoundcloud Link: https://soundcloud.com/thewanshow/the-wan-show-windows-10-the-last-windows-apple-anti-competitive-may-8-2015\n\nTimestamps courtesy of Ghost (deadfire19) & JJMC89\n\n00:03:45 - Channel Superfun discussion\n00:08:28 - Why Microsoft is calling Windows 10 \"the last version of Windows\"\n00:18:23 - Apple wants to kill free music streaming apps like Spotify ahead of Beats relaunch\n00:26:30 - GOG Galaxy client now in open beta!\n00:34:25 - Twitter Blitz discussion about Spotify\n00:39:38 - Star Wars Battlefront will not have iron sights, hip fire only\n00:43:00 - Jewelers start gold plating Apple Watch to undercut Apple’s pricey Edition models\n00:51:25 - Star Wars Battlefront (cont.)\n00:53:05 - Sponsor - Lynda.com\n00:54:30 - Sponsor - Freshbooks.com\n00:56:07 - Sponsor - Massdrop\n00:58:22 - Fixstars unveils 6TB 2.5” SSD\n01:01:53 - ASUS recalls MG279Q AMD FreeSync Display\n01:04:39 - Tesla now selling used electric cars\n01:10:30 - Feedback on the return of unboxings\n01:19:44 - Nintendo to make a theme park\n01:25:23 - EVGA releases DDR3 and DDR4 memory",
+				"thumbnails": {
+					"default": {
+						"url": "https://i.ytimg.com/vi/YJta8Zpb9s0/default.jpg",
+						"width": 120,
+						"height": 90,
+						"blurhash": {
+							"hash": "VADS{..8Sv.7o|_Lj]x[oztQ00M{s:R6a1RXaeIBV[Mx",
+							"w": 120,
+							"h": 90,
+							"cX": 5,
+							"cY": 4
+						}
+					},
+					"medium": {
+						"url": "https://i.ytimg.com/vi/YJta8Zpb9s0/mqdefault.jpg",
+						"width": 320,
+						"height": 180,
+						"blurhash": {
+							"hash": "VEFPQg-=Sb.7gL_LbIx[oztRD*jFoLV@aK?caeIUafM{",
+							"w": 320,
+							"h": 180,
+							"cX": 5,
+							"cY": 4
+						}
+					},
+					"high": {
+						"url": "https://i.ytimg.com/vi/YJta8Zpb9s0/hqdefault.jpg",
+						"width": 480,
+						"height": 360,
+						"blurhash": {
+							"hash": "V9Dcgi?bSb.7b[_LbIx[oztR00Mys;MyeURXaeD*aLMx",
+							"w": 480,
+							"h": 360,
+							"cX": 5,
+							"cY": 4
+						}
+					},
+					"standard": {
+						"url": "https://i.ytimg.com/vi/YJta8Zpb9s0/sddefault.jpg",
+						"width": 640,
+						"height": 480,
+						"blurhash": {
+							"hash": "V9Dcgi?bSb.7b[_LbIx[oztR00Mys;MyixRXadD*aLMx",
+							"w": 640,
+							"h": 480,
+							"cX": 5,
+							"cY": 4
+						}
+					}
+				},
+				"channelTitle": "Linus Tech Tips",
+				"tags": [
+					"Windows 10",
+					"Microsoft Windows (Operating System)",
+					"Apple Inc. (Publisher)",
+					"music",
+					"beats",
+					"streaming",
+					"tesla",
+					"used",
+					"model s",
+					"battlefront",
+					"star wars",
+					"nintendo",
+					"theme park",
+					"nintendo land",
+					"gaming",
+					"technology"
+				],
+				"categoryId": "19",
+				"liveBroadcastContent": "none",
+				"localized": {
+					"title": "The WAN Show - Windows 10 the LAST Windows & Apple Anti-Competitive??  - May 8, 2015",
+					"description": "http://linustechtips.com/main/topic/363108-may-8-2015-the-wan-show-document/\n\nSponsors!\n\nLynda.com Link: http://lynda.com/wanshow for a 10 day free trial\n\nMassdrop link: http://dro.ps/WANshow - Sweet deals on all kinds of cool stuff!\n\nFreshbooks: Head over to http://freshbooks.com/wan and don’t forget to enter WAN in the “How Did You Hear About Us” section when signing up for your free trial.\n\nSoundcloud Link: https://soundcloud.com/thewanshow/the-wan-show-windows-10-the-last-windows-apple-anti-competitive-may-8-2015\n\nTimestamps courtesy of Ghost (deadfire19) & JJMC89\n\n00:03:45 - Channel Superfun discussion\n00:08:28 - Why Microsoft is calling Windows 10 \"the last version of Windows\"\n00:18:23 - Apple wants to kill free music streaming apps like Spotify ahead of Beats relaunch\n00:26:30 - GOG Galaxy client now in open beta!\n00:34:25 - Twitter Blitz discussion about Spotify\n00:39:38 - Star Wars Battlefront will not have iron sights, hip fire only\n00:43:00 - Jewelers start gold plating Apple Watch to undercut Apple’s pricey Edition models\n00:51:25 - Star Wars Battlefront (cont.)\n00:53:05 - Sponsor - Lynda.com\n00:54:30 - Sponsor - Freshbooks.com\n00:56:07 - Sponsor - Massdrop\n00:58:22 - Fixstars unveils 6TB 2.5” SSD\n01:01:53 - ASUS recalls MG279Q AMD FreeSync Display\n01:04:39 - Tesla now selling used electric cars\n01:10:30 - Feedback on the return of unboxings\n01:19:44 - Nintendo to make a theme park\n01:25:23 - EVGA releases DDR3 and DDR4 memory"
+				}
+			}
+		}
+	},
+	{
 		"name": "2015/05/01",
 		"metadata": {
 			"title": " Paid SKYRIM Mods Are Gone! & Apple Watch Costs $85 :p",
@@ -37266,6 +38557,94 @@
 				"localized": {
 					"title": "The WAN Show - WHAT Was Apple THINKING?? with Guest Jon Rettinger! - Mar 13, 2015",
 					"description": "http://linustechtips.com/main/topic/327839-march-13-2015-the-wan-show-document/\n\nSponsors!\n\nLynda.com Link: http://lynda.com/wanshow for a 10 day free trial\n\nSquarespace Link: http://squarespace.com/linus - Offer code Linus to save 10%\n\nJoin Dollar Shave Club: http://dollarshaveclub.com/linus\n\nSoundcloud Link: https://soundcloud.com/thewanshow/the-wan-show-what-was-apple-thinking-with-guest-jon-rettinger-mar-13-2015\n\nTimestamps courtesy of Ghost (deadfire19), FlighterLuid, cloclo8003 & JJMC89\n\n00:01:18 Apple Watch\n00:11:04 New MacBook\n00:25:19 John leaves the stream, plug for his channel\n00:28:04 Intro\n00:28:52 Additional Apple Event coverage\n00:34:41 Apple Watch Editions 18k gold has, on a volume basis, less gold than regular 18k gold\n00:39:40 AVG develops glasses that can protect the wearer’s identity from facial recognition software\n00:42:37 AMD to benefit, over time, as China lifts ban on game console sales\n00:45:20 Facebook “feeling fat” emoji is no longer\n00:48:59 Apple’s ResearchKit did in 24 hours what would normally take 50 medical centers a year\n00:54:32 Sponsor spot - Lynda.com\n00:55:45 Sponsor spot - Squarespace\n00:57:36 Sponsor spot - Dollar Shave Club\n01:00:50 Valve was given a 'F' in customer service by the BBB \n01:06:01 The SSD Endurance Experiment: Finally, They Are All Dead\n01:12:41 New shirt design - \"Sleep is for Pussies\" - Ends 31/3/2015 - http://teespring.com/sifp\n01:15:06 [RUMOR] MediaTek to license AMD graphics\n01:16:27 DirectX 12 AMD and NVIDIA Multi-GPU configurations confirmed\n01:19:05 Shoutouts to everyone who posted topics used in this week's WAN Show\n01:19:31 FCC released rules it intends to use to protect the “new” open internet - long-form document\n01:20:12 New Chromebook Pixel + Star Citizen client to be around 100GB\n01:20:23 Show wrapup"
+				}
+			}
+		}
+	},
+	{
+		"name": "2015/03/06",
+		"metadata": {
+			"title": " CRAZY NVIDIA and Valve News! Titan X and More!",
+			"mainShowLength": 6122000,
+			"vods": {
+				"youtube": "7d_FkKYMSfo"
+			},
+			"snippet": {
+				"publishedAt": "2015-03-07T08:38:49Z",
+				"channelId": "UCXuqSBlHAE6Xw-yeJA0Tunw",
+				"title": "The WAN Show - CRAZY NVIDIA and Valve News! Titan X and More! - Mar 6, 2015",
+				"description": "http://linustechtips.com/main/topic/323584-march-6-2015-the-wan-show-document/?p=4397324\n\nSponsors!\n\nLynda.com Link: http://lynda.com/wanshow for a 10 day free trial\n\nPAX East Coverage: http://youtube.com/kingstonhyperx\n\nLootcrate Link: http://lootcrate.com/linus - Offer code Linus to save 10%\n\nSoundcloud Link: https://soundcloud.com/thewanshow/the-wan-show-crazy-nvidia-and-valve-news-titan-x-and-more-mar-6-2015\n\nTimestamps courtesy of Ghost (deadfire19), FlighterLuid, cloclo8003 & JJMC89\n\n00:01:53 Topic callouts\n00:04:47 Luke joins the show!\n00:06:15 Luke's experience at PAX so far\n00:07:40 Up close look at the Titan X\n00:09:36 Quick note about Vessel\n00:12:27 Politicians are STILL trying to kill net neutrality in the US with “Internet Freedom Act”\n00:13:32 Stream crash\n00:14:01 Back to \"Internet Freedom Act\"\n00:16:55 Official AMD FreeSync launch\n00:18:28 Valve's Steam Machines will officially launch November 2015, Source 2 announced\n00:26:03 Final Steam Controller design\n00:28:53 Teasers for upcoming videos\n00:30:04 Back to Valve news + talk\n00:31:51 NVIDIA's press conference\n00:36:08 Mantle SDK available to everyone in March 2015\n00:37:45 [RUMOR] Google reportedly preparing Android Wear for iOS\n00:39:41 Pebble Time Steel + Pebble Smart Straps\n00:44:37 NVIDIA Titan X\n00:53:19 NVIDIA annouced the Shield (console)\n00:59:53 At what price would you subscribe to NVIDIA GRID Premium?\n01:01:41 HBO streaming service, HBO Now\n01:02:33 Strawpoll - http://strawpoll.me/3807546\n01:08:51 Sponsor spot - Lynda.com\n01:10:19 Sponsor spot - PAX East 2015 powered by HyperX\n01:10:59 Sponsor spot - Lootcrate + unboxing\n01:19:05 WhatsApp now bans users who use 3rd party apps\n01:20:14 Huawei to manufacture the next Nexus device\n01:23:16 Gabe Newell - 0% of people get motion sick using the Vive VR headset\n01:28:03 Clarification for a previous TechQuickie sponsor spot\n01:29:51 LTT merch store has been restocked + new shirt design & lanyards\n01:31:24 Google has developed a technology to tell whether ‘facts’ on the Internet are true\n01:37:01 Show wrapup",
+				"thumbnails": {
+					"default": {
+						"url": "https://i.ytimg.com/vi/7d_FkKYMSfo/default.jpg",
+						"width": 120,
+						"height": 90,
+						"blurhash": {
+							"hash": "VFEyPX_M-.x]o|?FxuxuWWt700MxMyM{VtI]smIooeRQ",
+							"w": 120,
+							"h": 90,
+							"cX": 5,
+							"cY": 4
+						}
+					},
+					"medium": {
+						"url": "https://i.ytimg.com/vi/7d_FkKYMSfo/mqdefault.jpg",
+						"width": 320,
+						"height": 180,
+						"blurhash": {
+							"hash": "VKG[$a_M%ex]o|?Fxu%LR+tQ4:aKM|RjV@x]%2NGofV[",
+							"w": 320,
+							"h": 180,
+							"cX": 5,
+							"cY": 4
+						}
+					},
+					"high": {
+						"url": "https://i.ytimg.com/vi/7d_FkKYMSfo/hqdefault.jpg",
+						"width": 480,
+						"height": 360,
+						"blurhash": {
+							"hash": "VEE.;8_N%ex]o|?FxuxuWCt700MeMyM{VtI]slIVoeRP",
+							"w": 480,
+							"h": 360,
+							"cX": 5,
+							"cY": 4
+						}
+					},
+					"standard": {
+						"url": "https://i.ytimg.com/vi/7d_FkKYMSfo/sddefault.jpg",
+						"width": 640,
+						"height": 480,
+						"blurhash": {
+							"hash": "VEE.;8_N%ex]kp?FxuxuR+t700MeMzM{a1I]slIVoeRP",
+							"w": 640,
+							"h": 480,
+							"cX": 5,
+							"cY": 4
+						}
+					}
+				},
+				"channelTitle": "Linus Tech Tips",
+				"tags": [
+					"Oculus Rift (Video Game Platform)",
+					"steam machine",
+					"Steam OS",
+					"Valve Corporation (Video Game Developer)",
+					"NVIDIA",
+					"SHIELD",
+					"GRID",
+					"Source 2",
+					"video game engine",
+					"gaming",
+					"Video Game (Industry)",
+					"Pebble Time Steel",
+					"Titan X"
+				],
+				"categoryId": "28",
+				"liveBroadcastContent": "none",
+				"localized": {
+					"title": "The WAN Show - CRAZY NVIDIA and Valve News! Titan X and More! - Mar 6, 2015",
+					"description": "http://linustechtips.com/main/topic/323584-march-6-2015-the-wan-show-document/?p=4397324\n\nSponsors!\n\nLynda.com Link: http://lynda.com/wanshow for a 10 day free trial\n\nPAX East Coverage: http://youtube.com/kingstonhyperx\n\nLootcrate Link: http://lootcrate.com/linus - Offer code Linus to save 10%\n\nSoundcloud Link: https://soundcloud.com/thewanshow/the-wan-show-crazy-nvidia-and-valve-news-titan-x-and-more-mar-6-2015\n\nTimestamps courtesy of Ghost (deadfire19), FlighterLuid, cloclo8003 & JJMC89\n\n00:01:53 Topic callouts\n00:04:47 Luke joins the show!\n00:06:15 Luke's experience at PAX so far\n00:07:40 Up close look at the Titan X\n00:09:36 Quick note about Vessel\n00:12:27 Politicians are STILL trying to kill net neutrality in the US with “Internet Freedom Act”\n00:13:32 Stream crash\n00:14:01 Back to \"Internet Freedom Act\"\n00:16:55 Official AMD FreeSync launch\n00:18:28 Valve's Steam Machines will officially launch November 2015, Source 2 announced\n00:26:03 Final Steam Controller design\n00:28:53 Teasers for upcoming videos\n00:30:04 Back to Valve news + talk\n00:31:51 NVIDIA's press conference\n00:36:08 Mantle SDK available to everyone in March 2015\n00:37:45 [RUMOR] Google reportedly preparing Android Wear for iOS\n00:39:41 Pebble Time Steel + Pebble Smart Straps\n00:44:37 NVIDIA Titan X\n00:53:19 NVIDIA annouced the Shield (console)\n00:59:53 At what price would you subscribe to NVIDIA GRID Premium?\n01:01:41 HBO streaming service, HBO Now\n01:02:33 Strawpoll - http://strawpoll.me/3807546\n01:08:51 Sponsor spot - Lynda.com\n01:10:19 Sponsor spot - PAX East 2015 powered by HyperX\n01:10:59 Sponsor spot - Lootcrate + unboxing\n01:19:05 WhatsApp now bans users who use 3rd party apps\n01:20:14 Huawei to manufacture the next Nexus device\n01:23:16 Gabe Newell - 0% of people get motion sick using the Vive VR headset\n01:28:03 Clarification for a previous TechQuickie sponsor spot\n01:29:51 LTT merch store has been restocked + new shirt design & lanyards\n01:31:24 Google has developed a technology to tell whether ‘facts’ on the Internet are true\n01:37:01 Show wrapup"
 				}
 			}
 		}
@@ -38285,6 +39664,83 @@
 		}
 	},
 	{
+		"name": "2014/11/07",
+		"metadata": {
+			"title": " OMG Blizzcon News & HP Stream pwns Chromebooks?",
+			"mainShowLength": 5699000,
+			"vods": {
+				"youtube": "X-1hNBrHYWY"
+			},
+			"snippet": {
+				"publishedAt": "2014-11-08T08:18:05Z",
+				"channelId": "UCXuqSBlHAE6Xw-yeJA0Tunw",
+				"title": "The WAN Show - OMG Blizzcon News & HP Stream pwns Chromebooks? - November 8, 2014",
+				"description": "http://linustechtips.com/main/topic/246723-november-7-2014-the-wan-show-document/\n\nSponsors!\n\nLynda.com Link: lynda.com: http://lynda.com/wanshow for a 7 day free trial\n\nJoin Dollar Shave Club: http://dollarshaveclub.com/linus\n\nTable of Contents courtesy of Ghost from the forum:\n\n00:00:39 - Main Topics Callouts\n00:03:34 - New Blizzard game \"Overwatch\"\n00:06:30 - Starcraft 2: Legacy of the Void will be a stand-alone game\n00:12:36 - Hearthstone for Android tablets and new expansion: Goblins vs Gnomes\n00:13:24 - Intel Caught Cheating, Gets A Slap On The Wrist 14 Years Later\n00:16:26 - Sony Reports $1.25 Billion U.S In Losses Over Last Quarter\n00:23:29 - HTC's New Charger Gets Your Mobile Charging Up To 40% Faster\n00:26:00 - Initial thoughts on Droid Turbo\n00:30:02 - Google's New Gmail App Is Opening Its Doors To Rival Email Services.\n00:31:43 - Google Inbox\n00:33:58 - HP Stream\n00:38:15 - Chromebook Twitter Blitz\n00:46:07 - Sponsor Segment\n00:49:57 - Paypal Has Officially Launched Its Pay After Delivery Service..\n00:53:10 - Consumer Version Of Oculus Rift VR Headset Ready To Arrive In Months, not Years\n01:00:10 - LGA 1151 & Z170\n01:03:43 - \"Dawngate\" Cancelled\n01:07:35 - Ubisoft Pull Christmas Launch Games From Steam In The UK\n01:09:36 - Zalman Files For Bankruptcy - DENYING ALL CLAIMS\n01:10:50 - Amazon Echo - Voice Personal Assistant\n01:20:36 - Futuremark Acquired By UL\n01:21:46 - Gold Apple Watch Estimated To Cost $5000\n01:26:20 - Ubisoft: Buy Shaving Cream For In-Game Downloadable Content!\n01:30:24 - Lukes Smartwatch",
+				"thumbnails": {
+					"default": {
+						"url": "https://i.ytimg.com/vi/X-1hNBrHYWY/default.jpg",
+						"width": 120,
+						"height": 90,
+						"blurhash": {
+							"hash": "VHDvl-xCozxu.7~oozxtWVoz9FRkRjoKRP4pROIWj]RP",
+							"w": 120,
+							"h": 90,
+							"cX": 5,
+							"cY": 4
+						}
+					},
+					"medium": {
+						"url": "https://i.ytimg.com/vi/X-1hNBrHYWY/mqdefault.jpg",
+						"width": 320,
+						"height": 180,
+						"blurhash": {
+							"hash": "VRF$b6xCoyt8%g~oo#xtWVoz-:RjRjt7i_M|RiRkWVRj",
+							"w": 320,
+							"h": 180,
+							"cX": 5,
+							"cY": 4
+						}
+					},
+					"high": {
+						"url": "https://i.ytimg.com/vi/X-1hNBrHYWY/hqdefault.jpg",
+						"width": 480,
+						"height": 360,
+						"blurhash": {
+							"hash": "VGD,7YxCozxu.7~oo#xtWVoz8{RjRjodR50LROIpj]RP",
+							"w": 480,
+							"h": 360,
+							"cX": 5,
+							"cY": 4
+						}
+					},
+					"standard": {
+						"url": "https://i.ytimg.com/vi/X-1hNBrHYWY/sddefault.jpg",
+						"width": 640,
+						"height": 480,
+						"blurhash": {
+							"hash": "VGD,7ZxCozxu.7~oo#xtWVoz8{RjRjodR50LROIpj]RP",
+							"w": 640,
+							"h": 480,
+							"cX": 5,
+							"cY": 4
+						}
+					}
+				},
+				"channelTitle": "Linus Tech Tips",
+				"tags": [
+					"twitch",
+					"games"
+				],
+				"categoryId": "20",
+				"liveBroadcastContent": "none",
+				"localized": {
+					"title": "The WAN Show - OMG Blizzcon News & HP Stream pwns Chromebooks? - November 8, 2014",
+					"description": "http://linustechtips.com/main/topic/246723-november-7-2014-the-wan-show-document/\n\nSponsors!\n\nLynda.com Link: lynda.com: http://lynda.com/wanshow for a 7 day free trial\n\nJoin Dollar Shave Club: http://dollarshaveclub.com/linus\n\nTable of Contents courtesy of Ghost from the forum:\n\n00:00:39 - Main Topics Callouts\n00:03:34 - New Blizzard game \"Overwatch\"\n00:06:30 - Starcraft 2: Legacy of the Void will be a stand-alone game\n00:12:36 - Hearthstone for Android tablets and new expansion: Goblins vs Gnomes\n00:13:24 - Intel Caught Cheating, Gets A Slap On The Wrist 14 Years Later\n00:16:26 - Sony Reports $1.25 Billion U.S In Losses Over Last Quarter\n00:23:29 - HTC's New Charger Gets Your Mobile Charging Up To 40% Faster\n00:26:00 - Initial thoughts on Droid Turbo\n00:30:02 - Google's New Gmail App Is Opening Its Doors To Rival Email Services.\n00:31:43 - Google Inbox\n00:33:58 - HP Stream\n00:38:15 - Chromebook Twitter Blitz\n00:46:07 - Sponsor Segment\n00:49:57 - Paypal Has Officially Launched Its Pay After Delivery Service..\n00:53:10 - Consumer Version Of Oculus Rift VR Headset Ready To Arrive In Months, not Years\n01:00:10 - LGA 1151 & Z170\n01:03:43 - \"Dawngate\" Cancelled\n01:07:35 - Ubisoft Pull Christmas Launch Games From Steam In The UK\n01:09:36 - Zalman Files For Bankruptcy - DENYING ALL CLAIMS\n01:10:50 - Amazon Echo - Voice Personal Assistant\n01:20:36 - Futuremark Acquired By UL\n01:21:46 - Gold Apple Watch Estimated To Cost $5000\n01:26:20 - Ubisoft: Buy Shaving Cream For In-Game Downloadable Content!\n01:30:24 - Lukes Smartwatch"
+				}
+			}
+		}
+	},
+	{
 		"name": "2014/10/31",
 		"metadata": {
 			"title": " Trouble for Apple Pay.. & also Tim Cook is Gay!",
@@ -39015,6 +40471,7 @@
 		"name": "2014/08/29",
 		"metadata": {
 			"title": " Intel's 8 core Extreme Edition & Whole Room Water Cooling Teasers",
+			"mainShowLength": 5546000,
 			"vods": {
 				"youtube": "FTbNYtXoizI"
 			},
@@ -39484,6 +40941,86 @@
 				"localized": {
 					"title": "The WAN Show: Digital Theft to Land You in Jail? & Google Buying Twitch? - July 25th, 2014",
 					"description": "http://linustechtips.com/main/topic/186941-july-25th-2014-the-wan-show-document/\n\nSponsors!\n\nGet a FREE 7 day trial for lynda.com here: http://bit.ly/1hvWvb9\n\nIntel offer codes and giveaway rules: http://linustechtips.com/main/topic/186279-intel-nerdhq-giveaway-and-offer-codes-inside/\n\nTable of Contents (thanks DoozyDiglett, Diffin, BatterySound!)\n\n0:00:00 Sponsors & Luke getting fired\n0:05:57 $100k of Yogscast kickstarter money unaccounted for\n0:11:48 General Kickstarter Discussion\n0:12:50 Bunch O Balloons Kickstarter\n0:14:17 JIBO Indiegogo ETA 2015\n0:16:00 Exciting new LTT Project/ Linus' solution for not getting an AC (Water Cooling & Titan Black Editions)\n0:25:21 Ubisoft copies HighLANder and 'Quest for Everest'\n0:29:11 Everest Climbing Overcrowding\n0:31:11 Linus' apology for the pronunciation of Brisbane\n0:32:20 Nvidia 870 and 880 GPU rumours and Linus wants to slick Lick's foot\n0:34:50 Barnacules joins the show (https://www.youtube.com/user/barnacules1)\n0:35:50 Barnacules' plan for his YouTube channel (and the future in general)\n0:45:10 British MP wants to punish people for stealing in-game items in WoW\n0:50:10 Added thumbstick to Steam controller Discussion\n0:55:18 Seagate 8TB & 10TB HDDs\n1:00:40 Intel sponsor spot\n1:03:00 Lynda.com sponsor spot and Luke gets fired again. More Barnacules is unemployed jokes.\n1:06:43 Barnacules \"reservoir\" idea \n1:17:35 Microsoft wants to merge all separate versions of Windows into one, Barnacules edition with tears on the cover\n1:32:08 Samsung employees give back $2.9 million to apologize for poor performance\n1:35:44 Samsung tries to beat \"Beats\" with \"Level\"\n1:39:47 Nvidia Shield Tablet and Controller\n1:44:47 Dell accepts Bitcoin and Square Enix takes down fan translation\n1:46:26 LG doing well (but they're still evil)\n1:48:13 Outro and Intro (Again)"
+				}
+			}
+		}
+	},
+	{
+		"name": "2014/07/18",
+		"metadata": {
+			"title": "Google Chrome Wasting Battery & iPhone 6 Specs Leaked  - July 18th, 2014",
+			"mainShowLength": 5343000,
+			"vods": {
+				"youtube": "3fPSk5TSxTk"
+			},
+			"snippet": {
+				"publishedAt": "2014-07-19T06:22:09Z",
+				"channelId": "UCXuqSBlHAE6Xw-yeJA0Tunw",
+				"title": "The WAN Show: Google Chrome Wasting Battery & iPhone 6 Specs Leaked  - July 18th, 2014",
+				"description": "WAN Show Document: http://linustechtips.com/main/topic/183379-july-18th-2014-the-wan-show-document/\n\nSponsors!\n\nJoin Five Four Club for at least $120 worth of stylish, quality clothing every month for only $60: http://bit.ly/linusffc\nSave $15 on your first month with offer code: LINUS\n\nSquarespace Link: http://squarespace.com/linus - Offer code Linus to save 10%\n- Use hashtag #LinusSquarespace to tweet your Squarespace site for a chance to win a year worth of hosting for free!\n\nTable of Contents (thanks AmateurPCGuy, DoozyDiglett, Dietrichw, Speedstack79,Windows7323, and Random Person)\n\n0:00:00 They're late... by 5 minutes\n0:00:53 Google's 2-step Verification - Linus can't log in on the doc!\n0:02:55 Headlines/Intro/Sponsor Spots (Squarespace/Five-Four Club)\n0:05:39 iPhone 6 Specs leaked\n0:07:00 Discussion: MKBHD's video on iPhone 6's Sapphire Glass Display (Part 1: https://www.youtube.com/watch?v=5R0_FJ4r73s / Part 2: https://www.youtube.com/watch?v=b7ANcWQEUI8)\n0:08:40 Discussion: Phone Resolutions\n0:12:07 Five-Four Club Giveaway!\n0:13:37 Google Chrome Kills Battery Life\n0:18:18 International Tournament 4 to be broadcasted on ESPN\n0:25:07 Strawpoll: Does a Televised North American broadcast of a Top-Tier Game like DotA validate gaming as a legitimate mainstream competition? (http://strawpoll.me/2145074)\n0:25:54 Is TV a dying medium?\n0:27:14 Josh from Fractal is trying to buy A/C for LMG HQ - Linus is Cheap\n0:28:02 #HireBarnacules\n0:28:27 Strawpoll Results (http://strawpoll.me/2145074/r)\n0:30:55 Google+ now lets you use any name\n0:33:10 Accounts without real names\n0:37:03 Five Four Club Sponsor Spot + Giveaway!\n0:37:57 Five Four Censorship - No Nipples pls.\n0:41:27 Squarespace Sponsor Spot\n0:44:09 Squarespace site Giveaway + Winner (www.branphoto.com)\n0:46:45 LG G3... Beat?\n0:46:55 HighLANder merchandise all over the web (Buy yours at teespring.com/highlanderlan)\n0:47:47 \n0:50:00 LG G3 Beat vs. HTC One mini and One mini 2\n0:51:20 The HTC One mini 2 is still a good phone\n0:51:41 LG's Skill vs. HTC's Sense\n0:54:44 Mozilla is attempting to improve JPEG\n0:56:55 Google's WebP format unsupported by most browsers and computers\n0:58:40 Adobe Flash Player is terrible and it uses a lot of RAM\n0:59:32 Google's Project Ara Dev board ships later this month\n1:02:13 Discussion: Improvements in battery technology\n1:03:11 Sony and Microsoft might have \"early access\" games on consoles\n1:03:50 Discussion: How different developers are open or closed about the development process\n1:04:43 \n1:05:00 Discussion:Beta access then and now \"Is paying for early access games good?\"\n1:07:44 Another Teespring idea? Beta Access shirts\n1:08:50 Worst Comcast Customer service call\n1:10:55 Luke's experience with their ISP customer service\n1:11:45 Linus' experience with insurance presentations\n1:13:55 SanDisk reporting that SSD sales of soared and increasing capacities with flash storage\n1:15:03 Microsoft lays off 18,000 employees over the next 6 months... and Barnacules is one of them :(\n1:17:20 US Draft Notices sent to men born in 1800s due to the \"Millennium Bug\" way back Y2K\n1:18:55 The Last of Us Remastered lets you lock frame rate to 30fps\n1:21:30 Tesla Model 3\n1:24:20 ASUS RoG G550JK giveaway - Congratulations Forum User \"ShuColate\"!\n1:27:26 Record for most viewers watching live on the WAN Show at almost 6,000 viewers\n1:28:25 Outro",
+				"thumbnails": {
+					"default": {
+						"url": "https://i.ytimg.com/vi/3fPSk5TSxTk/default.jpg",
+						"width": 120,
+						"height": 90,
+						"blurhash": {
+							"hash": "VUHoE*WB?a%Lx[~pofxtRjoy4pofD%RQV@D*M|IVxtV@",
+							"w": 120,
+							"h": 90,
+							"cX": 5,
+							"cY": 4
+						}
+					},
+					"medium": {
+						"url": "https://i.ytimg.com/vi/3fPSk5TSxTk/mqdefault.jpg",
+						"width": 320,
+						"height": 180,
+						"blurhash": {
+							"hash": "VjK1zFWB?axux[~pofxuRjoztRoeIUV[jGx[M|Rjxtae",
+							"w": 320,
+							"h": 180,
+							"cX": 5,
+							"cY": 4
+						}
+					},
+					"high": {
+						"url": "https://i.ytimg.com/vi/3fPSk5TSxTk/hqdefault.jpg",
+						"width": 480,
+						"height": 360,
+						"blurhash": {
+							"hash": "VSHoE*V@?t%Lx[~pofxtRjoy02ofDjRQV@9ZM|M{xuV@",
+							"w": 480,
+							"h": 360,
+							"cX": 5,
+							"cY": 4
+						}
+					},
+					"standard": {
+						"url": "https://i.ytimg.com/vi/3fPSk5TSxTk/sddefault.jpg",
+						"width": 640,
+						"height": 480,
+						"blurhash": {
+							"hash": "VSHoE*V@?t%Lx[~pofxtRjoy02ofDjRQV@9ZM|M{xuV@",
+							"w": 640,
+							"h": 480,
+							"cX": 5,
+							"cY": 4
+						}
+					}
+				},
+				"channelTitle": "Linus Tech Tips",
+				"tags": [
+					"Google Chrome (Web Browser)",
+					"battery",
+					"drain",
+					"iphone 6",
+					"leak"
+				],
+				"categoryId": "28",
+				"liveBroadcastContent": "none",
+				"localized": {
+					"title": "The WAN Show: Google Chrome Wasting Battery & iPhone 6 Specs Leaked  - July 18th, 2014",
+					"description": "WAN Show Document: http://linustechtips.com/main/topic/183379-july-18th-2014-the-wan-show-document/\n\nSponsors!\n\nJoin Five Four Club for at least $120 worth of stylish, quality clothing every month for only $60: http://bit.ly/linusffc\nSave $15 on your first month with offer code: LINUS\n\nSquarespace Link: http://squarespace.com/linus - Offer code Linus to save 10%\n- Use hashtag #LinusSquarespace to tweet your Squarespace site for a chance to win a year worth of hosting for free!\n\nTable of Contents (thanks AmateurPCGuy, DoozyDiglett, Dietrichw, Speedstack79,Windows7323, and Random Person)\n\n0:00:00 They're late... by 5 minutes\n0:00:53 Google's 2-step Verification - Linus can't log in on the doc!\n0:02:55 Headlines/Intro/Sponsor Spots (Squarespace/Five-Four Club)\n0:05:39 iPhone 6 Specs leaked\n0:07:00 Discussion: MKBHD's video on iPhone 6's Sapphire Glass Display (Part 1: https://www.youtube.com/watch?v=5R0_FJ4r73s / Part 2: https://www.youtube.com/watch?v=b7ANcWQEUI8)\n0:08:40 Discussion: Phone Resolutions\n0:12:07 Five-Four Club Giveaway!\n0:13:37 Google Chrome Kills Battery Life\n0:18:18 International Tournament 4 to be broadcasted on ESPN\n0:25:07 Strawpoll: Does a Televised North American broadcast of a Top-Tier Game like DotA validate gaming as a legitimate mainstream competition? (http://strawpoll.me/2145074)\n0:25:54 Is TV a dying medium?\n0:27:14 Josh from Fractal is trying to buy A/C for LMG HQ - Linus is Cheap\n0:28:02 #HireBarnacules\n0:28:27 Strawpoll Results (http://strawpoll.me/2145074/r)\n0:30:55 Google+ now lets you use any name\n0:33:10 Accounts without real names\n0:37:03 Five Four Club Sponsor Spot + Giveaway!\n0:37:57 Five Four Censorship - No Nipples pls.\n0:41:27 Squarespace Sponsor Spot\n0:44:09 Squarespace site Giveaway + Winner (www.branphoto.com)\n0:46:45 LG G3... Beat?\n0:46:55 HighLANder merchandise all over the web (Buy yours at teespring.com/highlanderlan)\n0:47:47 \n0:50:00 LG G3 Beat vs. HTC One mini and One mini 2\n0:51:20 The HTC One mini 2 is still a good phone\n0:51:41 LG's Skill vs. HTC's Sense\n0:54:44 Mozilla is attempting to improve JPEG\n0:56:55 Google's WebP format unsupported by most browsers and computers\n0:58:40 Adobe Flash Player is terrible and it uses a lot of RAM\n0:59:32 Google's Project Ara Dev board ships later this month\n1:02:13 Discussion: Improvements in battery technology\n1:03:11 Sony and Microsoft might have \"early access\" games on consoles\n1:03:50 Discussion: How different developers are open or closed about the development process\n1:04:43 \n1:05:00 Discussion:Beta access then and now \"Is paying for early access games good?\"\n1:07:44 Another Teespring idea? Beta Access shirts\n1:08:50 Worst Comcast Customer service call\n1:10:55 Luke's experience with their ISP customer service\n1:11:45 Linus' experience with insurance presentations\n1:13:55 SanDisk reporting that SSD sales of soared and increasing capacities with flash storage\n1:15:03 Microsoft lays off 18,000 employees over the next 6 months... and Barnacules is one of them :(\n1:17:20 US Draft Notices sent to men born in 1800s due to the \"Millennium Bug\" way back Y2K\n1:18:55 The Last of Us Remastered lets you lock frame rate to 30fps\n1:21:30 Tesla Model 3\n1:24:20 ASUS RoG G550JK giveaway - Congratulations Forum User \"ShuColate\"!\n1:27:26 Record for most viewers watching live on the WAN Show at almost 6,000 viewers\n1:28:25 Outro"
 				}
 			}
 		}
@@ -41856,6 +43393,98 @@
 		}
 	},
 	{
+		"name": "2013/11/01",
+		"metadata": {
+			"title": "Nexus 5, Project Ara, R9 290, and GUEST Jon Rettinger",
+			"mainShowLength": 5750000,
+			"vods": {
+				"youtube": "To7SpuxoJxE"
+			},
+			"snippet": {
+				"publishedAt": "2013-11-02T06:41:32Z",
+				"channelId": "UCXuqSBlHAE6Xw-yeJA0Tunw",
+				"title": "The WAN Show: Nexus 5, Project Ara, R9 290, and GUEST Jon Rettinger - Nov 1, 2013",
+				"description": "The WAN Show: The Nexus 5, GPU Rumors, Motorola teams up with Phonepbloks and GUEST Jon Rettinger - Nov 1, 2013\n\nAfter party : Sorry no official afterparty this week but Luke ran a super long unofficial afterparty on the http://www.twitch.tv/luke_lafr channel!\n\nHotspot Shield Link: http://bit.ly/HSShare\n\nLive Stream Doc: http://linustechtips.com/main/topic/71479-november-1st-2013-the-wan-show-document/\n\n3:31 Active Steam users surpass Xbox live\n8:20 Jon Rettinger from TechnoBuffalo joins\n11:35 Guest Topic: The Nexus 5 and the smart phone market\n25:24 Guest Topic: PS4 audio format restrictions and consoles in general\n39:17 Twitter blitz with Jon Rettinger\n44:22 Hotspot Shield Sponsor Spot\n46:06 80 Plus Bronze vs Platinum power supplies\n49:34 Motorola Project Ara/Phonebloks \n1:03:15 Giant Xbox One in Vancouver parking lot\n1:05:50 HTC EVO 3D stops a bullet\n1:06:24 Goggle Glass and smartwatch\n1:12:46 FAA loosen rules on E-devices on flights\n1:15:23 AMD R9 290 \"Rumours\"/Info\n1:18:07 780ti is rumoured to have 2880 CUDA cores\n1:21:38 Man makes 1 million dollars on his 27 dollar bit-coin investment\n1:22:59 BBM App gets about 10 million downloads in one day\n1:27:44 Dell laptops recalled due to smelling like cat urine\n1:30:00 Curved scream and bendable batteries\n1:32:08 Build Logs of the week",
+				"thumbnails": {
+					"default": {
+						"url": "https://i.ytimg.com/vi/To7SpuxoJxE/default.jpg",
+						"width": 120,
+						"height": 90,
+						"blurhash": {
+							"hash": "VCCiz2.RPB-WNe_NWU-:xaRk0gMx$fRi$xIUxGM|Iosk",
+							"w": 120,
+							"h": 90,
+							"cX": 5,
+							"cY": 4
+						}
+					},
+					"medium": {
+						"url": "https://i.ytimg.com/vi/To7SpuxoJxE/mqdefault.jpg",
+						"width": 320,
+						"height": 180,
+						"blurhash": {
+							"hash": "VIEf1e.7O[%2NK?^S1-:xaNH%gV@xZV@$et,xFxtIpW9",
+							"w": 320,
+							"h": 180,
+							"cX": 5,
+							"cY": 4
+						}
+					},
+					"high": {
+						"url": "https://i.ytimg.com/vi/To7SpuxoJxE/hqdefault.jpg",
+						"width": 480,
+						"height": 360,
+						"blurhash": {
+							"hash": "VBCsKp.RPB-WNK_NS1-:xaNG0gMx$eM{-5IAxHM{Ios*",
+							"w": 480,
+							"h": 360,
+							"cX": 5,
+							"cY": 4
+						}
+					},
+					"standard": {
+						"url": "https://i.ytimg.com/vi/To7SpuxoJxE/sddefault.jpg",
+						"width": 640,
+						"height": 480,
+						"blurhash": {
+							"hash": "VBC$$H.RPB-WNK?^S1-:xaNG0gMx$eM{-5IAxGM{Ios*",
+							"w": 640,
+							"h": 480,
+							"cX": 5,
+							"cY": 4
+						}
+					},
+					"maxres": {
+						"url": "https://i.ytimg.com/vi/To7SpuxoJxE/maxresdefault.jpg",
+						"width": 1280,
+						"height": 720,
+						"blurhash": {
+							"hash": "VIEoi7.7O[%2NK?^S1-:xaNH%haKxZV@$xtlxFxtIpW9",
+							"w": 1280,
+							"h": 720,
+							"cX": 5,
+							"cY": 4
+						}
+					}
+				},
+				"channelTitle": "Linus Tech Tips",
+				"tags": [
+					"Nexus 5",
+					"R9 290",
+					"GTX 780 Ti",
+					"Project Ara",
+					"Phonebloks"
+				],
+				"categoryId": "28",
+				"liveBroadcastContent": "none",
+				"localized": {
+					"title": "The WAN Show: Nexus 5, Project Ara, R9 290, and GUEST Jon Rettinger - Nov 1, 2013",
+					"description": "The WAN Show: The Nexus 5, GPU Rumors, Motorola teams up with Phonepbloks and GUEST Jon Rettinger - Nov 1, 2013\n\nAfter party : Sorry no official afterparty this week but Luke ran a super long unofficial afterparty on the http://www.twitch.tv/luke_lafr channel!\n\nHotspot Shield Link: http://bit.ly/HSShare\n\nLive Stream Doc: http://linustechtips.com/main/topic/71479-november-1st-2013-the-wan-show-document/\n\n3:31 Active Steam users surpass Xbox live\n8:20 Jon Rettinger from TechnoBuffalo joins\n11:35 Guest Topic: The Nexus 5 and the smart phone market\n25:24 Guest Topic: PS4 audio format restrictions and consoles in general\n39:17 Twitter blitz with Jon Rettinger\n44:22 Hotspot Shield Sponsor Spot\n46:06 80 Plus Bronze vs Platinum power supplies\n49:34 Motorola Project Ara/Phonebloks \n1:03:15 Giant Xbox One in Vancouver parking lot\n1:05:50 HTC EVO 3D stops a bullet\n1:06:24 Goggle Glass and smartwatch\n1:12:46 FAA loosen rules on E-devices on flights\n1:15:23 AMD R9 290 \"Rumours\"/Info\n1:18:07 780ti is rumoured to have 2880 CUDA cores\n1:21:38 Man makes 1 million dollars on his 27 dollar bit-coin investment\n1:22:59 BBM App gets about 10 million downloads in one day\n1:27:44 Dell laptops recalled due to smelling like cat urine\n1:30:00 Curved scream and bendable batteries\n1:32:08 Build Logs of the week"
+				}
+			}
+		}
+	},
+	{
 		"name": "2013/10/25",
 		"metadata": {
 			"title": "AMD Mantle & Nvidia G-SYNC, Trouble for Android, and GUEST Corsair George Oct 25, 2013",
@@ -42464,6 +44093,96 @@
 				"localized": {
 					"title": "The WAN Show: STEAM Game Sharing, Apple iPhone 5S and 5C GUEST Marques Brownlee - Sept 13, 2013",
 					"description": "After party : Sorry no afterparty this week\n\nHotspot Shield Link: http://bit.ly/HSShare\nSquarespace Link : http://www.squarespace.com/linus\n\nLive Stream Doc: http://linustechtips.com/main/topic/56229-september-13th-2013-the-wan-show-document/\n\n3:27 OMG DROPBOX IS READING MY FILES!\n5:04 Steam family sharing!\n11:24 Yahoo's CEO Doesn't want to go to jail\n15:10 Comcast and Verizon are slow because : Reasons\n21:00 Preload entire youtube videos!\n27:45 Marques Brownlee Introduction!\n29:52 Iphone 5C\n37:25 Iphone 5S\n43:06 Finger print readers on phones\n53:50 64bit Phones!\n58:22 Phoneblocks\n1:03:56 Wearable technology is the future\n1:09:52 GTA V cost a metric butt ton to make\n1:13:44 PS Vita announced\n1:17:25 Doom and gloom for Sony and Nintendo? Maybe not!\n1:19:35 AMD HD Graphics name change\n1:23:00 Saints Row IV added to Never Settle Forever Bundle\n1:36:08 Haswell-E showing off DDR4 and 8 Cores!\n1:39:15 ASUS T100, Baytrail 2-in-1 Tablet\n1:40:40 Intel Quark SoC\n1:43:54 Intel Demos 14nm Broadwell... Not exciting for gamers\n1:47:00 J.K. Rowling to write another movie in the Harry Potter Universe!\n1:48:11 Starcraft Universe Kickstarter \n1:51:12 Instagram supports ads\n1:54:07 This week in forums! Unofficial Linus Tech Tips Gaming Servers!\n1:56:08 Build Logs of the Week!\n\nIntro Screen Music Credit: Adhesive Wombat - Check out his channel here: http://youtube.com/adhesivewombat"
+				}
+			}
+		}
+	},
+	{
+		"name": "2013/09/06",
+		"metadata": {
+			"title": " Galaxy Note 3 & Gear, Ivy Bridge E, HDMI 2.0 and GUEST Tiny Tom Logan",
+			"mainShowLength": 8164000,
+			"vods": {
+				"youtube": "Xe0FhacqEj0"
+			},
+			"snippet": {
+				"publishedAt": "2013-09-08T06:23:33Z",
+				"channelId": "UCXuqSBlHAE6Xw-yeJA0Tunw",
+				"title": "The WAN Show : Galaxy Note 3 & Gear, Ivy Bridge E, HDMI 2.0 and GUEST Tiny Tom Logan - Sept 6, 2013",
+				"description": "After party : Sorry no afterparty this week\n\nRazer Comms Link: http://bit.ly/16c6hso\n\nSquarespace Link : http://www.squarespace.com/linus\n\nLive Stream Doc: http://linustechtips.com/main/topic/54021-september-6th-2013-the-wan-show-document/\n\n4:55 Tesla Model S is the safest car ever?\n11:00 Microsoft buys Nokia's devices & services business\n16:50 Android 4.4 \"Kit Kat\" name announced\n20:20 Hynix facility fire. Expect pricing increases\n25:40 Tiny Tom Logan (http://youtube.com/timetolivecustoms) guest spot!\n27:40 Ivy Bridge - E - All you need to know\n42:00 How to get sub-ambient cooling by using 40 fans at a time... or wait?\n54:30 Broadwell compatibility... Not backwards compatible\n1:05:50 Amazon's new Kindle Paperwhite w/ new display tech\n1:10:00 An unexpected package\n1:13:05 Amazon will take over the world\n1:15:45 Samsung Gear announced!\n1:25:00 Qualcomm Toq - The smart watch we're ACTUALLY interested in\n1:29:40 Nokia shots fired at Samsung AND Google\n1:32:10 Surface Pro 2 - Is this the product that doesn't suck?\n1:36:05 Squarespace Sponsorship spot!!\n1:39:45 Chrome Apps - The answer to how Chrome will become a real OS\n1:42:12 Galaxy Note 3 gets USB3 micro connector\n1:44:40 HDMI 2.0 announced\n1:52:25 Soccer league removes ball out of fear of kids being too competitive\n1:55:05 Microsoft didn't want Heavy Rain on Xbox One due to child abduction plotline\n1:56:35 Twitter Blitz\n2:03:05 DON'T BE A FANBOY\n2:09:40 Build Logs of the Week\n\nIntro Screen Music Credit: Adhesive Wombat - Check out his channel here: http://youtube.com/adhesivewombat",
+				"thumbnails": {
+					"default": {
+						"url": "https://i.ytimg.com/vi/Xe0FhacqEj0/default.jpg",
+						"width": 120,
+						"height": 90,
+						"blurhash": {
+							"hash": "VCA^RA_LyC-;tSx^xuogt7o}8}DkMxRPWTR$M{V?VsrX",
+							"w": 120,
+							"h": 90,
+							"cX": 5,
+							"cY": 4
+						}
+					},
+					"medium": {
+						"url": "https://i.ytimg.com/vi/Xe0FhacqEj0/mqdefault.jpg",
+						"width": 320,
+						"height": 180,
+						"blurhash": {
+							"hash": "VGCj5+_LyC%gtSx^xus;tRo}xvIVRPnhbqS}WAnOrr#m",
+							"w": 320,
+							"h": 180,
+							"cX": 5,
+							"cY": 4
+						}
+					},
+					"high": {
+						"url": "https://i.ytimg.com/vi/Xe0FhacqEj0/hqdefault.jpg",
+						"width": 480,
+						"height": 360,
+						"blurhash": {
+							"hash": "VCA^UH_LyC%ftSx^xbogt7o}4pDkMxVsWTNYM{aJVsrX",
+							"w": 480,
+							"h": 360,
+							"cX": 5,
+							"cY": 4
+						}
+					},
+					"standard": {
+						"url": "https://i.ytimg.com/vi/Xe0FhacqEj0/sddefault.jpg",
+						"width": 640,
+						"height": 480,
+						"blurhash": {
+							"hash": "VCA^UH_LyC%ftSx^xbogt7o}4pDkMxVsWTNYNFaJVsrX",
+							"w": 640,
+							"h": 480,
+							"cX": 5,
+							"cY": 4
+						}
+					},
+					"maxres": {
+						"url": "https://i.ytimg.com/vi/Xe0FhacqEj0/maxresdefault.jpg",
+						"width": 1280,
+						"height": 720,
+						"blurhash": {
+							"hash": "VGCj8?_LyC%ftSx^xus;tRkqxcIVRPnhbqS}adnOrr#m",
+							"w": 1280,
+							"h": 720,
+							"cX": 5,
+							"cY": 4
+						}
+					}
+				},
+				"channelTitle": "Linus Tech Tips",
+				"tags": [
+					"HDMI 2.0",
+					"Samsung Gear",
+					"Galaxy Note 3"
+				],
+				"categoryId": "28",
+				"liveBroadcastContent": "none",
+				"localized": {
+					"title": "The WAN Show : Galaxy Note 3 & Gear, Ivy Bridge E, HDMI 2.0 and GUEST Tiny Tom Logan - Sept 6, 2013",
+					"description": "After party : Sorry no afterparty this week\n\nRazer Comms Link: http://bit.ly/16c6hso\n\nSquarespace Link : http://www.squarespace.com/linus\n\nLive Stream Doc: http://linustechtips.com/main/topic/54021-september-6th-2013-the-wan-show-document/\n\n4:55 Tesla Model S is the safest car ever?\n11:00 Microsoft buys Nokia's devices & services business\n16:50 Android 4.4 \"Kit Kat\" name announced\n20:20 Hynix facility fire. Expect pricing increases\n25:40 Tiny Tom Logan (http://youtube.com/timetolivecustoms) guest spot!\n27:40 Ivy Bridge - E - All you need to know\n42:00 How to get sub-ambient cooling by using 40 fans at a time... or wait?\n54:30 Broadwell compatibility... Not backwards compatible\n1:05:50 Amazon's new Kindle Paperwhite w/ new display tech\n1:10:00 An unexpected package\n1:13:05 Amazon will take over the world\n1:15:45 Samsung Gear announced!\n1:25:00 Qualcomm Toq - The smart watch we're ACTUALLY interested in\n1:29:40 Nokia shots fired at Samsung AND Google\n1:32:10 Surface Pro 2 - Is this the product that doesn't suck?\n1:36:05 Squarespace Sponsorship spot!!\n1:39:45 Chrome Apps - The answer to how Chrome will become a real OS\n1:42:12 Galaxy Note 3 gets USB3 micro connector\n1:44:40 HDMI 2.0 announced\n1:52:25 Soccer league removes ball out of fear of kids being too competitive\n1:55:05 Microsoft didn't want Heavy Rain on Xbox One due to child abduction plotline\n1:56:35 Twitter Blitz\n2:03:05 DON'T BE A FANBOY\n2:09:40 Build Logs of the Week\n\nIntro Screen Music Credit: Adhesive Wombat - Check out his channel here: http://youtube.com/adhesivewombat"
 				}
 			}
 		}
@@ -43245,6 +44964,91 @@
 		}
 	},
 	{
+		"name": "2013/04/12",
+		"metadata": {
+			"title": "Linus Tech Tips Live Show Archive",
+			"mainShowLength": 9055000,
+			"vods": {
+				"youtube": "iX9E5i_HzRg"
+			},
+			"snippet": {
+				"publishedAt": "2013-04-13T21:43:07Z",
+				"channelId": "UCXuqSBlHAE6Xw-yeJA0Tunw",
+				"title": "Linus Tech Tips Live Show Archive - April 12, 2013",
+				"description": "1:28 something bad happened to our streaming PC :(\n6:15 Introducing B-roll\n17:05 Black Magic 4K Camera\n19:47 4K TV pricing \n30:29 Slick teasing Linus about Bioshock Infinite\n34:07 Bit-coin Mining \n40:05 Far Cry 3: Blood Dragon\n44:52 Very basic Bit-coin explanation\n46:38 USB 3.0 vs Thunderbolt\n55:24 The stream crashes :(\n56:32 Haswel integration of vrm into the cpu\n1:10:14 What body part would you give...\n1:15:08 Bethesda's announcement of an announcement \n1:19:30 EA is the worst company of the year\n1:23:05 Apparently our cispa coverage was just wrong...sorry guys! this wasn't prepared! \n1:35:20 Build Logs of the Week! - please also check out 1:56:30\n1:46:12 B-Roll shows up!",
+				"thumbnails": {
+					"default": {
+						"url": "https://i.ytimg.com/vi/iX9E5i_HzRg/default.jpg",
+						"width": 120,
+						"height": 90,
+						"blurhash": {
+							"hash": "VCB:5N5e%MIp0n?1EVxvxvNg0J-OM|xY-Q9W$uR$R$$^",
+							"w": 120,
+							"h": 90,
+							"cX": 5,
+							"cY": 4
+						}
+					},
+					"medium": {
+						"url": "https://i.ytimg.com/vi/iX9E5i_HzRg/mqdefault.jpg",
+						"width": 320,
+						"height": 180,
+						"blurhash": {
+							"hash": "VKDlKY5d%2Ip5E?1EVxvxvNg9wt8RkxE$zInngkUocxV",
+							"w": 320,
+							"h": 180,
+							"cX": 5,
+							"cY": 4
+						}
+					},
+					"high": {
+						"url": "https://i.ytimg.com/vi/iX9E5i_HzRg/hqdefault.jpg",
+						"width": 480,
+						"height": 360,
+						"blurhash": {
+							"hash": "VCB:5N5e%LIp5E-tEVxvxvR;00-OM|$$-P9W$tR$R$$w",
+							"w": 480,
+							"h": 360,
+							"cX": 5,
+							"cY": 4
+						}
+					},
+					"standard": {
+						"url": "https://i.ytimg.com/vi/iX9E5i_HzRg/sddefault.jpg",
+						"width": 640,
+						"height": 480,
+						"blurhash": {
+							"hash": "VCB{l=5e%LIp0--tEVxvxvR;00-OM|$$-P9W$tR$R$$w",
+							"w": 640,
+							"h": 480,
+							"cX": 5,
+							"cY": 4
+						}
+					},
+					"maxres": {
+						"url": "https://i.ytimg.com/vi/iX9E5i_HzRg/maxresdefault.jpg",
+						"width": 1280,
+						"height": 720,
+						"blurhash": {
+							"hash": "VKDu$05d%2Ip5E-tEVxvxvR;9wxbRkxD$zInngkUob$y",
+							"w": 1280,
+							"h": 720,
+							"cX": 5,
+							"cY": 4
+						}
+					}
+				},
+				"channelTitle": "Linus Tech Tips",
+				"categoryId": "28",
+				"liveBroadcastContent": "none",
+				"localized": {
+					"title": "Linus Tech Tips Live Show Archive - April 12, 2013",
+					"description": "1:28 something bad happened to our streaming PC :(\n6:15 Introducing B-roll\n17:05 Black Magic 4K Camera\n19:47 4K TV pricing \n30:29 Slick teasing Linus about Bioshock Infinite\n34:07 Bit-coin Mining \n40:05 Far Cry 3: Blood Dragon\n44:52 Very basic Bit-coin explanation\n46:38 USB 3.0 vs Thunderbolt\n55:24 The stream crashes :(\n56:32 Haswel integration of vrm into the cpu\n1:10:14 What body part would you give...\n1:15:08 Bethesda's announcement of an announcement \n1:19:30 EA is the worst company of the year\n1:23:05 Apparently our cispa coverage was just wrong...sorry guys! this wasn't prepared! \n1:35:20 Build Logs of the Week! - please also check out 1:56:30\n1:46:12 B-Roll shows up!"
+				}
+			}
+		}
+	},
+	{
 		"name": "2013/04/05",
 		"metadata": {
 			"title": "Linus Tech Tips Live Show Archive",
@@ -43590,6 +45394,98 @@
 		}
 	},
 	{
+		"name": "2012/12/28",
+		"metadata": {
+			"title": "Linus Tech Tips Live Show Archive",
+			"mainShowLength": 5463000,
+			"vods": {
+				"youtube": "smUvgxt3St4"
+			},
+			"snippet": {
+				"publishedAt": "2012-12-29T07:49:17Z",
+				"channelId": "UCXuqSBlHAE6Xw-yeJA0Tunw",
+				"title": "Linus Tech Tips Live Show Archive - December 28, 2012",
+				"description": "0:1:00 Linus Tech Tips forum update\n0:5:40 8 pin EPS vs 8 pin PCIe connector\n0:12:45 Boutique gaming machines vs DIY gaming machines\n0:25:10 Sandia cooler technology discussion\n0:30:15 Cooler Master Quickfire TK keyboard is awesome\n0:38:30 NZXT Kraken review upcoming\n0:43:20 Why could you possibly need 96GB of RAM??\n1:07:00 Windows 8 giveaway sponsored by youtube.com/timmytechtv!!\n1:25:40 Surface RT vs iPad\n1:27:30 Parrot AR.Drone being hung on the \"Wall of Legends\" for reaching 1M views!",
+				"thumbnails": {
+					"default": {
+						"url": "https://i.ytimg.com/vi/smUvgxt3St4/default.jpg",
+						"width": 120,
+						"height": 90,
+						"blurhash": {
+							"hash": "VABfhbEXbVX2^fxgEU$]E0Io0g%1-oxbEORe$wEA%3oc",
+							"w": 120,
+							"h": 90,
+							"cX": 5,
+							"cY": 4
+						}
+					},
+					"medium": {
+						"url": "https://i.ytimg.com/vi/smUvgxt3St4/mqdefault.jpg",
+						"width": 320,
+						"height": 180,
+						"blurhash": {
+							"hash": "VHDIteEWbWX2=]tDEU$]E0IpOwt9-nxbNHW;jcN1sXNF",
+							"w": 320,
+							"h": 180,
+							"cX": 5,
+							"cY": 4
+						}
+					},
+					"high": {
+						"url": "https://i.ytimg.com/vi/smUvgxt3St4/hqdefault.jpg",
+						"width": 480,
+						"height": 360,
+						"blurhash": {
+							"hash": "VABfhbA4bVX2^ftDEU$]E0Ip0M%1-oxcEONB$w9%%3s+",
+							"w": 480,
+							"h": 360,
+							"cX": 5,
+							"cY": 4
+						}
+					},
+					"standard": {
+						"url": "https://i.ytimg.com/vi/smUvgxt3St4/sddefault.jpg",
+						"width": 640,
+						"height": 480,
+						"blurhash": {
+							"hash": "VABp33A4X2X2^ftDEU$]E0Ip0M%1-oxcEONB$w9%%3oc",
+							"w": 640,
+							"h": 480,
+							"cX": 5,
+							"cY": 4
+						}
+					},
+					"maxres": {
+						"url": "https://i.ytimg.com/vi/smUvgxt3St4/maxresdefault.jpg",
+						"width": 1280,
+						"height": 720,
+						"blurhash": {
+							"hash": "VHDSF7EWX3X2=]tDEU$]E0IpOwtS-nxbNHWojcItsWNF",
+							"w": 1280,
+							"h": 720,
+							"cX": 5,
+							"cY": 4
+						}
+					}
+				},
+				"channelTitle": "Linus Tech Tips",
+				"tags": [
+					"Linus",
+					"Tech",
+					"Tips",
+					"Live",
+					"Show"
+				],
+				"categoryId": "28",
+				"liveBroadcastContent": "none",
+				"localized": {
+					"title": "Linus Tech Tips Live Show Archive - December 28, 2012",
+					"description": "0:1:00 Linus Tech Tips forum update\n0:5:40 8 pin EPS vs 8 pin PCIe connector\n0:12:45 Boutique gaming machines vs DIY gaming machines\n0:25:10 Sandia cooler technology discussion\n0:30:15 Cooler Master Quickfire TK keyboard is awesome\n0:38:30 NZXT Kraken review upcoming\n0:43:20 Why could you possibly need 96GB of RAM??\n1:07:00 Windows 8 giveaway sponsored by youtube.com/timmytechtv!!\n1:25:40 Surface RT vs iPad\n1:27:30 Parrot AR.Drone being hung on the \"Wall of Legends\" for reaching 1M views!"
+				}
+			}
+		}
+	},
+	{
 		"name": "2012/12/21",
 		"metadata": {
 			"title": "Linus Tech Tips Live Show Archive",
@@ -43769,6 +45665,99 @@
 				"localized": {
 					"title": "Linus Tech Tips Live Show Archive - December 7, 2012",
 					"description": "Topics:\n\n2:30 - Thunderbolt External Enclosure\n3:48 - Audio Issues Apology & Explanation\n8:15 - Posting \"First\" on a Video\n9:29 - Mail & Parcels are Fun to Receive\n10:01 - Email Habits that Need to Die\n21:55 - What is a \"Mainstream\" Game\n26:00 - Sharing Email Addresses... A Cardinal Sin\n29:10 - The GeForce Experience\n30:55 - SKYRIM After 100 Mods\n44:55 - YouTube Layout Changes\n1:06:00 - Intel LGA vs Soldered Sockets\n1:19:00 - CryEngine 3 & Crysis 3 Recommended Specs\n1:23:00 - Wireless AC - When do we Need it?\n1:32:40 - Charging Phone from Computer vs Wall Socket\n\nI take questions on Twitter @LinusTech, and I also send out notifications about upcoming live streams on Twitter.\n\nCatch future live stream at www.twitch.tv/linustech"
+				}
+			}
+		}
+	},
+	{
+		"name": "2012/11/02",
+		"metadata": {
+			"title": "Linus Tech Tips Live Show Archive",
+			"mainShowLength": 5690000,
+			"vods": {
+				"youtube": "6dKrr5zhD9Y"
+			},
+			"snippet": {
+				"publishedAt": "2012-11-03T06:24:53Z",
+				"channelId": "UCXuqSBlHAE6Xw-yeJA0Tunw",
+				"title": "Linus Tech Tips Live Show Archive - November 2, 2012",
+				"description": "**READ THIS BEFORE WATCHING** Sorry there's a period for about 10 minutes at 1:11 where there's accidentally a video running the background ruining the audio... Just skip it I guess.\n\nTopics: Live Halo 4 unboxing, I'm on Facebook now, Star Citizen crowd funding, picking the perfect power supply, Acer S7 super thin notebook, Core i7 3970X value, and of course Q&A!\n\nI take questions on Twitter @LinusTech, and I also send out notifications about upcoming live streams on Twitter.",
+				"thumbnails": {
+					"default": {
+						"url": "https://i.ytimg.com/vi/6dKrr5zhD9Y/default.jpg",
+						"width": 120,
+						"height": 90,
+						"blurhash": {
+							"hash": "VLGSM+00WD_3RjtRxuM|bbWB00~qt8DixuxbIUt7nlj[",
+							"w": 120,
+							"h": 90,
+							"cX": 5,
+							"cY": 4
+						}
+					},
+					"medium": {
+						"url": "https://i.ytimg.com/vi/6dKrr5zhD9Y/mqdefault.jpg",
+						"width": 320,
+						"height": 180,
+						"blurhash": {
+							"hash": "VOIrNi00e?_NM|o}%LM{bcV[4._2tRD%%L%NM_W;o4WB",
+							"w": 320,
+							"h": 180,
+							"cX": 5,
+							"cY": 4
+						}
+					},
+					"high": {
+						"url": "https://i.ytimg.com/vi/6dKrr5zhD9Y/hqdefault.jpg",
+						"width": 480,
+						"height": 360,
+						"blurhash": {
+							"hash": "VLGSJx00jc_3Rjo}xuM|bbWB00~qt7DjxuxbIUt7n+bH",
+							"w": 480,
+							"h": 360,
+							"cX": 5,
+							"cY": 4
+						}
+					},
+					"standard": {
+						"url": "https://i.ytimg.com/vi/6dKrr5zhD9Y/sddefault.jpg",
+						"width": 640,
+						"height": 480,
+						"blurhash": {
+							"hash": "VLGSJx00jc_3RjozxuM|bbWB00~qt7DjxuxbIUt7n+fk",
+							"w": 640,
+							"h": 480,
+							"cX": 5,
+							"cY": 4
+						}
+					},
+					"maxres": {
+						"url": "https://i.ytimg.com/vi/6dKrr5zhD9Y/maxresdefault.jpg",
+						"width": 1280,
+						"height": 720,
+						"blurhash": {
+							"hash": "VNIrNh00jc_NM|o}%MIobcRk4o_2tRD%%M%NM_W;o4WB",
+							"w": 1280,
+							"h": 720,
+							"cX": 5,
+							"cY": 4
+						}
+					}
+				},
+				"channelTitle": "Linus Tech Tips",
+				"tags": [
+					"Linus",
+					"Tech",
+					"Tips",
+					"Live",
+					"Show",
+					"Archive"
+				],
+				"categoryId": "28",
+				"liveBroadcastContent": "none",
+				"localized": {
+					"title": "Linus Tech Tips Live Show Archive - November 2, 2012",
+					"description": "**READ THIS BEFORE WATCHING** Sorry there's a period for about 10 minutes at 1:11 where there's accidentally a video running the background ruining the audio... Just skip it I guess.\n\nTopics: Live Halo 4 unboxing, I'm on Facebook now, Star Citizen crowd funding, picking the perfect power supply, Acer S7 super thin notebook, Core i7 3970X value, and of course Q&A!\n\nI take questions on Twitter @LinusTech, and I also send out notifications about upcoming live streams on Twitter."
 				}
 			}
 		}
@@ -43954,6 +45943,97 @@
 				"localized": {
 					"title": "Linus Tech Tips Live Show Archive - September 21th, 2012",
 					"description": "Topics: Mostly general Q&A\n\nI take questions on Twitter @LinusTech, and I also send out notifications about upcoming live streams on Twitter. \n\nFor those of you who follow on YouTube and are concerned you won't be able to watch, I will be posting video notifications to YouTube prior to the live streams, then I will be uploading the completed live streams to YouTube. I haven't forgotten you folks who have supported me all this time!\n\nYou can check out future live streams at http://www.twitch.tv/linustech"
+				}
+			}
+		}
+	},
+	{
+		"name": "2012/09/14",
+		"metadata": {
+			"title": "Linus Tech Tips Live Show Archive",
+			"mainShowLength": 3852000,
+			"vods": {
+				"youtube": "5mB87aCKia0"
+			},
+			"snippet": {
+				"publishedAt": "2012-09-15T06:34:21Z",
+				"channelId": "UCXuqSBlHAE6Xw-yeJA0Tunw",
+				"title": "Linus Tech Tips Live Show Archive - September 14th, 2012",
+				"description": "Topics: iPhone 5, GTX 660, my kitchen, and general Q&A.\n\nI take questions on Twitter @LinusTech, and I also send out notifications about upcoming live streams on Twitter. \n\nFor those of you who follow on YouTube and are concerned you won't be able to watch, I will be posting video notifications to YouTube prior to the live streams, then I will be uploading the completed live streams to YouTube. I haven't forgotten you folks who have supported me all this time!\n\nYou can check out future live streams at http://www.twitch.tv/linustech",
+				"thumbnails": {
+					"default": {
+						"url": "https://i.ytimg.com/vi/5mB87aCKia0/default.jpg",
+						"width": 120,
+						"height": 90,
+						"blurhash": {
+							"hash": "VIJRXF00XS%#4.00IUoexaof00_Ne.Vs%M?b%Mj]RjWC",
+							"w": 120,
+							"h": 90,
+							"cX": 5,
+							"cY": 4
+						}
+					},
+					"medium": {
+						"url": "https://i.ytimg.com/vi/5mB87aCKia0/mqdefault.jpg",
+						"width": 320,
+						"height": 180,
+						"blurhash": {
+							"hash": "VEL}1?00Xn.m00009Fs.%Mt7Jn.8V@nO%LI9%2xaoMR-",
+							"w": 320,
+							"h": 180,
+							"cX": 5,
+							"cY": 4
+						}
+					},
+					"high": {
+						"url": "https://i.ytimg.com/vi/5mB87aCKia0/hqdefault.jpg",
+						"width": 480,
+						"height": 360,
+						"blurhash": {
+							"hash": "VJJRU700bw%#9F00M_oexaof00_NaKVs%M?b%MjuRjWB",
+							"w": 480,
+							"h": 360,
+							"cX": 5,
+							"cY": 4
+						}
+					},
+					"standard": {
+						"url": "https://i.ytimg.com/vi/5mB87aCKia0/sddefault.jpg",
+						"width": 640,
+						"height": 480,
+						"blurhash": {
+							"hash": "VJJRU800bw%#9F00M_oexaof00_NaKVs%M?b%MjuRjWB",
+							"w": 640,
+							"h": 480,
+							"cX": 5,
+							"cY": 4
+						}
+					},
+					"maxres": {
+						"url": "https://i.ytimg.com/vi/5mB87aCKia0/maxresdefault.jpg",
+						"width": 1280,
+						"height": 720,
+						"blurhash": {
+							"hash": "VDL}1@00b_.m00009Ft6%Mt7J-.8V@nO%MDi%2xaoMR-",
+							"w": 1280,
+							"h": 720,
+							"cX": 5,
+							"cY": 4
+						}
+					}
+				},
+				"channelTitle": "Linus Tech Tips",
+				"tags": [
+					"Live",
+					"Linus",
+					"Tech",
+					"Tips"
+				],
+				"categoryId": "28",
+				"liveBroadcastContent": "none",
+				"localized": {
+					"title": "Linus Tech Tips Live Show Archive - September 14th, 2012",
+					"description": "Topics: iPhone 5, GTX 660, my kitchen, and general Q&A.\n\nI take questions on Twitter @LinusTech, and I also send out notifications about upcoming live streams on Twitter. \n\nFor those of you who follow on YouTube and are concerned you won't be able to watch, I will be posting video notifications to YouTube prior to the live streams, then I will be uploading the completed live streams to YouTube. I haven't forgotten you folks who have supported me all this time!\n\nYou can check out future live streams at http://www.twitch.tv/linustech"
 				}
 			}
 		}
