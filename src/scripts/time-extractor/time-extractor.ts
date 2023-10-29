@@ -7,7 +7,7 @@ const exec = util.promisify(execCallback);
 
 export async function download(id: string) {
   if(await fileExists(`static/time-extracting/${id}/vid.mp4`)) {
-    return {}
+    return {};
   }
   console.log(1)
   await fs.mkdir("static/time-extracting/" + id, {recursive: true});
