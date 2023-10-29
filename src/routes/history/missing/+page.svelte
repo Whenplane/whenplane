@@ -1,0 +1,15 @@
+<ol class="breadcrumb pt-2 pl-2">
+  <li class="crumb"><a class="anchor hover-underline" href="/">Whenplane</a></li>
+  <li class="crumb-separator" aria-hidden="true">&rsaquo;</li>
+  <li class="crumb"><a class="anchor hover-underline" href="/history">History</a></li>
+  <li class="crumb-separator" aria-hidden="true">&rsaquo;</li>
+  <li class="crumb">Missing</li>
+</ol>
+
+<div class="text-center">
+
+  <h1>Shows with missing metadata</h1>
+
+  <a href="/history/missing/times">Start times</a>
+
+</div>
