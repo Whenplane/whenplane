@@ -5,6 +5,9 @@
   <li class="crumb-separator" aria-hidden="true">&rsaquo;</li>
   <li class="crumb">Missing</li>
 </ol>
+<svelte:head>
+  <title>Shows with missing metadata</title>
+</svelte:head>
 
 <div class="text-center">
 

@@ -8,6 +8,10 @@
 
 </script>
 
+<svelte:head>
+  <title>Shows with missing start times</title>
+</svelte:head>
+
 <ol class="breadcrumb pt-2 pl-2">
   <li class="crumb"><a class="anchor hover-underline" href="/">Whenplane</a></li>
   <li class="crumb-separator" aria-hidden="true">&rsaquo;</li>
