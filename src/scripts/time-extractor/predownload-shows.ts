@@ -23,7 +23,7 @@ console.log("Found " + showsToDownload.length + " to download");
 let currentI = "N/A";
 let currentName = "N/A";
 
-setInterval(() => {
+const reminderInterval = setInterval(() => {
   console.log("Currently working on " + currentName + " (" + (currentI+1) + "/" + showsToDownload.length + ")")
 }, 30e3);
 
@@ -47,4 +47,7 @@ for (const i in showsToDownload) {
   } catch(e) {
     console.error("Error while downloading", show.name, ":", e)
   }
+  console.log("Finished " + show.name + " (" + (i+1) + "/" + showsToDownload.length + ")");
 }
+console.log("all done!");
+clearInterval(reminderInterval);

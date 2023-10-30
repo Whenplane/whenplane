@@ -54,6 +54,9 @@
     {#if !$page.url.pathname.startsWith("/history/show/") && !pagesWithDescription.includes($page.url.pathname)}
         <meta name="description" content="When is WAN? Who knows! At least you can look at when it started before.. (spoiler: it's late)">
     {/if}
+    {#if $page.url.hostname !== "whenplane.com"}
+        <link rel="canonical" href="https://whenplane.com{$page.url.pathname}">
+    {/if}
 </svelte:head>
 
 <slot />

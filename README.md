@@ -1,6 +1,6 @@
 # When is WAN
 
-When is WAN (aka [whenplane](https://www.whenplane.com)) is a site that is meant to make it easier to tell a few things
+When is WAN (aka [whenplane](https://www.whenplane.com) and [whenwan.show](https://whenwan.show)) is a site that is meant to make it easier to tell a few things
 
 1. When the next WAN show is (compensating for timezones)
 2. How late the WAN show is
