@@ -1,5 +1,5 @@
 <ol class="breadcrumb pt-2 pl-2">
-  <li class="crumb"><a class="anchor hover-underline" href="/">Whenplane</a></li>
+  <li class="crumb"><a class="anchor hover-underline" href="/">{$page.url.hostname === "whenwan.show" ? "whenwan.show" : "Whenplane"}</a></li>
   <li class="crumb-separator" aria-hidden="true">&rsaquo;</li>
   <li class="crumb"><a class="anchor hover-underline" href="/history">History</a></li>
   <li class="crumb-separator" aria-hidden="true">&rsaquo;</li>

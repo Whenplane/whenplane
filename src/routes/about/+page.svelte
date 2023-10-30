@@ -2,6 +2,7 @@
     import {fade} from "svelte/transition";
     import {SlideToggle} from "@skeletonlabs/skeleton";
     import {browser} from "$app/environment";
+    import { page } from "$app/stores";
 
     let scrollY = 0;
 
@@ -14,7 +15,7 @@
 </script>
 <svelte:window bind:scrollY/>
 <svelte:head>
-    <title>About Whenplane</title>
+    <title>About {$page.url.hostname === "whenwan.show" ? "whenwan.show" : "Whenplane"}</title>
 </svelte:head>
 <div class="container h-full mx-auto flex justify-center items-center limit">
     <div class="space-y-5">
