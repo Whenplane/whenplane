@@ -82,18 +82,19 @@
         {/if}
         {#if data.image.verifyText}
           Text:
-          {#if data.image.text}
+          {#if typeof data.image.text === "string"}
             {data.image.text}
           {:else}
-            Processing{dot}
+            Processing{dot}<br>
+            <pre>{typeof data.image.text}</pre>
           {/if}
           <br>
 
-          <button class="btn variant-ghost-success w-5/12" formaction="?/correctTime" disabled={!data.image.text} >
+          <button class="btn variant-ghost-success w-5/12" formaction="?/correctTime" disabled={typeof data.image.text !== "string"} >
             Correct Time
           </button>
           {#key data.image.text}
-            <input class="text input w-3/12 p-2" disabled={!data.image.text} name="adjustedTime" value={data.image.text ?? ""}>
+            <input class="text input w-3/12 p-2" disabled={typeof data.image.text !== "string"} name="adjustedTime" value={data.image.text ?? ""}>
           {/key}
           <button class="btn variant-ghost-error w-2/12" formaction="?/adjustTime">
             Modify Time

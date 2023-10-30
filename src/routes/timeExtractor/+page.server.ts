@@ -35,7 +35,7 @@ export const load = (async ({fetch}) => {
   if(!download || !process) throw new Error();
 
   if(typeof verifyImageText != "undefined") {
-    const isDoneFetching = !!await Promise.any([verifyImageText.text, wait(5)]);
+    const isDoneFetching = typeof (await Promise.any([verifyImageText.text, wait(5)])) === "string";
     return {
       image: {
         path: verifyImageText.imagePath,
@@ -295,6 +295,10 @@ function startGoogleOCR(imagePath: string, imageBase64: string) {
       .then(r => r.json())
       .then(r => {console.log(r); return r;})
       .then(r => {
+        if(r.responses.length < 1 || !r.responses[0].textAnnotations || r.responses[0].textAnnotations.length < 1) {
+          console.log("No text from google ocr. returning empty string")
+          return "";
+        }
         const lines = r.responses[0].textAnnotations[0].description.split("\n");
         for (const line of lines) {
           if(line.includes("PM") || line.includes("AM")) {
