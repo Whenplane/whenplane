@@ -1,10 +1,11 @@
-import { writable } from "svelte/store";
+import { get, writable } from "svelte/store";
 import type { WanDb_FloatplaneData, WanDb_SocketState } from "$lib/utils.ts";
-import { dev } from "$app/environment";
+import { browser, dev } from "$app/environment";
 import type { LatenessVotingOption } from "$lib/voting.ts";
+import { page } from "$app/stores";
 
 export const floatplaneState = writable<WanDb_FloatplaneData>();
-export const wdbSocketState = writable<WanDb_SocketState>({lastReceive: 0});
+export const wdbSocketState = writable<WanDb_SocketState>({lastReceive: browser ? (get(page).data?.isWdbResponseValid ? Date.now() : 0) : 0});
 
 if(dev) {
   floatplaneState.subscribe(value => console.debug("Floatplane status changed:", value))
