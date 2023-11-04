@@ -64,6 +64,7 @@ export const load = (async ({fetch}) => {
                           lastFetch: Date.now() - wdb_fp_cache_time + 30e3
                       }
                       console.error("Error while fetching fp live status from thewandb:", error);
+                      return false;
                   });
                 // don't wait for more than 400ms for thewandb
                 const response = await Promise.race([responsePromise, wait(dev ? 1000 : 400)]) as WanDb_FloatplaneData;

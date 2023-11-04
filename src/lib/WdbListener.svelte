@@ -26,7 +26,7 @@
 
       stomp?.subscribe('/exchange/status', (message) => {
         try {
-          const body = JSON.parse(message.body) as WdbMessage ;
+          const body = JSON.parse(message.body) as WdbMessage;
           body.isWAN = body.wan;
           delete body.wan;
           floatplaneState.set(body as WanDb_FloatplaneData);
