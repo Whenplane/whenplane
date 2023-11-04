@@ -11,8 +11,8 @@
 
     export let data;
 
-    $: useTwitchFallback = (!data.isWdbResponseValid && (Date.now() - $wdbSocketState.lastReceive > 300e3)) || data.liveStatus.twitch.isWAN != $floatplaneState.isWAN;
-    $: if(useTwitchFallback) console.log(data.isWdbResponseValid, $wdbSocketState.lastReceive, data.liveStatus.twitch.isWAN, $floatplaneState.isWAN);
+    $: useTwitchFallback = (!data.isWdbResponseValid && (Date.now() - $wdbSocketState.lastReceive > 300e3)) || data.liveStatus.twitch.isWAN != $floatplaneState?.isWAN;
+    $: if(useTwitchFallback) console.log(data.isWdbResponseValid, $wdbSocketState.lastReceive, data.liveStatus.twitch.isWAN, $floatplaneState?.isWAN);
 
     let mounted = false;
     onMount(() => mounted = true);
@@ -74,9 +74,9 @@
             {/if}
             <br>
             {#if !useTwitchFallback}
-                <span class="status opacity-50" class:wan={$floatplaneState.live && $floatplaneState.isWAN}>
+                <span class="status opacity-50" class:wan={$floatplaneState.live && $floatplaneState?.isWAN}>
                     {#if $floatplaneState.live}
-                        {#if $floatplaneState.isWAN}
+                        {#if $floatplaneState?.isWAN}
                             (live)
                         {:else}
                             (live non-WAN)
