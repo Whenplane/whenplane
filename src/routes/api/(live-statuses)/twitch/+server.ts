@@ -175,13 +175,14 @@ export const GET = (async ({platform, url}) => {
 
     const remaining = twitchResponse.headers.get("Ratelimit-Remaining");
     const reset = twitchResponse.headers.get("Ratelimit-Reset");
+    const limit = twitchResponse.headers.get("Ratelimit-Limit");
 
     const analytics = platform.env?.TWITCH_ANALYTICS
 
     if(analytics) {
         analytics.writeDataPoint({
             blobs: [],
-            doubles: [remaining, Math.max((Number(reset) * 1000) - Date.now(), 0)],
+            doubles: [remaining, Math.max((Number(reset) * 1000) - Date.now(), 0), limit],
             indexes: []
         });
     }
