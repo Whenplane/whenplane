@@ -74,8 +74,8 @@
             {/if}
             <br>
             {#if !useTwitchFallback}
-                <span class="status opacity-50" class:wan={$floatplaneState.live && $floatplaneState?.isWAN}>
-                    {#if $floatplaneState.live}
+                <span class="status opacity-50" class:wan={$floatplaneState?.live && $floatplaneState?.isWAN}>
+                    {#if $floatplaneState?.live}
                         {#if $floatplaneState?.isWAN}
                             (live)
                         {:else}
