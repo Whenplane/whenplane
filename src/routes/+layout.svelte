@@ -51,7 +51,7 @@
 </script>
 
 <svelte:head>
-    {#if !$page.url.pathname.startsWith("/history/show/") && !pagesWithDescription.includes($page.url.pathname)}
+    {#if !$page.url.pathname.startsWith("/history/show/") && !$page.url.pathname.startsWith("/history/graph") && !pagesWithDescription.includes($page.url.pathname)}
         <meta name="description" content="When is WAN? Who knows! At least you can look at when it started before.. (spoiler: it's late)">
     {/if}
     {#if $page.url.hostname !== "whenplane.com"}
