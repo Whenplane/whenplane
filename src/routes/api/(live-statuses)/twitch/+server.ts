@@ -177,12 +177,19 @@ export const GET = (async ({platform, url}) => {
     const reset = twitchResponse.headers.get("Ratelimit-Reset");
     const limit = twitchResponse.headers.get("Ratelimit-Limit");
 
-    const analytics = platform.env?.TWITCH_ANALYTICS
+    const analytics = platform.env?.TWITCH_ANALYTICS;
+
+    const msUntilReset = Math.max((Number(reset) * 1000) - Date.now(), 0);
+
+    if(Number(remaining) < 15) {
+        // If we are low on remaining requests, wait until 1s after the reset in the future.
+        fastCache.lastFetch = Date.now() + msUntilReset - cacheTime + 1e3;
+    }
 
     if(analytics) {
         analytics.writeDataPoint({
             blobs: [],
-            doubles: [remaining, Math.max((Number(reset) * 1000) - Date.now(), 0), limit],
+            doubles: [remaining, msUntilReset, limit],
             indexes: []
         });
     }
