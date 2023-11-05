@@ -6,7 +6,7 @@
 
 <div class="text-center pt-16">
     <a href="/history/show/2021/03/12" class="inline-block">
-        <img src="/this_is_awkward.jpg" {alt} title={alt}/>
+        <img src="/this_is_awkward.webp" {alt} title={alt}/>
     </a>
     <h1>{$page.status}</h1>
     {$page.error.message}
