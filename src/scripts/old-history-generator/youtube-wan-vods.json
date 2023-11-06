@@ -1169,7 +1169,7 @@
 	},
 	"2023/01/13": {
 		"kind": "youtube#video",
-		"etag": "FXU7pxhHO8oyoo9M7aW__GSpW2c",
+		"etag": "P-C5eY3erheSrK4yyLvXg3wlGNk",
 		"id": "B1lfVm7JMFk",
 		"snippet": {
 			"publishedAt": "2023-01-14T04:12:51Z",
@@ -13181,7 +13181,7 @@
 		"snippet": {
 			"publishedAt": "2019-10-12T02:28:07Z",
 			"channelId": "UCXuqSBlHAE6Xw-yeJA0Tunw",
-			"title": "Blizzard Boycott? (PT 2) - WAN Show Oct 11, 2019",
+			"title": "Blizzard Boycott?  - WAN Show Oct 11, 2019",
 			"description": "Use offer code linustech to get 15% off MOS products at https://mosorganizer.com or on Amazon Canada at https://lmg.gg/moscanada\n\nHoney automatically applies the best coupon codes to save you money at \ndifferent online checkouts, try it now at https://www.joinhoney.com/linus\n\nSign up for Private Internet Access VPN at https://lmg.gg/piawan\n\nBuy an LTT shirt, hoodie, hat, and even our own insulated water bottle at https://lmg.gg/wanlttstore \n\nPodcast Download: http://traffic.libsyn.com/linustechtips/blizzard-boycott-pt-1-wan-show-oct-11-2019-1b87dfmymp3.mp3\n\nTimestamps (Courtesy of Cahenvels)\n\n5:48 Apple removes Hong Kong protest map\n11:33 Google has also removed Hong Kong Protestor game\n12:23 Steam to make local multiplayer games online (remote play together)\n13:45 LTTstore.com New water bottle colors\n14:07 Steam subject continues\n14:55 PT 2 high refresh rate latency test announcement ft. Michael Grzesiek (Shroud)\n17:17 Lan parties going 'retro'?\n18:45 Sponsor MOS Organizer\n20:17 Sponsor Honey\n22:09 Sponsor Private Internet Access\n23:51 Stadia 'thing' \n30:20 Superchats",
 			"thumbnails": {
 				"default": {
@@ -13235,7 +13235,7 @@
 			"projection": "rectangular"
 		},
 		"liveStreamingDetails": {
-			"actualStartTime": "2019-10-12T01:15:27Z",
+			"actualStartTime": "2019-10-12T00:26:16Z",
 			"actualEndTime": "2019-10-12T01:54:29Z"
 		}
 	},
@@ -13302,6 +13302,71 @@
 		"liveStreamingDetails": {
 			"actualStartTime": "2019-10-04T23:46:22Z",
 			"actualEndTime": "2019-10-05T01:07:34Z"
+		}
+	},
+	"2019/09/27": {
+		"kind": "youtube#video",
+		"etag": "dhBAG6GY6HOpjuJAPdOWD9UT5CY",
+		"id": "5piTyl2wzNk",
+		"snippet": {
+			"publishedAt": "2019-09-28T08:00:02Z",
+			"channelId": "UCXuqSBlHAE6Xw-yeJA0Tunw",
+			"title": "Is Apple FINALLY the Best for Gaming? - WAN Show Sept 27, 2019",
+			"description": "Vertagear: Enter Vertagear's Gaming Chair Giveaway at https://lmg.gg/8KVPH\nGet the Vertagear RGB LED Upgrade Kit at https://lmg.gg/8KV1R\n\nSavage Jerky: Use offer code LTT to save 10% on Savage Jerky at https://lmg.gg/savagejerky\n\nDisplate: Save 15% today with offer code LTT on Displate at https://lmg.gg/displatewan\n\nBuy an LTT shirt, hoodie, hat, and even our own insulated water bottle at https://lmg.gg/wanlttstore \n\nPodcast Download: http://traffic.libsyn.com/linustechtips/Is_Apple_FINALLY_the_Best_for_Gaming_-_WAN_Show_Sept_27_2019.mp3\n\nTimestamps (Courtesy of ItsKoby)\n\n0:12 Anthonames\n0:39 Topics/Intro\n1:34 Apple Arcade/Play Pass Comparison\n11:34 Amazon Hardware Event\n20:31 Checkm8 Exploit\n25:18 A Wild Nick Appears\n26:58 Sponsor Spots\n33:30 Boston Dynamics selling Spot robots\n40:53 Sony launches online hardware storefront\n44:51 The lost minute of WAN show.\n45:25 Sony launches online hardware storefront 2: electric boogaloo\n47:08 Alibaba unveils their first AI chip\n45:17 Superchats!",
+			"thumbnails": {
+				"default": {
+					"url": "https://i.ytimg.com/vi/5piTyl2wzNk/default.jpg",
+					"width": 120,
+					"height": 90
+				},
+				"medium": {
+					"url": "https://i.ytimg.com/vi/5piTyl2wzNk/mqdefault.jpg",
+					"width": 320,
+					"height": 180
+				},
+				"high": {
+					"url": "https://i.ytimg.com/vi/5piTyl2wzNk/hqdefault.jpg",
+					"width": 480,
+					"height": 360
+				},
+				"standard": {
+					"url": "https://i.ytimg.com/vi/5piTyl2wzNk/sddefault.jpg",
+					"width": 640,
+					"height": 480
+				}
+			},
+			"channelTitle": "Linus Tech Tips",
+			"tags": [
+				"Linus",
+				"Tech",
+				"Tips",
+				"Car",
+				"Lambo",
+				"LTX",
+				"LTX2018",
+				"automobile",
+				"Honda",
+				"Civic"
+			],
+			"categoryId": "28",
+			"liveBroadcastContent": "none",
+			"localized": {
+				"title": "Is Apple FINALLY the Best for Gaming? - WAN Show Sept 27, 2019",
+				"description": "Vertagear: Enter Vertagear's Gaming Chair Giveaway at https://lmg.gg/8KVPH\nGet the Vertagear RGB LED Upgrade Kit at https://lmg.gg/8KV1R\n\nSavage Jerky: Use offer code LTT to save 10% on Savage Jerky at https://lmg.gg/savagejerky\n\nDisplate: Save 15% today with offer code LTT on Displate at https://lmg.gg/displatewan\n\nBuy an LTT shirt, hoodie, hat, and even our own insulated water bottle at https://lmg.gg/wanlttstore \n\nPodcast Download: http://traffic.libsyn.com/linustechtips/Is_Apple_FINALLY_the_Best_for_Gaming_-_WAN_Show_Sept_27_2019.mp3\n\nTimestamps (Courtesy of ItsKoby)\n\n0:12 Anthonames\n0:39 Topics/Intro\n1:34 Apple Arcade/Play Pass Comparison\n11:34 Amazon Hardware Event\n20:31 Checkm8 Exploit\n25:18 A Wild Nick Appears\n26:58 Sponsor Spots\n33:30 Boston Dynamics selling Spot robots\n40:53 Sony launches online hardware storefront\n44:51 The lost minute of WAN show.\n45:25 Sony launches online hardware storefront 2: electric boogaloo\n47:08 Alibaba unveils their first AI chip\n45:17 Superchats!"
+			}
+		},
+		"contentDetails": {
+			"duration": "PT1H1M58S",
+			"dimension": "2d",
+			"definition": "hd",
+			"caption": "false",
+			"licensedContent": true,
+			"contentRating": {},
+			"projection": "rectangular"
+		},
+		"liveStreamingDetails": {
+			"actualStartTime": "2019-09-27T23:44:51Z",
+			"actualEndTime": "2019-09-28T00:46:50Z"
 		}
 	},
 	"2019/09/20": {
@@ -15178,7 +15243,7 @@
 	},
 	"2019/02/15": {
 		"kind": "youtube#video",
-		"etag": "IO7zdbYvVorH-bpXs8qYiRT2FBk",
+		"etag": "l0cUMz5GFGnS6zVEodt6T1xpOwI",
 		"id": "Zzu1-VM7y6g",
 		"snippet": {
 			"publishedAt": "2019-02-16T03:13:53Z",
@@ -15304,6 +15369,71 @@
 		"liveStreamingDetails": {
 			"actualStartTime": "2019-02-09T01:22:35Z",
 			"actualEndTime": "2019-02-09T02:28:16Z"
+		}
+	},
+	"2019/02/01": {
+		"kind": "youtube#video",
+		"etag": "HoxnialDxgNry1GuZK9Xh4cBJwE",
+		"id": "lQtpxdlPOMM",
+		"snippet": {
+			"publishedAt": "2019-02-02T02:48:29Z",
+			"channelId": "UCXuqSBlHAE6Xw-yeJA0Tunw",
+			"title": "Apple WRECKS Google & Facebook - The WAN Show Feb 1 2019",
+			"description": "Pulseway: Monitor and manage your PC in real-time with Pulseway! Create your free account today at https://lmg.gg/pulseway \n\nSewell Direct: Save 20% on all Sewell HDMI Cables with Offer Code linustech at https://lmg.gg/sewelldirect or on Amazon at https://lmg.gg/amazonsewell \n\nPrivate Internet Access: Sign up for Private Internet Access VPN at https://lmg.gg/piawan\n\nInterested in volunteering for LTX 2019?! You MUST be local, but please send an email to info@linusmediagroup.com with a resume or info about who you are and any working experience you might have.\n\nApply to work at Floatplane Media: https://goo.gl/forms/5JViJJ7BhVj4xNy63\n\nFloatplane Account Migration Details: https://linustechtips.com/main/topic/1011580-floatplane-subscriptions-migrating-to-floatplanecom/\n\nPodcast Link: http://traffic.libsyn.com/linustechtips/Apple_WRECKS_Google__Facebook_-_The_WAN_Show_Feb_1_2019.mp3\n\nTimestamps (Courtesy of Ahmad Shariff)\n\n0:16 - Linus ask luke about his haircut\n2:20 - Luke exercise\n3:12 - Truth about luke haircut\n6:08 - Linus writing book\n11:54 - LMG and Floatplane Hiring\n13:00 - LMG Ideas for future\n17:43 - Luke hair in video compression\n19:23 - Serialized video discussion\n23:28 - Linus talk about virtual ticket\n25:10 - Small QnA\n26:31 - Going to party that they not suppose to tell about at 6\n\n26:56 - Sponsors sessions starting\n27:03 - Pulseway: Monitor and manage your PC in real-time with Pulseway! Create your free account today at https://lmg.gg/pulseway \n28:18 - Private Internet Access: Sign up for Private Internet Access VPN at https://lmg.gg/piawan\n28:53 - Sewell Direct: Save 20% on all Sewell HDMI Cables with Offer Code linustech at https://lmg.gg/sewelldirect or on Amazon at https://lmg.gg/amazonsewell \n\n30:48 - Internet detective Location discussion\n36:20 - 1st Topic: Facetime Bug\n37:50 - 2nd Topic: BIG DATA BREACHES\n38:24 - Email checking\n39:35 - Linus check pwned email\n43:30 - Wrong outro/END\n43:46 - Merch\n46:20 - Another wrong outro/END\n46:22 - Superchats\n48:20 - Title topic: Apple disable Google and Facebook apps\n49:00 - Continue Superchats\n50:22 - Outro with luke laughing",
+			"thumbnails": {
+				"default": {
+					"url": "https://i.ytimg.com/vi/lQtpxdlPOMM/default.jpg",
+					"width": 120,
+					"height": 90
+				},
+				"medium": {
+					"url": "https://i.ytimg.com/vi/lQtpxdlPOMM/mqdefault.jpg",
+					"width": 320,
+					"height": 180
+				},
+				"high": {
+					"url": "https://i.ytimg.com/vi/lQtpxdlPOMM/hqdefault.jpg",
+					"width": 480,
+					"height": 360
+				},
+				"standard": {
+					"url": "https://i.ytimg.com/vi/lQtpxdlPOMM/sddefault.jpg",
+					"width": 640,
+					"height": 480
+				}
+			},
+			"channelTitle": "Linus Tech Tips",
+			"tags": [
+				"Linus",
+				"Tech",
+				"Tips",
+				"Car",
+				"Lambo",
+				"LTX",
+				"LTX2018",
+				"automobile",
+				"Honda",
+				"Civic"
+			],
+			"categoryId": "28",
+			"liveBroadcastContent": "none",
+			"localized": {
+				"title": "Apple WRECKS Google & Facebook - The WAN Show Feb 1 2019",
+				"description": "Pulseway: Monitor and manage your PC in real-time with Pulseway! Create your free account today at https://lmg.gg/pulseway \n\nSewell Direct: Save 20% on all Sewell HDMI Cables with Offer Code linustech at https://lmg.gg/sewelldirect or on Amazon at https://lmg.gg/amazonsewell \n\nPrivate Internet Access: Sign up for Private Internet Access VPN at https://lmg.gg/piawan\n\nInterested in volunteering for LTX 2019?! You MUST be local, but please send an email to info@linusmediagroup.com with a resume or info about who you are and any working experience you might have.\n\nApply to work at Floatplane Media: https://goo.gl/forms/5JViJJ7BhVj4xNy63\n\nFloatplane Account Migration Details: https://linustechtips.com/main/topic/1011580-floatplane-subscriptions-migrating-to-floatplanecom/\n\nPodcast Link: http://traffic.libsyn.com/linustechtips/Apple_WRECKS_Google__Facebook_-_The_WAN_Show_Feb_1_2019.mp3\n\nTimestamps (Courtesy of Ahmad Shariff)\n\n0:16 - Linus ask luke about his haircut\n2:20 - Luke exercise\n3:12 - Truth about luke haircut\n6:08 - Linus writing book\n11:54 - LMG and Floatplane Hiring\n13:00 - LMG Ideas for future\n17:43 - Luke hair in video compression\n19:23 - Serialized video discussion\n23:28 - Linus talk about virtual ticket\n25:10 - Small QnA\n26:31 - Going to party that they not suppose to tell about at 6\n\n26:56 - Sponsors sessions starting\n27:03 - Pulseway: Monitor and manage your PC in real-time with Pulseway! Create your free account today at https://lmg.gg/pulseway \n28:18 - Private Internet Access: Sign up for Private Internet Access VPN at https://lmg.gg/piawan\n28:53 - Sewell Direct: Save 20% on all Sewell HDMI Cables with Offer Code linustech at https://lmg.gg/sewelldirect or on Amazon at https://lmg.gg/amazonsewell \n\n30:48 - Internet detective Location discussion\n36:20 - 1st Topic: Facetime Bug\n37:50 - 2nd Topic: BIG DATA BREACHES\n38:24 - Email checking\n39:35 - Linus check pwned email\n43:30 - Wrong outro/END\n43:46 - Merch\n46:20 - Another wrong outro/END\n46:22 - Superchats\n48:20 - Title topic: Apple disable Google and Facebook apps\n49:00 - Continue Superchats\n50:22 - Outro with luke laughing"
+			}
+		},
+		"contentDetails": {
+			"duration": "PT50M52S",
+			"dimension": "2d",
+			"definition": "hd",
+			"caption": "false",
+			"licensedContent": true,
+			"contentRating": {},
+			"projection": "rectangular"
+		},
+		"liveStreamingDetails": {
+			"actualStartTime": "2019-02-02T01:21:10Z",
+			"actualEndTime": "2019-02-02T02:12:09Z"
 		}
 	},
 	"2019/01/25": {
@@ -21155,7 +21285,7 @@
 	},
 	"2017/02/24": {
 		"kind": "youtube#video",
-		"etag": "yaotfUpieCgq3L7CNIRO7er0XlI",
+		"etag": "E7TrS5z9Iopl9SNWOT0o5mUlqAw",
 		"id": "96S9YXXexu8",
 		"snippet": {
 			"publishedAt": "2017-02-25T03:00:32Z",
@@ -21207,6 +21337,15 @@
 				"description": "Check out Epiphan’s video grabbers at https://www.epiphan.com/avio/wan/\n\nVisit https://freshbooks.com/WAN and enter WAN in the “how did you hear about us” section when you sign up for your free trial.\n\nForum link: https://linustechtips.com/main/topic/743387-1080ti-confirmed-wan-show-feb-24-2017/\n\nSoundcloud link: https://soundcloud.com/thewanshow/1080ti-confirmed-wan-show-feb-24-2017\n\nTimestamps courtesy of JJMC89.\n\n00:02:40 - Cloudbleed\n00:07:03 - Google's Waymo sues Uber\n00:15:54 - Ryzen\n00:29:21 - Ryzen has issues with high-frequency DDR4 memory\n00:30:50 - Disney nails free-roaming wireless power delivery\n00:41:52 - Switch will not have Virtual Console at launch\n00:44:56 - Microsoft is testing underwater data centers\n00:45:36 - Sponsor: Freshbooks\n00:47:32 - Sponsor: Epiphan\n00:49:55 - Amazon refusing to hand over data on whether Alexa overheard a murder\n00:53:40 - France uses eagles to destroy terrorists drones\n00:54:46 - [Rumor] GTX 1080Ti to be announced on February 28\n00:55:39 - Floatplane Club"
 			},
 			"defaultAudioLanguage": "en"
+		},
+		"contentDetails": {
+			"duration": "PT59M2S",
+			"dimension": "2d",
+			"definition": "hd",
+			"caption": "false",
+			"licensedContent": true,
+			"contentRating": {},
+			"projection": "rectangular"
 		}
 	},
 	"2017/02/17": {
@@ -22863,6 +23002,81 @@
 			"projection": "rectangular"
 		}
 	},
+	"2016/08/26": {
+		"kind": "youtube#video",
+		"etag": "udLbUH-NKPAX_3E3tDq968JP2NQ",
+		"id": "ev7jQAAvvQ0",
+		"snippet": {
+			"publishedAt": "2016-08-27T07:41:26Z",
+			"channelId": "UCXuqSBlHAE6Xw-yeJA0Tunw",
+			"title": "The WAN Show - PCI Express 4.0, Android Nougat.. & More AMD Zen - August 26th 2016",
+			"description": "iFixIt link: http://ifixit.com/Linus - Offer code WAN to save $5 off a purchase of $10 or more\n\nCooler Master link: http://www.coolermaster.com/case/mid-tower/mastercase-maker-5/ \n\nForum link: https://linustechtips.com/main/topic/649786-august-26-2016-the-wan-show-document/\n\nSoundcloud Link: https://soundcloud.com/thewanshow/the-wan-show-pci-express-40-android-nougat-more-amd-zen-august-26th-2016\n\nTimestamps courtesy of Ghost and JJMC89\n\n00:00:00 - Excuses for being late, topics overview, and intro\n00:12:00 - AMD releases architectural details on Zen\n00:14:52 - What's inside Microsoft's Hololens and how it works\n00:25:25 - PCI Express 4.0 brings 16 GT/s and at least 300 watts at the slot\n00:33:26 - Android 7.0 Nougat released\n00:40:09 - Design defect breaking a ton of iPhone 6 Pluses\n00:42:21 - The Nosulus Rift\n00:45:20 - Xbox Onesie\n00:46:50 - North Korea launches its own streaming service named \"Manbang\"\n00:49:42 - McDonald's recalls Happy Meal fitness trackers after they injure kids\n00:52:10 - US Senator suggests swapping college instructors for videos\n00:54:33 - Pizza drone deliveries start testing in New Zealand\n00:56:11 - ASRock Rack and SuperMicro Announces Xeon Phi systems\n00:59:15 - Intel announces their 600P series of M.2 SSDs\n01:00:16 - PlayStation now coming to PC\n01:03:26 - Sponsor: iFixit\n01:06:58 - Sponsor: Cooler Master",
+			"thumbnails": {
+				"default": {
+					"url": "https://i.ytimg.com/vi/ev7jQAAvvQ0/default.jpg",
+					"width": 120,
+					"height": 90
+				},
+				"medium": {
+					"url": "https://i.ytimg.com/vi/ev7jQAAvvQ0/mqdefault.jpg",
+					"width": 320,
+					"height": 180
+				},
+				"high": {
+					"url": "https://i.ytimg.com/vi/ev7jQAAvvQ0/hqdefault.jpg",
+					"width": 480,
+					"height": 360
+				},
+				"standard": {
+					"url": "https://i.ytimg.com/vi/ev7jQAAvvQ0/sddefault.jpg",
+					"width": 640,
+					"height": 480
+				}
+			},
+			"channelTitle": "Linus Tech Tips",
+			"tags": [
+				"AMD",
+				"Intel",
+				"Zen",
+				"CPU",
+				"processor",
+				"news",
+				"podcast",
+				"unboxing",
+				"review",
+				"Happy Meal",
+				"Nosulus Rift",
+				"South Park",
+				"Xbox Onesie",
+				"PCIe",
+				"pci express 4.0",
+				"motherboard",
+				"hololens",
+				"microsoft",
+				"Pizza drone",
+				"Xeon Phi",
+				"Xeon",
+				"SSD",
+				"Server",
+				"Playstation"
+			],
+			"categoryId": "28",
+			"liveBroadcastContent": "none",
+			"localized": {
+				"title": "The WAN Show - PCI Express 4.0, Android Nougat.. & More AMD Zen - August 26th 2016",
+				"description": "iFixIt link: http://ifixit.com/Linus - Offer code WAN to save $5 off a purchase of $10 or more\n\nCooler Master link: http://www.coolermaster.com/case/mid-tower/mastercase-maker-5/ \n\nForum link: https://linustechtips.com/main/topic/649786-august-26-2016-the-wan-show-document/\n\nSoundcloud Link: https://soundcloud.com/thewanshow/the-wan-show-pci-express-40-android-nougat-more-amd-zen-august-26th-2016\n\nTimestamps courtesy of Ghost and JJMC89\n\n00:00:00 - Excuses for being late, topics overview, and intro\n00:12:00 - AMD releases architectural details on Zen\n00:14:52 - What's inside Microsoft's Hololens and how it works\n00:25:25 - PCI Express 4.0 brings 16 GT/s and at least 300 watts at the slot\n00:33:26 - Android 7.0 Nougat released\n00:40:09 - Design defect breaking a ton of iPhone 6 Pluses\n00:42:21 - The Nosulus Rift\n00:45:20 - Xbox Onesie\n00:46:50 - North Korea launches its own streaming service named \"Manbang\"\n00:49:42 - McDonald's recalls Happy Meal fitness trackers after they injure kids\n00:52:10 - US Senator suggests swapping college instructors for videos\n00:54:33 - Pizza drone deliveries start testing in New Zealand\n00:56:11 - ASRock Rack and SuperMicro Announces Xeon Phi systems\n00:59:15 - Intel announces their 600P series of M.2 SSDs\n01:00:16 - PlayStation now coming to PC\n01:03:26 - Sponsor: iFixit\n01:06:58 - Sponsor: Cooler Master"
+			}
+		},
+		"contentDetails": {
+			"duration": "PT1H14M27S",
+			"dimension": "2d",
+			"definition": "hd",
+			"caption": "false",
+			"licensedContent": true,
+			"contentRating": {},
+			"projection": "rectangular"
+		}
+	},
 	"2016/08/19": {
 		"kind": "youtube#video",
 		"etag": "9e-a5T_q-Uj7rqhP0edadSr23BQ",
@@ -23845,7 +24059,7 @@
 	},
 	"2016/05/06": {
 		"kind": "youtube#video",
-		"etag": "VlfaVvvEXTL7X2c-GWVUp-asE3E",
+		"etag": "wu-IB5I_FnGKLtaWjc82hXrO6_g",
 		"id": "zmio_2GDKB0",
 		"snippet": {
 			"publishedAt": "2016-05-07T06:27:38Z",
@@ -23902,6 +24116,15 @@
 				"title": "The WAN Show - The Last Show Before We Leave - May 6, 2016",
 				"description": "https://linustechtips.com/main/topic/592403-may-6-2016-the-wan-show-document/\n\nCheck out NerdSports: http://vessel.com/nerdsports\n\nSponsors\n\nSquarespace: http://squarespace.com/linus, offer code LINUS to save 10%.\n\nLynda.com Link: http://lynda.com/wanshow for a 10 day free trial\n\nJoin Dollar Shave Club: http://dollarshaveclub.com/linus\n\nLimited Edition Shirts: \nhttps://teespring.com/ltt-gold \nhttps://teespring.com/ltt-silver\n\nSoundcloud Link: https://soundcloud.com/thewanshow/the-wan-show-the-last-show-before-we-leave-may-6-2016\n\nTimestamps courtesy of Sam Tilling, JJMC89 & Ghost\n\n00:09:33 Lyft Will Pick You Up In Self-Driving Electric Cars Within a Year: Report\n00:14:37 Microsoft Confirms that July 29th is the Last Day for Windows 10 Free Upgrade - $119 Afterwards\n00:17:25 Windows Statistics\n00:21:00 Windows Rant \n00:26:05 Microsoft is Removing its Nagging Windows 10 Upgrade Notifications \n00:26:45 China Bans ‘erotic’ Banana-eating Live Streams\n00:32:30 Where’s Luke? - NVIDIA Pascal Being Announced Today at 6pm PST\n00:35:30 Sponsor: Dollar Shave Club \n00:37:50 Sponsor: Squarespace \n00:39:25 Sponsor: Lynda\n00:40:40 Next Gen AI “Viv” to be Debuted at an Industry Conference Monday, May 9th\n00:44:30 NERD SPORTS SHOUT OUT, LINK WILL BE IN THE VIDEO DESCRIPTION\n00:45:45 New LTT Shirts\n00:48:40 Flyboard Air: Franky Zapata’s Flyboard Air Independent Propulsion Unit Redefines the Concept of a Hoverboard\n00:52:20 AMD Polaris Will Support up to 240Hz Displays\n00:56:26 Apple Loses iPhone Trademark Battle in China\n00:57:50 Elon Musk says production deadline for Model 3 ‘impossible’\n00:58:50 Microsoft to Stop Allowing Cortana to Function in Other Browsers\n00:59:45 Buttonless Fingerprint Sensors Coming to Phones This Year\n01:01:34 Oculus Rift to be sold in Best Buy, Amazon, and Microsoft by May 7th"
 			}
+		},
+		"contentDetails": {
+			"duration": "PT1H5M30S",
+			"dimension": "2d",
+			"definition": "hd",
+			"caption": "false",
+			"licensedContent": true,
+			"contentRating": {},
+			"projection": "rectangular"
 		}
 	},
 	"2016/04/29": {
@@ -26635,9 +26858,76 @@
 			"projection": "rectangular"
 		}
 	},
+	"2015/07/17": {
+		"kind": "youtube#video",
+		"etag": "wqQlsosBKTrUIgXPrvJYe5pjlQQ",
+		"id": "gEgz-gISzfM",
+		"snippet": {
+			"publishedAt": "2015-07-18T08:01:48Z",
+			"channelId": "UCXuqSBlHAE6Xw-yeJA0Tunw",
+			"title": "The WAN Show - Apple Sued over \"iWatch\" Trademark & Samsung Patents \"Fat Detector\" - July 17, 2015",
+			"description": "http://linustechtips.com/main/topic/409933-july-17-2015-the-wan-show-document/\n\nGet the Vote For Turnip shirt at http://teespring.com/vote4turnip\n\nSponsors!\n\nJoin Dollar Shave Club: http://dollarshaveclub.com/linus\n\niFixIt link: http://ifixit.com/Linus - Offer code WANSHOW\n\nSoundcloud Link: https://soundcloud.com/thewanshow/the-wan-show-apple-sued-over-iwatch-trademark-samsung-patents-fat-detector-july-17-2015\n\nTimestamps courtesy of cloclo8003 & JJMC89\n\n00:04:10 - Nintendo President Satoru Iwata has Passed Away\n00:06:26 - Star Wars Battlefront doesn't support local co-op on PC\n00:09:25 - IBM and NVIDIA Launch Supercomputer \"Centers of Excellence\"\n00:11:33 - Samsung Patents Body Fat Sensors on Smartphones\n00:17:00 - Apple takes 92% of smartphone market profits on just 20% of sales\n00:23:09 - Strawpoll - How many converted from iPhone to Android simply because Apple offered no large screen offering: https://strawpoll.me/4952799\n00:25:12 - Researchers build a transistor from a molecule and a few atoms\n00:27:01 - TSMC to start testing 10 nm process next year\n00:28:22 - Strawpoll - Will Apple use new technology to extend battery life or to make it thinner yet again?: https://strawpoll.me/4952825\n00:33:04 - Intel reportedly delays 10nm mass production\n00:41:10 - AMD has taped out their first FinFET products\n00:41:47 - Intel Skylake Xeon Could Pack 28 core and hex channel DDR4 memory\n00:44:31 - Apple Is Getting Sued Over Use of 'iWatch' Trademark in EU\n00:47:20 - Sponsor - DollarShaveClub: Sign up today at dollarshaveclub.com/linus\n00:48:24 - Sponsor - iFixit: Use offer code WANSHOW to save $10 off a purchase of $50 or more\n00:50:33 - Boeing patents laser-powered fusion-fission jet engines\n00:52:31 - T-Mobile's new family plan gives you 4 lines, 10GB for each, for only $120\n00:54:05 - CEO Nadella talks Microsoft's mobile ambitions, Windows 10 strategy, HoloLens and more\n00:58:00 - Woman changes her name to get control of Facebook account\n00:59:30 - Caselabs apologizes for accusations against Thermaltake\n01:02:30 - Twitter blitz",
+			"thumbnails": {
+				"default": {
+					"url": "https://i.ytimg.com/vi/gEgz-gISzfM/default.jpg",
+					"width": 120,
+					"height": 90
+				},
+				"medium": {
+					"url": "https://i.ytimg.com/vi/gEgz-gISzfM/mqdefault.jpg",
+					"width": 320,
+					"height": 180
+				},
+				"high": {
+					"url": "https://i.ytimg.com/vi/gEgz-gISzfM/hqdefault.jpg",
+					"width": 480,
+					"height": 360
+				},
+				"standard": {
+					"url": "https://i.ytimg.com/vi/gEgz-gISzfM/sddefault.jpg",
+					"width": 640,
+					"height": 480
+				}
+			},
+			"channelTitle": "Linus Tech Tips",
+			"tags": [
+				"Apple Watch",
+				"Apple Inc. (Publisher)",
+				"Samsung Electronics (Organization Founder)",
+				"Patent (Legal Subject)",
+				"iPhone",
+				"10nm",
+				"CPU",
+				"processor",
+				"Microsoft",
+				"Windows 10",
+				"T-mobile",
+				"AMD",
+				"Intel",
+				"Skylake",
+				"Nintendo",
+				"Satoru Iwata (Organization Leader)"
+			],
+			"categoryId": "19",
+			"liveBroadcastContent": "none",
+			"localized": {
+				"title": "The WAN Show - Apple Sued over \"iWatch\" Trademark & Samsung Patents \"Fat Detector\" - July 17, 2015",
+				"description": "http://linustechtips.com/main/topic/409933-july-17-2015-the-wan-show-document/\n\nGet the Vote For Turnip shirt at http://teespring.com/vote4turnip\n\nSponsors!\n\nJoin Dollar Shave Club: http://dollarshaveclub.com/linus\n\niFixIt link: http://ifixit.com/Linus - Offer code WANSHOW\n\nSoundcloud Link: https://soundcloud.com/thewanshow/the-wan-show-apple-sued-over-iwatch-trademark-samsung-patents-fat-detector-july-17-2015\n\nTimestamps courtesy of cloclo8003 & JJMC89\n\n00:04:10 - Nintendo President Satoru Iwata has Passed Away\n00:06:26 - Star Wars Battlefront doesn't support local co-op on PC\n00:09:25 - IBM and NVIDIA Launch Supercomputer \"Centers of Excellence\"\n00:11:33 - Samsung Patents Body Fat Sensors on Smartphones\n00:17:00 - Apple takes 92% of smartphone market profits on just 20% of sales\n00:23:09 - Strawpoll - How many converted from iPhone to Android simply because Apple offered no large screen offering: https://strawpoll.me/4952799\n00:25:12 - Researchers build a transistor from a molecule and a few atoms\n00:27:01 - TSMC to start testing 10 nm process next year\n00:28:22 - Strawpoll - Will Apple use new technology to extend battery life or to make it thinner yet again?: https://strawpoll.me/4952825\n00:33:04 - Intel reportedly delays 10nm mass production\n00:41:10 - AMD has taped out their first FinFET products\n00:41:47 - Intel Skylake Xeon Could Pack 28 core and hex channel DDR4 memory\n00:44:31 - Apple Is Getting Sued Over Use of 'iWatch' Trademark in EU\n00:47:20 - Sponsor - DollarShaveClub: Sign up today at dollarshaveclub.com/linus\n00:48:24 - Sponsor - iFixit: Use offer code WANSHOW to save $10 off a purchase of $50 or more\n00:50:33 - Boeing patents laser-powered fusion-fission jet engines\n00:52:31 - T-Mobile's new family plan gives you 4 lines, 10GB for each, for only $120\n00:54:05 - CEO Nadella talks Microsoft's mobile ambitions, Windows 10 strategy, HoloLens and more\n00:58:00 - Woman changes her name to get control of Facebook account\n00:59:30 - Caselabs apologizes for accusations against Thermaltake\n01:02:30 - Twitter blitz"
+			}
+		},
+		"contentDetails": {
+			"duration": "PT1H14M57S",
+			"dimension": "2d",
+			"definition": "hd",
+			"caption": "false",
+			"licensedContent": true,
+			"contentRating": {},
+			"projection": "rectangular"
+		}
+	},
 	"2015/07/10": {
 		"kind": "youtube#video",
-		"etag": "4eXhX80sLBExEbCjVZjgydKonHg",
+		"etag": "5fUhiGFBLWU7i3TWiilQlDdr9U4",
 		"id": "-DtvhX8SfUk",
 		"snippet": {
 			"publishedAt": "2015-07-11T08:20:16Z",
@@ -26692,6 +26982,15 @@
 				"title": "The WAN Show - The PC Gaming Golden Age & Fighting Robots! - July 10, 2015",
 				"description": "http://linustechtips.com/main/topic/404933-july-10th-2015-the-wan-show-document/\n\nGet the Vote For Turnip shirt at http://teespring.com/vote4turnip\n\nSponsors!\n\nLynda.com Link: http://lynda.com/wanshow for a 10 day free trial\n\nSquarespace: http://squarespace.com/linus, offer code LINUS to save 10%.\n\nSoundcloud Link: https://soundcloud.com/thewanshow/the-wan-show-the-pc-gaming-golden-age-fighting-robots-july-10-2015\n\nTimestamps courtesy of JJMC89\n\n00:03:51 - Samsung and Oppo sued over bloatware in China\n00:13:40 - OnePlus 2 - 4GB of LP-DDR4 RAM\n00:21:25 - Has phone memory gotten out of hand? (https://strawpoll.me/4887589/r)\n00:27:22 - EA will pay $60 million fine for unauthorized use of names and portraits of athlete\n00:32:47 - \"PC gaming is in a golden age\", says XCOM 2 creative director\n00:40:59 - Microsoft Cutting 7800 jobs from its Hardware division\n00:45:29 - Watch Dogs backlash started a policy change at Ubisoft, says company's CEO Yves Guillemot\n00:53:54 - [PC Gamer] PC second strongest platform for Ubisoft game sales\n00:56:08 - Sponsor - Lynda.com\n00:57:55 - Sponsor - Squarespace\n01:02:02 - Apple Watch demand has fallen a lot\n01:05:24 - AMD lowers revenue expectations because of poor APU sales - Q2 earnings call\n01:06:04 - AMD Officially cancels 20nm chips and takes a $33 million charge\n01:09:00 - IBM unveils world's first 7nm chip prototype\n01:14:58 - Ellen Pao has resigned from her role as reddit CEO\n01:15:56 - Microsoft presents Groove Music streaming service\n01:18:48 - Anything good \"groovy\" (https://strawpoll.me/4887960/r)\n01:21:55 - Japan response to USA's mech robot duel challenge\n01:22:33 - WAN Show feedback (https://strawpoll.me/4887986/r)"
 			}
+		},
+		"contentDetails": {
+			"duration": "PT1H24M59S",
+			"dimension": "2d",
+			"definition": "hd",
+			"caption": "false",
+			"licensedContent": true,
+			"contentRating": {},
+			"projection": "rectangular"
 		}
 	},
 	"2015/07/03": {
@@ -29435,7 +29734,7 @@
 	},
 	"2014/07/04": {
 		"kind": "youtube#video",
-		"etag": "QdLXgY_fU6AD2wDraL9vUJKOKQg",
+		"etag": "tGod_Ss7BExqmOOu5V8OQ_2tF6k",
 		"id": "goz92THfA1I",
 		"snippet": {
 			"publishedAt": "2014-07-05T07:38:25Z",
@@ -29811,6 +30110,68 @@
 			"projection": "rectangular"
 		}
 	},
+	"2014/05/09": {
+		"kind": "youtube#video",
+		"etag": "keOyTVHa4L1v2MU-TZkVlxWvp3Y",
+		"id": "E0rp8xGDXas",
+		"snippet": {
+			"publishedAt": "2014-05-10T05:39:34Z",
+			"channelId": "UCXuqSBlHAE6Xw-yeJA0Tunw",
+			"title": "The WAN Show: Apple to buy Beats! Surprisingly it was Overpriced :p - May 9th, 2014",
+			"description": "WAN Show Document: http://linustechtips.com/main/topic/150119-may-9th-2014-the-wan-show-document/\n\nJoin Dollar Shave Club: http://dollarshaveclub.com/linus\n\nASUS G750JZ Gaming Notebook: https://www.asus.com/Notebooks_Ultrabooks/ASUS_ROG_G750JZ/\n\nTopic Timetable (thanks Delons!)\n \n0:2:46 - Amazon Patents Photos On White Backgrounds\n0:13:30 - Steven Hawking Says A.I. Could Be Our \"Worst Mistake\"\n0:23:33 - Samsung's Head Of Mobile Design Resigns\n0:28:00 - Router Company Threatened A Reviewer\n0:34:10 - The Game \"Towns\" Was Taken Down\n0:44:40 - Apple Buying Beats For 3.2 Billion\n0:53:00 - Oculus Rift Bird Simulator\n0:57:26 - Dollar Shave Club Sponsor Spot\n1:00:20 - Asus Sponsor Spot\n1:06:20 - Symantec: Anti-Virus Is Dead\n1:12:30 - Intel Skylake\n1:15:00 - \"Destiny\" Costs $500 Million\n1:19:00 - Web Host Gives FCC A Slow Lane\n1:25:00 - PowerColor HD 7990\n1:27:31 - BUILD LOG: Project Insomnia\n1:18:35 - BUILD LOG: Portal Cube\n1:19:13 - BUILD LOG: Project Afinity\n \nExtended Timetable\n \n0:30:00 - JayZ Sponsoring\n0:01:00 - Introduction to Topics\n0:01:42 - Intro VIdeo\n \n0:2:46 - TOPIC: Amazon Patents Photos On White Backgrounds\n- Source: http://bit.ly/1sbNUPy\n- 0:04:50 - Specifics\n- 0:05:53 - Why do it?\n \n0:08:20 - Mothers Day\n0:08:58 - M8 to iPhone 5S\n0:09:45 - Google Now and Siri\n \n0:13:30 - TOPIC: Steven Hawking Says A.I. Could Be Our \"Worst Mistake\"\n- Source: http://bit.ly/1sbOVHm\n- 0:14:25 - Exact Quote\n- 0:15:00 - Comments\n \n0:17:50 - Twitter Blitz\n- 0:18:15 - Internet Explorer\n- 0:18:30 - Linus's Lambo\n- 0:19:45 - Haswell Refresh\n- 0:20:30 - Join Boinc and Folding!\n- 0:21:25 - OnePlus One Loaner Unit\n \n0:23:33 - TOPIC: Samsung's Head Of Mobile Design Resigns\n- Source: http://bit.ly/RxpZ1W\n- 0:25:00 - Phone Community Getting Bored\n \n0:28:00 - TOPIC: Router Company Threatened A Reviewer\n- Source: http://bit.ly/1nqnImA\n- 0:29:00 - Buying From Non-Amazon Sellers\n- 0:30:00 - Rebadged Items\n- 0:30:30 - Other False Reviews\n- 0:32:30 - Reddit Army\n \n0:34:10 - TOPIC: The Game \"Towns\" Was Abandoned\n- Source: http://bit.ly/RxDoXj\n- 0:35:25 - What It Is\n- 0:35:55 - How Do You Fix This?\n- 0:38:45 - Do Your Research\n- 0:39:20 - Kickstarter Perception\n- 0:41:15 - Luke's Experiences\n- 0:43:50 - Linus's Coworker\n \n \n0:44:40 - TOPIC: Apple Buying Beats For 3.2 Billion\n- Source: http://bit.ly/1sbOb50\n- 0:45:30 - Streaming Service\n- 0:47:46 - Linus's Bubble\n- 0:49:25 - Linus's Opinion\n- 0:51:00 - Strawpoll - http://strawpoll.me/1665436\n- 0:52:29 - Strawpoll Results\n \n0:52:40 - Wat\n \n0:53:00 - TOPIC: Oculus Rift Bird Simulator\n- Source: http://bit.ly/1fVFGuH\n- 0:55:20 - Room In The House\n- 0:56:10 - Too Much Money\n \n0:57:26 - Dollar Shave Club Sponsor Spot\n- Join the club. Visit DollarShaveClub.com/Linus\n \n1:00:20 - Asus Sponsor Spot\n- Asus G750JZ\n \n1:05:00 - Strawpoll Results\n \n1:06:20 - TOPIC: Symantec: Anti-Virus Is Dead\n- Source: http://bit.ly/1izUJ81\n- 1:09:50 - Strawpoll - http://strawpoll.me/1665508\n \n1:12:30 - TOPIC: Intel Skylake\n- Source: http://bit.ly/1nqogc8\n \n1:15:00 - TOPIC: \"Destiny\" Costs $500 Million\n- Source: http://bit.ly/1uLvf16\n- 1:15:55 - Strawpoll - http://strawpoll.me/1665542/\n- 1:17:00 - I Don't Even Know\n \n1:19:00 - TOPIC: Web Host Gives FCC A Slow Lane\n- Source: http://bit.ly/1fVFUCe\n- 1:21:00 - The Point\n \n1:25:00 - TOPIC: PowerColor HD 7990\n- Source: http://bit.ly/1qnWGOW\n \n1:27:00 - Awwwwwwwwwwwwwwwwwwwww\n \n1:27:31 - BUILD LOG: Project Insomnia\n- Source: http://bit.ly/1fVG1xw\n \n1:28:35 - BUILD LOG: Portal Cube\n- Source: http://bit.ly/1jbtUr1\n \n1:29:13 - BUILD LOG: Project Affinity\n- Source: http://bit.ly/1jbtYa6\n \n1:30:30 - Cogito Smart Watches\n1:32:35 - Outro Video",
+			"thumbnails": {
+				"default": {
+					"url": "https://i.ytimg.com/vi/E0rp8xGDXas/default.jpg",
+					"width": 120,
+					"height": 90
+				},
+				"medium": {
+					"url": "https://i.ytimg.com/vi/E0rp8xGDXas/mqdefault.jpg",
+					"width": 320,
+					"height": 180
+				},
+				"high": {
+					"url": "https://i.ytimg.com/vi/E0rp8xGDXas/hqdefault.jpg",
+					"width": 480,
+					"height": 360
+				},
+				"standard": {
+					"url": "https://i.ytimg.com/vi/E0rp8xGDXas/sddefault.jpg",
+					"width": 640,
+					"height": 480
+				},
+				"maxres": {
+					"url": "https://i.ytimg.com/vi/E0rp8xGDXas/maxresdefault.jpg",
+					"width": 1280,
+					"height": 720
+				}
+			},
+			"channelTitle": "Linus Tech Tips",
+			"tags": [
+				"Apple",
+				"Beats",
+				"Amazon",
+				"patent troll",
+				"skylake",
+				"bird simulator"
+			],
+			"categoryId": "28",
+			"liveBroadcastContent": "none",
+			"localized": {
+				"title": "The WAN Show: Apple to buy Beats! Surprisingly it was Overpriced :p - May 9th, 2014",
+				"description": "WAN Show Document: http://linustechtips.com/main/topic/150119-may-9th-2014-the-wan-show-document/\n\nJoin Dollar Shave Club: http://dollarshaveclub.com/linus\n\nASUS G750JZ Gaming Notebook: https://www.asus.com/Notebooks_Ultrabooks/ASUS_ROG_G750JZ/\n\nTopic Timetable (thanks Delons!)\n \n0:2:46 - Amazon Patents Photos On White Backgrounds\n0:13:30 - Steven Hawking Says A.I. Could Be Our \"Worst Mistake\"\n0:23:33 - Samsung's Head Of Mobile Design Resigns\n0:28:00 - Router Company Threatened A Reviewer\n0:34:10 - The Game \"Towns\" Was Taken Down\n0:44:40 - Apple Buying Beats For 3.2 Billion\n0:53:00 - Oculus Rift Bird Simulator\n0:57:26 - Dollar Shave Club Sponsor Spot\n1:00:20 - Asus Sponsor Spot\n1:06:20 - Symantec: Anti-Virus Is Dead\n1:12:30 - Intel Skylake\n1:15:00 - \"Destiny\" Costs $500 Million\n1:19:00 - Web Host Gives FCC A Slow Lane\n1:25:00 - PowerColor HD 7990\n1:27:31 - BUILD LOG: Project Insomnia\n1:18:35 - BUILD LOG: Portal Cube\n1:19:13 - BUILD LOG: Project Afinity\n \nExtended Timetable\n \n0:30:00 - JayZ Sponsoring\n0:01:00 - Introduction to Topics\n0:01:42 - Intro VIdeo\n \n0:2:46 - TOPIC: Amazon Patents Photos On White Backgrounds\n- Source: http://bit.ly/1sbNUPy\n- 0:04:50 - Specifics\n- 0:05:53 - Why do it?\n \n0:08:20 - Mothers Day\n0:08:58 - M8 to iPhone 5S\n0:09:45 - Google Now and Siri\n \n0:13:30 - TOPIC: Steven Hawking Says A.I. Could Be Our \"Worst Mistake\"\n- Source: http://bit.ly/1sbOVHm\n- 0:14:25 - Exact Quote\n- 0:15:00 - Comments\n \n0:17:50 - Twitter Blitz\n- 0:18:15 - Internet Explorer\n- 0:18:30 - Linus's Lambo\n- 0:19:45 - Haswell Refresh\n- 0:20:30 - Join Boinc and Folding!\n- 0:21:25 - OnePlus One Loaner Unit\n \n0:23:33 - TOPIC: Samsung's Head Of Mobile Design Resigns\n- Source: http://bit.ly/RxpZ1W\n- 0:25:00 - Phone Community Getting Bored\n \n0:28:00 - TOPIC: Router Company Threatened A Reviewer\n- Source: http://bit.ly/1nqnImA\n- 0:29:00 - Buying From Non-Amazon Sellers\n- 0:30:00 - Rebadged Items\n- 0:30:30 - Other False Reviews\n- 0:32:30 - Reddit Army\n \n0:34:10 - TOPIC: The Game \"Towns\" Was Abandoned\n- Source: http://bit.ly/RxDoXj\n- 0:35:25 - What It Is\n- 0:35:55 - How Do You Fix This?\n- 0:38:45 - Do Your Research\n- 0:39:20 - Kickstarter Perception\n- 0:41:15 - Luke's Experiences\n- 0:43:50 - Linus's Coworker\n \n \n0:44:40 - TOPIC: Apple Buying Beats For 3.2 Billion\n- Source: http://bit.ly/1sbOb50\n- 0:45:30 - Streaming Service\n- 0:47:46 - Linus's Bubble\n- 0:49:25 - Linus's Opinion\n- 0:51:00 - Strawpoll - http://strawpoll.me/1665436\n- 0:52:29 - Strawpoll Results\n \n0:52:40 - Wat\n \n0:53:00 - TOPIC: Oculus Rift Bird Simulator\n- Source: http://bit.ly/1fVFGuH\n- 0:55:20 - Room In The House\n- 0:56:10 - Too Much Money\n \n0:57:26 - Dollar Shave Club Sponsor Spot\n- Join the club. Visit DollarShaveClub.com/Linus\n \n1:00:20 - Asus Sponsor Spot\n- Asus G750JZ\n \n1:05:00 - Strawpoll Results\n \n1:06:20 - TOPIC: Symantec: Anti-Virus Is Dead\n- Source: http://bit.ly/1izUJ81\n- 1:09:50 - Strawpoll - http://strawpoll.me/1665508\n \n1:12:30 - TOPIC: Intel Skylake\n- Source: http://bit.ly/1nqogc8\n \n1:15:00 - TOPIC: \"Destiny\" Costs $500 Million\n- Source: http://bit.ly/1uLvf16\n- 1:15:55 - Strawpoll - http://strawpoll.me/1665542/\n- 1:17:00 - I Don't Even Know\n \n1:19:00 - TOPIC: Web Host Gives FCC A Slow Lane\n- Source: http://bit.ly/1fVFUCe\n- 1:21:00 - The Point\n \n1:25:00 - TOPIC: PowerColor HD 7990\n- Source: http://bit.ly/1qnWGOW\n \n1:27:00 - Awwwwwwwwwwwwwwwwwwwww\n \n1:27:31 - BUILD LOG: Project Insomnia\n- Source: http://bit.ly/1fVG1xw\n \n1:28:35 - BUILD LOG: Portal Cube\n- Source: http://bit.ly/1jbtUr1\n \n1:29:13 - BUILD LOG: Project Affinity\n- Source: http://bit.ly/1jbtYa6\n \n1:30:30 - Cogito Smart Watches\n1:32:35 - Outro Video"
+			}
+		},
+		"contentDetails": {
+			"duration": "PT1H34M50S",
+			"dimension": "2d",
+			"definition": "hd",
+			"caption": "false",
+			"licensedContent": true,
+			"contentRating": {},
+			"projection": "rectangular"
+		}
+	},
 	"2014/05/02": {
 		"kind": "youtube#video",
 		"etag": "4FYtHMHt-cxZwwi7OD8YYfGh8-0",
@@ -30002,6 +30363,68 @@
 		},
 		"contentDetails": {
 			"duration": "PT1H14M57S",
+			"dimension": "2d",
+			"definition": "hd",
+			"caption": "false",
+			"licensedContent": true,
+			"contentRating": {},
+			"projection": "rectangular"
+		}
+	},
+	"2014/04/04": {
+		"kind": "youtube#video",
+		"etag": "JTlbNivWjyUwsZbnEHbW839TgZQ",
+		"id": "s0DUheKKcxk",
+		"snippet": {
+			"publishedAt": "2014-04-05T07:39:37Z",
+			"channelId": "UCXuqSBlHAE6Xw-yeJA0Tunw",
+			"title": "The WAN Show: R9 295 X2 Rumours, Windows 8.1 Getting BETTER - April 4th, 2014",
+			"description": "WAN Show Document: http://linustechtips.com/main/topic/135793-april-4th-2014-the-wan-show-document/ \n\nSquarespace Link: http://squarespace.com/linus - Offer code Linus to save 10%\n\n0:00:00 - Introduction To Topics\n0:01:12 - Introduction Video\n0:01:37 - Intel/Corsair Sponsor Spot\n0:01:45 - Squarespace Sponsor Spot\n\n0:02:01 - TOPIC: Yahoo Making Their Own Youtube\n        - 0:04:25 - Linus' Perspective As A Content Creator\n        - 0:06:44 - Old Videos Getting Views\n\n0:08:15 - TOPIC: R9 295 Leaked\n        - 0:08:15 - How Many Will They Make?\n        - 0:10:14 - Rumored MSRP\n\n0:13:16 - TOPIC: Windows 8 Free On Devices Under 9\"\n        - 0:15:04 - Hackindows\n        - 0:15:21 - Cross Platform Apps\n        - 0:15:47 - Video\n        - 0:17:02 - New Business Strategy\n\n0:17:33 - TOPIC: Office For iPad Downloads Reach 12 Million\n        - 0:18:29 - Naming\n        - 0:19:07 - Free Version\n        - 0:19:56 - Advantages For Business\n        - 0:21:55 - Other Solutions\n\n0:23:23 - TOPIC: Windows 8.1 Update\n        - 0:23:32 - Video\n        - 0:25:10 - Photo App\n        - 0:28:45 - Start Menu\n\n0:32:57 - TOPIC: DirectX 12 Fully Supported On Windows 7 And Up\n        - 0:33:36 - Death of The Strategy Tax\n\n0:35:50 - Intel And Corsair Sponsor Spot\n        - Linus Media Group Covers PAX East\n        - Brought To You By Intel And Corsair\n\n0:38:55 - Squarespace Sponsor Spot\n        - Visit Squarespace.com/linus\n        - For a free trial and 10% off, use offer code: LINUS\n\n0:42:43 - TOPIC: Apple Patents Mouse For Swappable iPhone Lenses\n        - 0:44:03 - Challenges For Phone Cameras\n\n0:45:57 - TOPIC: Mozille CEO Resigns Over Anti-Gay Marrige Controversy\n        - 0:47:09 - Resiginations\n        - 0:48:39 - Strawpoll - http://strawpoll.me/1437520\n        - 0:50:30 - Strawpoll Results\n        - 0:53:07 - Strawpoll - http://strawpoll.me/1437531\n        - 0:54:38 - Strawpoll Results\n        - 1:00:48 - Strawpoll - http://strawpoll.me/1437564\n\n1:01:42 - TOPIC: Reversible USB 3.0 Type C Cable\n        - 1:02:48 - Linus' Opinions\n        - 1:06:26 - Wireless Charging Comments\n        - 1:10:12 - Strawpoll Results\n\n1:12:37 - TOPIC: Amazon FireTV\n        - 1:16:50 - Chromecast\n\n1:19:54 - TOPIC: Is The Gaming Laptop Dead?\n        - 1:21:46 - What Is A Gaming Laptop?",
+			"thumbnails": {
+				"default": {
+					"url": "https://i.ytimg.com/vi/s0DUheKKcxk/default.jpg",
+					"width": 120,
+					"height": 90
+				},
+				"medium": {
+					"url": "https://i.ytimg.com/vi/s0DUheKKcxk/mqdefault.jpg",
+					"width": 320,
+					"height": 180
+				},
+				"high": {
+					"url": "https://i.ytimg.com/vi/s0DUheKKcxk/hqdefault.jpg",
+					"width": 480,
+					"height": 360
+				},
+				"standard": {
+					"url": "https://i.ytimg.com/vi/s0DUheKKcxk/sddefault.jpg",
+					"width": 640,
+					"height": 480
+				},
+				"maxres": {
+					"url": "https://i.ytimg.com/vi/s0DUheKKcxk/maxresdefault.jpg",
+					"width": 1280,
+					"height": 720
+				}
+			},
+			"channelTitle": "Linus Tech Tips",
+			"tags": [
+				"Windows 8.1 Update 1",
+				"R9 295 X2",
+				"Yahoo YouTube",
+				"Mozilla CEO",
+				"Gay Rights",
+				"USB Type C"
+			],
+			"categoryId": "28",
+			"liveBroadcastContent": "none",
+			"localized": {
+				"title": "The WAN Show: R9 295 X2 Rumours, Windows 8.1 Getting BETTER - April 4th, 2014",
+				"description": "WAN Show Document: http://linustechtips.com/main/topic/135793-april-4th-2014-the-wan-show-document/ \n\nSquarespace Link: http://squarespace.com/linus - Offer code Linus to save 10%\n\n0:00:00 - Introduction To Topics\n0:01:12 - Introduction Video\n0:01:37 - Intel/Corsair Sponsor Spot\n0:01:45 - Squarespace Sponsor Spot\n\n0:02:01 - TOPIC: Yahoo Making Their Own Youtube\n        - 0:04:25 - Linus' Perspective As A Content Creator\n        - 0:06:44 - Old Videos Getting Views\n\n0:08:15 - TOPIC: R9 295 Leaked\n        - 0:08:15 - How Many Will They Make?\n        - 0:10:14 - Rumored MSRP\n\n0:13:16 - TOPIC: Windows 8 Free On Devices Under 9\"\n        - 0:15:04 - Hackindows\n        - 0:15:21 - Cross Platform Apps\n        - 0:15:47 - Video\n        - 0:17:02 - New Business Strategy\n\n0:17:33 - TOPIC: Office For iPad Downloads Reach 12 Million\n        - 0:18:29 - Naming\n        - 0:19:07 - Free Version\n        - 0:19:56 - Advantages For Business\n        - 0:21:55 - Other Solutions\n\n0:23:23 - TOPIC: Windows 8.1 Update\n        - 0:23:32 - Video\n        - 0:25:10 - Photo App\n        - 0:28:45 - Start Menu\n\n0:32:57 - TOPIC: DirectX 12 Fully Supported On Windows 7 And Up\n        - 0:33:36 - Death of The Strategy Tax\n\n0:35:50 - Intel And Corsair Sponsor Spot\n        - Linus Media Group Covers PAX East\n        - Brought To You By Intel And Corsair\n\n0:38:55 - Squarespace Sponsor Spot\n        - Visit Squarespace.com/linus\n        - For a free trial and 10% off, use offer code: LINUS\n\n0:42:43 - TOPIC: Apple Patents Mouse For Swappable iPhone Lenses\n        - 0:44:03 - Challenges For Phone Cameras\n\n0:45:57 - TOPIC: Mozille CEO Resigns Over Anti-Gay Marrige Controversy\n        - 0:47:09 - Resiginations\n        - 0:48:39 - Strawpoll - http://strawpoll.me/1437520\n        - 0:50:30 - Strawpoll Results\n        - 0:53:07 - Strawpoll - http://strawpoll.me/1437531\n        - 0:54:38 - Strawpoll Results\n        - 1:00:48 - Strawpoll - http://strawpoll.me/1437564\n\n1:01:42 - TOPIC: Reversible USB 3.0 Type C Cable\n        - 1:02:48 - Linus' Opinions\n        - 1:06:26 - Wireless Charging Comments\n        - 1:10:12 - Strawpoll Results\n\n1:12:37 - TOPIC: Amazon FireTV\n        - 1:16:50 - Chromecast\n\n1:19:54 - TOPIC: Is The Gaming Laptop Dead?\n        - 1:21:46 - What Is A Gaming Laptop?"
+			}
+		},
+		"contentDetails": {
+			"duration": "PT1H27M54S",
 			"dimension": "2d",
 			"definition": "hd",
 			"caption": "false",
@@ -31709,7 +32132,7 @@
 	},
 	"2013/08/09": {
 		"kind": "youtube#video",
-		"etag": "XuDUVmvg8GKEDv-L-NQzw3emM0g",
+		"etag": "6yYTmQpsGOWaLhbe1gCHu48FNDo",
 		"id": "GJFRucXDxS0",
 		"snippet": {
 			"publishedAt": "2013-08-11T09:50:20Z",
@@ -31754,6 +32177,15 @@
 				"title": "The WAN Show : Canadian Telcos are Whining, AMD Hawaii Rumours, and GUEST Josh - August 9, 2013",
 				"description": "After party : Sorry no afterparty this week\n\nRazer Comms Link: http://bit.ly/16c6hso\n\nLive Stream Doc: http://linustechtips.com/main/topic/44837-the-wan-show-august-9-2013-topics-document/\n\n4:58 Fair for Canada? Canadian Telco's band together against competition\n20:59 Amazon working on a new screen tech called \"Paperwhite\"\n23:55 Amazon moving into more markets \n30:00 Josh from Fractal Design joins us!\n32:50 There really isn't that much mark-up on custom computers\n49:16 AMD Possibly abandoning FX processors\n57:00 Core 1000 refresher?\n1:01:09 Josh destroys Linus - \n1:03:20 EA shuts down servers prematurely - gets sued\n1:09:48 EA sucks ever so slightly less\n1:12:02 Lab grown burger tastes horrible\n1:14:25 John Carmack joins Oculus as the CEO!\n1:16:57 Old ideas being resurrected into realistic devices\n1:19:48 The stream fails 3 times... starts up again with minor hysterics \n1:21:00 The Jobs movie and Ashton... \n1:23:46 Console optimizations will just make PC even stronger\n1:26:20 CUDA is doomed says Roy Taylor of AMD\n1:29:38 Samsung in mass production of 3D Vertical NAND Flash\n1:31:29 Nvidia dives into tablets\n1:34:19 HD9970 Rumours are nothing short of beast\n1:37:22 Microsoft digs a deeper hole for its console\n1:42:50 CBS blocks online subscribers from watching their content if they use Time Warner\n1:45:38 Build logs of the week"
 			}
+		},
+		"contentDetails": {
+			"duration": "PT1H51M47S",
+			"dimension": "2d",
+			"definition": "hd",
+			"caption": "false",
+			"licensedContent": true,
+			"contentRating": {},
+			"projection": "rectangular"
 		}
 	},
 	"2013/08/02": {
