@@ -15,6 +15,7 @@ import fs from "node:fs/promises";
 import { Duration } from "luxon";
 import sharp from "sharp";
 import { encode } from "blurhash";
+import { wait } from "../../lib/utils.ts";
 
 export const floatplaneDataPath = "src/scripts/old-history-generator/floatplane-wan-vods.json"
 export const youtubeDataPath = "src/scripts/old-history-generator/youtube-wan-vods.json";
@@ -29,7 +30,9 @@ if(!await fileExists(floatplaneDataPath)) {
 
 if(!await fileExists(youtubeDataPath) || process.argv.includes("--download-yt-vods")) {
     console.log("Missing youtube vod data! I'm going to fetch it from youtube's api. This can take a bit");
-    await fetchYoutubeShows()
+    await fetchYoutubeShows();
+
+    await wait(500); // because the old file keeps getting read for some reason
 } else {
     console.log("Youtube data already exists. Skipping download (use --download-yt-vods to override)");
 }

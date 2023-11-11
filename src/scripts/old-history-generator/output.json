@@ -45694,6 +45694,91 @@
 		}
 	},
 	{
+		"name": "2013/03/08",
+		"metadata": {
+			"title": "Linus Tech Tips Live Show Archive",
+			"mainShowLength": 7742000,
+			"vods": {
+				"youtube": "zLQBYcftALA"
+			},
+			"snippet": {
+				"publishedAt": "2013-03-09T08:48:10Z",
+				"channelId": "UCXuqSBlHAE6Xw-yeJA0Tunw",
+				"title": "Linus Tech Tips Live Show Archive - March 8, 2013",
+				"description": "1:21 Folding@Home and Boinc!\n3:37 Asus Z87 sneak previews\n9:03 islands vs. continents\n14:31 Intel branded snowboard\n18:12 Elder scrolls online at pax east\n27:07 AMD's current position\n32:27 Build log of the week\n48:20 Infomercial ideas... FEATURING SANDWICHES\n51:44 Humble Bundle is awesome\n55:02 The forum is getting rack space! And HTC giveaway!\n1:02:00 Adventure Time!\n1:07:30 Sim City............      :(\n1:10:38 Pre-ordering, would you or wouldn't you - and incentives \n1:20:02 8350 and 3570k video update\n1:26:38 Featured news item - Linus was pretty shook up about this one!",
+				"thumbnails": {
+					"default": {
+						"url": "https://i.ytimg.com/vi/zLQBYcftALA/default.jpg",
+						"width": 120,
+						"height": 90,
+						"blurhash": {
+							"hash": "VMEfQd9cDhNLRP01W[?bWBxuD$t7fls,WX~qny9FkCM{",
+							"w": 120,
+							"h": 90,
+							"cX": 5,
+							"cY": 4
+						}
+					},
+					"medium": {
+						"url": "https://i.ytimg.com/vi/zLQBYcftALA/mqdefault.jpg",
+						"width": 320,
+						"height": 180,
+						"blurhash": {
+							"hash": "VPGlF#4?8^NKRO00W]~pRj%M_3R:IUocRjxvoHM|a}jF",
+							"w": 320,
+							"h": 180,
+							"cX": 5,
+							"cY": 4
+						}
+					},
+					"high": {
+						"url": "https://i.ytimg.com/vi/zLQBYcftALA/hqdefault.jpg",
+						"width": 480,
+						"height": 360,
+						"blurhash": {
+							"hash": "VMEfNW9cDhNKRP01W[?bWBxuD$xaa$s,WX~pny9FofM{",
+							"w": 480,
+							"h": 360,
+							"cX": 5,
+							"cY": 4
+						}
+					},
+					"standard": {
+						"url": "https://i.ytimg.com/vi/zLQBYcftALA/sddefault.jpg",
+						"width": 640,
+						"height": 480,
+						"blurhash": {
+							"hash": "VMEfQd9cDhNKRP01W[?bWBxuD%xaa$s,WX~pny9FofM{",
+							"w": 640,
+							"h": 480,
+							"cX": 5,
+							"cY": 4
+						}
+					},
+					"maxres": {
+						"url": "https://i.ytimg.com/vi/zLQBYcftALA/maxresdefault.jpg",
+						"width": 1280,
+						"height": 720,
+						"blurhash": {
+							"hash": "VPGlF#4?8^NKRO00XC~pRj%M_3R:IUocRjxuoHM|a}jF",
+							"w": 1280,
+							"h": 720,
+							"cX": 5,
+							"cY": 4
+						}
+					}
+				},
+				"channelTitle": "Linus Tech Tips",
+				"categoryId": "28",
+				"liveBroadcastContent": "none",
+				"localized": {
+					"title": "Linus Tech Tips Live Show Archive - March 8, 2013",
+					"description": "1:21 Folding@Home and Boinc!\n3:37 Asus Z87 sneak previews\n9:03 islands vs. continents\n14:31 Intel branded snowboard\n18:12 Elder scrolls online at pax east\n27:07 AMD's current position\n32:27 Build log of the week\n48:20 Infomercial ideas... FEATURING SANDWICHES\n51:44 Humble Bundle is awesome\n55:02 The forum is getting rack space! And HTC giveaway!\n1:02:00 Adventure Time!\n1:07:30 Sim City............      :(\n1:10:38 Pre-ordering, would you or wouldn't you - and incentives \n1:20:02 8350 and 3570k video update\n1:26:38 Featured news item - Linus was pretty shook up about this one!"
+				}
+			}
+		}
+	},
+	{
 		"name": "2013/02/15",
 		"metadata": {
 			"title": "Linus Tech Tips Live Show Archive",
