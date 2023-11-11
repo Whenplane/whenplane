@@ -1,7 +1,16 @@
-<script>
-    import {page} from "$app/stores";
+<script lang="ts">
+    import { page } from "$app/stores";
+    import { browser } from "$app/environment";
 
     let alt = "\"This is Awkward\" - Thumbnail from March 12th, 2021"
+
+    if(browser && $page.status === 500 && $page.url.pathname === "/") {
+        let attempt = $page.url.searchParams.get("attempt") ?? 0;
+        // Auto-reload if root page throws a 500. This usually just happens because the data request failed. Thanks sveltekit..
+        setTimeout(() => {
+            location.href = "?attempt=" + (++attempt);
+        }, Math.min(Math.max(3e3, 3e3 * (attempt / 3)), 30e3));// delay by 3-30 seconds so that we don't spam reloads if the site is actually broken
+    }
 </script>
 
 <div class="text-center pt-16">
