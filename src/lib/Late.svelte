@@ -8,6 +8,7 @@
         "soon™",
         "close enough",
         "punctually impaired",
+        "punctually challenged",
         "belated",
         "procrastinated",
         "Linus Late Tips",
