@@ -7,7 +7,7 @@
 	import Late from "$lib/Late.svelte";
 	import {page} from "$app/stores";
 	import {fade} from "svelte/transition";
-	import { dev } from "$app/environment";
+	import { browser, dev } from "$app/environment";
 	import LatenessVoting from "$lib/LatenessVoting.svelte";
 	import { Accordion, AccordionItem } from "@skeletonlabs/skeleton";
 	import ImminentBox from "$lib/ImminentBox.svelte";
@@ -84,6 +84,12 @@
 
 
 	$: if(dev) console.log({data});
+
+
+	// remove ?attempt after 500 error
+	if(browser && $page.url.searchParams.has("attempt")) {
+		window.history.replaceState({}, document.title, "/");
+	}
 
 
 </script>
