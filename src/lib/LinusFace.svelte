@@ -4,7 +4,7 @@
 
 <LazyLoad style="display: inline-block">
     <div>
-        <img src="/linus.webp" alt="linus face">
+        <enhanced:img src="$lib/images/linus.webp" alt="linus face"/>
     </div>
 </LazyLoad>
 <style>

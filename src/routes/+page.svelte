@@ -183,7 +183,7 @@
 				<div class="absolute top-2 right-2 opacity-60">
 					Live for {danGoingFor}
 				</div>
-				<img src="/dan.png" class="inline-block placeholder-circle h-32" alt="Dan">
+				<enhanced:img src="$lib/images/dan.png" class="inline-block placeholder-circle h-32" alt="Dan">
 				<div class="inline-flex h-32 items-center justify-center ml-4">
 					<div>
 						<h2>Dan is live!</h2>

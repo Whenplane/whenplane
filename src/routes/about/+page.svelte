@@ -43,7 +43,7 @@
             <br>
             <div class="text-center w-full">
                 <h2 class="text-center">Why does it say WAN starts at 4:30?</h2>
-                <img class="mx-auto danwan" src="/430.webp" alt="Dan confirming 4:30"/>
+                <enhanced:img class="mx-auto danwan" src="$lib/images/430.png" alt="Dan confirming 4:30"/>
                 <i>always has been</i>
             </div>
             <br>

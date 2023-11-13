@@ -15,7 +15,7 @@
 
 <div class="text-center pt-16">
     <a href="/history/show/2021/03/12" class="inline-block">
-        <img src="/this_is_awkward.webp" {alt} title={alt}/>
+        <enhanced:img src="$lib/images/this_is_awkward.jpg?quality=60" {alt} title={alt}/>
     </a>
     <h1>{$page.status}</h1>
     {$page.error.message}
@@ -26,7 +26,9 @@
         margin-top: 2rem;
     }
     img {
+        width: auto;
         height: 50vh;
+        aspect-ratio: 16 / 9;
     }
     
     @media (max-width: 95vh) {
