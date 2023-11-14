@@ -17,6 +17,8 @@
 
   <h1>Shows with missing metadata</h1>
 
+  <a href="/history/missing/shows">Shows</a>
+  <br>
   <a href="/history/missing/times">Start times</a>
 
 </div>

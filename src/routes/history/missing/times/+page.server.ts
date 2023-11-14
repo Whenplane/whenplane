@@ -1,5 +1,6 @@
 import type { HistoricalEntry } from "$lib/utils.ts";
 import {GET as oldShowsGet} from "../../../api/oldShows/+server.ts"
+import type { PageServerLoad } from "./$types";
 
 
 export const load = (async () => {

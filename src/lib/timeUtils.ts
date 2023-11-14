@@ -5,7 +5,7 @@ export function isBefore(a: Date, b: Date): boolean {
     return a.getTime() < b.getTime()
 }
 
-export function getNextWAN(now = new Date(), buffer = true, hasDone?: boolean): Date {
+export function getNextWANLuxon(now = new Date(), buffer = true, hasDone?: boolean): DateTime {
     const adjustedNow = now;
     // Adjust 'now' for loose wan for LTX
     if(adjustedNow.getFullYear() == 2023 && adjustedNow.getMonth() == 6 && adjustedNow.getDate() == 29) {
@@ -55,10 +55,14 @@ export function getNextWAN(now = new Date(), buffer = true, hasDone?: boolean): 
         wanDate = wanDate.plus({days: 7});
     }
 
-    return wanDate.toJSDate();
+    return wanDate;
 }
 
-export function getPreviousWAN(now = new Date(), luxon = false): Date | DateTime {
+export function getNextWAN(now = new Date(), buffer = true, hasDone?: boolean): Date {
+    return getNextWANLuxon(now, buffer, hasDone).toJSDate();
+}
+
+export function getPreviousWANLuxon(now = new Date()): DateTime {
     let wanDate = getLooseWAN(now);
 
     while(wanDate.weekday !== 5) {
@@ -83,7 +87,10 @@ export function getPreviousWAN(now = new Date(), luxon = false): Date | DateTime
         wanDate = wanDate.minus({days: 7});
     }
 
-    return luxon ? wanDate : wanDate.toJSDate();
+    return wanDate;
+}
+export function getPreviousWAN(now = new Date()): Date {
+    return getPreviousWANLuxon(now).toJSDate()
 }
 
 function getLooseWAN(now = new Date()) {
@@ -115,18 +122,21 @@ function getLooseWAN(now = new Date()) {
     );
 }
 
-export function getClosestWan(now = new Date()) {
-    const next = getNextWAN(now, false) as Date;
-    const previous = getPreviousWAN(now) as Date;
+export function getClosestWanLuxon(now = new Date()) {
+    const next = getNextWANLuxon(now, false);
+    const previous = getPreviousWANLuxon(now);
 
-    const distanceToNext = Math.abs(next.getTime() - now.getTime());
-    const distanceToPrevious = Math.abs(previous.getTime() - now.getTime());
+    const distanceToNext = Math.abs(next.toMillis() - now.getTime());
+    const distanceToPrevious = Math.abs(previous.toMillis() - now.getTime());
 
     if(distanceToNext > distanceToPrevious) {
         return previous;
     } else {
         return next;
     }
+}
+export function getClosestWan(now = new Date()) {
+    return getClosestWanLuxon(now).toJSDate();
 }
 
 export function getUTCDate(date = new Date()) {

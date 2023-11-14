@@ -1,10 +1,10 @@
 <script lang="ts">
     import TimeInput from "$lib/TimeInput.svelte";
-    import {getPreviousWAN, addZero} from "$lib/timeUtils";
+    import {getPreviousWANLuxon, addZero} from "$lib/timeUtils";
     import {DateTime} from "luxon";
     import {getClosestWan} from "$lib/timeUtils";
 
-    const previousWAN: DateTime = getPreviousWAN(undefined, true);
+    const previousWAN: DateTime = getPreviousWANLuxon();
     const previousWANUTC = previousWAN.toUTC();
 
     let date = previousWANUTC.year + "-" + addZero(previousWANUTC.month) + "-" + addZero(previousWANUTC.day);
