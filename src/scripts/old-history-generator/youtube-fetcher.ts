@@ -61,7 +61,11 @@ export async function fetchYoutubeShows() {
                 console.warn("Skipping " + video.id.videoId + " due to missing snippet/title!")
                 continue;
             }
-            if(!video.snippet.title.includes("WAN Show") && !video.snippet.title.includes("Linus Tech Tips Live Show") && !video.snippet.title.includes("Live Stream Archive")) continue
+            const lowerTitle = video.snippet.title.toLowerCase()
+            if(!lowerTitle.includes("wan show") && !lowerTitle.includes("linus tech tips live show") && !lowerTitle.includes("live stream archive")) {
+                console.log("Skipping ", video.snippet.title, video.id.videoId);
+                continue;
+            }
 
             const specificResponse = await fetch(
                 "https://youtube.googleapis.com/youtube/v3/videos" +

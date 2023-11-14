@@ -11405,7 +11405,7 @@
 	},
 	"2020/04/24": {
 		"kind": "youtube#video",
-		"etag": "5lP7jAQNA402hyU71tf129YyGGA",
+		"etag": "LtKmKH5ImmqRKfH_z-Li67tZXc8",
 		"id": "P5atYpVtpfA",
 		"snippet": {
 			"publishedAt": "2020-04-25T01:16:55Z",
@@ -18935,6 +18935,115 @@
 			"projection": "rectangular"
 		}
 	},
+	"2017/12/01": {
+		"kind": "youtube#video",
+		"etag": "FUlDBTixlU9RveTWuddes9eBBR8",
+		"id": "KMaWSinw4MI",
+		"snippet": {
+			"publishedAt": "2017-12-02T03:10:16Z",
+			"channelId": "UCXuqSBlHAE6Xw-yeJA0Tunw",
+			"title": "Our Ex-Employer Went BANKRUPT - Wan Show Dec. 1 2017",
+			"description": "Savage Jerky: Use offer code LTT to save 10% on Savage Jerky at http://geni.us/savagejerky\n\nMarseille: Check out the Marseille Cinema and Gaming mCable here: http://geni.us/dWek\n\nSpekrum: Save 10% on Spektrum bluelight glasses using offer code LINUS at https://www.spektrumglasses.com/collections/prospek\n\nSoundcloud: https://soundcloud.com/thewanshow/our-old-employer-went-bankrupt-wan-show-dec-1-2017\n\nForum: https://linustechtips.com/main/topic/867914-dec-1-2017-the-wan-show-document/\n\nTimestamps courtesy of Beezohh\n\n02:05 - HDMI 2.1 is Here!\n12:57 - China using DJI drones to spy on the US\n16:11 - Floatplane Uploads\n20:48 - EA Sports UFC 3 Egregious Implementation of Microtransactions\n25:55 - Luke's mum guest call\n27:27 - Sponsor - Spektrum\n29:20 - Sponsor - MCable\n33:43 - Sponsor - Savage Jerky\n36:34 - Microsoft is bringing Tabs to every Windows 10 App\n38:38 - Websites use your CPU to mine cryptocurrency EVEN WHEN YOU CLOSE YOUR BROWSER\n41:33 - NCIX Bankrupt...\n01:00:07 - Tinder tests using A.I. to suggest who to ‘Super Like’\n01:01:01 - Super Mario Breakfast Cereal",
+			"thumbnails": {
+				"default": {
+					"url": "https://i.ytimg.com/vi/KMaWSinw4MI/default.jpg",
+					"width": 120,
+					"height": 90
+				},
+				"medium": {
+					"url": "https://i.ytimg.com/vi/KMaWSinw4MI/mqdefault.jpg",
+					"width": 320,
+					"height": 180
+				},
+				"high": {
+					"url": "https://i.ytimg.com/vi/KMaWSinw4MI/hqdefault.jpg",
+					"width": 480,
+					"height": 360
+				},
+				"standard": {
+					"url": "https://i.ytimg.com/vi/KMaWSinw4MI/sddefault.jpg",
+					"width": 640,
+					"height": 480
+				}
+			},
+			"channelTitle": "Linus Tech Tips",
+			"tags": [
+				"NCIX",
+				"bankrupt",
+				"HDMI 2.1",
+				"EA",
+				"microtransactions"
+			],
+			"categoryId": "28",
+			"liveBroadcastContent": "none",
+			"defaultLanguage": "en",
+			"localized": {
+				"title": "Our Ex-Employer Went BANKRUPT - Wan Show Dec. 1 2017",
+				"description": "Savage Jerky: Use offer code LTT to save 10% on Savage Jerky at http://geni.us/savagejerky\n\nMarseille: Check out the Marseille Cinema and Gaming mCable here: http://geni.us/dWek\n\nSpekrum: Save 10% on Spektrum bluelight glasses using offer code LINUS at https://www.spektrumglasses.com/collections/prospek\n\nSoundcloud: https://soundcloud.com/thewanshow/our-old-employer-went-bankrupt-wan-show-dec-1-2017\n\nForum: https://linustechtips.com/main/topic/867914-dec-1-2017-the-wan-show-document/\n\nTimestamps courtesy of Beezohh\n\n02:05 - HDMI 2.1 is Here!\n12:57 - China using DJI drones to spy on the US\n16:11 - Floatplane Uploads\n20:48 - EA Sports UFC 3 Egregious Implementation of Microtransactions\n25:55 - Luke's mum guest call\n27:27 - Sponsor - Spektrum\n29:20 - Sponsor - MCable\n33:43 - Sponsor - Savage Jerky\n36:34 - Microsoft is bringing Tabs to every Windows 10 App\n38:38 - Websites use your CPU to mine cryptocurrency EVEN WHEN YOU CLOSE YOUR BROWSER\n41:33 - NCIX Bankrupt...\n01:00:07 - Tinder tests using A.I. to suggest who to ‘Super Like’\n01:01:01 - Super Mario Breakfast Cereal"
+			},
+			"defaultAudioLanguage": "en"
+		},
+		"contentDetails": {
+			"duration": "PT1H2M42S",
+			"dimension": "2d",
+			"definition": "hd",
+			"caption": "false",
+			"licensedContent": true,
+			"contentRating": {},
+			"projection": "rectangular"
+		}
+	},
+	"2017/11/24": {
+		"kind": "youtube#video",
+		"etag": "1EvU60Yk3r8nMsx2Xq-oe2bufbQ",
+		"id": "neQhMG4izuU",
+		"snippet": {
+			"publishedAt": "2017-11-25T09:01:02Z",
+			"channelId": "UCXuqSBlHAE6Xw-yeJA0Tunw",
+			"title": "Net Neutrality Must Survive. - Wan Show Nov. 24 2017",
+			"description": "Savage Jerky: Use offer code BF2017 to get 20% off your Savage Jerky order, AND if you use that code you’ll also get a free Koozie at http://geni.us/PEs9IEY\n\nNeedforseat: Use offer code TURKEY75 to get $75 off your purchase of a MAXNOMIC chair, valid until November 29th: http://geni.us/mQTIDBM\n\nGFUEL: Check out GFUEL's Black Friday buy one, get one free sale on tubs, valid until November 26th at http://geni.us/QInYh\n\nSoundcloud: https://soundcloud.com/thewanshow/net-neutrality-must-survive-wan-show-nov-24-2017\n\nForum: https://linustechtips.com/main/topic/864778-nov-24-2017-the-wan-show-document/\n\nTimestamps courtesy of JJMC89.\n\n00:10:51 - iMac Pro to feature A10 Fusion coprocessor\n00:22:08 - Intel finds critial holes in secret Management Engine\n00:31:40 - Sponsor: Need for Seat\n00:33:24 - Sponsor: GFuel\n00:35:40 - Sponsor: Savage Jerky\n00:37:40 - Net neutrality\n00:46:51 - BGR teases Galaxy X, a bendable phone\n00:51:40 - Google collects Android user locations even when location services are disabled\n00:54:06 - Uber paid hackers to delete stolen data on millions\n01:10:18 - Elon Musk wins bet, finishing massive battery installation in 100 days\n01:11:14 - Pokémon Go creator raises $200 million ahead of Harry Potter game launch",
+			"thumbnails": {
+				"default": {
+					"url": "https://i.ytimg.com/vi/neQhMG4izuU/default.jpg",
+					"width": 120,
+					"height": 90
+				},
+				"medium": {
+					"url": "https://i.ytimg.com/vi/neQhMG4izuU/mqdefault.jpg",
+					"width": 320,
+					"height": 180
+				},
+				"high": {
+					"url": "https://i.ytimg.com/vi/neQhMG4izuU/hqdefault.jpg",
+					"width": 480,
+					"height": 360
+				},
+				"standard": {
+					"url": "https://i.ytimg.com/vi/neQhMG4izuU/sddefault.jpg",
+					"width": 640,
+					"height": 480
+				}
+			},
+			"channelTitle": "Linus Tech Tips",
+			"categoryId": "28",
+			"liveBroadcastContent": "none",
+			"defaultLanguage": "en",
+			"localized": {
+				"title": "Net Neutrality Must Survive. - Wan Show Nov. 24 2017",
+				"description": "Savage Jerky: Use offer code BF2017 to get 20% off your Savage Jerky order, AND if you use that code you’ll also get a free Koozie at http://geni.us/PEs9IEY\n\nNeedforseat: Use offer code TURKEY75 to get $75 off your purchase of a MAXNOMIC chair, valid until November 29th: http://geni.us/mQTIDBM\n\nGFUEL: Check out GFUEL's Black Friday buy one, get one free sale on tubs, valid until November 26th at http://geni.us/QInYh\n\nSoundcloud: https://soundcloud.com/thewanshow/net-neutrality-must-survive-wan-show-nov-24-2017\n\nForum: https://linustechtips.com/main/topic/864778-nov-24-2017-the-wan-show-document/\n\nTimestamps courtesy of JJMC89.\n\n00:10:51 - iMac Pro to feature A10 Fusion coprocessor\n00:22:08 - Intel finds critial holes in secret Management Engine\n00:31:40 - Sponsor: Need for Seat\n00:33:24 - Sponsor: GFuel\n00:35:40 - Sponsor: Savage Jerky\n00:37:40 - Net neutrality\n00:46:51 - BGR teases Galaxy X, a bendable phone\n00:51:40 - Google collects Android user locations even when location services are disabled\n00:54:06 - Uber paid hackers to delete stolen data on millions\n01:10:18 - Elon Musk wins bet, finishing massive battery installation in 100 days\n01:11:14 - Pokémon Go creator raises $200 million ahead of Harry Potter game launch"
+			},
+			"defaultAudioLanguage": "en"
+		},
+		"contentDetails": {
+			"duration": "PT1H15M14S",
+			"dimension": "2d",
+			"definition": "hd",
+			"caption": "false",
+			"licensedContent": true,
+			"contentRating": {},
+			"projection": "rectangular"
+		}
+	},
 	"2017/11/17": {
 		"kind": "youtube#video",
 		"etag": "RCF0XGmVcI_y1OLryyzlNL51-z4",
@@ -22155,7 +22264,7 @@
 	},
 	"2016/11/25": {
 		"kind": "youtube#video",
-		"etag": "sU3SAYRttkgbsYiAxmNJlObzn2Q",
+		"etag": "_2PrZSZJaQnoJY7_gIChOQlb5zY",
 		"id": "xBOZ8oFv3o4",
 		"snippet": {
 			"publishedAt": "2016-11-26T03:19:35Z",
@@ -26189,7 +26298,7 @@
 	},
 	"2015/10/02": {
 		"kind": "youtube#video",
-		"etag": "4GAlOwglho3odLwpxCawJBXC6FI",
+		"etag": "13Q3B29W_wUIo8GrVvF93NYCExs",
 		"id": "xOR9O-_W54Q",
 		"snippet": {
 			"publishedAt": "2015-10-03T08:16:10Z",
