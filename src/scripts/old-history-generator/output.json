@@ -45437,6 +45437,7 @@
 		"name": "2013/04/19",
 		"metadata": {
 			"title": "Linus Tech Tips Live Show Archive",
+			"mainShowLength": 5325000,
 			"vods": {
 				"youtube": "2aQIAPZ9zBo"
 			},
@@ -45867,6 +45868,7 @@
 		"name": "2013/02/08",
 		"metadata": {
 			"title": "Linus Tech Tips Live Show Archive",
+			"mainShowLength": 6507000,
 			"vods": {
 				"youtube": "FUsiu2_j0LM"
 			},
@@ -45943,6 +45945,91 @@
 				"localized": {
 					"title": "Linus Tech Tips Live Show Archive - February 8, 2013",
 					"description": "1:53 New Linus Tech tips unboxing video style explanations\n7:18 Random drunk guy calls\n10:33 The crazy russian dancing\n13:55 Linus' case is back from Mountain Mods!\n18:16 Dust 514!\n24:60 Declining prices and declining quality\n31:31 Gabe Newell talking about making portal and half life movies\n33:00 AMD never settle bundle\n35:57 But can it run crysis?\n38:30 Teaser screenshot from an upcoming video\n47:05 LinusMediaGroup and any possible direction changes! ALL IS OKAY!\n1:02:18 AMD delays HD8000 series - Delays can be good!\n1:07:10 Nvidia Titan speculations\n1:14:35 Kickstarter\n1:19:27 Being approached by groups like Rev3\n1:24:50 Youtube paid subscriptions\n1:36:57 Windows 8 giveaway\n1:40:17 The After Party"
+				}
+			}
+		}
+	},
+	{
+		"name": "2013/02/01",
+		"metadata": {
+			"title": "Linus Tech Tips Live Show Archive",
+			"mainShowLength": 5476000,
+			"vods": {
+				"youtube": "Z2ROOZS1DtQ"
+			},
+			"snippet": {
+				"publishedAt": "2013-02-02T08:17:26Z",
+				"channelId": "UCXuqSBlHAE6Xw-yeJA0Tunw",
+				"title": "Linus Tech Tips Live Show Archive - February 1, 2013",
+				"description": "4:45 SSD Update\n6:58 Our favorite pieces of software\n26:28 Linus Personal Rig Update - Info From Mountain Mods!\n33:40 Product Naming Consistency\n39:16 Linus Using Windows Phone 8\n43:35 3570K vs FX8350 showdown Ft. Logan's video\n51:10 Cool stuff that arrived today\n55:58 Slick's Surprise Gear Unboxing\n1:05:45 Patent trolls and Newegg standing up to the pressure\n1:07:35 Essential or non-essential internet\n1:17:56 Shrinkage of Storage\n1:22:08 Windows 8 Giveaway",
+				"thumbnails": {
+					"default": {
+						"url": "https://i.ytimg.com/vi/Z2ROOZS1DtQ/default.jpg",
+						"width": 120,
+						"height": 90,
+						"blurhash": {
+							"hash": "VCBy?O%%-:9b0La7D,t3bbo#00DjRP-n-:%y?ZR:V@n4",
+							"w": 120,
+							"h": 90,
+							"cX": 5,
+							"cY": 4
+						}
+					},
+					"medium": {
+						"url": "https://i.ytimg.com/vi/Z2ROOZS1DtQ/mqdefault.jpg",
+						"width": 320,
+						"height": 180,
+						"blurhash": {
+							"hash": "VGDc8d%%-:9I0LRCDmxVbctR0MD+aK-mxu%#-;W?Rjv~",
+							"w": 320,
+							"h": 180,
+							"cX": 5,
+							"cY": 4
+						}
+					},
+					"high": {
+						"url": "https://i.ytimg.com/vi/Z2ROOZS1DtQ/hqdefault.jpg",
+						"width": 480,
+						"height": 360,
+						"blurhash": {
+							"hash": "VCB:W=%%-:9I0LVyD,t3bbtR00DjRP-n-:%y?ZNfV@n4",
+							"w": 480,
+							"h": 360,
+							"cX": 5,
+							"cY": 4
+						}
+					},
+					"standard": {
+						"url": "https://i.ytimg.com/vi/Z2ROOZS1DtQ/sddefault.jpg",
+						"width": 640,
+						"height": 480,
+						"blurhash": {
+							"hash": "VBB:W=%%-:9I0LVyD,xWbbtR00DjRP---:%y?sNfV@n3",
+							"w": 640,
+							"h": 480,
+							"cX": 5,
+							"cY": 4
+						}
+					},
+					"maxres": {
+						"url": "https://i.ytimg.com/vi/Z2ROOZS1DtQ/maxresdefault.jpg",
+						"width": 1280,
+						"height": 720,
+						"blurhash": {
+							"hash": "VGDlp5%%-:9I0LRCDmxVbctR0MD+aK-mxu%#-;W?Rjv~",
+							"w": 1280,
+							"h": 720,
+							"cX": 5,
+							"cY": 4
+						}
+					}
+				},
+				"channelTitle": "Linus Tech Tips",
+				"categoryId": "28",
+				"liveBroadcastContent": "none",
+				"localized": {
+					"title": "Linus Tech Tips Live Show Archive - February 1, 2013",
+					"description": "4:45 SSD Update\n6:58 Our favorite pieces of software\n26:28 Linus Personal Rig Update - Info From Mountain Mods!\n33:40 Product Naming Consistency\n39:16 Linus Using Windows Phone 8\n43:35 3570K vs FX8350 showdown Ft. Logan's video\n51:10 Cool stuff that arrived today\n55:58 Slick's Surprise Gear Unboxing\n1:05:45 Patent trolls and Newegg standing up to the pressure\n1:07:35 Essential or non-essential internet\n1:17:56 Shrinkage of Storage\n1:22:08 Windows 8 Giveaway"
 				}
 			}
 		}

@@ -49,6 +49,11 @@ const youtubeNumber = Object.keys(youtubeData).length;
 console.log(Object.keys(floatplaneData).length + " floatplane videos");
 console.log(youtubeNumber + " youtube videos");
 
+let previousOldShows: HistoricalEntry[] = [];
+if(await fileExists(outputDataPath)) {
+    previousOldShows = (await import("./output.json", {assert: {type: 'json'}})).default as unknown as HistoricalEntry[]
+}
+
 const oldShows: HistoricalEntry[] = [];
 
 let i = 0;
@@ -109,12 +114,24 @@ for (const date in youtubeData) {
         }
     }
 
+    const oldThumbnails: {[key: string]: YoutubeThumbnail} | undefined
+      = previousOldShows.find(value => value.name == date)
+      ?.metadata.snippet?.thumbnails
+
     if(youtubeVod.snippet?.thumbnails) {
         const promises = [];
         for (const thumbnailKey in youtubeVod.snippet?.thumbnails) {
             promises.push((async () => {
                 const start = Date.now();
                 const thumbnail = (youtubeVod.snippet?.thumbnails as {[key: string]: YoutubeThumbnail})[thumbnailKey];
+
+                if(oldThumbnails && oldThumbnails[thumbnailKey].url === thumbnail.url && oldThumbnails[thumbnailKey].blurhash) {
+                    const oldData = oldThumbnails[thumbnailKey];
+                    (youtubeVod.snippet?.thumbnails as {[key: string]: YoutubeThumbnail})[thumbnailKey].blurhash = oldData.blurhash;
+                    console.log(date+" " + thumbnailKey + " took " + (Date.now() - start) + "ms (using old version)");
+                    return;
+                }
+
                 const image = await fetch(thumbnail.url)
                   .then(r => r.arrayBuffer());
                 const {data, info} = await sharp(image)
@@ -142,7 +159,7 @@ for (const date in youtubeData) {
                     cX: 5,
                     cY: 4
                 }
-                console.log(date+" " + thumbnailKey + " took " + (Date.now() - start) + "ms");
+                console.log(date+" " + thumbnailKey + " took " + (Date.now() - start) + "ms (blurhash calculated)");
             })())
         }
         await Promise.all(promises);
@@ -173,7 +190,6 @@ for (const date in youtubeData) {
 
 await fs.writeFile(outputDataPath, JSON.stringify(oldShows, undefined, '\t'))
 console.log("Done!")
-
 
 
 
