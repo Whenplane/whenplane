@@ -74,7 +74,7 @@
 	},
 	"2023/04/28": {
 		"kind": "youtube#video",
-		"etag": "nn94Pj-RQzyiSy5vd0zIilcEv4w",
+		"etag": "48wOFvRgvdr4lhZyFZmnEmYkmlQ",
 		"id": "CSOF8RFrihM",
 		"snippet": {
 			"publishedAt": "2023-04-29T04:51:55Z",
@@ -147,7 +147,7 @@
 	},
 	"2023/04/21": {
 		"kind": "youtube#video",
-		"etag": "E0457IX1e5Mqr9AjLptBooZpMTw",
+		"etag": "dOKwYcTI1QDu3B1enVwBMWF7lVY",
 		"id": "K1qOwPqfxE0",
 		"snippet": {
 			"publishedAt": "2023-04-22T05:27:49Z",
@@ -220,7 +220,7 @@
 	},
 	"2023/04/14": {
 		"kind": "youtube#video",
-		"etag": "n-u3XQwy3EtG-P3V3D6LR35j1OE",
+		"etag": "GVGmD1McZlKTxV3-ualjGuqa6ow",
 		"id": "T5PNAeE6fOY",
 		"snippet": {
 			"publishedAt": "2023-04-15T07:31:36Z",
@@ -439,7 +439,7 @@
 	},
 	"2023/03/24": {
 		"kind": "youtube#video",
-		"etag": "KqkeN2zRBT3ZmAdvOttu1bFlTY0",
+		"etag": "hHe_kUEY27LvobKoYA_hMqtEPo4",
 		"id": "lh8Zdyy3zTQ",
 		"snippet": {
 			"publishedAt": "2023-03-25T07:50:32Z",
@@ -658,7 +658,7 @@
 	},
 	"2023/03/03": {
 		"kind": "youtube#video",
-		"etag": "5_2pm4RAWOhazGVK5_gpmQNPc4o",
+		"etag": "9P1QJmqt20sT8e1BIeWnTDyJz2k",
 		"id": "boPRXV0VmEk",
 		"snippet": {
 			"publishedAt": "2023-03-04T05:16:45Z",
@@ -804,7 +804,7 @@
 	},
 	"2023/02/17": {
 		"kind": "youtube#video",
-		"etag": "uHYuilq9B02qOGgypKlpgaV4ymc",
+		"etag": "a7armWZs7jxxcWTQ5PLpJ2kaD8M",
 		"id": "6x68X05ZLRE",
 		"snippet": {
 			"publishedAt": "2023-02-18T06:24:45Z",
@@ -877,7 +877,7 @@
 	},
 	"2023/02/10": {
 		"kind": "youtube#video",
-		"etag": "hMnzoGuLRN4HiBcsHg3T-GO8Czg",
+		"etag": "Trzn5KmlC_dXTzGkZu9duCfBXng",
 		"id": "AxAAJnp5yms",
 		"snippet": {
 			"publishedAt": "2023-02-11T06:26:22Z",
@@ -1096,7 +1096,7 @@
 	},
 	"2023/01/20": {
 		"kind": "youtube#video",
-		"etag": "tXNGFuOGrQGiAWjDqQ1RzFcc3hY",
+		"etag": "LUPQiWX6tdHJRD2CzSece8Mdf2k",
 		"id": "1dhGKw7ph3s",
 		"snippet": {
 			"publishedAt": "2023-01-21T05:43:19Z",
@@ -1457,7 +1457,7 @@
 	},
 	"2022/12/16": {
 		"kind": "youtube#video",
-		"etag": "4XnyQVS3W9IIyEbiCWL4mEM2vFo",
+		"etag": "9iQ52nfTe7xs4AuEMLv16AK0WGo",
 		"id": "Wx-9FZmT_0g",
 		"snippet": {
 			"publishedAt": "2022-12-17T06:08:38Z",
@@ -1818,7 +1818,7 @@
 	},
 	"2022/11/11": {
 		"kind": "youtube#video",
-		"etag": "XmL_XIbOLZGpgd032YceLP23pVU",
+		"etag": "sFU2fBroM_fS3xIE3ygTG9Z9gMU",
 		"id": "hNXgJlPzkCQ",
 		"snippet": {
 			"publishedAt": "2022-11-12T03:41:50Z",
@@ -4514,7 +4514,7 @@
 	},
 	"2022/02/25": {
 		"kind": "youtube#video",
-		"etag": "MtYbxRwxA_0uM_NKFjGWYr0rvCU",
+		"etag": "0Cu_fbwuUldvSEwlwM-hx89blJU",
 		"id": "fNmj67UQlO4",
 		"snippet": {
 			"publishedAt": "2022-02-26T02:57:44Z",
@@ -4879,7 +4879,7 @@
 	},
 	"2022/01/21": {
 		"kind": "youtube#video",
-		"etag": "3F8dLzoDELzQP1TL9Vr9iD2YoXI",
+		"etag": "XD9WU3AqZ2MFBsx7lvb30Tc5p60",
 		"id": "t-dXXPPjjgU",
 		"snippet": {
 			"publishedAt": "2022-01-22T03:57:24Z",
@@ -7307,7 +7307,7 @@
 	},
 	"2021/05/21": {
 		"kind": "youtube#video",
-		"etag": "9dA-4huqIVGy3m-Z0ymzLc3KLbc",
+		"etag": "hbEdbFrGQFG9k1MZfzK0RKUCNOE",
 		"id": "v_DOqdyZEG0",
 		"snippet": {
 			"publishedAt": "2021-05-22T02:08:41Z",
@@ -7647,7 +7647,7 @@
 	},
 	"2021/04/16": {
 		"kind": "youtube#video",
-		"etag": "x9dnd13SjN6WYqWDwjwSWTxCpE4",
+		"etag": "8fbkrQs5mFkFULYjdWVcXJmZkgA",
 		"id": "U8J5DwHDbGA",
 		"snippet": {
 			"publishedAt": "2021-04-17T03:24:51Z",
@@ -9044,7 +9044,7 @@
 	},
 	"2020/12/04": {
 		"kind": "youtube#video",
-		"etag": "SkbUwCWhOB1mwBkZjfZYKuk2Aa0",
+		"etag": "n35kpqnu99dcagUo9xDqkIucDW4",
 		"id": "bGY9hEVk_Bc",
 		"snippet": {
 			"publishedAt": "2020-12-05T04:24:11Z",
@@ -9502,7 +9502,7 @@
 	},
 	"2020/10/23": {
 		"kind": "youtube#video",
-		"etag": "fyZjqx-wGu3ylntYhdr8R2kVvkw",
+		"etag": "zXtX5ytyvP85OsynEFYwDdRi9qQ",
 		"id": "Wln8fayc-3c",
 		"snippet": {
 			"publishedAt": "2020-10-24T02:08:59Z",
@@ -10190,7 +10190,7 @@
 	},
 	"2020/08/21": {
 		"kind": "youtube#video",
-		"etag": "jP1oPCYtjqp_MfbwjZiCzvtiwf4",
+		"etag": "cc7VLZZAcbXS399-skPLeoPo_NI",
 		"id": "u_dLt3-ycwo",
 		"snippet": {
 			"publishedAt": "2020-08-22T02:15:36Z",
@@ -10325,7 +10325,7 @@
 	},
 	"2020/08/07": {
 		"kind": "youtube#video",
-		"etag": "0L40yuhqj2EWrSpq_YUubp4sjxg",
+		"etag": "1S4Ce0JqYv7wUNjgj-I56izS3Tc",
 		"id": "Rs4hTm6B9QQ",
 		"snippet": {
 			"publishedAt": "2020-08-08T01:52:09Z",
@@ -10602,7 +10602,7 @@
 	},
 	"2020/07/10": {
 		"kind": "youtube#video",
-		"etag": "65lwMrZTkodSAdlUYAKjB3WSP3w",
+		"etag": "i5OC4Dx5i-y1Ft-iG1MMu1QYsHk",
 		"id": "Ox-phY_86WE",
 		"snippet": {
 			"publishedAt": "2020-07-11T02:08:41Z",
@@ -10675,7 +10675,7 @@
 	},
 	"2020/07/03": {
 		"kind": "youtube#video",
-		"etag": "UKyXUx7qB7apLYA-8RRPTfuXJWI",
+		"etag": "DbBqWjRdBp8C34BO9aXkNxK4SAg",
 		"id": "hVPFNZtXegQ",
 		"snippet": {
 			"publishedAt": "2020-07-04T02:10:33Z",
@@ -11624,7 +11624,7 @@
 	},
 	"2020/04/03": {
 		"kind": "youtube#video",
-		"etag": "UE3bVCKewfvZOjGRn7jWuF98le0",
+		"etag": "fg71UzmjSIY4ygwYBvupjEyeOYI",
 		"id": "ogqTF8o8bJQ",
 		"snippet": {
 			"publishedAt": "2020-04-04T01:38:24Z",
@@ -12276,7 +12276,7 @@
 	},
 	"2020/01/24": {
 		"kind": "youtube#video",
-		"etag": "T08oTfiSPICW0DsESwS5GMq-CAQ",
+		"etag": "LWF40tvyUonj2MIl64xSUaPPSHQ",
 		"id": "cxjhTVR_dJw",
 		"snippet": {
 			"publishedAt": "2020-01-25T02:29:50Z",
@@ -13721,7 +13721,7 @@
 	},
 	"2019/08/09": {
 		"kind": "youtube#video",
-		"etag": "8EjYb0r1kyaa_9t5pbP2wPJwOE0",
+		"etag": "xnjSYc0KpcTyUIQoISdNLdU9yDo",
 		"id": "vCiRFvXymqc",
 		"snippet": {
 			"publishedAt": "2019-08-10T02:16:37Z",
@@ -14198,7 +14198,7 @@
 	},
 	"2019/06/14": {
 		"kind": "youtube#video",
-		"etag": "-CWiWwJ4SaJMcgcpj9GJ0sMTuog",
+		"etag": "luu7h4T-FLeGntYOp6vFN9EnKVs",
 		"id": "HE97qIGhV0Y",
 		"snippet": {
 			"publishedAt": "2019-06-15T08:42:59Z",
@@ -14908,7 +14908,7 @@
 	},
 	"2019/03/29": {
 		"kind": "youtube#video",
-		"etag": "d7TQV0NLkzfCe01al4dnzEzIIBE",
+		"etag": "gP3ELmCqM-2kB5xH4THG-BbHme0",
 		"id": "XOtTUu3KEds",
 		"snippet": {
 			"publishedAt": "2019-03-30T02:05:05Z",
@@ -15243,7 +15243,7 @@
 	},
 	"2019/02/15": {
 		"kind": "youtube#video",
-		"etag": "l0cUMz5GFGnS6zVEodt6T1xpOwI",
+		"etag": "yAKTR2w6u8vDPvIrHnp8m3IPhR0",
 		"id": "Zzu1-VM7y6g",
 		"snippet": {
 			"publishedAt": "2019-02-16T03:13:53Z",
@@ -15633,7 +15633,7 @@
 	},
 	"2019/01/04": {
 		"kind": "youtube#video",
-		"etag": "4agyaYjF5NsO9NXKsM8Nq6GTz10",
+		"etag": "0Dn34wlh-noZosfvk2ubNWE0EG8",
 		"id": "OlIeuBkhERc",
 		"snippet": {
 			"publishedAt": "2019-01-05T03:27:23Z",
@@ -15958,7 +15958,7 @@
 	},
 	"2018/11/30": {
 		"kind": "youtube#video",
-		"etag": "Y9w64iyf_nbk5NT_N1tpVYt8nU0",
+		"etag": "_kT9vN4DAV5VsHy2P-Xnmiu4QjY",
 		"id": "iFyYRz82kSM",
 		"snippet": {
 			"publishedAt": "2018-12-01T02:58:28Z",
@@ -16153,7 +16153,7 @@
 	},
 	"2018/11/09": {
 		"kind": "youtube#video",
-		"etag": "lhHjgX1Y-kvNjcWEpWQLJEojAjY",
+		"etag": "aTFcWQ80IgeUP86OYHs-kNQA49Y",
 		"id": "_GBYcOVvuc4",
 		"snippet": {
 			"publishedAt": "2018-11-10T08:00:01Z",
@@ -16338,7 +16338,7 @@
 	},
 	"2018/10/19": {
 		"kind": "youtube#video",
-		"etag": "f_A8s9r-eqyePORsbO-xGa5-d2o",
+		"etag": "r16h91kXh5iuRKTPKubjW2WhyFs",
 		"id": "WZ_x1mT6GUg",
 		"snippet": {
 			"publishedAt": "2018-10-20T02:14:48Z",
@@ -16796,7 +16796,7 @@
 	},
 	"2018/08/31": {
 		"kind": "youtube#video",
-		"etag": "V9f6-WR9pgbm_HJqOqU-XjziJuw",
+		"etag": "8lTpltUzD_VOzKRVwLF2sBg4GiM",
 		"id": "aBhIJQH-x7I",
 		"snippet": {
 			"publishedAt": "2018-09-01T01:50:13Z",
@@ -17095,7 +17095,7 @@
 	},
 	"2018/07/20": {
 		"kind": "youtube#video",
-		"etag": "qDLAOB-wM2wq6DihaxTjCroWhQI",
+		"etag": "TdTBCnuviFeAGa7zbDpBOLreNKI",
 		"id": "k-95O24xCK8",
 		"snippet": {
 			"publishedAt": "2018-07-21T08:25:47Z",
@@ -17256,7 +17256,7 @@
 	},
 	"2018/06/29": {
 		"kind": "youtube#video",
-		"etag": "Ir4E3Ku_ugGoqbUNrlsaYeeQDQ4",
+		"etag": "S3x4NrpfBxoLQ8txnUPpI44x5o4",
 		"id": "kQQTo1WxQk4",
 		"snippet": {
 			"publishedAt": "2018-06-30T01:49:51Z",
@@ -20293,7 +20293,7 @@
 	},
 	"2017/06/09": {
 		"kind": "youtube#video",
-		"etag": "iBhFUKL5rtpOfnGADLoHMH4MW-8",
+		"etag": "o5G-zl71iwjC9KiYpfH502bBqRU",
 		"id": "XcNiKUm5j1s",
 		"snippet": {
 			"publishedAt": "2017-06-10T02:36:52Z",
@@ -21877,7 +21877,7 @@
 	},
 	"2016/12/23": {
 		"kind": "youtube#video",
-		"etag": "NRIHkIAwNOEM7PQXh_MFZp5obQ0",
+		"etag": "2XIkw65lyJZNU10BJtbpiuhoETk",
 		"id": "uonwCWkaovg",
 		"snippet": {
 			"publishedAt": "2016-12-24T06:08:33Z",
@@ -21939,7 +21939,7 @@
 	},
 	"2016/12/16": {
 		"kind": "youtube#video",
-		"etag": "ssx6aaU2BFnGj2YRrvsTAvdjPU8",
+		"etag": "NNZ3VAdOXulKqolzZkHpQoAORPk",
 		"id": "k6Hugyu2CME",
 		"snippet": {
 			"publishedAt": "2016-12-17T02:59:39Z",
@@ -22349,7 +22349,7 @@
 	},
 	"2016/10/28": {
 		"kind": "youtube#video",
-		"etag": "pK7iJD2AHqZf0AREUqSLeJyPwxQ",
+		"etag": "ON8FybflOTdp8m8M0QIsgG-gmTE",
 		"id": "m87PK_YcmE4",
 		"snippet": {
 			"publishedAt": "2016-10-29T02:10:53Z",
@@ -23079,7 +23079,7 @@
 	},
 	"2016/08/19": {
 		"kind": "youtube#video",
-		"etag": "9e-a5T_q-Uj7rqhP0edadSr23BQ",
+		"etag": "7qxZpn4WZjqcXmRsM3ov9kst0UQ",
 		"id": "cCmgmanXeho",
 		"snippet": {
 			"publishedAt": "2016-08-20T06:13:05Z",
@@ -24129,7 +24129,7 @@
 	},
 	"2016/04/29": {
 		"kind": "youtube#video",
-		"etag": "HXhUBOcb39qehKRKsPgViIagNNY",
+		"etag": "-eMKa6HIdChvgAswtvmJOPNzqxk",
 		"id": "bQy4Dan_s78",
 		"snippet": {
 			"publishedAt": "2016-04-30T08:53:55Z",
@@ -24202,7 +24202,7 @@
 	},
 	"2016/04/22": {
 		"kind": "youtube#video",
-		"etag": "xRrDCnhyWt1L41fBPpj7zfczLho",
+		"etag": "iSnvCIuOrQ-ljEVou2fTOp_PICY",
 		"id": "P9IJtwyM8NA",
 		"snippet": {
 			"publishedAt": "2016-04-23T08:43:26Z",
@@ -25921,7 +25921,7 @@
 	},
 	"2015/10/30": {
 		"kind": "youtube#video",
-		"etag": "3Kts-q1QOiZKgMXIlnzObcphQkc",
+		"etag": "xfIGbWQlu60Uiodc6ZpYvojNw5w",
 		"id": "cHnUzxkn7Aw",
 		"snippet": {
 			"publishedAt": "2015-10-31T09:06:32Z",
@@ -25987,7 +25987,7 @@
 	},
 	"2015/10/23": {
 		"kind": "youtube#video",
-		"etag": "FbOT13guUywDdpxMwN_VJhLRVuY",
+		"etag": "SzqfuCUMDOxh1H8QeHSgYFSEcj8",
 		"id": "cytwZTl2R9I",
 		"snippet": {
 			"publishedAt": "2015-10-24T07:53:04Z",
@@ -26391,7 +26391,7 @@
 	},
 	"2015/09/11": {
 		"kind": "youtube#video",
-		"etag": "74Zv00NVqkt0JedU8PDmTjNde0w",
+		"etag": "lxeMMllEa340-kZ9ecenQPGqMns",
 		"id": "oFadFYt0WQo",
 		"snippet": {
 			"publishedAt": "2015-09-12T08:05:08Z",
@@ -28142,7 +28142,7 @@
 	},
 	"2015/02/20": {
 		"kind": "youtube#video",
-		"etag": "2wH-yynK34zSNJ6zf0_w7Coiq_E",
+		"etag": "rj2V9EsvVYZ4u5KvrrkXKzjFUtg",
 		"id": "imPyit7zZY0",
 		"snippet": {
 			"publishedAt": "2015-02-21T08:00:00Z",
@@ -28333,7 +28333,7 @@
 	},
 	"2015/01/23": {
 		"kind": "youtube#video",
-		"etag": "W3we_QI9nxYEwrgBztltOrIVDXw",
+		"etag": "HhCpZPHws8D9xyL_GlGluudgHao",
 		"id": "e85aRCFH8gM",
 		"snippet": {
 			"publishedAt": "2015-01-24T08:00:08Z",
@@ -28456,7 +28456,7 @@
 	},
 	"2015/01/09": {
 		"kind": "youtube#video",
-		"etag": "vlqEfCRZnRXl-9EnphPQzT3mUj4",
+		"etag": "Z2ilVNvF98oEupZZkCFD1rDQ2zc",
 		"id": "kz32HOzFVqw",
 		"snippet": {
 			"publishedAt": "2015-01-10T10:55:36Z",
@@ -29192,7 +29192,7 @@
 	},
 	"2014/09/19": {
 		"kind": "youtube#video",
-		"etag": "OvG-Xor8RD9aKsUjpfnUkgO-_00",
+		"etag": "evjlpQOWar7_FSK4myHujNz39kM",
 		"id": "hPiE0VQjEqc",
 		"snippet": {
 			"publishedAt": "2014-09-20T06:43:28Z",
@@ -29620,7 +29620,7 @@
 	},
 	"2014/07/25": {
 		"kind": "youtube#video",
-		"etag": "O2Z2eGxIE_ckuWGt2zbYb0toWX4",
+		"etag": "HAdQg_JdfDWkS_GN-IiBqEgIZdc",
 		"id": "Xe0mitLNRhQ",
 		"snippet": {
 			"publishedAt": "2014-07-26T06:00:14Z",
@@ -29734,7 +29734,7 @@
 	},
 	"2014/07/04": {
 		"kind": "youtube#video",
-		"etag": "tGod_Ss7BExqmOOu5V8OQ_2tF6k",
+		"etag": "9Pjhnl_5AKN3LZKREHdNrAUMmmc",
 		"id": "goz92THfA1I",
 		"snippet": {
 			"publishedAt": "2014-07-05T07:38:25Z",
@@ -30651,7 +30651,7 @@
 	},
 	"2014/02/28": {
 		"kind": "youtube#video",
-		"etag": "Qe-vsVurLXXTYJI0EySPijnEDpo",
+		"etag": "0qS2GXKmFWqA_BnOOwf47FI59aQ",
 		"id": "UZ_kxbuMt5Y",
 		"snippet": {
 			"publishedAt": "2014-03-01T08:08:56Z",
@@ -31071,7 +31071,7 @@
 	},
 	"2013/12/20": {
 		"kind": "youtube#video",
-		"etag": "kaQIFloIGtXSwkqE2BLbBeapsiw",
+		"etag": "7MCXPyNbDZeAhhft_sx1lcZURKQ",
 		"id": "PyItbPA-J3w",
 		"snippet": {
 			"publishedAt": "2013-12-22T21:45:34Z",
@@ -31233,7 +31233,7 @@
 	},
 	"2013/11/29": {
 		"kind": "youtube#video",
-		"etag": "QTLLA6MOYnT4JlN5nsiqvVi3DRE",
+		"etag": "y0tk95Xv2bV8PgVKIm7iK2IVlAU",
 		"id": "qmzlur1qX6w",
 		"snippet": {
 			"publishedAt": "2013-11-30T05:27:57Z",
@@ -31684,7 +31684,7 @@
 	},
 	"2013/10/04": {
 		"kind": "youtube#video",
-		"etag": "T0aGTm0Oysd0my0DAvNF9iQwQys",
+		"etag": "vetPz62jQtMMo1o_lTVQpjPORUo",
 		"id": "c8WrGJ4GLm4",
 		"snippet": {
 			"publishedAt": "2013-10-06T07:04:27Z",
@@ -32132,7 +32132,7 @@
 	},
 	"2013/08/09": {
 		"kind": "youtube#video",
-		"etag": "6yYTmQpsGOWaLhbe1gCHu48FNDo",
+		"etag": "xwUpdjVGJgo_LJfxl2X22llb7Vc",
 		"id": "GJFRucXDxS0",
 		"snippet": {
 			"publishedAt": "2013-08-11T09:50:20Z",
@@ -32302,7 +32302,7 @@
 	},
 	"2013/07/12": {
 		"kind": "youtube#video",
-		"etag": "RYg0L2TQetZLgX50_pBqf_u4H9s",
+		"etag": "OJgKpBv0iTx7CI9VlmYlXOTJBmY",
 		"id": "dm6aRONewxk",
 		"snippet": {
 			"publishedAt": "2013-07-13T07:07:08Z",
@@ -32356,7 +32356,7 @@
 	},
 	"2013/04/26": {
 		"kind": "youtube#video",
-		"etag": "5GFvcSzbNfgziHrS5scIbsM_wKE",
+		"etag": "9vetNpQdoZYVLkmgxQeagv-In3c",
 		"id": "az1NpatFhgA",
 		"snippet": {
 			"publishedAt": "2013-04-27T21:42:19Z",
@@ -32410,7 +32410,7 @@
 	},
 	"2013/04/19": {
 		"kind": "youtube#video",
-		"etag": "ehMb2NRMRMK6ULt8TCFTnn9JMu8",
+		"etag": "Mc75CwdiLNhDMkSpfAx3K-EpWjs",
 		"id": "2aQIAPZ9zBo",
 		"snippet": {
 			"publishedAt": "2013-04-21T02:54:45Z",
@@ -32451,6 +32451,15 @@
 				"title": "Linus Tech Tips Live Show Archive - April 19, 2013",
 				"description": "6:43 Samsung S4\n14:53 Func Mouse Video\n17:55 Moving the live stream time slot\n23:45 Judge Voet holds himself in contempt\n25:54 Pax Prime tickets sell out fast\n32:08 Next Gen xbox requires $150 adder to play old games\n46:36 G710+ comes with black O-rings under the key caps\n47:35 Sony launches 2Gbit/s internet in Japan\n56:12 Foxcon settles with Microsoft over android licencing fees \n1:00:28 7990 Malta on Ebay, insane price tag\n1:12:04 Nvidia 700 series GPU's rumors\n1:15:13 Build logs of the week\n1:21:28 allegedly disabled gamer turns out to be 100% fine, community enraged\n\nLink to the after party: http://www.twitch.tv/linustech/b/393220580"
 			}
+		},
+		"contentDetails": {
+			"duration": "PT1H28M45S",
+			"dimension": "2d",
+			"definition": "hd",
+			"caption": "false",
+			"licensedContent": true,
+			"contentRating": {},
+			"projection": "rectangular"
 		}
 	},
 	"2013/04/12": {
@@ -32677,7 +32686,7 @@
 	},
 	"2013/02/08": {
 		"kind": "youtube#video",
-		"etag": "jItBRR8QqchOxujAW5fMVu-G7Ng",
+		"etag": "KmCVD8fOTNg6x-3eqMwrn-UiYsY",
 		"id": "FUsiu2_j0LM",
 		"snippet": {
 			"publishedAt": "2013-02-09T08:00:12Z",
@@ -32718,6 +32727,69 @@
 				"title": "Linus Tech Tips Live Show Archive - February 8, 2013",
 				"description": "1:53 New Linus Tech tips unboxing video style explanations\n7:18 Random drunk guy calls\n10:33 The crazy russian dancing\n13:55 Linus' case is back from Mountain Mods!\n18:16 Dust 514!\n24:60 Declining prices and declining quality\n31:31 Gabe Newell talking about making portal and half life movies\n33:00 AMD never settle bundle\n35:57 But can it run crysis?\n38:30 Teaser screenshot from an upcoming video\n47:05 LinusMediaGroup and any possible direction changes! ALL IS OKAY!\n1:02:18 AMD delays HD8000 series - Delays can be good!\n1:07:10 Nvidia Titan speculations\n1:14:35 Kickstarter\n1:19:27 Being approached by groups like Rev3\n1:24:50 Youtube paid subscriptions\n1:36:57 Windows 8 giveaway\n1:40:17 The After Party"
 			}
+		},
+		"contentDetails": {
+			"duration": "PT1H48M27S",
+			"dimension": "2d",
+			"definition": "hd",
+			"caption": "false",
+			"licensedContent": true,
+			"contentRating": {},
+			"projection": "rectangular"
+		}
+	},
+	"2013/02/01": {
+		"kind": "youtube#video",
+		"etag": "5LG3qk1mzYHiz7Tb3lR27Dz-f9o",
+		"id": "Z2ROOZS1DtQ",
+		"snippet": {
+			"publishedAt": "2013-02-02T08:17:26Z",
+			"channelId": "UCXuqSBlHAE6Xw-yeJA0Tunw",
+			"title": "Linus Tech Tips Live Show Archive - February 1, 2013",
+			"description": "4:45 SSD Update\n6:58 Our favorite pieces of software\n26:28 Linus Personal Rig Update - Info From Mountain Mods!\n33:40 Product Naming Consistency\n39:16 Linus Using Windows Phone 8\n43:35 3570K vs FX8350 showdown Ft. Logan's video\n51:10 Cool stuff that arrived today\n55:58 Slick's Surprise Gear Unboxing\n1:05:45 Patent trolls and Newegg standing up to the pressure\n1:07:35 Essential or non-essential internet\n1:17:56 Shrinkage of Storage\n1:22:08 Windows 8 Giveaway",
+			"thumbnails": {
+				"default": {
+					"url": "https://i.ytimg.com/vi/Z2ROOZS1DtQ/default.jpg",
+					"width": 120,
+					"height": 90
+				},
+				"medium": {
+					"url": "https://i.ytimg.com/vi/Z2ROOZS1DtQ/mqdefault.jpg",
+					"width": 320,
+					"height": 180
+				},
+				"high": {
+					"url": "https://i.ytimg.com/vi/Z2ROOZS1DtQ/hqdefault.jpg",
+					"width": 480,
+					"height": 360
+				},
+				"standard": {
+					"url": "https://i.ytimg.com/vi/Z2ROOZS1DtQ/sddefault.jpg",
+					"width": 640,
+					"height": 480
+				},
+				"maxres": {
+					"url": "https://i.ytimg.com/vi/Z2ROOZS1DtQ/maxresdefault.jpg",
+					"width": 1280,
+					"height": 720
+				}
+			},
+			"channelTitle": "Linus Tech Tips",
+			"categoryId": "28",
+			"liveBroadcastContent": "none",
+			"localized": {
+				"title": "Linus Tech Tips Live Show Archive - February 1, 2013",
+				"description": "4:45 SSD Update\n6:58 Our favorite pieces of software\n26:28 Linus Personal Rig Update - Info From Mountain Mods!\n33:40 Product Naming Consistency\n39:16 Linus Using Windows Phone 8\n43:35 3570K vs FX8350 showdown Ft. Logan's video\n51:10 Cool stuff that arrived today\n55:58 Slick's Surprise Gear Unboxing\n1:05:45 Patent trolls and Newegg standing up to the pressure\n1:07:35 Essential or non-essential internet\n1:17:56 Shrinkage of Storage\n1:22:08 Windows 8 Giveaway"
+			}
+		},
+		"contentDetails": {
+			"duration": "PT1H31M16S",
+			"dimension": "2d",
+			"definition": "hd",
+			"caption": "false",
+			"licensedContent": true,
+			"contentRating": {},
+			"projection": "rectangular"
 		}
 	},
 	"2013/01/04": {
