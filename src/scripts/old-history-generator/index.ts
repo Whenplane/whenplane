@@ -62,11 +62,11 @@ for (const date in youtubeData) {
     const youtubeVod = youtubeData[date];
 
     if(!youtubeVod.liveStreamingDetails) {
-        console.warn(date + " is missing liveStreamingDetails!");
+        // console.warn(date + " is missing liveStreamingDetails!");
     }
 
     if(!floatplaneVod) {
-        console.warn(date + " is missing floatplane entry!")
+        // console.warn(date + " is missing floatplane entry!")
     }
 
     const mainShowStart = youtubeVod.liveStreamingDetails?.actualStartTime;
@@ -128,7 +128,6 @@ for (const date in youtubeData) {
                 if(oldThumbnails && oldThumbnails[thumbnailKey].url === thumbnail.url && oldThumbnails[thumbnailKey].blurhash) {
                     const oldData = oldThumbnails[thumbnailKey];
                     (youtubeVod.snippet?.thumbnails as {[key: string]: YoutubeThumbnail})[thumbnailKey].blurhash = oldData.blurhash;
-                    console.log(date+" " + thumbnailKey + " took " + (Date.now() - start) + "ms (using old version)");
                     return;
                 }
 
