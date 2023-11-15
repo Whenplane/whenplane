@@ -25,6 +25,9 @@
   It would probably be missing due to the youtube api skipping some videos when I ask for a list for some reason.<br>
   Thanks youtube, very cool!<br>
   <br>
+  Note that most of these dates are from a while ago, so there might have just not been a show that week.<br>
+  Also, some of these dates might be a day off. That's just because I'm lazy, ill fix it at some point.<br>
+  <br>
   <b>If you find any of these, please tell me!</b> The easiest way to reach me is on discord: <code>ajgeiss0702</code><br>
   Either DM me or ping me in <code>#the-wan-show</code> in the
   <a href="https://discord.gg/ltt" target="_blank" rel="noopener">
