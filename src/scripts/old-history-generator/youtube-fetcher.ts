@@ -19,7 +19,7 @@ export async function fetchYoutubeShows() {
 
     // Show vods here will be manually added if they aren't already present.
     const manuallyScan: string[] = [
-
+        "W4DPonYbVlc", // 2015/06/12
     ]
 
     if(!process.env.YOUTUBE_KEY) {
