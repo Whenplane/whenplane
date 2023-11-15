@@ -20,6 +20,39 @@ export async function fetchYoutubeShows() {
     // Show vods here will be manually added if they aren't already present.
     const manuallyScan: string[] = [
         "W4DPonYbVlc", // 2015/06/12
+
+        // these thanks to TheWanDB
+        "ObiGTV6oZfQ", //"2013-07-05"
+        "ykHjuQvp8dY", //"2012-08-28"
+        "Fezr4Uwq-2w", //"2012-08-28"
+        "0GwurgaAIQg", //"2013-06-14"
+        "oZT4k0Ti8Mc", //"2013-08-07"
+        "ETwpXGqD4uk", //"2012-11-30"
+        "eS_cNCIr3qU", //"2012-10-12"
+        "mtmha7cCRfM", //"2012-09-28"
+        "XDZ0qn2KP9g", //"2012-11-23"
+        "UHkDRzxekVM", //"2013-01-25"
+        "iZd1OO98vT0", //"2013-02-22"
+        "gW1-NEexTp8", //"2012-10-19"
+        "QNVb3EfjIvA", //"2013-09-07"
+        "TvuUSxzpHlM", //"2012-08-31"
+        "y1RYUW7kjUA", //"2012-10-26"
+        "Tp6a2UoAeNQ", //"2013-03-15"
+        "unQk6zpicKo", //"2013-05-03"
+        "gg-qVqjUN_w", //"2019-10-11"
+        "18bvvL1CytE", //"2013-03-02"
+        "6w0Jq2fYEn0", //"2013-05-17"
+        "LlvyUNn6N74", //"2013-05-24"
+        "-dAzBVng2f8", //"2012-11-09"
+        "xZD5x39M6zw", //"2019-08-09"
+        "a15fnqKIQ9c", //"2013-01-19"
+        "cV1ujxWSxNg", //"2013-05-10"
+        "PQN3lhADVXY", //"2013-03-29"
+        "XliTYLihG9Y", //"2013-03-22"
+        "kusJt9f7xAQ", //"2013-05-31"
+        "Es6zRVrNsKY", //"2013-06-28"
+        "MKSQjP8U59g", //"2013-06-21"
+        "mn5wFy_aTUY", //"2012-11-16"
     ]
 
     if(!process.env.YOUTUBE_KEY) {

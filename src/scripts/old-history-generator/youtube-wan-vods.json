@@ -585,7 +585,7 @@
 	},
 	"2023/03/10": {
 		"kind": "youtube#video",
-		"etag": "WMNhNeal5HKXndpRSCrpyE8GLXQ",
+		"etag": "ku5hXvUIR5BXdvaW2Sdzx9Og9is",
 		"id": "A6_UOejJ8Zk",
 		"snippet": {
 			"publishedAt": "2023-03-11T04:44:57Z",
@@ -33144,6 +33144,168 @@
 			"projection": "rectangular"
 		}
 	},
+	"2013/07/05": {
+		"kind": "youtube#video",
+		"etag": "i-VVfeeh7ZX5v8xe1emHrVXw1yM",
+		"id": "ObiGTV6oZfQ",
+		"snippet": {
+			"publishedAt": "2013-07-06T08:52:17Z",
+			"channelId": "UCXuqSBlHAE6Xw-yeJA0Tunw",
+			"title": "July 5th, 2013 Live Stream Archive",
+			"description": "Check out the after party here! http://www.youtube.com/watch?v=0lyCRqaUhmg\n\nDownload Razer Comms here! bit.ly/16c6hso\n\n3:16 SMB 3.0 on Server 2012 and Windows 8\n6:54 Inventor of the mouse, Doug Engelbart, Dies at 88\n11:11 FF VII on Steam!\n18:34 What ROMs Do we run? (First caller : Zak)\n22:01 If you have a current gen AMD CPU should you move to haswell? (Second caller : Peanut...)\n24:54 Speaking Whale\n25:55 How much is your Gmail account worth? (credit :4Strings)\n30:00 Speaking Whale #2\n31:30 Android Master Cryptographic key found... bad news\n38:38 Negative vs Positive airflow (Third caller : Delons)\n42:46 AMD to support Libra Office in bringing GPU acceleration to Documents\n46:20 Overclocking an Intel 920 (Fourth caller : Thor)\n54:08 Will Xbox One take over the living room? (Fifth caller : Shaun)\n1:00:43 Should I get a 760GTX or wait for new ATI release (Sixth caller : Ghost)\n1:06:34 Technet is gone :(\n1:10:10 Slicks mom calls in and verbally destroys Linus (Seventh caller : Slicks Mom)\n1:14:50 Transmitting messages into your head while you rest on the train\n1:22:24 On 4k Benchmarks is testing 4k essentially testing 8k? (Eigth caller : Vitalus)\n1:26:38 Vtel moving in budget fiber in Vermont\n1:30:00 Dying noctua fans and putting 2nd hand advice on the forum (Ninth caller : Mortino)\n1:37:08 Google Glass FAQ - Security and Privacy\n1:44:23 Build logs of the week\n1:49:38 BitTorrent - \"You didn't download Game of Throne from us\"\n1:51:21 Enabling or Disabling Vsync for gaming (Tenth caller : Tama)\n1:53:35 Sensible upgrade from HD555 (Eleventh caller : Adam)(Caution, noise)",
+			"thumbnails": {
+				"default": {
+					"url": "https://i.ytimg.com/vi/ObiGTV6oZfQ/default.jpg",
+					"width": 120,
+					"height": 90
+				},
+				"medium": {
+					"url": "https://i.ytimg.com/vi/ObiGTV6oZfQ/mqdefault.jpg",
+					"width": 320,
+					"height": 180
+				},
+				"high": {
+					"url": "https://i.ytimg.com/vi/ObiGTV6oZfQ/hqdefault.jpg",
+					"width": 480,
+					"height": 360
+				},
+				"standard": {
+					"url": "https://i.ytimg.com/vi/ObiGTV6oZfQ/sddefault.jpg",
+					"width": 640,
+					"height": 480
+				},
+				"maxres": {
+					"url": "https://i.ytimg.com/vi/ObiGTV6oZfQ/maxresdefault.jpg",
+					"width": 1280,
+					"height": 720
+				}
+			},
+			"channelTitle": "Linus Tech Tips",
+			"categoryId": "28",
+			"liveBroadcastContent": "none",
+			"localized": {
+				"title": "July 5th, 2013 Live Stream Archive",
+				"description": "Check out the after party here! http://www.youtube.com/watch?v=0lyCRqaUhmg\n\nDownload Razer Comms here! bit.ly/16c6hso\n\n3:16 SMB 3.0 on Server 2012 and Windows 8\n6:54 Inventor of the mouse, Doug Engelbart, Dies at 88\n11:11 FF VII on Steam!\n18:34 What ROMs Do we run? (First caller : Zak)\n22:01 If you have a current gen AMD CPU should you move to haswell? (Second caller : Peanut...)\n24:54 Speaking Whale\n25:55 How much is your Gmail account worth? (credit :4Strings)\n30:00 Speaking Whale #2\n31:30 Android Master Cryptographic key found... bad news\n38:38 Negative vs Positive airflow (Third caller : Delons)\n42:46 AMD to support Libra Office in bringing GPU acceleration to Documents\n46:20 Overclocking an Intel 920 (Fourth caller : Thor)\n54:08 Will Xbox One take over the living room? (Fifth caller : Shaun)\n1:00:43 Should I get a 760GTX or wait for new ATI release (Sixth caller : Ghost)\n1:06:34 Technet is gone :(\n1:10:10 Slicks mom calls in and verbally destroys Linus (Seventh caller : Slicks Mom)\n1:14:50 Transmitting messages into your head while you rest on the train\n1:22:24 On 4k Benchmarks is testing 4k essentially testing 8k? (Eigth caller : Vitalus)\n1:26:38 Vtel moving in budget fiber in Vermont\n1:30:00 Dying noctua fans and putting 2nd hand advice on the forum (Ninth caller : Mortino)\n1:37:08 Google Glass FAQ - Security and Privacy\n1:44:23 Build logs of the week\n1:49:38 BitTorrent - \"You didn't download Game of Throne from us\"\n1:51:21 Enabling or Disabling Vsync for gaming (Tenth caller : Tama)\n1:53:35 Sensible upgrade from HD555 (Eleventh caller : Adam)(Caution, noise)"
+			}
+		},
+		"contentDetails": {
+			"duration": "PT2H4S",
+			"dimension": "2d",
+			"definition": "hd",
+			"caption": "false",
+			"licensedContent": true,
+			"contentRating": {},
+			"projection": "rectangular"
+		}
+	},
+	"2013/06/14": {
+		"kind": "youtube#video",
+		"etag": "qykyQhMhw8AL-yd8_CqfTJ_3XSU",
+		"id": "0GwurgaAIQg",
+		"snippet": {
+			"publishedAt": "2013-06-15T06:38:16Z",
+			"channelId": "UCXuqSBlHAE6Xw-yeJA0Tunw",
+			"title": "June 14th, 2013 Live Stream Archive",
+			"description": "0:02:55 - Meme contest winners announcement\n0:07:54 - Twitter Q&A Blitz #1\n0:10:35 - Motorcycle vs 4K monitor\n0:18:20 - The booth babe video controversy\n0:24:07 - SHOCKING, SCANDALOUS NEWS STORY\n0:28:07 - AMD announces Battlefield 4 optimization for Radeon & FX\n0:32:15 - NVIDIA says Xbox One and PS4 are great news for PC gaming\n0:36:00 - Twitter Q&A Blitz #2\n0:41:55 - Armageddon keyboard controversy\n0:43:20 - Original thoughts on Xbox One constant Internet connection\n0:46:45 - Sony wants your living room too!!\n0:49:50 - Account based game ownership vs disc based game ownership\n0:53:28 - Xbox One vs PS4 pricing & the value of Kinect\n1:01:50 - Twitter Q&A Blitz #3\n1:12:20 - New Mac Pro & the value proposition of Apple computers\n1:18:45 - Xbox One launching in 21 countries???\n1:20:30 - Twitter Q&A Blitz #4\n1:26:00 - AMD 5GHz CPU FX-9590\n1:32:30 - Intel cherry-picking Haswell review samples?\n1:36:53 - Lol low battery!\n1:39:40 - We're back and system of the week!\n1:45:00 - EA doesn't want to be hated anymore\n1:46:00 - Macbook Air PCIe SSDs - Who cares?\n1:52:00 - Good night!",
+			"thumbnails": {
+				"default": {
+					"url": "https://i.ytimg.com/vi/0GwurgaAIQg/default.jpg",
+					"width": 120,
+					"height": 90
+				},
+				"medium": {
+					"url": "https://i.ytimg.com/vi/0GwurgaAIQg/mqdefault.jpg",
+					"width": 320,
+					"height": 180
+				},
+				"high": {
+					"url": "https://i.ytimg.com/vi/0GwurgaAIQg/hqdefault.jpg",
+					"width": 480,
+					"height": 360
+				},
+				"standard": {
+					"url": "https://i.ytimg.com/vi/0GwurgaAIQg/sddefault.jpg",
+					"width": 640,
+					"height": 480
+				},
+				"maxres": {
+					"url": "https://i.ytimg.com/vi/0GwurgaAIQg/maxresdefault.jpg",
+					"width": 1280,
+					"height": 720
+				}
+			},
+			"channelTitle": "Linus Tech Tips",
+			"categoryId": "28",
+			"liveBroadcastContent": "none",
+			"localized": {
+				"title": "June 14th, 2013 Live Stream Archive",
+				"description": "0:02:55 - Meme contest winners announcement\n0:07:54 - Twitter Q&A Blitz #1\n0:10:35 - Motorcycle vs 4K monitor\n0:18:20 - The booth babe video controversy\n0:24:07 - SHOCKING, SCANDALOUS NEWS STORY\n0:28:07 - AMD announces Battlefield 4 optimization for Radeon & FX\n0:32:15 - NVIDIA says Xbox One and PS4 are great news for PC gaming\n0:36:00 - Twitter Q&A Blitz #2\n0:41:55 - Armageddon keyboard controversy\n0:43:20 - Original thoughts on Xbox One constant Internet connection\n0:46:45 - Sony wants your living room too!!\n0:49:50 - Account based game ownership vs disc based game ownership\n0:53:28 - Xbox One vs PS4 pricing & the value of Kinect\n1:01:50 - Twitter Q&A Blitz #3\n1:12:20 - New Mac Pro & the value proposition of Apple computers\n1:18:45 - Xbox One launching in 21 countries???\n1:20:30 - Twitter Q&A Blitz #4\n1:26:00 - AMD 5GHz CPU FX-9590\n1:32:30 - Intel cherry-picking Haswell review samples?\n1:36:53 - Lol low battery!\n1:39:40 - We're back and system of the week!\n1:45:00 - EA doesn't want to be hated anymore\n1:46:00 - Macbook Air PCIe SSDs - Who cares?\n1:52:00 - Good night!"
+			}
+		},
+		"contentDetails": {
+			"duration": "PT1H52M25S",
+			"dimension": "2d",
+			"definition": "hd",
+			"caption": "false",
+			"licensedContent": true,
+			"contentRating": {},
+			"projection": "rectangular"
+		}
+	},
+	"2013/05/03": {
+		"kind": "youtube#video",
+		"etag": "JpSxEG4_s7ivrjYfMd3Ak3MkUkU",
+		"id": "unQk6zpicKo",
+		"snippet": {
+			"publishedAt": "2013-05-05T06:09:11Z",
+			"channelId": "UCXuqSBlHAE6Xw-yeJA0Tunw",
+			"title": "May 3 Live Stream Archive",
+			"description": "0:30 Flux in ear Pro/non-pro\n2:10 Game discounting\n8:12 Linus Memes!\n15:25 Netflix splits from universal and mgm\n20:18 First major youtube channel acquired\n27:28 Razer Comms\n34:45 EA shuts down Popcap Vancouver branch\n45:39 Intel Haswell CPU Performance\n51:18 HTC M4\n59:25 Current TV market\n1:09:23 Forum call out!\n1:19:15 Intel Ivy Bridge-e\n1:21:31 LG OLED HDTV\n1:27:42 Who has your back (online privacy)\n1:33:50 Build log 1 rush view (sorry guys)\n1:35:27 Build log 2\n\nAfter Party Link : http://www.youtube.com/watch?v=xGVLClO1kCE",
+			"thumbnails": {
+				"default": {
+					"url": "https://i.ytimg.com/vi/unQk6zpicKo/default.jpg",
+					"width": 120,
+					"height": 90
+				},
+				"medium": {
+					"url": "https://i.ytimg.com/vi/unQk6zpicKo/mqdefault.jpg",
+					"width": 320,
+					"height": 180
+				},
+				"high": {
+					"url": "https://i.ytimg.com/vi/unQk6zpicKo/hqdefault.jpg",
+					"width": 480,
+					"height": 360
+				},
+				"standard": {
+					"url": "https://i.ytimg.com/vi/unQk6zpicKo/sddefault.jpg",
+					"width": 640,
+					"height": 480
+				},
+				"maxres": {
+					"url": "https://i.ytimg.com/vi/unQk6zpicKo/maxresdefault.jpg",
+					"width": 1280,
+					"height": 720
+				}
+			},
+			"channelTitle": "Linus Tech Tips",
+			"categoryId": "28",
+			"liveBroadcastContent": "none",
+			"localized": {
+				"title": "May 3 Live Stream Archive",
+				"description": "0:30 Flux in ear Pro/non-pro\n2:10 Game discounting\n8:12 Linus Memes!\n15:25 Netflix splits from universal and mgm\n20:18 First major youtube channel acquired\n27:28 Razer Comms\n34:45 EA shuts down Popcap Vancouver branch\n45:39 Intel Haswell CPU Performance\n51:18 HTC M4\n59:25 Current TV market\n1:09:23 Forum call out!\n1:19:15 Intel Ivy Bridge-e\n1:21:31 LG OLED HDTV\n1:27:42 Who has your back (online privacy)\n1:33:50 Build log 1 rush view (sorry guys)\n1:35:27 Build log 2\n\nAfter Party Link : http://www.youtube.com/watch?v=xGVLClO1kCE"
+			}
+		},
+		"contentDetails": {
+			"duration": "PT1H39M11S",
+			"dimension": "2d",
+			"definition": "hd",
+			"caption": "false",
+			"licensedContent": true,
+			"contentRating": {},
+			"projection": "rectangular"
+		}
+	},
 	"2013/04/26": {
 		"kind": "youtube#video",
 		"etag": "9vetNpQdoZYVLkmgxQeagv-In3c",
@@ -33366,6 +33528,60 @@
 			"projection": "rectangular"
 		}
 	},
+	"2013/03/15": {
+		"kind": "youtube#video",
+		"etag": "QaiiUdKj7d1yHXE5ovB-Hm9Q17U",
+		"id": "Tp6a2UoAeNQ",
+		"snippet": {
+			"publishedAt": "2013-03-16T06:38:25Z",
+			"channelId": "UCXuqSBlHAE6Xw-yeJA0Tunw",
+			"title": "Linus Tech Tips Live Show Archive - March 15, 2013",
+			"description": "3:17 Belkin/Linksys acquisition \n7:59 Paid subscriptions? NOPE\n14:08 Blackberry z10\n15:16 Tomb Raider Benchmarks\n18:25 Linus personal rig update\n19:46 Elric joining the newegg crew\n21:27 Galaxy s4 and HTC One\n42:45 Slick's Windows 8 experiences and downgrading \n55:15 Star Craft 2: Heart of the Swarm\n1:00:20 Corsair Vengeance 3000Mhz Ram\n1:02:33 LinusTechTips.com news of the week\n1:26:31 Logan is awesome! and stuff...\n1:32:27 Build of the week...again... Although in my defense it wasn't actually finished last time!",
+			"thumbnails": {
+				"default": {
+					"url": "https://i.ytimg.com/vi/Tp6a2UoAeNQ/default.jpg",
+					"width": 120,
+					"height": 90
+				},
+				"medium": {
+					"url": "https://i.ytimg.com/vi/Tp6a2UoAeNQ/mqdefault.jpg",
+					"width": 320,
+					"height": 180
+				},
+				"high": {
+					"url": "https://i.ytimg.com/vi/Tp6a2UoAeNQ/hqdefault.jpg",
+					"width": 480,
+					"height": 360
+				},
+				"standard": {
+					"url": "https://i.ytimg.com/vi/Tp6a2UoAeNQ/sddefault.jpg",
+					"width": 640,
+					"height": 480
+				},
+				"maxres": {
+					"url": "https://i.ytimg.com/vi/Tp6a2UoAeNQ/maxresdefault.jpg",
+					"width": 1280,
+					"height": 720
+				}
+			},
+			"channelTitle": "Linus Tech Tips",
+			"categoryId": "28",
+			"liveBroadcastContent": "none",
+			"localized": {
+				"title": "Linus Tech Tips Live Show Archive - March 15, 2013",
+				"description": "3:17 Belkin/Linksys acquisition \n7:59 Paid subscriptions? NOPE\n14:08 Blackberry z10\n15:16 Tomb Raider Benchmarks\n18:25 Linus personal rig update\n19:46 Elric joining the newegg crew\n21:27 Galaxy s4 and HTC One\n42:45 Slick's Windows 8 experiences and downgrading \n55:15 Star Craft 2: Heart of the Swarm\n1:00:20 Corsair Vengeance 3000Mhz Ram\n1:02:33 LinusTechTips.com news of the week\n1:26:31 Logan is awesome! and stuff...\n1:32:27 Build of the week...again... Although in my defense it wasn't actually finished last time!"
+			}
+		},
+		"contentDetails": {
+			"duration": "PT1H36M15S",
+			"dimension": "2d",
+			"definition": "hd",
+			"caption": "false",
+			"licensedContent": true,
+			"contentRating": {},
+			"projection": "rectangular"
+		}
+	},
 	"2013/03/08": {
 		"kind": "youtube#video",
 		"etag": "X0sLKl8r6PNwQK_GtZKbem9Znl4",
@@ -33412,6 +33628,60 @@
 		},
 		"contentDetails": {
 			"duration": "PT2H9M2S",
+			"dimension": "2d",
+			"definition": "hd",
+			"caption": "false",
+			"licensedContent": true,
+			"contentRating": {},
+			"projection": "rectangular"
+		}
+	},
+	"2013/02/22": {
+		"kind": "youtube#video",
+		"etag": "6Tragw_YQKcdS4tEhtSHmMfwr00",
+		"id": "iZd1OO98vT0",
+		"snippet": {
+			"publishedAt": "2013-02-23T09:54:13Z",
+			"channelId": "UCXuqSBlHAE6Xw-yeJA0Tunw",
+			"title": "Linus Tech Tips Live Show Archive - February 22, 2013",
+			"description": "10:55 Why we didn't compare Titan with a 690\n12:30 Great NAS Solutions\n18:41 Slick FINALLY shows up (I write these - sorry i was late)\n20:53 What graphics cards should I currently buy\n24:00 Did we get paid for our Titan coverage... spoiler alert... NO\n32:58 What monitor setups do we like and what setups do we have\n39:01 Our coverage of the Tesla Model S may have been bias due to not enough info\n46:44 Our favorite pieces of tech that we have purchased\n1:00:45 PS4 and next gen platforms\n1:09:15 Josh from Fractal Design is coming to the live stream!\n1:14:22 Positive air flow in cases\n1:18:24 The after party, brought in by the BEST JOKE OF THE NIGHT!",
+			"thumbnails": {
+				"default": {
+					"url": "https://i.ytimg.com/vi/iZd1OO98vT0/default.jpg",
+					"width": 120,
+					"height": 90
+				},
+				"medium": {
+					"url": "https://i.ytimg.com/vi/iZd1OO98vT0/mqdefault.jpg",
+					"width": 320,
+					"height": 180
+				},
+				"high": {
+					"url": "https://i.ytimg.com/vi/iZd1OO98vT0/hqdefault.jpg",
+					"width": 480,
+					"height": 360
+				},
+				"standard": {
+					"url": "https://i.ytimg.com/vi/iZd1OO98vT0/sddefault.jpg",
+					"width": 640,
+					"height": 480
+				},
+				"maxres": {
+					"url": "https://i.ytimg.com/vi/iZd1OO98vT0/maxresdefault.jpg",
+					"width": 1280,
+					"height": 720
+				}
+			},
+			"channelTitle": "Linus Tech Tips",
+			"categoryId": "28",
+			"liveBroadcastContent": "none",
+			"localized": {
+				"title": "Linus Tech Tips Live Show Archive - February 22, 2013",
+				"description": "10:55 Why we didn't compare Titan with a 690\n12:30 Great NAS Solutions\n18:41 Slick FINALLY shows up (I write these - sorry i was late)\n20:53 What graphics cards should I currently buy\n24:00 Did we get paid for our Titan coverage... spoiler alert... NO\n32:58 What monitor setups do we like and what setups do we have\n39:01 Our coverage of the Tesla Model S may have been bias due to not enough info\n46:44 Our favorite pieces of tech that we have purchased\n1:00:45 PS4 and next gen platforms\n1:09:15 Josh from Fractal Design is coming to the live stream!\n1:14:22 Positive air flow in cases\n1:18:24 The after party, brought in by the BEST JOKE OF THE NIGHT!"
+			}
+		},
+		"contentDetails": {
+			"duration": "PT2H20S",
 			"dimension": "2d",
 			"definition": "hd",
 			"caption": "false",
@@ -33574,6 +33844,65 @@
 		},
 		"contentDetails": {
 			"duration": "PT1H31M16S",
+			"dimension": "2d",
+			"definition": "hd",
+			"caption": "false",
+			"licensedContent": true,
+			"contentRating": {},
+			"projection": "rectangular"
+		}
+	},
+	"2013/01/25": {
+		"kind": "youtube#video",
+		"etag": "4XvN4gHpW3i6udTDNb-OmwFsGGI",
+		"id": "UHkDRzxekVM",
+		"snippet": {
+			"publishedAt": "2013-01-26T08:13:50Z",
+			"channelId": "UCXuqSBlHAE6Xw-yeJA0Tunw",
+			"title": "Linus Tech Tips Live Show Archive - January 25, 2013",
+			"description": "Cloud gaming 2:45\nlegacy computers 3:30\nnvidia 690 replacement rumour 14:35\nintel no longer making motherboards 25:50\nGaming consolidation 30:27\nIntel phones 39:35\nLinus running windows 8 phone 40:04\nElderscrolls MMO + The mainstream adaptation of MMO 43:33\nLinksys taken over by Belkin 48:22\nbuy now or buy later, the great question 55:24\nTHQ is being dissolved 1:00:55\nForum status 1:09:19\nBell isn't a butthead 1:16:9\nForum software and outages 1:24:30\nSlick formatting his benchmark flashdrive & losing data 1:34:30",
+			"thumbnails": {
+				"default": {
+					"url": "https://i.ytimg.com/vi/UHkDRzxekVM/default.jpg",
+					"width": 120,
+					"height": 90
+				},
+				"medium": {
+					"url": "https://i.ytimg.com/vi/UHkDRzxekVM/mqdefault.jpg",
+					"width": 320,
+					"height": 180
+				},
+				"high": {
+					"url": "https://i.ytimg.com/vi/UHkDRzxekVM/hqdefault.jpg",
+					"width": 480,
+					"height": 360
+				},
+				"standard": {
+					"url": "https://i.ytimg.com/vi/UHkDRzxekVM/sddefault.jpg",
+					"width": 640,
+					"height": 480
+				},
+				"maxres": {
+					"url": "https://i.ytimg.com/vi/UHkDRzxekVM/maxresdefault.jpg",
+					"width": 1280,
+					"height": 720
+				}
+			},
+			"channelTitle": "Linus Tech Tips",
+			"tags": [
+				"Linus Tech Tips",
+				"Live",
+				"Show"
+			],
+			"categoryId": "28",
+			"liveBroadcastContent": "none",
+			"localized": {
+				"title": "Linus Tech Tips Live Show Archive - January 25, 2013",
+				"description": "Cloud gaming 2:45\nlegacy computers 3:30\nnvidia 690 replacement rumour 14:35\nintel no longer making motherboards 25:50\nGaming consolidation 30:27\nIntel phones 39:35\nLinus running windows 8 phone 40:04\nElderscrolls MMO + The mainstream adaptation of MMO 43:33\nLinksys taken over by Belkin 48:22\nbuy now or buy later, the great question 55:24\nTHQ is being dissolved 1:00:55\nForum status 1:09:19\nBell isn't a butthead 1:16:9\nForum software and outages 1:24:30\nSlick formatting his benchmark flashdrive & losing data 1:34:30"
+			}
+		},
+		"contentDetails": {
+			"duration": "PT1H41M10S",
 			"dimension": "2d",
 			"definition": "hd",
 			"caption": "false",
@@ -33819,6 +34148,128 @@
 			"projection": "rectangular"
 		}
 	},
+	"2012/11/30": {
+		"kind": "youtube#video",
+		"etag": "jujpvtkGMxvsCqtwgnE6DRDtje4",
+		"id": "ETwpXGqD4uk",
+		"snippet": {
+			"publishedAt": "2012-12-01T07:53:45Z",
+			"channelId": "UCXuqSBlHAE6Xw-yeJA0Tunw",
+			"title": "Linus Tech Tips Live Show Archive - November 30, 2012",
+			"description": "Topics:\n\n4:08 - Hanging a video card on the wall\n9:24 - The safety word is \"cockroach\"\n15:10 - Linus' sword & stealing power tools from Dad\n34:00 - *Main Discussion Topics* Intel's upcoming platform with CPUs soldered to motherboards\n1:01:14 - Alternatives to mouse/keyboard for disabled and others\n1:06:00 - Scythe USA is out of business\n1:07:30 - Lucid Logix - What is it useful for, and why didn't it take off?\n1:12:12 - Stapling motorcycles together???\n1:13:00 - Human babies are useless\n1:17:40 - Apps vs Applications\n1:21:03 - Physical vs digital software & DRM discussion\n1:26:14 - WHY AREN'T THERE MORE CO-OP GAMES FOR PC??\n\nI take questions on Twitter @LinusTech, and I also send out notifications about upcoming live streams on Twitter.\n\nCatch future live stream at www.twitch.tv/linustech",
+			"thumbnails": {
+				"default": {
+					"url": "https://i.ytimg.com/vi/ETwpXGqD4uk/default.jpg",
+					"width": 120,
+					"height": 90
+				},
+				"medium": {
+					"url": "https://i.ytimg.com/vi/ETwpXGqD4uk/mqdefault.jpg",
+					"width": 320,
+					"height": 180
+				},
+				"high": {
+					"url": "https://i.ytimg.com/vi/ETwpXGqD4uk/hqdefault.jpg",
+					"width": 480,
+					"height": 360
+				},
+				"standard": {
+					"url": "https://i.ytimg.com/vi/ETwpXGqD4uk/sddefault.jpg",
+					"width": 640,
+					"height": 480
+				},
+				"maxres": {
+					"url": "https://i.ytimg.com/vi/ETwpXGqD4uk/maxresdefault.jpg",
+					"width": 1280,
+					"height": 720
+				}
+			},
+			"channelTitle": "Linus Tech Tips",
+			"tags": [
+				"Linus",
+				"Tech",
+				"Tips",
+				"Live",
+				"Show"
+			],
+			"categoryId": "28",
+			"liveBroadcastContent": "none",
+			"localized": {
+				"title": "Linus Tech Tips Live Show Archive - November 30, 2012",
+				"description": "Topics:\n\n4:08 - Hanging a video card on the wall\n9:24 - The safety word is \"cockroach\"\n15:10 - Linus' sword & stealing power tools from Dad\n34:00 - *Main Discussion Topics* Intel's upcoming platform with CPUs soldered to motherboards\n1:01:14 - Alternatives to mouse/keyboard for disabled and others\n1:06:00 - Scythe USA is out of business\n1:07:30 - Lucid Logix - What is it useful for, and why didn't it take off?\n1:12:12 - Stapling motorcycles together???\n1:13:00 - Human babies are useless\n1:17:40 - Apps vs Applications\n1:21:03 - Physical vs digital software & DRM discussion\n1:26:14 - WHY AREN'T THERE MORE CO-OP GAMES FOR PC??\n\nI take questions on Twitter @LinusTech, and I also send out notifications about upcoming live streams on Twitter.\n\nCatch future live stream at www.twitch.tv/linustech"
+			}
+		},
+		"contentDetails": {
+			"duration": "PT1H30M50S",
+			"dimension": "2d",
+			"definition": "hd",
+			"caption": "false",
+			"licensedContent": true,
+			"contentRating": {},
+			"projection": "rectangular"
+		}
+	},
+	"2012/11/23": {
+		"kind": "youtube#video",
+		"etag": "c48IwrV9qPui-jfJJpX6K6dltuE",
+		"id": "XDZ0qn2KP9g",
+		"snippet": {
+			"publishedAt": "2012-11-24T07:33:04Z",
+			"channelId": "UCXuqSBlHAE6Xw-yeJA0Tunw",
+			"title": "Linus Tech Tips Live Show Archive - November 23, 2012",
+			"description": "Topics:\n\n0:00 - General talk, what we filmed today, & Twitter Q&A\n9:00 - Could Slick fight ASUS' JJ\n21:00 - Linus Tech Tips forum - how do you guys want us to build it?\n41:30 - Glossy vs matte & nerd dungeons\n56:10 - Fanboyism coming soon. Can't find the beginning.\n1:04:10 - Stop asking me subjective questions... :p\n1:12:00 - Buying phones without a contract\n1:21:35 - Cricket players look ridiculous\n1:28:50 - CES - what do you guys want us to cover?\n\nI take questions on Twitter @LinusTech, and I also send out notifications about upcoming live streams on Twitter.\n\nCatch future live stream at www.twitch.tv/linustech",
+			"thumbnails": {
+				"default": {
+					"url": "https://i.ytimg.com/vi/XDZ0qn2KP9g/default.jpg",
+					"width": 120,
+					"height": 90
+				},
+				"medium": {
+					"url": "https://i.ytimg.com/vi/XDZ0qn2KP9g/mqdefault.jpg",
+					"width": 320,
+					"height": 180
+				},
+				"high": {
+					"url": "https://i.ytimg.com/vi/XDZ0qn2KP9g/hqdefault.jpg",
+					"width": 480,
+					"height": 360
+				},
+				"standard": {
+					"url": "https://i.ytimg.com/vi/XDZ0qn2KP9g/sddefault.jpg",
+					"width": 640,
+					"height": 480
+				},
+				"maxres": {
+					"url": "https://i.ytimg.com/vi/XDZ0qn2KP9g/maxresdefault.jpg",
+					"width": 1280,
+					"height": 720
+				}
+			},
+			"channelTitle": "Linus Tech Tips",
+			"tags": [
+				"Linus",
+				"Tech",
+				"Tips",
+				"Live",
+				"Show"
+			],
+			"categoryId": "28",
+			"liveBroadcastContent": "none",
+			"localized": {
+				"title": "Linus Tech Tips Live Show Archive - November 23, 2012",
+				"description": "Topics:\n\n0:00 - General talk, what we filmed today, & Twitter Q&A\n9:00 - Could Slick fight ASUS' JJ\n21:00 - Linus Tech Tips forum - how do you guys want us to build it?\n41:30 - Glossy vs matte & nerd dungeons\n56:10 - Fanboyism coming soon. Can't find the beginning.\n1:04:10 - Stop asking me subjective questions... :p\n1:12:00 - Buying phones without a contract\n1:21:35 - Cricket players look ridiculous\n1:28:50 - CES - what do you guys want us to cover?\n\nI take questions on Twitter @LinusTech, and I also send out notifications about upcoming live streams on Twitter.\n\nCatch future live stream at www.twitch.tv/linustech"
+			}
+		},
+		"contentDetails": {
+			"duration": "PT1H43M19S",
+			"dimension": "2d",
+			"definition": "hd",
+			"caption": "false",
+			"licensedContent": true,
+			"contentRating": {},
+			"projection": "rectangular"
+		}
+	},
 	"2012/11/02": {
 		"kind": "youtube#video",
 		"etag": "aABZu0CORrMUjb10g-DpuGqH6NU",
@@ -33881,6 +34332,189 @@
 			"projection": "rectangular"
 		}
 	},
+	"2012/10/26": {
+		"kind": "youtube#video",
+		"etag": "pujUi5HEBHWNtZgHDWFhy1RYLLY",
+		"id": "y1RYUW7kjUA",
+		"snippet": {
+			"publishedAt": "2012-10-27T06:37:17Z",
+			"channelId": "UCXuqSBlHAE6Xw-yeJA0Tunw",
+			"title": "Linus Tech Tips Live Show Archive - October 26th, 2012",
+			"description": "Topics: Touch screen interfaces, Gaming on Windows 8, Windows \"Modern UI\" compared to Start Menu and Windows 3.1, MS Surface Tablet, and of course Q&A!\n\nI take questions on Twitter @LinusTech, and I also send out notifications about upcoming live streams on Twitter.",
+			"thumbnails": {
+				"default": {
+					"url": "https://i.ytimg.com/vi/y1RYUW7kjUA/default.jpg",
+					"width": 120,
+					"height": 90
+				},
+				"medium": {
+					"url": "https://i.ytimg.com/vi/y1RYUW7kjUA/mqdefault.jpg",
+					"width": 320,
+					"height": 180
+				},
+				"high": {
+					"url": "https://i.ytimg.com/vi/y1RYUW7kjUA/hqdefault.jpg",
+					"width": 480,
+					"height": 360
+				},
+				"standard": {
+					"url": "https://i.ytimg.com/vi/y1RYUW7kjUA/sddefault.jpg",
+					"width": 640,
+					"height": 480
+				},
+				"maxres": {
+					"url": "https://i.ytimg.com/vi/y1RYUW7kjUA/maxresdefault.jpg",
+					"width": 1280,
+					"height": 720
+				}
+			},
+			"channelTitle": "Linus Tech Tips",
+			"tags": [
+				"Linus",
+				"Tech",
+				"Tips",
+				"Live",
+				"Show"
+			],
+			"categoryId": "28",
+			"liveBroadcastContent": "none",
+			"localized": {
+				"title": "Linus Tech Tips Live Show Archive - October 26th, 2012",
+				"description": "Topics: Touch screen interfaces, Gaming on Windows 8, Windows \"Modern UI\" compared to Start Menu and Windows 3.1, MS Surface Tablet, and of course Q&A!\n\nI take questions on Twitter @LinusTech, and I also send out notifications about upcoming live streams on Twitter."
+			}
+		},
+		"contentDetails": {
+			"duration": "PT1H45M52S",
+			"dimension": "2d",
+			"definition": "hd",
+			"caption": "false",
+			"licensedContent": true,
+			"contentRating": {},
+			"projection": "rectangular"
+		}
+	},
+	"2012/10/19": {
+		"kind": "youtube#video",
+		"etag": "vHvoh_Fu4yTeyyChJXFZh8yuEnc",
+		"id": "gW1-NEexTp8",
+		"snippet": {
+			"publishedAt": "2012-10-20T07:03:46Z",
+			"channelId": "UCXuqSBlHAE6Xw-yeJA0Tunw",
+			"title": "Linus Tech Tips Live Show Archive - October 19th, 2012",
+			"description": "Topics: Single vs multi rail power supplies, Haswell & FX Piledriver speculatoin. Also Q&A :)\n\nI take questions on Twitter @LinusTech, and I also send out notifications about upcoming live streams on Twitter.",
+			"thumbnails": {
+				"default": {
+					"url": "https://i.ytimg.com/vi/gW1-NEexTp8/default.jpg",
+					"width": 120,
+					"height": 90
+				},
+				"medium": {
+					"url": "https://i.ytimg.com/vi/gW1-NEexTp8/mqdefault.jpg",
+					"width": 320,
+					"height": 180
+				},
+				"high": {
+					"url": "https://i.ytimg.com/vi/gW1-NEexTp8/hqdefault.jpg",
+					"width": 480,
+					"height": 360
+				},
+				"standard": {
+					"url": "https://i.ytimg.com/vi/gW1-NEexTp8/sddefault.jpg",
+					"width": 640,
+					"height": 480
+				},
+				"maxres": {
+					"url": "https://i.ytimg.com/vi/gW1-NEexTp8/maxresdefault.jpg",
+					"width": 1280,
+					"height": 720
+				}
+			},
+			"channelTitle": "Linus Tech Tips",
+			"tags": [
+				"Linus",
+				"Tech",
+				"Tips",
+				"Live",
+				"Show"
+			],
+			"categoryId": "28",
+			"liveBroadcastContent": "none",
+			"localized": {
+				"title": "Linus Tech Tips Live Show Archive - October 19th, 2012",
+				"description": "Topics: Single vs multi rail power supplies, Haswell & FX Piledriver speculatoin. Also Q&A :)\n\nI take questions on Twitter @LinusTech, and I also send out notifications about upcoming live streams on Twitter."
+			}
+		},
+		"contentDetails": {
+			"duration": "PT1H31M3S",
+			"dimension": "2d",
+			"definition": "hd",
+			"caption": "false",
+			"licensedContent": true,
+			"contentRating": {},
+			"projection": "rectangular"
+		}
+	},
+	"2012/10/12": {
+		"kind": "youtube#video",
+		"etag": "c1WIzcCdhrm_hlvwYrQooTyOhNk",
+		"id": "eS_cNCIr3qU",
+		"snippet": {
+			"publishedAt": "2012-10-13T06:26:31Z",
+			"channelId": "UCXuqSBlHAE6Xw-yeJA0Tunw",
+			"title": "Linus Tech Tips Live Show Archive - October 12th, 2012",
+			"description": "Topics: OMG I HAVE A NEW CAMERA AND LIGHTING SET UP!! Also Q&A :)\n\nI take questions on Twitter @LinusTech, and I also send out notifications about upcoming live streams on Twitter.",
+			"thumbnails": {
+				"default": {
+					"url": "https://i.ytimg.com/vi/eS_cNCIr3qU/default.jpg",
+					"width": 120,
+					"height": 90
+				},
+				"medium": {
+					"url": "https://i.ytimg.com/vi/eS_cNCIr3qU/mqdefault.jpg",
+					"width": 320,
+					"height": 180
+				},
+				"high": {
+					"url": "https://i.ytimg.com/vi/eS_cNCIr3qU/hqdefault.jpg",
+					"width": 480,
+					"height": 360
+				},
+				"standard": {
+					"url": "https://i.ytimg.com/vi/eS_cNCIr3qU/sddefault.jpg",
+					"width": 640,
+					"height": 480
+				},
+				"maxres": {
+					"url": "https://i.ytimg.com/vi/eS_cNCIr3qU/maxresdefault.jpg",
+					"width": 1280,
+					"height": 720
+				}
+			},
+			"channelTitle": "Linus Tech Tips",
+			"tags": [
+				"Linus",
+				"Tech",
+				"Tips",
+				"Live",
+				"Show"
+			],
+			"categoryId": "28",
+			"liveBroadcastContent": "none",
+			"localized": {
+				"title": "Linus Tech Tips Live Show Archive - October 12th, 2012",
+				"description": "Topics: OMG I HAVE A NEW CAMERA AND LIGHTING SET UP!! Also Q&A :)\n\nI take questions on Twitter @LinusTech, and I also send out notifications about upcoming live streams on Twitter."
+			}
+		},
+		"contentDetails": {
+			"duration": "PT1H27M3S",
+			"dimension": "2d",
+			"definition": "hd",
+			"caption": "false",
+			"licensedContent": true,
+			"contentRating": {},
+			"projection": "rectangular"
+		}
+	},
 	"2012/10/05": {
 		"kind": "youtube#video",
 		"etag": "3gEOP7OQlDG6AqTP4bJj-mzKMZQ",
@@ -33934,6 +34568,67 @@
 		},
 		"contentDetails": {
 			"duration": "PT1H33M28S",
+			"dimension": "2d",
+			"definition": "hd",
+			"caption": "false",
+			"licensedContent": true,
+			"contentRating": {},
+			"projection": "rectangular"
+		}
+	},
+	"2012/09/28": {
+		"kind": "youtube#video",
+		"etag": "nDuQZmG6Z4ZLFca-2v0Pe53crOU",
+		"id": "mtmha7cCRfM",
+		"snippet": {
+			"publishedAt": "2012-09-29T06:09:30Z",
+			"channelId": "UCXuqSBlHAE6Xw-yeJA0Tunw",
+			"title": "Linus Tech Tips Live Show Archive - September 28th, 2012",
+			"description": "Topics: I hate micro USB, motorcycle gear, guidance counselors, and Q&A!\n\nI take questions on Twitter @LinusTech, and I also send out notifications about upcoming live streams on Twitter. \n\nFor those of you who follow on YouTube and are concerned you won't be able to watch, I will be posting video notifications to YouTube prior to the live streams, then I will be uploading the completed live streams to YouTube. I haven't forgotten you folks who have supported me all this time!\n\nYou can check out future live streams at http://www.twitch.tv/linustech",
+			"thumbnails": {
+				"default": {
+					"url": "https://i.ytimg.com/vi/mtmha7cCRfM/default.jpg",
+					"width": 120,
+					"height": 90
+				},
+				"medium": {
+					"url": "https://i.ytimg.com/vi/mtmha7cCRfM/mqdefault.jpg",
+					"width": 320,
+					"height": 180
+				},
+				"high": {
+					"url": "https://i.ytimg.com/vi/mtmha7cCRfM/hqdefault.jpg",
+					"width": 480,
+					"height": 360
+				},
+				"standard": {
+					"url": "https://i.ytimg.com/vi/mtmha7cCRfM/sddefault.jpg",
+					"width": 640,
+					"height": 480
+				},
+				"maxres": {
+					"url": "https://i.ytimg.com/vi/mtmha7cCRfM/maxresdefault.jpg",
+					"width": 1280,
+					"height": 720
+				}
+			},
+			"channelTitle": "Linus Tech Tips",
+			"tags": [
+				"Linus",
+				"Tech",
+				"Tips",
+				"Live",
+				"Show"
+			],
+			"categoryId": "28",
+			"liveBroadcastContent": "none",
+			"localized": {
+				"title": "Linus Tech Tips Live Show Archive - September 28th, 2012",
+				"description": "Topics: I hate micro USB, motorcycle gear, guidance counselors, and Q&A!\n\nI take questions on Twitter @LinusTech, and I also send out notifications about upcoming live streams on Twitter. \n\nFor those of you who follow on YouTube and are concerned you won't be able to watch, I will be posting video notifications to YouTube prior to the live streams, then I will be uploading the completed live streams to YouTube. I haven't forgotten you folks who have supported me all this time!\n\nYou can check out future live streams at http://www.twitch.tv/linustech"
+			}
+		},
+		"contentDetails": {
+			"duration": "PT1H40M56S",
 			"dimension": "2d",
 			"definition": "hd",
 			"caption": "false",
@@ -34060,6 +34755,180 @@
 			"definition": "hd",
 			"caption": "false",
 			"licensedContent": true,
+			"contentRating": {},
+			"projection": "rectangular"
+		}
+	},
+	"2012/09/07": {
+		"kind": "youtube#video",
+		"etag": "w4VSmQ1fpXA2lrgZVKYzO1BzBWI",
+		"id": "oZT4k0Ti8Mc",
+		"snippet": {
+			"publishedAt": "2012-09-08T06:02:25Z",
+			"channelId": "UCXuqSBlHAE6Xw-yeJA0Tunw",
+			"title": "August 7 Live Stream Hangout on Air Part 2",
+			"description": "sorry for the terrible audio quality. We will be switching to Twitch.TV moving forward.",
+			"thumbnails": {
+				"default": {
+					"url": "https://i.ytimg.com/vi/oZT4k0Ti8Mc/default.jpg",
+					"width": 120,
+					"height": 90
+				},
+				"medium": {
+					"url": "https://i.ytimg.com/vi/oZT4k0Ti8Mc/mqdefault.jpg",
+					"width": 320,
+					"height": 180
+				},
+				"high": {
+					"url": "https://i.ytimg.com/vi/oZT4k0Ti8Mc/hqdefault.jpg",
+					"width": 480,
+					"height": 360
+				},
+				"standard": {
+					"url": "https://i.ytimg.com/vi/oZT4k0Ti8Mc/sddefault.jpg",
+					"width": 640,
+					"height": 480
+				}
+			},
+			"channelTitle": "Linus Tech Tips",
+			"tags": [
+				"#hangoutsonair"
+			],
+			"categoryId": "28",
+			"liveBroadcastContent": "none",
+			"localized": {
+				"title": "August 7 Live Stream Hangout on Air Part 2",
+				"description": "sorry for the terrible audio quality. We will be switching to Twitch.TV moving forward."
+			}
+		},
+		"contentDetails": {
+			"duration": "PT45M27S",
+			"dimension": "2d",
+			"definition": "sd",
+			"caption": "false",
+			"licensedContent": true,
+			"contentRating": {},
+			"projection": "rectangular"
+		},
+		"liveStreamingDetails": {
+			"actualStartTime": "2012-09-08T05:01:16Z",
+			"actualEndTime": "2012-09-08T06:00:04Z",
+			"scheduledStartTime": "2012-09-08T05:09:11Z"
+		}
+	},
+	"2012/08/31": {
+		"kind": "youtube#video",
+		"etag": "-MF2_vi65T4RZUvHEYdxNBxOwIg",
+		"id": "TvuUSxzpHlM",
+		"snippet": {
+			"publishedAt": "2012-09-01T07:07:42Z",
+			"channelId": "UCXuqSBlHAE6Xw-yeJA0Tunw",
+			"title": "August 31 2012 Live Google Hangout Q&A Session Linus Tech Tips",
+			"description": "Lots of topics covered tonight. It's over 2 hours long, so don't feel pressured to watch the whole thing :p\n\nThanks to everyone who tuned in live. The positive feedback is overwhelming so I will definitely continue to do these!",
+			"thumbnails": {
+				"default": {
+					"url": "https://i.ytimg.com/vi/TvuUSxzpHlM/default.jpg",
+					"width": 120,
+					"height": 90
+				},
+				"medium": {
+					"url": "https://i.ytimg.com/vi/TvuUSxzpHlM/mqdefault.jpg",
+					"width": 320,
+					"height": 180
+				},
+				"high": {
+					"url": "https://i.ytimg.com/vi/TvuUSxzpHlM/hqdefault.jpg",
+					"width": 480,
+					"height": 360
+				},
+				"standard": {
+					"url": "https://i.ytimg.com/vi/TvuUSxzpHlM/sddefault.jpg",
+					"width": 640,
+					"height": 480
+				}
+			},
+			"channelTitle": "Linus Tech Tips",
+			"tags": [
+				"#hangoutsonair"
+			],
+			"categoryId": "28",
+			"liveBroadcastContent": "none",
+			"localized": {
+				"title": "August 31 2012 Live Google Hangout Q&A Session Linus Tech Tips",
+				"description": "Lots of topics covered tonight. It's over 2 hours long, so don't feel pressured to watch the whole thing :p\n\nThanks to everyone who tuned in live. The positive feedback is overwhelming so I will definitely continue to do these!"
+			}
+		},
+		"contentDetails": {
+			"duration": "PT2H2M45S",
+			"dimension": "2d",
+			"definition": "sd",
+			"caption": "false",
+			"licensedContent": true,
+			"contentRating": {},
+			"projection": "rectangular"
+		},
+		"liveStreamingDetails": {
+			"actualStartTime": "2012-09-01T04:59:57Z",
+			"actualEndTime": "2012-09-01T07:02:41Z",
+			"scheduledStartTime": "2012-09-01T04:53:57Z"
+		}
+	},
+	"2012/08/24": {
+		"kind": "youtube#video",
+		"etag": "vte-7a--VLkSloaAseh0JmTcmQU",
+		"id": "ykHjuQvp8dY",
+		"snippet": {
+			"publishedAt": "2012-08-28T12:01:08Z",
+			"channelId": "UCeVWsIgbelPWxhStlv27scw",
+			"title": "LinusTechTips Live - 28th August 2012 - Trying To Figure This Out",
+			"description": "His initial test.",
+			"thumbnails": {
+				"default": {
+					"url": "https://i.ytimg.com/vi/ykHjuQvp8dY/default.jpg",
+					"width": 120,
+					"height": 90
+				},
+				"medium": {
+					"url": "https://i.ytimg.com/vi/ykHjuQvp8dY/mqdefault.jpg",
+					"width": 320,
+					"height": 180
+				},
+				"high": {
+					"url": "https://i.ytimg.com/vi/ykHjuQvp8dY/hqdefault.jpg",
+					"width": 480,
+					"height": 360
+				},
+				"standard": {
+					"url": "https://i.ytimg.com/vi/ykHjuQvp8dY/sddefault.jpg",
+					"width": 640,
+					"height": 480
+				}
+			},
+			"channelTitle": "LinusLiveStreams",
+			"tags": [
+				"Linus",
+				"Tech",
+				"Tips",
+				"Live",
+				"Q&A",
+				"LinusTechTips",
+				"August",
+				"26th",
+				"2012"
+			],
+			"categoryId": "28",
+			"liveBroadcastContent": "none",
+			"localized": {
+				"title": "LinusTechTips Live - 28th August 2012 - Trying To Figure This Out",
+				"description": "His initial test."
+			}
+		},
+		"contentDetails": {
+			"duration": "PT22M45S",
+			"dimension": "2d",
+			"definition": "sd",
+			"caption": "false",
+			"licensedContent": false,
 			"contentRating": {},
 			"projection": "rectangular"
 		}
