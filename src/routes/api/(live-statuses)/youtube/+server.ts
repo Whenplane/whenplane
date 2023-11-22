@@ -4,6 +4,7 @@ import {getClosestWan, getUTCDate} from "$lib/timeUtils";
 import {dev} from "$app/environment";
 import type {KVNamespace, DurableObjectNamespace, DurableObjectStub} from "@cloudflare/workers-types";
 import type {OldShowMeta} from "$lib/utils";
+import { env } from "$env/dynamic/private";
 
 const cacheTime = 4750; // Fetch from fetcher no more than once every (just under) 5 seconds
 
@@ -72,6 +73,15 @@ export const GET = (async ({platform, locals, url, fetch}) => {
                     if(started) await history.put(date + ":mainShowStart", started, {expirationTtl});
                     if(videoId) await history.put(date + ":videoId", videoId, {expirationTtl});
                     await history.put(date + ":snippet", JSON.stringify(snippet), {expirationTtl});
+                    await fetch("https://wheniswan-taskrunner.ajg.workers.dev/", {
+                        method: "POST",
+                        headers: {
+                            "content-type": "application/json"
+                        },
+                        body: JSON.stringify({
+                            key: env.TASKRUNNER_START_KEY
+                        })
+                    })
                 }
             })());
             savedStartTime = true;

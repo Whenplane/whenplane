@@ -142,6 +142,15 @@ export const GET = (async ({platform, url}) => {
                         // The collapsing is done in a scheduled worker
                         expirationTtl: 15 * 24 * 60 * 60
                     });
+                    await fetch("https://wheniswan-taskrunner.ajg.workers.dev/", {
+                        method: "POST",
+                        headers: {
+                            "content-type": "application/json"
+                        },
+                        body: JSON.stringify({
+                            key: env.TASKRUNNER_START_KEY
+                        })
+                    })
                 }
             })())
             savedStartTime = true;
