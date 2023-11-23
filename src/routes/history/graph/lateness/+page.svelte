@@ -29,15 +29,15 @@
 
     const onTimeDistance = mainShowStart ? (showDate.getTime() - mainShowStart.getTime()) : null;
 
-    return onTimeDistance;
+    return onTimeDistance ? onTimeDistance * -1 : onTimeDistance;
 }}
   yFormatter={(d) => {
-    let late = false;
+    let early = false;
     if(d < 0) {
-      late = true;
+      early = true;
       d = Math.abs(d);
     }
     if(d === 0) return "On time";
-    return timeString(d) + (late ? " late" : " early")
+    return timeString(d) + (early ? " early" : " late")
   }}/>
 {/if}
