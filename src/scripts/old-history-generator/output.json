@@ -47049,6 +47049,91 @@
 		}
 	},
 	{
+		"name": "2013/03/29",
+		"metadata": {
+			"title": "Linus Tech Tips Live Show Archive",
+			"mainShowLength": 8137000,
+			"vods": {
+				"youtube": "PQN3lhADVXY"
+			},
+			"snippet": {
+				"publishedAt": "2013-03-30T07:41:48Z",
+				"channelId": "UCXuqSBlHAE6Xw-yeJA0Tunw",
+				"title": "Linus Tech Tips Live Show Archive - March 29, 2013",
+				"description": "12:31 Costco and manager pay\n25:51 AMD 7990 and graphics card benchmarks are changing!\n37:05 WD Mynet Routers sponsored segment\n55:03 Linus talks about everything to do with ram\n59:44 the new Activison engine is awesome!\n1:07:20 AMD Sky - cloud based graphics cards\n1:12:52 Windows Blue leaked and showcased\n1:31:08 Rig(build) of the week!\n1:41:00 Linus FINALLY tries android! COME TO THE DARK SIDE...we have jellybeans...",
+				"thumbnails": {
+					"default": {
+						"url": "https://i.ytimg.com/vi/PQN3lhADVXY/default.jpg",
+						"width": 120,
+						"height": 90,
+						"blurhash": {
+							"hash": "VPFrnwS79FkWD*00Ir-;R*xu9aayoesos:_N$zE0s;NF",
+							"w": 120,
+							"h": 90,
+							"cX": 5,
+							"cY": 4
+						}
+					},
+					"medium": {
+						"url": "https://i.ytimg.com/vi/PQN3lhADVXY/mqdefault.jpg",
+						"width": 320,
+						"height": 180,
+						"blurhash": {
+							"hash": "VNHxc}Nh4Ukp9G00E7_3NG-p_NS6Mxxai_X8smR*oLof",
+							"w": 320,
+							"h": 180,
+							"cX": 5,
+							"cY": 4
+						}
+					},
+					"high": {
+						"url": "https://i.ytimg.com/vi/PQN3lhADVXY/hqdefault.jpg",
+						"width": 480,
+						"height": 360,
+						"blurhash": {
+							"hash": "VOFrkpR;9FkWD%00It-;R%%29afPoesos:_N$zE0s;NF",
+							"w": 480,
+							"h": 360,
+							"cX": 5,
+							"cY": 4
+						}
+					},
+					"standard": {
+						"url": "https://i.ytimg.com/vi/PQN3lhADVXY/sddefault.jpg",
+						"width": 640,
+						"height": 480,
+						"blurhash": {
+							"hash": "VOFrkpR;9FkWD*00It-;R%%29afPoesos:_N$zE0s:M{",
+							"w": 640,
+							"h": 480,
+							"cX": 5,
+							"cY": 4
+						}
+					},
+					"maxres": {
+						"url": "https://i.ytimg.com/vi/PQN3lhADVXY/maxresdefault.jpg",
+						"width": 1280,
+						"height": 720,
+						"blurhash": {
+							"hash": "VNH.1sNh4Ukp9G00E7_3NG-p_NS5IUxaenShsmWBoLoe",
+							"w": 1280,
+							"h": 720,
+							"cX": 5,
+							"cY": 4
+						}
+					}
+				},
+				"channelTitle": "Linus Tech Tips",
+				"categoryId": "28",
+				"liveBroadcastContent": "none",
+				"localized": {
+					"title": "Linus Tech Tips Live Show Archive - March 29, 2013",
+					"description": "12:31 Costco and manager pay\n25:51 AMD 7990 and graphics card benchmarks are changing!\n37:05 WD Mynet Routers sponsored segment\n55:03 Linus talks about everything to do with ram\n59:44 the new Activison engine is awesome!\n1:07:20 AMD Sky - cloud based graphics cards\n1:12:52 Windows Blue leaked and showcased\n1:31:08 Rig(build) of the week!\n1:41:00 Linus FINALLY tries android! COME TO THE DARK SIDE...we have jellybeans..."
+				}
+			}
+		}
+	},
+	{
 		"name": "2013/03/15",
 		"metadata": {
 			"title": "Linus Tech Tips Live Show Archive",
@@ -48933,7 +49018,7 @@
 	{
 		"name": "2012/09/07",
 		"metadata": {
-			"mainShowStart": "2012-09-08T05:01:16Z",
+			"mainShowStart": "2012-09-08T05:14:35Z",
 			"showEnd": "2012-09-08T06:00:04Z",
 			"title": "",
 			"mainShowLength": 2727000,
