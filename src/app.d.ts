@@ -15,6 +15,7 @@ declare namespace App {
             META: KVNamespace;
             FETCHER: DurableObjectNamespace;
             TWITCH_ANALYTICS?: AnalyticsEngineDataset;
+            LOG_MESSAGES?: AnalyticsEngineDataset;
             DB: D1Database;
         },
         context?: {

@@ -115,7 +115,18 @@ export const GET = (async ({platform, url}) => {
 
     const twitchJSON = await twitchResponse.json();
 
-    if(twitchJSON.message) console.warn("Got message in twitch response: ", twitchJSON.message)
+    if(twitchJSON.message) {
+        console.warn("Got message in twitch response: ", twitchJSON.message)
+        if(platform?.env?.LOG_MESSAGES) {
+            platform.context.waitUntil((async () => {
+                await platform.env?.LOG_MESSAGES.writeDataPoint({
+                    blobs: ["Got message in twitch response: " + twitchJSON.message],
+                    doubles: [],
+                    indexes: []
+                })
+            }));
+        }
+    }
 
     fastCache.lastFetch = Date.now();
 
