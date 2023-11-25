@@ -17,9 +17,9 @@
 <svelte:head>
     <title>About {$page.url.hostname === "whenwan.show" ? "whenwan.show" : "Whenplane"}</title>
 </svelte:head>
-<div class="container h-full mx-auto flex justify-center items-center limit">
+<div class="container mx-auto items-center limit mt-16">
     <div class="space-y-5">
-        <div class="card p-4 inline-block text-left m-2 relative bottom-12">
+        <div class="card p-4 inline-block text-left m-2">
             <h1 class="text-center">About</h1>
             This website was made so it can be easier to tell when the WAN is starting, without having to go back between twitch/youtube.
             <br>
@@ -48,6 +48,18 @@
             </div>
             <br>
 
+            <br>
+            <br>
+            <div class="text-left w-full">
+                <h2 class="text-center">Contact</h2>
+                If you have questions, concerns, or just want to send me a message, you can email me at
+                <a href="mailto:hi@whenplane.com" target="_blank" rel="noopener">aj@whenplane.com</a><br>
+                <br>
+                If you want to contact me about something other than this site, you can see my
+                <a href="https://about.ajg0702.us/contact">general contact information here</a>
+            </div>
+            <br>
+
             <div class="text-right">
                 <a class="btn variant-ghost-primary" href="https://about.ajg0702.us" target="_blank" rel="noopener">
                     Made by aj
@@ -56,9 +68,10 @@
         </div>
     </div>
 </div>
+<br>
+<br>
 
-
-<div class="limit mx-auto relative bottom-22 preferences-container text-center">
+<div class="limit mx-auto text-center">
     <div class="card p-4 inline-block text-left">
         <h1 class="text-center">
             Preferences
@@ -86,6 +99,8 @@
     </div>
 </div>
 
+<div class="pb-48"></div>
+
 
 <div class="absolute bottom-0 right-0 p-2">
     <a href="/">Back to Countdown</a>
@@ -93,8 +108,5 @@
 <style>
     .danwan {
         height: 60px;
-    }
-    .preferences-container {
-
     }
 </style>
