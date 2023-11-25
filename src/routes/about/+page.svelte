@@ -49,7 +49,6 @@
             <br>
 
             <br>
-            <br>
             <div class="text-left w-full">
                 <h2 class="text-center">Contact</h2>
                 If you have questions, concerns, or just want to send me a message, you can email me at
