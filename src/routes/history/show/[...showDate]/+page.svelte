@@ -38,9 +38,11 @@
     {/if}
 </svelte:head>
 
-<div class="thumbnail-backdrop" aria-hidden="true">
-    <img class="thumbnail" src={thumbnail.url} alt="Thumbnail for show"/>
-</div>
+{#if thumbnail}
+    <div class="thumbnail-backdrop" aria-hidden="true">
+        <img src={thumbnail.url} alt="Thumbnail for show"/>
+    </div>
+{/if}
 
 
 <ol class="breadcrumb pt-2 pl-2">
