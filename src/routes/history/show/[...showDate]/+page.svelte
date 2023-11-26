@@ -38,6 +38,10 @@
     {/if}
 </svelte:head>
 
+<div class="thumbnail-backdrop" aria-hidden="true">
+    <img class="thumbnail" src={thumbnail.url} alt="Thumbnail for show"/>
+</div>
+
 
 <ol class="breadcrumb pt-2 pl-2">
     <li class="crumb"><a class="anchor hover-underline" href="/">{$page.url.hostname === "whenwan.show" ? "whenwan.show" : "Whenplane"}</a></li>
@@ -92,7 +96,7 @@
     {/if}
 </div>
 {#if dev}
-    <pre>{JSON.stringify(data, null, "\t")}</pre>
+<!--    <pre>{JSON.stringify(data, null, "\t")}</pre>-->
 {/if}
 
 <style>
@@ -106,5 +110,20 @@
         object-fit: cover;
         border-radius: 8px;
         aspect-ratio: 16 / 9;
+    }
+
+    .thumbnail-backdrop {
+        position: absolute;
+        top: 0;
+        z-index: -1;
+    }
+
+    .thumbnail-backdrop > img {
+        opacity: 25%;
+        width: 100vw;
+        height: 28.125vw; /* half of the height of the image, assuming the image is 16:9 */
+        object-fit: cover;
+        object-position: top;
+        mask-image: linear-gradient(to bottom, rgba(0,0,0,1), rgba(0,0,0,0));
     }
 </style>
