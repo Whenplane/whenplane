@@ -4,6 +4,8 @@
     import {fade} from "svelte/transition";
     import { quadInOut } from "svelte/easing";
     import { page } from "$app/stores";
+    import { countTo } from "$lib/utils";
+    import LoadingHistoricalShow from "$lib/LoadingHistoricalShow.svelte";
 
     export let withThumbnail = false;
 
@@ -33,8 +35,15 @@
 
 {#await fetchingHistory}
     <span class="opacity-50 old-show-loading">
+        <div class="loading-shows-container">
+            {#each countTo(20) as i}
+                <LoadingHistoricalShow {withThumbnail}/>
+            {/each}
+        </div>
         <br>
-        Loading older shows..
+        <span class="opacity-50">
+            Loading...
+        </span>
     </span>
 {:then {history}}
     {#each history as show, i}
@@ -64,5 +73,10 @@
     }
     .thats-all {
         padding-bottom: 20vh;
+    }
+    .loading-shows-container {
+        display: inline;
+        max-height: 100vh;
+        overflow-y: hidden;
     }
 </style>

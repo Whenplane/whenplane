@@ -8,6 +8,19 @@ export function random(min: number, max: number) {
     return (Math.random() * (max - min)) + min;
 }
 
+export function countTo(a: number, b?: number) {
+    const start = b == undefined ? 1 : a;
+    const end = b == undefined ? a : b;
+
+    const r = [];
+
+    for (let i = start; i <= end; i++) {
+        r.push(i);
+    }
+
+    return r;
+}
+
 
 
 export type HistoricalEntry = {
