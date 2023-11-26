@@ -121,7 +121,7 @@
     .thumbnail-backdrop > img {
         opacity: 25%;
         width: 100vw;
-        height: 28.125vw; /* half of the height of the image, assuming the image is 16:9 */
+        height: 35vw;
         object-fit: cover;
         object-position: top;
         mask-image: linear-gradient(to bottom, rgba(0,0,0,1), rgba(0,0,0,0));
