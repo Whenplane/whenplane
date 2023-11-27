@@ -17,23 +17,25 @@ while(nextIndex < oldShows.length) {
   nextIndex++;
 }
 
-console.debug(showsToDownload);
+console.debug(showsToDownload.map(s => {
+  return {name: s.name, mainShowStart: s.metadata?.mainShowStart};
+}));
 console.log("Found " + showsToDownload.length + " to download");
 
 let currentI = "N/A";
 let currentName = "N/A";
 
 const reminderInterval = setInterval(() => {
-  console.log("Currently working on " + currentName + " (" + (currentI+1) + "/" + showsToDownload.length + ")")
+  console.log("Currently working on " + currentName + " (" + (currentI) + "/" + showsToDownload.length + ")")
 }, 30e3);
 
 for (const i in showsToDownload) {
   const show = showsToDownload[i];
 
-  currentI = i;
+  currentI = (Number(i)+1)+"";
   currentName = show.name
 
-  console.log("Starting download for " + show.name + " (" + (i+1) + "/" + showsToDownload.length + ")");
+  console.log("Starting download for " + show.name + " (" + (Number(i)+1) + "/" + showsToDownload.length + ")");
 
   const videoId = show.metadata.vods?.youtube;
   if(!videoId) {
