@@ -171,18 +171,25 @@ export function getTimeUntil(date: Date, now = Date.now()) {
     };
 }
 
-export function timeString(distance: number) {
+export function timeString(distance: number | undefined, long = false) {
+    if(distance == undefined) return undefined;
     const days = Math.floor(distance / (1000 * 60 * 60 * 24));
     const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
     const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
     const seconds = Math.floor((distance % (1000 * 60)) / 1000);
 
-    const daysS = days > 0 ? days+"d " : "";
-    const hoursS = hours > 0 ? hours+"h " : "";
-    const minutesS = minutes > 0 ? minutes+"m " : "";
-    const secondsS = seconds+"s ";
+    const d = long ? " days " : "d ";
+    const h = long ? " hours " : "h ";
+    const m = long ? " minutes " : "m ";
+    const s = long ? " seconds " : "s ";
 
-    return daysS + hoursS + minutesS + secondsS;
+    const daysS = days > 0 ? days+d : "";
+    const hoursS = hours > 0 ? hours+h : "";
+    const minutesS = minutes > 0 ? minutes+m : "";
+    const and = (long && (daysS || hoursS || minutesS)) ? "and " : "";
+    const secondsS = seconds+s;
+
+    return daysS + hoursS + minutesS + and + secondsS;
 }
 
 const daysInMonth = (year: number, month: number) => new Date(year, month, 0).getDate();
