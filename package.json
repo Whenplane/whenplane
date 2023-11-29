@@ -26,6 +26,7 @@
 		"@tailwindcss/typography": "^0.5.9",
 		"@types/luxon": "^3.3.0",
 		"@types/node": "^20.4.5",
+		"@types/sanitize-html": "^2.9.5",
 		"@typescript-eslint/eslint-plugin": "^5.45.0",
 		"@typescript-eslint/parser": "^5.45.0",
 		"autoprefixer": "^10.4.14",
@@ -58,6 +59,7 @@
 		"fast-blurhash": "^1.1.2",
 		"luxon": "^3.3.0",
 		"nprogress": "^0.2.0",
+		"sanitize-html": "^2.11.0",
 		"webstomp-client": "^1.2.6"
 	}
 }
