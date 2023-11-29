@@ -58,6 +58,6 @@
 		"fast-blurhash": "^1.1.2",
 		"luxon": "^3.3.0",
 		"nprogress": "^0.2.0",
-		"webstomp-client": "^1.2.6"
+		"socket.io-client": "^4.7.2"
 	}
 }

@@ -1,13 +1,14 @@
 <script lang="ts">
-  import { onDestroy, onMount } from "svelte";
-  import webstomp, { Client } from "webstomp-client";
-  import type { WanDb_FloatplaneData } from "$lib/utils.ts";
-  import { floatplaneState, wdbSocketState } from "$lib/stores.ts";
+  import {onDestroy, onMount} from "svelte";
+  import * as socketio from "socket.io-client";
+  import {floatplaneState, wdbSocketState} from "$lib/stores.ts";
+  import type {WanDb_FloatplaneData} from "$lib/utils.ts";
 
   // This is the message format that the WDB websocket sends to the client
   interface WdbMessage {
     live: boolean,
     wan?: boolean,
+    isWAN?: boolean,
     title: string,
     description: string,
     thumbnail: string,
@@ -15,38 +16,60 @@
     textImminence: "Distant" | "Today" | "Soon" | "Imminent"
   }
 
-  let stomp: Client | undefined;
+  let socket: socketio.Socket | undefined
   onMount(() => {
-    stomp = webstomp.client('wss://mq.thewandb.com/ws', {debug: false});
-    stomp.connect({
-        host: 'prod_whenplane_com',
-        login: 'whenplane',
-        passcode: 'cWDK2KUpPCw3AW'
-    }, () => {
+    socket = socketio.connect('wss://mq.thewandb.com', {transports: ['websocket']});
+    socket.on('connect', () => {
+      console.log("Connected to WDB")
+      if (!socket) return;
+      socket.emit('message', JSON.stringify({
+        type: 2,
+        payload: 'live'
+      }));
+      // socket.emit(, 'status');
+    });
 
-      stomp?.subscribe('/exchange/status', (message) => {
-        try {
-          const body = JSON.parse(message.body) as WdbMessage;
-          body.isWAN = body.wan;
-          delete body.wan;
-          floatplaneState.set(body as WanDb_FloatplaneData);
+    socket.on('state', (message: string) => {
+      const body = JSON.parse(message) as WdbMessage;
+      body.isWAN = body.wan;
+      delete body.wan;
+      floatplaneState.set(body as WanDb_FloatplaneData);
 
-          wdbSocketState.update(value => {
-            value.lastReceive = Date.now();
-            return value;
-          });
-          message.ack()
-        } catch (e) {
-          message.nack();
-        }
-      }, { 'ack': 'client' });
+      wdbSocketState.update(value => {
+        value.lastReceive = Date.now();
+        return value;
+      });
+    });
 
-    })
+    // stomp.connect({
+    //     host: 'prod_whenplane_com',
+    //     login: 'whenplane',
+    //     passcode: 'cWDK2KUpPCw3AW'
+    // }, () => {
+    //
+    //   stomp?.subscribe('/exchange/status', (message) => {
+    //     try {
+    //       const body = JSON.parse(message.body) as WdbMessage;
+    //       body.isWAN = body.wan;
+    //       delete body.wan;
+    //       floatplaneState.set(body as WanDb_FloatplaneData);
+    //
+    //       wdbSocketState.update(value => {
+    //         value.lastReceive = Date.now();
+    //         return value;
+    //       });
+    //       message.ack()
+    //     } catch (e) {
+    //       message.nack();
+    //     }
+    //   }, { 'ack': 'client' });
+    // })
   })
 
   onDestroy(() => {
-    if(stomp) {
-      stomp.disconnect(() => stomp = undefined);
+    if (socket) {
+      socket.disconnect();
+      socket = undefined;
     }
   })
 </script>
