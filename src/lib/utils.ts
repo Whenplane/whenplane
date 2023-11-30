@@ -21,6 +21,10 @@ export function countTo(a: number, b?: number) {
     return r;
 }
 
+export function capitalize(string: string) {
+    return string.charAt(0).toUpperCase() + string.slice(1);
+}
+
 
 
 export type HistoricalEntry = {
