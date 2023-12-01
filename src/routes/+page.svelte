@@ -23,6 +23,13 @@
 	let invalidationInterval: number | undefined;
 	let lastInvalidation = Date.now();
 	function invalidate() {
+		// Only update in the background if there hasnt been an update for 30 minutes
+		if(document.hidden && Date.now() - lastInvalidation < 30e3) {
+			// console.debug("not updating", { hidden: document.hidden, distance: Date.now() - lastInvalidation });
+			return;
+		}
+		// console.debug("updating")
+
 		lastInvalidation = Date.now();
 		invalidateAll();
 
@@ -50,13 +57,8 @@
 	// Periodically invalidate the data so that SvelteKit goes and fetches it again for us
 	function startInvalidationInterval() {
 		if(invalidationInterval) clearInterval(invalidationInterval);
-		// VS code is getting the setInterval type from Node.js, so we need to override it
+		// VS code is getti87206ng the setInterval type from Node.js, so we need to override it
 		invalidationInterval = setInterval(invalidate, 5e3) as unknown as number;
-
-		// go ahead and invalidate if it's been a bit since the last one
-		if(Date.now() - lastInvalidation > 5e3) {
-			invalidate();
-		}
 	}
 
 	let mounted = false;
@@ -66,14 +68,7 @@
 		if(data.fast) setTimeout(invalidate, 500);
 		console.log({fast: data.fast});
 
-		let slowInvalidationInterval = setInterval(() => {
-			if(Date.now() - lastInvalidation > 5e3) {
-				invalidate();
-			}
-		}, 30 * 60e3); // update, even in the background, every 30 minutes
-
 		return () => {
-			clearInterval(slowInvalidationInterval)
 			if (invalidationInterval) clearInterval(invalidationInterval)
 		};
 	})
@@ -94,8 +89,12 @@
 
 </script>
 <svelte:window
-		on:focus={startInvalidationInterval}
-		on:blur={() => clearInterval(invalidationInterval)}
+		on:focus={() => {
+			// go ahead and invalidate if it's been a bit since the last one
+			if(Date.now() - lastInvalidation > 5e3) {
+				invalidate();
+			}
+		}}
 />
 <svelte:head>
 	<title>When is the WAN Show?  {$page.url.hostname === "whenwan.show" ? "whenwan.show" : "Whenplane"}</title>

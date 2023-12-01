@@ -52,7 +52,6 @@
       if(event.data == "[DONE]") {
         // SSE spec says the connection is restarted
         // if we don't explicitly close it
-        console.debug("Closing EventSource");
         eventSource.close();
         if(duplicated) responseText = responseText.substring(0, responseText.length-lastChunk.length); // remove the last chunk since it seems to be duplicated for some reason
         checkResponseText();
