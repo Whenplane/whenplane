@@ -11,6 +11,7 @@
 	import LatenessVoting from "$lib/LatenessVoting.svelte";
 	import { Accordion, AccordionItem } from "@skeletonlabs/skeleton";
 	import ImminentBox from "$lib/ImminentBox.svelte";
+	import LTTTime from "$lib/LTTTime.svelte";
 
 	export let data;
 
@@ -86,20 +87,26 @@
 		window.history.replaceState({}, document.title, "/");
 	}
 
+	function onFocus() {
+		// go ahead and invalidate if it's been a bit since the last one
+		if(Date.now() - lastInvalidation > 5e3) {
+			invalidate();
+		}
+	}
+
 
 </script>
 <svelte:window
-		on:focus={() => {
-			// go ahead and invalidate if it's been a bit since the last one
-			if(Date.now() - lastInvalidation > 5e3) {
-				invalidate();
-			}
-		}}
+		on:focus={onFocus}
 />
 <svelte:head>
 	<title>When is the WAN Show?  {$page.url.hostname === "whenwan.show" ? "whenwan.show" : "Whenplane"}</title>
 	<meta name="description" content="Is the WAN show late? How late is the WAN show? Probably very! See a countdown to when WAN is supposed to start, as well as how late it's been before."/>
 </svelte:head>
+
+<div class="absolute top-0 right-0">
+	<LTTTime/>
+</div>
 
 <div class="container h-full mx-auto justify-center items-center">
 	<div class="space-y-5 inner">
