@@ -101,7 +101,7 @@
 />
 <svelte:head>
 	<title>When is the WAN Show?  {$page.url.hostname === "whenwan.show" ? "whenwan.show" : "Whenplane"}</title>
-	<meta name="description" content="Is the WAN show late? How late is the WAN show? Probably very! See a countdown to when WAN is supposed to start, as well as how late it's been before."/>
+	<meta name="description" content="Is the WAN show late? Yes. How late is the WAN show? Probably very! See a countdown to when WAN is supposed to start, as well as how late it's been before."/>
 </svelte:head>
 
 <div class="absolute top-0 right-0">
