@@ -226,7 +226,7 @@
 		{/if}
 	</div>
 </div>
-<div class="absolute bottom-0 right-0 p-2">
+<div class="absolute bottom-0 p-2" class:right-0={!isFrame} class:left-0={isFrame}>
 	{#if !isFrame}
 		<a href="/about">About</a>
 	{:else}
