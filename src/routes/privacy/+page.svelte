@@ -1,3 +1,6 @@
+<svelte:head>
+  <title>Whenplane Privacy Policy</title>
+</svelte:head>
 <div class="limit mx-auto mt-16 mb-32">
   <h1>Privacy Policy for Whenplane (whenplane.com)</h1>
   <br>
