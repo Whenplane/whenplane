@@ -20,6 +20,8 @@
 
 	$: isLate = isAfterStartTime && !data.isPreShow && !data.isMainShow;
 
+	$: isFrame = $page.url.searchParams.has("frame");
+
 
 	let invalidationInterval: number | undefined;
 	let lastInvalidation = Date.now();
@@ -180,9 +182,11 @@
 				</span>
 			{/if}
 			<br>
-			<a href="/history" class="btn variant-ghost-surface">
-				History
-			</a>
+			{#if !isFrame}
+				<a href="/history" class="btn variant-ghost-surface">
+					History
+				</a>
+			{/if}
 		</div>
 		{#if data.dan?.isLive}
 			<a class="card border-2 p-2 !border-amber-600 !bg-opacity-20 !bg-amber-600 block relative" href="https://twitch.tv/buhdan">
@@ -206,7 +210,7 @@
 				{/if}
 			</div>
 		{/if}
-		{#if (nowish.getUTCDay() === 5 || nowish.getUTCDay() === 6 || dev) && !data.hasDone}
+		{#if (nowish.getUTCDay() === 5 || nowish.getUTCDay() === 6 || dev) && !data.hasDone && !isFrame}
 			<div>
 				<Accordion>
 					<AccordionItem open>
@@ -223,7 +227,13 @@
 	</div>
 </div>
 <div class="absolute bottom-0 right-0 p-2">
-	<a href="/about">About</a>
+	{#if !isFrame}
+		<a href="/about">About</a>
+	{:else}
+		<span style="font-size: 0.8rem;">
+			whenplane.com
+		</span>
+	{/if}
 </div>
 
 
