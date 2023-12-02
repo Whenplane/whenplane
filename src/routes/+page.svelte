@@ -226,15 +226,18 @@
 		{/if}
 	</div>
 </div>
-<div class="absolute bottom-0 p-2" class:right-0={!isFrame} class:left-0={isFrame}>
-	{#if !isFrame}
-		<a href="/about">About</a>
-	{:else}
+
+{#if isFrame}
+	<div class="absolute top-0 left-0 p-2">
 		<span style="font-size: 0.8rem;">
 			whenplane.com
 		</span>
-	{/if}
-</div>
+	</div>
+{:else}
+	<div class="absolute bottom-0 right-0 p-2">
+		<a href="/about">About</a>
+	</div>
+{/if}
 
 
 {#if $page.url.hostname.includes("wheniswan.pages.dev")}
