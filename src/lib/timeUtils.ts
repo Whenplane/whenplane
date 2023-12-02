@@ -23,7 +23,7 @@ export function getNextWANLuxon(now = new Date(), buffer = true, hasDone?: boole
     if (buffer) {
         if (typeof hasDone != 'undefined') {
             shouldStay = !hasDone;
-            console.log({hasDone, shouldStay})
+            console.debug({hasDone, shouldStay})
         } else {
             shouldStay = now.getTime() - wanDate.toJSDate().getTime() > 5 * 60 * 60 * 1e3;
         }

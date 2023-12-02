@@ -69,7 +69,7 @@
 		mounted = true;
 		startInvalidationInterval();
 		if(data.fast) setTimeout(invalidate, 500);
-		console.log({fast: data.fast});
+		console.debug({fast: data.fast});
 
 		return () => {
 			if (invalidationInterval) clearInterval(invalidationInterval)

@@ -20,7 +20,7 @@
   onMount(() => {
     socket = socketio.connect('wss://mq.thewandb.com', {transports: ['websocket']});
     socket.on('connect', () => {
-      console.log("Connected to WDB")
+      console.debug("[whenplane] Connected to WDB")
       if (!socket) return;
       socket.emit('message', JSON.stringify({
         type: 2,

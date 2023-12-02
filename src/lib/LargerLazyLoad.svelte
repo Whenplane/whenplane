@@ -12,7 +12,7 @@
 <div class="relative no-pointer-events width-1">
   <div class="absolute">
     <div class="relative bottom width-1">
-      <LazyLoad on:visible={() => {shown = true; console.log("loaded")}} height="50em"/>
+      <LazyLoad on:visible={() => {shown = true; console.debug("loaded")}} height="50em"/>
     </div>
   </div>
 </div>

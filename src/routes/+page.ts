@@ -141,7 +141,7 @@ export const load = (async ({fetch}) => {
 
     const isWdbResponseValid = typeof fpState?.live === "boolean" && (liveStatus.twitch.isWAN == fpState.isWAN);
     if(!isWdbResponseValid && dev) {
-        console.log("wdb api response invalid!", {
+        console.debug("wdb api response invalid!", {
             typeofLive: typeof fpState?.live,
             twitch: liveStatus.twitch.isWAN,
             fp: fpState?.isWAN,
