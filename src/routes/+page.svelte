@@ -110,7 +110,7 @@
 	<LTTTime/>
 </div>
 
-<div class="container h-full mx-auto justify-center items-center">
+<div class="container h-full mx-auto justify-center items-center" class:alwaysFlex={isFrame}>
 	<div class="space-y-5 inner">
 		<ImminentBox hasDone={data.hasDone}/>
 		<div class="text-center">
@@ -270,9 +270,14 @@
 	}
 
 	@media (max-height: 790px) {
-		.inner {
+		.inner:not(>.alwaysFlex) {
 			padding-bottom: 5em;
 		}
+	}
+
+	.alwaysFlex {
+		display: flex;
+		padding: 0;
 	}
 	
 	@media (min-height: 790px) {
