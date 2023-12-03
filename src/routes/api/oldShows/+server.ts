@@ -1,5 +1,5 @@
 import {json, type RequestHandler} from "@sveltejs/kit";
-import {history} from "$lib/oldHistory";
+import {history} from "$lib/history/oldHistory.ts";
 
 export const GET = (async ({url}) => {
     const oldShows = [...history];

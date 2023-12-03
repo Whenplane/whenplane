@@ -1,8 +1,8 @@
 <script lang="ts">
   import { onMount } from "svelte";
   import { browser } from "$app/environment";
-  import type { DataTransformFunction, HistoricalEntry } from "$lib/utils.js";
-  import { timeString } from "$lib/timeUtils";
+  import type { DataTransformFunction, HistoricalEntry } from "$lib/utils";
+  import { timeString } from "$lib/timeUtils.ts";
 
   export let shows: HistoricalEntry[];
   export let transformFunction: DataTransformFunction;

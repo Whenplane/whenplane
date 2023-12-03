@@ -1,7 +1,7 @@
 <script lang="ts">
     import {dev} from "$app/environment";
-    import Record from "$lib/Record.svelte";
-    import LoadingRecord from "$lib/LoadingRecord.svelte";
+    import Record from "$lib/history/Record.svelte";
+    import LoadingRecord from "$lib/history/LoadingRecord.svelte";
     import { Accordion, AccordionItem } from "@skeletonlabs/skeleton";
     import { onMount } from "svelte";
     import GraphUp from "svelte-bootstrap-icons/lib/GraphUp.svelte";

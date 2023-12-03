@@ -1,7 +1,7 @@
 <script>
   import { invalidateAll } from "$app/navigation";
   import { onDestroy } from "svelte";
-  import HistoricalShow from "$lib/HistoricalShow.svelte";
+  import HistoricalShow from "$lib/history/HistoricalShow.svelte";
   import {enhance} from "$app/forms";
 
   export let data;

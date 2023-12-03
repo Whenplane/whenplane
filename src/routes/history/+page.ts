@@ -13,7 +13,7 @@ export const load = (async ({fetch, params, url}) => {
         cacheBusting = "";
     }
 
-    const oldHistory = url.searchParams.has("old") ? import("$lib/oldHistory") : undefined;
+    const oldHistory = url.searchParams.has("old") ? import("$lib/history/oldHistory.ts") : undefined;
     const records = fetch("/api/history/records").then(r => r.json());
     const currentYear = await fetch("/api/history/year/" + now.getFullYear() + cacheBusting).then(r => r.json());
 

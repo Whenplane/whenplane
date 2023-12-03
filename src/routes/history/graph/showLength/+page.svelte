@@ -1,5 +1,5 @@
 <script lang="ts">
-  import StatChart from "$lib/StatChart.svelte";
+  import StatChart from "$lib/history/StatChart.svelte";
   import { getClosestWan, getTimeUntil, timeString } from "$lib/timeUtils";
   import { browser } from "$app/environment";
   import { page } from "$app/stores";

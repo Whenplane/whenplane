@@ -5,7 +5,7 @@ import { wait } from "$lib/utils";
 import Tesseract from "tesseract.js";
 import { env } from "$env/dynamic/private";
 import { DateTime } from "luxon";
-import type { TimeOverride, TimeOverrides } from "$lib/oldHistory";
+import type { TimeOverride, TimeOverrides } from "$lib/history/oldHistory.ts";
 import { dev } from "$app/environment";
 
 let nextIndex = 0;

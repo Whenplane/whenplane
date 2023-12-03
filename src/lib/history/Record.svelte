@@ -1,5 +1,5 @@
 <script lang="ts">
-    import {getClosestWan, timeString} from "$lib/timeUtils.js";
+    import {getClosestWan, timeString} from "$lib/timeUtils";
     import Late from "$lib/Late.svelte";
     export let record: BestShow | number;
     export let color = true;

@@ -5,7 +5,7 @@
     import { quadInOut } from "svelte/easing";
     import { page } from "$app/stores";
     import { countTo } from "$lib/utils";
-    import LoadingHistoricalShow from "$lib/LoadingHistoricalShow.svelte";
+    import LoadingHistoricalShow from "$lib/history/LoadingHistoricalShow.svelte";
 
     export let withThumbnail = false;
 

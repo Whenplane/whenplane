@@ -1,6 +1,6 @@
 <script lang="ts">
 
-  import HistoricalShow from "$lib/HistoricalShow.svelte";
+  import HistoricalShow from "$lib/history/HistoricalShow.svelte";
   import { page } from "$app/stores";
 
   export let data;

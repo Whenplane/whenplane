@@ -3,7 +3,7 @@ import { json } from "@sveltejs/kit";
 
 export const GET = (async ({platform, params, locals, fetch}) => {
   const kvShows = fetch("/api/history/year/all").then(r => r.json());
-  const oldShows = import("$lib/oldHistory.ts");
+  const oldShows = import("$lib/history/oldHistory.ts");
 
   return json([
     ...(await kvShows),

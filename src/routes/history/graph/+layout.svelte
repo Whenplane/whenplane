@@ -1,5 +1,5 @@
 <script>
-  import Record from "$lib/Record.svelte";
+  import Record from "$lib/history/Record.svelte";
   import { page } from "$app/stores";
 
   export let data;

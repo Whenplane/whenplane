@@ -1,5 +1,5 @@
 <script lang="ts">
-    import HistoricalShow from "$lib/HistoricalShow.svelte";
+    import HistoricalShow from "$lib/history/HistoricalShow.svelte";
     import {getClosestWan} from "$lib/timeUtils";
     import Floatplane from "$lib/svg/Floatplane.svelte";
     import Youtube from "$lib/svg/Youtube.svelte";

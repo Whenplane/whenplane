@@ -1,10 +1,10 @@
 <script>
-    import { getClosestWan, getTimeUntil, timeString } from "./timeUtils";
-    import Late from "./Late.svelte";
+    import { getClosestWan, getTimeUntil, timeString } from "../timeUtils";
+    import Late from "../Late.svelte";
     import LazyLoad from "@dimfeld/svelte-lazyload";
-    import Live from "$lib/Live.svelte";
+    import Live from "$lib/history/Live.svelte";
     import { page } from "$app/stores";
-    import BlurHash from "$lib/BlurHash.svelte";
+    import BlurHash from "$lib/history/BlurHash.svelte";
     import {fade} from "svelte/transition";
     import LargerLazyLoad from "$lib/LargerLazyLoad.svelte";
     import { browser } from "$app/environment";

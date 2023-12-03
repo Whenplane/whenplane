@@ -1,9 +1,9 @@
 <script>
-    import HistoricalShow from "$lib/HistoricalShow.svelte";
-    import OldHistory from "$lib/OldHistory.svelte";
+    import HistoricalShow from "$lib/history/HistoricalShow.svelte";
+    import OldHistory from "$lib/history/OldHistory.svelte";
     import { browser, dev } from "$app/environment";
-    import HistoryRecords from "$lib/HistoryRecords.svelte";
-    import LinusFace from "$lib/LinusFace.svelte";
+    import HistoryRecords from "$lib/history/HistoryRecords.svelte";
+    import LinusFace from "$lib/history/LinusFace.svelte";
     import { RadioGroup, RadioItem } from "@skeletonlabs/skeleton";
     import { setCookie } from "$lib/cookieUtils";
 
@@ -11,7 +11,7 @@
     import CardImage from "svelte-bootstrap-icons/lib/CardImage.svelte"
     import Images from "svelte-bootstrap-icons/lib/Images.svelte"
     import Grid from "svelte-bootstrap-icons/lib/Grid.svelte"
-    import Live from "$lib/Live.svelte";
+    import Live from "$lib/history/Live.svelte";
 
     export let data;
 

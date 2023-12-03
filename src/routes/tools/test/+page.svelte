@@ -1,6 +1,6 @@
 <script>
     import {getClosestWan, getNextWAN, getPreviousWAN} from "$lib/timeUtils";
-    import BlurHash from "$lib/BlurHash.svelte";
+    import BlurHash from "$lib/history/BlurHash.svelte";
     import LargerLazyLoad from "$lib/LargerLazyLoad.svelte";
     import LatenessVotingTest from "./LatenessVotingTest.svelte";
 

@@ -63,7 +63,7 @@ export const GET = (async ({platform, params}) => {
         })
     }
 
-    const oldHistory = await import("$lib/oldHistory");
+    const oldHistory = await import("$lib/history/oldHistory.ts");
     for (const oldShow of oldHistory.history) {
         if(oldShow.name == params.showDate) {
             oldShow.value = structuredClone(oldShow.metadata)
