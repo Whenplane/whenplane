@@ -8,7 +8,7 @@
   <meta name="twitter:card" content="/extension/screenshots/late.png">
 </svelte:head>
 
-<div class="limit-large mx-auto mt-16">
+<div class="limit-large mx-auto mt-16 px-4">
   <h1>Whenplane Floatplane Widget Extension</h1>
   For you fellow Floatplane watchers, I've made a browser extension that replaces the "Offline" screen on the LTT floatplane channel with whenplane.
   <br>
