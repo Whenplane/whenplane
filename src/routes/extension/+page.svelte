@@ -3,6 +3,9 @@
 </script>
 <svelte:head>
   <title>Whenplane Floatplane Widget Extension</title>
+  <meta name="description" content="For you fellow Floatplane watchers, I've made a browser extension that replaces the 'Offline' screen on the LTT floatplane channel with whenplane."/>
+  <meta name="og:image" content="/extension/screenshots/late.png">
+  <meta name="twitter:card" content="/extension/screenshots/late.png">
 </svelte:head>
 
 <div class="limit-large mx-auto mt-16">
