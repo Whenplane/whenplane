@@ -46,7 +46,8 @@
 
     const pagesWithDescription = [
       "/",
-      "/history"
+      "/history",
+      "/extension"
     ]
 </script>
 
