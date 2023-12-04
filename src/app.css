@@ -4,6 +4,9 @@ html, body { @apply h-full; }
 .limit {
     max-width: 800px;
 }
+.limit-large {
+    max-width: 1000px;
+}
 
 h1,h2,h3 {
     margin-bottom: 0.25em;
