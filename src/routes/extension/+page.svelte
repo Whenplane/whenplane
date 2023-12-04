@@ -16,7 +16,7 @@
 
   <div class="text-center">
     <a
-      class="btn variant-filled-primary"
+      class="btn variant-filled-primary my-1"
       href="https://addons.mozilla.org/en-US/firefox/addon/whenplane-floatplane-widget/"
       target="_blank"
       rel="noopener"
@@ -25,7 +25,7 @@
       Download for Firefox
     </a>
     <a
-      class="btn variant-filled-secondary"
+      class="btn variant-filled-secondary my-1"
       href="https://chromewebstore.google.com/detail/whenplane-floatplane-widget/jiijhgibeiaaacbohdjihncoingomjjm"
       target="_blank"
       rel="noopener"
@@ -36,8 +36,8 @@
     <br>
     <br>
     <br>
-    <ClickableImage src="/extension/screenshots/late.png" style="width: 48%;"/>
-    <ClickableImage src="/extension/screenshots/after.png" style="width: 48%;"/>
+    <ClickableImage src="/extension/screenshots/late.png" style="width: 25em;" width="1920" height="994"/>
+    <ClickableImage src="/extension/screenshots/after.png" style="width: 25em;" width="1920" height="994"/>
   </div>
 </div>
 
