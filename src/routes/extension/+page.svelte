@@ -1,6 +1,9 @@
 <script>
   import ClickableImage from "$lib/ClickableImage.svelte";
 </script>
+<svelte:head>
+  <title>Whenplane Floatplane Widget Extension</title>
+</svelte:head>
 
 <div class="limit-large mx-auto mt-16">
   <h1>Whenplane Floatplane Widget Extension</h1>
