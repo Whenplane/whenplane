@@ -1,5 +1,6 @@
 <script>
   import ClickableImage from "$lib/ClickableImage.svelte";
+  import { page } from "$app/stores";
 </script>
 <svelte:head>
   <title>Whenplane Floatplane Widget Extension</title>
@@ -8,7 +9,13 @@
   <meta name="twitter:card" content="/extension/screenshots/late.png">
 </svelte:head>
 
-<div class="limit-large mx-auto mt-16 px-4">
+<ol class="breadcrumb pt-2 pl-2">
+  <li class="crumb"><a class="anchor hover-underline" href="/">{$page.url.hostname === "whenwan.show" ? "whenwan.show" : "Whenplane"}</a></li>
+  <li class="crumb-separator" aria-hidden="true">&rsaquo;</li>
+  <li class="crumb">Extension</li>
+</ol>
+
+<div class="limit-large mx-auto mt-12 px-4">
   <h1>Whenplane Floatplane Widget Extension</h1>
   For you fellow Floatplane watchers, I've made a browser extension that replaces the "Offline" screen on the LTT floatplane channel with whenplane.
   <br>
