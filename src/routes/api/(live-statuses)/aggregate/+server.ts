@@ -5,13 +5,15 @@ import type { HasDoneResponse } from "../../hasDone/+server";
 import type { TwitchResponse } from "../twitch/+server";
 import type { YoutubeResponse } from "../youtube/+server";
 import type { LatenessVotingOption } from "$lib/voting.ts";
+import type { KVNamespace } from "@cloudflare/workers-types";
 
-export const GET = (async ({url, fetch, locals}) => {
+export const GET = (async ({url, fetch, locals, platform}) => {
     const fast = url.searchParams.get("fast");
     const isNextFast = url.searchParams.get("isNextFast");
 
     const isThereWan = fetch("/api/isThereWan").then(r => r.json());
     const hasDone = fetch("/api/hasDone").then(r => r.json()).then(r => r.hasDone);
+    const showExtension = (platform?.env?.META as KVNamespace)?.get("showExtension").then(r => r === "true");
 
     let votesTime: number | undefined;
     const votes = (async () => {
@@ -46,7 +48,8 @@ export const GET = (async ({url, fetch, locals}) => {
         youtube: await youtube,
         isThereWan: await isThereWan,
         hasDone: await hasDone,
-        votes: await votes
+        votes: await votes,
+        showExtension: await showExtension
     }
 
     locals.addTiming({id: "twitch", duration: twitchTime ?? -1});
@@ -61,5 +64,6 @@ export type AggregateResponse = {
     youtube: YoutubeResponse,
     isThereWan: IsThereWanResponse,
     hasDone: HasDoneResponse,
-    votes: LatenessVotingOption[]
+    votes: LatenessVotingOption[],
+    showExtension: boolean
 }
