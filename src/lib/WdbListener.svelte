@@ -12,8 +12,8 @@
     title: string,
     description: string,
     thumbnail: string,
-    imminence: 0 | 1 | 2 | 3,
-    textImminence: "Distant" | "Today" | "Soon" | "Imminent"
+    imminence: 0 | 1 | 2 | 3 | 4,
+    textImminence: "Distant" | "Today" | "Soon" | "Imminent" | "Live"
   }
 
   let socket: socketio.Socket | undefined
