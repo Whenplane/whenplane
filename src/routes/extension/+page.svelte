@@ -17,7 +17,8 @@
 
 <div class="limit-large mx-auto mt-12 px-4">
   <h1>Whenplane Floatplane Widget Extension</h1>
-  For you fellow Floatplane watchers, I've made a browser extension that replaces the "Offline" screen on the LTT floatplane channel with whenplane.
+  For you fellow Floatplane watchers, I've made a browser extension that replaces the "Offline" screen on the LTT floatplane channel with whenplane.<br>
+  It only replaces the offline screen, so it goes away as soon as they go live.
   <br>
   <br>
 
