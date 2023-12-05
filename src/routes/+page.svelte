@@ -12,6 +12,7 @@
 	import { Accordion, AccordionItem } from "@skeletonlabs/skeleton";
 	import ImminentBox from "$lib/ImminentBox.svelte";
 	import LTTTime from "$lib/LTTTime.svelte";
+	import ExtensionAd from "$lib/ExtensionAd.svelte";
 
 	export let data;
 
@@ -236,6 +237,12 @@
 {:else}
 	<div class="absolute bottom-0 right-0 p-2">
 		<a href="/about">About</a>
+	</div>
+{/if}
+
+{#if (data.showExtension || dev) && !isFrame}
+	<div class="absolute top-0 left-0">
+		<ExtensionAd/>
 	</div>
 {/if}
 
