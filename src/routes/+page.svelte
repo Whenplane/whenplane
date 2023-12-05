@@ -240,7 +240,7 @@
 	</div>
 {/if}
 
-{#if (data.showExtension || dev) && !isFrame}
+{#if !isFrame}
 	<div class="absolute top-0 left-0">
 		<ExtensionAd/>
 	</div>

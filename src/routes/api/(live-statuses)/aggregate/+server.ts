@@ -13,7 +13,7 @@ export const GET = (async ({url, fetch, locals, platform}) => {
 
     const isThereWan = fetch("/api/isThereWan").then(r => r.json());
     const hasDone = fetch("/api/hasDone").then(r => r.json()).then(r => r.hasDone);
-    const showExtension = (platform?.env?.META as KVNamespace)?.get("showExtension").then(r => r === "true");
+    // const showExtension = (platform?.env?.META as KVNamespace)?.get("showExtension").then(r => r === "true");
 
     let votesTime: number | undefined;
     const votes = (async () => {
@@ -49,7 +49,7 @@ export const GET = (async ({url, fetch, locals, platform}) => {
         isThereWan: await isThereWan,
         hasDone: await hasDone,
         votes: await votes,
-        showExtension: await showExtension
+        // showExtension: await showExtension
     }
 
     locals.addTiming({id: "twitch", duration: twitchTime ?? -1});
@@ -65,5 +65,5 @@ export type AggregateResponse = {
     isThereWan: IsThereWanResponse,
     hasDone: HasDoneResponse,
     votes: LatenessVotingOption[],
-    showExtension: boolean
+    // showExtension: boolean
 }
