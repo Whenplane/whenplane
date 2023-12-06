@@ -29,7 +29,7 @@ const initiallyDismissed = browser ? localStorage.getItem("permanentExtensionDis
       <span class="x-circle"><XCircleFill/></span>
     </button>
 
-    <button class="inline-block absolute bottom-2 right-3 permanent-dismiss opacity-50">
+    <button class="inline-block absolute bottom-2 right-3 permanent-dismiss opacity-50" on:click={() => {dismissed.set(true);localStorage.setItem("permanentExtensionDismiss", "true")}}>
       Don't show again
     </button>
   </div>
