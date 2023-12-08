@@ -6,7 +6,8 @@
   <title>Whenplane Floatplane Widget Extension</title>
   <meta name="description" content="For you fellow Floatplane watchers, I've made a browser extension that replaces the 'Offline' screen on the LTT floatplane channel with whenplane."/>
   <meta name="og:image" content="/extension/screenshots/late.png">
-  <meta name="twitter:card" content="/extension/screenshots/late.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:image:src" content="{$page.url.origin}/extension/screenshots/late.png">
 </svelte:head>
 
 <ol class="breadcrumb pt-2 pl-2">
