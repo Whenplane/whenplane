@@ -1,5 +1,6 @@
 <script>
   import ClickableImage from "$lib/ClickableImage.svelte";
+  import Code from "svelte-bootstrap-icons/lib/CodeSlash.svelte";
   import { page } from "$app/stores";
 </script>
 <svelte:head>
@@ -43,6 +44,17 @@
     </a>
     <br>
     or <a href="https://downloads.whenplane.com/whenplane_floatplane_widget-1.0.2.zip" download>download zip</a>
+    <br>
+    <br>
+    <a
+      class="btn variant-filled-surface my-1"
+      href="https://github.com/ajgeiss0702/whenplane-fp-extension"
+      target="_blank"
+      rel="noopener"
+      >
+      <Code height="1.5em" width="1.5em" class="mr-2"/>
+      Source Code
+    </a>
     <br>
     <br>
     <br>
