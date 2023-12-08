@@ -42,6 +42,8 @@
       Download for Chrome
     </a>
     <br>
+    or <a href="https://downloads.whenplane.com/whenplane_floatplane_widget-1.0.2.zip" download>download zip</a>
+    <br>
     <br>
     <br>
     <ClickableImage src="/extension/screenshots/late.png" style="width: 25em;" width="1920" height="994"/>
