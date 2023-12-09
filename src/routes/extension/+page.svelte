@@ -65,7 +65,9 @@
     <br>
     <div class="text-center">
       <h2>Endorsements</h2>
-      <img src="/extension/endorsements/tibbyjab.png" alt="tibbyjab: Oh wow this whenplane extension is AMAZING haha tysm to the developer"/>
+      <div class="inline-block">
+        <img src="/extension/endorsements/tibbyjab.png" alt="tibbyjab: Oh wow this whenplane extension is AMAZING haha tysm to the developer"/>
+      </div>
     </div>
   </div>
 </div>
