@@ -61,6 +61,12 @@
     <ClickableImage src="/extension/screenshots/late.png" style="width: 25em;" width="1920" height="994"/>
     <ClickableImage src="/extension/screenshots/after.png" style="width: 25em;" width="1920" height="994"/>
     <ClickableImage src="/extension/screenshots/filled.png" style="width: 25em;" width="1920" height="994"/>
+    <br>
+    <br>
+    <div class="text-center">
+      <h2>Endorsements</h2>
+      <img src="/extension/endorsements/tibbyjab.png" alt="tibbyjab: Oh wow this whenplane extension is AMAZING haha tysm to the developer"/>
+    </div>
   </div>
 </div>
 
@@ -70,5 +76,9 @@
       height: 2em;
       border-radius: 100%;
       @apply mx-2;
+  }
+
+  .limit-large {
+      margin-bottom: 20em;
   }
 </style>
