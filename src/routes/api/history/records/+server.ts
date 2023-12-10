@@ -2,6 +2,7 @@ import type {RequestHandler} from "@sveltejs/kit";
 import {error, json} from "@sveltejs/kit";
 import {dev} from "$app/environment";
 import {random, wait} from "$lib/utils";
+import type { KVNamespace } from "@cloudflare/workers-types";
 
 // Cache in edge for 2 hours
 const cacheTtl = 60 * 60 * 2;
@@ -11,7 +12,7 @@ const testMin = 5;
 const testMax = 30;
 
 export const GET = (async ({platform, locals}) => {
-    const meta = platform?.env?.META;
+    const meta: KVNamespace | undefined = platform?.env?.META;
     if(!meta) throw error(503, "KV not available!");
 
     const totalStart = Date.now();
@@ -64,13 +65,49 @@ export const GET = (async ({platform, locals}) => {
         return r;
     })();
 
+    const averageLateness = (async () => {
+        const start = Date.now();
+        if(dev) await wait(random(testMin, testMax))
+        const r = await meta.get("averageLateness", {type: "json", cacheTtl});
+        locals.addTiming({id: "al", duration: Date.now() - start})
+        return r as number;
+    })();
+
+    const medianLateness = (async () => {
+        const start = Date.now();
+        if(dev) await wait(random(testMin, testMax))
+        const r = await meta.get("medianLateness", {type: "json", cacheTtl});
+        locals.addTiming({id: "mel", duration: Date.now() - start})
+        return r as number;
+    })();
+
+    const lateStreak = (async () => {
+        const start = Date.now();
+        if(dev) await wait(random(testMin, testMax))
+        const r = await meta.get("lateStreak", {type: "json", cacheTtl});
+        locals.addTiming({id: "lst", duration: Date.now() - start})
+        return r as number;
+    })();
+
+    const showStreak = (async () => {
+        const start = Date.now();
+        if(dev) await wait(random(testMin, testMax))
+        const r = await meta.get("showStreak", {type: "json", cacheTtl});
+        locals.addTiming({id: "sst", duration: Date.now() - start})
+        return r as number;
+    })();
+
     const r = {
         earliest: await earliest,
         longestPreShow: await longestPreShow,
         shortestPreShow: await shortestPreShow,
         longestShow: await longestShow,
         shortestShow: await shortestShow,
-        mostLate: await mostLate
+        mostLate: await mostLate,
+        averageLateness: await averageLateness,
+        medianLateness: await medianLateness,
+        lateStreak: await lateStreak,
+        showStreak: await showStreak
     };
     locals.addTiming({id: "total", duration: Date.now() - totalStart});
     return json(r)
