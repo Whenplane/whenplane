@@ -2,14 +2,20 @@
 
   import { onMount } from "svelte";
   import { dev } from "$app/environment";
-  import { capitalize } from "$lib/utils";
+  import { capitalize, type HistoricalEntry } from "$lib/utils";
   import sanitizeHtml from 'sanitize-html';
+  import LoadingHistoricalShow from "$lib/history/LoadingHistoricalShow.svelte";
+  import HistoricalShow from "$lib/history/HistoricalShow.svelte";
 
   let query = dev ? "How late was last week's show?" : "";
   let lastQuery = undefined;
 
   let responseText = "";
   let eventSource: EventSource | undefined = undefined;
+
+  const showDatas: {[key: string]: Promise<HistoricalEntry>} = {}
+
+  let mentionedShows = new Set<string>();
 
   let dots = "";
   let doti = 0;
@@ -41,6 +47,7 @@
     if(!query) return;
     lastQuery = query;
     responseText = "";
+    mentionedShows = new Set();
 
     if(eventSource !== undefined) eventSource.close();
 
@@ -70,6 +77,12 @@
   }
 
   function checkResponseText() {
+    if(responseText.startsWith(" ")) {
+      responseText = responseText.substring(1);
+    }
+    if(responseText.startsWith("[INST] ")) {
+      responseText = capitalize(responseText.substring("[INST] ".length));
+    }
     if(responseText.startsWith("According to the information provided, ")) {
       responseText = capitalize(responseText.substring("According to the information provided, ".length));
     }
@@ -88,6 +101,19 @@
       .replaceAll("\n", "<br>")
       .replace(/<(https?:\/\/(www\.)?[-a-zA-Z0-9@:%._+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_+.~#?&/=]*))>/g, "<a href='$1' target='_blank'>$1</a>");
 
+
+    const showPattern = /([0-9]{4}\/[0-9]{2}\/[0-9]{2})/gm
+    let match;
+    while((match = showPattern.exec(responseText)) != null) {
+      console.log("Found", match)
+      mentionedShows.add(match[0]);
+      mentionedShows = mentionedShows;
+      if(!Object.keys(showDatas).includes(match[0])) {
+        showDatas[match[0]] = fetch("/api/history/show/" + match[0])
+          .then(r => r.json());
+      }
+    }
+
   }
 </script>
 
@@ -102,5 +128,22 @@
     {:else}
       {@html sanitizeHtml(responseText)}
     {/if}
+  {/if}
+  <br>
+  <br>
+</div>
+<div class="text-center mx-12">
+  {#if mentionedShows.size > 0}
+    <h2>Mentioned Shows</h2>
+    {#each Object.entries(showDatas) as [name, show]}
+      {#if mentionedShows.has(name)}
+        {#await show}
+          <LoadingHistoricalShow/>
+        {:then show}
+          <HistoricalShow {show} withThumbnail={true}/>
+        {:catch err}
+        {/await}
+      {/if}
+    {/each}
   {/if}
 </div>
