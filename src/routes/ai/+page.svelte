@@ -137,7 +137,7 @@
     {#each Object.entries(showDatas) as [name, show]}
       {#if mentionedShows.has(name)}
         {#await show}
-          <LoadingHistoricalShow/>
+          <LoadingHistoricalShow withThumbnail={true}/>
         {:then show}
           <HistoricalShow {show} withThumbnail={true}/>
         {:catch err}
