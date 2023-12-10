@@ -131,7 +131,7 @@
   <br>
   <br>
 </div>
-<div class="text-center mx-12">
+<div class="text-center my-12">
   {#if mentionedShows.size > 0}
     <h2>Mentioned Shows</h2>
     {#each Object.entries(showDatas) as [name, show]}
