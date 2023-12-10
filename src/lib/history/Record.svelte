@@ -2,6 +2,7 @@
     import {getClosestWan, timeString} from "$lib/timeUtils";
     import Late from "$lib/Late.svelte";
     export let record: BestShow | number;
+    export let asTime = true;
     export let color = true;
     export let late = false;
     export let early = false;
@@ -18,12 +19,16 @@
     </div>
     {#if record}
         <span class:late={late && color} class:early={early && color}>
-            {timeString(Math.abs(typeof record === 'number' ? record : record.distance))}
-            {#if late}
-                <Late/>
-            {/if}
-            {#if early}
-                early
+            {#if asTime}
+                {timeString(Math.abs(typeof record === 'number' ? record : record.distance))}
+                {#if late}
+                    <Late/>
+                {/if}
+                {#if early}
+                    early
+                {/if}
+            {:else}
+                {record}
             {/if}
         </span>
         <br>

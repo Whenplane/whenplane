@@ -48,4 +48,8 @@ async function putRecords(meta: KVNamespace) {
     await meta.put("longestShow", JSON.stringify(prodData.longestShow));
     await meta.put("shortestShow", JSON.stringify(prodData.shortestShow));
     await meta.put("mostLate", JSON.stringify(prodData.mostLate));
+    await meta.put("averageLateness", JSON.stringify(prodData.averageLateness));
+    await meta.put("medianLateness", JSON.stringify(prodData.medianLateness));
+    await meta.put("lateStreak", JSON.stringify(prodData.lateStreak));
+    await meta.put("showStreak", JSON.stringify(prodData.showStreak));
 }

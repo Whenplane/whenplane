@@ -32,7 +32,7 @@
         <a class="hidden-link absolute right-5 top-5" href="/history/graph">
             <GraphUp/>
         </a>
-        <h2>Records</h2>
+        <h2>Records and Stats</h2>
         {#await records}
             <LoadingRecord>
                 Earliest Show
@@ -47,20 +47,26 @@
             <LoadingRecord>
                 Longest main show
             </LoadingRecord>
+            <LoadingRecord>
+                Late Streak
+            </LoadingRecord>
+            <LoadingRecord>
+                Show Streak
+            </LoadingRecord>
             <Accordion>
                 <AccordionItem>
-                    <svelte:fragment slot="summary">More records</svelte:fragment>
+                    <svelte:fragment slot="summary">More records/stats</svelte:fragment>
                     <svelte:fragment slot="content">Loading...</svelte:fragment>
                 </AccordionItem>
             </Accordion>
         {:then rec}
             {#if dev && (!rec.earliest || !rec.longestPreShow || !rec.longestShow || !rec.mostLate)}
-            <span class="box">
-                <h2>Missing records</h2>
-                You're in dev but dont appear to have records loaded!<br>
-                <a href="/api/dev/fetch">fetch data from prod</a>
-                <br>
-            </span>
+                <span class="box">
+                    <h2>Missing records</h2>
+                    You're in dev but dont appear to have records loaded!<br>
+                    <a href="/api/dev/fetch">fetch data from prod</a>
+                    <br>
+                </span>
                 <br>
             {/if}
             {#await rec.earliest}
@@ -83,8 +89,8 @@
             {/await}
             <br>
             <Accordion class="mx-4" spacing="" regionPanel="">
-                <AccordionItem on:toggle={fetchLatenesses}>
-                    <svelte:fragment slot="summary">More records</svelte:fragment>
+                <AccordionItem on:toggle={fetchLatenesses} open={dev}>
+                    <svelte:fragment slot="summary">More records/stats</svelte:fragment>
                     <svelte:fragment slot="content">
                         {#await rec.longestPreShow}
                             <LoadingRecord>
@@ -122,6 +128,38 @@
                                 Shortest main show
                             </Record>
                         {/await}
+
+                        {#await rec.lateStreak}
+                            <LoadingRecord>
+                                Late Streak
+                                <svelte:fragment slot="description">
+                                    <span class="opacity-75 text-90 relative bottom-1">Late shows in a row</span>
+                                </svelte:fragment>
+                            </LoadingRecord>
+                        {:then record}
+                            <Record {record} asTime={false}>
+                                Late Streak
+                                <svelte:fragment slot="description">
+                                    <span class="opacity-75 text-90 relative bottom-1">Late shows in a row</span>
+                                </svelte:fragment>
+                            </Record>
+                        {/await}
+                        {#await rec.showStreak}
+                            <LoadingRecord>
+                                Show Streak
+                                <svelte:fragment slot="description">
+                                    <span class="opacity-75 text-90 relative bottom-1">Shows aired without missing a week</span>
+                                </svelte:fragment>
+                            </LoadingRecord>
+                        {:then record}
+                            <Record {record} asTime={false}>
+                                Show Streak
+                                <svelte:fragment slot="description">
+                                    <span class="opacity-75 text-90 relative bottom-1">Shows aired without missing a week</span>
+                                </svelte:fragment>
+                            </Record>
+                        {/await}
+
                         {#await latenessesFetching}
                             <LoadingRecord>
                                 Average lateness
