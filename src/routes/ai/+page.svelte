@@ -105,7 +105,6 @@
     const showPattern = /([0-9]{4}\/[0-9]{2}\/[0-9]{2})/gm
     let match;
     while((match = showPattern.exec(responseText)) != null) {
-      console.log("Found", match)
       mentionedShows.add(match[0]);
       mentionedShows = mentionedShows;
       if(!Object.keys(showDatas).includes(match[0])) {
