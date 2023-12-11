@@ -189,5 +189,9 @@
                 </AccordionItem>
             </Accordion>
         {/await}
+        <span class="opacity-75">
+            If you have any ideas for new records or stats, feel free to suggest them.<br>
+            I'm ajgeiss0702 on floatplane and discord, or you can email me at <a href="mailto:aj@whenplane.com">aj@whenplane.com</a>
+        </span>
     </div>
 </div>
