@@ -17,6 +17,12 @@ import sharp from "sharp";
 import { encode } from "blurhash";
 import { wait } from "../../lib/utils.ts";
 
+const imageUrlToBase64 = async (url: string) => {
+    const response = await fetch(url);
+    const blob = await response.arrayBuffer();
+    return Buffer.from(blob).toString('base64');
+};
+
 export const floatplaneDataPath = "src/scripts/old-history-generator/floatplane-wan-vods.json"
 export const youtubeDataPath = "src/scripts/old-history-generator/youtube-wan-vods.json";
 export const outputDataPath = "src/scripts/old-history-generator/output.json";
@@ -120,14 +126,65 @@ for (const date in youtubeData) {
 
     if(youtubeVod.snippet?.thumbnails) {
         const promises = [];
+        let i = 0;
+        const thumbnailCount = Object.keys(youtubeVod.snippet?.thumbnails).length;
         for (const thumbnailKey in youtubeVod.snippet?.thumbnails) {
+            i++;
+            const fi = i;
             promises.push((async () => {
                 const start = Date.now();
                 const thumbnail = (youtubeVod.snippet?.thumbnails as {[key: string]: YoutubeThumbnail})[thumbnailKey];
+                const oldThumbnail = oldThumbnails?.[thumbnailKey];
 
-                if(oldThumbnails && oldThumbnails[thumbnailKey].url === thumbnail.url && oldThumbnails[thumbnailKey].blurhash) {
-                    const oldData = oldThumbnails[thumbnailKey];
-                    (youtubeVod.snippet?.thumbnails as {[key: string]: YoutubeThumbnail})[thumbnailKey].blurhash = oldData.blurhash;
+                // Only run OCR on highest quality image
+                if(fi === thumbnailCount /*&& (!oldThumbnail?.text || oldThumbnail?.url !== thumbnail.url)*/) {
+                    console.log("Running OCR on " + thumbnail.url);
+
+                    // const imageBase64 = await imageUrlToBase64(thumbnail.url);
+
+                    const image = await fetch(thumbnail.url)
+                      .then(r => r.arrayBuffer());
+                    const buffer = await sharp(image)
+                      .flatten()
+                      .modulate({
+                          // remove some of the brightness to crush some non-white thumbnail text
+                          lightness: -70
+                      })
+                      .toBuffer();
+
+                    const text = await fetch("https://vision.googleapis.com/v1/images:annotate?key=" + process.env.YOUTUBE_KEY, {
+                        method: "POST",
+                        body: JSON.stringify(
+                          {
+                              requests: [
+                                  {
+                                      image: {
+                                          content: buffer.toString('base64')
+                                      },
+                                      features: [
+                                          {
+                                              "type": "TEXT_DETECTION"
+                                          }
+                                      ]
+                                  }
+                              ]
+                          }
+                        )
+                    })
+                      .then(r => r.json())
+                      // .then(r => {console.log(r); return r;})
+                      .then(r => {
+                          if(r.responses.length < 1 || !r.responses[0].textAnnotations || r.responses[0].textAnnotations.length < 1) {
+                              console.log("No text from google ocr for " + thumbnail.url + ".")
+                              return null;
+                          }
+                          return r.responses[0].textAnnotations[0].description;
+                      });
+                    (youtubeVod.snippet?.thumbnails as {[key: string]: YoutubeThumbnail})[thumbnailKey].text = text;
+                }
+
+                if(oldThumbnail?.url === thumbnail.url && oldThumbnail?.blurhash) {
+                    (youtubeVod.snippet?.thumbnails as {[key: string]: YoutubeThumbnail})[thumbnailKey].blurhash = oldThumbnail.blurhash;
                     return;
                 }
 
@@ -189,6 +246,7 @@ for (const date in youtubeData) {
 
 await fs.writeFile(outputDataPath, JSON.stringify(oldShows, undefined, '\t'))
 console.log("Done!")
+
 
 
 

@@ -70,7 +70,8 @@ export type YoutubeThumbnail = {
     url: string,
     width: number,
     height: number,
-    blurhash?: BlurHash
+    blurhash?: BlurHash,
+    text?: string
 }
 
 export type BlurHash = {
