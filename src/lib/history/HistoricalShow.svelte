@@ -59,7 +59,7 @@
                     <div class="thumbnail-space relative">
                         <div class="absolute top-0 left-0">
                             <LargerLazyLoad>
-                                <img src={thumbnail.url} aria-hidden="true" alt="" on:load={() => thumbnailLoaded = true}>
+                                <img src={thumbnail.url} aria-hidden="true" alt={thumbnail.text ?? ""} title={thumbnail.text ?? ""} on:load={() => thumbnailLoaded = true}>
                             </LargerLazyLoad>
                         </div>
                         {#if !thumbnailLoaded && browser && localStorage.getItem("disableBlurHash") !== "true"}

@@ -40,7 +40,7 @@
 
 {#if thumbnail}
     <div class="thumbnail-backdrop" aria-hidden="true">
-        <img src={thumbnail.url} alt="Thumbnail for show"/>
+        <img src={thumbnail.url} alt={thumbnail.text ?? "Thumbnail for this show"}/>
     </div>
 {/if}
 
@@ -57,7 +57,7 @@
     <h1>{showDate.toLocaleDateString(undefined, {dateStyle: "long"})}</h1>
     {#if thumbnail}
         <br>
-        <img class="thumbnail" src={thumbnail.url} alt="Thumbnail for show"/>
+        <img class="thumbnail" src={thumbnail.url} alt={thumbnail.text ?? "Thumbnail for this show"} title={thumbnail.text ?? "Thumbnail for this show"}/>
     {/if}
     {#if data.metadata.title}
         <h2>{data.metadata.title}</h2>
