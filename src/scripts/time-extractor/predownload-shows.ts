@@ -1,5 +1,5 @@
 import {promises as fs} from "fs";
-import { history as oldShows, type TimeOverrides } from "$lib/history/oldHistory.ts";
+import { history as oldShows, type TimeOverrides } from "../../lib/history/oldHistory.ts";
 import type { HistoricalEntry } from "../../lib/utils.ts";
 import { download } from "./time-extractor.ts";
 

@@ -19,6 +19,7 @@
   let images = [];
   $: {
     if(data.image?.length && data.show) {
+      images = [];
       for (let i = 1; i <= data.image.length; i++) {
         images.push(i);
       }
