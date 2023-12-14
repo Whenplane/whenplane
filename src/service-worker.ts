@@ -57,17 +57,18 @@ self.addEventListener('fetch', (event) => {
         throw new Error('invalid response from fetch');
       }
 
-      if (response.status === 200) {
+      /*if (response.status === 200) {
         cache.put(event.request, response.clone());
-      }
+      }*/
 
       return response;
     } catch (err) {
-      const response = await cache.match(event.request);
-
-      if (response) {
-        return response;
-      }
+      // maybe at some point ill add better offline support
+      // const response = await cache.match(event.request);
+      //
+      // if (response) {
+      //   return response;
+      // }
 
       // if there's no cache, then just error out
       // as there is nothing we can do to respond to this request
