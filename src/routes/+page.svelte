@@ -87,7 +87,9 @@
 
 	// remove ?attempt after 500 error
 	if(browser && $page.url.searchParams.has("attempt")) {
-		window.history.replaceState({}, document.title, "/" + ($page.url.searchParams.has("frame") ? "?frame" : ""));
+		const newURL = new URL(location.href);
+		newURL.searchParams.delete("attempt");
+		window.history.replaceState({}, document.title, "/" + (newURL.searchParams.size > 0 ? "?" + newURL.searchParams.toString() : ""));
 	}
 
 	function onFocus() {
