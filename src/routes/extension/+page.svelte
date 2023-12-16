@@ -67,6 +67,7 @@
       <h2>Endorsements</h2>
       <div class="inline-block">
         <img src="/extension/endorsements/tibbyjab.png" alt="tibbyjab: Oh wow this whenplane extension is AMAZING haha tysm to the developer"/>
+        <img src="/extension/endorsements/StupidServerDude.png" alt="StupidServerDude: this whenplane extension is pretty cool lol"/>
       </div>
     </div>
   </div>
