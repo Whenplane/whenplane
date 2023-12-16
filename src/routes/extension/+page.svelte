@@ -43,7 +43,7 @@
       Download for Chrome
     </a>
     <br>
-    or <a href="https://downloads.whenplane.com/whenplane_floatplane_widget-1.0.3.zip" download>download zip</a>
+    or <a href="https://downloads.whenplane.com/whenplane_floatplane_widget-1.0.3.1.zip" download>download zip</a>
     <br>
     <br>
     <a
