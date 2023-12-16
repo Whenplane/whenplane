@@ -201,7 +201,7 @@ export const GET = (async ({platform, url}) => {
 
     const msUntilReset = Math.max((Number(reset) * 1000) - Date.now(), 0);
 
-    if(Number(remaining) < 15) {
+    if(Number(remaining) < 50) {
         // If we are low on remaining requests, wait until 1s after the reset in the future.
         fastCache.lastFetch = Date.now() + msUntilReset - cacheTime + 1e3;
     }
