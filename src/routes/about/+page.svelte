@@ -28,7 +28,7 @@
             <br>
             <br>
             The site is
-            <a href="https://github.com/ajgeiss0702/wheniswan" target="_blank" rel="noopener">
+            <a href="https://github.com/ajgeiss0702/whenplane" target="_blank" rel="noopener">
                 open-sourced</a>.
             Feel free to make contributions!
             <br>
