@@ -20,7 +20,7 @@ export const first_news_post = [
   "1702149714624", //"2023-12-09T19:14:26.152Z",
   "whenplane-is-in-an-ltt-video",
   "Whenplane is in an LTT video!",
-  `Unfortunately, it's not discussed at all, but is in the background.<br>
+  `Unfortunately, it wasn't mentioned at all, but is in the background.<br>
 <img src="https://images.ajg0702.us/whenplane_on_ltt.jpg">
 (<a href="https://youtu.be/QGcYUtNIrRw?t=1369" target="_blank" rel="noopener">Youtube</a> | <a href="https://www.floatplane.com/post/DpnlYlWQv8" target="_blank" rel="noopener">Floatplane</a> @ 22:49)<br>
 <img src="https://images.ajg0702.us/whenplane_zoomed.png">
