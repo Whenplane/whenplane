@@ -164,9 +164,13 @@
 				{/if}
 			</div>
 		</div>
+
+
 		<div class="mx-4">
 			<StreamStatus {data}/>
 		</div>
+
+
 		<div class="text-center">
 			{#if averageLateness || dev}
 				<span class="card px-4 py-2 mb-4 inline-block lateness">
@@ -191,6 +195,8 @@
 				</a>
 			{/if}
 		</div>
+
+
 		{#if data.dan?.isLive}
 			<a class="card border-2 p-2 !border-amber-600 !bg-opacity-20 !bg-amber-600 block relative" href="https://twitch.tv/buhdan">
 				<div class="absolute top-2 right-2 opacity-60">
@@ -205,6 +211,8 @@
 				</div>
 			</a>
 		{/if}
+
+
 		{#if data.isThereWan?.text || data.isThereWan?.image}
 			<div class="card border-2 p-2 !border-amber-600 !bg-opacity-20 !bg-amber-600 block text-center limit">
 				{data.isThereWan?.text ?? ""}
