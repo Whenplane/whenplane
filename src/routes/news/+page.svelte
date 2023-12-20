@@ -1,7 +1,7 @@
 <script lang="ts">
   import type {PageData} from "./$types"
   import sanitizeHtml from "sanitize-html";
-  import { newsSanitizeSettings } from "$lib/news/news.js";
+  import { newsSanitizeSettings } from "$lib/news/news";
   import { page } from "$app/stores";
   export let data: PageData;
 </script>

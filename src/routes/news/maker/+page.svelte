@@ -2,7 +2,7 @@
   import { page } from "$app/stores";
   import sanitizeHtml from "sanitize-html";
   import { onMount } from "svelte";
-  import { newsSanitizeSettings } from "$lib/news/news.js";
+  import { newsSanitizeSettings } from "$lib/news/news";
   import { truncateText } from "$lib/utils";
 
   let title = "";
