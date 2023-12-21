@@ -39,7 +39,7 @@
 </script>
 
 <div class="card p-2 px-3 inline-block countdown-box text-left m-2 wrapper">
-  <h2>Upcoming Stream</h2>
+  <h2>Special Stream</h2>
   <span class="title">
     "{specialStreamData.title}"
   </span><br>
