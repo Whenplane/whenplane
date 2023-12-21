@@ -13,7 +13,7 @@ export const GET = (async () => {
 
     onFloatplane: true,
 
-    onTwitch: true,
+    onTwitch: false,
     twitchNotes: "first half",
 
     onYoutube: false

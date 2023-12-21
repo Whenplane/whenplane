@@ -25,6 +25,9 @@
   <span class="red">
     <XCircle style="display: inline-block;"/>
   </span>
+  {#if note}
+    ({note})
+  {/if}
 {/if}
 
 <style>
