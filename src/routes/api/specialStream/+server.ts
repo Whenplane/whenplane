@@ -21,7 +21,8 @@ export const GET = (async () => {
 
   // hide an hour after the start time;
   const hideTime = new Date(data.start as string)
-  hideTime.setHours(hideTime.getHours() + 1);
+  hideTime.setHours(hideTime.getHours() + 2);
+
   const timeUntil = getTimeUntil(hideTime);
   if(timeUntil.late) {
     return json(false);
