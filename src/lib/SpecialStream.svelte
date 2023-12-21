@@ -23,9 +23,10 @@
     const timeUntil = getTimeUntil(startTime);
 
     countdownString = timeUntil.string;
-    late = timeUntil.late
+    late = timeUntil.late;
   }
-  if(startTime) updateCountdown();
+
+  $: updateCountdown(startTime)
 
   onMount(() => {
     let interval = setInterval(updateCountdown, 1e3);
