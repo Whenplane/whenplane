@@ -4,12 +4,16 @@
   import SpecialStreamStatus from "$lib/subcomponents/SpecialStreamStatus.svelte";
   import { onMount } from "svelte";
   import { getTimeUntil } from "$lib/timeUtils.ts";
+  import Late from "$lib/Late.svelte";
+  import { floatplaneState } from "$lib/stores.ts";
 
   export let specialStreamData: SpecialStream = $page.data.specialStream;
 
   let countdownString;
   let late = false;
   $: startTime = specialStreamData.start ? new Date(specialStreamData.start) : undefined;
+
+  $: live = $floatplaneState.live
 
   function updateCountdown() {
     if(!specialStreamData.start || !startTime) {
@@ -54,8 +58,16 @@
       <td><SpecialStreamStatus service="youtube" {specialStreamData}/></td>
     </tr>
   </table>
-  {#if countdownString}
-    <h3 class="countdown">{countdownString}</h3>
+  {#if countdownString && !live}
+    <h3 class="countdown" class:red={late && !live}>
+      {countdownString}
+      {#if late && !live}
+        <Late/>
+      {/if}
+    </h3>
+  {/if}
+  {#if live}
+    Currently Live
   {/if}
 
 
@@ -79,5 +91,12 @@
 
     .wrapper {
         aspect-ratio: 16 / 9;
+    }
+
+    .red {
+        color: red;
+    }
+    .green {
+        color: green;
     }
 </style>

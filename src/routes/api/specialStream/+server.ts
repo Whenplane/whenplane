@@ -19,7 +19,10 @@ export const GET = (async () => {
     onYoutube: false
   }
 
-  const timeUntil = getTimeUntil(new Date(data.start as string));
+  // hide an hour after the start time;
+  const hideTime = new Date(data.start as string)
+  hideTime.setHours(hideTime.getHours() + 1);
+  const timeUntil = getTimeUntil(hideTime);
   if(timeUntil.late) {
     return json(false);
   } // after
