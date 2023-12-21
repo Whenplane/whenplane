@@ -131,7 +131,9 @@
 	<div class="space-y-5 inner">
 		<ImminentBox hasDone={data.hasDone}/>
 		<div class="text-center">
-			<SpecialStream/>
+			{#if data.specialStream}
+				<SpecialStream/>
+			{/if}
 			<br>
 			<div class="card p-4 inline-block countdown-box text-left">
 				{#if isLate}
