@@ -13,7 +13,7 @@
   let late = false;
   $: startTime = specialStreamData.start ? new Date(specialStreamData.start) : undefined;
 
-  $: live = $floatplaneState.live
+  $: live = $floatplaneState?.live
 
   function updateCountdown() {
     if(!specialStreamData.start || !startTime) {
