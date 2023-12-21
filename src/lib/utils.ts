@@ -33,6 +33,12 @@ export function truncateText(text: string, maxLength: number, elipsis = true) {
     return text.substring(0, maxLength) + (elipsis ? '\u2026' : '');
 }
 
+export function removeAfterLastDash(rawTitle: string) {
+    const parts = rawTitle.split(" - ");
+    parts.pop(); // do a pop to only remove the stuff after the *last* dash
+    return parts.join(" - ");
+}
+
 
 
 

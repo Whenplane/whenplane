@@ -1,5 +1,6 @@
 import type {RequestHandler} from "@sveltejs/kit";
 import {error, json} from "@sveltejs/kit";
+import { removeAfterLastDash } from "$lib/utils.ts";
 
 const cacheTtl = 60 * 60 * 24 * 6; // cache single keys for 6 days if possible
 
@@ -68,9 +69,7 @@ export const GET = (async ({platform, params, locals, fetch}) => {
                                 const rawTitle = (await snippet)?.title;
                                 if(!rawTitle) return rawTitle;
 
-                                const parts = rawTitle.split(" - ");
-                                parts.pop(); // do a pop to only remove the stuff after the *last* dash
-                                return parts.join(" - ");
+                                return removeAfterLastDash(rawTitle)
                             })(),
                             isCurrentlyLive: await isCurrentlyLive
                         }
