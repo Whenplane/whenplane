@@ -1,6 +1,8 @@
 import type { SpecialStream } from "$lib/utils.ts";
 import { json } from "@sveltejs/kit";
 import { getTimeUntil } from "$lib/timeUtils.ts";
+import { get } from "svelte/store";
+import { floatplaneState } from "$lib/stores.ts";
 
 export const GET = (async () => {
   // In the future this will be from a database, but this will be fine for now.
@@ -22,6 +24,8 @@ export const GET = (async () => {
   // hide an hour after the start time;
   const hideTime = new Date(data.start as string)
   hideTime.setHours(hideTime.getHours() + 3);
+
+  console.log({floatplane: get(floatplaneState)})
 
   const timeUntil = getTimeUntil(hideTime);
   if(timeUntil.late) {
