@@ -7,6 +7,7 @@ import { floatplaneState } from "$lib/stores.ts";
 export const GET = (async () => {
   // In the future this will be from a database, but this will be fine for now.
 
+  console.log("hello?")
   console.log("floatplane:", get(floatplaneState))
 
   const data: SpecialStream = {
