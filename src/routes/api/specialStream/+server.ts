@@ -1,5 +1,6 @@
 import type { SpecialStream } from "$lib/utils.ts";
 import { json } from "@sveltejs/kit";
+import { getTimeUntil } from "$lib/timeUtils.ts";
 
 export const GET = (async () => {
   // In the future this will be from a database, but this will be fine for now.
@@ -17,6 +18,11 @@ export const GET = (async () => {
 
     onYoutube: false
   }
+
+  const timeUntil = getTimeUntil(new Date(data.start as string));
+  if(timeUntil.late) {
+    return json(false);
+  } // after
 
   return json(data);
 
