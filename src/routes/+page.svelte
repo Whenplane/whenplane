@@ -13,6 +13,7 @@
 	import ImminentBox from "$lib/ImminentBox.svelte";
 	import LTTTime from "$lib/LTTTime.svelte";
 	import ExtensionAd from "$lib/ExtensionAd.svelte";
+	import SpecialStream from "$lib/SpecialStream.svelte";
 
 	export let data;
 
@@ -130,6 +131,8 @@
 	<div class="space-y-5 inner">
 		<ImminentBox hasDone={data.hasDone}/>
 		<div class="text-center">
+			<SpecialStream/>
+			<br>
 			<div class="card p-4 inline-block countdown-box text-left">
 				{#if isLate}
 					The WAN show is currently <span class="red"><Late/></span> by

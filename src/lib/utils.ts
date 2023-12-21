@@ -215,3 +215,20 @@ export type MainLate = {
     late?: boolean,
     distance?: number
 }
+
+export type SpecialStream = {
+    title: string,
+    thumbnail?: string,
+
+    start?: string,
+    end?: string
+
+    onFloatplane?: boolean,
+    floatplaneNotes?: string
+
+    onTwitch?: boolean,
+    twitchNotes?: string,
+
+    onYoutube?: boolean
+    youtubeNotes?: string
+}

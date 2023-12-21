@@ -3,7 +3,7 @@ import { browser, dev, version } from "$app/environment";
 import { error } from "@sveltejs/kit";
 import type { Latenesses } from "./api/latenesses/+server";
 import type { AggregateResponse } from "./api/(live-statuses)/aggregate/+server";
-import type { WanDb_FloatplaneData } from "$lib/utils.ts";
+import type { SpecialStream, WanDb_FloatplaneData } from "$lib/utils.ts";
 import { floatplaneState, nextFast } from "$lib/stores.ts";
 import { wait } from "$lib/utils.ts";
 
@@ -13,6 +13,11 @@ let cachedLatenessesTime = 0 ;
 let danCache: {
     lastFetch: number,
     lastData?: DanResponse
+} = {lastFetch: 0}
+
+let specialStreamCache: {
+    lastFetch: number,
+    lastData?: SpecialStream
 } = {lastFetch: 0}
 
 // update every 10 minutes when in browser, otherwise 2x per second from ssr
@@ -39,6 +44,7 @@ export const load = (async ({fetch}) => {
     let latenesses: Latenesses | undefined;
     let dan: DanResponse | undefined;
     let fpState: WanDb_FloatplaneData | undefined;
+    let specialStream: SpecialStream | undefined;
 
     await Promise.all([
         (async () => {
@@ -48,6 +54,18 @@ export const load = (async ({fetch}) => {
               .then(r => r.json());
 
 
+        })(),
+        (async () => {
+            if(Date.now() - specialStreamCache.lastFetch < 5e3) {
+                specialStream = specialStreamCache.lastData;
+            } else {
+                specialStream = await fetch("/api/specialStream")
+                  .then(r => r.json());
+                specialStreamCache = {
+                    lastFetch: Date.now(),
+                    lastData: specialStream
+                }
+            }
         })(),
         (async () => {
 
@@ -67,14 +85,16 @@ export const load = (async ({fetch}) => {
                       return false;
                   });
                 // don't wait for more than 400ms for thewandb
-                const response = await Promise.race([responsePromise, wait(dev ? 1000 : 400)]) as WanDb_FloatplaneData;
+                const response = await Promise.race([responsePromise, wait(dev ? 1000 : 400)]) as (WanDb_FloatplaneData & {wan?: boolean});
                 if(!response) return;
                 wdbFpCache = {
                     lastFetch: Date.now(),
                     lastData: response
                 }
-                response.isWAN = response.wan;
-                delete response.wan;
+                if(!response.isWAN) {
+                    response.isWAN = response.wan;
+                    delete response.wan;
+                }
                 fpState = response;
 
                 floatplaneState.set(fpState)
@@ -162,7 +182,8 @@ export const load = (async ({fetch}) => {
         hasDone: liveStatus.hasDone,
         averageLateness: latenesses?.averageLateness,
         medianLateness: latenesses?.medianLateness,
-        dan
+        dan,
+        specialStream
     }
 }) satisfies PageLoad;
 
