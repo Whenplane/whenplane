@@ -119,11 +119,11 @@
 	<LTTTime/>
 </div>
 
-<div class="text-center mt-2">
+<!--<div class="text-center mt-2">
 	<a class="hidden-link opacity-70 hover:opacity-100 cursor-pointer">
 		✨ test
 	</a>
-</div>
+</div>-->
 
 <div class="container h-full mx-auto justify-center items-center" class:alwaysFlex={isFrame}>
 	<div class="space-y-5 inner">
