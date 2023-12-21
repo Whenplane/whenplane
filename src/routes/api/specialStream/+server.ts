@@ -7,6 +7,8 @@ import { floatplaneState } from "$lib/stores.ts";
 export const GET = (async () => {
   // In the future this will be from a database, but this will be fine for now.
 
+  console.log("floatplane:", get(floatplaneState))
+
   const data: SpecialStream = {
     title: "Gingerbread PC Building (with Sarah & guests)",
     thumbnail: "https://pbs.floatplane.com/stream_thumbnails/5c13f3c006f1be15e08e05c0/276172365615767_1703191094285.jpeg",
@@ -24,8 +26,6 @@ export const GET = (async () => {
   // hide an hour after the start time;
   const hideTime = new Date(data.start as string)
   hideTime.setHours(hideTime.getHours() + 3);
-
-  console.log({floatplane: get(floatplaneState)})
 
   const timeUntil = getTimeUntil(hideTime);
   if(timeUntil.late) {
