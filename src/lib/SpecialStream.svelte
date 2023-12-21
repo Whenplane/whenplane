@@ -58,16 +58,17 @@
       <td><SpecialStreamStatus service="youtube" {specialStreamData}/></td>
     </tr>
   </table>
-  {#if countdownString && !live}
-    <h3 class="countdown" class:red={late && !live}>
-      {countdownString}
-      {#if late && !live}
-        <Late/>
+  {#if countdownString || live}
+    <h3 class="countdown" class:red={late && !live} class:green={live}>
+      {#if live}
+        Currently Live
+      {:else}
+        {countdownString}
+        {#if late && !live}
+          <Late/>
+        {/if}
       {/if}
     </h3>
-  {/if}
-  {#if live}
-    Currently Live
   {/if}
 
 
