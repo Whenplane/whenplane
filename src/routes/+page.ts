@@ -70,12 +70,8 @@ export const load = (async ({fetch}) => {
         (async () => {
 
             if(Date.now() - wdbFpCache.lastFetch > wdb_fp_cache_time) {
-                const responsePromise = fetch("https://edge.thewandb.com/v2/live/floatplane", {
-                    headers: {
-                        "referer": "whenplane.com",
-                        "x-whenplane-version": version
-                    }
-                }).then(r => r.json() as Promise<WanDb_FloatplaneData>)
+                const responsePromise = fetch("/api/floatplane")
+                  .then(r => r.json() as Promise<WanDb_FloatplaneData>)
                   .catch(error => {
                       // retry in 30 seconds
                       wdbFpCache = {
@@ -84,16 +80,12 @@ export const load = (async ({fetch}) => {
                       console.error("Error while fetching fp live status from thewandb:", error);
                       return false;
                   });
-                // don't wait for more than 400ms for thewandb
-                const response = await Promise.race([responsePromise, wait(dev ? 1000 : 400)]) as (WanDb_FloatplaneData & {wan?: boolean});
+                // don't wait for more than 450ms for thewandb
+                const response = await Promise.race([responsePromise, wait(dev ? 1000 : 450)]) as (WanDb_FloatplaneData);
                 if(!response) return;
                 wdbFpCache = {
                     lastFetch: Date.now(),
                     lastData: response
-                }
-                if(!response.isWAN) {
-                    response.isWAN = response.wan;
-                    delete response.wan;
                 }
                 fpState = response;
 
