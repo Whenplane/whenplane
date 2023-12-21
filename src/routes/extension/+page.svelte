@@ -59,6 +59,8 @@
     <br>
     <br>
     <ClickableImage src="/extension/screenshots/late.png" style="width: 25em;" width="1920" height="994"/>
+    <ClickableImage src="/extension/screenshots/late-filled.png" style="width: 25em;" width="1920" height="994"/>
+
     <ClickableImage src="/extension/screenshots/after.png" style="width: 25em;" width="1920" height="994"/>
     <ClickableImage src="/extension/screenshots/filled.png" style="width: 25em;" width="1920" height="994"/>
     <br>
