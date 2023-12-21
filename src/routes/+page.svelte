@@ -26,7 +26,8 @@
 	const myDomains = [
 		"whenplane.com",
 		"whenwan.show",
-		"wheniswan.pages.dev"
+		"wheniswan.pages.dev",
+		"localhost"
 	]
 
 
