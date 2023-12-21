@@ -23,6 +23,12 @@
 
 	$: isFrame = $page.url.searchParams.has("frame");
 
+	const myDomains = [
+		"whenplane.com",
+		"whenwan.show",
+		"wheniswan.pages.dev"
+	]
+
 
 	let invalidationInterval: number | undefined;
 	let lastInvalidation = Date.now();
@@ -111,6 +117,12 @@
 
 <div class="absolute top-0 right-0">
 	<LTTTime/>
+</div>
+
+<div class="text-center mt-2">
+	<a class="hidden-link opacity-70 hover:opacity-100 cursor-pointer">
+		✨ test
+	</a>
 </div>
 
 <div class="container h-full mx-auto justify-center items-center" class:alwaysFlex={isFrame}>
@@ -266,6 +278,18 @@
 				Consider using it
 			</a>
 			:)
+		</div>
+	</div>
+{/if}
+
+{#if !myDomains.includes($page.url.hostname.replaceAll("www.", ""))}
+	<div class="fixed top-0 w-screen text-center">
+		<div class="card inline-block p-2 mt-2">
+			You are using an unofficial domain. Whenplane cannot guarantee that this domain has no WORMS
+			<br>
+			<a href="https://whenplane.com">
+				Use the official domain here
+			</a>
 		</div>
 	</div>
 {/if}
