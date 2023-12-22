@@ -4,8 +4,9 @@ export function wait(ms: number) {
     });
 }
 
-export function random(min: number, max: number) {
-    return (Math.random() * (max - min)) + min;
+export function random(min: number, max: number, int = false) {
+    const rand = (Math.random() * (max - min)) + min;
+    return int ? Math.floor(rand) : rand;
 }
 
 export function countTo(a: number, b?: number) {
