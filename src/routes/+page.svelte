@@ -14,6 +14,7 @@
 	import LTTTime from "$lib/LTTTime.svelte";
 	import ExtensionAd from "$lib/ExtensionAd.svelte";
 	import SpecialStream from "$lib/SpecialStream.svelte";
+	import NewsAnnouncer from "$lib/NewsAnnouncer.svelte";
 
 	export let data;
 
@@ -121,11 +122,7 @@
 	<LTTTime/>
 </div>
 
-<!--<div class="text-center mt-2">
-	<a class="hidden-link opacity-70 hover:opacity-100 cursor-pointer">
-		✨ test
-	</a>
-</div>-->
+<NewsAnnouncer/>
 
 <div class="container h-full mx-auto justify-center items-center" class:alwaysFlex={isFrame}>
 	<div class="space-y-5 inner">

@@ -27,7 +27,7 @@ export const load = (async ({platform}) => {
   return {
     results: await db.prepare("select * from news order by timestamp DESC")
       .all<NewsPost>()
-      .then(r => r.results)
+      .then(r => r.results as unknown as NewsPost[])
       .then(r => r.map(n => {return {...n, body: truncateText(n.body, 500)}}))
   }
 }) satisfies PageServerLoad;

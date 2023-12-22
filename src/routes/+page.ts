@@ -6,6 +6,7 @@ import type { AggregateResponse } from "./api/(live-statuses)/aggregate/+server"
 import type { SpecialStream, WanDb_FloatplaneData } from "$lib/utils.ts";
 import { floatplaneState, nextFast } from "$lib/stores.ts";
 import { wait } from "$lib/utils.ts";
+import type { NewsPost } from "$lib/news/news.ts";
 
 let cachedLatenesses: Latenesses;
 let cachedLatenessesTime = 0 ;
@@ -19,6 +20,8 @@ let specialStreamCache: {
     lastFetch: number,
     lastData?: SpecialStream
 } = {lastFetch: 0}
+
+let lastNewsPostCache: NewsPost;
 
 // update every 10 minutes when in browser, otherwise 2x per second from ssr
 const wdb_fp_cache_time = browser ? 10 * 60e3 : 500;
@@ -45,6 +48,7 @@ export const load = (async ({fetch}) => {
     let dan: DanResponse | undefined;
     let fpState: WanDb_FloatplaneData | undefined;
     let specialStream: SpecialStream | undefined;
+    let lastNewsPost: NewsPost | undefined;
 
     await Promise.all([
         (async () => {
@@ -66,6 +70,13 @@ export const load = (async ({fetch}) => {
                     lastData: specialStream
                 }
             }
+        })(),
+        (async () => {
+            if(!lastNewsPostCache) {
+                lastNewsPostCache = await fetch("/api/news/latest")
+                  .then(r => r.json());
+            }
+            lastNewsPost = lastNewsPostCache
         })(),
         (async () => {
 
@@ -175,7 +186,8 @@ export const load = (async ({fetch}) => {
         averageLateness: latenesses?.averageLateness,
         medianLateness: latenesses?.medianLateness,
         dan,
-        specialStream
+        specialStream,
+        lastNewsPost
     }
 }) satisfies PageLoad;
 
