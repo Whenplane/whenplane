@@ -122,7 +122,9 @@
 	<LTTTime/>
 </div>
 
-<NewsAnnouncer/>
+{#if !isFrame}
+	<NewsAnnouncer/>
+{/if}
 
 <div class="container h-full mx-auto justify-center items-center" class:alwaysFlex={isFrame}>
 	<div class="space-y-5 inner">
