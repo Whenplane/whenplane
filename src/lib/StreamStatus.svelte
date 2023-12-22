@@ -50,7 +50,11 @@
                         (live non-WAN)
                     {/if}
                 {:else}
-                    (offline)
+                    {#if data.liveStatus.youtube.upcoming}
+                        (upcoming)
+                    {:else}
+                        (offline)
+                    {/if}
                 {/if}
             </span>
         </span>
