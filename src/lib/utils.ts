@@ -35,6 +35,7 @@ export function truncateText(text: string, maxLength: number, elipsis = true) {
 
 export function removeAfterLastDash(rawTitle: string) {
     const parts = rawTitle.split(" - ");
+    if(parts.length <= 1) return rawTitle; // Don't remove if there is no dash
     parts.pop(); // do a pop to only remove the stuff after the *last* dash
     return parts.join(" - ");
 }
