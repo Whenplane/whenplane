@@ -17,17 +17,17 @@ export const options: LatenessVotingOption[] = [
     time: 50 * 60e3
   },
   {
-    name: "1-2 hours late",
+    name: "1 hour late",
     votes: 0,
-    time: 2.75 * 60 * 60e3
+    time: 1.75 * 60 * 60e3
   },
   {
-    name: "3-4 hours late",
+    name: "2-3 hours late",
     votes: 0,
-    time: 4.75 * 60 * 60e3
+    time: 3.75 * 60 * 60e3
   },
   {
-    name: "5+ hours late",
+    name: "4+ hours late",
     comment: "new record?",
     votes: 0,
     time: 24 * 60 * 60e3
