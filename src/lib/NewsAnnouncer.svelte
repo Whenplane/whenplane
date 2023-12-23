@@ -12,7 +12,7 @@
 
 
 <div class="text-center mt-2">
-  <a class="hidden-link opacity-70 hover:opacity-100 cursor-pointer" {href} class:small={!isRecent}>
+  <a class="hidden-link hover:!opacity-100 cursor-pointer" {href} class:small={!isRecent} class:opacity-70={isRecent}>
     {#if isRecent}
       ✨ {data.lastNewsPost.title}
     {:else}
@@ -24,5 +24,6 @@
 <style>
   .small {
       font-size: 0.8em;
+      opacity: 25%;
   }
 </style>
