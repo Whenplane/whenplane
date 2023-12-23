@@ -26,7 +26,7 @@
   <div class="text-center">
     <a
       class="btn variant-filled-primary my-1"
-      href="https://addons.mozilla.org/en-US/firefox/addon/whenplane-floatplane-widget/"
+      href="https://addons.mozilla.org/en-US/firefox/addon/whenplane-widget/"
       target="_blank"
       rel="noopener"
     >
