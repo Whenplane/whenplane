@@ -15,7 +15,8 @@
         "Late-nus",
         "The Late Show",
         "fashionably late",
-        "tardy"
+        "tardy",
+        "diligently delayed"
     ];
 
     let current = writable("late");
