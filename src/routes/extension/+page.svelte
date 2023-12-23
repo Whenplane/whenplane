@@ -4,8 +4,8 @@
   import { page } from "$app/stores";
 </script>
 <svelte:head>
-  <title>Whenplane Floatplane Widget Extension</title>
-  <meta name="description" content="For you fellow Floatplane watchers, I've made a browser extension that replaces the 'Offline' screen on the LTT floatplane channel with whenplane."/>
+  <title>Whenplane Widget Extension</title>
+  <meta name="description" content="For you fellow Floatplane watchers, (and I guess Twitch too) I've made a browser extension that replaces the "Offline" screen on the LTT Floatplane/Twitch channel with Whenplane."/>
   <meta name="og:image" content="/extension/screenshots/late.png">
   <meta name="twitter:card" content="summary_large_image">
 </svelte:head>
