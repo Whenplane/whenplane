@@ -16,7 +16,7 @@
     {#if isRecent}
       ✨ {data.lastNewsPost.title}
     {:else}
-      No recent news
+      No recent site news
     {/if}
   </a>
 </div>
