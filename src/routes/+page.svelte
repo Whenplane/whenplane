@@ -108,6 +108,8 @@
 		}
 	}
 
+	const description = "Is the WAN show late? Yes. How late is the WAN show? Probably very! See a countdown to when WAN is supposed to start, as well as how late it's been before.";
+
 
 </script>
 <svelte:window
@@ -115,7 +117,7 @@
 />
 <svelte:head>
 	<title>When is the WAN Show?  {$page.url.hostname === "whenwan.show" ? "whenwan.show" : "Whenplane"}</title>
-	<meta name="description" content="Is the WAN show late? Yes. How late is the WAN show? Probably very! See a countdown to when WAN is supposed to start, as well as how late it's been before."/>
+	<meta name="description" content={description}/>
 </svelte:head>
 
 <div class="absolute top-0 right-0">
@@ -125,6 +127,8 @@
 {#if !isFrame}
 	<NewsAnnouncer/>
 {/if}
+
+<span class="invisible">{description}</span>
 
 <div class="container h-full mx-auto justify-center items-center" class:alwaysFlex={isFrame}>
 	<div class="space-y-5 inner">
