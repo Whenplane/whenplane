@@ -263,7 +263,7 @@
 
 {#if isFrame}
 	<div class="absolute top-0 left-0 p-2">
-		<span style="font-size: 0.8rem;">
+		<span style="font-size: 0.75rem;">
 			whenplane.com
 		</span>
 	</div>
