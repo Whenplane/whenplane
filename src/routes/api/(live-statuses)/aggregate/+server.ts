@@ -63,7 +63,7 @@ export type AggregateResponse = {
     twitch: TwitchResponse,
     youtube: YoutubeResponse,
     isThereWan: IsThereWanResponse,
-    hasDone: HasDoneResponse,
+    hasDone: boolean,
     votes: LatenessVotingOption[],
     // showExtension: boolean
 }

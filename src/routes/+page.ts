@@ -31,7 +31,7 @@ let wdbFpCache: {
     lastData?: WanDb_FloatplaneData
 } = {lastFetch: 0}
 
-export const load = (async ({fetch}) => {
+export const load = (async ({fetch, params}) => {
     let fast = (!browser || (location && location.pathname !== "/"));
     const cacheBuster = fast ? "" : "&r=" + Date.now();
 
@@ -187,7 +187,9 @@ export const load = (async ({fetch}) => {
         medianLateness: latenesses?.medianLateness,
         dan,
         specialStream,
-        lastNewsPost
+        lastNewsPost,
+        isBot: /bot|googlebot|crawler|spider|robot|crawling/i
+          .test(browser ? navigator?.userAgent : params.__h__userAgent),
     }
 }) satisfies PageLoad;
 

@@ -128,9 +128,11 @@
 
 <div class="container h-full mx-auto justify-center items-center" class:alwaysFlex={isFrame}>
 	<div class="space-y-5 inner">
-		<ImminentBox hasDone={data.hasDone}/>
+		{#if !$page.data.isBot} <!-- so the imminent box stops showing up in search results -->
+			<ImminentBox hasDone={data.hasDone}/>
+		{/if}
 		<div class="text-center">
-			{#if data.specialStream}
+			{#if data.specialStream && !$page.data.isBot}
 				<SpecialStream/>
 			{/if}
 			<br>
