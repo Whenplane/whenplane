@@ -128,7 +128,7 @@
 	<NewsAnnouncer/>
 {/if}
 
-<span class="invisible">{description}</span>
+<span class="clear" style="position: absolute">{description}</span>
 
 <div class="container h-full mx-auto justify-center items-center" class:alwaysFlex={isFrame}>
 	<div class="space-y-5 inner">
