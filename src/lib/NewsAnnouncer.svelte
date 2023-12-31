@@ -11,7 +11,7 @@
 
 
 
-<div class="text-center mt-2">
+<div class="text-center mt-2 absolute top-0 left-0 right-0 z-10">
   <a class="hidden-link hover:!opacity-100 cursor-pointer" {href} class:small={!isRecent} class:opacity-70={isRecent}>
     {#if isRecent}
       ✨ {data.lastNewsPost.title}
