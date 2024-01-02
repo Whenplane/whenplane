@@ -15,7 +15,7 @@ export const load = (async ({fetch, params, url}) => {
 
     const oldHistory = url.searchParams.has("old") ? import("$lib/history/oldHistory.ts") : undefined;
     const records = fetch("/api/history/records").then(r => r.json());
-    const currentYear = await fetch("/api/history/year/" + now.getFullYear() + cacheBusting).then(r => r.json());
+    const currentYear = await fetch("/api/history/year/all" + cacheBusting).then(r => r.json());
 
     // only wait 50ms extra for records. If they aren't done fetching by then,
     //  just return the promise so sveltekit can stream it when it does finish
