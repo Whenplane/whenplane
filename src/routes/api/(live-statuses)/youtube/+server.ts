@@ -11,11 +11,7 @@ const cacheTime = 4750; // Fetch from fetcher no more than once every (just unde
 
 const cache: {
     lastFetch: number,
-    value?: {
-        isLive: boolean,
-        isWAN: boolean,
-        started?: string
-    }
+    value?: YoutubeResponse
 } = {
     lastFetch: 0
 }
@@ -53,11 +49,12 @@ export const GET = (async ({platform, locals, url, fetch}) => {
     }
 
     const doStart = Date.now();
-    let {isLive, isWAN, started, videoId, snippet} = await stub.fetch("https://wheniswan-fetcher.ajg.workers.dev/youtube")
+    let {isLive, isWAN, started, videoId, snippet, upcoming} =
+      await stub.fetch("https://wheniswan-fetcher.ajg.workers.dev/youtube")
         .then(r => r.json()) as DOResponse;
     locals.addTiming({id: 'doFetch', duration: Date.now() - doStart})
 
-    if(!savedStartTime && isWAN) {
+    if(!savedStartTime && isWAN && started) {
         const closestWAN = getClosestWan();
         const distance = Math.abs(Date.now() - closestWAN.getTime())
         // Only record show start time if we are within 7 hours of the closest wan
@@ -103,7 +100,8 @@ export const GET = (async ({platform, locals, url, fetch}) => {
         isWAN,
         started,
         videoId,
-        forced
+        forced,
+        upcoming
     };
 
     cache.value = result
@@ -114,16 +112,18 @@ export const GET = (async ({platform, locals, url, fetch}) => {
 
 export type YoutubeResponse = {
     isLive: boolean,
-    isWAN: boolean,
+    isWAN?: boolean,
     started?: string,
     videoId?: string,
-    forced: boolean
+    forced: boolean,
+    upcoming: boolean
 }
 
 type DOResponse = {
     isLive: boolean,
-    isWAN: boolean,
+    isWAN?: boolean,
     started?: string,
     videoId?: string,
-    snippet?: OldShowMeta["snippet"]
+    snippet?: OldShowMeta["snippet"],
+    upcoming: boolean
 }

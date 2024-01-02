@@ -3,9 +3,10 @@ import { browser, dev, version } from "$app/environment";
 import { error } from "@sveltejs/kit";
 import type { Latenesses } from "./api/latenesses/+server";
 import type { AggregateResponse } from "./api/(live-statuses)/aggregate/+server";
-import type { WanDb_FloatplaneData } from "$lib/utils.ts";
+import type { SpecialStream, WanDb_FloatplaneData } from "$lib/utils.ts";
 import { floatplaneState, nextFast } from "$lib/stores.ts";
 import { wait } from "$lib/utils.ts";
+import type { NewsPost } from "$lib/news/news.ts";
 
 let cachedLatenesses: Latenesses;
 let cachedLatenessesTime = 0 ;
@@ -15,6 +16,13 @@ let danCache: {
     lastData?: DanResponse
 } = {lastFetch: 0}
 
+let specialStreamCache: {
+    lastFetch: number,
+    lastData?: SpecialStream
+} = {lastFetch: 0}
+
+let lastNewsPostCache: NewsPost;
+
 // update every 10 minutes when in browser, otherwise 2x per second from ssr
 const wdb_fp_cache_time = browser ? 10 * 60e3 : 500;
 
@@ -23,7 +31,7 @@ let wdbFpCache: {
     lastData?: WanDb_FloatplaneData
 } = {lastFetch: 0}
 
-export const load = (async ({fetch}) => {
+export const load = (async ({fetch, params}) => {
     let fast = (!browser || (location && location.pathname !== "/"));
     const cacheBuster = fast ? "" : "&r=" + Date.now();
 
@@ -39,6 +47,8 @@ export const load = (async ({fetch}) => {
     let latenesses: Latenesses | undefined;
     let dan: DanResponse | undefined;
     let fpState: WanDb_FloatplaneData | undefined;
+    let specialStream: SpecialStream | undefined;
+    let lastNewsPost: NewsPost | undefined;
 
     await Promise.all([
         (async () => {
@@ -50,14 +60,29 @@ export const load = (async ({fetch}) => {
 
         })(),
         (async () => {
+            if(Date.now() - specialStreamCache.lastFetch < 5e3) {
+                specialStream = specialStreamCache.lastData;
+            } else {
+                specialStream = await fetch("/api/specialStream?filler" + cacheBuster)
+                  .then(r => r.json());
+                specialStreamCache = {
+                    lastFetch: Date.now(),
+                    lastData: specialStream
+                }
+            }
+        })(),
+        (async () => {
+            if(!lastNewsPostCache) {
+                lastNewsPostCache = await fetch("/api/news/latest")
+                  .then(r => r.json());
+            }
+            lastNewsPost = lastNewsPostCache
+        })(),
+        (async () => {
 
             if(Date.now() - wdbFpCache.lastFetch > wdb_fp_cache_time) {
-                const responsePromise = fetch("https://edge.thewandb.com/v2/live/floatplane", {
-                    headers: {
-                        "referer": "whenplane.com",
-                        "x-whenplane-version": version
-                    }
-                }).then(r => r.json() as Promise<WanDb_FloatplaneData>)
+                const responsePromise = fetch("/api/floatplane")
+                  .then(r => r.json() as Promise<WanDb_FloatplaneData>)
                   .catch(error => {
                       // retry in 30 seconds
                       wdbFpCache = {
@@ -66,15 +91,13 @@ export const load = (async ({fetch}) => {
                       console.error("Error while fetching fp live status from thewandb:", error);
                       return false;
                   });
-                // don't wait for more than 400ms for thewandb
-                const response = await Promise.race([responsePromise, wait(dev ? 1000 : 400)]) as WanDb_FloatplaneData;
+                // don't wait for more than 450ms for thewandb
+                const response = await Promise.race([responsePromise, wait(dev ? 1000 : 450)]) as (WanDb_FloatplaneData);
                 if(!response) return;
                 wdbFpCache = {
                     lastFetch: Date.now(),
                     lastData: response
                 }
-                response.isWAN = response.wan;
-                delete response.wan;
                 fpState = response;
 
                 floatplaneState.set(fpState)
@@ -162,7 +185,11 @@ export const load = (async ({fetch}) => {
         hasDone: liveStatus.hasDone,
         averageLateness: latenesses?.averageLateness,
         medianLateness: latenesses?.medianLateness,
-        dan
+        dan,
+        specialStream,
+        lastNewsPost,
+        isBot: /bot|googlebot|crawler|spider|robot|crawling/i
+          .test(browser ? navigator?.userAgent : params.__h__userAgent),
     }
 }) satisfies PageLoad;
 

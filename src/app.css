@@ -16,6 +16,10 @@ h1,h2,h3 {
     bottom: 5.5rem;
 }
 
+.clear {
+    color: rgba(0, 0, 0, 0);
+}
+
 .hidden-link {
     color: inherit !important;
     text-decoration: inherit !important;

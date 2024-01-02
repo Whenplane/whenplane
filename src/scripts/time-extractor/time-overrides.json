@@ -1074,5 +1074,9 @@
 	"2013/03/22": {
 		"mainShowStart": "2013-03-22T22:06:00.000-07:00",
 		"showEnd": "2013-03-23T00:31:39.000-07:00"
+	},
+	"2012/09/14": {
+		"comment": "Added thanks to the tweet at timestamp 4:53 that was posted 26s earlier (2012-09-08T05:44:04.000Z): https://twitter.com/Connkruse/status/244310113077321729",
+		"mainShowStart": "2012-09-08T05:39:37.000Z"
 	}
 }

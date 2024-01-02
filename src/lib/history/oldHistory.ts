@@ -206,6 +206,16 @@ for (let i = 0; i < historyBuilding.length; i++) {
                 ...historyBuilding[i].metadata,
                 showEnd: times.showEnd
             }
+        } else if(times.mainShowStart && historicalEntry.metadata.mainShowLength) {
+            // If there is a mainShowStart time but not a showEnd time, generate one based on mainShowLength
+            const d = new Date(times.mainShowStart);
+            d.setMilliseconds(d.getMilliseconds() + historicalEntry.metadata.mainShowLength);
+            const showEnd = d.toISOString();
+            console.log({overrideShow, showEnd})
+            historyBuilding[i].metadata = {
+                ...historyBuilding[i].metadata,
+                showEnd
+            }
         }
     }
 }

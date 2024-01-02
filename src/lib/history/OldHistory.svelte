@@ -45,6 +45,11 @@
             Loading...
         </span>
     </span>
+    <div style="height: 0; display: inline-block;" id="old-history">
+        <div class="relative pointer-events-none" style="bottom: 50em">
+            <LazyLoad on:visible={loadHistory} height="50em"/>
+        </div>
+    </div>
 {:then {history}}
     {#each history as show, i}
         <span in:fade={{delay: i > 50 ? 0 : i * 50, duration: 350, easing: quadInOut}}>

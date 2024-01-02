@@ -4,8 +4,9 @@ export function wait(ms: number) {
     });
 }
 
-export function random(min: number, max: number) {
-    return (Math.random() * (max - min)) + min;
+export function random(min: number, max: number, int = false) {
+    const rand = (Math.random() * (max - min)) + min;
+    return int ? Math.floor(rand) : rand;
 }
 
 export function countTo(a: number, b?: number) {
@@ -24,6 +25,22 @@ export function countTo(a: number, b?: number) {
 export function capitalize(string: string) {
     return string.charAt(0).toUpperCase() + string.slice(1);
 }
+
+export function truncateText(text: string, maxLength: number, elipsis = true) {
+    if (text.length <= maxLength) {
+        return text;
+    }
+
+    return text.substring(0, maxLength) + (elipsis ? '\u2026' : '');
+}
+
+export function removeAfterLastDash(rawTitle: string) {
+    const parts = rawTitle.split(" - ");
+    if(parts.length <= 1) return rawTitle; // Don't remove if there is no dash
+    parts.pop(); // do a pop to only remove the stuff after the *last* dash
+    return parts.join(" - ");
+}
+
 
 
 
@@ -199,4 +216,21 @@ export type MainLate = {
     string?: string,
     late?: boolean,
     distance?: number
+}
+
+export type SpecialStream = {
+    title: string,
+    thumbnail?: string,
+
+    start?: string,
+    end?: string
+
+    onFloatplane?: boolean,
+    floatplaneNotes?: string
+
+    onTwitch?: boolean,
+    twitchNotes?: string,
+
+    onYoutube?: boolean
+    youtubeNotes?: string
 }

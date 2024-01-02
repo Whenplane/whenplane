@@ -1,8 +1,18 @@
 <script context="module">
   import { writable } from "svelte/store";
   import { browser } from "$app/environment";
+  import { random } from "$lib/utils";
 
-const initiallyDismissed = browser ? localStorage.getItem("permanentExtensionDismiss") === "true" : false;
+  let initiallyDismissed = false;
+  if(browser) {
+    const setting = localStorage.getItem("permanentExtensionDismiss");
+
+    if(setting == null) {
+      initiallyDismissed = random(0, 5, true) !== 0;
+    } else {
+      initiallyDismissed = setting === "true";
+    }
+  }
 
   let dismissed = writable(initiallyDismissed);
 </script>
@@ -19,9 +29,9 @@ const initiallyDismissed = browser ? localStorage.getItem("permanentExtensionDis
 </script>
 {#if !$dismissed && mounted}
   <div class="card p-3 m-2 relative" out:fade|local={{duration: 200}} in:fade|local={{duration: 1500, delay: 2e3}}>
-    <h1>Floatplane Browser Extension</h1>
-    Hello fellow floaters!<br>
-    I've made a browser extension that replaces the floatplane offline page with this site.<br>
+    <h1>Browser Extension</h1>
+    Hello fellow floaters! (and twitch too I guess)<br>
+    I've made a browser extension that replaces the Floatplane/Twitch offline page with this site.<br>
     <a href="/extension">More info and download link</a>
 
     <button class="inline-block absolute top-2 right-3 opacity-70 x" on:click={() => dismissed.set(true)}>

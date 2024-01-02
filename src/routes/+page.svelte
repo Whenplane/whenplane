@@ -13,6 +13,8 @@
 	import ImminentBox from "$lib/ImminentBox.svelte";
 	import LTTTime from "$lib/LTTTime.svelte";
 	import ExtensionAd from "$lib/ExtensionAd.svelte";
+	import SpecialStream from "$lib/SpecialStream.svelte";
+	import NewsAnnouncer from "$lib/NewsAnnouncer.svelte";
 
 	export let data;
 
@@ -22,6 +24,13 @@
 	$: isLate = isAfterStartTime && !data.isPreShow && !data.isMainShow;
 
 	$: isFrame = $page.url.searchParams.has("frame");
+
+	const myDomains = [
+		"whenplane.com",
+		"whenwan.show",
+		"wheniswan.pages.dev",
+		"localhost"
+	]
 
 
 	let invalidationInterval: number | undefined;
@@ -87,7 +96,9 @@
 
 	// remove ?attempt after 500 error
 	if(browser && $page.url.searchParams.has("attempt")) {
-		window.history.replaceState({}, document.title, "/" + ($page.url.searchParams.has("frame") ? "?frame" : ""));
+		const newURL = new URL(location.href);
+		newURL.searchParams.delete("attempt");
+		window.history.replaceState({}, document.title, "/" + (newURL.searchParams.size > 0 ? "?" + newURL.searchParams.toString() : ""));
 	}
 
 	function onFocus() {
@@ -97,6 +108,8 @@
 		}
 	}
 
+	const description = "Is the WAN show late? Yes. How late is the WAN show? Probably very! See a countdown to when WAN is supposed to start, as well as how late it's been before.";
+
 
 </script>
 <svelte:window
@@ -104,17 +117,29 @@
 />
 <svelte:head>
 	<title>When is the WAN Show?  {$page.url.hostname === "whenwan.show" ? "whenwan.show" : "Whenplane"}</title>
-	<meta name="description" content="Is the WAN show late? Yes. How late is the WAN show? Probably very! See a countdown to when WAN is supposed to start, as well as how late it's been before."/>
+	<meta name="description" content={description}/>
 </svelte:head>
 
 <div class="absolute top-0 right-0">
 	<LTTTime/>
 </div>
 
+{#if !isFrame}
+	<NewsAnnouncer/>
+{/if}
+
+<span class="clear inline-block absolute z-0">{description}</span>
+
 <div class="container h-full mx-auto justify-center items-center" class:alwaysFlex={isFrame}>
 	<div class="space-y-5 inner">
-		<ImminentBox hasDone={data.hasDone}/>
+		{#if !$page.data.isBot} <!-- so the imminent box stops showing up in search results -->
+			<ImminentBox hasDone={data.hasDone}/>
+		{/if}
 		<div class="text-center">
+			{#if data.specialStream && !$page.data.isBot}
+				<SpecialStream/>
+			{/if}
+			<br>
 			<div class="card p-4 inline-block countdown-box text-left">
 				{#if isLate}
 					The WAN show is currently <span class="red"><Late/></span> by
@@ -162,9 +187,13 @@
 				{/if}
 			</div>
 		</div>
+
+
 		<div class="mx-4">
 			<StreamStatus {data}/>
 		</div>
+
+
 		<div class="text-center">
 			{#if averageLateness || dev}
 				<span class="card px-4 py-2 mb-4 inline-block lateness">
@@ -189,6 +218,8 @@
 				</a>
 			{/if}
 		</div>
+
+
 		{#if data.dan?.isLive}
 			<a class="card border-2 p-2 !border-amber-600 !bg-opacity-20 !bg-amber-600 block relative" href="https://twitch.tv/buhdan">
 				<div class="absolute top-2 right-2 opacity-60">
@@ -203,6 +234,8 @@
 				</div>
 			</a>
 		{/if}
+
+
 		{#if data.isThereWan?.text || data.isThereWan?.image}
 			<div class="card border-2 p-2 !border-amber-600 !bg-opacity-20 !bg-amber-600 block text-center limit">
 				{data.isThereWan?.text ?? ""}
@@ -230,7 +263,7 @@
 
 {#if isFrame}
 	<div class="absolute top-0 left-0 p-2">
-		<span style="font-size: 0.8rem;">
+		<span style="font-size: 0.75rem;">
 			whenplane.com
 		</span>
 	</div>
@@ -256,6 +289,18 @@
 				Consider using it
 			</a>
 			:)
+		</div>
+	</div>
+{/if}
+
+{#if !myDomains.includes($page.url.hostname.replaceAll("www.", ""))}
+	<div class="fixed top-0 w-screen text-center">
+		<div class="card inline-block p-2 mt-2 px-3" style="font-size: 0.75em; background-color: rgba(21, 23, 31, 0.3) !important;">
+			You are using an unofficial domain. Whenplane cannot guarantee that this domain has no WORMS
+			<br>
+			<a href="https://whenplane.com">
+				Use the official domain here
+			</a>
 		</div>
 	</div>
 {/if}

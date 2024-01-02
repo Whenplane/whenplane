@@ -53,6 +53,8 @@ export const handle: Handle = async ({ event, resolve }) => {
         event.params.__c__viewType = event.cookies.get("historyViewType")
     }
 
+    event.params.__h__userAgent = event.request.headers.get("user-agent") ?? undefined
+
     const response = await resolve(event);
 
     if(timings.length > 0) {

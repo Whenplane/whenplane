@@ -4,8 +4,8 @@
   import { page } from "$app/stores";
 </script>
 <svelte:head>
-  <title>Whenplane Floatplane Widget Extension</title>
-  <meta name="description" content="For you fellow Floatplane watchers, I've made a browser extension that replaces the 'Offline' screen on the LTT floatplane channel with whenplane."/>
+  <title>Whenplane Widget Extension</title>
+  <meta name="description" content="For you fellow Floatplane watchers, (and I guess Twitch too) I've made a browser extension that replaces the 'Offline' screen on the LTT Floatplane/Twitch channel with Whenplane."/>
   <meta name="og:image" content="/extension/screenshots/late.png">
   <meta name="twitter:card" content="summary_large_image">
 </svelte:head>
@@ -17,8 +17,8 @@
 </ol>
 
 <div class="limit-large mx-auto mt-12 px-4">
-  <h1>Whenplane Floatplane Widget Extension</h1>
-  For you fellow Floatplane watchers, I've made a browser extension that replaces the "Offline" screen on the LTT floatplane channel with whenplane.<br>
+  <h1>Whenplane Widget Extension</h1>
+  For you fellow Floatplane watchers, (and I guess Twitch too) I've made a browser extension that replaces the "Offline" screen on the LTT Floatplane/Twitch channel with Whenplane.<br>
   It only replaces the offline screen, so it goes away as soon as they go live.
   <br>
   <br>
@@ -26,7 +26,7 @@
   <div class="text-center">
     <a
       class="btn variant-filled-primary my-1"
-      href="https://addons.mozilla.org/en-US/firefox/addon/whenplane-floatplane-widget/"
+      href="https://addons.mozilla.org/en-US/firefox/addon/whenplane-widget/"
       target="_blank"
       rel="noopener"
     >
@@ -43,7 +43,7 @@
       Download for Chrome
     </a>
     <br>
-    or <a href="https://downloads.whenplane.com/whenplane_floatplane_widget-1.0.2.zip" download>download zip</a>
+    or <a href="https://downloads.whenplane.com/whenplane_floatplane_widget-1.1.1.zip" download>download zip</a>
     <br>
     <br>
     <a
@@ -59,14 +59,20 @@
     <br>
     <br>
     <ClickableImage src="/extension/screenshots/late.png" style="width: 25em;" width="1920" height="994"/>
+    <ClickableImage src="/extension/screenshots/late-filled.png" style="width: 25em;" width="1920" height="994"/>
+
     <ClickableImage src="/extension/screenshots/after.png" style="width: 25em;" width="1920" height="994"/>
     <ClickableImage src="/extension/screenshots/filled.png" style="width: 25em;" width="1920" height="994"/>
+
+    <ClickableImage src="/extension/screenshots/twitch-filled.png" style="width: 25em;" width="1920" height="994"/>
     <br>
     <br>
     <div class="text-center">
       <h2>Endorsements</h2>
       <div class="inline-block">
         <img src="/extension/endorsements/tibbyjab.png" alt="tibbyjab: Oh wow this whenplane extension is AMAZING haha tysm to the developer"/>
+        <img src="/extension/endorsements/StupidServerDude.png" alt="StupidServerDude: this whenplane extension is pretty cool lol"/>
+        <img src="/extension/endorsements/Smore.png" alt="Smore: whenplane extension is great lol"/>
       </div>
     </div>
   </div>
