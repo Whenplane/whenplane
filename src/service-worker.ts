@@ -10,10 +10,13 @@ import { build, files, version } from '$service-worker';
 // Create a unique cache name for this deployment
 const CACHE = `cache-${version}`;
 
+const dontCache: string[] = [];
+
 const ASSETS = [
   ...build, // the app itself
   ...files  // everything in `static`
-];
+].filter((a) => !dontCache.includes(a));
+
 
 sw.addEventListener('install', (event) => {
   // Create a new cache and add all files to it
@@ -54,34 +57,20 @@ sw.addEventListener('fetch', (event) => {
       }
     }
 
-    // for everything else, try the network first, but
-    // fall back to the cache if we're offline
-    try {
-      const response = await fetch(event.request);
+    const response = await fetch(event.request);
 
-      // if we're offline, fetch can return a value that is not a Response
-      // instead of throwing - and we can't pass this non-Response to respondWith
-      if (!(response instanceof Response)) {
-        throw new Error('invalid response from fetch');
-      }
-
-      /*if (response.status === 200) {
-        cache.put(event.request, response.clone());
-      }*/
-
-      return response;
-    } catch (err) {
-      // maybe at some point ill add better offline support
-      // const response = await cache.match(event.request);
-      //
-      // if (response) {
-      //   return response;
-      // }
-
-      // if there's no cache, then just error out
-      // as there is nothing we can do to respond to this request
-      throw err;
+    // if we're offline, fetch can return a value that is not a Response
+    // instead of throwing - and we can't pass this non-Response to respondWith
+    if (!(response instanceof Response)) {
+      throw new Error('invalid response from fetch');
     }
+
+    // Assets should already be cached so this *shouldn't* happen, but we're here so why not
+    if (response.status === 200) {
+      event.waitUntil(cache.put(event.request, response.clone()));
+    }
+
+    return response;
   }
 
   if(ASSETS.includes(url.pathname)) event.respondWith(respond());
