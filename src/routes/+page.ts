@@ -60,7 +60,7 @@ export const load = (async ({fetch, params}) => {
 
         })(),
         (async () => {
-            if(Date.now() - specialStreamCache.lastFetch < 5e3) {
+            if(Date.now() - specialStreamCache.lastFetch < 15e3) {
                 specialStream = specialStreamCache.lastData;
             } else {
                 specialStream = await fetch("/api/specialStream?filler" + cacheBuster)
