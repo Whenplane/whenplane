@@ -30,7 +30,7 @@ export const GET = (async ({fetch, url, platform}) => {
     .then(r => r.json() as Promise<WanDb_FloatplaneData>)
     .then(r => {
       // cache response if we dont have it
-      if(!cache.lastData) {
+      if(!cache.lastData && r) {
         cache = {
           lastFetch: Date.now(),
           lastData: r
