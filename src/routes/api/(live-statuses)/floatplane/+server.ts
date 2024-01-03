@@ -37,7 +37,20 @@ export const GET = (async ({fetch, url}) => {
     });
   // don't wait for more than 400ms for thewandb
   const response = await Promise.race([responsePromise, wait(dev ? 1000 : 400)]) as (WanDb_FloatplaneData & {wan?: boolean});
-  if(!response) throw error(504);
+  if(!response) {
+    // dont send cached response if there is no cached data or if the data is pretty old
+    if(cache.lastData && Date.now() - cache.lastFetch < 60e3) {
+      return json({
+        cached: true,
+        lastFetch: cache.lastFetch,
+        cacheReason: "error",
+        ...cache.lastData,
+        via: "TheWanDB"
+      });
+    } else {
+      throw error(504);
+    }
+  }
   cache = {
     lastFetch: Date.now(),
     lastData: response
