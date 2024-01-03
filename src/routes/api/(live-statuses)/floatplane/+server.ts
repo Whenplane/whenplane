@@ -10,7 +10,7 @@ let cache: {
 const cache_time = 5e3;
 const fast_cache_time = 5 * 60 * 60e3;
 
-export const GET = (async ({fetch, url}) => {
+export const GET = (async ({fetch, url, platform}) => {
   const fast = url.searchParams.has("fast");
   if(Date.now() - cache.lastFetch < (fast ? fast_cache_time : cache_time)) {
     return json({
@@ -26,7 +26,19 @@ export const GET = (async ({fetch, url}) => {
       "referer": "whenplane.com",
       "x-whenplane-version": version
     }
-  }).then(r => r.json() as Promise<WanDb_FloatplaneData>)
+  })
+    .then(r => r.json() as Promise<WanDb_FloatplaneData>)
+    .then(r => {
+      // cache response if we dont have it
+      if(!cache.lastData) {
+        cache = {
+          lastFetch: Date.now(),
+          lastData: r
+        }
+      }
+
+      return r;
+    })
     .catch(error => {
       // retry in 30 seconds
       cache = {
