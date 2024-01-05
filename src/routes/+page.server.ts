@@ -3,6 +3,7 @@ import type { Actions } from "@sveltejs/kit";
 import { fail } from "@sveltejs/kit";
 import { latenessVotesCache } from "$lib/stores.ts";
 import { wait } from "$lib/utils.ts";
+import { n } from "$lib/timeUtils.ts";
 
 
 export const actions = {
@@ -15,7 +16,7 @@ export const actions = {
     if(!k) return fail(400, {message: "Missing or invalid validator!"});
 
     const kn = Number(atob(k));
-    if(Date.now() - kn > 15e3) {
+    if(n() - kn > 15e3) {
       return;
     }
 
