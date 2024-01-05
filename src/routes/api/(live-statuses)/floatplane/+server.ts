@@ -60,6 +60,7 @@ export const GET = (async ({fetch, url, platform}) => {
         via: "TheWanDB"
       });
     } else {
+      console.log(cache)
       throw error(504);
     }
   }
