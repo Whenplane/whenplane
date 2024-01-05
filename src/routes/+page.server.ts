@@ -11,6 +11,14 @@ export const actions = {
     const votingFor = url.searchParams.get("for");
     if(!votingFor) return fail(400, {message: "Missing thing to vote for!"});
 
+    const k = url.searchParams.get("k");
+    if(!k) return fail(400, {message: "Missing or invalid validator!"});
+
+    const kn = Number(atob(k));
+    if(Date.now() - kn > 15e3) {
+      return fail(400, {message: "Missing or invalid validator!"});
+    }
+
     await vote(locals.id, votingFor, platform?.env?.DB);
 
     // invalidate lateness voting cache

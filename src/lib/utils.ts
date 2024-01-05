@@ -41,8 +41,9 @@ export function removeAfterLastDash(rawTitle: string) {
     return parts.join(" - ");
 }
 
-
-
+export function e(s: string) {
+    return btoa(s);
+}
 
 export type HistoricalEntry = {
     name: string,

@@ -193,3 +193,7 @@ export function timeString(distance: number | undefined, long = false) {
 }
 
 const daysInMonth = (year: number, month: number) => new Date(year, month, 0).getDate();
+
+export function n() {
+    return Date.now();
+}

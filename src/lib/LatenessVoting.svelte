@@ -10,12 +10,26 @@
   import { nextFast } from "$lib/stores.ts";
   import Info from "$lib/svg/Info.svelte";
   import {popup} from "@skeletonlabs/skeleton";
+  import { onMount } from "svelte";
+  import { n } from "$lib/timeUtils.ts";
+  import { e } from "$lib/utils.ts";
 
   export let mainLate: Writable<MainLate>;
 
   $: total = $page.data.liveStatus?.votes?.reduce((a, x) => a + x.votes, 0) || 1;
 
   let userVote = browser ? JSON.parse(localStorage.getItem("latenessVote") ?? "{\"lastVote\":0}") as UserVote : {lastVote:0}
+
+  let vd = "";
+  onMount(() => {
+    const i = setInterval(updateVd, 1e3);
+    return () => clearInterval(i);
+  });
+
+  function updateVd() {
+    vd = (e(n()+""))
+  }
+
 
 </script>
 
@@ -53,7 +67,7 @@ How late do you think the show will be?
       }}>
   {#each $page.data.liveStatus?.votes as option}
     {@const passed = Math.abs($mainLate.distance ?? 0) > option.time}
-    <button class="block w-full text-left background relative" formaction="?/vote&for={encodeURIComponent(option.name)}" class:passed={passed}>
+    <button class="block w-full text-left background relative" formaction="?/vote&for={encodeURIComponent(option.name)}&k={vd}" class:passed={passed}>
       <span class="block percent" style="width: {(option.votes / total) * 100}%">
         <span class="inline-block px-2">
           <span class:passed={passed}>
