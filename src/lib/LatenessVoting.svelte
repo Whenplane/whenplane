@@ -22,7 +22,7 @@
 
   let vd = "";
   onMount(() => {
-    const i = setInterval(updateVd, 1e3);
+    const i = setInterval(updateVd, 3e3);
     return () => clearInterval(i);
   });
 
