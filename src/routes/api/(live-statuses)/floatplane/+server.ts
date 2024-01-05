@@ -33,7 +33,7 @@ export const GET = (async ({fetch, url, platform}) => {
       if(!cache.lastData && r) {
         cache = {
           lastFetch: Date.now(),
-          lastData: r
+          lastData: typeof r["error"] == "undefined" ? r : cache.lastData
         }
       }
 
@@ -42,7 +42,8 @@ export const GET = (async ({fetch, url, platform}) => {
     .catch(error => {
       // retry in 30 seconds
       cache = {
-        lastFetch: Date.now() - cache_time + 30e3
+        lastFetch: Date.now() - cache_time + 30e3,
+        lastData: cache.lastData
       }
       console.error("Error while fetching fp live status from thewandb:", error);
       return false;
@@ -68,7 +69,7 @@ export const GET = (async ({fetch, url, platform}) => {
   }
   cache = {
     lastFetch: Date.now(),
-    lastData: response
+    lastData: typeof response["error"] == "undefined" ? response : cache.lastData
   }
   if(!response.isWAN) {
     response.isWAN = response.wan;
