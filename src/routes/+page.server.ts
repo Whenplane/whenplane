@@ -16,7 +16,7 @@ export const actions = {
 
     const kn = Number(atob(k));
     if(Date.now() - kn > 15e3) {
-      return fail(400, {message: "Missing or invalid validator!"});
+      return;
     }
 
     await vote(locals.id, votingFor, platform?.env?.DB);
