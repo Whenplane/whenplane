@@ -1,4 +1,4 @@
-<script>
+<script lang="ts">
   import { page } from "$app/stores";
   import sanitizeHtml from "sanitize-html";
   import { onMount } from "svelte";
@@ -7,10 +7,10 @@
 
   let title = "";
   $: url = truncateText(title.replace(/[^A-Za-z0-9- ]+/g, "").replace(/\s\s+/g, ' ').replaceAll(" ", "-").toLowerCase(), 50, false)
-  let content;
-  let timestamp;
+  let content: string;
+  let timestamp: string;
 
-  let timestampCopied;
+  let timestampCopied: boolean;
   let timestampCopying = false;
 
   function updateTimestamp() {
