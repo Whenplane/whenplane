@@ -13,7 +13,7 @@ export const actions = {
     if(!votingFor) return fail(400, {message: "Missing thing to vote for!"});
 
     const k = url.searchParams.get("k");
-    if(!k) return fail(400, {message: "Missing or invalid validator!"});
+    if(!k) return;
 
     const kn = Number(atob(k));
     if(n() - kn > 15e3) {
