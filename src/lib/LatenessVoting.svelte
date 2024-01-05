@@ -13,6 +13,7 @@
   import { onMount } from "svelte";
   import { n } from "$lib/timeUtils.ts";
   import { e } from "$lib/utils.ts";
+  import { strip } from "$lib/cookieUtils.ts";
 
   export let mainLate: Writable<MainLate>;
 
@@ -27,7 +28,7 @@
   });
 
   function updateVd() {
-    vd = (e(n()+""))
+    vd = strip(e(n()+""))
   }
 
 

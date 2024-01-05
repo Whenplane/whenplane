@@ -30,3 +30,8 @@ export function getCookie(cookieName: string) {
   }
   return undefined;
 }
+
+
+export function strip(s: string) {
+  return s.replaceAll("=", "");
+}
