@@ -121,14 +121,23 @@
 </svelte:head>
 
 <div class="absolute top-0 right-0">
-	<LTTTime/>
+	{#if !isFrame}
+		<a class="hidden-link" href="/ltt-time">
+			<LTTTime/>
+		</a>
+	{:else}
+		<LTTTime/>
+	{/if}
 </div>
 
 {#if !isFrame}
 	<NewsAnnouncer/>
 {/if}
 
-<span class="clear inline-block absolute z-0">{description}</span>
+<span class="clear inline-block absolute z-0">
+	{description}
+	When is wan? Who is wan? Why is wan?
+</span>
 
 <div class="container h-full mx-auto justify-center items-center" class:alwaysFlex={isFrame}>
 	<div class="space-y-5 inner">
