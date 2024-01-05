@@ -24,7 +24,8 @@ export const GET = (async ({fetch, url, platform}) => {
   const responsePromise = fetch("https://edge.thewandb.com/v2/live/floatplane", {
     headers: {
       "referer": "whenplane.com",
-      "x-whenplane-version": version
+      "x-whenplane-version": version,
+      "user-agent": "Whenplane/" + version
     }
   })
     .then(r => r.json() as Promise<WanDb_FloatplaneData>)
