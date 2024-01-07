@@ -12,7 +12,16 @@ const config = {
 	},
 
 	kit: {
-		adapter: adapter()
+		adapter: adapter({
+			routes: {
+				exclude: [
+					"*/wp-includes",
+					"*/wp-includes/*",
+					"/wp-includes",
+					"/wp-includes/*",
+				]
+			}
+		})
 	}
 };
 
