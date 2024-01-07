@@ -1,9 +1,9 @@
 import type {PageLoad} from "./$types";
-import { browser, dev, version } from "$app/environment";
+import { browser, dev } from "$app/environment";
 import { error } from "@sveltejs/kit";
 import type { Latenesses } from "./api/latenesses/+server";
 import type { AggregateResponse } from "./api/(live-statuses)/aggregate/+server";
-import type { SpecialStream, WanDb_FloatplaneData } from "$lib/utils.ts";
+import type { WanDb_FloatplaneData } from "$lib/utils.ts";
 import { floatplaneState, nextFast } from "$lib/stores.ts";
 import { wait } from "$lib/utils.ts";
 import type { NewsPost } from "$lib/news/news.ts";
@@ -14,11 +14,6 @@ let cachedLatenessesTime = 0 ;
 let danCache: {
     lastFetch: number,
     lastData?: DanResponse
-} = {lastFetch: 0}
-
-let specialStreamCache: {
-    lastFetch: number,
-    lastData?: SpecialStream
 } = {lastFetch: 0}
 
 let lastNewsPostCache: NewsPost;
