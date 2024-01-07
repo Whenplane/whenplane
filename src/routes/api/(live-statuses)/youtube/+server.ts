@@ -20,6 +20,8 @@ let savedStartTime: boolean | undefined = undefined;
 
 export const GET = (async ({platform, locals, url, fetch}) => {
 
+    // return json({forcedDev: true,"isLive":false,"isWAN":true,"videoId":"KtSabkVT8y4","forced":false,"upcoming":true})
+
     const history: KVNamespace = platform?.env?.HISTORY;
     const fetcher: DurableObjectNamespace = platform?.env?.FETCHER;
     if(!history) throw error(503, "History not available");

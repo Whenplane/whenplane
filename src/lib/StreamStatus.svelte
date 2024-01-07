@@ -42,7 +42,7 @@
         <span><Youtube/></span>
         <span>
             Youtube<br>
-            <span class="status opacity-50" class:wan={data.liveStatus.youtube.isWAN}>
+            <span class="status opacity-50" class:wan={data.liveStatus.youtube.isWAN} class:upcoming={data.liveStatus.youtube.upcoming}>
                 {#if data.liveStatus.youtube.isLive}
                     {#if data.liveStatus.youtube.isWAN}
                         (live)
@@ -126,6 +126,10 @@
 
     .wan {
         color: green
+    }
+
+    .upcoming {
+        color: yellow;
     }
 
     @media (pointer: coarse) {
