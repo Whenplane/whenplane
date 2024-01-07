@@ -47,7 +47,6 @@ export const load = (async ({fetch, params}) => {
     let latenesses: Latenesses | undefined;
     let dan: DanResponse | undefined;
     let fpState: WanDb_FloatplaneData | undefined;
-    let specialStream: SpecialStream | undefined;
     let lastNewsPost: NewsPost | undefined;
 
     await Promise.all([
@@ -58,18 +57,6 @@ export const load = (async ({fetch, params}) => {
               .then(r => r.json());
 
 
-        })(),
-        (async () => {
-            if(Date.now() - specialStreamCache.lastFetch < 15e3) {
-                specialStream = specialStreamCache.lastData;
-            } else {
-                specialStream = await fetch("/api/specialStream?filler" + cacheBuster)
-                  .then(r => r.json());
-                specialStreamCache = {
-                    lastFetch: Date.now(),
-                    lastData: specialStream
-                }
-            }
         })(),
         (async () => {
             if(!lastNewsPostCache) {
@@ -186,7 +173,7 @@ export const load = (async ({fetch, params}) => {
         averageLateness: latenesses?.averageLateness,
         medianLateness: latenesses?.medianLateness,
         dan,
-        specialStream,
+        specialStream: liveStatus.specialStream,
         lastNewsPost,
         isBot: /bot|googlebot|crawler|spider|robot|crawling/i
           .test(browser ? navigator?.userAgent : params.__h__userAgent),

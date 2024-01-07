@@ -6,6 +6,7 @@ import type { TwitchResponse } from "../twitch/+server";
 import type { YoutubeResponse } from "../youtube/+server";
 import type { LatenessVotingOption } from "$lib/voting.ts";
 import type { KVNamespace } from "@cloudflare/workers-types";
+import type { SpecialStream } from "$lib/utils.ts";
 
 export const GET = (async ({url, fetch, locals, platform}) => {
     const fast = url.searchParams.get("fast");
@@ -42,6 +43,15 @@ export const GET = (async ({url, fetch, locals, platform}) => {
         return response;
     })();
 
+    let spTime: number | undefined;
+    const specialStream = (async () => {
+        const start = Date.now();
+        const response = await fetch("/api/specialStream?short&fast=" + fast)
+          .then(r => r.json());
+        spTime = Date.now() - start;
+        return response;
+    })();
+
     const response: AggregateResponse = {
         twitch: await twitch,
         // floatplane,
@@ -49,12 +59,14 @@ export const GET = (async ({url, fetch, locals, platform}) => {
         isThereWan: await isThereWan,
         hasDone: await hasDone,
         votes: await votes,
+        specialStream: await specialStream
         // showExtension: await showExtension
     }
 
     locals.addTiming({id: "twitch", duration: twitchTime ?? -1});
     locals.addTiming({id: "youtube", duration: ytTime ?? -1});
     locals.addTiming({id: "votes", duration: votesTime ?? -1});
+    locals.addTiming({id: "specialStream", duration: spTime ?? -1});
 
     return json(response)
 }) satisfies RequestHandler;
@@ -65,5 +77,6 @@ export type AggregateResponse = {
     isThereWan: IsThereWanResponse,
     hasDone: boolean,
     votes: LatenessVotingOption[],
+    specialStream: SpecialStream
     // showExtension: boolean
 }
