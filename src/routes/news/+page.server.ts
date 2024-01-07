@@ -25,7 +25,8 @@ export const load = (async ({platform}) => {
   }
 
   return {
-    results: await db.prepare("select * from news order by timestamp DESC")
+    results: await db.prepare("select * from news where timestamp <= ? order by timestamp DESC")
+      .bind(Date.now())
       .all<NewsPost>()
       .then(r => r.results as unknown as NewsPost[])
       .then(r => r.map(n => {return {...n, body: truncateText(n.body, 500)}}))
