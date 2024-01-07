@@ -16,6 +16,7 @@ declare namespace App {
             FETCHER: DurableObjectNamespace;
             TWITCH_ANALYTICS?: AnalyticsEngineDataset;
             LOG_MESSAGES?: AnalyticsEngineDataset;
+            REQUESTS?: AnalyticsEngineDataset;
             DB: D1Database;
         },
         context?: {
