@@ -157,7 +157,7 @@ export const load = (async ({fetch, params}) => {
     if(!liveStatus) throw error(500, "Missing liveStatus!");
 
     const isPreShow = !liveStatus.youtube.isWAN && liveStatus.twitch.isWAN;
-    const isMainShow = liveStatus.youtube.isWAN;
+    const isMainShow = liveStatus.youtube.isWAN && liveStatus.youtube.isLive;
 
     const preShowStarted = isPreShow ? liveStatus.twitch.started : undefined;
     const mainShowStarted = isMainShow ? liveStatus.youtube.started : undefined;
