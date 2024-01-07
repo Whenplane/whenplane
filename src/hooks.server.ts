@@ -8,7 +8,7 @@ let devBindings: App.Platform | undefined;
 
 export const handle: Handle = async ({ event, resolve }) => {
 
-    if(event.platform?.env?.REQUESTS) {
+    if(event.platform?.env?.REQUESTS && event.request.headers.has("host")) {
         event.platform?.env?.REQUESTS.writeDataPoint({
             blobs: [event.url.pathname],
             doubles: [],
