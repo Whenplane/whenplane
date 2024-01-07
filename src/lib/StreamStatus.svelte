@@ -38,7 +38,7 @@
             </span>
         </span>
     </a>
-    <a class="logo-item" href="https://www.youtube.com/linustechtips/live" target="_blank" rel="noopener">
+    <a class="logo-item" href="/youtube-redirect" target="_blank">
         <span><Youtube/></span>
         <span>
             Youtube<br>

@@ -47,7 +47,9 @@
     const pagesWithDescription = [
       "/",
       "/history",
-      "/extension"
+      "/extension",
+      "/ltt-time",
+      "/youtube-redirect"
     ]
 
     $: pathname = $page.url.pathname;

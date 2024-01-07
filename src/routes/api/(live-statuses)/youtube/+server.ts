@@ -20,7 +20,7 @@ let savedStartTime: boolean | undefined = undefined;
 
 export const GET = (async ({platform, locals, url, fetch}) => {
 
-    // return json({forcedDev: true,"isLive":false,"isWAN":true,"videoId":"KtSabkVT8y4","forced":false,"upcoming":true})
+    // if(new Date().getSeconds() > 50) return json({forcedDev: true,"isLive":false,"isWAN":true,"videoId":"KtSabkVT8y4","forced":false,"upcoming":true})
 
     const history: KVNamespace = platform?.env?.HISTORY;
     const fetcher: DurableObjectNamespace = platform?.env?.FETCHER;
@@ -98,6 +98,7 @@ export const GET = (async ({platform, locals, url, fetch}) => {
 
 
     const result: YoutubeResponse = {
+        time: Date.now(),
         isLive,
         isWAN,
         started,
@@ -113,6 +114,7 @@ export const GET = (async ({platform, locals, url, fetch}) => {
 }) satisfies RequestHandler;
 
 export type YoutubeResponse = {
+    time: number,
     isLive: boolean,
     isWAN?: boolean,
     started?: string,
