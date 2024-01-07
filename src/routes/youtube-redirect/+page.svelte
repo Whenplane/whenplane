@@ -33,8 +33,13 @@
     localStorage.setItem("ytrNotif", sendNotification+"");
   }
 
+  let lastCheck = new Date();
+
   onMount(() => {
-    let i = setInterval(invalidateAll, 5e3);
+    let i = setInterval(() => {
+      invalidateAll();
+      lastCheck = new Date();
+    }, 5e3);
     return () => clearInterval(i);
   });
 
@@ -70,7 +75,7 @@
   <br>
   <br>
   <span class="opacity-70">
-    Last checked {new Date(data.youtube.time).toLocaleTimeString(undefined, {timeStyle: "medium"})}
+    Last checked {lastCheck.toLocaleTimeString(undefined, {timeStyle: "medium"})}
   </span>
   <br>
   <br>
