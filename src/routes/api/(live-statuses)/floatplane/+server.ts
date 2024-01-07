@@ -69,7 +69,7 @@ export const GET = (async ({fetch, url, platform}) => {
     }
   }
   cache = {
-    lastFetch: Date.now(),
+    lastFetch: typeof response["error"] == "undefined" ? Date.now() : Date.now() + 15e3, // dont fetch for an extra 15 seconds if the response has an error
     lastData: typeof response["error"] == "undefined" ? response : cache.lastData
   }
   if(!response.isWAN) {
