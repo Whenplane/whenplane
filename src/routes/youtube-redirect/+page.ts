@@ -4,7 +4,8 @@ import { redirect } from "@sveltejs/kit";
 import { browser } from "$app/environment";
 
 export const load = (async ({fetch}) => {
-  const youtubeData = await fetch("/api/youtube")
+  const fast = (!browser || (location && location.pathname !== "/"));
+  const youtubeData = await fetch("/api/youtube?fast=" + fast)
     .then(r => r.json() as Promise<YoutubeResponse>);
 
   if(youtubeData.videoId && !browser) {
