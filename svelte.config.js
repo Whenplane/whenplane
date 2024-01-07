@@ -15,8 +15,8 @@ const config = {
 		adapter: adapter({
 			routes: {
 				exclude: [
-					"*/wp-includes",
-					"*/wp-includes/*",
+					"/*/wp-includes",
+					"/*/wp-includes/*",
 					"/wp-includes",
 					"/wp-includes/*",
 				]
