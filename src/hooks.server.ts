@@ -1,5 +1,6 @@
 import type {Handle} from "@sveltejs/kit";
 import {dev} from "$app/environment";
+import { random } from "$lib/utils.ts";
 
 const reportedIds: {[key: string]: number} = {};
 
@@ -12,7 +13,11 @@ export const handle: Handle = async ({ event, resolve }) => {
     if(!id) {
         id = crypto.randomUUID();
         const expires = new Date();
-        expires.setDate(expires.getDate() + 30);
+        expires.setUTCMonth(expires.getUTCMonth() + 1);
+        expires.setDate(0);
+        expires.setUTCHours(0);
+        expires.setUTCMinutes(0);
+        expires.setUTCSeconds(random(-60, 60));
 
         // If the cookie is supposed to expire around wan day, delay it
         if(expires.getUTCDay() === 5 || expires.getUTCDay() === 6) {

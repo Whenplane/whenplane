@@ -4,14 +4,33 @@
 
     let alt = "\"This is Awkward\" - Thumbnail from March 12th, 2021"
 
+    let attempt = Number($page.url.searchParams.get("attempt") ?? 0);
+
     if(browser && $page.status === 500 && $page.url.pathname === "/") {
-        let attempt = $page.url.searchParams.get("attempt") ?? 0;
+        checkForReload();
+    }
+
+    function checkForReload() {
         // Auto-reload if root page throws a 500. This usually just happens because the data request failed. Thanks sveltekit..
         setTimeout(() => {
             const newUrl = new URL(location.href);
-            newUrl.searchParams.set("attempt", ++attempt)
-            location.href = newUrl.toString();
-        }, Math.min(Math.max(3e3, 3e3 * (attempt / 3)), 30e3));// delay by 3-30 seconds so that we don't spam reloads if the site is actually broken
+            newUrl.searchParams.set("attempt", (++attempt) + "")
+
+            history.replaceState({}, document.title, newUrl.toString());
+
+            // check if the page is ok before redirecting
+            fetch(newUrl.toString())
+              .then(r => {
+                  if(r.ok) {
+                      location.href = newUrl.toString();
+                  } else {
+                      checkForReload();
+                  }
+              })
+              // eslint-disable-next-line @typescript-eslint/no-empty-function
+              .catch(checkForReload);
+
+        }, Math.min(Math.max(3e3, 3e3 * (attempt / 3)), 30e3));// delay by 3-30 seconds so that we don't spam if the site is actually broken
     }
 </script>
 
@@ -20,7 +39,7 @@
         <img src="/this_is_awkward.webp" {alt} title={alt}/>
     </a>
     <h1>{$page.status}</h1>
-    {$page.error.message}
+    {$page.error?.message}
 </div>
 
 <style>
