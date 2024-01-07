@@ -7,8 +7,9 @@ const sw = self as unknown as ServiceWorkerGlobalScope;
 
 import { build, files, version } from '$service-worker';
 
+const CACHE_PREFIX = "cache-"
 // Create a unique cache name for this deployment
-const CACHE = `cache-${version}`;
+const CACHE = CACHE_PREFIX + version;
 
 const dontCache: string[] = [];
 
@@ -23,6 +24,15 @@ sw.addEventListener('install', (event) => {
   async function addFilesToCache() {
     const cache = await caches.open(CACHE);
     await cache.addAll(ASSETS);
+
+    const others = await caches.keys()
+      .then(keys => keys.filter(k => k !== CACHE))
+      .then(keys => keys.filter(k => k.startsWith(CACHE_PREFIX)));
+
+    for (const other of others) {
+      await caches.delete(other);
+    }
+
   }
 
   event.waitUntil(addFilesToCache());
