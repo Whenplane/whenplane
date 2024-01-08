@@ -312,7 +312,7 @@
 {#if !myDomains.includes($page.url.hostname.replaceAll("www.", ""))}
 	<div class="fixed top-0 w-screen text-center">
 		<div class="card inline-block p-2 mt-2 px-3" style="font-size: 0.75em; background-color: rgba(21, 23, 31, 0.3) !important;">
-			You are using an unofficial domain. Whenplane cannot guarantee that this domain has no WORMS
+			You are using an unofficial domain. Whenplane cannot guarantee that this domain doesnt modify the site in any way.
 			<br>
 			<a href="https://whenplane.com">
 				Use the official domain here
