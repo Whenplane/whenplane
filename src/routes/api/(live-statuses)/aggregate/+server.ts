@@ -11,10 +11,10 @@ import type { SpecialStream } from "$lib/utils.ts";
 export const GET = (async ({url, fetch, locals, platform}) => {
 
 
-    const now = new Date();
+    /*const now = new Date();
     if(now.getUTCMonth() === 0 && now.getUTCDate() === 8 && now.getUTCHours() === 16 && now.getUTCMinutes() === 31) {
         throw error(500, "Reload Forcer");
-    }
+    }*/
 
 
     const fast = url.searchParams.get("fast");
