@@ -1,5 +1,5 @@
 import type {RequestHandler} from "@sveltejs/kit";
-import {json} from "@sveltejs/kit";
+import { error, json } from "@sveltejs/kit";
 import type { IsThereWanResponse } from "../isThereWan/+server";
 import type { HasDoneResponse } from "../../hasDone/+server";
 import type { TwitchResponse } from "../twitch/+server";
@@ -9,6 +9,14 @@ import type { KVNamespace } from "@cloudflare/workers-types";
 import type { SpecialStream } from "$lib/utils.ts";
 
 export const GET = (async ({url, fetch, locals, platform}) => {
+
+
+    const now = new Date();
+    if(now.getUTCMonth() === 0 && now.getUTCDate() === 8 && now.getUTCHours() === 16 && now.getUTCMinutes() === 31) {
+        throw error(500, "Reload Forcer");
+    }
+
+
     const fast = url.searchParams.get("fast");
     const isNextFast = url.searchParams.get("isNextFast");
 
