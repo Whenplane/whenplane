@@ -40,19 +40,6 @@
             <LoadingRecord>
                 Most late show
             </LoadingRecord>
-            <br>
-            <LoadingRecord>
-                Longest pre-show
-            </LoadingRecord>
-            <LoadingRecord>
-                Longest main show
-            </LoadingRecord>
-            <LoadingRecord>
-                Late Streak
-            </LoadingRecord>
-            <LoadingRecord>
-                Show Streak
-            </LoadingRecord>
             <Accordion>
                 <AccordionItem>
                     <svelte:fragment slot="summary">More records/stats</svelte:fragment>
