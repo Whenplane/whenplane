@@ -35,13 +35,20 @@
 
 	let invalidationInterval: number | undefined;
 	let lastInvalidation = Date.now();
+
+	let i = 0;
 	function invalidate() {
 		// Only update in the background if there hasnt been an update for 30 minutes
-		if(document.hidden && Date.now() - lastInvalidation < 30e3) {
+		if(document.hidden && Date.now() - lastInvalidation < 30 * 60e3) {
 			// console.debug("not updating", { hidden: document.hidden, distance: Date.now() - lastInvalidation });
 			return;
 		}
-		// console.debug("updating")
+		const day = new Date().getUTCDay();
+
+		// update less often when far away from wan time
+		if(day < 5 && i++ % 2 === 0) {
+			return;
+		}
 
 		lastInvalidation = Date.now();
 		invalidateAll();
