@@ -20,8 +20,8 @@
 <br>
 
 <div class="limit mx-auto">
-  <h1>News</h1>
-  I will occasionally post news and updates here related to Whenplane here.<br>
+  <h1>{$page.url.hostname === "whenwan.show" ? "whenwan.show" : "Whenplane"} News</h1>
+  I will occasionally post news and updates here related to {$page.url.hostname === "whenwan.show" ? "whenwan.show" : "Whenplane"} here.<br>
   <br>
   <hr>
   {#each data.results as post}
