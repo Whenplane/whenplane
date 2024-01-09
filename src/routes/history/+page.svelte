@@ -79,7 +79,7 @@
         {/each}
 
         {#if nextYear >= 2012}
-            <div style="height: 0; display: inline-block;" id="old-history">
+            <div style="height: 0; display: inline-block;">
                 <div class="relative pointer-events-none" style="bottom: 50em">
                     {#key shows}
                         <LazyLoad on:visible={loadNextYear} height="50em"/>
