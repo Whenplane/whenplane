@@ -52,35 +52,37 @@ export type HistoricalEntry = {
 }
 
 export type OldShowMeta = {
-    preShowStart?: string,
-    mainShowStart?: string,
-    showEnd?: string,
-    title?: string,
-    mainShowLength?: number
+    preShowStart?: string | null,
+    mainShowStart?: string | null,
+    showEnd?: string | null,
+    title?: string | null,
+    mainShowLength?: number | null
     vods?: {
         floatplane?: string,
         youtube: string,
         youtubeParts?: string[]
     },
-    snippet?: {
-        publishedAt: string,
-        channelId: string,
+    snippet?: YoutubeSnippet | null
+}
+
+export type YoutubeSnippet = {
+    publishedAt: string,
+    channelId: string,
+    title: string,
+    description?: string,
+    thumbnails: {
+        default?: YoutubeThumbnail,
+        medium?: YoutubeThumbnail,
+        high?: YoutubeThumbnail,
+        standard?: YoutubeThumbnail,
+        maxres?: YoutubeThumbnail
+    },
+    channelTitle: string,
+    tags?: string[],
+    categoryId?: string,
+    localized?: {
         title: string,
-        description?: string,
-        thumbnails: {
-            default?: YoutubeThumbnail,
-            medium?: YoutubeThumbnail,
-            high?: YoutubeThumbnail,
-            standard?: YoutubeThumbnail,
-            maxres?: YoutubeThumbnail
-        },
-        channelTitle: string,
-        tags?: string[],
-        categoryId?: string,
-        localized?: {
-            title: string,
-            description: string
-        }
+        description: string
     }
 }
 

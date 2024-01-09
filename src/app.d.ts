@@ -29,7 +29,8 @@ declare namespace App {
     }
 }
 
-type KVListResponse = {
+type KVListResponse<Metadata = unknown> = KVNamespaceListResult<Metadata, string>
+/*type KVListResponse = {
     keys: {
         name: string,
         metadata: {
@@ -39,7 +40,7 @@ type KVListResponse = {
     }[],
     list_complete: boolean,
     cursor: string
-}
+}*/
 
 type BestShow = {
     name: string,
