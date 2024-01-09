@@ -38,7 +38,7 @@
         fetch("/api/history/year/" + nextYear)
           .then(r => r.json() as Promise<HistoricalEntry[]>)
           .then(newShows => {
-              console.debug("Adding " + newShows.length + " shows from ", newShows[0]?.name.split("/")[0])
+              console.debug("Adding " + newShows.length + " shows from " + newShows[0]?.name.split("/")[0])
               shows.push(...newShows);
               shows = shows;
               nextYear--;
