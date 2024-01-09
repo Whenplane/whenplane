@@ -72,7 +72,7 @@
          class:thumbnailless-inline={view === 3}
     >
         {#each shows as show, i (show.name)}
-            <HistoricalShow {show} withThumbnail={view < 2}/>
+            <HistoricalShow {show} withThumbnail={view < 2} lazyLoadThumbnail={i > 10}/>
             {#if i === 50}
                 <LinusFace/>
             {/if}
