@@ -17,14 +17,14 @@ export const GET = (async ({platform, params, locals, fetch}) => {
     const keyNames: string[] = []
 
     const keyPromises: Promise<HistoricalEntry>[] = [];
-    let list_complete = false;
-    let cursor: string | undefined = undefined;
 
     let lists = 0;
 
     const start = Date.now();
 
     for (const year of years) {
+        let list_complete = false;
+        let cursor: string | undefined = undefined;
         while(!list_complete) {
             const listStart = Date.now();
             const list: KVListResponse<OldShowMeta> = await history.list<OldShowMeta>({
@@ -98,6 +98,7 @@ export const GET = (async ({platform, params, locals, fetch}) => {
             for (const historicalShow of historicalShows) {
                 if(!historicalShow.name.startsWith(year)) continue;
                 if(keyNames.includes(historicalShow.name)) continue;
+                keyNames.push(historicalShow.name);
                 keyPromises.push(Promise.resolve(historicalShow));
             }
         }

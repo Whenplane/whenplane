@@ -1,6 +1,5 @@
-<script>
+<script lang="ts">
     import HistoricalShow from "$lib/history/HistoricalShow.svelte";
-    import OldHistory from "$lib/history/OldHistory.svelte";
     import { browser, dev } from "$app/environment";
     import HistoryRecords from "$lib/history/HistoryRecords.svelte";
     import LinusFace from "$lib/history/LinusFace.svelte";
@@ -11,11 +10,17 @@
     import CardImage from "svelte-bootstrap-icons/lib/CardImage.svelte"
     import Images from "svelte-bootstrap-icons/lib/Images.svelte"
     import Grid from "svelte-bootstrap-icons/lib/Grid.svelte"
-    import Live from "$lib/history/Live.svelte";
+    import { countTo, type HistoricalEntry } from "$lib/utils.js";
+    import LoadingHistoricalShow from "$lib/history/LoadingHistoricalShow.svelte";
+    import LazyLoad from "@dimfeld/svelte-lazyload";
 
     export let data;
 
     console.debug({data})
+
+    let shows = data.history.shows;
+
+    let nextYear = data.history.lowestYear - 1;
 
     let view = data.history.viewType ?? 0;
 
@@ -24,8 +29,20 @@
         if(first) {
             first = false;
         } else if(browser) {
-            setCookie("historyViewType", view);
+            setCookie("historyViewType", view+"");
         }
+    }
+
+    function loadNextYear() {
+        console.debug("Fetching", nextYear)
+        fetch("/api/history/year/" + nextYear)
+          .then(r => r.json() as Promise<HistoricalEntry[]>)
+          .then(newShows => {
+              console.debug("Adding " + newShows.length + " shows from ", newShows[0]?.name.split("/")[0])
+              shows.push(...newShows);
+              shows = shows;
+              nextYear--;
+          })
     }
 
 </script>
@@ -54,13 +71,42 @@
          class:old-layout={view === 2}
          class:thumbnailless-inline={view === 3}
     >
-        {#each data.history.currentYear as show (show.name)}
+        {#each shows as show, i (show.name)}
             <HistoricalShow {show} withThumbnail={view < 2}/>
+            {#if i === 50}
+                <LinusFace/>
+            {/if}
         {/each}
-        <LinusFace/>
-        <OldHistory withThumbnail={view < 2}/>
+
+        {#if nextYear >= 2012}
+            <div style="height: 0; display: inline-block;" id="old-history">
+                <div class="relative pointer-events-none" style="bottom: 50em">
+                    {#key shows}
+                        <LazyLoad on:visible={loadNextYear} height="50em"/>
+                    {/key}
+                </div>
+            </div>
+            {#each countTo(20) as i}
+                <LoadingHistoricalShow withThumbnail={view < 2}/>
+            {/each}
+
+        {:else}
+            <br>
+            <br>
+            <br>
+            <span class="opacity-50 thats-all">
+                <h2>That's it!</h2>
+                You've reached the very beginning.<br>
+            </span>
+        {/if}
         <br>
         <br>
         <br>
     </div>
 </div>
+
+<style>
+    .thats-all {
+        padding-bottom: 20vh;
+    }
+</style>

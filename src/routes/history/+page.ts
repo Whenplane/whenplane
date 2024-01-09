@@ -13,9 +13,27 @@ export const load = (async ({fetch, params, url}) => {
         cacheBusting = "";
     }
 
-    const oldHistory = url.searchParams.has("old") ? import("$lib/history/oldHistory.ts") : undefined;
+    const currentYear = now.getUTCFullYear();
+    const years = [];
+
+    for (let i = 0; i < 2; i++) {
+        years.push(currentYear - i);
+    }
+
+    let lowestYear = years[years.length-1];
+
+    if(url.searchParams.has("to")) {
+        const goTo = Number(url.searchParams.get("to"))
+        if(!isNaN(goTo)) {
+            while(lowestYear > goTo && lowestYear > 2008) {
+                lowestYear--;
+                years.push(lowestYear);
+            }
+        }
+    }
+
     const records = fetch("/api/history/records").then(r => r.json());
-    const currentYear = await fetch("/api/history/year/all" + cacheBusting).then(r => r.json());
+    const shows = await fetch("/api/history/year/" + years.join(",") + cacheBusting).then(r => r.json());
 
     // only wait 50ms extra for records. If they aren't done fetching by then,
     //  just return the promise so sveltekit can stream it when it does finish
@@ -31,10 +49,10 @@ export const load = (async ({fetch, params, url}) => {
     const recordsDone = !!returned;
     return {
         history: {
-            currentYear,
+            shows,
             records: recordsDone ? await records : records,
             viewType,
-            oldHistory: oldHistory ? await oldHistory : undefined
+            lowestYear
         }
     }
 }) satisfies PageLoad;
