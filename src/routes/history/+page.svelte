@@ -86,10 +86,18 @@
                     {/key}
                 </div>
             </div>
+
             {#each countTo(20) as i}
                 <LoadingHistoricalShow withThumbnail={view < 2}/>
             {/each}
 
+            <div style="height: 0; display: inline-block;">
+                <div class="relative pointer-events-none" style="bottom: 50em">
+                    {#key shows}
+                        <LazyLoad on:visible={loadNextYear} height="50em"/>
+                    {/key}
+                </div>
+            </div>
         {:else}
             <br>
             <br>
@@ -108,5 +116,16 @@
 <style>
     .thats-all {
         padding-bottom: 20vh;
+    }
+
+    :global(.old-layout > a) {
+        display: block;
+        margin-left: auto;
+        margin-right: auto;
+    }
+    :global(.thumbnail-list > a) {
+        display: block;
+        margin-left: auto;
+        margin-right: auto;
     }
 </style>

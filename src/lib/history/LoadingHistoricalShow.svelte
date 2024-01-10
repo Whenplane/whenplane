@@ -46,12 +46,6 @@
   <span class="placeholder animate-pulse inline-block w-64"></span>
 </div>
 <style>
-    :global(.old-layout) a {
-        display: block
-    }
-    :global(.thumbnail-list) a {
-        display: block
-    }
 
     .thumbnail-space {
         width: min(28.5rem, 95vw);
