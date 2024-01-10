@@ -56,7 +56,8 @@ export type OldShowMeta = {
     mainShowStart?: string | null,
     showEnd?: string | null,
     title?: string | null,
-    mainShowLength?: number | null
+    mainShowLength?: number | null,
+    thumbnails?: YoutubeThumbnails,
     vods?: {
         floatplane?: string,
         youtube: string,
@@ -70,13 +71,7 @@ export type YoutubeSnippet = {
     channelId: string,
     title: string,
     description?: string,
-    thumbnails: {
-        default?: YoutubeThumbnail,
-        medium?: YoutubeThumbnail,
-        high?: YoutubeThumbnail,
-        standard?: YoutubeThumbnail,
-        maxres?: YoutubeThumbnail
-    },
+    thumbnails: YoutubeThumbnails,
     channelTitle: string,
     tags?: string[],
     categoryId?: string,
@@ -84,6 +79,14 @@ export type YoutubeSnippet = {
         title: string,
         description: string
     }
+}
+
+export type YoutubeThumbnails = {
+    default?: YoutubeThumbnail,
+    medium?: YoutubeThumbnail,
+    high?: YoutubeThumbnail,
+    standard?: YoutubeThumbnail,
+    maxres?: YoutubeThumbnail
 }
 
 export type YoutubeThumbnail = {
