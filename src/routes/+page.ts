@@ -110,8 +110,8 @@ export const load = (async ({fetch, params}) => {
         (async () => {
 
             const now = new Date();
-            // don't check for dan streams on fridays after 4pm
-            if(now.getUTCDay() === 5 && now.getUTCHours() >= 11) {
+            // don't check for dan streams on fridays after 4am, or all of saturday
+            if((now.getUTCDay() === 5 && now.getUTCHours() >= 11) || now.getUTCDay() === 6) {
                 dan = {
                     isLive: false,
                     bypassed: true,
