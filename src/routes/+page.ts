@@ -118,7 +118,7 @@ export const load = (async ({fetch, params}) => {
                     bypassed_by: "page"
                 }
             } else {
-                if(Date.now() - danCache.lastFetch > 30e3) {
+                if(Date.now() - danCache.lastFetch > 60e3) {
                     dan = (await fetch("/api/dan?short=true&fast=" + fast + "&d=" + Date.now())
                       .then(r => r.json())) as DanResponse;
                     danCache = {
