@@ -67,7 +67,8 @@ export const GET = (async ({url, fetch, locals, platform}) => {
         isThereWan: await isThereWan,
         hasDone: await hasDone,
         votes: await votes,
-        specialStream: await specialStream
+        specialStream: await specialStream,
+        reloadNumber: 0
         // showExtension: await showExtension
     }
 
@@ -85,6 +86,7 @@ export type AggregateResponse = {
     isThereWan: IsThereWanResponse,
     hasDone: boolean,
     votes: LatenessVotingOption[],
-    specialStream: SpecialStream
+    specialStream: SpecialStream,
+    reloadNumber: number
     // showExtension: boolean
 }

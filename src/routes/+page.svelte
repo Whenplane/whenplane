@@ -32,6 +32,13 @@
 		"localhost"
 	]
 
+	const reloadNumber = data.liveStatus.reloadNumber;
+	$: {
+		if(data.liveStatus.reloadNumber != reloadNumber) {
+			location.href = "";
+		}
+	}
+
 
 	let invalidationInterval: number | undefined;
 	let lastInvalidation = Date.now();
