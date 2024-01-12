@@ -1,11 +1,19 @@
 <script lang="ts">
   import { page } from "$app/stores";
   import { dev } from "$app/environment";
+  import { onMount } from "svelte";
 
   $: data = $page.data;
 
+  let minuteNow = Date.now();
+
+  onMount(() => {
+    let i = setInterval(() => minuteNow = Date.now(), 60e3);
+    return () => clearInterval(i);
+  })
+
   // Only show news if there is a post from the past 3 days
-  $: isRecent = (data.lastNewsPost?.timestamp ?? 0) > (Date.now() - (3 * 24 * 60 * 60e3)) /*|| dev*/
+  $: isRecent = (data.lastNewsPost?.timestamp ?? 0) > (Date.now() - (3 * 24 * 60 * 60e3)) && (data.lastNewsPost?.timestamp ?? 0 < minuteNow) /*|| dev*/
   $: href = isRecent ? "/news/" + data.lastNewsPost.url : "/news";
 </script>
 

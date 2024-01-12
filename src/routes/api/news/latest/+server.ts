@@ -12,7 +12,7 @@ export const GET = (async ({platform}) => {
 
   return json(
     await db.prepare("select * from news where timestamp <= ? order by timestamp DESC limit 1")
-      .bind(Date.now())
+      .bind(Date.now() + (60 * 60e3))
       .all<NewsPost>()
       .then(r => r.results[0] as unknown as NewsPost)
       .then(n => {return {...n, body: truncateText(n.body, 500)}})
