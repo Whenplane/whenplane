@@ -64,4 +64,6 @@
     {/if}
 </svelte:head>
 
-<slot />
+<div class="padding-0 margin-0 text-sizer">
+    <slot />
+</div>

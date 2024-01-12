@@ -37,15 +37,17 @@
 How late do you think the show will be?
 
 
-<div
-  class="text-surface pt-3 inline-block info [&>*]:pointer-events-none"
-  use:popup={{
+<div class="inline-block relative">
+  <div
+    class="absolute bottom-0 text-surface pt-3 inline-block info [&>*]:pointer-events-none"
+    use:popup={{
     event: 'hover',
     target: 'latenessVotingInfo',
     placement: 'top'
   }}
->
-  <Info/>
+  >
+    <Info/>
+  </div>
 </div>
 
 <div data-popup="latenessVotingInfo">
@@ -108,7 +110,7 @@ How late do you think the show will be?
       text-decoration: line-through;
   }
   .background {
-      @apply my-3;
+      @apply my-2;
       background-color: rgba(0, 0, 0, 0.15);
       border-radius: 4px;
   }

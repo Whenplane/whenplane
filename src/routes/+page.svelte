@@ -210,7 +210,7 @@
 		</div>
 
 
-		<div class="text-center">
+		<div class="text-center lateness-stats">
 			{#if averageLateness || dev}
 				<span class="card px-4 py-2 mb-4 inline-block lateness">
 					<h3>Average lateness</h3>
@@ -255,14 +255,14 @@
 		{#if data.isThereWan?.text || data.isThereWan?.image}
 			<div class="card border-2 p-2 !border-amber-600 !bg-opacity-20 !bg-amber-600 block text-center limit">
 				{data.isThereWan?.text ?? ""}
-				{#if data.isThereWan?.image || dev}
+				{#if data.isThereWan?.image}
 					<img src={data.isThereWan.image} alt={data.isThereWan?.text ?? ""} style="height: 10em;" class="mx-auto">
 				{/if}
 			</div>
 		{/if}
 		{#if (nowish.getUTCDay() === 5 || nowish.getUTCDay() === 6 || dev) && !data.hasDone && ($page.url.searchParams.has("showLatenessVoting") ? $page.url.searchParams.get("showLatenessVoting") === "true" : !isFrame)}
 			<div>
-				<Accordion>
+				<Accordion padding="pb-2 px-4">
 					<AccordionItem open>
 						<svelte:fragment slot="summary">
 							<h3 class="inline">Lateness Voting</h3>
@@ -335,6 +335,10 @@
 
 	.container {
 		padding: 5em 1em 1em;
+	}
+
+	.lateness-stats {
+		font-size: 0.9em;
 	}
 
 	@media (max-height: 790px) {

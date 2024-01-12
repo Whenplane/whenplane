@@ -122,6 +122,9 @@
     .logo-item {
         padding-left: 2em;
         padding-right: 2em;
+
+        padding-top: 1.5em;
+        padding-bottom: 1.5em;
     }
 
     .wan {
