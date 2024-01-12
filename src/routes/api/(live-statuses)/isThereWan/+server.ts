@@ -9,7 +9,7 @@ export const GET = (async ({platform}) => {
 
   if(dev) {
     const response: IsThereWanResponse = {
-      text: "Linus will most likely be calling into the show today due to being at CES. This could lead to either the show being earlier than normal, or later than normal.",
+      text: "Linus will most likely be calling into the show today due to being at CES. This could lead to either the show being earlier than normal, or later than normal. If you have further information, <i>please</i> let me know either on discord (ajgeiss0702) or email (<a href='mailto:aj@whenplane.com'>aj@whenplane.com</a>)",
       image: null
     }
     return json(response);

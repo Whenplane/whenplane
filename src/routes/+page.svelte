@@ -15,6 +15,8 @@
 	import ExtensionAd from "$lib/ExtensionAd.svelte";
 	import SpecialStream from "$lib/SpecialStream.svelte";
 	import NewsAnnouncer from "$lib/NewsAnnouncer.svelte";
+	import sanitizeHtml from "sanitize-html";
+	import { newsSanitizeSettings } from "$lib/news/news.ts";
 
 	export let data;
 
@@ -261,7 +263,9 @@
 
 		{#if data.isThereWan?.text || data.isThereWan?.image}
 			<div class="card border-2 p-2 !border-amber-600 !bg-opacity-20 !bg-amber-600 block text-center limit">
-				{data.isThereWan?.text ?? ""}
+				{#if data.isThereWan?.text}
+					{@html sanitizeHtml(data.isThereWan?.text, newsSanitizeSettings)}
+				{/if}
 				{#if data.isThereWan?.image}
 					<img src={data.isThereWan.image} alt={data.isThereWan?.text ?? ""} style="height: 10em;" class="mx-auto">
 				{/if}
