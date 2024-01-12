@@ -156,7 +156,7 @@
 </span>
 
 <div class="container h-full mx-auto justify-center items-center" class:alwaysFlex={isFrame}>
-	<div class="space-y-5 inner">
+	<div class="space-y-3 inner">
 		{#if !$page.data.isBot} <!-- so the imminent box stops showing up in search results -->
 			<ImminentBox hasDone={data.hasDone}/>
 		{/if}
@@ -176,7 +176,7 @@
 					The WAN show is (supposed) to start in
 				{/if}
 
-				<h1 class="text-center" class:red={isLate}>
+				<h1 class="text-center no-header-margin" class:red={isLate}>
 					<ShowCountdown bind:isAfterStartTime={isAfterStartTime} {data}/>
 				</h1>
 				{#if $mainLate.isMainLate && data.preShowStarted}
@@ -222,7 +222,7 @@
 		<div class="text-center lateness-stats">
 			{#if averageLateness || dev}
 				<span class="card px-4 py-2 mb-4 inline-block lateness">
-					<h3>Average lateness</h3>
+					<h3 class="no-header-margin">Average lateness</h3>
 					<span class="opacity-75 text-90 relative bottom-1">from the last 5 shows</span>
 					<br>
 					{averageLateness} <Late/>
@@ -230,7 +230,7 @@
 			{/if}
 			{#if medianLateness || dev}
 				<span class="card px-4 py-2 mb-4 inline-block lateness">
-					<h3>Median lateness</h3>
+					<h3 class="no-header-margin">Median lateness</h3>
 					<span class="opacity-75 text-90 relative bottom-1">from the last 5 shows</span>
 					<br>
 					{medianLateness} <Late/>

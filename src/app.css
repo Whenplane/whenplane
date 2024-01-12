@@ -8,7 +8,7 @@ html, body { @apply h-full; }
     max-width: 1000px;
 }
 
-h1,h2,h3 {
+h1:not(.no-header-margin), h2:not(.no-header-margin), h3:not(.no-header-margin) {
     margin-bottom: 0.25em;
 }
 
