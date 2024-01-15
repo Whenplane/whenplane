@@ -21,13 +21,12 @@ export const handle: Handle = async ({ event, resolve }) => {
     if(!id) {
         id = crypto.randomUUID();
         const expires = new Date();
-        expires.setUTCMonth(expires.getUTCMonth() + 1);
-        expires.setDate(0);
+        expires.setUTCFullYear(expires.getUTCFullYear() + 1);
         expires.setUTCHours(0);
         expires.setUTCMinutes(0);
         expires.setUTCSeconds(random(-60, 60));
 
-        // If the cookie is supposed to expire around wan day, delay it
+        // If the cookie is supposed to expire around a wan day, delay it
         if(expires.getUTCDay() === 5 || expires.getUTCDay() === 6) {
             expires.setDate(expires.getDate() + 2);
         }
