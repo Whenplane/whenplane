@@ -9,11 +9,13 @@
 
   export let specialStreamData: SpecialStream = $page.data.specialStream;
 
-  let countdownString;
+  let countdownString: string | undefined;
   let late = false;
   $: startTime = specialStreamData.start ? new Date(specialStreamData.start) : undefined;
 
   $: live = $floatplaneState?.live;
+
+  $: thumbnailStyle = specialStreamData.thumbnail ? `background: linear-gradient(rgba(21,23,31,.75), rgba(21,23,31,.75)), url(${JSON.stringify(specialStreamData.thumbnail)});` : "";
 
   function updateCountdown() {
     if(!specialStreamData.start || !startTime) {
@@ -38,10 +40,7 @@
   })
 </script>
 
-<div class="card inline-block countdown-box text-left m-2 wrapper">
-  {#if specialStreamData.thumbnail}
-  <img class="thumbnail absolute" src={specialStreamData.thumbnail}/>
-  {/if}
+<div class="card inline-block countdown-box text-left m-2 wrapper" style={thumbnailStyle}>
   <div class="p-2 px-3 relative z-2">
     <h2>Special Stream</h2>
     <span class="title">
@@ -101,13 +100,9 @@
         align-items: center;
 
         overflow: hidden;
-    }
-    .thumbnail {
-        aspect-ratio: 16 / 9;
-        object-fit: contain;
-        max-height: 15em;
-        opacity: 15%;
-        border-radius: var(--theme-rounded-container);
+
+        /*background-blend-mode: overlay;*/
+        background-size: contain !important;
     }
 
     .red {

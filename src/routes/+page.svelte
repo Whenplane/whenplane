@@ -271,7 +271,7 @@
 				{/if}
 			</div>
 		{/if}
-		{#if (nowish.getUTCDay() === 5 || nowish.getUTCDay() === 6 || dev) && !data.hasDone && ($page.url.searchParams.has("showLatenessVoting") ? $page.url.searchParams.get("showLatenessVoting") === "true" : !isFrame)}
+		{#if (nowish.getUTCDay() === 5 || nowish.getUTCDay() === 6 /*|| dev*/) && !data.hasDone && ($page.url.searchParams.has("showLatenessVoting") ? $page.url.searchParams.get("showLatenessVoting") === "true" : !isFrame)}
 			<div>
 				<Accordion padding="pb-2 px-4">
 					<AccordionItem open>

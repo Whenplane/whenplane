@@ -8,15 +8,15 @@ export const GET = (async () => {
   // In the future this will be from a database, but this will be fine for now.
 
   const data: SpecialStream = {
-    title: "Gingerbread PC Building (with Sarah & guests)",
-    thumbnail: "https://pbs.floatplane.com/stream_thumbnails/5c13f3c006f1be15e08e05c0/276172365615767_1703191094285.jpeg",
+    title: "Linus Interviews the New CEO (Terren)",
+    thumbnail: "https://images.ajg0702.us/terren.jpeg",
 
-    start: "2023-12-21T20:30:00.000Z",
+    start: "2024-01-18T18:00:00.000Z",
 
     onFloatplane: true,
 
     onTwitch: false,
-    twitchNotes: "first half",
+    // twitchNotes: "first half",
 
     onYoutube: false
   }
