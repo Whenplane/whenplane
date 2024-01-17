@@ -16,7 +16,8 @@ export const GET = (async ({platform, url}) => {
         return json({
             ...cache.lastData,
             cached: true,
-            lastFetch: cache.lastFetch
+            lastFetch: cache.lastFetch,
+            fetchDistance: Date.now() - cache.lastFetch
         });
     }
 
