@@ -203,7 +203,7 @@ export const GET = (async ({platform, url}) => {
 
     if(Number(remaining) < 50 || Number(remaining) < 100 && msUntilReset > 15e3) {
         // If we are low on remaining requests, wait until 1s after the reset in the future.
-        fastCache.lastFetch = Date.now() + msUntilReset - cacheTime + 1e3;
+        fastCache.lastFetch = ((Date.now() + msUntilReset) - cacheTime) + 1e3;
     }
 
     if(analytics) {

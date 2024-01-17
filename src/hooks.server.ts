@@ -1,6 +1,8 @@
 import type {Handle} from "@sveltejs/kit";
 import {dev} from "$app/environment";
 import { random } from "$lib/utils.ts";
+import type { AnalyticsEngineDataset, KVNamespace,
+    KVNamespaceGetOptions, KVNamespaceListOptions, KVNamespaceListResult, KVNamespacePutOptions } from "@cloudflare/workers-types";
 
 const reportedIds: {[key: string]: number} = {};
 
@@ -67,7 +69,26 @@ export const handle: Handle = async ({ event, resolve }) => {
 
     event.params.__h__userAgent = event.request.headers.get("user-agent") ?? undefined
 
+    if(event.platform) {
+        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+        // @ts-ignore
+        event.platform = {
+            ...event.platform,
+            env: {
+                ...event.platform.env,
+                CACHE: createKVNamespaceWrapper(event.platform.env?.CACHE, "caches", event.platform),
+                HISTORY: createKVNamespaceWrapper(event.platform.env?.HISTORY, "wheniswan_history", event.platform),
+                META: createKVNamespaceWrapper(event.platform.env?.META, "wheniswan_meta", event.platform),
+            }
+        }
+    }
+
+
+
     const response = await resolve(event);
+
+
+
 
     if(timings.length > 0) {
         const timingStrings: string[] = [];
@@ -113,4 +134,35 @@ export const handle: Handle = async ({ event, resolve }) => {
     }
 
     return response;
+}
+
+
+function createKVNamespaceWrapper(real: KVNamespace, kvNamespaceName: string, realPlatform: App.Platform): KVNamespace {
+    const analytics: AnalyticsEngineDataset | undefined = realPlatform.env?.KV_ANALYTICS;
+    if(!real) return real;
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+    // @ts-ignore
+    return {
+        delete(key: string): Promise<void> {
+            analytics?.writeDataPoint({blobs: [kvNamespaceName, "DELETE", key, `DELETE ${kvNamespaceName}/${key}`]});
+            return real.delete(key);
+        },
+        list<Metadata>(options: KVNamespaceListOptions | undefined): Promise<KVNamespaceListResult<Metadata, string>> {
+            analytics?.writeDataPoint({blobs: [kvNamespaceName, "LIST", null, `LIST ${kvNamespaceName}`]});
+            return real.list(options);
+        },
+        put(key: string, value: string | ArrayBuffer | ArrayBufferView | ReadableStream, options: KVNamespacePutOptions | undefined): Promise<void> {
+            analytics?.writeDataPoint({blobs: [kvNamespaceName, "PUT", key, `PUT ${kvNamespaceName}/${key}`]});
+            return real.put(key, value, options);
+        },
+        get(key: string, options?: KVNamespaceGetOptions<never>): Promise<string | null> {
+            analytics?.writeDataPoint({blobs: [kvNamespaceName, "GET", key, `GET ${kvNamespaceName}/${key}`]});
+            return real.get(key, options);
+        },
+        getWithMetadata(key: string, options?: KVNamespaceGetOptions<never>): any {
+            analytics?.writeDataPoint({blobs: [kvNamespaceName, "GETwMETA", key, `GETwMETA ${kvNamespaceName}/${key}`]});
+            return real.getWithMetadata(key, options);
+        }
+
+    }
 }

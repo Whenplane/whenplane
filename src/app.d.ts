@@ -17,6 +17,7 @@ declare namespace App {
             TWITCH_ANALYTICS?: AnalyticsEngineDataset;
             LOG_MESSAGES?: AnalyticsEngineDataset;
             REQUESTS?: AnalyticsEngineDataset;
+            KV_ANALYTICS?: AnalyticsEngineDataset;
             DB: D1Database;
         },
         context?: {
