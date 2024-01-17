@@ -13,7 +13,11 @@ export const GET = (async ({platform, url}) => {
     // if(dev) return json({hasDone: true, dev})
 
     if(Date.now() - cache.lastFetch < cache_time) {
-        return json(cache.lastData);
+        return json({
+            ...cache.lastData,
+            cached: true,
+            lastFetch: cache.lastFetch
+        });
     }
 
     cache.lastFetch = Date.now();
@@ -30,7 +34,8 @@ export const GET = (async ({platform, url}) => {
     const partialEntry = history.get(date + ":mainShowStart");
 
     const response: HasDoneResponse = {
-        hasDone: !!(await fullEntry) || !!(await partialEntry)
+        hasDone: !!(await fullEntry) || !!(await partialEntry),
+        cached: false
     };
 
     cache.lastData = response;
@@ -40,5 +45,8 @@ export const GET = (async ({platform, url}) => {
 }) satisfies RequestHandler;
 
 export type HasDoneResponse = {
-    hasDone: boolean
+    hasDone: boolean,
+
+    cached: boolean
+    lastFetch?: number
 }
