@@ -21,6 +21,7 @@ let savedStartTime: boolean | undefined = undefined;
 export const GET = (async ({platform, locals, url, fetch}) => {
 
     // if(new Date().getSeconds() > 50) return json({forcedDev: true,"isLive":false,"isWAN":true,"videoId":"KtSabkVT8y4","forced":false,"upcoming":true})
+    // if(dev) return json({forcedDev: true,"isLive":true,"isWAN":true,"videoId":"KtSabkVT8y4","forced":false,"upcoming":false/*,"started":"1/17/2024"*/})
 
     const history: KVNamespace = platform?.env?.HISTORY;
     const fetcher: DurableObjectNamespace = platform?.env?.FETCHER;

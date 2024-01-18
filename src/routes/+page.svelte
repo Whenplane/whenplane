@@ -168,7 +168,7 @@
 			<div class="card p-4 inline-block countdown-box text-left">
 				{#if isLate}
 					The WAN show is currently <span class="red"><Late/></span> by
-				{:else if data.mainShowStarted}
+				{:else if data.isMainShow}
 					The WAN show has been live for
 				{:else if data.preShowStarted}
 					The pre-WAN show has been live for
@@ -177,7 +177,14 @@
 				{/if}
 
 				<h1 class="text-center no-header-margin" class:red={isLate}>
-					<ShowCountdown bind:isAfterStartTime={isAfterStartTime} {data}/>
+					{#if data.isMainShow && !data.mainShowStarted}
+						????
+						<div style="font-size: 0.25em;" class="pb-2">
+							If you see this, youtube messed up again
+						</div>
+					{:else}
+						<ShowCountdown bind:isAfterStartTime={isAfterStartTime} {data}/>
+					{/if}
 				</h1>
 				{#if $mainLate.isMainLate && data.preShowStarted}
 					<div class="text-center">
@@ -188,7 +195,7 @@
 					</div>
 				{/if}
 
-				{#if !isAfterStartTime}
+				{#if !isAfterStartTime && !data.isMainShow}
 					Next WAN:
 					{#if mounted} <!-- dont SSR next wan date, as server timezone and locale is probably different than the users' -->
 						<span in:fade={{duration: 150}}>
@@ -197,7 +204,7 @@
 					{/if}
 				{:else if isLate}
 					It usually <i>actually</i> starts between 1 and 3 hours late.
-				{:else if data.isMainShow || data.isPreShow}
+				{:else if (data.isMainShow && data.mainShowStarted) || data.isPreShow}
 					{#if data.isPreShow}
 						Pre-show started
 					{:else}
