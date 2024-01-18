@@ -3,6 +3,13 @@ import { error, json } from "@sveltejs/kit";
 import type { KVNamespace } from "@cloudflare/workers-types";
 import { dev } from "$app/environment";
 
+const CACHE_TIME = 4750;
+
+const cache: {
+  lastFetch: number,
+  lastData?: IsThereWanResponse
+} = {lastFetch: 0};
+
 export const GET = (async ({platform}) => {
   const meta: KVNamespace = platform?.env?.META;
   if(!meta) throw error(503, "meta not available");
@@ -15,6 +22,17 @@ export const GET = (async ({platform}) => {
     return json(response);
   }*/
 
+  const cacheDistance = Date.now() - cache.lastFetch;
+  if(cacheDistance < CACHE_TIME) {
+    return json({
+      ...cache.lastData,
+      cached: true,
+      lastFetch: cache.lastFetch,
+      cacheDistance
+    })
+  }
+
+  cache.lastFetch = Date.now()
 
   const promises = await Promise.all([
     meta.get("is-there-wan"),
@@ -25,6 +43,8 @@ export const GET = (async ({platform}) => {
     text: promises[0],
     image: promises[1]
   }
+
+  cache.lastData = response;
 
   return json(response);
 }) satisfies RequestHandler
