@@ -1,10 +1,10 @@
-import type { SpecialStream } from "$lib/utils.ts";
+import type { SpecialStream, WanDb_FloatplaneData } from "$lib/utils.ts";
 import { json } from "@sveltejs/kit";
 import { getTimeUntil } from "$lib/timeUtils.ts";
 import { get } from "svelte/store";
 import { floatplaneState } from "$lib/stores.ts";
 
-export const GET = (async () => {
+export const GET = (async ({fetch}) => {
   // In the future this will be from a database, but this will be fine for now.
 
   const data: SpecialStream = {
@@ -25,8 +25,10 @@ export const GET = (async () => {
   const hideTime = new Date(data.start as string)
   hideTime.setHours(hideTime.getHours() + 2);
 
+  const fpLive: WanDb_FloatplaneData = await fetch("/api/floatplane?fast=true").then(r => r.json());
+
   const timeUntil = getTimeUntil(hideTime);
-  if(timeUntil.late) {
+  if(timeUntil.late && !(timeUntil.distance < (5 * 60 * 60e3) && fpLive.live)) {
     return json(false);
   } // after
 
