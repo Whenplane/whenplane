@@ -9,7 +9,7 @@ export const GET = (async ({fetch}) => {
 
   const data: SpecialStream = {
     title: "Linus Interviews the New CEO (Terren)",
-    thumbnail: "https://images.ajg0702.us/terren_tomorrow.webp",
+    thumbnail: "https://pbs.floatplane.com/stream_thumbnails/5c13f3c006f1be15e08e05c0/168505790704333_1705599393918.jpeg",
 
     start: "2024-01-18T18:00:00.000Z",
 
