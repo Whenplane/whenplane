@@ -23,7 +23,7 @@ export const GET = (async ({fetch}) => {
 
   // hide an hour after the start time;
   const hideTime = new Date(data.start as string)
-  hideTime.setHours(hideTime.getHours() + 2);
+  hideTime.setHours(hideTime.getHours() + 1.5);
 
   const fpLive: WanDb_FloatplaneData = await fetch("/api/floatplane?fast=true").then(r => r.json());
 
