@@ -9,7 +9,7 @@ export const GET = (async () => {
 
   const data: SpecialStream = {
     title: "Linus Interviews the New CEO (Terren)",
-    thumbnail: "https://images.ajg0702.us/terren.webp",
+    thumbnail: "https://images.ajg0702.us/terren_tomorrow.webp",
 
     start: "2024-01-18T18:00:00.000Z",
 
