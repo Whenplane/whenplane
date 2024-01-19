@@ -78,11 +78,11 @@
 </script>
 
 {#if notificationPromptOpen}
-  <div class="dark-background absolute top-0 left-0 w-screen h-screen flex items-center justify-items-center" on:click={() => notificationPromptOpen = false}>
+  <button class="dark-background absolute top-0 left-0 w-screen h-screen flex items-center justify-items-center" on:click={() => notificationPromptOpen = false}>
     <span class="self-center justify-self-center mx-auto">
       Click "Allow" to enable notifications
     </span>
-  </div>
+  </button>
 {/if}
 
 
