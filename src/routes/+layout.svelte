@@ -57,11 +57,9 @@
     $: pathname = $page.url.pathname;
 
 
-    onMount(() => {
+    onMount(async () => {
         if('serviceWorker' in navigator) {
-            const serviceWorker = await navigator.serviceWorker.register('service-worker.js');
-            setServiceWorker(serviceWorker);
-            console.debug("Registered service worker", serviceWorker)
+            navigator.serviceWorker.register('service-worker.js').then(setServiceWorker);
         }
     })
 </script>

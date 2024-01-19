@@ -10,6 +10,7 @@ export const wdbSocketState = writable<WanDb_SocketState>({lastReceive: browser 
 export let serviceWorker: ServiceWorkerRegistration | undefined = undefined;
 export function setServiceWorker(worker: ServiceWorkerRegistration) {
   serviceWorker = worker;
+  console.debug("Registered service worker", serviceWorker)
 }
 
 if(dev) {
