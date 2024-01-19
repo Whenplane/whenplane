@@ -13,6 +13,7 @@
     import {navigating, page} from '$app/stores';
     import NProgress from 'nprogress';
   import { browser } from "$app/environment";
+  import { setServiceWorker } from "$lib/stores.ts";
 
     NProgress.configure({
         // Full list: https://github.com/rstacruz/nprogress#configuration
@@ -53,7 +54,19 @@
     ]
 
     $: pathname = $page.url.pathname;
+
+  if (browser && 'serviceWorker' in navigator) {
+      addEventListener('load', async () => {
+          const serviceWorker = await navigator.serviceWorker.register('service-worker.js');
+          setServiceWorker(serviceWorker);
+          console.debug("Registered service worker", serviceWorker)
+      });
+  }
 </script>
+
+<!--<svelte:window
+  on:load={async () => setServiceWorker(await navigator.serviceWorker.register('/service-worker.js'))}
+/>-->
 
 <svelte:head>
     {#if !pathname.startsWith("/history/show/") && !pathname.startsWith("/history/graph") && !pathname.startsWith("/news") && !pagesWithDescription.includes(pathname)}

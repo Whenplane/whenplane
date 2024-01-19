@@ -22,7 +22,11 @@ const config = {
 					"/wp-includes/*",
 				]
 			}
-		})
+		}),
+
+		serviceWorker: {
+			register: false
+		}
 	}
 };
 

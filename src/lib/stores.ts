@@ -7,6 +7,11 @@ import { page } from "$app/stores";
 export const floatplaneState = writable<WanDb_FloatplaneData>();
 export const wdbSocketState = writable<WanDb_SocketState>({lastReceive: browser ? (get(page).data?.isWdbResponseValid ? Date.now() : 0) : 0});
 
+export let serviceWorker: ServiceWorkerRegistration | undefined = undefined;
+export function setServiceWorker(worker: ServiceWorkerRegistration) {
+  serviceWorker = worker;
+}
+
 if(dev) {
   floatplaneState.subscribe(value => console.debug("Floatplane status changed:", value))
 }

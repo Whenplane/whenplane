@@ -15,6 +15,7 @@
 		"predownload-vods": "ts-node-esm --experimental-specifier-resolution=node src/scripts/time-extractor/predownload-shows.ts"
 	},
 	"devDependencies": {
+		"@block65/webcrypto-web-push": "^0.3.2",
 		"@cloudflare/workers-types": "^4.20230717.0",
 		"@colour-extractor/colour-extractor": "^1.0.1",
 		"@playwright/test": "^1.28.1",
@@ -60,6 +61,6 @@
 		"luxon": "^3.3.0",
 		"nprogress": "^0.2.0",
 		"sanitize-html": "^2.11.0",
-        "socket.io-client": "^4.7.2"
+		"socket.io-client": "^4.7.2"
 	}
 }
