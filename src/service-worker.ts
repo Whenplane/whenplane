@@ -5,7 +5,7 @@
 
 const sw = self as unknown as ServiceWorkerGlobalScope;
 
-import { build, files, version } from '$service-worker';
+import { build, files, prerendered, version } from "$service-worker";
 
 const CACHE_PREFIX = "cache-"
 // Create a unique cache name for this deployment
@@ -15,7 +15,8 @@ const dontCache: string[] = [];
 
 const ASSETS = [
   ...build, // the app itself
-  ...files  // everything in `static`
+  ...files,  // everything in `static`
+  ...prerendered
 ].filter((a) => !dontCache.includes(a));
 
 
