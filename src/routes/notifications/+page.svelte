@@ -46,6 +46,17 @@
     pushSubscription = serviceWorker.pushManager.getSubscription();
   }
 
+
+  async function unsubscribe() {
+    const sub = await serviceWorker?.pushManager.getSubscription();
+
+    if(sub) {
+      await sub.unsubscribe()
+    }
+
+    // TODO: delete from server too
+  }
+
 </script>
 
 {#if notificationPromptOpen}
@@ -66,6 +77,11 @@
   {:then sub}
     {#if sub}
       You are subscribed!
+      <br>
+      <br>
+      <button class="btn variant-ghost-error" on:click={unsubscribe}>
+        Unsubscribe
+      </button>
     {:else}
       You are not subscribed to push notifications.<br>
       <br>
