@@ -14,6 +14,7 @@
     import NProgress from 'nprogress';
   import { browser } from "$app/environment";
   import { setServiceWorker } from "$lib/stores.ts";
+  import { onMount } from "svelte";
 
     NProgress.configure({
         // Full list: https://github.com/rstacruz/nprogress#configuration
@@ -55,13 +56,14 @@
 
     $: pathname = $page.url.pathname;
 
-  if (browser && 'serviceWorker' in navigator) {
-      addEventListener('load', async () => {
-          const serviceWorker = await navigator.serviceWorker.register('service-worker.js');
-          setServiceWorker(serviceWorker);
-          console.debug("Registered service worker", serviceWorker)
-      });
-  }
+
+    onMount(() => {
+        if('serviceWorker' in navigator) {
+            const serviceWorker = await navigator.serviceWorker.register('service-worker.js');
+            setServiceWorker(serviceWorker);
+            console.debug("Registered service worker", serviceWorker)
+        }
+    })
 </script>
 
 <!--<svelte:window
