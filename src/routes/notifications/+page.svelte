@@ -1,6 +1,6 @@
 <script>
 
-  import { browser } from "$app/environment";
+  import { browser, dev } from "$app/environment";
   import { getPushSubscription, urlB64ToUint8Array } from "$lib/notifications/notificationUtils";
   import { serviceWorker } from "$lib/stores";
 
@@ -47,6 +47,16 @@
   }
 
 </script>
+
+{#if notificationPromptOpen}
+  <div class="dark-background absolute top-0 left-0 w-screen h-screen flex items-center justify-items-center" on:click={() => notificationPromptOpen = false}>
+    <span class="self-center justify-self-center mx-auto">
+      Click "Allow" to enable notifications
+    </span>
+  </div>
+{/if}
+
+
 <div class="limit mx-auto">
   <h1>Push Notifications</h1>
   {#await pushSubscription}
@@ -75,3 +85,10 @@
     {/if}
   {/await}
 </div>
+
+
+<style>
+  .dark-background {
+      background-color: rgba(0, 0, 0, 0.6);
+  }
+</style>
