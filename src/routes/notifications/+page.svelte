@@ -5,9 +5,23 @@
   import { serviceWorker } from "$lib/stores";
 
   import { PUBLIC_VAPID_KEY } from "$env/static/public"
+  import { onMount } from "svelte";
 
   // eslint-disable-next-line @typescript-eslint/no-empty-function
-  let pushSubscription = browser ? getPushSubscription() : new Promise(() => {});
+  let pushSubscription = new Promise(() => {});
+
+  onMount(() => {
+    function set() {
+      pushSubscription = getPushSubscription();
+    }
+
+    if(serviceWorker) {
+      set()
+    } else {
+      // if serviceworker isnt registered yet, wait until it hopefully is
+      setTimeout(set, 500);
+    }
+  })
 
   let notificationPromptOpen = false;
 
