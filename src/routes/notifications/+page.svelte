@@ -48,11 +48,15 @@
 
 
   async function unsubscribe() {
-    const sub = await serviceWorker?.pushManager.getSubscription();
+    if(!serviceWorker) return;
+
+    const sub = await serviceWorker.pushManager.getSubscription();
 
     if(sub) {
       await sub.unsubscribe()
     }
+
+    pushSubscription = serviceWorker.pushManager.getSubscription();
 
     // TODO: delete from server too
   }
@@ -75,6 +79,7 @@
       Loading your notification preferences
     </span>
   {:then sub}
+    <pre>{JSON.stringify(sub)}</pre>
     {#if sub}
       You are subscribed!
       <br>
