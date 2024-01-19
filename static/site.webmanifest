@@ -4,7 +4,7 @@
     "icons": [
         {
             "src": "/wan.webp",
-            "sizes": "200x200",
+            "sizes": "300x300",
             "type": "image/webp"
         }
     ],
