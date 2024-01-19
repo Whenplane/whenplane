@@ -1,0 +1,12 @@
+{
+    "name": "Whenplane",
+    "short_name": "Whenplane",
+    "icons": [
+        {
+            "src": "/wan.webp",
+            "sizes": "200x200",
+            "type": "image/webp"
+        }
+    ],
+    "display": "standalone"
+}
