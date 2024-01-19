@@ -93,7 +93,6 @@
       Loading your notification preferences
     </span>
   {:then sub}
-    <pre>{JSON.stringify(sub)}</pre>
     {#if sub}
       You are subscribed!
       <br>
