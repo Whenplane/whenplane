@@ -62,8 +62,6 @@
     {#if $page.url.hostname !== "whenplane.com"}
         <link rel="canonical" href="https://whenplane.com{$page.url.pathname}">
     {/if}
-
-    <link rel="apple-touch-icon" href="/wan-ios-logo.png">
 </svelte:head>
 
 <slot />
