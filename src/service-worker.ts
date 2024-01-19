@@ -85,3 +85,21 @@ sw.addEventListener('fetch', (event) => {
 
   if(ASSETS.includes(url.pathname)) event.respondWith(respond());
 });
+
+
+sw.addEventListener("push", (event) => {
+  if (!(self.Notification && self.Notification.permission === "granted")) {
+    return;
+  }
+
+  const data = event.data?.json() ?? {};
+  const title = data.title || "Something Has Happened";
+  const icon = "https://whenplane.com/wan.webp";
+
+  console.debug("Got data to send notification", data);
+
+  sw.registration.showNotification(title, {
+    icon,
+    ...data
+  });
+});
