@@ -11,16 +11,16 @@
   let pushSubscription = new Promise(() => {});
 
   onMount(() => {
+    let tries = 0;
     function set() {
-      pushSubscription = getPushSubscription();
+      if(serviceWorker) {
+        pushSubscription = getPushSubscription();
+      } else if(tries < 60) {
+        tries++;
+        setTimeout(set, 500)
+      }
     }
-
-    if(serviceWorker) {
-      set()
-    } else {
-      // if serviceworker isnt registered yet, wait until it hopefully is
-      setTimeout(set, 500);
-    }
+    set()
   })
 
   let notificationPromptOpen = false;
