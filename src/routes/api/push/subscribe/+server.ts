@@ -12,7 +12,7 @@ export const POST = (async ({platform, request}) => {
 
   const endpoint_hash = await sha256(subscription.endpoint);
 
-  const alreadySubscribed = await db.prepare("select * from subscribers where subscription=?")
+  const alreadySubscribed = await db.prepare("select * from notifications where subscription=?")
     .bind(subscriptionString).all().then(r => r.results.length > 0);
 
   if(alreadySubscribed) {
@@ -20,7 +20,7 @@ export const POST = (async ({platform, request}) => {
   }
 
   return json(
-    await db.prepare("insert into subscribers (subscription, endpoint_hash) values(?, ?)")
+    await db.prepare("insert into notifications (subscription, endpoint_hash) values(?, ?)")
       .bind(JSON.stringify(subscription), endpoint_hash)
       .run()
   )
