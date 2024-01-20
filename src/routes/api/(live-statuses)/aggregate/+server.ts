@@ -86,6 +86,7 @@ export const GET = (async ({url, fetch, locals, platform}) => {
     locals.addTiming({id: "youtube", duration: ytTime ?? -1});
     locals.addTiming({id: "votes", duration: votesTime ?? -1});
     locals.addTiming({id: "specialStream", duration: spTime ?? -1});
+    locals.addTiming({id: "floatplane", duration: fpTime ?? -1});
 
     return json(response)
 }) satisfies RequestHandler;
