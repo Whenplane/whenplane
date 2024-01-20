@@ -6,7 +6,7 @@ import type { TwitchResponse } from "../twitch/+server";
 import type { YoutubeResponse } from "../youtube/+server";
 import type { LatenessVotingOption } from "$lib/voting.ts";
 import type { KVNamespace } from "@cloudflare/workers-types";
-import type { SpecialStream } from "$lib/utils.ts";
+import type { SpecialStream, WanDb_FloatplaneData } from "$lib/utils.ts";
 
 export const GET = (async ({url, fetch, locals, platform}) => {
 
@@ -60,6 +60,15 @@ export const GET = (async ({url, fetch, locals, platform}) => {
         return response;
     })();
 
+    let fpTime: number | undefined;
+    const floatplane = (async () => {
+        const start = Date.now();
+        const response = await fetch("/api/floatplane?fast=" + fast)
+          .then(r => r.json());
+        fpTime = Date.now() - start;
+        return response;
+    })();
+
     const response: AggregateResponse = {
         twitch: await twitch,
         // floatplane,
@@ -68,6 +77,7 @@ export const GET = (async ({url, fetch, locals, platform}) => {
         hasDone: await hasDone,
         votes: await votes,
         specialStream: await specialStream,
+        floatplane: await floatplane,
         reloadNumber: 4
         // showExtension: await showExtension
     }
@@ -87,6 +97,7 @@ export type AggregateResponse = {
     hasDone: boolean,
     votes: LatenessVotingOption[],
     specialStream: SpecialStream,
+    floatplane: WanDb_FloatplaneData,
     reloadNumber: number
     // showExtension: boolean
 }

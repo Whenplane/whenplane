@@ -24,7 +24,7 @@ export const GET = (async ({fetch, url, platform}) => {
     });
   }
 
-  const responsePromise = fetch("https://edge.thewandb.com/v2/live/floatplane", {
+  const responsePromise = fetch(/*"https://edge.thewandb.com/v2/live/floatplane"*/"https://edge.thewandb.com/v2/live/floatplane-test?im=3", {
     headers: {
       "referer": "whenplane.com",
       "x-whenplane-version": version,
