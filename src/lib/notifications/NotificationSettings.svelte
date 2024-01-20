@@ -1,6 +1,6 @@
 <script>
   import { browser } from "$app/environment";
-  import { getPushSubscription, sha256 } from "$lib/notifications/notificationUtils.js";
+  import { getPushSubscription, sha256 } from "$lib/notifications/notificationUtils";
 
   // eslint-disable-next-line @typescript-eslint/no-empty-function
   let settingsFetch = browser ? fetchSettings() : new Promise(() => {});
