@@ -37,6 +37,8 @@ export const POST = (async ({platform, params, request}) => {
       .then(r => r.results as unknown as NotificationRows[]);
   }
 
+  console.log("Got " + subs.length + " subs")
+
 
   const pushMessages: NotificationMessage[] = subs.filter(sub => sub.subscription).map(sub => {
     return {
