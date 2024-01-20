@@ -31,8 +31,7 @@ export const POST = (async ({platform, params, request}) => {
       .all()
       .then(r => r.results as unknown as NotificationRows[]);
   } else {
-    subs = await db.prepare("select * from notifications where ? = 1")
-      .bind(name)
+    subs = await db.prepare("select * from notifications where " + name.replace(/\W/g, '') + " = 1")
       .all()
       .then(r => {
         console.log(JSON.stringify(r, undefined, '\t'))
