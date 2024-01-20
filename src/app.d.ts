@@ -14,6 +14,10 @@ declare namespace App {
             HISTORY: KVNamespace;
             META: KVNamespace;
             FETCHER: DurableObjectNamespace;
+
+            NOTIFICATION_THROTTLER: DurableObjectNamespace;
+            NOTIFICATION_QUEUE: Queue<NotificationMessage>
+
             TWITCH_ANALYTICS?: AnalyticsEngineDataset;
             LOG_MESSAGES?: AnalyticsEngineDataset;
             REQUESTS?: AnalyticsEngineDataset;
@@ -47,4 +51,12 @@ type TimingEntry = {
     id: string,
     duration: number,
     description?: string
+}
+
+type NotificationMessage = {
+    id: number,
+    type: string,
+    subscription: PushSubscription,
+    message: PushMessage,
+    isDummy?: boolean
 }

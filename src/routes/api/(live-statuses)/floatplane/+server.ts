@@ -1,6 +1,7 @@
 import { wait, type WanDb_FloatplaneData } from "$lib/utils.ts";
 import { error, json, type RequestHandler } from "@sveltejs/kit";
 import { dev, version } from "$app/environment";
+import type { DurableObjectNamespace } from "@cloudflare/workers-types";
 
 let cache: {
   lastFetch: number,
@@ -9,6 +10,8 @@ let cache: {
 
 const cache_time = 5e3;
 const fast_cache_time = 5 * 60 * 60e3;
+
+let lastNotifSend = 0;
 
 export const GET = (async ({fetch, url, platform}) => {
   const fast = url.searchParams.has("fast");
@@ -75,6 +78,15 @@ export const GET = (async ({fetch, url, platform}) => {
   if(!response.isWAN) {
     response.isWAN = response.wan;
     delete response.wan;
+  }
+
+  const throttler = (platform?.env?.NOTIFICATION_THROTTLER as DurableObjectNamespace)
+  if(response.imminence === 3 && throttler && Date.now() - lastNotifSend < (60 * 60e3)) {
+    lastNotifSend = Date.now();
+    const id = throttler.idFromName("n");
+    const stub = throttler.get(id);
+
+    platform?.context?.waitUntil(stub.fetch("whenplane-notification-throttler/imminent"))
   }
 
   return json({
