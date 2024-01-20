@@ -6,6 +6,7 @@
 
   import { PUBLIC_VAPID_KEY } from "$env/static/public"
   import { onMount } from "svelte";
+  import NotificationSettings from "$lib/notifications/NotificationSettings.svelte";
 
   // eslint-disable-next-line @typescript-eslint/no-empty-function
   let pushSubscription = new Promise(() => {});
@@ -95,6 +96,9 @@
   {:then sub}
     {#if sub}
       You are subscribed!
+      <br>
+      <br>
+      <NotificationSettings/>
       <br>
       <br>
       <button class="btn variant-ghost-error" on:click={unsubscribe}>
