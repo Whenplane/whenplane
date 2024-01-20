@@ -88,7 +88,7 @@ const messages: {[key: string]: PushMessage} = {
     options: {
       ttl: 60,
       urgency: 'high',
-      topic: "imminent-" + getUTCDate(getClosestWan())
+      topic: "imminent-" + getUTCDate(getClosestWan()).replaceAll("/", "-")
     }
   },
 
@@ -100,7 +100,7 @@ const messages: {[key: string]: PushMessage} = {
     options: {
       ttl: 60,
       urgency: 'high',
-      topic: "preshow_live-" + getUTCDate(getClosestWan())
+      topic: "preshow_live-" + getUTCDate(getClosestWan()).replaceAll("/", "-")
     }
   },
 
@@ -112,7 +112,7 @@ const messages: {[key: string]: PushMessage} = {
     options: {
       ttl: 60,
       urgency: 'high',
-      topic: "wanshow_live-" + getUTCDate(getClosestWan())
+      topic: "wanshow_live-" + getUTCDate(getClosestWan()).replaceAll("/", "-")
     }
   },
 
@@ -124,7 +124,7 @@ const messages: {[key: string]: PushMessage} = {
     options: {
       ttl: 60,
       urgency: 'high',
-      topic: "imminent-" + getUTCDate(getClosestWan())
+      topic: "imminent-" + getUTCDate(getClosestWan()).replaceAll("/", "-")
     }
   },
 
