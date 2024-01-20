@@ -60,7 +60,12 @@ export const POST = (async ({platform, params, request}) => {
     }
   }
 
-  return new Response("", {status: 204});
+  return new Response("", {
+    status: 204,
+    headers: {
+      "x-messages-queued": pushMessages.length+""
+    }
+  });
 }) satisfies RequestHandler;
 
 
