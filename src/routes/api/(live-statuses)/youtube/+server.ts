@@ -18,6 +18,8 @@ const cache: {
 
 let savedStartTime: boolean | undefined = undefined;
 
+let lastNotifSend = 0;
+
 export const GET = (async ({platform, locals, url, fetch}) => {
 
     // if(new Date().getSeconds() > 50) return json({forcedDev: true,"isLive":false,"isWAN":true,"videoId":"KtSabkVT8y4","forced":false,"upcoming":true})
@@ -107,6 +109,15 @@ export const GET = (async ({platform, locals, url, fetch}) => {
         forced,
         upcoming
     };
+
+    const throttler = (platform?.env?.NOTIFICATION_THROTTLER as DurableObjectNamespace)
+    if(isLive && isWAN && throttler && Date.now() - lastNotifSend < (60 * 60e3)) {
+        lastNotifSend = Date.now();
+        const id = throttler.idFromName("n");
+        const stub = throttler.get(id);
+
+        platform?.context?.waitUntil(stub.fetch("whenplane-notification-throttler/mainshow_live"))
+    }
 
     cache.value = result
 

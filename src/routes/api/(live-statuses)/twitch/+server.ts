@@ -3,6 +3,7 @@ import {error, json} from "@sveltejs/kit";
 import {env} from "$env/dynamic/private";
 import {dev} from "$app/environment";
 import {getClosestWan, getUTCDate} from "$lib/timeUtils";
+import type { DurableObjectNamespace } from "@cloudflare/workers-types";
 
 const cacheTime = 5000; // maximum fetch from twitch api once every 5 seconds
 
@@ -24,6 +25,8 @@ let lastToken = {
     validUntil: 0,
     dateGenerated: 0
 }
+
+let lastNotifSend = 0;
 
 export const GET = (async ({platform, url}) => {
 
@@ -234,6 +237,15 @@ export const GET = (async ({platform, url}) => {
         isLive,
         isWAN,
         started
+    }
+
+    const throttler = (platform?.env?.NOTIFICATION_THROTTLER as DurableObjectNamespace)
+    if(isLive && isWAN && throttler && Date.now() - lastNotifSend < (12 * 60 * 60e3)) {
+        lastNotifSend = Date.now();
+        const id = throttler.idFromName("n");
+        const stub = throttler.get(id);
+
+        platform?.context?.waitUntil(stub.fetch("whenplane-notification-throttler/preshow_live"))
     }
 
     return json(response);
