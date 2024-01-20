@@ -93,7 +93,10 @@
         <SlideToggle active="bg-primary-500" size="sm" bind:checked={disableBlurHash}>
             Disable "blur" on loading images
         </SlideToggle>
+        <br>
 
+        <br>
+        <a href="/notifications">Push Notification Settings</a>
 
     </div>
 </div>
