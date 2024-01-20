@@ -116,7 +116,7 @@ export const GET = (async ({platform, locals, url, fetch}) => {
         const id = throttler.idFromName("n");
         const stub = throttler.get(id);
 
-        platform?.context?.waitUntil(stub.fetch("whenplane-notification-throttler/mainshow_live"))
+        platform?.context?.waitUntil(stub.fetch("https://whenplane-notification-throttler/mainshow_live"))
     }
 
     cache.value = result

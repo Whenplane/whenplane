@@ -245,7 +245,7 @@ export const GET = (async ({platform, url}) => {
         const id = throttler.idFromName("n");
         const stub = throttler.get(id);
 
-        platform?.context?.waitUntil(stub.fetch("whenplane-notification-throttler/preshow_live"))
+        platform?.context?.waitUntil(stub.fetch("https://whenplane-notification-throttler/preshow_live"))
     }
 
     return json(response);

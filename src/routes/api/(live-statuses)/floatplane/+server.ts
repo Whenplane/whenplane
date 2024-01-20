@@ -87,7 +87,7 @@ export const GET = (async ({fetch, url, platform}) => {
     const id = throttler.idFromName("n");
     const stub = throttler.get(id);
 
-    platform?.context?.waitUntil(stub.fetch("whenplane-notification-throttler/imminent"))
+    platform?.context?.waitUntil(stub.fetch("https://whenplane-notification-throttler/imminent"))
   } else {
     console.log("Not sending notification", response.imminence, throttler, (Date.now() - lastNotifSend) / 1e3);
   }
