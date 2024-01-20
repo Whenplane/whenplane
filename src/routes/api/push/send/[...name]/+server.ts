@@ -59,9 +59,12 @@ export const POST = (async ({platform, params, request}) => {
       batch = [];
     }
   }
-  await queue.sendBatch(batch.map(body => {
-    return { body };
-  }));
+
+  if(batch.length > 0) {
+    await queue.sendBatch(batch.map(body => {
+      return { body };
+    }));
+  }
 
   return new Response("", {
     status: 204,
