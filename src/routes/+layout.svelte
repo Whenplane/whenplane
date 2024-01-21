@@ -12,9 +12,9 @@
     import 'nprogress/nprogress.css';
     import {navigating, page} from '$app/stores';
     import NProgress from 'nprogress';
-  import { browser } from "$app/environment";
-  import { setServiceWorker } from "$lib/stores.ts";
-  import { onMount } from "svelte";
+    import { browser, dev } from "$app/environment";
+    import { setServiceWorker } from "$lib/stores.ts";
+    import { onMount } from "svelte";
 
     NProgress.configure({
         // Full list: https://github.com/rstacruz/nprogress#configuration
@@ -59,7 +59,8 @@
 
     onMount(async () => {
         if('serviceWorker' in navigator) {
-            navigator.serviceWorker.register('/service-worker.js').then(setServiceWorker);
+            const options: RegistrationOptions | undefined = dev ? {type: 'module'} : undefined;
+            navigator.serviceWorker.register('/service-worker.js', options).then(setServiceWorker);
         }
     })
 </script>

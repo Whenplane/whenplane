@@ -1,11 +1,17 @@
 import { error, json, type RequestHandler } from "@sveltejs/kit";
 import type { D1Database } from "@cloudflare/workers-types";
 import { sha256 } from "$lib/notifications/notificationUtils.ts";
+import { dev } from "$app/environment";
 
 export const POST = (async ({platform, request}) => {
 
   const db: D1Database = platform?.env?.DB;
   if(!db) throw error(503, "Database missing");
+
+  if(dev) {
+    await db.prepare(`CREATE TABLE if not exists notifications ("subscription" text PRIMARY KEY,"endpoint_hash" text,"imminent" integer DEFAULT 1,"preshow_live" integer DEFAULT 1,"mainshow_live" integer DEFAULT 1,"other_streams" integer DEFAULT 0)`)
+      .run();
+  }
 
   const subscription: PushSubscription = await request.json();
   const subscriptionString = JSON.stringify(subscription);
