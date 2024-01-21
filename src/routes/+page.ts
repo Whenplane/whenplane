@@ -143,16 +143,14 @@ export const load = (async ({fetch, params}) => {
         })()
     ]);
 
-    if(!liveStatus) throw error(500, "Missing liveStatus!");
+    const isPreShow = liveStatus ? (!liveStatus.youtube.isWAN && liveStatus.twitch.isWAN) : false;
+    const isMainShow = liveStatus ? (liveStatus.youtube.isWAN && liveStatus.youtube.isLive) : false;
 
-    const isPreShow = !liveStatus.youtube.isWAN && liveStatus.twitch.isWAN;
-    const isMainShow = liveStatus.youtube.isWAN && liveStatus.youtube.isLive;
+    const preShowStarted = liveStatus && isPreShow ? liveStatus.twitch.started : undefined;
+    const mainShowStarted = liveStatus && isMainShow ? liveStatus.youtube.started : undefined;
 
-    const preShowStarted = isPreShow ? liveStatus.twitch.started : undefined;
-    const mainShowStarted = isMainShow ? liveStatus.youtube.started : undefined;
-
-    const isWdbResponseValid = typeof fpState?.live === "boolean" && (liveStatus.twitch.isWAN == fpState.isWAN);
-    if(!isWdbResponseValid && dev) {
+    const isWdbResponseValid = liveStatus && typeof fpState?.live === "boolean" && (liveStatus.twitch.isWAN == fpState.isWAN);
+    if(!isWdbResponseValid && liveStatus && dev) {
         console.debug("wdb api response invalid!", {
             typeofLive: typeof fpState?.live,
             twitch: liveStatus.twitch.isWAN,
@@ -175,7 +173,7 @@ export const load = (async ({fetch, params}) => {
         averageLateness: latenesses?.averageLateness,
         medianLateness: latenesses?.medianLateness,
         dan,
-        specialStream: liveStatus.specialStream,
+        specialStream: liveStatus?.specialStream,
         lastNewsPost,
         isBot: /bot|googlebot|crawler|spider|robot|crawling/i
           .test(browser ? navigator?.userAgent : params.__h__userAgent),
