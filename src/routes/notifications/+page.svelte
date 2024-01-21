@@ -87,8 +87,15 @@
 {/if}
 
 
-<div class="limit mx-auto">
+<div class="limit mx-auto m-2">
   <h1>Push Notifications</h1>
+
+  <b>Push notifications are not ready yet!</b>
+  They are still being tested, so only subscribe if you're ok with them being broken and/or spammy.
+  There will be a <a href="/news">news</a> post once they are done and ready
+
+  <br>
+  <br>
   {#await pushSubscription}
     <span class="opacity-75">
       Loading your notification preferences
