@@ -7,9 +7,11 @@
   import { PUBLIC_VAPID_KEY } from "$env/static/public"
   import { onMount } from "svelte";
   import NotificationSettings from "$lib/notifications/NotificationSettings.svelte";
+  import { page } from "$app/stores";
 
   // eslint-disable-next-line @typescript-eslint/no-empty-function
   let pushSubscription = new Promise(() => {});
+  let givenUp = false;
 
   onMount(() => {
     let tries = 0;
@@ -19,6 +21,8 @@
       } else if(tries < 60) {
         tries++;
         setTimeout(set, 500)
+      } else {
+        givenUp = true;
       }
     }
     set()
@@ -87,19 +91,36 @@
 {/if}
 
 
+<ol class="breadcrumb pt-2 pl-2">
+  <li class="crumb"><a class="anchor hover-underline" href="/">{$page.url.hostname === "whenwan.show" ? "whenwan.show" : "Whenplane"}</a></li>
+  <li class="crumb-separator" aria-hidden="true">&rsaquo;</li>
+  <li class="crumb">Push Notification Settings</li>
+</ol>
+
 <div class="limit mx-auto m-2">
   <h1>Push Notifications</h1>
 
   <b>Push notifications are not ready yet!</b>
   They are still being tested, so only subscribe if you're ok with them being broken and/or spammy.
-  There will be a <a href="/news">news</a> post once they are done and ready
+  There will be a <a href="/news">news</a> post once they are done and ready.
 
   <br>
   <br>
-  {#await pushSubscription}
-    <span class="opacity-75">
-      Loading your notification preferences
+  {#if givenUp}
+    <span class="text-red-500">
+      Failed to load service worker registration. Make sure you are not in a private tab, and try reloading.
     </span>
+    <br>
+    If the issue persists, <a href="/support">contact me</a>
+    <br>
+    <br>
+  {/if}
+  {#await pushSubscription}
+    {#if !givenUp}
+      <span class="opacity-75">
+        Loading your notification preferences
+      </span>
+    {/if}
   {:then sub}
     {#if sub}
       You are subscribed!
