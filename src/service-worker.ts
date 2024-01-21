@@ -30,6 +30,7 @@ sw.addEventListener('install', (event) => {
 
     const cache = await caches.open(CACHE);
     await cache.addAll(ASSETS);
+    await cache.addAll(cacheablePages);
 
     const others = await caches.keys()
       .then(keys => keys.filter(k => k !== CACHE))
@@ -42,20 +43,6 @@ sw.addEventListener('install', (event) => {
   }
 
   event.waitUntil(addFilesToCache());
-});
-
-sw.addEventListener('activate', (event) => {
-  // Remove previous cached data from disk
-  async function deleteOldCaches() {
-    for (const key of await caches.keys()) {
-      if (key !== CACHE) {
-        console.debug("Removing cache", key)
-        await caches.delete(key);
-      }
-    }
-  }
-
-  event.waitUntil(deleteOldCaches());
 });
 
 sw.addEventListener('fetch', (event) => {
