@@ -96,7 +96,7 @@ export const load = (async ({fetch, params}) => {
             if(browser) {
                 // refresh latenesses once an hour
                 if(Date.now() - cachedLatenessesTime > (60 * 60e3)) {
-                    cachedLatenesses = await getAverageLateness(fetch);
+                    cachedLatenesses = await getAverageLateness(fetch) || cachedLatenesses;
                     cachedLatenessesTime = Date.now()
 
                     latenesses = cachedLatenesses;

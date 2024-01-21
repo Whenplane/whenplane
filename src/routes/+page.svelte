@@ -34,9 +34,9 @@
 		"localhost"
 	]
 
-	const reloadNumber = data.liveStatus.reloadNumber;
+	const reloadNumber = data.liveStatus?.reloadNumber;
 	$: {
-		if(data.liveStatus.reloadNumber != reloadNumber) {
+		if(data.liveStatus?.reloadNumber != reloadNumber) {
 			location.href = "";
 		}
 	}
@@ -222,7 +222,13 @@
 
 
 		<div class="mx-4">
-			<StreamStatus {data}/>
+			{#if data.liveStatus}
+				<StreamStatus {data}/>
+			{:else}
+				<span class="opacity-75">
+					Live stream status not available while offline.
+				</span>
+			{/if}
 		</div>
 
 
@@ -286,7 +292,11 @@
 							<h3 class="inline">Lateness Voting</h3>
 						</svelte:fragment>
 						<svelte:fragment slot="content">
-							<LatenessVoting {mainLate}/>
+							{#if data.liveStatus && false}
+								<LatenessVoting {mainLate}/>
+							{:else}
+								<span class="opacity-75">Lateness voting not available while offline.</span>
+							{/if}
 						</svelte:fragment>
 					</AccordionItem>
 				</Accordion>
