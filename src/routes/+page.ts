@@ -40,7 +40,7 @@ export const load = (async ({fetch, params}) => {
 
     let liveStatus: AggregateResponse | undefined;
     let latenesses: Latenesses | undefined;
-    let dan: DanResponse | undefined;
+    let dan: DanResponse | false | undefined;
     let fpState: WanDb_FloatplaneData | undefined;
     let lastNewsPost: NewsPost | undefined;
 
@@ -49,14 +49,16 @@ export const load = (async ({fetch, params}) => {
 
 
             liveStatus = await fetch("/api/aggregate?fast=" + fast + cacheBuster + "&isNextFast=" + isNextFast)
-              .then(r => r.json());
+              .then(r => r.json())
+              .catch(() => false);
 
 
         })(),
         (async () => {
             if(!lastNewsPostCache) {
                 lastNewsPostCache = await fetch("/api/news/latest")
-                  .then(r => r.json());
+                  .then(r => r.json())
+                  .catch(() => false);
             }
             lastNewsPost = lastNewsPostCache
         })(),
@@ -119,11 +121,16 @@ export const load = (async ({fetch, params}) => {
                 }
             } else {
                 if(Date.now() - danCache.lastFetch > 60e3) {
-                    dan = (await fetch("/api/dan?short=true&fast=" + fast + "&d=" + Date.now())
-                      .then(r => r.json())) as DanResponse;
-                    danCache = {
-                        lastFetch: Date.now(),
-                        lastData: dan
+                    dan = (
+                      await fetch("/api/dan?short=true&fast=" + fast + "&d=" + Date.now())
+                        .then(r => r.json())
+                        .catch(() => false)
+                    ) as DanResponse | false;
+                    if(dan) {
+                        danCache = {
+                            lastFetch: Date.now(),
+                            lastData: dan
+                        }
                     }
                 } else {
                     dan = danCache.lastData;
@@ -164,7 +171,7 @@ export const load = (async ({fetch, params}) => {
         preShowStarted,
         mainShowStarted,
         fast,
-        hasDone: liveStatus.hasDone,
+        hasDone: liveStatus ? liveStatus.hasDone : true,
         averageLateness: latenesses?.averageLateness,
         medianLateness: latenesses?.medianLateness,
         dan,
@@ -178,7 +185,8 @@ export const load = (async ({fetch, params}) => {
 
 async function getAverageLateness(fetch: fetchFunction) {
     return await fetch("/api/latenesses")
-      .then(r => r.json());
+      .then(r => r.json())
+      .catch(() => false);
 }
 
 type fetchFunction = typeof fetch
