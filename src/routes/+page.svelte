@@ -36,7 +36,7 @@
 
 	const reloadNumber = data.liveStatus?.reloadNumber;
 	$: {
-		if(data.liveStatus?.reloadNumber != reloadNumber) {
+		if(data.liveStatus && data.liveStatus?.reloadNumber != reloadNumber) {
 			location.href = "";
 		}
 	}
