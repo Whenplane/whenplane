@@ -19,6 +19,10 @@ const ASSETS = [
   ...prerendered
 ].filter((a) => !dontCache.includes(a));
 
+const cacheablePages = [
+  "/",
+]
+
 
 sw.addEventListener('install', (event) => {
   // Create a new cache and add all files to it
@@ -72,23 +76,35 @@ sw.addEventListener('fetch', (event) => {
       }
     }
 
-    const response = await fetch(event.request);
+    try {
+      const response = await fetch(event.request);
 
-    // if we're offline, fetch can return a value that is not a Response
-    // instead of throwing - and we can't pass this non-Response to respondWith
-    if (!(response instanceof Response)) {
-      throw new Error('invalid response from fetch');
+      // if we're offline, fetch can return a value that is not a Response
+      // instead of throwing - and we can't pass this non-Response to respondWith
+      if (!(response instanceof Response)) {
+        throw new Error('invalid response from fetch');
+      }
+
+      // Assets should already be cached so this *shouldn't* happen, but we're here so why not
+      if (response.status === 200) {
+        event.waitUntil(cache.put(event.request, response.clone()));
+      }
+
+      return response;
+    } catch(e) {
+      const response = await cache.match(event.request);
+
+      if (response) {
+        return response;
+      }
+
+      // if there's no cache, then just error out
+      // as there is nothing we can do to respond to this request
+      throw e;
     }
-
-    // Assets should already be cached so this *shouldn't* happen, but we're here so why not
-    if (response.status === 200) {
-      event.waitUntil(cache.put(event.request, response.clone()));
-    }
-
-    return response;
   }
 
-  if(ASSETS.includes(url.pathname)) event.respondWith(respond());
+  if(ASSETS.includes(url.pathname) || cacheablePages.includes(url.pathname)) event.respondWith(respond());
 });
 
 
