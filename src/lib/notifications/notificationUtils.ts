@@ -5,6 +5,21 @@ export async function getPushSubscription() {
   return await serviceWorker.pushManager.getSubscription();
 }
 
+export const lang: {[key: string]: {name: string, description: string}} = {
+  imminent: {
+    name: "Imminent Show Notifications",
+    description: "Get a notification when the show is imminent (a thumbnail is uploaded)"
+  },
+  preshow_live: {
+    name: "Pre-Show Live Notification",
+    description: "Get a notification when the pre-show starts (everywhere other than youtube)"
+  },
+  mainshow_live: {
+    name: "Main Show Live Notification",
+    description: "Get a notification when the main show starts (on youtube)"
+  }
+}
+
 export function urlB64ToUint8Array(base64String: string) {
   const padding = "=".repeat((4 - base64String.length % 4) % 4)
   const base64 = (base64String + padding)

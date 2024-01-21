@@ -25,6 +25,22 @@ export const GET = (async ({ url, platform }) => {
 
 }) satisfies RequestHandler;
 
+export const PUT = (async ({url, request, platform}) => {
+  const db: D1Database = platform?.env?.DB;
+  if(!db) throw error(503, "Database missing");
+
+  const hash = url.searchParams.get("hash");
+  if(!hash) throw error(400, "Missing hash");
+
+  const data = await request.json() as NotificationRows;
+
+  const response = await db.prepare("update notifications set imminent=?, preshow_live=?, mainshow_live=?, other_streams=?")
+    .bind(data.imminent, data.preshow_live, data.mainshow_live, data.other_streams)
+    .run()
+
+  return json(response, {status: response.success ? 200 : 500});
+}) satisfies RequestHandler;
+
 export type NotificationRows = {
   subscription?: string,
   endpoint_hash: string,

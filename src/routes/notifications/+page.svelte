@@ -82,6 +82,10 @@
 
 </script>
 
+<svelte:head>
+  <title>Push Notification Settings - {$page.url.hostname === "whenwan.show" ? "whenwan.show" : "Whenplane"}</title>
+</svelte:head>
+
 {#if notificationPromptOpen}
   <button class="dark-background absolute top-0 left-0 w-screen h-screen flex items-center justify-items-center" on:click={() => notificationPromptOpen = false}>
     <span class="self-center justify-self-center mx-auto">
@@ -97,7 +101,7 @@
   <li class="crumb">Push Notification Settings</li>
 </ol>
 
-<div class="limit mx-auto m-2">
+<div class="limit mx-auto m-2 mb-96">
   <h1>Push Notifications</h1>
 
   <b>Push notifications are not ready yet!</b>
@@ -129,8 +133,9 @@
       <NotificationSettings/>
       <br>
       <br>
+      <br>
       <button class="btn variant-ghost-error" on:click={unsubscribe}>
-        Unsubscribe
+        Unsubscribe from all
       </button>
     {:else}
       You are not subscribed to push notifications.<br>
