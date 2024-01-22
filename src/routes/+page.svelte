@@ -292,7 +292,7 @@
 							<h3 class="inline">Lateness Voting</h3>
 						</svelte:fragment>
 						<svelte:fragment slot="content">
-							{#if data.liveStatus && false}
+							{#if data.liveStatus}
 								<LatenessVoting {mainLate}/>
 							{:else}
 								<span class="opacity-75">Lateness voting not available while offline.</span>
