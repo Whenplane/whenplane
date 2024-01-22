@@ -40,6 +40,12 @@
     </a>
     <h1>{$page.status}</h1>
     {$page.error?.message}
+    {#if $page.url.pathname !== "/"}
+        <br>
+        <br>
+        <br>
+        <a href="/">Go Home</a>
+    {/if}
 </div>
 
 <style>
