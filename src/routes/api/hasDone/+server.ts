@@ -2,7 +2,7 @@ import type {RequestHandler} from "@sveltejs/kit";
 import {error, json} from "@sveltejs/kit";
 import {getClosestWan, getUTCDate} from "$lib/timeUtils";
 
-const cache_time = 15e3; // 15 seconds
+const cache_time =  30 * 60e3; // 30 minutes
 
 const cache: {
     lastFetch: number,
