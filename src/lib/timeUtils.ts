@@ -197,3 +197,11 @@ const daysInMonth = (year: number, month: number) => new Date(year, month, 0).ge
 export function n() {
     return Date.now();
 }
+
+/**
+ * Checks if the day is friday/saturday
+ */
+export function isNearWan(now?: Date) {
+    const d = now ? now : new Date();
+    return d.getUTCDay() === 5 || d.getUTCDay() === 6;
+}

@@ -2,8 +2,8 @@ import type { RequestHandler } from "@sveltejs/kit";
 import { error, json } from "@sveltejs/kit";
 import type { KVNamespace } from "@cloudflare/workers-types";
 import { dev } from "$app/environment";
+import { isNearWan } from "$lib/timeUtils.ts";
 
-const CACHE_TIME = 4750;
 
 const cache: {
   lastFetch: number,
@@ -14,6 +14,8 @@ export const GET = (async ({platform}) => {
   const meta: KVNamespace = platform?.env?.META;
   if(!meta) throw error(503, "meta not available");
 
+  const cache_time = isNearWan() ? 4750 : 60e3; // just under 5 seconds on wan days, 1 minute on non-wan days
+
   /*if(dev) {
     const response: IsThereWanResponse = {
       text: "Linus will most likely be calling into the show today due to being at CES. This could lead to either the show being earlier than normal, or later than normal. <br><small>If you have further information, <i>please</i> let me know either on discord (ajgeiss0702) or email (<a href='mailto:aj@whenplane.com'>aj@whenplane.com</a>) so that I can publish it here</small>",
@@ -23,7 +25,7 @@ export const GET = (async ({platform}) => {
   }*/
 
   const cacheDistance = Date.now() - cache.lastFetch;
-  if(cacheDistance < CACHE_TIME) {
+  if(cacheDistance < cache_time) {
     return json({
       ...cache.lastData,
       cached: true,
