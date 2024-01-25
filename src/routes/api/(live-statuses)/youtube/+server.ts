@@ -1,12 +1,10 @@
 import type {RequestHandler} from "@sveltejs/kit";
 import {error, json} from "@sveltejs/kit";
-import {getClosestWan, getUTCDate} from "$lib/timeUtils";
+import { getClosestWan, getUTCDate, isNearWan } from "$lib/timeUtils";
 import {dev} from "$app/environment";
 import type {KVNamespace, DurableObjectNamespace, DurableObjectStub} from "@cloudflare/workers-types";
 import type {OldShowMeta} from "$lib/utils";
 import { env } from "$env/dynamic/private";
-
-const cacheTime = 4750; // Fetch from fetcher no more than once every (just under) 5 seconds
 
 
 const cache: {
@@ -21,6 +19,8 @@ let savedStartTime: boolean | undefined = undefined;
 let lastNotifSend = 0;
 
 export const GET = (async ({platform, locals, url, fetch}) => {
+
+    const cacheTime = isNearWan() ? 4750 : 60e3; // Fetch from fetcher no more than once every (just under) 5 seconds on wan days, 60 seconds otherwise
 
     // if(new Date().getSeconds() > 50) return json({forcedDev: true,"isLive":false,"isWAN":true,"videoId":"KtSabkVT8y4","forced":false,"upcoming":true})
     // if(dev) return json({forcedDev: true,"isLive":true,"isWAN":true,"videoId":"KtSabkVT8y4","forced":false,"upcoming":false/*,"started":"1/17/2024"*/})
