@@ -6,6 +6,16 @@ import type { KVNamespace } from "@cloudflare/workers-types";
 
 const cacheTtl = 60 * 60 * 24 * 6; // cache single keys for 6 days if possible
 
+const CURRENT_YEAR_CACHE = 60e3; // cache the current year for 60 seconds
+const OTHER_CACHE = 60 * 60e3; // cache other years for 60 minutes
+
+const cache: {
+    [key: string]: {
+        lastFetch: number,
+        lastData: HistoricalEntry[]
+    }
+} = {};
+
 export const GET = (async ({platform, params, locals, fetch}) => {
     const history: KVNamespace = platform?.env?.HISTORY;
     if(!history) throw error(503, "History not available");
@@ -13,6 +23,25 @@ export const GET = (async ({platform, params, locals, fetch}) => {
     const yearRaw = params.year;
     if(!yearRaw) throw error(400, "Need a year!");
     const years = yearRaw.split(",");
+
+
+    const cache_time = years.includes(new Date().getUTCFullYear()) ? CURRENT_YEAR_CACHE : OTHER_CACHE;
+
+    const fetchDistance = Date.now() - (cache[yearRaw]?.lastFetch ?? 0);
+    if(fetchDistance < cache_time) {
+        return json(cache[yearRaw].lastData, {
+            headers: {
+                "x-cached": "true",
+                "x-fetch-distance": fetchDistance
+            }
+        });
+    }
+
+    if(cache[yearRaw]?.lastData) {
+        cache[yearRaw].lastFetch = Date.now();
+    }
+
+
 
     const keyNames: string[] = []
 
@@ -119,6 +148,11 @@ export const GET = (async ({platform, params, locals, fetch}) => {
     keys = keys.sort((a, b) => new Date(b.name).getTime() - new Date(a.name).getTime());
 
     locals.addTiming({id: "total", duration: Date.now() - start});
+
+    cache[yearRaw] = {
+        lastFetch: Date.now(),
+        lastData: keys
+    }
 
     return json(keys, {
         headers: {
