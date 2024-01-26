@@ -85,7 +85,12 @@ export const handle: Handle = async ({ event, resolve }) => {
 
 
 
-    const response = await resolve(event);
+    const response = await resolve(
+      event,
+      {
+          filterSerializedResponseHeaders: (name) => name.startsWith('x-') || name.toLowerCase() === "server-timing",
+      }
+    );
 
 
 
