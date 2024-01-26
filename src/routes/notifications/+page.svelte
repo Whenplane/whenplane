@@ -101,7 +101,7 @@
   <li class="crumb">Push Notification Settings</li>
 </ol>
 
-<div class="limit mx-auto m-2 mb-96">
+<div class="limit mx-auto m-2 mb-96 p-2">
   <h1>Push Notifications</h1>
 
   <b>Push notifications are not ready yet!</b>
