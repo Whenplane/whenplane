@@ -24,8 +24,8 @@ export const GET = (async ({fetch, url, platform}) => {
     });
   }
 
-  const endpoint = "https://edge.thewandb.com/v2/live/floatplane";
-  // const endpoint = "https://edge.thewandb.com/v2/live/floatplane-test?im=3";
+  // const endpoint = "https://edge.thewandb.com/v2/live/floatplane";
+  const endpoint = "https://edge.thewandb.com/v2/live/floatplane-test?im=3";
 
   const responsePromise = fetch(endpoint, {
     headers: {
