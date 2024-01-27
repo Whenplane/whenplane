@@ -5,7 +5,7 @@ import { browser } from "$app/environment";
 
 export const load = (async ({fetch}) => {
   const fast = (!browser || (location && location.pathname !== "/"));
-  const youtubeData = await fetch("/api/youtube?fast=" + fast)
+  const youtubeData = await fetch("/api/youtube?fast=" + fast + "&d=" + Date.now())
     .then(r => r.json() as Promise<YoutubeResponse>);
 
   if(youtubeData.videoId && !browser) {
