@@ -78,7 +78,7 @@ export const GET = (async ({url, fetch, locals, platform}) => {
         votes: await votes,
         specialStream: await specialStream,
         floatplane: await floatplane,
-        reloadNumber: 4
+        reloadNumber: 5
         // showExtension: await showExtension
     }
 
