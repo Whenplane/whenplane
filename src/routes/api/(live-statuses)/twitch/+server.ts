@@ -240,7 +240,7 @@ export const GET = (async ({platform, url}) => {
     }
 
     const throttler = (platform?.env?.NOTIFICATION_THROTTLER as DurableObjectNamespace)
-    if(isLive && isWAN && throttler && Date.now() - lastNotifSend < (12 * 60 * 60e3)) {
+    if(isLive && isWAN && throttler && Date.now() - lastNotifSend > (12 * 60 * 60e3)) {
         lastNotifSend = Date.now();
         const id = throttler.idFromName("n");
         const stub = throttler.get(id);
