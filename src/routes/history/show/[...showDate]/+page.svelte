@@ -115,7 +115,7 @@
     {#if topics && topics.length > 0}
         <h2>Show Info</h2>
         Provided by
-        <a href="https://thewandb.com/">
+        <a href="https://thewandb.com/archive/{data.wdb.id}" target="_blank" rel="noopener">
             <img src="/thewandb.svg" style="height: 2.5em; display: inline-block" alt="The WAN Database"/>
         </a>
 
