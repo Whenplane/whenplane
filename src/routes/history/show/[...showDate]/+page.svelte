@@ -65,7 +65,7 @@
     <li class="crumb"><a class="anchor hover-underline" href="/history{backHash}">{showDate.toLocaleDateString()}</a></li>
 </ol>
 
-<div class="text-center limit mx-auto big-wrapper mb-96">
+<div class="text-center limit mx-auto big-wrapper mb-96 px-2">
     <h1>{showDate.toLocaleDateString(undefined, {dateStyle: "long"})}</h1>
     {#if thumbnail}
         <br>
