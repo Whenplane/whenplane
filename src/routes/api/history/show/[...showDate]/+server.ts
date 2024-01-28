@@ -5,7 +5,7 @@ import type {KVNamespace} from "@cloudflare/workers-types";
 import { version } from "$app/environment";
 import type { WanDb_Episode } from "$lib/wdb_types.ts";
 
-export const GET = (async ({platform, params, url}) => {
+export const GET = (async ({platform, params, url, locals}) => {
 
     const history: KVNamespace = platform?.env?.HISTORY;
     if(!history) throw error(503, "History missing!");
@@ -14,7 +14,9 @@ export const GET = (async ({platform, params, url}) => {
     if(!showDate) throw error(400, "No show date!");
 
     const fetchWdbData = url.searchParams.get("wdb") === "true";
+    const start = Date.now();
 
+    const startKVFetch = Date.now()
     const kvShowInfo = await history.getWithMetadata<OldShowMeta, OldShowMeta>(showDate, {type: 'json'});
 
     if(kvShowInfo.value) {
@@ -24,8 +26,16 @@ export const GET = (async ({platform, params, url}) => {
             kvShowInfo.metadata.snippet = undefined;
             generatedMetadata = true;
         }
+
+        locals.addTiming({id: "kv", duration: Date.now() - startKVFetch})
+
+        const startWdbFetch = Date.now();
         const id = kvShowInfo.metadata?.vods?.youtube ?? kvShowInfo.value.vods?.youtube;
         const wdb = fetchWdbData && id ? await getWdbData(id) : undefined;
+        locals.addTiming({id: "wdb", duration: Date.now() - startWdbFetch});
+
+        locals.addTiming({id: "total", duration: Date.now() - start});
+
         return json({
             name: params.showDate,
             metadata: kvShowInfo.metadata,
@@ -33,7 +43,6 @@ export const GET = (async ({platform, params, url}) => {
             wdb
         }, {headers: {"X-Generated-Metadata": generatedMetadata+""}});
     }
-
     const preShowStartFragment = history.get(params.showDate + ":preShowStart");
     const mainShowStartFragment = history.get(params.showDate + ":mainShowStart");
     const showEndFragment = history.get(params.showDate + ":showEnd");
@@ -64,8 +73,15 @@ export const GET = (async ({platform, params, url}) => {
             snippet
         }
 
+        locals.addTiming({id: "kv", duration: Date.now() - startKVFetch});
+
+        const startWdbFetch = Date.now();
         const id = metadata?.vods?.youtube;
         const wdb = fetchWdbData && id ? await getWdbData(id) : undefined;
+        locals.addTiming({id: "wdb", duration: Date.now() - startWdbFetch});
+
+        locals.addTiming({id: "total", duration: Date.now() - start});
+
 
         return json({
             name: showDate,
