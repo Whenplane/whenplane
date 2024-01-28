@@ -202,21 +202,6 @@ export type FloatplaneSubscription = {
     allowGrandfatheredAccess: boolean,
 }
 
-export type WanDb_FloatplaneData = {
-    live?: boolean,
-    isWAN?: boolean,
-    title?: string,
-    description?: string,
-    thumbnail?: string
-    error?: any,
-    imminence?: number,
-    textImminence?: string
-};
-
-export type WanDb_SocketState = {
-    lastReceive: number
-}
-
 export type MainLate = {
     isMainLate: boolean,
     string?: string,

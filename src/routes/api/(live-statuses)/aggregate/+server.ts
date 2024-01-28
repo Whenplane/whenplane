@@ -6,7 +6,8 @@ import type { TwitchResponse } from "../twitch/+server";
 import type { YoutubeResponse } from "../youtube/+server";
 import type { LatenessVotingOption } from "$lib/voting.ts";
 import type { KVNamespace } from "@cloudflare/workers-types";
-import type { SpecialStream, WanDb_FloatplaneData } from "$lib/utils.ts";
+import type { SpecialStream } from "$lib/utils.ts";
+import type { WanDb_FloatplaneData } from "$lib/wdb_types.ts";
 
 export const GET = (async ({url, fetch, locals, platform}) => {
 

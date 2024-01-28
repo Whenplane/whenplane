@@ -2,7 +2,8 @@
   import {onDestroy, onMount} from "svelte";
   import * as socketio from "socket.io-client";
   import {floatplaneState, wdbSocketState} from "$lib/stores.ts";
-  import type {WanDb_FloatplaneData} from "$lib/utils.ts";
+
+  import type { WanDb_FloatplaneData } from "$lib/wdb_types.ts";
 
   // This is the message format that the WDB websocket sends to the client
   interface WdbMessage {

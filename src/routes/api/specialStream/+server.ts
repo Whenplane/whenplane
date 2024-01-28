@@ -1,8 +1,9 @@
-import type { SpecialStream, WanDb_FloatplaneData } from "$lib/utils.ts";
+import type { SpecialStream } from "$lib/utils.ts";
 import { json } from "@sveltejs/kit";
 import { getTimeUntil } from "$lib/timeUtils.ts";
 import { get } from "svelte/store";
 import { floatplaneState } from "$lib/stores.ts";
+import type { WanDb_FloatplaneData } from "$lib/wdb_types.ts";
 
 export const GET = (async ({fetch}) => {
   // In the future this will be from a database, but this will be fine for now.

@@ -1,7 +1,8 @@
-import { wait, type WanDb_FloatplaneData } from "$lib/utils.ts";
+import { wait } from "$lib/utils.ts";
 import { error, json, type RequestHandler } from "@sveltejs/kit";
 import { dev, version } from "$app/environment";
 import type { DurableObjectNamespace } from "@cloudflare/workers-types";
+import type { WanDb_FloatplaneData } from "$lib/wdb_types.ts";
 
 let cache: {
   lastFetch: number,

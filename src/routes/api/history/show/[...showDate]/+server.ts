@@ -2,14 +2,18 @@ import type {RequestHandler} from "@sveltejs/kit";
 import {error, json} from "@sveltejs/kit";
 import type {OldShowMeta} from "$lib/utils";
 import type {KVNamespace} from "@cloudflare/workers-types";
+import { version } from "$app/environment";
+import type { WanDb_Episode } from "$lib/wdb_types.ts";
 
-export const GET = (async ({platform, params}) => {
+export const GET = (async ({platform, params, url}) => {
 
     const history: KVNamespace = platform?.env?.HISTORY;
     if(!history) throw error(503, "History missing!");
 
     const showDate = params.showDate;
     if(!showDate) throw error(400, "No show date!");
+
+    const fetchWdbData = url.searchParams.get("wdb") === "true";
 
     const kvShowInfo = await history.getWithMetadata<OldShowMeta, OldShowMeta>(showDate, {type: 'json'});
 
@@ -20,10 +24,13 @@ export const GET = (async ({platform, params}) => {
             kvShowInfo.metadata.snippet = undefined;
             generatedMetadata = true;
         }
+        const id = kvShowInfo.metadata?.vods?.youtube ?? kvShowInfo.value.vods?.youtube;
+        const wdb = fetchWdbData && id ? await getWdbData(id) : undefined;
         return json({
             name: params.showDate,
             metadata: kvShowInfo.metadata,
-            value: kvShowInfo.value
+            value: kvShowInfo.value,
+            wdb
         }, {headers: {"X-Generated-Metadata": generatedMetadata+""}});
     }
 
@@ -56,10 +63,15 @@ export const GET = (async ({platform, params}) => {
             ...metadata,
             snippet
         }
+
+        const id = metadata?.vods?.youtube;
+        const wdb = fetchWdbData && id ? await getWdbData(id) : undefined;
+
         return json({
             name: showDate,
             metadata,
-            value
+            value,
+            wdb
         })
     }
 
@@ -67,9 +79,60 @@ export const GET = (async ({platform, params}) => {
     for (const oldShow of oldHistory.history) {
         if(oldShow.name == params.showDate) {
             oldShow.value = structuredClone(oldShow.metadata)
-            return json(oldShow);
+            const id = oldShow.metadata?.vods?.youtube;
+            const wdb = fetchWdbData && id ? await getWdbData(id) : undefined;
+            return json({
+                ...oldShow,
+                wdb
+            });
         }
     }
 
     throw error(404, "Show not found")
 }) satisfies RequestHandler;
+
+
+const wdb_cache: {
+    [id: string]: {
+        lastFetch: number,
+        lastData: WanDb_Episode
+    }
+} = {};
+
+async function getWdbData(youtubeId: string) {
+
+    const lastFetch = wdb_cache[youtubeId]?.lastFetch ?? 0;
+
+    if(Date.now() - lastFetch < 60 * 60e3) { // cache for up to an hour
+        return wdb_cache[youtubeId]?.lastData;
+    }
+
+    if(wdb_cache[youtubeId]?.lastFetch) wdb_cache[youtubeId].lastFetch = Date.now();
+
+    const response = await fetch("https://edge.thewandb.com/v2/episodes/" + youtubeId, {
+        headers: {
+            "Referer": "Whenplane/" + version,
+            "x-whenplane-version": version
+        }
+    })
+      .then(async r => {
+          if(!r.ok) {
+              console.warn(`Received ${r.status} ${r.statusText} from thewandb`, await r.text());
+              return null;
+          }
+          return r;
+      })
+      .then(r => r != null ? r.json() : r)
+      .catch(e => {
+          console.warn("Error while fetching from thewandb:", e)
+      })
+
+    if(response || !wdb_cache[youtubeId]?.lastData) { // only write a null to the cache if we didn't already have data
+        wdb_cache[youtubeId] = {
+            lastFetch: Date.now(),
+            lastData: response
+        }
+    }
+
+    return response;
+}

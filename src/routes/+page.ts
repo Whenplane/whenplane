@@ -3,10 +3,10 @@ import { browser, dev } from "$app/environment";
 import { error } from "@sveltejs/kit";
 import type { Latenesses } from "./api/latenesses/+server";
 import type { AggregateResponse } from "./api/(live-statuses)/aggregate/+server";
-import type { WanDb_FloatplaneData } from "$lib/utils.ts";
 import { floatplaneState, nextFast } from "$lib/stores.ts";
 import { wait } from "$lib/utils.ts";
 import type { NewsPost } from "$lib/news/news.ts";
+import type { WanDb_FloatplaneData } from "$lib/wdb_types.ts";
 
 let cachedLatenesses: Latenesses;
 let cachedLatenessesTime = 0 ;

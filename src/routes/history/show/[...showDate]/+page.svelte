@@ -6,6 +6,7 @@
     import {getTimeUntil} from "$lib/timeUtils";
     import { dev } from "$app/environment";
     import { page } from "$app/stores";
+    import type { WanDb_Topic } from "$lib/wdb_types.ts";
 
     export let data;
 
@@ -29,6 +30,17 @@
 
     let onTimeString;
     $: if(onTimeUntil) onTimeString = onTimeUntil.distance < 5 * 60e3 ? "on time!" : (onTimeUntil.late ? onTimeUntil.string + "late" : onTimeUntil.string + "early!");
+
+
+    $: topics = (() => {
+        let r: WanDb_Topic[] = [];
+        if(!data.wdb?.topics) return [];
+        for (let topic of data.wdb.topics) {
+            const existing = r.find(t => t.start == topic.start)
+            if(!existing) r.push(topic);
+        }
+        return r.filter(t => t.title !== "Merch Messages" && t.title !== "Sponsor Spots");
+    })()
 </script>
 <svelte:head>
     <title>{data.metadata.title ?? ""}{data.metadata.title ? " - " : ""}WAN Show {showDate.toLocaleDateString(undefined, {dateStyle: 'long'})}</title>
@@ -53,7 +65,7 @@
     <li class="crumb"><a class="anchor hover-underline" href="/history{backHash}">{showDate.toLocaleDateString()}</a></li>
 </ol>
 
-<div class="text-center limit mx-auto big-wrapper">
+<div class="text-center limit mx-auto big-wrapper mb-96">
     <h1>{showDate.toLocaleDateString(undefined, {dateStyle: "long"})}</h1>
     {#if thumbnail}
         <br>
@@ -96,9 +108,34 @@
             </a>
         {/each}
     {/if}
+
+    <br>
+    <br>
+
+    {#if topics && topics.length > 0}
+        <h2>Show Info</h2>
+        Provided by
+        <a href="https://thewandb.com/">
+            <img src="/thewandb.svg" style="height: 2.5em; display: inline-block" alt="The WAN Database"/>
+        </a>
+
+        <div class="text-left">
+            {#if topics && topics.length > 0}
+                <h3>Main Topics</h3>
+                <ol class="list">
+                    {#each topics as topic, i}
+                        <li class="!mt-0 !mb-0 !p-0">
+                            <span>{i + 1}.</span>
+                            <span>{topic.title}</span>
+                        </li>
+                    {/each}
+                </ol>
+            {/if}
+        </div>
+    {/if}
 </div>
 {#if dev}
-<!--    <pre>{JSON.stringify(data, null, "\t")}</pre>-->
+<!--    <pre>{JSON.stringify(data.wdb, null, "\t")}</pre>-->
 {/if}
 
 <style>
