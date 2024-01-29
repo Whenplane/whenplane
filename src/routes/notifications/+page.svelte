@@ -9,6 +9,8 @@
   import NotificationSettings from "$lib/notifications/NotificationSettings.svelte";
   import { page } from "$app/stores";
 
+  import ExclamationTriangleFill from "svelte-bootstrap-icons/lib/ExclamationTriangleFill.svelte";
+
   // eslint-disable-next-line @typescript-eslint/no-empty-function
   let pushSubscription = new Promise(() => {});
   let givenUp = false;
@@ -80,6 +82,8 @@
     // TODO: delete from server too
   }
 
+  const iOS = browser ? !!navigator.userAgent.match(/iPad/i) || !!navigator.userAgent.match(/iPhone/i) : false;
+
 </script>
 
 <svelte:head>
@@ -104,9 +108,23 @@
 <div class="limit mx-auto m-2 mb-96 p-2">
   <h1>Push Notifications</h1>
 
-  <b>Push notifications are not ready yet!</b>
-  They are still being tested, so only subscribe if you're ok with them being broken and/or spammy.
-  There will be a <a href="/news">news</a> post once they are done and ready.
+  Subscribe to push notifications to get a notification when the show is imminent, or when the pre/main show start.<br>
+  <br>
+  This is an alternative to floatplane/youtube notifications which can be significantly delayed.
+  You should receive these notifications within 5 seconds of the event happening (usually less)
+  {#if iOS}
+    <br>
+    <aside class="alert variant-ghost-warning">
+      <div><ExclamationTriangleFill/></div>
+      <div class="alert-message">
+        <h3 class="h3">Extra steps are required!</h3>
+        <p>
+          Because you appear to be on iOS, extra steps are required for push notifications to work.<br>
+          <a href="/notifications/ios-add-to-home-screen">More info and instructions</a>
+        </p>
+      </div>
+    </aside>
+  {/if}
 
   <br>
   <br>
@@ -161,5 +179,11 @@
 <style>
   .dark-background {
       background-color: rgba(0, 0, 0, 0.6);
+  }
+
+  @media all and (display-mode: standalone) {
+      .alert {
+          display: none;
+      }
   }
 </style>

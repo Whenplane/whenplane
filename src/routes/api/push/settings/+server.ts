@@ -1,5 +1,7 @@
 import { error, json, type RequestHandler } from "@sveltejs/kit";
 import type { D1Database } from "@cloudflare/workers-types";
+import { dev } from "$app/environment";
+import { createNotificationsTable } from "$lib/server/notifications/notification-server-tools.ts";
 
 export const GET = (async ({ url, platform }) => {
 
@@ -8,6 +10,10 @@ export const GET = (async ({ url, platform }) => {
 
   const hash = url.searchParams.get("hash");
   if(!hash) throw error(400, "Missing hash");
+
+  if(dev) {
+    await createNotificationsTable(db);
+  }
 
   const settings: NotificationRows | undefined = await db.prepare("select * from notifications where endpoint_hash = ?")
     .bind(hash)
