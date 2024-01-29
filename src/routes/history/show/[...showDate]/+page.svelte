@@ -134,6 +134,7 @@
         </div>
     {/if}
 </div>
+<span class="clear">.</span> <!-- this has to be here otherwise safari ignores the padding for some reason -->
 {#if dev}
 <!--    <pre>{JSON.stringify(data.wdb, null, "\t")}</pre>-->
 {/if}
