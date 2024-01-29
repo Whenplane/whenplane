@@ -1,11 +1,9 @@
 import type {RequestHandler} from "@sveltejs/kit";
 import { error, json } from "@sveltejs/kit";
 import type { IsThereWanResponse } from "../isThereWan/+server";
-import type { HasDoneResponse } from "../../hasDone/+server";
 import type { TwitchResponse } from "../twitch/+server";
 import type { YoutubeResponse } from "../youtube/+server";
 import type { LatenessVotingOption } from "$lib/voting.ts";
-import type { KVNamespace } from "@cloudflare/workers-types";
 import type { SpecialStream } from "$lib/utils.ts";
 import type { WanDb_FloatplaneData } from "$lib/wdb_types.ts";
 

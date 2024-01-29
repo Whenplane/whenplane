@@ -1,6 +1,8 @@
 // See https://kit.svelte.dev/docs/types#app
 // for information about these interfaces
 // and what to do when importing types
+import type { KVNamespace } from "@cloudflare/workers-types";
+
 declare namespace App {
 	interface Locals {
         addTiming: (timing: TimingEntry) => void,
@@ -13,6 +15,8 @@ declare namespace App {
             CACHE: KVNamespace;
             HISTORY: KVNamespace;
             META: KVNamespace;
+            WDB_EPISODE_CACHE: KVNamespace;
+
             FETCHER: DurableObjectNamespace;
 
             NOTIFICATION_THROTTLER: DurableObjectNamespace;

@@ -10,6 +10,9 @@ export const GET = (async ({platform, params, url, locals}) => {
     const history: KVNamespace = platform?.env?.HISTORY;
     if(!history) throw error(503, "History missing!");
 
+    const episode_cache: KVNamespace = platform?.env?.WDB_EPISODE_CACHE;
+    if(!episode_cache) throw error(503, "WDB episode cache missing!");
+
     const showDate = params.showDate;
     if(!showDate) throw error(400, "No show date!");
 
@@ -31,7 +34,7 @@ export const GET = (async ({platform, params, url, locals}) => {
 
         const startWdbFetch = Date.now();
         const id = kvShowInfo.metadata?.vods?.youtube ?? kvShowInfo.value.vods?.youtube;
-        const wdb = fetchWdbData && id ? await getWdbData(id) : undefined;
+        const wdb = fetchWdbData && id ? await getWdbData(id, episode_cache, platform) : undefined;
         locals.addTiming({id: "wdb", duration: Date.now() - startWdbFetch});
 
         locals.addTiming({id: "total", duration: Date.now() - start});
@@ -77,7 +80,7 @@ export const GET = (async ({platform, params, url, locals}) => {
 
         const startWdbFetch = Date.now();
         const id = metadata?.vods?.youtube;
-        const wdb = fetchWdbData && id ? await getWdbData(id) : undefined;
+        const wdb = fetchWdbData && id ? await getWdbData(id, episode_cache, platform) : undefined;
         locals.addTiming({id: "wdb", duration: Date.now() - startWdbFetch});
 
         locals.addTiming({id: "total", duration: Date.now() - start});
@@ -96,7 +99,7 @@ export const GET = (async ({platform, params, url, locals}) => {
         if(oldShow.name == params.showDate) {
             oldShow.value = structuredClone(oldShow.metadata)
             const id = oldShow.metadata?.vods?.youtube;
-            const wdb = fetchWdbData && id ? await getWdbData(id) : undefined;
+            const wdb = fetchWdbData && id ? await getWdbData(id, episode_cache, platform) : undefined;
             return json({
                 ...oldShow,
                 wdb
@@ -115,7 +118,7 @@ const wdb_cache: {
     }
 } = {};
 
-async function getWdbData(youtubeId: string) {
+async function getWdbData(youtubeId: string, episode_cache: KVNamespace, platform: App.Platform) {
 
     const lastFetch = wdb_cache[youtubeId]?.lastFetch ?? 0;
 
@@ -125,7 +128,8 @@ async function getWdbData(youtubeId: string) {
 
     if(wdb_cache[youtubeId]?.lastFetch) wdb_cache[youtubeId].lastFetch = Date.now();
 
-    const response = await fetch("https://edge.thewandb.com/v2/episodes/" + youtubeId, {
+    const cached = episode_cache.get<WanDb_Episode>(youtubeId, {type: 'json'});
+    const wdb_response = fetch("https://edge.thewandb.com/v2/episodes/" + youtubeId, {
         headers: {
             "Referer": "Whenplane/" + version,
             "x-whenplane-version": version
@@ -143,12 +147,19 @@ async function getWdbData(youtubeId: string) {
           console.warn("Error while fetching from thewandb:", e)
       })
 
-    if(response || !wdb_cache[youtubeId]?.lastData) { // only write a null to the cache if we didn't already have data
+    let result = await Promise.any([cached, wdb_response]);
+    if(!result) result = await wdb_response;
+
+    if(result || !wdb_cache[youtubeId]?.lastData) { // only write a null to the cache if we didn't already have data
         wdb_cache[youtubeId] = {
             lastFetch: Date.now(),
-            lastData: response
+            lastData: result
+        }
+
+        if(!(await cached) && result) {
+            platform.context.waitUntil(episode_cache.put(youtubeId, JSON.stringify(result)));
         }
     }
 
-    return response;
+    return result;
 }

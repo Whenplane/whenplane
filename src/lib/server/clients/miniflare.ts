@@ -8,7 +8,7 @@ export const fallBackPlatformToMiniFlareInDev = async (_platform: App.Platform |
     const mf = new Miniflare({
         log: new Log(LogLevel.INFO),
         kvPersist: './kv-data',
-        kvNamespaces: ['CACHE', 'HISTORY', 'META'],
+        kvNamespaces: ['CACHE', 'HISTORY', 'META', 'WDB_EPISODE_CACHE'],
         d1Databases: ['DB'],
         globalAsyncIO: true,
         globalTimers: true,
