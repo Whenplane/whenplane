@@ -157,7 +157,15 @@ async function getWdbData(youtubeId: string, episode_cache: KVNamespace, platfor
         }
 
         if(!(await cached) && result) {
-            platform.context.waitUntil(episode_cache.put(youtubeId, JSON.stringify(result)));
+            platform.context.waitUntil(
+              episode_cache.put(
+                youtubeId,
+                JSON.stringify(result),
+                {
+                    expirationTtl: 30 * 24 * 60 * 60e3 // keep kv cache for 30 days
+                }
+              )
+            );
         }
     }
 
