@@ -12,7 +12,10 @@ export const handle: Handle = async ({ event, resolve }) => {
 
     if(event.platform?.env?.REQUESTS && event.request.headers.has("host")) {
         event.platform?.env?.REQUESTS.writeDataPoint({
-            blobs: [event.url.pathname],
+            blobs: [
+              event.url.pathname,
+              event.request.cf ? (event.request.cf.latitude + "," + event.request.cf.longitude) : undefined
+            ],
             doubles: [],
             indexes: []
         })
