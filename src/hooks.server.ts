@@ -79,6 +79,7 @@ export const handle: Handle = async ({ event, resolve }) => {
                 CACHE: createKVNamespaceWrapper(event.platform.env?.CACHE, "caches", event.platform),
                 HISTORY: createKVNamespaceWrapper(event.platform.env?.HISTORY, "wheniswan_history", event.platform),
                 META: createKVNamespaceWrapper(event.platform.env?.META, "wheniswan_meta", event.platform),
+                WDB_EPISODE_CACHE: createKVNamespaceWrapper(event.platform.env?.WDB_EPISODE_CACHE, "thewandb_episode_cache", event.platform),
             }
         }
     }
