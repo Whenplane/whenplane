@@ -14,8 +14,8 @@ export const handle: Handle = async ({ event, resolve }) => {
         event.platform?.env?.REQUESTS.writeDataPoint({
             blobs: [
               event.url.pathname,
-              event.request.cf?.latitude,
-              event.request.cf?.longitude
+              event.platform.cf?.latitude,
+              event.platform.cf?.longitude
             ],
             doubles: [],
             indexes: []
