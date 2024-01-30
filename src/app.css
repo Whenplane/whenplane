@@ -50,3 +50,10 @@ h1:not(.no-header-margin), h2:not(.no-header-margin), h3:not(.no-header-margin) 
 :is(.anchor,.hover-underline):hover {
     text-decoration-line: underline !important;
 }
+
+ol.normal-list {
+    list-style-type: decimal;
+}
+.normal-list {
+    list-style-type: initial;
+}

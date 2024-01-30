@@ -7,6 +7,7 @@
     import { dev } from "$app/environment";
     import { page } from "$app/stores";
     import type { WanDb_Topic } from "$lib/wdb_types.ts";
+    import SubTopics from "$lib/subcomponents/SubTopics.svelte";
 
     export let data;
 
@@ -129,13 +130,7 @@
                                 {topic.title}
 
                                 {#if topic.children}
-                                    <ul class="normal-list ml-4">
-                                        {#each topic.children as child}
-                                            <li>
-                                                <span>{child.title}</span>
-                                            </li>
-                                        {/each}
-                                    </ul>
+                                    <SubTopics subTopics={topic.children}/>
                                 {/if}
                             </span>
 
@@ -152,13 +147,6 @@
 {/if}
 
 <style>
-    ol.normal-list {
-        list-style-type: decimal;
-    }
-    .normal-list {
-        list-style-type: initial;
-    }
-
     .big-wrapper {
         margin-top: 2em;
     }
