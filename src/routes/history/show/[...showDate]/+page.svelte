@@ -39,7 +39,7 @@
             const existing = r.find(t => t.start == topic.start)
             if(!existing) r.push(topic);
         }
-        return r.filter(t => t.title !== "Merch Messages" && t.title !== "Sponsor Spots");
+        return r;//r.filter(t => t.title !== "Merch Messages" && t.title !== "Sponsor Spots");
     })()
 </script>
 <svelte:head>
@@ -121,12 +121,24 @@
 
         <div class="text-left">
             {#if topics && topics.length > 0}
-                <h3>Main Topics</h3>
-                <ol class="list">
+                <h3>Topics</h3>
+                <ol class="normal-list">
                     {#each topics as topic, i}
                         <li class="!mt-0 !mb-0 !p-0">
-                            <span>{i + 1}.</span>
-                            <span>{topic.title}</span>
+                            <span>
+                                {topic.title}
+
+                                {#if topic.children}
+                                    <ul class="normal-list ml-4">
+                                        {#each topic.children as child}
+                                            <li>
+                                                <span>{child.title}</span>
+                                            </li>
+                                        {/each}
+                                    </ul>
+                                {/if}
+                            </span>
+
                         </li>
                     {/each}
                 </ol>
@@ -140,6 +152,13 @@
 {/if}
 
 <style>
+    ol.normal-list {
+        list-style-type: decimal;
+    }
+    .normal-list {
+        list-style-type: initial;
+    }
+
     .big-wrapper {
         margin-top: 2em;
     }
