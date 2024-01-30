@@ -13,17 +13,24 @@
 
 <ul class="normal-list ml-4">
   {#each firstFew as topic}
+
     <li>{topic.title}</li>
+
   {/each}
+
   {#if !expanded && rest}
+
     <button class="opacity-75 hover-underline" on:click={() => expanded = true}>
       ... And {rest.length} more
     </button>
+
   {:else if expanded && rest}
+
     {#each rest as topic}
       <li in:slide={{easing: quintOut}}>
         {topic.title}
       </li>
     {/each}
+
   {/if}
 </ul>
