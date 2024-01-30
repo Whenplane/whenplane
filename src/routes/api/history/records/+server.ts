@@ -4,16 +4,26 @@ import {dev} from "$app/environment";
 import {random, wait} from "$lib/utils";
 import type { KVNamespace } from "@cloudflare/workers-types";
 
-// Cache in edge for 2 hours
+// Cache KV in edge for 2 hours
 const cacheTtl = 60 * 60 * 2;
 
 // In dev, random test latencies are used
 const testMin = 5;
 const testMax = 30;
 
+let cache: {
+    lastFetch: number,
+    lastData?: Records
+} = {lastFetch: 0};
+
 export const GET = (async ({platform, locals}) => {
     const meta: KVNamespace | undefined = platform?.env?.META;
     if(!meta) throw error(503, "KV not available!");
+
+    if(Date.now() - cache.lastFetch < 60e3) { // cache for 1 minute
+        return json(cache.lastData);
+    }
+    if(cache.lastData) cache.lastFetch = Date.now();
 
     const totalStart = Date.now();
 
@@ -97,7 +107,7 @@ export const GET = (async ({platform, locals}) => {
         return r as number;
     })();
 
-    const r = {
+    const r: Records = {
         earliest: await earliest,
         longestPreShow: await longestPreShow,
         shortestPreShow: await shortestPreShow,
@@ -109,6 +119,24 @@ export const GET = (async ({platform, locals}) => {
         lateStreak: await lateStreak,
         showStreak: await showStreak
     };
+
+    cache = {
+        lastFetch: Date.now(),
+        lastData: r
+    }
     locals.addTiming({id: "total", duration: Date.now() - totalStart});
     return json(r)
 }) satisfies RequestHandler;
+
+type Records = {
+    averageLateness: number;
+    lateStreak: number;
+    showStreak: number;
+    longestShow: unknown;
+    shortestShow: unknown;
+    earliest: unknown;
+    longestPreShow: unknown;
+    shortestPreShow: unknown;
+    mostLate: unknown;
+    medianLateness: number
+}
