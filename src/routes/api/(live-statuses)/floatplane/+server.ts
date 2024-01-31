@@ -85,7 +85,7 @@ export const GET = (async ({fetch, url, platform}) => {
   }
 
   const throttler = (platform?.env?.NOTIFICATION_THROTTLER as DurableObjectNamespace)
-  if(response.imminence === 3 && throttler && Date.now() - lastNotifSend > (60 * 60e3)) {
+  if(response.imminence === 3 && response.isWAN && throttler && Date.now() - lastNotifSend > (60 * 60e3)) {
     lastNotifSend = Date.now();
 
     console.log("Sending notification!");
