@@ -9,17 +9,17 @@ export const GET = (async ({fetch}) => {
   // In the future this will be from a database, but this will be fine for now.
 
   const data: SpecialStream = {
-    title: "Linus Interviews the New CEO (Terren)",
-    thumbnail: "https://pbs.floatplane.com/stream_thumbnails/5c13f3c006f1be15e08e05c0/168505790704333_1705599393918.jpeg",
+    title: "Wintergatan Wood PC 2: We can do better",
+    thumbnail: "https://pbs.floatplane.com/stream_thumbnails/5c13f3c006f1be15e08e05c0/530913290833307_1706722559012.jpeg",
 
-    start: "2024-01-18T18:00:00.000Z",
+    start: "2024-01-31T18:00:00.000Z",
 
     onFloatplane: true,
 
-    onTwitch: false,
+    onTwitch: true,
     // twitchNotes: "first half",
 
-    onYoutube: false
+    onYoutube: true
   }
 
   // hide an hour after the start time;
