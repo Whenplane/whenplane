@@ -12,7 +12,7 @@ export const GET = (async ({fetch}) => {
     title: "Wood PC 2: They said they could do it better, I agree.",
     thumbnail: "https://pbs.floatplane.com/stream_thumbnails/5c13f3c006f1be15e08e05c0/530913290833307_1706722559012.jpeg",
 
-    start: "2024-01-31T18:00:00.000Z",
+    start: "2024-01-31T19:00:00.000Z",
 
     onFloatplane: true,
 
