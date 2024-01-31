@@ -144,7 +144,8 @@ async function getWdbData(youtubeId: string, episode_cache: KVNamespace, platfor
       })
       .then(r => r != null ? r.json() : r)
       .catch(e => {
-          console.warn("Error while fetching from thewandb:", e)
+          console.warn("Error while fetching from thewandb:", e);
+          return null;
       })
 
     let result = await Promise.any([cached, wdb_response]);
