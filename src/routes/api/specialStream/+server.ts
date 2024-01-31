@@ -29,7 +29,7 @@ export const GET = (async ({fetch}) => {
   const fpLive: WanDb_FloatplaneData = await fetch("/api/floatplane?fast=true").then(r => r.json());
 
   const timeUntil = getTimeUntil(hideTime);
-  if(timeUntil.late && !(timeUntil.distance < (5 * 60 * 60e3) && fpLive.live)) {
+  if(timeUntil.late && !(timeUntil.distance < (2 * 60 * 60e3) && fpLive.live)) {
     return json(false);
   } // after
 
