@@ -54,8 +54,8 @@
 		}
 		const day = new Date().getUTCDay();
 
-		// update less often when far away from wan time
-		if(day < 5 && i++ % 2 === 0) {
+		// update less often when far away from wan time (but bypass if last update was more than a minute ago)
+		if(day < 5 && i++ % 2 === 0 && Date.now() - lastInvalidation < 60e3) {
 			return;
 		}
 
