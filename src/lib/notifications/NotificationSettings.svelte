@@ -19,6 +19,11 @@
     console.log(JSON.stringify(stagedSettings) === JSON.stringify(knownSettings))
   }
 
+  const disabled = [
+    "other_streams_imminent",
+    "other_streams"
+  ]
+
   async function fetchSettings() {
     const sub = await getPushSubscription();
     if(!sub) {
@@ -84,7 +89,7 @@
 <!--  <pre>{JSON.stringify(stagedSettings, null, '\t')}</pre>-->
 
   <div class="card p-3">
-    {#each Object.keys(stagedSettings).filter(n => n !== "endpoint_hash") as settingName, i}
+    {#each Object.keys(stagedSettings).filter(n => n !== "endpoint_hash" && !disabled.includes(n)) as settingName, i}
       {@const display = lang[settingName]}
       {#if display}
         {#if i !== 0}
@@ -107,6 +112,22 @@
         <br>
       {/if}
     {/each}
+
+    {#if disabled}
+      <br>
+      <span class="opacity-50">
+      <h2>Future Notifications</h2>
+      These notifications aren't ready yet, but they will be added in the future<br>
+        {#each disabled as settingName, i}
+        {@const display = lang[settingName] ?? settingName}
+          <div class="my-4 mx-14">
+          <b>{display.name}</b><br>
+            {display.description}
+        </div>
+      {/each}
+    </span>
+    {/if}
+
   </div>
   <br>
   <button

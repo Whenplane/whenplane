@@ -17,6 +17,15 @@ export const lang: {[key: string]: {name: string, description: string}} = {
   mainshow_live: {
     name: "Main Show Live Notification",
     description: "Get a notification when the main show starts (on youtube)"
+  },
+
+  other_streams_imminent: {
+    name: "Imminent Other Stream Notifications",
+    description: "Get a notification when a non-wan stream is close to starting"
+  },
+  other_streams: {
+    name: "Other Stream Live Notifications",
+    description: "Get a notification when a non-wan stream starts"
   }
 }
 
