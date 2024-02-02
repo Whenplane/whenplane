@@ -17,6 +17,7 @@
 	import NewsAnnouncer from "$lib/NewsAnnouncer.svelte";
 	import sanitizeHtml from "sanitize-html";
 	import { newsSanitizeSettings } from "$lib/news/news.ts";
+	import ToolTip from "$lib/ToolTip.svelte";
 
 	export let data;
 
@@ -104,6 +105,7 @@
 
 
 	$: averageLateness = data.averageLateness ? timeString(Math.abs(data.averageLateness)) : undefined;
+	$: latenessStandardDeviation = data.latenessStandardDeviation ? timeString(Math.abs(data.latenessStandardDeviation)) : undefined;
 	$: medianLateness = data.medianLateness ? timeString(Math.abs(data.medianLateness)) : undefined;
 
 
@@ -239,6 +241,15 @@
 					<span class="opacity-75 text-90 relative bottom-1">from the last 5 shows</span>
 					<br>
 					{averageLateness} <Late/>
+					{#if latenessStandardDeviation}
+						<br>
+						<span class="smaller">
+							&plusmn; {latenessStandardDeviation}
+						</span>
+						<ToolTip id="stdDev">
+							Think of standard deviation as a measure that tells you how much individual values in a set typically differ from the average of that set. If the standard deviation is small, it means most values are close to the average. If it's large, it means values are more spread out from the average, indicating greater variability in the data. Essentially, standard deviation gives you an idea of how consistent or varied the values are in relation to the average.
+						</ToolTip>
+					{/if}
 				</span>
 			{/if}
 			{#if medianLateness || dev}
@@ -247,6 +258,12 @@
 					<span class="opacity-75 text-90 relative bottom-1">from the last 5 shows</span>
 					<br>
 					{medianLateness} <Late/>
+					{#if latenessStandardDeviation}
+						<br>
+						<span class="smaller">
+							&nbsp;
+						</span>
+					{/if}
 				</span>
 			{/if}
 			<br>
@@ -389,6 +406,10 @@
 
 	.lateness {
 		min-width: 18em;
+	}
+
+	.smaller {
+		font-size: 0.9em;
 	}
 	
 </style>

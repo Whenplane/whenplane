@@ -1,6 +1,5 @@
 import type {PageLoad} from "./$types";
 import { browser, dev } from "$app/environment";
-import { error } from "@sveltejs/kit";
 import type { Latenesses } from "./api/latenesses/+server";
 import type { AggregateResponse } from "./api/(live-statuses)/aggregate/+server";
 import { floatplaneState, nextFast } from "$lib/stores.ts";
@@ -171,6 +170,7 @@ export const load = (async ({fetch, params}) => {
         fast,
         hasDone: liveStatus ? liveStatus.hasDone : true,
         averageLateness: latenesses?.averageLateness,
+        latenessStandardDeviation: latenesses?.latenessStandardDeviation,
         medianLateness: latenesses?.medianLateness,
         dan,
         specialStream: liveStatus?.specialStream,
