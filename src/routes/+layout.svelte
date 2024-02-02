@@ -16,6 +16,8 @@
     import { setServiceWorker } from "$lib/stores.ts";
     import { onMount } from "svelte";
 
+    import { Toast } from '@skeletonlabs/skeleton';
+
     NProgress.configure({
         // Full list: https://github.com/rstacruz/nprogress#configuration
         minimum: 0.16,
@@ -77,5 +79,7 @@
         <link rel="canonical" href="https://whenplane.com{$page.url.pathname}">
     {/if}
 </svelte:head>
+
+<Toast/>
 
 <slot />

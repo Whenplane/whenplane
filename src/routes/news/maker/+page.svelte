@@ -4,6 +4,7 @@
   import { onMount } from "svelte";
   import { newsSanitizeSettings } from "$lib/news/news";
   import { truncateText } from "$lib/utils";
+  import {toastStore, clipboard} from "@skeletonlabs/skeleton";
 
   let title = "";
   $: url = truncateText(title.replace(/[^A-Za-z0-9- ]+/g, "").replace(/\s\s+/g, ' ').replaceAll(" ", "-").toLowerCase(), 50, false)
@@ -72,7 +73,14 @@
 </div>
 <br>
 
-&ZeroWidthSpace;{url}
+
+<button use:clipboard={url} on:click={() => {
+        toastStore.trigger({
+            message: "Copied to Clipboard!"
+        })
+    }}>
+  {url}
+</button>
 <br>
 
 
