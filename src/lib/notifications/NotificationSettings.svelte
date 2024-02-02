@@ -115,17 +115,17 @@
 
     {#if disabled}
       <br>
-      <span class="opacity-50">
-      <h2>Future Notifications</h2>
-      These notifications aren't ready yet, but they will be added in the future<br>
+      <div class="opacity-50">
+        <h2>Future Notifications</h2>
+        These notifications aren't ready yet, but they will be added in the future<br>
         {#each disabled as settingName, i}
-        {@const display = lang[settingName] ?? settingName}
-          <div class="my-4 mx-14">
-          <b>{display.name}</b><br>
-            {display.description}
-        </div>
-      {/each}
-    </span>
+          {@const display = lang[settingName] ?? settingName}
+            <div class="my-4 mx-14">
+              <b>{display.name}</b><br>
+                {display.description}
+            </div>
+        {/each}
+      </div>
     {/if}
 
   </div>
