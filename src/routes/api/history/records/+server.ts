@@ -83,6 +83,14 @@ export const GET = (async ({platform, locals}) => {
         return r as number;
     })();
 
+    const latenessStandardDeviation = (async () => {
+        const start = Date.now();
+        if(dev) await wait(random(testMin, testMax))
+        const r = await meta.get("latenessStandardDeviation", {type: "json", cacheTtl});
+        locals.addTiming({id: "lStdDev", duration: Date.now() - start})
+        return r as number;
+    })();
+
     const medianLateness = (async () => {
         const start = Date.now();
         if(dev) await wait(random(testMin, testMax))
@@ -115,6 +123,7 @@ export const GET = (async ({platform, locals}) => {
         shortestShow: await shortestShow,
         mostLate: await mostLate,
         averageLateness: await averageLateness,
+        latenessStandardDeviation: await latenessStandardDeviation,
         medianLateness: await medianLateness,
         lateStreak: await lateStreak,
         showStreak: await showStreak
@@ -130,6 +139,7 @@ export const GET = (async ({platform, locals}) => {
 
 type Records = {
     averageLateness: number;
+    latenessStandardDeviation: number;
     lateStreak: number;
     showStreak: number;
     longestShow: unknown;
