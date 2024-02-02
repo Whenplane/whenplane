@@ -111,22 +111,22 @@
   Subscribe to push notifications to get a notification when the show is imminent, or when the pre/main show start.<br>
   <br>
   This is an alternative to floatplane/youtube notifications which can be significantly delayed.
-  You should receive these notifications within 5 seconds of the event happening (usually less)
+  You should receive these notifications within 5 seconds of the event happening (usually less)<br>
   {#if iOS}
-    <br>
-    <aside class="alert variant-ghost-warning">
-      <div><ExclamationTriangleFill/></div>
-      <div class="alert-message">
-        <h3 class="h3">Extra steps are required!</h3>
-        <p>
-          Because you appear to be on iOS, extra steps are required for push notifications to work.<br>
-          <a href="/notifications/ios-add-to-home-screen">More info and instructions</a>
-        </p>
-      </div>
-    </aside>
+    <div class="ios-alert mt-5">
+      <aside class="alert variant-ghost-warning">
+        <div><ExclamationTriangleFill/></div>
+        <div class="alert-message">
+          <h3 class="h3">Extra steps are required!</h3>
+          <p>
+            Because you appear to be on iOS, extra steps are required for push notifications to work.<br>
+            <a href="/notifications/ios-add-to-home-screen">More info and instructions</a>
+          </p>
+        </div>
+      </aside>
+    </div>
   {/if}
 
-  <br>
   <br>
   {#if givenUp}
     <span class="text-red-500">
@@ -182,7 +182,7 @@
   }
 
   @media all and (display-mode: standalone) {
-      .alert {
+      .ios-alert {
           display: none;
       }
   }
