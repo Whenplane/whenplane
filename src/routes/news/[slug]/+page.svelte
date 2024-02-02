@@ -12,6 +12,7 @@
 <svelte:head>
   <title>{data.post.title} - Whenplane News</title>
   <meta name="description" content={truncateText(sanitizeHtml(data.post.body, {allowedTags: []}), 200)}>
+  <meta name="created" content="{postDate.toISOString()}">
 </svelte:head>
 
 <ol class="breadcrumb pt-2 pl-2">
