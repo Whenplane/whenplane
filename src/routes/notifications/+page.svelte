@@ -174,7 +174,7 @@
     {/if}
   {/await}
 </div>
-
+<span class="clear">.</span>
 
 <style>
   .dark-background {
