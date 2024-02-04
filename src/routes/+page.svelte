@@ -12,12 +12,12 @@
 	import { Accordion, AccordionItem } from "@skeletonlabs/skeleton";
 	import ImminentBox from "$lib/ImminentBox.svelte";
 	import LTTTime from "$lib/LTTTime.svelte";
-	import ExtensionAd from "$lib/ExtensionAd.svelte";
 	import SpecialStream from "$lib/SpecialStream.svelte";
 	import NewsAnnouncer from "$lib/NewsAnnouncer.svelte";
 	import sanitizeHtml from "sanitize-html";
 	import { newsSanitizeSettings } from "$lib/news/news.ts";
 	import ToolTip from "$lib/ToolTip.svelte";
+	import AdPicker from "$lib/ads/AdPicker.svelte";
 
 	export let data;
 
@@ -336,7 +336,7 @@
 
 {#if !isFrame}
 	<div class="absolute top-0 left-0">
-		<ExtensionAd/>
+		<AdPicker/>
 	</div>
 {/if}
 

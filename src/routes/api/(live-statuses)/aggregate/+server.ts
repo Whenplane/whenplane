@@ -10,10 +10,10 @@ import type { WanDb_FloatplaneData } from "$lib/wdb_types.ts";
 export const GET = (async ({url, fetch, locals, platform}) => {
 
 
-    const now = new Date();
+    /*const now = new Date();
     if(now.getUTCMonth() === 0 && now.getUTCDate() === 12 && now.getUTCHours() === 21 && now.getUTCMinutes() === 1 && now.getUTCSeconds() < 45) {
         throw error(500, "Reload Forcer");
-    }
+    }*/
 
 
     const fast = url.searchParams.get("fast");

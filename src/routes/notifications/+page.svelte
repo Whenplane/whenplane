@@ -112,6 +112,11 @@
   <br>
   This is an alternative to floatplane/youtube notifications which can be significantly delayed.
   You should receive these notifications within 5 seconds of the event happening (usually less)<br>
+  <br>
+  You do <u>not</u> need to keep Whenplane open in order to get notifications. They also work on your phone (just requires some extra setup on iOS, which will show below if you are on iOS)<br>
+  <br>
+  To get to this page without typing in the url, you can go to the about page, and there is a link to this page near the bottom (in the preferences box)
+  <br>
   {#if iOS}
     <div class="ios-alert mt-5">
       <aside class="alert variant-ghost-warning">
@@ -126,6 +131,9 @@
       </aside>
     </div>
   {/if}
+
+  <br>
+  <hr>
 
   <br>
   {#if givenUp}
@@ -145,7 +153,7 @@
     {/if}
   {:then sub}
     {#if sub}
-      You are subscribed!
+      You are subscribed! Change which notifications you want to receive below. Click the unsubscribe button to stop receiving all notifications from Whenplane.
       <br>
       <br>
       <NotificationSettings/>
@@ -156,7 +164,7 @@
         Unsubscribe from all
       </button>
     {:else}
-      You are not subscribed to push notifications.<br>
+      You are not subscribed to push notifications. Click the button below to subscribe. Once you subscribe, you will be able to customise which notifications you receive.<br>
       <br>
       {#if Notification.permission === "denied"}
         <span class="text-red-500">
