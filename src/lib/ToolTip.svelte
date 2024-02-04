@@ -13,15 +13,16 @@
 
 </script>
 <slot name="icon">
-  <span
+  <div
     use:popup={{
       event: 'hover',
       target: id,
       placement: placement
     }}
+    class="inline-block [&>*]:pointer-events-none"
   >
     <Info classes="!inline-block"/>
-  </span>
+  </div>
 </slot>
 
 <div class="card p-4 shadow-x1 z-10 font-normal inline-block" data-popup={id}>
