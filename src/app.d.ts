@@ -3,37 +3,40 @@
 // and what to do when importing types
 import type { KVNamespace } from "@cloudflare/workers-types";
 
-declare namespace App {
-	interface Locals {
-        addTiming: (timing: TimingEntry) => void,
-        id: string
-    }
-	// interface PageData {}
-	// interface Error {}
-    interface Platform {
-        env?: {
-            CACHE: KVNamespace;
-            HISTORY: KVNamespace;
-            META: KVNamespace;
-            WDB_EPISODE_CACHE: KVNamespace;
 
-            FETCHER: DurableObjectNamespace;
+declare global {
+    namespace App {
+        interface Locals {
+            addTiming: (timing: TimingEntry) => void,
+            id: string
+        }
+        // interface PageData {}
+        // interface Error {}
+        interface Platform {
+            env?: {
+                CACHE: KVNamespace;
+                HISTORY: KVNamespace;
+                META: KVNamespace;
+                WDB_EPISODE_CACHE: KVNamespace;
 
-            NOTIFICATION_THROTTLER: DurableObjectNamespace;
-            NOTIFICATION_QUEUE: Queue<NotificationMessage>
+                FETCHER: DurableObjectNamespace;
 
-            TWITCH_ANALYTICS?: AnalyticsEngineDataset;
-            LOG_MESSAGES?: AnalyticsEngineDataset;
-            REQUESTS?: AnalyticsEngineDataset;
-            KV_ANALYTICS?: AnalyticsEngineDataset;
-            DB: D1Database;
-        },
-        context?: {
-            /**
-             * Waits for the promise to complete without blocking.
-             * @param promise The promise that is ensured completion
-             */
-            waitUntil: (promise: Promise) => void
+                NOTIFICATION_THROTTLER: DurableObjectNamespace;
+                NOTIFICATION_QUEUE: Queue<NotificationMessage>
+
+                TWITCH_ANALYTICS?: AnalyticsEngineDataset;
+                LOG_MESSAGES?: AnalyticsEngineDataset;
+                REQUESTS?: AnalyticsEngineDataset;
+                KV_ANALYTICS?: AnalyticsEngineDataset;
+                DB: D1Database;
+            },
+            context?: {
+                /**
+                 * Waits for the promise to complete without blocking.
+                 * @param promise The promise that is ensured completion
+                 */
+                waitUntil: (promise: Promise) => void
+            }
         }
     }
 }
