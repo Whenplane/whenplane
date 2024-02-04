@@ -245,7 +245,10 @@ export const GET = (async ({platform, url}) => {
         const id = throttler.idFromName("n");
         const stub = throttler.get(id);
 
-        platform?.context?.waitUntil(stub.fetch("https://whenplane-notification-throttler/preshow_live"))
+        const params = new URLSearchParams();
+        params.set("title", twitchJSON[0].title);
+
+        platform?.context?.waitUntil(stub.fetch("https://whenplane-notification-throttler/preshow_live?" + params.toString()))
     }
 
     return json(response);

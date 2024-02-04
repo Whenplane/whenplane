@@ -7,7 +7,7 @@ import { getClosestWan, getUTCDate } from "$lib/timeUtils.ts";
 
 import type {PushMessage} from '@block65/webcrypto-web-push';
 
-export const POST = (async ({platform, params, request}) => {
+export const POST = (async ({platform, params, request, url}) => {
 
   const { key } = await request.json();
 
@@ -20,8 +20,17 @@ export const POST = (async ({platform, params, request}) => {
   const db: D1Database = platform?.env?.DB;
   if(!db) throw error(503, "Database missing");
 
-  const message = messages[name];
+  const message = JSON.parse(JSON.stringify(messages[name]));
   if(!message) throw error(400);
+
+  for (const searchKey of url.searchParams.keys()) {
+    message.data.title.replaceAll(searchKey, url.searchParams.get(searchKey))
+    message.data.body.replaceAll(searchKey, url.searchParams.get(searchKey))
+  }
+  if(url.searchParams.has("image")) {
+    message.data.image = url.searchParams.get("image");
+  }
+
 
   let subs;
 
@@ -83,7 +92,7 @@ const messages: {[key: string]: PushMessage} = {
   imminent: {
     data: {
       title: "The WAN show is imminent!",
-      body: "The pre show should be starting in the next 10 minutes. Get ready!"
+      body: "The pre show should be starting in the next 10 minutes. Get ready! \"{title}\""
     },
     options: {
       ttl: 60,
@@ -95,7 +104,8 @@ const messages: {[key: string]: PushMessage} = {
   preshow_live: {
     data: {
       title: "The WAN pre-show has started!",
-      body: "The pre-show is now live (everywhere except for youtube)"
+      body: "The pre-show is now live (everywhere except for youtube) \"{title}\"",
+      tag: "preshow_live-" + getUTCDate(getClosestWan()).replaceAll("/", "-")
     },
     options: {
       ttl: 60,
@@ -107,7 +117,8 @@ const messages: {[key: string]: PushMessage} = {
   mainshow_live: {
     data: {
       title: "The WAN show has started!",
-      body: "The main show is now live everywhere."
+      body: "The main show is now live everywhere. \"{title}\"",
+      tag: "wanshow_live-" + getUTCDate(getClosestWan()).replaceAll("/", "-")
     },
     options: {
       ttl: 60,
@@ -119,7 +130,8 @@ const messages: {[key: string]: PushMessage} = {
   other_streams: {
     data: {
       title: "A non-wan stream has started",
-      body: "{TODO: insert title here}"
+      body: "\"{title}\"",
+      tag: "imminent-" + getUTCDate(getClosestWan()).replaceAll("/", "-")
     },
     options: {
       ttl: 60,
@@ -131,7 +143,8 @@ const messages: {[key: string]: PushMessage} = {
   test: {
     data: {
       title: "Test Notification",
-      body: "Yeah, it works!"
+      body: "If you are getting this and are not me, please contact support@whenplane.com",
+      tag: "test-" + new Date().getUTCMinutes()
     },
     options: {
       ttl: 60,

@@ -116,7 +116,11 @@ export const GET = (async ({platform, locals, url, fetch}) => {
         const id = throttler.idFromName("n");
         const stub = throttler.get(id);
 
-        platform?.context?.waitUntil(stub.fetch("https://whenplane-notification-throttler/mainshow_live"))
+        const params = new URLSearchParams();
+        params.set("title", snippet?.title+"");
+        params.set("image", (snippet?.thumbnails.maxres ?? snippet?.thumbnails.default)+"");
+
+        platform?.context?.waitUntil(stub.fetch("https://whenplane-notification-throttler/mainshow_live?" + params.toString()))
     }
 
     cache.value = result
