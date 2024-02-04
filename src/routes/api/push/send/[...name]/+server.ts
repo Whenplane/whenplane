@@ -24,8 +24,8 @@ export const POST = (async ({platform, params, request, url}) => {
   if(!message) throw error(400);
 
   for (const searchKey of url.searchParams.keys()) {
-    message.data.title = message.data.title.replaceAll(searchKey, url.searchParams.get(searchKey))
-    message.data.body = message.data.body.replaceAll(searchKey, url.searchParams.get(searchKey))
+    message.data.title = message.data.title.replaceAll("{" + searchKey + "}", url.searchParams.get(searchKey))
+    message.data.body = message.data.body.replaceAll("{" + searchKey + "}", url.searchParams.get(searchKey))
   }
   if(url.searchParams.has("image")) {
     message.data.image = url.searchParams.get("image");
