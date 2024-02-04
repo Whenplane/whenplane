@@ -36,7 +36,7 @@ export const POST = (async ({platform, params, request, url}) => {
 
   if(name === "test") {
     subs = await db.prepare("select * from notifications where endpoint_hash = ?")
-      .bind("8b71f18a5a6afd8c36b0094008fb82597a7559634d800cbcdfb0425e8fbe1b7f")
+      .bind("d3aeaf364e34a66a5a3ccee24d09f0225ecd9432e1848c836115c23204f757f0")
       .all()
       .then(r => r.results as unknown as NotificationRows[]);
   } else {
@@ -143,7 +143,7 @@ const messages: {[key: string]: PushMessage} = {
   test: {
     data: {
       title: "Test Notification",
-      body: "If you are getting this and are not me, please contact support@whenplane.com",
+      body: "If you are getting this and are not me, please contact support@whenplane.com. \"{title}\"",
       tag: "test-" + new Date().getUTCMinutes()
     },
     options: {
