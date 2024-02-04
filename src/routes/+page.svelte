@@ -55,8 +55,10 @@
 		}
 		const day = new Date().getUTCDay();
 
+
+		const isAwayFromWan = day < 5 || (data.hasDone && !(data.liveStatus?.twitch.isWAN && data.liveStatus?.twitch.isLive))
 		// update less often when far away from wan time (but bypass if last update was more than a minute ago)
-		if(day < 5 && i++ % 2 === 0 && Date.now() - lastInvalidation < 60e3) {
+		if(isAwayFromWan && i++ % 2 === 0 && Date.now() - lastInvalidation < 60e3) {
 			return;
 		}
 
