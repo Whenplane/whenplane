@@ -55,6 +55,7 @@ export const POST = (async ({platform, params, request, url}) => {
     return {
       type: name,
       subscription: JSON.parse(<string>sub.subscription) as PushSubscription,
+      sendTime: Date.now(),
       message
     }
   });
@@ -159,5 +160,6 @@ export type NotificationMessage = {
   type: string,
   subscription: PushSubscription,
   message: PushMessage,
+  sendTime: number,
   isDummy?: boolean
 }
