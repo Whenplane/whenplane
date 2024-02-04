@@ -25,8 +25,8 @@ export const GET = (async ({fetch, url, platform}) => {
     });
   }
 
-  // const endpoint = "https://edge.thewandb.com/v2/live/floatplane";
-  const endpoint = "https://edge.thewandb.com/v2/live/floatplane-test?im=3";
+  const endpoint = "https://edge.thewandb.com/v2/live/floatplane";
+  // const endpoint = "https://edge.thewandb.com/v2/live/floatplane-test?im=3";
 
   const responsePromise = fetch(endpoint, {
     headers: {
@@ -96,7 +96,8 @@ export const GET = (async ({fetch, url, platform}) => {
     params.set("title", response.title+"");
     params.set("image", response.thumbnail+"");
 
-    platform?.context?.waitUntil(stub.fetch("https://whenplane-notification-throttler/test?" + params.toString()))
+    platform?.context?.waitUntil(stub.fetch("https://whenplane-notification-throttler/imminent?" + params.toString()))
+    // platform?.context?.waitUntil(stub.fetch("https://whenplane-notification-throttler/test?" + params.toString()))
   } else {
     console.log("Not sending notification", response.imminence, throttler, (Date.now() - lastNotifSend) / 1e3);
   }
