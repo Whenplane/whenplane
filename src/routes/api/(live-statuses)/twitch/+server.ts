@@ -1,7 +1,7 @@
 import type {RequestHandler} from "@sveltejs/kit";
 import {error, json} from "@sveltejs/kit";
 import {env} from "$env/dynamic/private";
-import {dev} from "$app/environment";
+import { dev, version } from "$app/environment";
 import {getClosestWan, getUTCDate} from "$lib/timeUtils";
 import type { DurableObjectNamespace } from "@cloudflare/workers-types";
 
@@ -111,7 +111,10 @@ export const GET = (async ({platform, url}) => {
         {
             headers: {
                 "Client-ID": env.TWITCH_CLIENT_ID,
-                "Authorization": "Bearer " + lastToken.token
+                "Authorization": "Bearer " + lastToken.token,
+                "referer": "whenplane.com",
+                "x-whenplane-version": version,
+                "user-agent": "Whenplane/" + version
             }
         }
     )

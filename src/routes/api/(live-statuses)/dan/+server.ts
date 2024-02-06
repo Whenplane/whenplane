@@ -1,7 +1,8 @@
 import type {RequestHandler} from "@sveltejs/kit";
 import {error, json} from "@sveltejs/kit";
 import {env} from "$env/dynamic/private";
-import {dev} from "$app/environment";
+import { dev, version } from "$app/environment";
+import { dev, version } from "$app/environment";
 
 const cacheTime = 29e3; // maximum fetch from twitch api once every 30 seconds
 
@@ -88,7 +89,10 @@ export const GET = (async ({platform, url}) => {
       {
         method: "POST",
         headers: {
-          "Content-Type": "application/x-www-form-urlencoded"
+          "Content-Type": "application/x-www-form-urlencoded",
+          "referer": "whenplane.com",
+          "x-whenplane-version": version,
+          "user-agent": "Whenplane/" + version
         },
         body: formBody
       }
@@ -111,7 +115,10 @@ export const GET = (async ({platform, url}) => {
     {
       headers: {
         "Client-ID": env.TWITCH_CLIENT_ID,
-        "Authorization": "Bearer " + lastToken.token
+        "Authorization": "Bearer " + lastToken.token,
+        "referer": "whenplane.com",
+        "x-whenplane-version": version,
+        "user-agent": "Whenplane/" + version
       }
     }
   )
