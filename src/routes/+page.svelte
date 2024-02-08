@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { getNextWAN, timeString } from "$lib/timeUtils";
+	import { getNextWAN, isNearWan, timeString } from "$lib/timeUtils";
 	import ShowCountdown, {mainLate} from "$lib/ShowCountdown.svelte";
 	import StreamStatus from "$lib/StreamStatus.svelte";
 	import {invalidateAll} from "$app/navigation";
@@ -18,6 +18,7 @@
 	import { newsSanitizeSettings } from "$lib/news/news.ts";
 	import ToolTip from "$lib/ToolTip.svelte";
 	import AdPicker from "$lib/ads/AdPicker.svelte";
+	import NotablePersonLive from "$lib/NotablePersonLive.svelte";
 
 	export let data;
 
@@ -65,26 +66,10 @@
 		lastInvalidation = Date.now();
 		invalidateAll();
 
-		getDanGoingFor();
-
 		nowish = new Date();
 	}
 
 	let nowish = new Date();
-
-	let danGoingFor = "";
-	function getDanGoingFor() {
-		if(data.dan?.isLive) {
-			const distance = Math.floor(Date.now() - new Date(data.dan.started).getTime());
-			const string = timeString(distance);
-			const parts = string.split(" ");
-			if(parts.pop() == "") parts.pop(); // remove seconds
-			danGoingFor = parts.join(" ");
-		} else {
-			danGoingFor = "";
-		}
-	}
-	getDanGoingFor();
 
 	// Periodically invalidate the data so that SvelteKit goes and fetches it again for us
 	function startInvalidationInterval() {
@@ -277,20 +262,21 @@
 		</div>
 
 
-		{#if data.dan?.isLive}
-			<a class="card border-2 p-2 !border-amber-600 !bg-opacity-20 !bg-amber-600 block relative" href="https://twitch.tv/buhdan">
-				<div class="absolute top-2 right-2 opacity-60">
-					Live for {danGoingFor}
-				</div>
-				<img src="/dan.png" class="inline-block placeholder-circle h-32" alt="Dan">
-				<div class="inline-flex h-32 items-center justify-center ml-4">
-					<div>
-						<h2>Dan is live!</h2>
-						{data.dan.title}
-					</div>
-				</div>
-			</a>
+		{#if data.notablePeople}
+			{#each Object.values(data.notablePeople) as shortResponse}
+				{#if shortResponse.isLive}
+					<NotablePersonLive {shortResponse}/>
+				{/if}
+			{/each}
 		{/if}
+
+		<!--<NotablePersonLive shortResponse={{
+			isLive: true,
+			name: "Elijah",
+			title: "(stream title will be here)",
+			channel: "bocabola_",
+			started: "2024-02-08T22:45:02.407Z"
+		}}/>-->
 
 
 		{#if data.isThereWan?.text || data.isThereWan?.image}

@@ -225,3 +225,9 @@ export type SpecialStream = {
     onYoutube?: boolean
     youtubeNotes?: string
 }
+
+export type TwitchToken = {
+    token: string,
+    validUntil: number,
+    dateGenerated: number
+}

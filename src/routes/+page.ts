@@ -6,13 +6,15 @@ import { floatplaneState, nextFast } from "$lib/stores.ts";
 import { wait } from "$lib/utils.ts";
 import type { NewsPost } from "$lib/news/news.ts";
 import type { WanDb_FloatplaneData } from "$lib/wdb_types.ts";
+import type { NotablePeopleResponse } from "./api/(live-statuses)/notable-streams/+server.ts";
+import { isNearWan } from "$lib/timeUtils.ts";
 
 let cachedLatenesses: Latenesses;
 let cachedLatenessesTime = 0 ;
 
-let danCache: {
+let notablePeopleCache: {
     lastFetch: number,
-    lastData?: DanResponse
+    lastData?: NotablePeopleResponse
 } = {lastFetch: 0}
 
 let lastNewsPostCache: NewsPost;
@@ -39,7 +41,7 @@ export const load = (async ({fetch, params}) => {
 
     let liveStatus: AggregateResponse | undefined;
     let latenesses: Latenesses | undefined;
-    let dan: DanResponse | false | undefined;
+    let notablePeople: NotablePeopleResponse | false | undefined;
     let fpState: WanDb_FloatplaneData | undefined;
     let lastNewsPost: NewsPost | undefined;
 
@@ -110,29 +112,24 @@ export const load = (async ({fetch, params}) => {
         })(),
         (async () => {
 
-            const now = new Date();
-            // don't check for dan streams on fridays after 4am, or all of saturday
-            if((now.getUTCDay() === 5 && now.getUTCHours() >= 11) || now.getUTCDay() === 6) {
-                dan = {
-                    isLive: false,
-                    bypassed: true,
-                    bypassed_by: "page"
-                }
+            // don't check for notable streams close to wan time
+            if(isNearWan()) {
+                notablePeople = false
             } else {
-                if(Date.now() - danCache.lastFetch > 60e3) {
-                    dan = (
-                      await fetch("/api/dan?short=true&fast=" + fast + "&d=" + Date.now())
+                if(Date.now() - notablePeopleCache.lastFetch > 60e3) {
+                    notablePeople = (
+                      await fetch("/api/notable-streams?short=true&fast=" + fast + "&d=" + Date.now())
                         .then(r => r.json())
                         .catch(() => false)
-                    ) as DanResponse | false;
-                    if(dan) {
-                        danCache = {
+                    ) as NotablePeopleResponse | false;
+                    if(notablePeople) {
+                        notablePeopleCache = {
                             lastFetch: Date.now(),
-                            lastData: dan
+                            lastData: notablePeople
                         }
                     }
                 } else {
-                    dan = danCache.lastData;
+                    notablePeople = notablePeopleCache.lastData;
                 }
             }
 
@@ -172,7 +169,7 @@ export const load = (async ({fetch, params}) => {
         averageLateness: latenesses?.averageLateness,
         latenessStandardDeviation: latenesses?.latenessStandardDeviation,
         medianLateness: latenesses?.medianLateness,
-        dan,
+        notablePeople,
         specialStream: liveStatus?.specialStream,
         lastNewsPost,
         isBot: /bot|googlebot|crawler|spider|robot|crawling/i
@@ -188,12 +185,3 @@ async function getAverageLateness(fetch: fetchFunction) {
 }
 
 type fetchFunction = typeof fetch
-
-type DanResponse = {
-    isLive: boolean,
-    started?: string,
-    title?: string,
-
-    bypassed?: boolean,
-    bypassed_by?: string
-}

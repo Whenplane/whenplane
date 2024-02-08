@@ -199,9 +199,15 @@ export function n() {
 }
 
 /**
- * Checks if the day is friday/saturday
+ * Checks if its near wan time (for purposes of throttling checks)
  */
 export function isNearWan(now?: Date) {
     const d = now ? now : new Date();
-    return d.getUTCDay() === 5 || d.getUTCDay() === 6;
+    if(d.getUTCDay() === 5) {
+        return d.getUTCHours() > 20;
+    } else if(d.getUTCDay() === 6) {
+        return d.getUTCHours() <= 11;
+    } else {
+        return false;
+    }
 }
