@@ -2,7 +2,6 @@ import type {RequestHandler} from "@sveltejs/kit";
 import {error, json} from "@sveltejs/kit";
 import {env} from "$env/dynamic/private";
 import { dev, version } from "$app/environment";
-import { dev, version } from "$app/environment";
 
 const cacheTime = 29e3; // maximum fetch from twitch api once every 30 seconds
 
