@@ -113,7 +113,13 @@ export const load = (async ({fetch, params}) => {
     const preShowStarted = liveStatus && isPreShow ? liveStatus.twitch.started : undefined;
     const mainShowStarted = liveStatus && isMainShow ? liveStatus.youtube.started : undefined;
 
-    const isWdbResponseValid = liveStatus && typeof fpState?.live === "boolean" && (liveStatus.twitch.isWAN == fpState.isWAN);
+    const isWdbResponseValid = liveStatus &&
+      typeof fpState?.live === "boolean" &&
+      (
+        fpState.live ?
+          liveStatus.twitch.isWAN == fpState.isWAN :
+          true
+      );
     if(!isWdbResponseValid && liveStatus && dev) {
         console.debug("wdb api response invalid!", {
             typeofLive: typeof fpState?.live,
