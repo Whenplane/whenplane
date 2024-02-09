@@ -95,6 +95,8 @@
 		};
 	})
 
+	if(browser) checkHeight();
+
 
 	$: averageLateness = data.averageLateness ? timeString(Math.abs(data.averageLateness)) : undefined;
 	$: latenessStandardDeviation = data.latenessStandardDeviation ? timeString(Math.abs(data.latenessStandardDeviation)) : undefined;
