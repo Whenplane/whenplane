@@ -74,7 +74,7 @@
 	// Periodically invalidate the data so that SvelteKit goes and fetches it again for us
 	function startInvalidationInterval() {
 		if(invalidationInterval) clearInterval(invalidationInterval);
-		// VS code is getti87206ng the setInterval type from Node.js, so we need to override it
+		// VS code is getting the setInterval type from Node.js, so we need to override it
 		invalidationInterval = setInterval(invalidate, 5e3) as unknown as number;
 	}
 
