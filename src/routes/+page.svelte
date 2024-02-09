@@ -43,12 +43,16 @@
 		}
 	}
 
+	let outerContainer: HTMLDivElement;
+	let mainContainer: HTMLDivElement;
+
 
 	let invalidationInterval: number | undefined;
 	let lastInvalidation = Date.now();
 
 	let i = 0;
 	function invalidate() {
+		checkHeight();
 		// Only update in the background if there hasnt been an update for 30 minutes
 		if(document.hidden && Date.now() - lastInvalidation < 30 * 60e3) {
 			// console.debug("not updating", { hidden: document.hidden, distance: Date.now() - lastInvalidation });
@@ -84,6 +88,7 @@
 		startInvalidationInterval();
 		if(data.fast) setTimeout(invalidate, 500);
 		console.debug({fast: data.fast});
+		checkHeight()
 
 		return () => {
 			if (invalidationInterval) clearInterval(invalidationInterval)
@@ -104,6 +109,17 @@
 		const newURL = new URL(location.href);
 		newURL.searchParams.delete("attempt");
 		window.history.replaceState({}, document.title, "/" + (newURL.searchParams.size > 0 ? "?" + newURL.searchParams.toString() : ""));
+	}
+
+	function checkHeight() {
+		if(!browser || !mainContainer) return;
+		if(mainContainer.clientHeight > window.innerHeight-50) {
+			outerContainer.classList.add("too-short")
+			if(dev) console.debug("too short")
+		} else {
+			outerContainer.classList.remove("too-short")
+			if(dev) console.debug("not too short")
+		}
 	}
 
 	function onFocus() {
@@ -144,8 +160,8 @@
 	When is wan? Who is wan? Why is wan?
 </span>
 
-<div class="container h-full mx-auto justify-center items-center" class:alwaysFlex={isFrame}>
-	<div class="space-y-3 inner">
+<div class="container h-full mx-auto justify-center items-center" bind:this={outerContainer} class:alwaysFlex={isFrame}>
+	<div class="space-y-3 inner" bind:this={mainContainer}>
 		{#if !$page.data.isBot} <!-- so the imminent box stops showing up in search results -->
 			<ImminentBox hasDone={data.hasDone}/>
 		{/if}
@@ -380,13 +396,13 @@
 		}
 	}
 
-	.alwaysFlex {
+	.alwaysFlex:not(.too-short) {
 		display: flex;
 		padding: 0;
 	}
 	
 	@media (min-height: 790px) {
-		.container {
+		.container:not(.too-short) {
 			display: flex;
 			padding: 0;
 		}
