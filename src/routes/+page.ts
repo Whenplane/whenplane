@@ -12,10 +12,6 @@ import { isNearWan } from "$lib/timeUtils.ts";
 let cachedLatenesses: Latenesses;
 let cachedLatenessesTime = 0 ;
 
-let notablePeopleCache: {
-    lastFetch: number,
-    lastData?: NotablePeopleResponse
-} = {lastFetch: 0}
 
 let lastNewsPostCache: NewsPost;
 
@@ -41,7 +37,6 @@ export const load = (async ({fetch, params}) => {
 
     let liveStatus: AggregateResponse | undefined;
     let latenesses: Latenesses | undefined;
-    let notablePeople: NotablePeopleResponse | false | undefined;
     let fpState: WanDb_FloatplaneData | undefined;
     let lastNewsPost: NewsPost | undefined;
 
@@ -109,33 +104,6 @@ export const load = (async ({fetch, params}) => {
             }
 
 
-        })(),
-        (async () => {
-
-            // don't check for notable streams close to wan time
-            if(isNearWan()) {
-                notablePeople = false
-            } else {
-                if(Date.now() - notablePeopleCache.lastFetch > 60e3) {
-                    notablePeople = (
-                      await fetch("/api/notable-streams?short=true&fast=" + fast + "&d=" + Date.now())
-                        .then(r => r.json())
-                        .catch(() => false)
-                    ) as NotablePeopleResponse | false;
-                    if(notablePeople) {
-                        notablePeopleCache = {
-                            lastFetch: Date.now(),
-                            lastData: notablePeople
-                        }
-                    }
-                } else {
-                    notablePeople = notablePeopleCache.lastData;
-                }
-            }
-
-
-
-
         })()
     ]);
 
@@ -169,7 +137,7 @@ export const load = (async ({fetch, params}) => {
         averageLateness: latenesses?.averageLateness,
         latenessStandardDeviation: latenesses?.latenessStandardDeviation,
         medianLateness: latenesses?.medianLateness,
-        notablePeople,
+        notablePeople: liveStatus?.notablePeople,
         specialStream: liveStatus?.specialStream,
         lastNewsPost,
         isBot: /bot|googlebot|crawler|spider|robot|crawling/i

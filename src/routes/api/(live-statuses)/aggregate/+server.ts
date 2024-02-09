@@ -6,6 +6,7 @@ import type { YoutubeResponse } from "../youtube/+server";
 import type { LatenessVotingOption } from "$lib/voting.ts";
 import type { SpecialStream } from "$lib/utils.ts";
 import type { WanDb_FloatplaneData } from "$lib/wdb_types.ts";
+import type { NotablePeopleResponse } from "../notable-streams/+server.ts";
 
 export const GET = (async ({url, fetch, locals, platform}) => {
 
@@ -68,6 +69,15 @@ export const GET = (async ({url, fetch, locals, platform}) => {
         return response;
     })();
 
+    let notableTime: number | undefined;
+    const notable = (async () => {
+        const start = Date.now();
+        const response = await fetch("/api/notable-streams?short&fast=" + fast)
+          .then(r => r.json());
+        notableTime = Date.now() - start;
+        return response;
+    })();
+
     const response: AggregateResponse = {
         twitch: await twitch,
         // floatplane,
@@ -77,7 +87,8 @@ export const GET = (async ({url, fetch, locals, platform}) => {
         votes: await votes,
         specialStream: await specialStream,
         floatplane: await floatplane,
-        reloadNumber: 8
+        notablePeople: await notable,
+        reloadNumber: 9
         // showExtension: await showExtension
     }
 
@@ -86,6 +97,7 @@ export const GET = (async ({url, fetch, locals, platform}) => {
     locals.addTiming({id: "votes", duration: votesTime ?? -1});
     locals.addTiming({id: "specialStream", duration: spTime ?? -1});
     locals.addTiming({id: "floatplane", duration: fpTime ?? -1});
+    locals.addTiming({id: "notable", duration: notableTime ?? -1});
 
     return json(response)
 }) satisfies RequestHandler;
@@ -98,6 +110,7 @@ export type AggregateResponse = {
     votes: LatenessVotingOption[],
     specialStream: SpecialStream,
     floatplane: WanDb_FloatplaneData,
+    notablePeople: NotablePeopleResponse
     reloadNumber: number
     // showExtension: boolean
 }

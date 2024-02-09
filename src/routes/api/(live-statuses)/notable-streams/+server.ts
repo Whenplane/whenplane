@@ -6,8 +6,6 @@ import { isNearWan } from "$lib/timeUtils.ts";
 import type { GetStreamsResponse } from "ts-twitch-api";
 import type { TwitchToken } from "$lib/utils.ts";
 
-const cacheTime = 29e3; // maximum fetch from twitch api once every 30 seconds
-
 const people: { [channel: string]: string } = {
   "bocabola_": "Elijah",
   "buhdan": "Dan",
@@ -39,14 +37,22 @@ export const GET = (async ({platform, url}) => {
 
   const fast = url.searchParams.get("fast") === "true";
 
+  const cacheTime = isNearWan() ? 15 * 60e3 : 29e3; // update every 30 seconds when not around wan time. every 15 minutes when near wan
+
+  const fetchDistance = Date.now() - fastCache.lastFetch;
   // With the fast flag (added for initial page load requests), always fetch cached data if its from within the past 5 hours
-  if(Date.now() - fastCache.lastFetch < cacheTime || (fast && Date.now() - fastCache.lastFetch < 5 * 60 * 60e3)) {
+  if(fetchDistance < cacheTime || (fast && fetchDistance < 5 * 60 * 60e3)) {
     const shortResponse = makeShortResponses(fastCache.lastFetchData, url);
-    return json(shortResponse);
+    return json({
+      ...shortResponse,
+      cached: true,
+      fetchDistance,
+      cacheTime
+    });
   }
 
-  // don't check for other streams when close to wan
-  if(isNearWan()) {
+  // don't check for other streams when close to wan (no longer used, 30 minute cache is used instead)
+  /*if(isNearWan()) {
     const shortResponse: {[channel: string]: unknown} = {};
     for (const channel in people) {
       shortResponse[channel] = {
@@ -56,7 +62,7 @@ export const GET = (async ({platform, url}) => {
       }
     }
     return json(shortResponse);
-  }
+  }*/
 
   if(lastToken.validUntil < Date.now()) {
     const newToken = await cache.get<TwitchToken>("wheniswan:twitch:token", {type: "json"});

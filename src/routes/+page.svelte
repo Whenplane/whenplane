@@ -264,7 +264,7 @@
 
 		{#if data.notablePeople}
 			{#each Object.values(data.notablePeople) as shortResponse}
-				{#if shortResponse.isLive}
+				{#if (typeof shortResponse === "object") && shortResponse.isLive}
 					<NotablePersonLive {shortResponse}/>
 				{/if}
 			{/each}
