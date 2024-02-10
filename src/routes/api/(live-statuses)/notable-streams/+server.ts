@@ -128,7 +128,7 @@ export const GET = (async ({platform, url}) => {
         "https://api.twitch.tv/helix/streams?user_login=" + channel,
         {
           headers: {
-            "Client-ID": env.TWITCH_CLIENT_ID,
+            "Client-ID": env.TWITCH_CLIENT_ID ?? "",
             "Authorization": "Bearer " + lastToken.token,
             "referer": "whenplane.com",
             "x-whenplane-version": version,
