@@ -9,7 +9,8 @@ import type { TwitchToken } from "$lib/utils.ts";
 const people: { [channel: string]: string } = {
   "bocabola_": "Elijah",
   "buhdan": "Dan",
-  "luke_lafr": "Luke"
+  "luke_lafr": "Luke",
+  "ajgeiss0702": "Test"
 }
 
 let fastCache: {
