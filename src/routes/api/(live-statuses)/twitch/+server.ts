@@ -4,6 +4,8 @@ import {env} from "$env/dynamic/private";
 import { dev, version } from "$app/environment";
 import {getClosestWan, getUTCDate} from "$lib/timeUtils";
 import type { DurableObjectNamespace } from "@cloudflare/workers-types";
+import type { GetStreamsResponse } from "ts-twitch-api";
+import type { TwitchToken } from "$lib/utils.ts";
 
 const cacheTime = 5000; // maximum fetch from twitch api once every 5 seconds
 
@@ -14,13 +16,13 @@ let savedEndTime: boolean | undefined = undefined;
 
 const fastCache: {
     lastFetch: number,
-    lastFetchData: TwitchAPIResponse | undefined
+    lastFetchData?: GetStreamsResponse
 } = {
     lastFetch: 0,
     lastFetchData: undefined
 };
 
-let lastToken = {
+let lastToken: TwitchToken = {
     token: "",
     validUntil: 0,
     dateGenerated: 0
@@ -44,7 +46,7 @@ export const GET = (async ({platform, url}) => {
     // With the fast flag (added for initial page load requests), always fetch cached data if its from within the past 5 hours
     if(Date.now() - fastCache.lastFetch < cacheTime || (fast && Date.now() - fastCache.lastFetch < 5 * 60 * 60e3)) {
         const isLive = fastCache.lastFetchData?.data?.length != 0;
-        const isWAN = isLive && (fastCache.lastFetchData?.data[0].title.includes("WAN") || makeAlwaysWAN);
+        const isWAN = isLive && (fastCache.lastFetchData?.data[0]?.title.includes("WAN") || makeAlwaysWAN);
 
         const twitchData = url.searchParams.has("short") ? undefined : fastCache.lastFetchData;
         const started = isLive ? fastCache.lastFetchData?.data[0].started_at : undefined;
@@ -62,7 +64,7 @@ export const GET = (async ({platform, url}) => {
     }
 
     if(lastToken.validUntil < Date.now()) {
-        const newToken = await cache.get("wheniswan:twitch:token", {type: "json"});
+        const newToken = await cache.get<TwitchToken>("wheniswan:twitch:token", {type: "json"});
         if(newToken) {
             lastToken = newToken;
         }
@@ -137,7 +139,7 @@ export const GET = (async ({platform, url}) => {
     fastCache.lastFetch = Date.now();
 
     const isLive = twitchJSON.data?.length != 0;
-    const isWAN = isLive && (twitchJSON.data[0].title.includes("WAN") || makeAlwaysWAN);
+    const isWAN = isLive && (twitchJSON.data[0]?.title.includes("WAN") || makeAlwaysWAN);
 
     if(savedStartTime && !isLive) savedStartTime = false;
     if(savedEndTime && fastCache.lastFetchData?.data?.length == 0) savedEndTime = false;
@@ -243,7 +245,7 @@ export const GET = (async ({platform, url}) => {
     }
 
     const throttler = (platform?.env?.NOTIFICATION_THROTTLER as DurableObjectNamespace)
-    if(isLive && isWAN && throttler && Date.now() - lastNotifSend > (12 * 60 * 60e3)) {
+    if(isLive && isWAN && throttler && Date.now() - lastNotifSend > (12 * 60 * 60e3) && twitchJSON[0]) {
         lastNotifSend = Date.now();
         const id = throttler.idFromName("n");
         const stub = throttler.get(id);
@@ -267,12 +269,13 @@ export type TwitchResponse = {
             [header: string]: string
         }
     },
-    twitchData?: TwitchAPIResponse,
+    twitchData?: GetStreamsResponse,
     isLive: boolean,
     isWAN: boolean,
     started?: string
 }
 
+/*
 type TwitchAPIResponse = {
     data: {
         id: string,
@@ -291,4 +294,4 @@ type TwitchAPIResponse = {
         tags: string[],
         is_mature: boolean
     }[]
-}
+}*/
