@@ -26,7 +26,20 @@ export const lang: {[key: string]: {name: string, description: string}} = {
   other_streams: {
     name: "Other Stream Live Notifications",
     description: "Get a notification when a non-wan stream starts on the LinusTechTips channel(s)"
-  }
+  },
+
+  elijah_stream: {
+    name: "Elijah Stream Notifications",
+    description: "Get an notification when Elijah (BocaBola_) starts streaming on twitch"
+  },
+  dan_stream: {
+    name: "Dan Stream Notifications",
+    description: "Get an notification when Dan (BuhDan) starts streaming on twitch"
+  },
+  // luke_stream: {
+  //   name: "Luke Stream Notifications",
+  //   description: "Get an notification when Luke (luke_lafr) starts streaming on twitch"
+  // },
 }
 
 export function urlB64ToUint8Array(base64String: string) {
