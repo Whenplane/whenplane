@@ -84,11 +84,13 @@ export const GET = (async ({fetch, url, platform}) => {
     delete response.wan;
   }
 
+  const quickNotificationThrottleTime = 3 * 60 * 60e3;
+
   const throttler = (platform?.env?.NOTIFICATION_THROTTLER as DurableObjectNamespace)
-  if(response.imminence === 3 && response.isWAN && throttler && Date.now() - lastNotifSend > (60 * 60e3)) {
+  if(response.imminence === 3 && response.isWAN && throttler && Date.now() - lastNotifSend > quickNotificationThrottleTime) {
     lastNotifSend = Date.now();
 
-    console.log("Sending notification!");
+    console.log("Sending wan imminent notification!");
     const id = throttler.idFromName("n");
     const stub = throttler.get(id);
 
@@ -98,8 +100,18 @@ export const GET = (async ({fetch, url, platform}) => {
 
     platform?.context?.waitUntil(stub.fetch("https://whenplane-notification-throttler/imminent?" + params.toString()))
     // platform?.context?.waitUntil(stub.fetch("https://whenplane-notification-throttler/test?" + params.toString()))
-  } else {
-    console.log("Not sending notification", response.imminence, throttler, (Date.now() - lastNotifSend) / 1e3);
+  } else if(!response.isWAN && response.live && throttler && Date.now() - lastNotifSend > quickNotificationThrottleTime) {
+    lastNotifSend = Date.now();
+
+    console.log("Sending other stream live notification!");
+    const id = throttler.idFromName("n");
+    const stub = throttler.get(id);
+
+    const params = new URLSearchParams();
+    params.set("title", response.title+"");
+    params.set("image", response.thumbnail+"");
+
+    platform?.context?.waitUntil(stub.fetch("https://whenplane-notification-throttler/other_streams?" + params.toString()))
   }
 
   return json({

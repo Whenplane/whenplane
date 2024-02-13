@@ -21,7 +21,7 @@
 
   const disabled = [
     "other_streams_imminent",
-    "other_streams"
+    // "other_streams"
   ]
 
   async function fetchSettings() {

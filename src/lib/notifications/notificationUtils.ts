@@ -21,11 +21,11 @@ export const lang: {[key: string]: {name: string, description: string}} = {
 
   other_streams_imminent: {
     name: "Imminent Other Stream Notifications",
-    description: "Get a notification when a non-wan stream is close to starting"
+    description: "Get a notification when a non-wan stream is close to starting on the LinusTechTips channel(s)"
   },
   other_streams: {
     name: "Other Stream Live Notifications",
-    description: "Get a notification when a non-wan stream starts"
+    description: "Get a notification when a non-wan stream starts on the LinusTechTips channel(s)"
   }
 }
 
