@@ -3,6 +3,9 @@
   import {popup} from "@skeletonlabs/skeleton";
 
   export let border = true;
+  export let tooltip = true;
+
+  $: console.log({border})
 
   let timeString = "";
 
@@ -17,7 +20,7 @@
   updateTimeString();
 </script>
 <div
-  class="ltttime"
+  class="ltttime bg-surface-900"
   class:border={border}
   use:popup={{
     event: 'hover',
@@ -32,10 +35,12 @@
   {timeString}
 </div>
 <div data-popup="ltttime-info" class="popup">
-  <div class="card p-3 py-2 whitespace-nowrap shadow-x1 z-15 font-normal text-right">
-    The current time in LTT land<br>
-    (Vancouver)
-  </div>
+  {#if tooltip}
+    <div class="card p-3 py-2 whitespace-nowrap shadow-x1 z-15 font-normal text-right">
+      The current time in LTT land<br>
+      (Vancouver)
+    </div>
+  {/if}
 </div>
 <style>
   .ltttime {

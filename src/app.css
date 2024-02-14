@@ -57,3 +57,7 @@ ol.normal-list {
 .normal-list {
     list-style-type: initial;
 }
+
+.background-none {
+    background: transparent none !important;
+}
