@@ -4,11 +4,12 @@
   import type { NotificationRows } from "../../routes/api/push/settings/+server.js";
   import { SlideToggle } from "@skeletonlabs/skeleton";
   import { beforeNavigate } from "$app/navigation";
+  import {ProgressRadial} from "@skeletonlabs/skeleton";
   import type { D1Result } from "@cloudflare/workers-types";
 
   // eslint-disable-next-line @typescript-eslint/no-empty-function
   let settingsFetch: Promise<NotificationRows> = browser ? fetchSettings() : new Promise(() => {});
-  let savingSettings: Promise<D1Result> = Promise.resolve(undefined);
+  let savingSettings: Promise<D1Result | undefined> = Promise.resolve(undefined);
 
   let knownSettings: NotificationRows;
   let stagedSettings: NotificationRows;
@@ -138,4 +139,10 @@
   >
     Save
   </button>
+
+  {#await savingSettings}
+    <span class="relative inline-block h-0">
+      <ProgressRadial width="w-10 inline-block absolute top-3 left-2" fill="fill-on-primary-token"/>
+    </span>
+  {/await}
 {/await}
