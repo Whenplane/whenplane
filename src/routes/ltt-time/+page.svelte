@@ -5,7 +5,7 @@
 
   $: isFrame = $page.url.searchParams.has("frame");
 
-  if(browser && isFrame) {
+  $: if(browser && isFrame) {
     document.body.classList.add("background-none")
   }
 </script>

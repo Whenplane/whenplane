@@ -27,5 +27,6 @@
 
   div {
       background-color: black;
+      padding: 2em;
   }
 </style>
