@@ -11,5 +11,11 @@
 	<body data-theme="crimson" data-sveltekit-preload-code="viewport" data-sveltekit-preload-data>
 		<div style="display: contents">%sveltekit.body%</div>
 		<!-- Cloudflare Web Analytics --><script defer src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "7449720ccc244298870ba34ef0901bf1"}'></script><!-- End Cloudflare Web Analytics -->
+
+		<script>
+			if(location.pathname === "/ltt-time" && new URL(location.href).searchParams.has("frame")) {
+				document.body.classList.add("background-none")
+			}
+		</script>
 	</body>
 </html>
