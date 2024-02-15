@@ -86,8 +86,11 @@ export const GET = (async ({fetch, url, platform}) => {
 
   const quickNotificationThrottleTime = 3 * 60 * 60e3;
 
+  const now = new Date();
+
+
   const throttler = (platform?.env?.NOTIFICATION_THROTTLER as DurableObjectNamespace)
-  if(response.imminence === 3 && response.isWAN && throttler && Date.now() - lastNotifSend > quickNotificationThrottleTime) {
+  if(response.imminence === 3 && response.isWAN && throttler && Date.now() - lastNotifSend > quickNotificationThrottleTime && (now.getUTCDay() >= 5 || now.getUTCDay() === 0)) {
     lastNotifSend = Date.now();
 
     console.log("Sending wan imminent notification!");
