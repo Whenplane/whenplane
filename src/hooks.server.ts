@@ -13,7 +13,8 @@ export const handle: Handle = async ({ event, resolve }) => {
     if(event.platform?.env?.REQUESTS && event.request.headers.has("host")) {
         event.platform?.env?.REQUESTS.writeDataPoint({
             blobs: [
-              event.url.pathname
+              event.url.pathname,
+              event.request.headers.get("referer") ?? event.request.headers.get("referrer")
             ],
             doubles: [
                 event.platform.cf?.latitude,
