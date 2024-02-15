@@ -1,7 +1,7 @@
 import type {RequestHandler} from "@sveltejs/kit";
 import {error, json} from "@sveltejs/kit";
 import { getClosestWan, getUTCDate, isNearWan } from "$lib/timeUtils";
-import {dev} from "$app/environment";
+import { dev, version } from "$app/environment";
 import type {KVNamespace, DurableObjectNamespace, DurableObjectStub} from "@cloudflare/workers-types";
 import type {OldShowMeta} from "$lib/utils";
 import { env } from "$env/dynamic/private";
@@ -17,6 +17,8 @@ const cache: {
 let savedStartTime: boolean | undefined = undefined;
 
 let lastNotifSend = 0;
+
+let sentToWDB = false;
 
 export const GET = (async ({platform, locals, url, fetch}) => {
 
@@ -121,6 +123,25 @@ export const GET = (async ({platform, locals, url, fetch}) => {
         params.set("image", (snippet?.thumbnails.maxres ?? snippet?.thumbnails.default)+"");
 
         platform?.context?.waitUntil(stub.fetch("https://whenplane-notification-throttler/mainshow_live?" + params.toString()))
+    }
+
+    if(!sentToWDB && isWAN && videoId) {
+        sentToWDB = true;
+        platform?.context?.waitUntil(
+          fetch(
+            `https://mq.thewandb.com/yt/${videoId}`,
+            {
+                method: "POST",
+                headers: {
+                    "referer": "whenplane.com",
+                    "x-whenplane-version": version,
+                    "user-agent": "Whenplane/" + version,
+                    "content-type": "application/json"
+                },
+                body: JSON.stringify(result)
+            }
+          )
+        );
     }
 
     cache.value = result
