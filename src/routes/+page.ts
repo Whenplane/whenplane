@@ -3,11 +3,7 @@ import { browser, dev } from "$app/environment";
 import type { Latenesses } from "./api/latenesses/+server";
 import type { AggregateResponse } from "./api/(live-statuses)/aggregate/+server";
 import { floatplaneState, nextFast } from "$lib/stores.ts";
-import { wait } from "$lib/utils.ts";
 import type { NewsPost } from "$lib/news/news.ts";
-import type { WanDb_FloatplaneData } from "$lib/wdb_types.ts";
-import type { NotablePeopleResponse } from "./api/(live-statuses)/notable-streams/+server.ts";
-import { isNearWan } from "$lib/timeUtils.ts";
 
 let cachedLatenesses: Latenesses;
 let cachedLatenessesTime = 0 ;

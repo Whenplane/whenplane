@@ -27,8 +27,8 @@ export const GET = (async ({platform, locals, url, fetch}) => {
     // if(new Date().getSeconds() > 50) return json({forcedDev: true,"isLive":false,"isWAN":true,"videoId":"KtSabkVT8y4","forced":false,"upcoming":true})
     // if(dev) return json({forcedDev: true,"isLive":true,"isWAN":true,"videoId":"KtSabkVT8y4","forced":false,"upcoming":false/*,"started":"1/17/2024"*/})
 
-    const history: KVNamespace = platform?.env?.HISTORY;
-    const fetcher: DurableObjectNamespace = platform?.env?.FETCHER;
+    const history: KVNamespace | undefined = platform?.env?.HISTORY;
+    const fetcher: DurableObjectNamespace | undefined = platform?.env?.FETCHER;
     if(!history) throw error(503, "History not available");
     if(!platform?.context) throw error(503, "Request context not available!");
 
@@ -56,6 +56,7 @@ export const GET = (async ({platform, locals, url, fetch}) => {
     }
 
     const doStart = Date.now();
+    // eslint-disable-next-line prefer-const
     let {isLive, isWAN, started, videoId, snippet, upcoming} =
       await stub.fetch("https://wheniswan-fetcher.ajg.workers.dev/youtube")
         .then(r => r.json()) as DOResponse;

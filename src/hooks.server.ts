@@ -3,6 +3,7 @@ import {dev} from "$app/environment";
 import { random } from "$lib/utils.ts";
 import type { AnalyticsEngineDataset, KVNamespace,
     KVNamespaceGetOptions, KVNamespaceListOptions, KVNamespaceListResult, KVNamespacePutOptions } from "@cloudflare/workers-types";
+import type { TimingEntry } from "./app";
 
 const reportedIds: {[key: string]: number} = {};
 
@@ -17,7 +18,11 @@ export const handle: Handle = async ({ event, resolve }) => {
               event.request.headers.get("referer") ?? event.request.headers.get("referrer")
             ],
             doubles: [
+                // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+                // @ts-ignore
                 event.platform.cf?.latitude,
+                // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+                // @ts-ignore
                 event.platform.cf?.longitude
             ],
             indexes: []
@@ -76,10 +81,10 @@ export const handle: Handle = async ({ event, resolve }) => {
     event.params.__h__userAgent = event.request.headers.get("user-agent") ?? undefined
 
     if(event.platform) {
-        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-        // @ts-ignore
         event.platform = {
             ...event.platform,
+            // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+            // @ts-ignore
             env: {
                 ...event.platform.env,
                 CACHE: createKVNamespaceWrapper(event.platform.env?.CACHE, "caches", event.platform),
@@ -149,9 +154,12 @@ export const handle: Handle = async ({ event, resolve }) => {
 }
 
 
-function createKVNamespaceWrapper(real: KVNamespace, kvNamespaceName: string, realPlatform: App.Platform): KVNamespace {
+function createKVNamespaceWrapper(real: KVNamespace | undefined, kvNamespaceName: string, realPlatform: App.Platform): KVNamespace {
     const analytics: AnalyticsEngineDataset | undefined = realPlatform.env?.KV_ANALYTICS;
-    if(!real) return real;
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+    if(!real) { // @ts-ignore
+        return real;
+    }
     // eslint-disable-next-line @typescript-eslint/ban-ts-comment
     // @ts-ignore
     return {
@@ -163,14 +171,22 @@ function createKVNamespaceWrapper(real: KVNamespace, kvNamespaceName: string, re
             analytics?.writeDataPoint({blobs: [kvNamespaceName, "LIST", null, `LIST ${kvNamespaceName}`]});
             return real.list(options);
         },
+        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+        // @ts-ignore
         put(key: string, value: string | ArrayBuffer | ArrayBufferView | ReadableStream, options: KVNamespacePutOptions | undefined): Promise<void> {
             analytics?.writeDataPoint({blobs: [kvNamespaceName, "PUT", key, `PUT ${kvNamespaceName}/${key}`]});
+            // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+            // @ts-ignore
             return real.put(key, value, options);
         },
+        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+        // @ts-ignore
         get(key: string, options?: KVNamespaceGetOptions<never>): Promise<string | null> {
             analytics?.writeDataPoint({blobs: [kvNamespaceName, "GET", key, `GET ${kvNamespaceName}/${key}`]});
             return real.get(key, options);
         },
+        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+        // @ts-ignore
         getWithMetadata(key: string, options?: KVNamespaceGetOptions<never>): any {
             analytics?.writeDataPoint({blobs: [kvNamespaceName, "GETwMETA", key, `GETwMETA ${kvNamespaceName}/${key}`]});
             return real.getWithMetadata(key, options);
