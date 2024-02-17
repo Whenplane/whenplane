@@ -20,7 +20,7 @@
   updateTimeString();
 </script>
 <div
-  class="ltttime bg-surface-900"
+  class="ltttime background"
   class:border={border}
   use:popup={{
     event: 'hover',
@@ -67,5 +67,9 @@
   span {
       font-size: 0.82em;
       line-height: 0.5em;
+  }
+
+  .background {
+      background-color: rgba(21, 23, 31, 0.8);
   }
 </style>
