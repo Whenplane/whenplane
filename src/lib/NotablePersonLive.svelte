@@ -37,7 +37,10 @@
   <div class="inline-flex h-32 items-center justify-center ml-4">
     <div>
       <h2>{shortResponse.name} is live!</h2>
-      {shortResponse.title}
+      {shortResponse.title}<br>
+      <span class="opacity-80">
+        {shortResponse.game}
+      </span>
     </div>
   </div>
 </a>

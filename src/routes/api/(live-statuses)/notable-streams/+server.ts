@@ -184,8 +184,9 @@ function makeShortResponses(responses: Responses, url: URL): ShortResponses {
     const isLive = response.data?.length != 0;
 
     const twitchData = url.searchParams.has("short") ? undefined : response;
-    const started = isLive ? response.data[0].started_at : undefined;
-    const title = isLive ? response.data[0].title : undefined;
+    const started = isLive ? response.data[0]?.started_at : undefined;
+    const title = isLive ? response.data[0]?.title : undefined;
+    const game = isLive ? response.data[0]?.game_name : undefined;
 
     shortResponses[channel] = {
       twitchData,
@@ -193,7 +194,8 @@ function makeShortResponses(responses: Responses, url: URL): ShortResponses {
       started,
       title,
       name,
-      channel
+      channel,
+      game
     }
   }
 
@@ -212,7 +214,8 @@ type ShortResponse = {
   started?: string,
   title?: string,
   name: string,
-  channel: string
+  channel: string,
+  game?: string
 }
 
 type Responses = {
