@@ -38,7 +38,9 @@ export const GET = (async ({platform, url}) => {
 
   const fast = url.searchParams.get("fast") === "true";
 
-  const cacheTime = isNearWan() ? 5 * 60e3 : 29e3; // update every 30 seconds when not around wan time. every 5 minutes when near wan
+  const now = new Date();
+
+  const cacheTime = isNearWan(now) && now.getUTCHours()  ? 59e3 : 29e3; // update every 30 seconds when not around wan time. every minute when near wan
 
   const fetchDistance = Date.now() - fastCache.lastFetch;
   // With the fast flag (added for initial page load requests), always fetch cached data if its from within the past 5 hours
@@ -52,7 +54,7 @@ export const GET = (async ({platform, url}) => {
     });
   }
 
-  // don't check for other streams when close to wan (no longer used, 30 minute cache is used instead)
+  // don't check for other streams when close to wan (no longer used, longer cache is used instead)
   /*if(isNearWan()) {
     const shortResponse: {[channel: string]: unknown} = {};
     for (const channel in people) {
