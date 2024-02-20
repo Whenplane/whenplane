@@ -40,7 +40,7 @@ export const GET = (async ({platform, url}) => {
 
   const now = new Date();
 
-  const cacheTime = isNearWan(now) && now.getUTCHours()  ? 59e3 : 29e3; // update every 30 seconds when not around wan time. every minute when near wan
+  const cacheTime = isNearWan(now) ? 59e3 : 29e3; // update every 30 seconds when not around wan time. every minute when near wan
 
   const fetchDistance = Date.now() - fastCache.lastFetch;
   // With the fast flag (added for initial page load requests), always fetch cached data if its from within the past 5 hours
