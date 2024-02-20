@@ -1,6 +1,7 @@
 <script>
   import { onMount } from "svelte";
   import {popup} from "@skeletonlabs/skeleton";
+  import { page } from "$app/stores";
 
   export let border = true;
   export let tooltip = true;
@@ -8,6 +9,8 @@
   $: console.log({border})
 
   let timeString = "";
+
+  $: boca = $page.url.searchParams.has("boca")
 
   onMount(() => {
     let interval = setInterval(updateTimeString, 5e3);
@@ -29,7 +32,7 @@
   }}
 >
   <span>
-    LTT Time
+    {boca ? "Boca" : "LTT"} Time
   </span>
   <br>
   {timeString}
