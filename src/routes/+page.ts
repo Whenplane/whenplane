@@ -66,7 +66,7 @@ export const load = (async ({fetch, params}) => {
         })()
     ]);
 
-    const isPreShow = liveStatus ? (!liveStatus.youtube.isLive && liveStatus.twitch.isWAN) : false;
+    const isPreShow = liveStatus ? (!liveStatus.youtube.isLive && (liveStatus.twitch.isWAN || (liveStatus.floatplane.isWAN && liveStatus.floatplane.live))) : false;
     const isMainShow = liveStatus ? (liveStatus.youtube.isWAN && liveStatus.youtube.isLive) : false;
 
     const preShowStarted = liveStatus && isPreShow ? liveStatus.twitch.started : undefined;

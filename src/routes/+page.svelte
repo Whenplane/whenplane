@@ -177,7 +177,7 @@
 					The WAN show is currently <span class="red"><Late/></span> by
 				{:else if data.isMainShow}
 					The WAN show has been live for
-				{:else if data.preShowStarted}
+				{:else if data.isPreShow}
 					The pre-WAN show has been live for
 				{:else}
 					The WAN show is (supposed) to start in
@@ -189,11 +189,16 @@
 						<div style="font-size: 0.25em;" class="pb-2">
 							If you see this, youtube messed up again
 						</div>
+					{:else if data.isPreShow && !data.preShowStarted}
+						????
+						<div style="font-size: 0.25em;" class="pb-2">
+							If you see this, twitch is probably messing up
+						</div>
 					{:else}
 						<ShowCountdown bind:isAfterStartTime={isAfterStartTime} {data}/>
 					{/if}
 				</h1>
-				{#if $mainLate.isMainLate && data.preShowStarted}
+				{#if $mainLate.isMainLate && data.isPreShow}
 					<div class="text-center">
 						The main show is late by
 						<span class="mono">
