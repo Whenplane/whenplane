@@ -2,10 +2,20 @@ import type { IOptions } from "sanitize-html";
 import sanitizeHtml from "sanitize-html";
 
 export const newsSanitizeSettings: IOptions = {
-  allowedTags: sanitizeHtml.defaults.allowedTags.concat([ 'img' ]),
+  allowedTags: sanitizeHtml.defaults.allowedTags.concat([ 'img', 'video', 'source' ]),
   allowedAttributes: {
     ...sanitizeHtml.defaults.allowedAttributes,
-    img: sanitizeHtml.defaults.allowedAttributes.img.concat([ 'class' ])
+    a: sanitizeHtml.defaults.allowedAttributes.a.concat([
+      "target",
+      {
+        name: "rel",
+        multiple: false,
+        values: ["noreferer", "noopener"]
+      }
+    ]),
+    img: sanitizeHtml.defaults.allowedAttributes.img.concat([ 'class' ]),
+    video: [ "width", "height", "autoplay", "controls" ],
+    source: ["src", "type"]
   }
 }
 
