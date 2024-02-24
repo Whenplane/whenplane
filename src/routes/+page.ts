@@ -2,7 +2,7 @@ import type {PageLoad} from "./$types";
 import { browser, dev } from "$app/environment";
 import type { Latenesses } from "./api/latenesses/+server";
 import type { AggregateResponse } from "./api/(live-statuses)/aggregate/+server";
-import { floatplaneState, nextFast } from "$lib/stores.ts";
+import { floatplaneState, nextFast, wdbSocketState } from "$lib/stores.ts";
 import type { NewsPost } from "$lib/news/news.ts";
 
 let cachedLatenesses: Latenesses;
@@ -66,12 +66,6 @@ export const load = (async ({fetch, params}) => {
         })()
     ]);
 
-    const isPreShow = liveStatus ? (!liveStatus.youtube.isLive && (liveStatus.twitch.isWAN || (liveStatus.floatplane.isWAN && liveStatus.floatplane.live))) : false;
-    const isMainShow = liveStatus ? (liveStatus.youtube.isWAN && liveStatus.youtube.isLive) : false;
-
-    const preShowStarted = liveStatus && isPreShow ? liveStatus.twitch.started : undefined;
-    const mainShowStarted = liveStatus && isMainShow ? liveStatus.youtube.started : undefined;
-
     const isWdbResponseValid = liveStatus &&
       typeof liveStatus?.floatplane?.live === "boolean" &&
       (
@@ -88,6 +82,12 @@ export const load = (async ({fetch, params}) => {
         })
     }
     if(liveStatus?.floatplane) floatplaneState.set(liveStatus?.floatplane)
+
+    const isPreShow = liveStatus ? (!liveStatus.youtube.isLive && (liveStatus.twitch.isWAN || (isWdbResponseValid && liveStatus.floatplane.isWAN && liveStatus.floatplane.live))) : false;
+    const isMainShow = liveStatus ? (liveStatus.youtube.isWAN && liveStatus.youtube.isLive) : false;
+
+    const preShowStarted = liveStatus && isPreShow ? liveStatus.twitch.started : undefined;
+    const mainShowStarted = liveStatus && isMainShow ? liveStatus.youtube.started : undefined;
 
     return {
         isPreShow,
