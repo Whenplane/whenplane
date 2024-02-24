@@ -254,6 +254,8 @@ export const GET = (async ({platform, url}) => {
         params.set("title", twitchJSON[0].title);
 
         platform?.context?.waitUntil(stub.fetch("https://whenplane-notification-throttler/preshow_live?" + params.toString()))
+    } else {
+        console.debug("Not sending preshow notification: ", isLive, isWAN, !!throttler, Date.now() - lastNotifSend > (12 * 60 * 60e3), !!twitchJSON[0])
     }
 
     return json(response);
