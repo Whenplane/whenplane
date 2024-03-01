@@ -52,7 +52,6 @@
 
 	let i = 0;
 	function invalidate() {
-		checkHeight();
 		// Only update in the background if there hasnt been an update for 30 minutes
 		if(document.hidden && Date.now() - lastInvalidation < 30 * 60e3) {
 			// console.debug("not updating", { hidden: document.hidden, distance: Date.now() - lastInvalidation });
@@ -88,10 +87,13 @@
 		startInvalidationInterval();
 		if(data.fast) setTimeout(invalidate, 500);
 		console.debug({fast: data.fast});
-		checkHeight()
+		checkHeight();
+
+		let chi = setInterval(checkHeight, 1e3);
 
 		return () => {
 			if (invalidationInterval) clearInterval(invalidationInterval)
+			clearInterval(chi)
 		};
 	})
 
@@ -115,10 +117,12 @@
 
 	function checkHeight() {
 		if(!browser || !mainContainer) return;
-		if(mainContainer.clientHeight > window.innerHeight-50) {
+		if(mainContainer.scrollHeight > window.innerHeight-50) {
+			outerContainer.classList.remove("items-center")
 			outerContainer.classList.add("too-short")
 			if(dev) console.debug("too short")
 		} else {
+			outerContainer.classList.add("items-center")
 			outerContainer.classList.remove("too-short")
 			if(dev) console.debug("not too short")
 		}
@@ -391,6 +395,7 @@
 
 	.container {
 		padding: 5em 1em 1em;
+		transition: padding 0.4s;
 	}
 
 	.lateness-stats {
@@ -404,14 +409,18 @@
 	}
 
 	.alwaysFlex:not(.too-short) {
-		display: flex;
 		padding: 0;
+	}
+	.alwaysFlex {
+		display: flex;
 	}
 	
 	@media (min-height: 790px) {
 		.container:not(.too-short) {
-			display: flex;
 			padding: 0;
+		}
+		.container {
+			display: flex;
 		}
 	}
 
