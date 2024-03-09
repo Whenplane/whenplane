@@ -262,17 +262,25 @@ export const GET = (async ({platform, url}) => {
 
     const throttler = (platform?.env?.NOTIFICATION_THROTTLER as DurableObjectNamespace)
     if(isLive && isWAN && throttler && Date.now() - lastNotifSend > (12 * 60 * 60e3) && twitchJSON?.data[0]) {
+        console.debug(9.1)
         lastNotifSend = Date.now();
         const id = throttler.idFromName("n");
         const stub = throttler.get(id);
 
+        console.debug(9.2)
+
         const params = new URLSearchParams();
         params.set("title", twitchJSON[0].title);
 
+        console.debug(9.3)
+
         platform?.context?.waitUntil(stub.fetch("https://whenplane-notification-throttler/preshow_live?" + params.toString()))
+        console.debug(9.4)
     } else {
+        console.debug(9.5)
         console.debug("Not sending preshow notification: ", isLive, isWAN, !!throttler, Date.now() - lastNotifSend > (12 * 60 * 60e3), !!twitchJSON?.data[0])
     }
+    console.debug(10)
 
     return json(response);
 }) satisfies RequestHandler;
