@@ -9,17 +9,17 @@ export const GET = (async ({fetch}) => {
   // In the future this will be from a database, but this will be fine for now.
 
   const data: SpecialStream = {
-    title: "Wood PC 2: They said they could do it better, I agree.",
-    thumbnail: "https://pbs.floatplane.com/stream_thumbnails/5c13f3c006f1be15e08e05c0/530913290833307_1706722559012.jpeg",
+    title: "Super Chexx Afterparty (floatplane exclusive)",
+    thumbnail: "https://pbs.floatplane.com/stream_thumbnails/5c13f3c006f1be15e08e05c0/524925433847569_1709965750967.jpeg",
 
-    start: "2024-01-31T19:00:00.000Z",
+    start: "2024-03-09T06:25:00.000Z",
 
     onFloatplane: true,
 
-    onTwitch: true,
+    onTwitch: false,
     // twitchNotes: "first half",
 
-    onYoutube: true
+    onYoutube: false
   }
 
   // hide an hour after the start time;
