@@ -269,13 +269,15 @@ export const GET = (async ({platform, url}) => {
 
         console.debug(9.2)
 
-        const params = new URLSearchParams();
-        params.set("title", twitchJSON[0].title);
+        if(twitchJSON[0].title) {
+            const params = new URLSearchParams();
+            params.set("title", twitchJSON[0].title);
 
-        console.debug(9.3)
+            console.debug(9.3)
 
-        platform?.context?.waitUntil(stub.fetch("https://whenplane-notification-throttler/preshow_live?" + params.toString()))
-        console.debug(9.4)
+            platform?.context?.waitUntil(stub.fetch("https://whenplane-notification-throttler/preshow_live?" + params.toString()))
+            console.debug(9.4)
+        }
     } else {
         console.debug(9.5)
         console.debug("Not sending preshow notification: ", isLive, isWAN, !!throttler, Date.now() - lastNotifSend > (12 * 60 * 60e3), !!twitchJSON?.data[0])
