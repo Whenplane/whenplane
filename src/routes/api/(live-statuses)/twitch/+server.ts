@@ -269,9 +269,9 @@ export const GET = (async ({platform, url}) => {
 
         console.debug(9.2)
 
-        if(twitchJSON[0].title) {
+        if(twitchJSON.data[0].title) {
             const params = new URLSearchParams();
-            params.set("title", twitchJSON[0].title);
+            params.set("title", twitchJSON.data[0].title);
 
             console.debug(9.3)
 
