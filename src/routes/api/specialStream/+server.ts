@@ -8,7 +8,7 @@ import type { WanDb_FloatplaneData } from "$lib/wdb_types.ts";
 export const GET = (async ({fetch}) => {
   // In the future this will be from a database, but this will be fine for now.
 
-  const data: SpecialStream = {}/*{
+  const data: SpecialStream = false/*{
     title: "Super Chexx Afterparty (floatplane exclusive)",
     thumbnail: "https://pbs.floatplane.com/stream_thumbnails/5c13f3c006f1be15e08e05c0/524925433847569_1709965750967.jpeg",
 
