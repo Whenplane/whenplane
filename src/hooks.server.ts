@@ -15,7 +15,8 @@ export const handle: Handle = async ({ event, resolve }) => {
         event.platform?.env?.REQUESTS.writeDataPoint({
             blobs: [
               event.url.pathname,
-              event.request.headers.get("referer") ?? event.request.headers.get("referrer")
+              event.request.headers.get("referer") ?? event.request.headers.get("referrer"),
+              event.request.headers.get("user-agent")
             ],
             doubles: [
                 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
