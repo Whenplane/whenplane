@@ -43,7 +43,7 @@ export const GET = (async ({platform, url}) => {
 
     const fast = url.searchParams.get("fast") === "true";
 
-    console.debug(1)
+    // console.debug(1)
 
     // With the fast flag (added for initial page load requests), always fetch cached data if its from within the past 5 hours
     if(Date.now() - fastCache.lastFetch < cacheTime || (fast && Date.now() - fastCache.lastFetch < 5 * 60 * 60e3)) {
@@ -64,7 +64,7 @@ export const GET = (async ({platform, url}) => {
             }
         )
     }
-    console.debug(2)
+    // console.debug(2)
 
     if(lastToken.validUntil < Date.now()) {
         const newToken = await cache.get<TwitchToken>("wheniswan:twitch:token", {type: "json"});
@@ -111,7 +111,7 @@ export const GET = (async ({platform, url}) => {
         platform.context.waitUntil(cache.put("wheniswan:twitch:token", JSON.stringify(lastToken)))
     }
 
-    console.debug(3)
+    // console.debug(3)
 
     const twitchResponse = await fetch(
         "https://api.twitch.tv/helix/streams?user_login=linustech",
@@ -128,7 +128,7 @@ export const GET = (async ({platform, url}) => {
 
     const twitchJSON = await twitchResponse.json();
 
-    console.debug(4)
+    // console.debug(4)
 
     if(twitchJSON.message) {
         console.warn("Got message in twitch response: ", twitchJSON.message)
@@ -154,7 +154,7 @@ export const GET = (async ({platform, url}) => {
     const twitchData = url.searchParams.has("short") ? undefined : twitchJSON;
     const started = isLive ? twitchJSON.data[0].started_at : undefined;
 
-    console.debug(5)
+    // console.debug(5)
 
     if(!savedStartTime && started && isWAN) {
         const closestWAN = getClosestWan();
@@ -185,7 +185,7 @@ export const GET = (async ({platform, url}) => {
         }
     }
 
-    console.debug(6)
+    // console.debug(6)
 
     if(!savedEndTime && !isLive && fastCache.lastFetchData?.data?.length != 0) {
         const closestWAN = getClosestWan();
@@ -208,7 +208,7 @@ export const GET = (async ({platform, url}) => {
         }
     }
 
-    console.debug(7)
+    // console.debug(7)
 
     if(!twitchJSON.message) {
         fastCache.lastFetchData = twitchJSON;
@@ -227,7 +227,7 @@ export const GET = (async ({platform, url}) => {
         fastCache.lastFetch = ((Date.now() + msUntilReset) - cacheTime) + 1e3;
     }
 
-    console.debug(8)
+    // console.debug(8)
 
     if(analytics) {
         analytics.writeDataPoint({
@@ -258,31 +258,31 @@ export const GET = (async ({platform, url}) => {
         isWAN,
         started
     }
-    console.debug(9)
+    // console.debug(9)
 
     const throttler = (platform?.env?.NOTIFICATION_THROTTLER as DurableObjectNamespace)
     if(isLive && isWAN && throttler && Date.now() - lastNotifSend > (12 * 60 * 60e3) && twitchJSON?.data[0]) {
-        console.debug(9.1)
+        // console.debug(9.1)
         lastNotifSend = Date.now();
         const id = throttler.idFromName("n");
         const stub = throttler.get(id);
 
-        console.debug(9.2)
+        // console.debug(9.2)
 
         if(twitchJSON.data[0].title) {
             const params = new URLSearchParams();
             params.set("title", twitchJSON.data[0].title);
 
-            console.debug(9.3)
+            // console.debug(9.3)
 
             platform?.context?.waitUntil(stub.fetch("https://whenplane-notification-throttler/preshow_live?" + params.toString()))
-            console.debug(9.4)
+            // console.debug(9.4)
         }
     } else {
-        console.debug(9.5)
+        // console.debug(9.5)
         console.debug("Not sending preshow notification: ", isLive, isWAN, !!throttler, Date.now() - lastNotifSend > (12 * 60 * 60e3), !!twitchJSON?.data[0])
     }
-    console.debug(10)
+    // console.debug(10)
 
     return json(response);
 }) satisfies RequestHandler;
