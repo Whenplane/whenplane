@@ -1,5 +1,5 @@
 import { error, type Handle } from "@sveltejs/kit";
-import {dev} from "$app/environment";
+import { building, dev } from "$app/environment";
 import { random } from "$lib/utils.ts";
 import type { AnalyticsEngineDataset, KVNamespace,
     KVNamespaceGetOptions, KVNamespaceListOptions, KVNamespaceListResult, KVNamespacePutOptions } from "@cloudflare/workers-types";
@@ -32,7 +32,7 @@ export const handle: Handle = async ({ event, resolve }) => {
         })
     }
 
-    if((!ua || ua === "Go-http-client/1.1") && new URL(event.request.url).pathname === "/history") {
+    if(!building && (!ua || ua === "Go-http-client/1.1") && new URL(event.request.url).pathname === "/history") {
         throw error(403, "You are querying an html page via automated means, when there is a better api available. Please email block@whenplane.com for more info and guidance.")
     }
 
