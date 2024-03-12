@@ -1,4 +1,4 @@
-import type {Handle} from "@sveltejs/kit";
+import { error, type Handle } from "@sveltejs/kit";
 import {dev} from "$app/environment";
 import { random } from "$lib/utils.ts";
 import type { AnalyticsEngineDataset, KVNamespace,
@@ -11,12 +11,14 @@ let devBindings: App.Platform | undefined;
 
 export const handle: Handle = async ({ event, resolve }) => {
 
+    const ua = event.request.headers.get("user-agent");
+
     if(event.platform?.env?.REQUESTS && event.request.headers.has("host")) {
         event.platform?.env?.REQUESTS.writeDataPoint({
             blobs: [
               event.url.pathname,
               event.request.headers.get("referer") ?? event.request.headers.get("referrer"),
-              event.request.headers.get("user-agent")
+              ua
             ],
             doubles: [
                 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
@@ -28,6 +30,10 @@ export const handle: Handle = async ({ event, resolve }) => {
             ],
             indexes: []
         })
+    }
+
+    if((!ua || ua === "Go-http-client/1.1") && new URL(event.request.url).pathname === "/history") {
+        throw error(403, "You are querying an html page via automated means, when there is a better api available. Please email block@whenplane.com for more info and guidance.")
     }
 
 
