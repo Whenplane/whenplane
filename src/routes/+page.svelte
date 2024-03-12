@@ -285,6 +285,11 @@
 				<a href="/history" class="btn variant-ghost-surface">
 					History
 				</a>
+				<br>
+				<br>
+				<a href="https://havetheylaunchedmagneticcablemanagementyet.com" target="_blank" rel="noopener">
+					Have they launched magnetic cable management yet? (.com)
+				</a>
 			{/if}
 		</div>
 
