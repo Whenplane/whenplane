@@ -4,23 +4,17 @@
 		<meta charset="utf-8" />
 		<link rel="icon" href="%sveltekit.assets%/wan.webp" />
 		<meta name="viewport" content="width=device-width" />
-		<link rel="manifest" href="/site.webmanifest" />
-		<link rel="apple-touch-icon" href="/wan-ios-logo.png" />
+		<link rel="manifest" href="/site.webmanifest">
+		<link rel="apple-touch-icon" href="/wan-ios-logo.png">
 		%sveltekit.head%
 	</head>
 	<body data-theme="crimson" data-sveltekit-preload-code="viewport" data-sveltekit-preload-data>
 		<div style="display: contents">%sveltekit.body%</div>
-		<!-- Cloudflare Web Analytics -->
-		<script
-			defer
-			src="https://static.cloudflareinsights.com/beacon.min.js"
-			data-cf-beacon='{"token": "7449720ccc244298870ba34ef0901bf1"}'
-		></script>
-		<!-- End Cloudflare Web Analytics -->
+		<!-- Cloudflare Web Analytics --><script defer src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "7449720ccc244298870ba34ef0901bf1"}'></script><!-- End Cloudflare Web Analytics -->
 
 		<script>
-			if (location.pathname === '/ltt-time' && new URL(location.href).searchParams.has('frame')) {
-				document.body.classList.add('background-none');
+			if(location.pathname === "/ltt-time" && new URL(location.href).searchParams.has("frame")) {
+				document.body.classList.add("background-none")
 			}
 		</script>
 	</body>
