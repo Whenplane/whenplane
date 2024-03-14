@@ -43,6 +43,7 @@
 			console.debug('[wdb] Using WDB Protocol Version: ' + data.version);
 			console.debug('[wdb] WDB Features: ' + data.features);
 			floatplaneState.set(data.state as unknown as WanDb_FloatplaneData);
+			if (!socket) return console.error('[wdb] Socket is undefined - unable to proceeed');
 			socket.emit(
 				'join',
 				JSON.stringify({
