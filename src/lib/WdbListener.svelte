@@ -5,35 +5,52 @@
 
   import type { WanDb_FloatplaneData } from "$lib/wdb_types.ts";
 
+  // Interface sent by the WDB websocket on connection
+  interface WdbConnectState {
+    version: string,
+    features: number,
+    state: WdbMessage
+  }
+
   // This is the message format that the WDB websocket sends to the client
   interface WdbMessage {
     live: boolean,
-    wan?: boolean,
-    isWAN?: boolean,
+    isWAN: boolean,
+    isAfterparty: boolean
     title: string,
     description: string,
-    thumbnail: string,
+    thumbnail: {
+      url: string,
+      width: number,
+      height: number
+      childImages: any[]
+    },
     imminence: 0 | 1 | 2 | 3 | 4,
-    textImminence: "Distant" | "Today" | "Soon" | "Imminent" | "Live"
+    sponsors: any[]
   }
 
   let socket: socketio.Socket | undefined
+
   onMount(() => {
     socket = socketio.connect('wss://mq.thewandb.com', {transports: ['websocket']});
     socket.on('connect', () => {
-      console.debug("[whenplane] Connected to WDB")
-      if (!socket) return;
-      socket.emit('message', JSON.stringify({
-        type: 2,
-        payload: 'live'
-      }));
-      // socket.emit(, 'status');
+      console.debug("[wdb] Connected to WDB")
     });
 
-    socket.on('state', (message: string) => {
+    // Handle the connection message (which includes initial state)
+    socket.on("state_sync", (data: WdbConnectState) => {
+      console.debug("[wdb] Received State Sync message")
+      console.debug("[wdb] Using WDB Protocol Version: " + data.version)
+      console.debug("[wdb] WDB Features: " + data.features)
+      floatplaneState.set(data.state as WanDb_FloatplaneData);
+      socket.emit('join', JSON.stringify({
+        id: 'live'
+      }));
+    });
+
+    // Handle the live state updates (revised for protocol 0.1.2)
+    socket.on('live', (message: string) => {
       const body = JSON.parse(message) as WdbMessage;
-      body.isWAN = body.wan;
-      delete body.wan;
       floatplaneState.set(body as WanDb_FloatplaneData);
 
       wdbSocketState.update(value => {
@@ -42,29 +59,9 @@
       });
     });
 
-    // stomp.connect({
-    //     host: 'prod_whenplane_com',
-    //     login: 'whenplane',
-    //     passcode: 'cWDK2KUpPCw3AW'
-    // }, () => {
-    //
-    //   stomp?.subscribe('/exchange/status', (message) => {
-    //     try {
-    //       const body = JSON.parse(message.body) as WdbMessage;
-    //       body.isWAN = body.wan;
-    //       delete body.wan;
-    //       floatplaneState.set(body as WanDb_FloatplaneData);
-    //
-    //       wdbSocketState.update(value => {
-    //         value.lastReceive = Date.now();
-    //         return value;
-    //       });
-    //       message.ack()
-    //     } catch (e) {
-    //       message.nack();
-    //     }
-    //   }, { 'ack': 'client' });
-    // })
+    socket.on('disconnect', (code: number) => {
+      console.debug("[wdb] Disconnected from WDB (with code: " + code + ")");
+    })
   })
 
   onDestroy(() => {
