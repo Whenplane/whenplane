@@ -287,8 +287,10 @@
 				</a>
 				<br>
 				<br>
-				<a href="https://havetheylaunchedmagneticcablemanagementyet.com" target="_blank" rel="noopener">
-					Have they launched magnetic cable management yet? (.com)
+			{/if}
+			{#if nowish.getTime() < 1710572400000}
+				<a href="https://www.twitch.tv/bocabola_" target="_blank" rel="noopener" class="!no-underline">
+					Elijah (BocaBola_) will be streaming during After Dark and after WAN Show!
 				</a>
 			{/if}
 		</div>
