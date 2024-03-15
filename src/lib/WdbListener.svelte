@@ -30,16 +30,28 @@
       // socket.emit(, 'status');
     });
 
+    let lastSocketData: WdbMessage;
+
     socket.on('state', (message: string) => {
       const body = JSON.parse(message) as WdbMessage;
       body.isWAN = body.wan;
       delete body.wan;
-      floatplaneState.set(body as WanDb_FloatplaneData);
+
+      if(!lastSocketData) lastSocketData = body;
 
       wdbSocketState.update(value => {
         value.lastReceive = Date.now();
         return value;
       });
+
+
+      if(body.imminence < 3 && lastSocketData.imminence >= 3) {
+        // only set last socket data, to prevent flickering due to wandb bug
+        lastSocketData = body;
+      } else {
+        lastSocketData = body;
+        floatplaneState.set(body as WanDb_FloatplaneData);
+      }
     });
 
     // stomp.connect({
