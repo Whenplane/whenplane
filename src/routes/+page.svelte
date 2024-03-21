@@ -124,7 +124,7 @@
 		} else {
 			outerContainer.classList.add("items-center")
 			outerContainer.classList.remove("too-short")
-			if(dev) console.debug("not too short")
+			mainContainer.classList.remove("pb-5")
 		}
 	}
 
@@ -302,6 +302,11 @@
 					<NotablePersonLive {shortResponse}/>
 				{/if}
 			{/each}
+			{#if Object.values(data.notablePeople).some(p => p.isLive)}
+				<div class="text-center pb-5">
+					Do <b>not</b> share other streams in WAN chat!
+				</div>
+			{/if}
 		{/if}
 
 		<!--<NotablePersonLive shortResponse={{
