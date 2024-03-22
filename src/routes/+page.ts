@@ -4,6 +4,7 @@ import type { Latenesses } from "./api/latenesses/+server";
 import type { AggregateResponse } from "./api/(live-statuses)/aggregate/+server";
 import { floatplaneState, nextFast, wdbSocketState } from "$lib/stores.ts";
 import type { NewsPost } from "$lib/news/news.ts";
+import { get } from "svelte/store";
 
 let cachedLatenesses: Latenesses;
 let cachedLatenessesTime = 0 ;
@@ -81,7 +82,7 @@ export const load = (async ({fetch, params}) => {
             fpState: liveStatus?.floatplane
         })
     }
-    if(liveStatus?.floatplane) floatplaneState.set(liveStatus?.floatplane)
+    if(liveStatus?.floatplane && Date.now() - get(wdbSocketState).lastReceive > 300e3) floatplaneState.set(liveStatus?.floatplane)
 
     const isPreShow = liveStatus ? (!liveStatus.youtube.isLive && (liveStatus.twitch.isWAN || (isWdbResponseValid && liveStatus.floatplane.isWAN && liveStatus.floatplane.live))) : false;
     const isMainShow = liveStatus ? (liveStatus.youtube.isWAN && liveStatus.youtube.isLive) : false;

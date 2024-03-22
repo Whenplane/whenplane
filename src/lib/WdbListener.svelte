@@ -33,6 +33,7 @@
     let lastSocketData: WdbMessage;
 
     socket.on('state', (message: string) => {
+      // const body = {"live":false,"wan":true,"title":"This Is A Royal Disaster - WAN Show March 15, 2024","description":"<p>Check out Ridgeâs Anniversary Sale and get Free Shipping at <a href=\"https://www.ridge.com/wan\" rel=\"noopener noreferrer\" target=\"_blank\">https://www.ridge.com/wan</a></p><p><br></p><p>Visit<a href=\"https://www.squarespace.com/WAN\" rel=\"noopener noreferrer\" target=\"_blank\"> https://www.squarespace.com/WAN</a> and use offer code WAN for 10% off</p><p><br></p><p>Save 15% with our offer code WANSHOW at<a href=\"https://vessi.com/WANSHOW\" rel=\"noopener noreferrer\" target=\"_blank\"> https://vessi.com/WANSHOW</a></p><p><br></p><p>Podcast Download: TBD</p>","thumbnail":"https://pbs.floatplane.com/stream_thumbnails/5c13f3c006f1be15e08e05c0/888565524674927_1710554857698.jpeg","imminence":3,"textImminence":"IMMINENT"};
       const body = JSON.parse(message) as WdbMessage;
       body.isWAN = body.wan;
       delete body.wan;
