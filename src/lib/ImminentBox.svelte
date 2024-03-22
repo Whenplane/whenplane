@@ -9,7 +9,7 @@
 
   const day = new Date().getUTCDay();
   const dayIsCloseEnough = day === 5 || day === 6;
-  $: console.log("imminentbox show: ", (!hasDone) + " && " + (!$floatplaneState?.live) +" && "+ "((" +dayIsCloseEnough +" && "+ ($floatplaneState?.imminence) +" === 3)"+ /*|| dev*/")")
+  // $: console.log("imminentbox show: ", (!hasDone) + " && " + (!$floatplaneState?.live) +" && "+ "((" +dayIsCloseEnough +" && "+ ($floatplaneState?.imminence) +" === 3)"+ /*|| dev*/")")
 </script>
 
 <!--
