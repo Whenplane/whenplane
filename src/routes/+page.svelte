@@ -304,7 +304,7 @@
 			{/each}
 			{#if Object.values(data.notablePeople).some(p => p.isLive)}
 				<div class="text-center pb-5">
-					Do <b>not</b> share other streams in WAN chat!
+					Do <b>not</b> share other streams in any LTT chat (like wan chat)
 				</div>
 			{/if}
 		{/if}
