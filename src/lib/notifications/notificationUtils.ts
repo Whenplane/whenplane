@@ -30,15 +30,15 @@ export const lang: {[key: string]: {name: string, description: string}} = {
 
   elijah_stream: {
     name: "Elijah Stream Notifications",
-    description: "Get an notification when Elijah (BocaBola_) starts streaming on twitch"
+    description: "Get a notification when Elijah (BocaBola_) starts streaming on twitch"
   },
   dan_stream: {
     name: "Dan Stream Notifications",
-    description: "Get an notification when Dan (BuhDan) starts streaming on twitch"
+    description: "Get a notification when Dan (BuhDan) starts streaming on twitch"
   },
   // luke_stream: {
   //   name: "Luke Stream Notifications",
-  //   description: "Get an notification when Luke (luke_lafr) starts streaming on twitch"
+  //   description: "Get a notification when Luke (luke_lafr) starts streaming on twitch"
   // },
 }
 
