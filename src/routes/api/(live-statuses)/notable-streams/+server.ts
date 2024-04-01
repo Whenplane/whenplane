@@ -122,6 +122,9 @@ export const GET = (async ({platform, url}) => {
 
   const promises = [];
 
+  let minRemaining;
+  let maxResetTime;
+
   for (const channel in people) {
     promises.push((async () => {
       const name = people[channel];
@@ -148,18 +151,18 @@ export const GET = (async ({platform, url}) => {
         name
       }
 
+      const remaining = twitchResponse.headers.get("Ratelimit-Remaining");
+      const reset = twitchResponse.headers.get("Ratelimit-Reset");
+
       const analytics = platform.env?.TWITCH_ANALYTICS;
-      if(analytics) {
+      analytics?.writeDataPoint({
+        blobs: [],
+        doubles: [remaining, Math.max((Number(reset) * 1000) - Date.now(), 0)],
+        indexes: []
+      });
 
-        const remaining = twitchResponse.headers.get("Ratelimit-Remaining");
-        const reset = twitchResponse.headers.get("Ratelimit-Reset");
-
-        analytics.writeDataPoint({
-          blobs: [],
-          doubles: [remaining, Math.max((Number(reset) * 1000) - Date.now(), 0)],
-          indexes: []
-        });
-      }
+      if(remaining) minRemaining = Math.min(Number(remaining), minRemaining ?? Number(remaining))
+      if(reset) maxResetTime = Math.min(Number(reset), maxResetTime ?? Number(reset))
     })())
   }
 
@@ -168,6 +171,12 @@ export const GET = (async ({platform, url}) => {
   fastCache = {
     lastFetchData: responses,
     lastFetch: Date.now()
+  }
+
+  const msUntilReset = Math.max((Number(maxResetTime) * 1000) - Date.now(), 0);
+  if(Number(minRemaining) < 100 || (Number(minRemaining) < 150 && msUntilReset > 30e3)) {
+    // If we are low on remaining requests, wait until 1s after the reset in the future.
+    fastCache.lastFetch = ((Date.now() + msUntilReset) - cacheTime) + 1e3;
   }
 
   const shortResponses: ShortResponses = makeShortResponses(responses, url);
