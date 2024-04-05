@@ -90,16 +90,27 @@ export const GET = (async ({fetch, url, platform}) => {
 
 
   const throttler = (platform?.env?.NOTIFICATION_THROTTLER as DurableObjectNamespace)
+
+  const params = new URLSearchParams();
+  params.set("title", response.title+"");
+  params.set("image", response.thumbnail+"");
+
+  const id = throttler.idFromName("n");
+  const stub = throttler.get(id);
+
+  platform?.context?.waitUntil(stub.fetch("https://whenplane-notification-throttler/test?" + params.toString()))
+
+
   if(response.imminence === 3 && response.isWAN && throttler && Date.now() - lastNotifSend > quickNotificationThrottleTime && (now.getUTCDay() >= 5 || now.getUTCDay() === 0)) {
     lastNotifSend = Date.now();
 
     console.log("Sending wan imminent notification!");
-    const id = throttler.idFromName("n");
-    const stub = throttler.get(id);
+    // const id = throttler.idFromName("n");
+    // const stub = throttler.get(id);
 
-    const params = new URLSearchParams();
+    /*const params = new URLSearchParams();
     params.set("title", response.title+"");
-    params.set("image", response.thumbnail+"");
+    params.set("image", response.thumbnail+"");*/
 
     platform?.context?.waitUntil(stub.fetch("https://whenplane-notification-throttler/imminent?" + params.toString()))
     // platform?.context?.waitUntil(stub.fetch("https://whenplane-notification-throttler/test?" + params.toString()))
