@@ -48,14 +48,6 @@
 
     storePopup.set({ computePosition, autoUpdate, flip, shift, offset, arrow });
 
-    const pagesWithDescription = [
-      "/",
-      "/history",
-      "/extension",
-      "/ltt-time",
-      "/youtube-redirect"
-    ]
-
     $: pathname = $page.url.pathname;
 
 
@@ -65,6 +57,15 @@
             navigator.serviceWorker.register('/service-worker.js', options).then(setServiceWorker);
         }
     })
+
+      const pagesWithDescription = [
+          "/",
+          "/history",
+          "/extension",
+          "/ltt-time",
+          "/youtube-redirect",
+          "/about"
+      ];
 </script>
 
 <!--<svelte:window
