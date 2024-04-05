@@ -24,6 +24,8 @@
             This website was made so it can be easier to tell when the WAN is starting, without having to go back between twitch/youtube.
             <br>
             <br>
+            Unless noted otherwise, all times are converted to <b>your local timezone</b>.<br>
+            <br>
             This site is not affiliated with Linus Media Group. It is just a side project of a fan.
             <br>
             <br>
