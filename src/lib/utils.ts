@@ -231,3 +231,18 @@ export type TwitchToken = {
     validUntil: number,
     dateGenerated: number
 }
+
+export type FpProxyResponse = {
+    id: string,
+    title: string,
+    description: string,
+    thumbnail: FloatplaneImage,
+    owner: string,
+    channel: string,
+    offline: {
+        title: string,
+        description: string,
+        thumbnail: FloatplaneImage
+    },
+    isLive: boolean
+}
