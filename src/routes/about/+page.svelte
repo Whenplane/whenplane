@@ -54,15 +54,19 @@
             <div class="text-left w-full">
                 <h2 class="text-center">Contact</h2>
                 If you have questions, concerns, or just want to send me a message, you can email me at
-                <a href="mailto:hi@whenplane.com" target="_blank" rel="noopener">aj@whenplane.com</a><br>
+                <a href="mailto:hi@whenplane.com" target="_blank" rel="noopener">aj@whenplane.com</a>,
+                or you can <a href="https://discord.gg/PmN9AJh6KR">join the Discord server</a>.<br>
                 <br>
                 If you want to contact me about something other than this site, you can see my
                 <a href="https://about.ajg0702.us/contact">general contact information here</a>
             </div>
             <br>
 
-            <div class="text-right">
-                <a class="btn variant-ghost-primary" href="https://about.ajg0702.us" target="_blank" rel="noopener">
+            <div class="flex">
+                <a class="btn variant-ghost-secondary" href="https://discord.gg/PmN9AJh6KR">
+                    <img src="/discord-logo-white.svg" style="height: 1.5em;">
+                    </a>
+                    <a class="inline-block btn variant-ghost-primary ml-auto" href="https://about.ajg0702.us" target="_blank" rel="noopener">
                     Made by aj
                 </a>
             </div>

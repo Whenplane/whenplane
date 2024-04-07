@@ -17,9 +17,11 @@ import { page } from "$app/stores";
   <br>
   <br>
   <h2>Discord</h2>
+  The easiest way to ask questions is to join the <a href="https://discord.gg/PmN9AJh6KR">Whenplane Discord Server</a>.<br>
+  <br>
   You can also contact the author directly on discord.<br>
-  My username is <code>ajgeiss0702</code>. I do not accept friend requests, and you need to be in a shared server to message me.
+  My username is <code>ajgeiss0702</code>. I do not accept friend requests, and you need to be in a shared server to DM me.
   I am in the
-  <a href="https://lmg.gg/discord" target="_blank" rel="noopener">LTT Discord</a>
-  if you dont already share a discord server with me.
+  <a href="https://lmg.gg/discord" target="_blank" rel="noopener">LTT</a> and <a href="https://discord.gg/PmN9AJh6KR">Whenplane</a>
+  discord servers if you dont already share a discord server with me.
 </div>
