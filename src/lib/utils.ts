@@ -252,5 +252,7 @@ export type FpLiveStatusResponse = {
     isThumbnailNew: boolean,
     title: string,
     thumbnail: string,
+    thumbnailAge: number,
+    thumbnailFirstSeen: number,
     description?: string
 }
