@@ -39,7 +39,7 @@
             <a href="https://thewandb.com/" target="_blank" rel="noopener">
                 The WAN DB
             </a>
-            for the floatplane live detection
+            for the helping me understand Floatplane's API.
 
             <br>
             <br>
