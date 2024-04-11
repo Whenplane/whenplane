@@ -40,7 +40,6 @@ export const GET = (async ({fetch, url, platform, locals}) => {
     const id = fetcher.idFromName("floatplane");
     stub = fetcher.get(id, {locationHint: 'wnam'});
   } else if(dev) {
-    console.debug("Using fetch in dev")
     stub = {fetch} as unknown as DurableObjectStub;
   } else {
     throw error(503, "Fetcher not available");
