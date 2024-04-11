@@ -127,14 +127,14 @@
         </span>
     </a>-->
 </div>
-<div class="card p-4 whitespace-nowrap shadow-x1 z-10 font-normal" data-popup="floatplaneInfo">
+<!--<div class="card p-4 whitespace-nowrap shadow-x1 z-10 font-normal" data-popup="floatplaneInfo">
     Floatplane does not have a (public) way to tell if LTT is streaming live.<br>
     So, instead we guess based on if twitch is live or not.<br>
     <br>
     Normally we would use TheWanDb's reverse-engineering,<br>
     but TheWanDb appears to be having issues right now,<br>
     so we are falling back to twitch
-</div>
+</div>-->
 <style>
     .status {
         font-weight: normal;
