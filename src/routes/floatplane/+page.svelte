@@ -29,7 +29,7 @@
   }
 }}/>
 
-<div class="limit mx-auto pb-16">
+<div class="limit mx-auto px-2 pt-4 pb-16">
   <h1>Floatplane Metadata</h1>
   This info is fetched directly from Floatplane.<br>
   Up-to-date as of {new Date(data.floatplane.fetched).toLocaleTimeString(undefined, {timeStyle: "medium"})}<br>
