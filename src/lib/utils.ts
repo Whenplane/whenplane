@@ -244,7 +244,8 @@ export type FpProxyResponse = {
         description: string,
         thumbnail: FloatplaneImage
     },
-    isLive: boolean
+    isLive: boolean,
+    fetched: number
 }
 
 export type FpLiveStatusResponse = {
