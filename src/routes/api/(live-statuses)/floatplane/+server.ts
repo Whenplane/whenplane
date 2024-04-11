@@ -2,13 +2,13 @@ import { error, json } from "@sveltejs/kit";
 import { dev } from "$app/environment";
 import type { DurableObjectNamespace, DurableObjectStub } from "@cloudflare/workers-types";
 import type { FpLiveStatusResponse } from "$lib/utils.ts";
+import { isNearWan } from "$lib/timeUtils.ts";
 
 let cache: {
   lastFetch: number,
   lastData?: FpLiveStatusResponse
 } = {lastFetch: 0};
 
-const cache_time = 4.9e3;
 const fast_cache_time = 5 * 60 * 60e3;
 
 let lastNotifSend = 0;
@@ -18,13 +18,17 @@ export const GET = (async ({fetch, url, platform, locals}) => {
 
   const fetcher: DurableObjectNamespace | undefined = platform?.env?.FLOATPLANE_FETCHER;
 
-  const fast = url.searchParams.has("fast");
+  const withDescription = url.searchParams.get("description") === "true";
+
+  const cache_time = isNearWan() ? 4.999e3 : 29.999e3;
+
+  const fast = url.searchParams.get("fast") === "true";
   if(Date.now() - cache.lastFetch < (fast ? fast_cache_time : cache_time)) {
     return json({
       cached: true,
       lastFetch: cache.lastFetch,
       ...cache.lastData,
-      description: undefined,
+      description: withDescription ? cache.lastData?.description : undefined,
       isWAN: cache.lastData?.title.toLowerCase().includes(" wan ")
     });
   }
@@ -91,7 +95,7 @@ export const GET = (async ({fetch, url, platform, locals}) => {
 
   return json({
     ...data,
-    description: undefined,
+    description: withDescription ? data.description : undefined,
     isWAN: data.title.toLowerCase().includes(" wan ")
   });
 
