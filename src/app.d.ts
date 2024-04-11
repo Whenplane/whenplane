@@ -20,6 +20,7 @@ declare global {
                 WDB_EPISODE_CACHE: KVNamespace;
 
                 FETCHER: DurableObjectNamespace;
+                FLOATPLANE_FETCHER: DurableObjectNamespace;
 
                 NOTIFICATION_THROTTLER: DurableObjectNamespace;
                 NOTIFICATION_QUEUE: Queue<NotificationMessage>

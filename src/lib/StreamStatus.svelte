@@ -11,14 +11,14 @@
 
     export let data;
 
-    $: useTwitchFallback = (!data.isWdbResponseValid && (Date.now() - $wdbSocketState.lastReceive > 300e3));
-    $: if(useTwitchFallback) console.debug("Using twitch fallback:", data.isWdbResponseValid, $wdbSocketState.lastReceive);
+    // $: useTwitchFallback = (!data.isWdbResponseValid && (Date.now() - $wdbSocketState.lastReceive > 300e3));
+    // $: if(useTwitchFallback) console.debug("Using twitch fallback:", data.isWdbResponseValid, $wdbSocketState.lastReceive);
 
     let mounted = false;
     onMount(() => mounted = true);
 </script>
 
-<WdbListener/>
+<!--<WdbListener/>-->
 
 <div class="logo-cloud grid-cols-1 md:!grid-cols-3 gap-1">
     <a class="logo-item" href="https://www.twitch.tv/linustech" target="_blank" rel="noopener">
@@ -62,8 +62,30 @@
     <a class="logo-item" href="https://www.floatplane.com/channel/linustechtips/live" target="_blank" rel="noopener">
         <span><Floatplane/></span>
         <span>
+            Floatplane<br>
+            <span class="status opacity-50" class:wan={data.liveStatus.floatplane.isWAN} class:upcoming={data.liveStatus.floatplane.isThumbnailNew}>
+                {#if data.liveStatus.floatplane.isLive}
+                    {#if data.liveStatus.floatplane.isWAN}
+                        (live)
+                    {:else}
+                        (live non-WAN)
+                    {/if}
+                {:else}
+                    {#if data.liveStatus.floatplane.isThumbnailNew}
+                        (upcoming)
+                    {:else}
+                        (offline)
+                    {/if}
+                {/if}
+            </span>
+        </span>
+    </a>
+    <!-- Old WanDB floatplane live detection
+    <a class="logo-item" href="https://www.floatplane.com/channel/linustechtips/live" target="_blank" rel="noopener">
+        <span><Floatplane/></span>
+        <span>
             Floatplane
-            {#if mounted && useTwitchFallback} <!-- Don't SSR info button since it wont work without client-side JS -->
+            {#if mounted && useTwitchFallback} </!-- Don't SSR info button since it wont work without client-side JS --/>
                 <span
                         class="text-surface inline-block fp-info [&>*]:pointer-events-none"
                         use:popup={{
@@ -103,7 +125,7 @@
                 </span>
             {/if}
         </span>
-    </a>
+    </a>-->
 </div>
 <div class="card p-4 whitespace-nowrap shadow-x1 z-10 font-normal" data-popup="floatplaneInfo">
     Floatplane does not have a (public) way to tell if LTT is streaming live.<br>

@@ -249,6 +249,8 @@ export type FpProxyResponse = {
 
 export type FpLiveStatusResponse = {
     isLive: boolean,
+    started?: string,
+    lastLive?: string,
     isThumbnailNew: boolean,
     title: string,
     thumbnail: string,

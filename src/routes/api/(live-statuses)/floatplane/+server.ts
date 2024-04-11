@@ -1,20 +1,113 @@
-import { wait } from "$lib/utils.ts";
-import { error, json, type RequestHandler } from "@sveltejs/kit";
-import { dev, version } from "$app/environment";
-import type { DurableObjectNamespace } from "@cloudflare/workers-types";
-import type { WanDb_FloatplaneData } from "$lib/wdb_types.ts";
+import { error, json } from "@sveltejs/kit";
+import { dev } from "$app/environment";
+import type { DurableObjectNamespace, DurableObjectStub } from "@cloudflare/workers-types";
+import type { FpLiveStatusResponse } from "$lib/utils.ts";
 
 let cache: {
   lastFetch: number,
-  lastData?: WanDb_FloatplaneData
+  lastData?: FpLiveStatusResponse
 } = {lastFetch: 0};
 
-const cache_time = 5e3;
+const cache_time = 4.9e3;
 const fast_cache_time = 5 * 60 * 60e3;
 
 let lastNotifSend = 0;
 
+
+export const GET = (async ({fetch, url, platform, locals}) => {
+
+  const fetcher: DurableObjectNamespace | undefined = platform?.env?.FLOATPLANE_FETCHER;
+
+  const fast = url.searchParams.has("fast");
+  if(Date.now() - cache.lastFetch < (fast ? fast_cache_time : cache_time)) {
+    return json({
+      cached: true,
+      lastFetch: cache.lastFetch,
+      ...cache.lastData,
+      description: undefined,
+      isWAN: cache.lastData?.title.toLowerCase().includes(" wan ")
+    });
+  }
+
+  cache.lastFetch = Date.now();
+
+  let stub: DurableObjectStub;
+  if(fetcher) {
+    const id = fetcher.idFromName("floatplane");
+    stub = fetcher.get(id, {locationHint: 'wnam'});
+  } else if(dev) {
+    console.debug("Using fetch in dev")
+    stub = {fetch} as unknown as DurableObjectStub;
+  } else {
+    throw error(503, "Fetcher not available");
+  }
+
+  const doStart = Date.now();
+  const response = await stub.fetch("https://floatplane-live-status.ajg.workers.dev/channel/linustechtips");
+  locals.addTiming({id: 'doFetch', duration: Date.now() - doStart});
+
+
+  const data: FpLiveStatusResponse = await response.json();
+  const isWAN = data?.title?.includes("WAN")
+
+  const quickNotificationThrottleTime = 3 * 60 * 60e3;
+
+  const now = new Date();
+
+
+  const throttler = (platform?.env?.NOTIFICATION_THROTTLER as DurableObjectNamespace)
+
+  if(data.isThumbnailNew && isWAN && throttler && Date.now() - lastNotifSend > quickNotificationThrottleTime && (now.getUTCDay() >= 5 || now.getUTCDay() === 0)) {
+    lastNotifSend = Date.now();
+
+    console.log("Sending wan imminent notification!");
+    const id = throttler.idFromName("n");
+    const stub = throttler.get(id);
+
+    const params = new URLSearchParams();
+    params.set("title", data.title);
+    params.set("image", data.thumbnail);
+
+    platform?.context?.waitUntil(stub.fetch("https://whenplane-notification-throttler/imminent?" + params.toString()))
+    // platform?.context?.waitUntil(stub.fetch("https://whenplane-notification-throttler/test?" + params.toString()))
+  } else if(!isWAN && data.isLive && throttler && Date.now() - lastNotifSend > quickNotificationThrottleTime) {
+    lastNotifSend = Date.now();
+
+    console.log("Sending other stream live notification!");
+    const id = throttler.idFromName("n");
+    const stub = throttler.get(id);
+
+    const params = new URLSearchParams();
+    params.set("title", data.title);
+    params.set("image", data.thumbnail);
+
+    platform?.context?.waitUntil(stub.fetch("https://whenplane-notification-throttler/other_streams?" + params.toString()))
+  }
+
+  cache = {
+    lastFetch: Date.now(),
+    lastData: data
+  }
+
+  return json({
+    ...data,
+    description: undefined,
+    isWAN: data.title.toLowerCase().includes(" wan ")
+  });
+
+})
+
+export type FpEndpointResponse = FpLiveStatusResponse & {
+  isWAN: boolean
+}
+
+
+
+
+
+/* old wandb stuff
 export const GET = (async ({fetch, url, platform}) => {
+
   const fast = url.searchParams.has("fast");
   if(Date.now() - cache.lastFetch < (fast ? fast_cache_time : cache_time)) {
     return json({
@@ -98,7 +191,7 @@ export const GET = (async ({fetch, url, platform}) => {
   const id = throttler.idFromName("n");
   const stub = throttler.get(id);
 
-  platform?.context?.waitUntil(stub.fetch("https://whenplane-notification-throttler/test?" + params.toString()))*/
+  platform?.context?.waitUntil(stub.fetch("https://whenplane-notification-throttler/test?" + params.toString())) *\/
 
 
   if(response.imminence === 3 && response.isWAN && throttler && Date.now() - lastNotifSend > quickNotificationThrottleTime && (now.getUTCDay() >= 5 || now.getUTCDay() === 0)) {
@@ -132,4 +225,4 @@ export const GET = (async ({fetch, url, platform}) => {
     ...response,
     via: "TheWanDB"
   });
-}) satisfies RequestHandler;
+}) satisfies RequestHandler;*/

@@ -4,9 +4,10 @@ import type { IsThereWanResponse } from "../isThereWan/+server";
 import type { TwitchResponse } from "../twitch/+server";
 import type { YoutubeResponse } from "../youtube/+server";
 import type { LatenessVotingOption } from "$lib/voting.ts";
-import type { SpecialStream } from "$lib/utils.ts";
+import type { FpLiveStatusResponse, SpecialStream } from "$lib/utils.ts";
 import type { WanDb_FloatplaneData } from "$lib/wdb_types.ts";
 import type { NotablePeopleResponse } from "../notable-streams/+server.ts";
+import type { FpEndpointResponse } from "../floatplane/+server.ts";
 
 export const GET = (async ({url, fetch, locals, platform}) => {
 
@@ -109,7 +110,7 @@ export type AggregateResponse = {
     hasDone: boolean,
     votes: LatenessVotingOption[],
     specialStream: SpecialStream,
-    floatplane: WanDb_FloatplaneData,
+    floatplane: FpEndpointResponse,
     notablePeople: NotablePeopleResponse
     reloadNumber: number
     // showExtension: boolean

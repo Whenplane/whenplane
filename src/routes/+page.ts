@@ -67,6 +67,7 @@ export const load = (async ({fetch, params}) => {
         })()
     ]);
 
+    /* wdb live stuff
     const isWdbResponseValid = liveStatus &&
       typeof liveStatus?.floatplane?.live === "boolean" &&
         (liveStatus?.floatplane?.live || liveStatus?.twitch.isLive) ? (
@@ -81,9 +82,9 @@ export const load = (async ({fetch, params}) => {
             fpState: liveStatus?.floatplane
         })
     }
-    if(liveStatus?.floatplane && Date.now() - get(wdbSocketState).lastReceive > 300e3) floatplaneState.set(liveStatus?.floatplane)
+    if(liveStatus?.floatplane && Date.now() - get(wdbSocketState).lastReceive > 300e3) floatplaneState.set(liveStatus?.floatplane)*/
 
-    const isPreShow = liveStatus ? (!liveStatus.youtube.isLive && (liveStatus.twitch.isWAN || (isWdbResponseValid && liveStatus.floatplane.isWAN && liveStatus.floatplane.live))) : false;
+    const isPreShow = liveStatus ? (!liveStatus.youtube.isLive && (liveStatus.twitch.isWAN || (liveStatus.floatplane.isWAN && liveStatus.floatplane.isLive))) : false;
     const isMainShow = liveStatus ? (liveStatus.youtube.isWAN && liveStatus.youtube.isLive) : false;
 
     const preShowStarted = liveStatus && isPreShow ? liveStatus.twitch.started : undefined;
@@ -93,8 +94,6 @@ export const load = (async ({fetch, params}) => {
         isPreShow,
         isMainShow,
         liveStatus,
-        isWdbResponseValid,
-        fpState: liveStatus?.floatplane,
         isThereWan: liveStatus?.isThereWan,
         preShowStarted,
         mainShowStarted,
