@@ -63,7 +63,7 @@
         <span><Floatplane/></span>
         <span>
             Floatplane<br>
-            <span class="status opacity-50" class:wan={data.liveStatus.floatplane.isWAN} class:upcoming={data.liveStatus.floatplane.isThumbnailNew}>
+            <span class="status opacity-50" class:wan={data.liveStatus.floatplane.isWAN && data.liveStatus.floatplane.isLive} class:upcoming={data.liveStatus.floatplane.isThumbnailNew}>
                 {#if data.liveStatus.floatplane.isLive}
                     {#if data.liveStatus.floatplane.isWAN}
                         (live)
