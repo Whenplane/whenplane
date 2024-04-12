@@ -5,6 +5,7 @@ import { version } from "$app/environment";
 import { isNearWan } from "$lib/timeUtils.ts";
 import type { GetStreamsResponse } from "ts-twitch-api";
 import type { TwitchToken } from "$lib/utils.ts";
+import type { DurableObjectNamespace } from "@cloudflare/workers-types";
 
 const people: { [channel: string]: string } = {
   "bocabola_": "Elijah",
@@ -26,6 +27,8 @@ let lastToken: TwitchToken = {
   validUntil: 0,
   dateGenerated: 0
 }
+
+const lastNotifSends: {[channel: string]: number} = {};
 
 export const GET = (async ({platform, url}) => {
 
@@ -163,6 +166,19 @@ export const GET = (async ({platform, url}) => {
 
       if(remaining) minRemaining = Math.min(Number(remaining), minRemaining ?? Number(remaining))
       if(reset) maxResetTime = Math.min(Number(reset), maxResetTime ?? Number(reset))
+
+      if(channel === "bocabola_" && twitchJSON.data.length > 0) {
+        const throttler = (platform?.env?.NOTIFICATION_THROTTLER as DurableObjectNamespace)
+        lastNotifSends[channel] = Date.now();
+        const id = throttler.idFromName("n");
+        const stub = throttler.get(id);
+
+        const params = new URLSearchParams();
+        params.set("title", twitchJSON.data[0]?.title+"");
+        params.set("image", twitchJSON.data[0]?.thumbnail_url+"");
+
+        platform?.context?.waitUntil(stub.fetch("https://whenplane-notification-throttler/elijah_stream?" + params.toString()))
+      }
     })())
   }
 
