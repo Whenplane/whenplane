@@ -40,8 +40,8 @@ export const PUT = (async ({url, request, platform}) => {
 
   const data = await request.json() as NotificationRows;
 
-  const response = await db.prepare("update notifications set imminent=?, preshow_live=?, mainshow_live=?, other_streams=? where endpoint_hash=?")
-    .bind(data.imminent, data.preshow_live, data.mainshow_live, data.other_streams, hash)
+  const response = await db.prepare("update notifications set imminent=?, preshow_live=?, mainshow_live=?, other_streams=?, elijah_stream=? where endpoint_hash=?")
+    .bind(data.imminent, data.preshow_live, data.mainshow_live, data.other_streams, data.elijah_stream, hash)
     .run()
 
   return json(response, {status: response.success ? 200 : 500});
