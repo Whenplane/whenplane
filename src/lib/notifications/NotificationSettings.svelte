@@ -22,7 +22,6 @@
 
   const disabled = [
     "other_streams_imminent",
-    "elijah_stream",
     "dan_stream",
   ]
 

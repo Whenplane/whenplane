@@ -141,6 +141,19 @@ const messages: {[key: string]: PushMessage} = {
     }
   },
 
+  elijah_stream: {
+    data: {
+      title: "Elijah is streaming on Twitch!",
+      body: "\"{title}\"",
+      tag: "elijah-" + getUTCDate(getClosestWan()).replaceAll("/", "-")
+    },
+    options: {
+      ttl: 60,
+      urgency: 'high',
+      topic: "elijah-" + getUTCDate(getClosestWan()).replaceAll("/", "-")
+    }
+  },
+
   test: {
     data: {
       title: "Test Notification",

@@ -53,5 +53,6 @@ export type NotificationRows = {
   imminent: boolean
   preshow_live: boolean,
   mainshow_live: boolean,
-  other_streams: boolean
+  other_streams: boolean,
+  elijah_stream: boolean
 }
