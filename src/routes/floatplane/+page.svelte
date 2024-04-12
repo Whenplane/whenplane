@@ -22,6 +22,11 @@
     return () => clearInterval(i);
   })
 </script>
+
+<svelte:head>
+  <title>Floatplane Watcher</title>
+</svelte:head>
+
 <svelte:window on:focus={() => {
   if(Date.now() - lastInvalidate > 5e3) {
     invalidateAll();
