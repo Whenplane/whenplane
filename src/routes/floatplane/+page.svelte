@@ -3,6 +3,7 @@
   import { newsSanitizeSettings } from "$lib/news/news";
   import { onMount } from "svelte";
   import { invalidateAll } from "$app/navigation";
+  import { page } from "$app/stores";
 
   export let data;
 
@@ -33,6 +34,12 @@
     lastInvalidate = Date.now();
   }
 }}/>
+
+<ol class="breadcrumb pt-2 pl-2">
+  <li class="crumb"><a class="anchor hover-underline" href="/">{$page.url.hostname === "whenwan.show" ? "whenwan.show" : "Whenplane"}</a></li>
+  <li class="crumb-separator" aria-hidden="true">&rsaquo;</li>
+  <li class="crumb">Floatplane Watcher</li>
+</ol>
 
 <div class="limit mx-auto px-2 pt-4 pb-16">
   <h1>Floatplane Metadata</h1>
