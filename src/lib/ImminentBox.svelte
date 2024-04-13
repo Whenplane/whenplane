@@ -31,7 +31,7 @@ export enum ImminenceEnumeration {
 }
 -->
 
-{#if floatplane && !floatplane.isLive && ((dayIsCloseEnough && floatplane.isThumbnailNew) /*|| dev*/)}
+{#if floatplane && !floatplane.isLive && floatplane.isWAN && ((dayIsCloseEnough && floatplane.isThumbnailNew) /*|| dev*/)}
   <div class="card border-2 p-2 !border-green-600 !bg-opacity-20 !bg-green-600 block relative pb-0 mobile-add-padding">
     <a href={$floatplaneState?.thumbnail} target="_blank" rel="noopener">
       <img src={$floatplaneState?.thumbnail} class="inline-block h-32 rounded-lg mobile-full-width" alt="Dan">
@@ -39,8 +39,8 @@ export enum ImminenceEnumeration {
     <div class="inline-flex h-32 items-center justify-center ml-4 mobile-full-width">
       <div>
         <h2 class="!mb-0">The show might start soon!</h2>
-        {#if $floatplaneState?.title}
-          "{removeAfterLastDash($floatplaneState?.title)}"
+        {#if floatplane?.title}
+          "{removeAfterLastDash(floatplane?.title)}"
           <br>
         {/if}
         The thumbnail has been updated.
@@ -53,9 +53,6 @@ export enum ImminenceEnumeration {
           }}
         >
           <Info/>
-        </div>
-        <div class="absolute bottom-0 right-3 opacity-60" style="font-size: 0.8em;">
-          Imminence detection by The WAN DB
         </div>
       </div>
     </div>
