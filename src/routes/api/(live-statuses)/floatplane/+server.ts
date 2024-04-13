@@ -11,7 +11,8 @@ let cache: {
 
 const fast_cache_time = 5 * 60 * 60e3;
 
-let lastNotifSend = 0;
+let lastImminentNotifSend = 0;
+let lastOtherStreamNotifSend = 0;
 
 
 export const GET = (async ({fetch, url, platform, locals}) => {
@@ -60,8 +61,8 @@ export const GET = (async ({fetch, url, platform, locals}) => {
 
   const throttler = (platform?.env?.NOTIFICATION_THROTTLER as DurableObjectNamespace)
 
-  if(data.isThumbnailNew && isWAN && throttler && Date.now() - lastNotifSend > quickNotificationThrottleTime && (now.getUTCDay() >= 5 || now.getUTCDay() === 0)) {
-    lastNotifSend = Date.now();
+  if(data.isThumbnailNew && throttler && Date.now() - lastImminentNotifSend > quickNotificationThrottleTime && (now.getUTCDay() >= 5 || now.getUTCDay() === 0)) {
+    lastImminentNotifSend = Date.now();
 
     console.log("Sending wan imminent notification!");
     const id = throttler.idFromName("n");
@@ -73,8 +74,8 @@ export const GET = (async ({fetch, url, platform, locals}) => {
 
     platform?.context?.waitUntil(stub.fetch("https://whenplane-notification-throttler/imminent?" + params.toString()))
     // platform?.context?.waitUntil(stub.fetch("https://whenplane-notification-throttler/test?" + params.toString()))
-  } else if(!isWAN && data.isLive && throttler && Date.now() - lastNotifSend > quickNotificationThrottleTime) {
-    lastNotifSend = Date.now();
+  } else if(!isWAN && data.isLive && throttler && Date.now() - lastOtherStreamNotifSend > quickNotificationThrottleTime) {
+    lastOtherStreamNotifSend = Date.now();
 
     console.log("Sending other stream live notification!");
     const id = throttler.idFromName("n");
