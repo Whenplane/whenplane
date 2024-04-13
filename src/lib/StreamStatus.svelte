@@ -72,7 +72,7 @@
                     {/if}
                 {:else}
                     {#if data.liveStatus.floatplane.isThumbnailNew}
-                        (upcoming)
+                        (upcoming{data.liveStatus.floatplane.isWAN ? "" : " non-wan"})
                     {:else}
                         (offline)
                     {/if}
