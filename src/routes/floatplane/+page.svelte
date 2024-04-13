@@ -8,7 +8,7 @@
   export let data;
 
   $: titleParts = data.floatplane?.title?.split(" - ");
-  $: thumbnailChangedDate = new Date(data.floatplane.thumbnailFirstSeen);
+  $: thumbnailChangedDate = new Date(data.floatplane?.thumbnailFirstSeen);
   $: console.debug({data})
 
   let lastInvalidate = 0;
@@ -44,7 +44,7 @@
 <div class="limit mx-auto px-2 pt-4 pb-16">
   <h1>Floatplane Metadata</h1>
   This info is fetched directly from Floatplane.<br>
-  Up-to-date as of {new Date(data.floatplane.fetched).toLocaleTimeString(undefined, {timeStyle: "medium"})}<br>
+  Up-to-date as of {new Date(data.floatplane?.fetched).toLocaleTimeString(undefined, {timeStyle: "medium"})}<br>
   <br>
 
   <div class="out pb-2">
@@ -69,14 +69,14 @@
     <span class="opacity-80 card-title">
       Thumbnail
     </span>
-    {#if data.floatplane.thumbnail}
+    {#if data.floatplane?.thumbnail}
       <div class="px-4">
-        <img src={data.floatplane.thumbnail} alt="Current Thumbnail" title="Current Thumbnail">
+        <img src={data.floatplane?.thumbnail} alt="Current Thumbnail" title="Current Thumbnail">
         <span class="opacity-85">
-          New: {data.floatplane.isThumbnailNew}<br>
+          New: {data.floatplane?.isThumbnailNew}<br>
           Last Changed: {thumbnailChangedDate.toLocaleDateString(undefined, {dateStyle: "medium"})} {thumbnailChangedDate.toLocaleTimeString(undefined, {timeStyle: "medium"})}
           <span class="opacity-80">
-            ({data.floatplane.thumbnailAgePretty} ago)
+            ({data.floatplane?.thumbnailAgePretty} ago)
           </span>
         </span>
       </div>
@@ -93,9 +93,9 @@
     <span class="opacity-80 card-title">
       Description
     </span>
-    {#if data.floatplane.description}
+    {#if data.floatplane?.description}
       <div class="px-4">
-        {@html sanitizeHtml(data.floatplane.description, newsSanitizeSettings)}
+        {@html sanitizeHtml(data.floatplane?.description, newsSanitizeSettings)}
       </div>
     {:else}
       <span class="opacity-70">
