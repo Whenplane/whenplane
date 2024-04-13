@@ -4,8 +4,9 @@
   import {popup} from "@skeletonlabs/skeleton";
   import Info from "$lib/svg/Info.svelte";
   import { removeAfterLastDash } from "$lib/utils.js";
+  import type { FpEndpointResponse } from "../routes/api/(live-statuses)/floatplane/+server.ts";
 
-  export let hasDone: boolean;
+  export let floatplane: FpEndpointResponse | undefined;
 
   const day = new Date().getUTCDay();
   const dayIsCloseEnough = day === 5 || day === 6;
@@ -30,7 +31,7 @@ export enum ImminenceEnumeration {
 }
 -->
 
-{#if !hasDone && !$floatplaneState?.live && ((dayIsCloseEnough && $floatplaneState?.imminence === 3) /*|| dev*/)}
+{#if floatplane && !floatplane.isLive && ((dayIsCloseEnough && floatplane.isThumbnailNew) /*|| dev*/)}
   <div class="card border-2 p-2 !border-green-600 !bg-opacity-20 !bg-green-600 block relative pb-0 mobile-add-padding">
     <a href={$floatplaneState?.thumbnail} target="_blank" rel="noopener">
       <img src={$floatplaneState?.thumbnail} class="inline-block h-32 rounded-lg mobile-full-width" alt="Dan">
