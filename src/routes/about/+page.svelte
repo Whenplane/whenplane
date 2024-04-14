@@ -65,8 +65,8 @@
             <div class="flex">
                 <a class="btn variant-ghost-secondary" href="https://discord.gg/PmN9AJh6KR">
                     <img src="/discord-logo-white.svg" style="height: 1.5em;">
-                    </a>
-                    <a class="inline-block btn variant-ghost-primary ml-auto" href="https://about.ajg0702.us" target="_blank" rel="noopener">
+                </a>
+                <a class="inline-block btn variant-ghost-primary ml-auto" href="https://about.ajg0702.us" target="_blank" rel="noopener">
                     Made by aj
                 </a>
             </div>

@@ -4,11 +4,14 @@
   import { onMount } from "svelte";
   import { invalidateAll } from "$app/navigation";
   import { page } from "$app/stores";
+  import DateStamp from "$lib/DateStamp.svelte";
 
   export let data;
 
   $: titleParts = data.floatplane?.title?.split(" - ");
   $: thumbnailChangedDate = new Date(data.floatplane?.thumbnailFirstSeen);
+  $: titleChangedDate = new Date(data.floatplane?.titleFirstSeen);
+  $: descriptionChangedDate = new Date(data.floatplane?.descriptionFirstSeen);
   $: console.debug({data})
 
   let lastInvalidate = 0;
@@ -48,9 +51,12 @@
   <br>
 
   <div class="out pb-2">
-    <span class="opacity-80 card-title">
+    <div class="opacity-80 card-title">
       Title
-    </span>
+      <div class="opacity-70 float-right">
+        Last updated: <DateStamp epochSeconds={titleChangedDate.getTime()/1000}/>
+      </div>
+    </div>
     {#if titleParts}
       <div class="px-4">
         <h2>{titleParts[0]}</h2>
@@ -68,16 +74,15 @@
   <div class="out pb-2">
     <span class="opacity-80 card-title">
       Thumbnail
+      <div class="opacity-70 float-right">
+        Last updated: <DateStamp epochSeconds={thumbnailChangedDate.getTime()/1000}/>
+      </div>
     </span>
     {#if data.floatplane?.thumbnail}
       <div class="px-4">
         <img src={data.floatplane?.thumbnail} alt="Current Thumbnail" title="Current Thumbnail">
         <span class="opacity-85">
           New: {data.floatplane?.isThumbnailNew}<br>
-          Last Changed: {thumbnailChangedDate.toLocaleDateString(undefined, {dateStyle: "medium"})} {thumbnailChangedDate.toLocaleTimeString(undefined, {timeStyle: "medium"})}
-          <span class="opacity-80">
-            ({data.floatplane?.thumbnailAgePretty} ago)
-          </span>
         </span>
       </div>
     {:else}
@@ -92,6 +97,9 @@
   <div class="out pb-2">
     <span class="opacity-80 card-title">
       Description
+      <div class="opacity-70 float-right">
+        Last updated: <DateStamp epochSeconds={descriptionChangedDate.getTime()/1000}/>
+      </div>
     </span>
     {#if data.floatplane?.description}
       <div class="px-4">
