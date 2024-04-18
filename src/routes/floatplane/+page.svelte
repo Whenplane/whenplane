@@ -4,7 +4,9 @@
   import { onMount } from "svelte";
   import { invalidateAll } from "$app/navigation";
   import { page } from "$app/stores";
+  import {timeString} from "$lib/timeUtils";
   import DateStamp from "$lib/DateStamp.svelte";
+  import { browser } from "$app/environment";
 
   export let data;
 
@@ -12,9 +14,13 @@
   $: thumbnailChangedDate = new Date(data.floatplane?.thumbnailFirstSeen);
   $: titleChangedDate = new Date(data.floatplane?.titleFirstSeen);
   $: descriptionChangedDate = new Date(data.floatplane?.descriptionFirstSeen);
+  $: liveStatusChangedDate = new Date(data.floatplane?.started ?? data.floatplane?.lastLive)
   $: console.debug({data})
 
   let lastInvalidate = 0;
+
+
+  let liveStatusChangeTime = "";
 
   onMount(() => {
     let i = setInterval(() => {
@@ -22,9 +28,21 @@
         invalidateAll();
         lastInvalidate = Date.now();
       }
+
+      updateLiveStatusChangeTime();
     }, 5e3)
+
+    updateLiveStatusChangeTime()
+
     return () => clearInterval(i);
   })
+
+  function updateLiveStatusChangeTime() {
+    const initial = timeString(Date.now() - liveStatusChangedDate.getTime())?.split(" ");
+    initial?.pop();
+    initial?.pop();
+    liveStatusChangeTime = initial?.join(" ") ?? "";
+  }
 </script>
 
 <svelte:head>
@@ -48,6 +66,20 @@
   <h1>Floatplane Metadata</h1>
   This info is fetched directly from Floatplane.<br>
   Up-to-date as of {new Date(data.floatplane?.fetched).toLocaleTimeString(undefined, {timeStyle: "medium"})}<br>
+  <br>
+
+
+  <div class="out pb-2">
+    <div class="opacity-80 card-title">
+      Live or not?
+    </div>
+    <div class="px-4">
+      <h2 class:green={data.floatplane?.isLive}>
+        {data.floatplane?.isLive ? "Live" : "Offline"}
+      </h2>
+      for {liveStatusChangeTime}
+    </div>
+  </div>
   <br>
 
   <div class="out pb-2">
@@ -124,6 +156,10 @@
 
   img {
       border-radius: 5px;
+  }
+
+  .green {
+      color: lawngreen;
   }
 
   .card-title {
