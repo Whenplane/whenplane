@@ -15,6 +15,7 @@
   $: titleChangedDate = new Date(data.floatplane?.titleFirstSeen);
   $: descriptionChangedDate = new Date(data.floatplane?.descriptionFirstSeen);
   $: liveStatusChangedDate = new Date(data.floatplane?.started ?? data.floatplane?.lastLive)
+  let initialLiveStatusChangedDate = new Date(data.floatplane?.started ?? data.floatplane?.lastLive)
   $: console.debug({data})
 
   let lastInvalidate = 0;
@@ -32,13 +33,13 @@
       updateLiveStatusChangeTime();
     }, 5e3)
 
-    updateLiveStatusChangeTime()
-
     return () => clearInterval(i);
   })
 
+  updateLiveStatusChangeTime()
+
   function updateLiveStatusChangeTime() {
-    const initial = timeString(Date.now() - liveStatusChangedDate.getTime())?.split(" ");
+    const initial = timeString(Date.now() - (liveStatusChangedDate ?? initialLiveStatusChangedDate).getTime())?.split(" ");
     initial?.pop();
     initial?.pop();
     liveStatusChangeTime = initial?.join(" ") ?? "";
