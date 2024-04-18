@@ -39,9 +39,14 @@
   updateLiveStatusChangeTime()
 
   function updateLiveStatusChangeTime() {
-    const initial = timeString(Date.now() - (liveStatusChangedDate ?? initialLiveStatusChangedDate).getTime())?.split(" ");
-    initial?.pop();
-    initial?.pop();
+    const distance = Date.now() - (liveStatusChangedDate ?? initialLiveStatusChangedDate).getTime();
+    const initial = timeString(distance, true)?.split(" ");
+    if(distance > 60e3) {
+      initial?.pop();
+      initial?.pop();
+      initial?.pop();
+      initial?.pop();
+    }
     liveStatusChangeTime = initial?.join(" ") ?? "";
   }
 </script>
