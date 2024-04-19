@@ -3,6 +3,7 @@
     import {SlideToggle} from "@skeletonlabs/skeleton";
     import {browser} from "$app/environment";
     import { page } from "$app/stores";
+    import { getCookie, setCookie } from "$lib/cookieUtils";
 
     let scrollY = 0;
 
@@ -11,6 +12,11 @@
 
     let disableBlurHash = browser ? !(localStorage.getItem("disableBlurHash") !== "true") : false
     $: if(browser) localStorage.setItem("disableBlurHash", disableBlurHash + "");
+
+    let disableNotableStreams = browser ? !(getCookie("disableNotableStreams") !== "true") : !($page.params.__c__disableNotableStreams !== "true")
+    $: if(browser) setCookie("disableNotableStreams", disableNotableStreams + "");
+
+    console.log({disableNotableStreams, server: $page.params.__c__disableNotableStreams, client: browser ? getCookie("disableNotableStreams") : undefined})
 
 </script>
 <svelte:window bind:scrollY/>
@@ -91,13 +97,18 @@
             {/if}
         </div>
 
-        <SlideToggle active="bg-primary-500" size="sm" bind:checked={noSpecialLateText}>
+        <SlideToggle active="bg-primary-500" size="sm" bind:checked={noSpecialLateText} name="noSpecialLateText">
             Disable special "late" text
         </SlideToggle>
         <br>
 
-        <SlideToggle active="bg-primary-500" size="sm" bind:checked={disableBlurHash}>
+        <SlideToggle active="bg-primary-500" size="sm" bind:checked={disableBlurHash} name="disableBlurHash">
             Disable "blur" on loading images
+        </SlideToggle>
+        <br>
+
+        <SlideToggle active="bg-primary-500" size="sm" bind:checked={disableNotableStreams} name="disableNotableStreams">
+            Disable "notable" stream (e.g. Elijah, Dan, Luke) boxes
         </SlideToggle>
         <br>
 

@@ -19,6 +19,7 @@
 	import ToolTip from "$lib/ToolTip.svelte";
 	import AdPicker from "$lib/ads/AdPicker.svelte";
 	import NotablePersonLive from "$lib/NotablePersonLive.svelte";
+	import { getCookie } from "$lib/cookieUtils.ts";
 
 	export let data;
 
@@ -135,8 +136,9 @@
 		}
 	}
 
-	const description = "Is the WAN show late? Yes. How late is the WAN show? Probably very! See a countdown to when WAN is supposed to start, as well as how late it's been before.";
+	const disableNotableStreams = browser ? !(getCookie("disableNotableStreams") !== "true") : !($page.params.__c__disableNotableStreams !== "true");
 
+	const description = "Is the WAN show late? Yes. How late is the WAN show? Probably very! See a countdown to when WAN is supposed to start, as well as how late it's been before.";
 
 </script>
 <svelte:window
@@ -299,7 +301,7 @@
 		</div>
 
 
-		{#if data.notablePeople}
+		{#if data.notablePeople && !disableNotableStreams}
 			{#each Object.values(data.notablePeople) as shortResponse}
 				{#if (typeof shortResponse === "object") && shortResponse.isLive}
 					<NotablePersonLive {shortResponse}/>

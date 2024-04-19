@@ -1,7 +1,7 @@
 import type {RequestHandler} from "@sveltejs/kit";
 import {error, json} from "@sveltejs/kit";
 import {env} from "$env/dynamic/private";
-import { version } from "$app/environment";
+import { dev, version } from "$app/environment";
 import { isNearWan } from "$lib/timeUtils.ts";
 import type { GetStreamsResponse } from "ts-twitch-api";
 import type { TwitchToken } from "$lib/utils.ts";
@@ -208,7 +208,7 @@ function makeShortResponses(responses: Responses, url: URL): ShortResponses {
     const response = responses[channel];
     const name = people[channel];
 
-    const isLive = response.data?.length != 0;
+    const isLive = response.data?.length != 0 /*|| dev*/;
 
     const twitchData = url.searchParams.has("short") ? undefined : response;
     const started = isLive ? response.data[0]?.started_at : undefined;

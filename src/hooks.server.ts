@@ -85,6 +85,8 @@ export const handle: Handle = async ({ event, resolve }) => {
         event.params.__c__viewType = event.cookies.get("historyViewType")
     }
 
+    event.params.__c__disableNotableStreams = event.cookies.get("disableNotableStreams")
+
     event.params.__h__userAgent = event.request.headers.get("user-agent") ?? undefined
 
     if(event.platform) {
