@@ -3,7 +3,7 @@
 import { page } from "$app/stores";
 </script>
 <svelte:head>
-  <title>Adding Whenplane to the Home Screen on iOS</title>
+  <title>iOS Push Notification Setup - Whenplane</title>
 </svelte:head>
 
 <ol class="breadcrumb pt-2 pl-2">
@@ -11,7 +11,7 @@ import { page } from "$app/stores";
   <li class="crumb-separator" aria-hidden="true">&rsaquo;</li>
   <li class="crumb"><a class="anchor hover-underline" href="/notifications">Notifications</a></li>
   <li class="crumb-separator" aria-hidden="true">&rsaquo;</li>
-  <li class="crumb">Push Notification Settings</li>
+  <li class="crumb">iOS Push Setup</li>
 </ol>
 
 <div class="limit p-2 mb-96 mx-auto">
