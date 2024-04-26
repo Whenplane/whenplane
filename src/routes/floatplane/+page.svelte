@@ -92,7 +92,10 @@
     <div class="opacity-80 card-title">
       Title
       <div class="opacity-70 float-right">
-        Last changed: <DateStamp epochSeconds={titleChangedDate.getTime()/1000}/>
+        Last changed:
+        {#key titleChangedDate}
+          <DateStamp epochSeconds={titleChangedDate.getTime()/1000}/>
+        {/key}
       </div>
     </div>
     {#if titleParts}
@@ -113,7 +116,10 @@
     <span class="opacity-80 card-title">
       Thumbnail
       <div class="opacity-70 float-right">
-        Last changed: <DateStamp epochSeconds={thumbnailChangedDate.getTime()/1000}/>
+        Last changed:
+        {#key thumbnailChangedDate}
+          <DateStamp epochSeconds={thumbnailChangedDate.getTime()/1000}/>
+        {/key}
       </div>
     </span>
     {#if data.floatplane?.thumbnail}
@@ -136,7 +142,10 @@
     <span class="opacity-80 card-title">
       Description
       <div class="opacity-70 float-right">
-        Last changed: <DateStamp epochSeconds={descriptionChangedDate.getTime()/1000}/>
+        Last changed:
+        {#key descriptionChangedDate}
+          <DateStamp epochSeconds={descriptionChangedDate.getTime()/1000}/>
+        {/key}
       </div>
     </span>
     {#if data.floatplane?.description}
