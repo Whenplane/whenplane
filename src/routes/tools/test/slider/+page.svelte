@@ -12,6 +12,7 @@
 
 </script>
 <div class="text-center limit mx-auto">
+    Next WAN
     <input type="range" class="input" min="-7" max="7" step="0.25" bind:value>
     {value}<br>
     <label>
