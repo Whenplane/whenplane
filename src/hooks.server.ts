@@ -32,7 +32,8 @@ export const handle: Handle = async ({ event, resolve }) => {
         })
     }
 
-    if(!building && (!ua || ua === "Go-http-client/1.1") && new URL(event.request.url).pathname === "/history") {
+
+    if(!building && (!ua || ua.startsWith("Go-http-client/") || ua === "node") && ["/history", "/news"].includes(event.url.pathname)) {
         throw error(403, "You are querying an html page via automated means, when there is a better api available. Please email block@whenplane.com for more info and guidance.")
     }
 
