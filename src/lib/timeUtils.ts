@@ -75,6 +75,11 @@ export function getPreviousWANLuxon(now = new Date()): DateTime {
         wanDate = wanDate.minus({days: 1});
     }
 
+    // 2024/4/26 wan is at 1pm for some reason
+    if(wanDate.year == 2024 && wanDate.month == 4 && wanDate.day == 26) {
+        wanDate = wanDate.set({hour: 13, minute: 0})
+    }
+
     if(isBefore(now, wanDate.toJSDate())) {
         wanDate = wanDate.minus({days: 7});
     }

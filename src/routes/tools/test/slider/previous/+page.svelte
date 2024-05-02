@@ -1,6 +1,6 @@
 <script>
 
-  import { getNextWAN, getPreviousWAN } from "$lib/timeUtils";
+  import { getPreviousWAN, getUTCDate } from "$lib/timeUtils";
   import {DateTime} from "luxon";
 
   let value = 0;
@@ -14,7 +14,7 @@
   <input type="range" class="input" min="-7" max="7" step="0.25" bind:value>
   {value}<br>
   <br>
-  {testingDate.toLocaleString()}'s<br>
+  {testingDate.toLocaleString()}'s ({getUTCDate(testingDate)})<br>
   previous is<br>
-  {computedPrevious.toLocaleString()}
+  {computedPrevious.toLocaleString()} ({getUTCDate(computedPrevious)})
 </div>
