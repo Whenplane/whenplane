@@ -21,7 +21,7 @@
 
   }
 </script>
-<svelte:window on:focus={invalidate}/>
+<svelte:window on:focus={invalidate} on:visibilitychange={invalidate}/>
 
 <div class="limit mx-auto">
   <h1 class="h1">Active Instances ({data.activeInstances.length})</h1>
