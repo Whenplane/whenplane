@@ -2,8 +2,9 @@
 
   import { onMount } from "svelte";
   import { invalidateAll } from "$app/navigation";
-  import * as airportData from "airport-data-js";
-  import { dev } from "$app/environment";
+  import { browser, dev } from "$app/environment";
+
+  const airportData = browser ? import("airport-data-js") : new Promise(() => {})
 
   export let data;
 
@@ -27,7 +28,7 @@
   <h1 class="h1">Active Instances ({data.activeInstances.length})</h1>
   <table>
     {#each Object.entries(data.activeInstanceColos).toSorted((a, b) => b[1] - a[1]) as [colo, count]}
-      {@const airport = airportData.getAirportByIata(colo)}
+      {@const airport = airportData.then(d => d.getAirportByIata(colo))}
       <tr>
         <!--{@debug airport}-->
         <td>
