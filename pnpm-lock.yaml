@@ -11,6 +11,9 @@ dependencies:
   '@floating-ui/dom':
     specifier: ^1.2.7
     version: 1.2.7
+  airport-data-js:
+    specifier: ^1.0.6
+    version: 1.0.6
   apexcharts:
     specifier: ^3.42.0
     version: 3.42.0
@@ -1236,6 +1239,12 @@ packages:
     hasBin: true
     dev: true
 
+  /airport-data-js@1.0.6:
+    resolution: {integrity: sha512-maJD27ucD8Ik6EEkbUWOWVuLuQc4C0NpR0bm09PplwiURcqf/WSt88o+oxQ6ET4jlnz/DcimDnSwcaOt4wC5VQ==}
+    dependencies:
+      jsonpack: 1.1.5
+    dev: false
+
   /ajv@6.12.6:
     resolution: {integrity: sha512-j3fVLgvTo527anyYyJOGTYJbG+vnnQYvE0m5mmkc1TK+nxAppkCLMIL0aZ4dblVCNoGShhm+kzE4ZUykBoMg4g==}
     dependencies:
@@ -2248,6 +2257,10 @@ packages:
   /jsonc-parser@3.2.0:
     resolution: {integrity: sha512-gfFQZrcTc8CnKXp6Y4/CBT3fTc0OVuDofpre4aEeEpSBPV5X5v4+Vmx+8snU7RLPrNHPKSgLxGo9YuQzz20o+w==}
     dev: true
+
+  /jsonpack@1.1.5:
+    resolution: {integrity: sha512-d2vwomK605ks7Q+uCpbwGyoIF5j+UZuJjlYcugISBt3CxM+eBo/W6y63yVPIyIvbYON+pvJYsYZjCYbzqJj/xQ==}
+    dev: false
 
   /kleur@4.1.5:
     resolution: {integrity: sha512-o+NO+8WrRiQEE4/7nwRJhN1HWpVmJm511pBHUxPLtp0BUISzlBplORYSmTclCnJvQq2tKu/sgl3xVpkc7ZWuQQ==}
