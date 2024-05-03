@@ -4,6 +4,7 @@ import { random } from "$lib/utils.ts";
 import type { AnalyticsEngineDataset, KVNamespace,
     KVNamespaceGetOptions, KVNamespaceListOptions, KVNamespaceListResult, KVNamespacePutOptions } from "@cloudflare/workers-types";
 import type { TimingEntry } from "./app";
+import { report } from "$lib/server/instance-analytics.ts";
 
 const reportedIds: {[key: string]: number} = {};
 
@@ -105,6 +106,12 @@ export const handle: Handle = async ({ event, resolve }) => {
         }
     }
 
+
+    if(event.platform?.cf) {
+        event.platform?.context?.waitUntil(report(event.platform.cf))
+    } else {
+        console.warn("Missing platform or platform.cf!")
+    }
 
 
     const response = await resolve(

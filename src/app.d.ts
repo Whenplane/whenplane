@@ -1,7 +1,7 @@
 // See https://kit.svelte.dev/docs/types#app
 // for information about these interfaces
 // and what to do when importing types
-import type { KVNamespace } from "@cloudflare/workers-types";
+import type { IncomingRequestCfProperties, KVNamespace } from "@cloudflare/workers-types";
 
 
 declare global {
@@ -37,7 +37,8 @@ declare global {
                  * @param promise The promise that is ensured completion
                  */
                 waitUntil: (promise: Promise) => void
-            }
+            },
+            cf?: IncomingRequestCfProperties
         }
     }
 }
