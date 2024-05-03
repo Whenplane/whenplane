@@ -49,4 +49,32 @@
       </tr>
     {/each}
   </table>
+  <br>
+  <br>
+  <br>
+
+  <h1 class="h1">Inactive Instances ({data.inactiveInstances.length})</h1>
+  <table>
+    {#each Object.entries(data.inactiveInstanceColos).toSorted((a, b) => b[1] - a[1]) as [colo, count]}
+      {@const airport = airportData.then(d => d.getAirportByIata(colo))}
+      <tr>
+        <!--{@debug airport}-->
+        <td>
+          {colo}
+        </td>
+        <td class="pl-4">
+          {#await airport}
+            ...
+          {:then airportInfo}
+            {airportInfo[0].city}, {airportInfo[0].state}, {airportInfo[0].country_code}
+          {/await}
+        </td>
+        <td class="pl-8">
+          {#if count > 1 || dev}
+            x{count}
+          {/if}
+        </td>
+      </tr>
+    {/each}
+  </table>
 </div>
