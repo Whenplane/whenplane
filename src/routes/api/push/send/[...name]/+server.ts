@@ -11,9 +11,10 @@ export const POST = (async ({platform, params, request, url}) => {
 
   const { key } = await request.json();
 
-  const name = params.name;
+  const isTest = params.name?.includes("test") ?? false;
+  const name = params.name?.replaceAll("test", "");
 
-  if(key != PUSH_KEY && name != "test") throw error(401);
+  if(key != PUSH_KEY && !isTest) throw error(401);
 
   if(!name) throw error(400);
 
@@ -34,7 +35,7 @@ export const POST = (async ({platform, params, request, url}) => {
 
   let subs;
 
-  if(name === "test") {
+  if(isTest) {
     subs = await db.prepare("select * from notifications where endpoint_hash = ?")
       .bind("4a446187f188ea1fb29bfb1bae13ccbc605a8deb89230d36658cf30f8d5c6418")
       .all()
