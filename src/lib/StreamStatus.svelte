@@ -2,12 +2,8 @@
     import Youtube from "./svg/Youtube.svelte";
     import Twitch from "./svg/Twitch.svelte";
     import Floatplane from "./svg/Floatplane.svelte";
-    import {popup} from "@skeletonlabs/skeleton";
-    import Info from "$lib/svg/Info.svelte";
-    import {fade} from "svelte/transition";
     import {onMount} from "svelte";
-    import { floatplaneState, wdbSocketState } from "$lib/stores";
-    import WdbListener from "$lib/WdbListener.svelte";
+    import { page } from "$app/stores";
 
     export let data;
 
@@ -22,7 +18,14 @@
 
 <div class="logo-cloud grid-cols-1 md:!grid-cols-3 gap-1">
     <a class="logo-item" href="https://www.twitch.tv/linustech" target="_blank" rel="noopener">
-        <span><Twitch/></span>
+        <span>
+            {#if $page.url.searchParams.has("boca")}
+                <img class="absolute z-0 rounded-lg" style="margin-left: 1px; height: 26px; width: 30px;" src="/secret/boca-cropped.jpg"/>
+            {/if}
+            <span class="inline-block relative z-10">
+                <Twitch/>
+            </span>
+        </span>
         <span>
             Twitch<br>
             <span class="status opacity-50" class:wan={data.liveStatus.twitch.isWAN}>
@@ -39,7 +42,14 @@
         </span>
     </a>
     <a class="logo-item" href="/youtube-redirect" target="_blank">
-        <span><Youtube/></span>
+        <span>
+            {#if $page.url.searchParams.has("boca")}
+                <img class="absolute z-10 rounded-md opacity-50" style="margin-left: 6px; margin-top: 7px; height: 26px; width: 37px;" src="/secret/boca-cropped.jpg"/>
+            {/if}
+            <span class="inline-block relative z-0">
+                <Youtube/>
+            </span>
+        </span>
         <span>
             Youtube<br>
             <span class="status opacity-50" class:wan={data.liveStatus.youtube.isWAN} class:upcoming={data.liveStatus.youtube.upcoming}>
@@ -60,7 +70,14 @@
         </span>
     </a>
     <a class="logo-item" href="https://www.floatplane.com/channel/linustechtips/live" target="_blank" rel="noopener">
-        <span><Floatplane/></span>
+        <span>
+            {#if $page.url.searchParams.has("boca")}
+                <img class="absolute z-0 rounded-full" style="margin-left: 2px; margin-top: 4px; height: 26px; width: 26px;" src="/secret/boca-cropped.jpg"/>
+            {/if}
+            <div class="inline-block relative z-10">
+                <Floatplane/>
+            </div>
+        </span>
         <span>
             Floatplane<br>
             <span class="status opacity-50" class:wan={data.liveStatus.floatplane.isWAN && data.liveStatus.floatplane.isLive} class:upcoming={data.liveStatus.floatplane.isThumbnailNew}>
