@@ -146,7 +146,7 @@ const messages: {[key: string]: PushMessage} = {
     data: {
       title: "Elijah (BocaBola_) is streaming on Twitch!",
       body: "\"{title}\"",
-      tag: "elijah-" + getUTCDate(getClosestWan()).replaceAll("/", "-")
+      tag: "elijah_streams-" + getUTCDate(getClosestWan()).replaceAll("/", "-")
     },
     options: {
       ttl: 60,
