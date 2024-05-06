@@ -14,9 +14,18 @@
 		<!-- Cloudflare Web Analytics --><script defer src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "7449720ccc244298870ba34ef0901bf1"}'></script><!-- End Cloudflare Web Analytics -->
 
 		<script>
-			if(location.pathname === "/ltt-time" && new URL(location.href).searchParams.has("frame")) {
+
+			const url = new URL(location.href);
+
+			if(location.pathname === "/ltt-time" && url.searchParams.has("frame")) {
 				document.body.classList.add("background-none")
 			}
+
+			if(url.searchParams.has("boca")) {
+				document.documentElement.classList.add("boca-theme");
+				console.log("I'm the boca, baby!");
+			}
+
 		</script>
 	</body>
 </html>

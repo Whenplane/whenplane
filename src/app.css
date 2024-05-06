@@ -1,6 +1,12 @@
 /*place global styles here */
 html, body { @apply h-full; }
 
+
+.boca-theme body {
+    background-image: url('/secret/boca-cropped.jpg');
+    background-size: 100vw 100vh;
+}
+
 .limit {
     max-width: 800px;
 }

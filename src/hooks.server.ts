@@ -109,7 +109,7 @@ export const handle: Handle = async ({ event, resolve }) => {
 
     if(event.platform?.cf) {
         event.platform?.context?.waitUntil(report(event.platform.cf))
-    } else {
+    } else if(!dev && !building) {
         console.warn("Missing platform or platform.cf!")
     }
 

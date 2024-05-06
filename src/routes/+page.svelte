@@ -403,6 +403,11 @@
 		min-width: 23em;
 		margin-left: auto;
 	}
+
+	:global(.boca-theme) .countdown-box {
+		background-color: rgba(26, 28, 38, 0.6)
+	}
+
 	.red {
 		color: red;
 	}
@@ -443,6 +448,10 @@
 
 	.lateness {
 		min-width: 18em;
+	}
+
+	:global(.boca-theme) .lateness {
+		background-color: rgba(26, 28, 38, 0.6);
 	}
 
 	.smaller {

@@ -149,6 +149,10 @@
         padding-bottom: 1.5em;
     }
 
+    :global(.boca-theme) .logo-item {
+        background-color: rgba(26, 28, 38, 0.6);
+    }
+
     .wan {
         color: green
     }
