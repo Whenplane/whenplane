@@ -8,19 +8,19 @@ import type { WanDb_FloatplaneData } from "$lib/wdb_types.ts";
 export const GET = (async ({fetch}) => {
   // In the future this will be from a database, but this will be fine for now.
 
-  const data: SpecialStream = false/*{
-    title: "Super Chexx Afterparty (floatplane exclusive)",
-    thumbnail: "https://pbs.floatplane.com/stream_thumbnails/5c13f3c006f1be15e08e05c0/524925433847569_1709965750967.jpeg",
+  const data: SpecialStream = {
+    title: "I’m Selling This PC for $2… I Hope Sucks",
+    thumbnail: "https://pbs.floatplane.com/stream_thumbnails/5c13f3c006f1be15e08e05c0/096166759055993_1715193799485.jpeg",
 
-    start: "2024-03-09T06:25:00.000Z",
+    start: "2024-05-08T20:00:00Z",
 
     onFloatplane: true,
 
-    onTwitch: false,
+    onTwitch: true,
     // twitchNotes: "first half",
 
-    onYoutube: false
-  }*/
+    onYoutube: true
+  }
 
   // hide an hour after the start time;
   const hideTime = new Date(data.start as string)
