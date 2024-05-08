@@ -5,15 +5,16 @@
   import { onMount } from "svelte";
   import { getTimeUntil } from "$lib/timeUtils.ts";
   import Late from "$lib/Late.svelte";
-  import { floatplaneState } from "$lib/stores.ts";
 
   export let specialStreamData: SpecialStream = $page.data.specialStream;
+
+  export let data;
 
   let countdownString: string | undefined;
   let late = false;
   $: startTime = specialStreamData.start ? new Date(specialStreamData.start) : undefined;
 
-  $: live = $floatplaneState?.live;
+  $: live = data.liveStatus.floatplane?.isLive;
 
   $: thumbnailStyle = specialStreamData.thumbnail ? `background: linear-gradient(rgba(21,23,31,.75), rgba(21,23,31,.75)), url(${JSON.stringify(specialStreamData.thumbnail)});` : "";
 
