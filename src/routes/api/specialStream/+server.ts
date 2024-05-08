@@ -2,6 +2,7 @@ import type { SpecialStream } from "$lib/utils.ts";
 import { json } from "@sveltejs/kit";
 import { getTimeUntil } from "$lib/timeUtils.ts";
 import type { WanDb_FloatplaneData } from "$lib/wdb_types.ts";
+import type { FpEndpointResponse } from "../(live-statuses)/floatplane/+server.ts";
 
 export const GET = (async ({fetch}) => {
   // In the future this will be from a database, but this will be fine for now.
@@ -24,7 +25,7 @@ export const GET = (async ({fetch}) => {
   const hideTime = new Date(data.start as string)
   hideTime.setHours(hideTime.getHours() + 1.5);
 
-  const fpLive: WanDb_FloatplaneData = await fetch("/api/floatplane?fast=true").then(r => r.json());
+  const fpLive: FpEndpointResponse = await fetch("/api/floatplane?fast=true").then(r => r.json());
 
   const timeUntil = getTimeUntil(hideTime);
   if(timeUntil.late && !(timeUntil.distance < (2 * 60 * 60e3) && fpLive.isLive)) {
