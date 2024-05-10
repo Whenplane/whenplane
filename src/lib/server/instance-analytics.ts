@@ -15,7 +15,7 @@ export async function report(cf: IncomingRequestCfProperties) {
   }
 
   // only ping at most once every 30 seconds
-  if(Date.now() - lastSend < 30e3) return;
+  if(Date.now() - lastSend < 15e3) return;
 
   lastSend = Date.now();
 
