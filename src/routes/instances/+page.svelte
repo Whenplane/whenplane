@@ -15,7 +15,7 @@
 
   let lastInvalidate = 0;
   function invalidate() {
-    if(document.hidden && Date.now() - lastInvalidate < 30 * 60 * 60e3) return;
+    if(document.hidden && Date.now() - lastInvalidate < 5 * 60 * 60e3) return;
 
     lastInvalidate = Date.now();
     invalidateAll();
@@ -23,6 +23,9 @@
   }
 </script>
 <svelte:window on:focus={invalidate} on:visibilitychange={invalidate}/>
+<svelte:head>
+  <title>Whenplane Instances</title>
+</svelte:head>
 
 <div class="limit mx-auto">
   <h1 class="h1">Active Instances ({data.activeInstances.length})</h1>
