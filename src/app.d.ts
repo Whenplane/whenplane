@@ -29,6 +29,7 @@ declare global {
                 LOG_MESSAGES?: AnalyticsEngineDataset;
                 REQUESTS?: AnalyticsEngineDataset;
                 KV_ANALYTICS?: AnalyticsEngineDataset;
+                TEST_WS_ANALYTICS?: AnalyticsEngineDataset;
                 DB: D1Database;
             },
             context?: {

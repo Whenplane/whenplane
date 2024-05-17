@@ -2,9 +2,8 @@ import type {PageLoad} from "./$types";
 import { browser, dev } from "$app/environment";
 import type { Latenesses } from "./api/latenesses/+server";
 import type { AggregateResponse } from "./api/(live-statuses)/aggregate/+server";
-import { floatplaneState, nextFast, wdbSocketState } from "$lib/stores.ts";
+import { nextFast } from "$lib/stores.ts";
 import type { NewsPost } from "$lib/news/news.ts";
-import { get } from "svelte/store";
 
 let cachedLatenesses: Latenesses;
 let cachedLatenessesTime = 0 ;
@@ -23,6 +22,8 @@ export const load = (async ({fetch, params}) => {
         isNextFast = true;
         fast = true;
     }
+
+    await fetch("/api/recordTestMetric");
 
     let liveStatus: AggregateResponse | undefined;
     let latenesses: Latenesses | undefined;
