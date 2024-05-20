@@ -11,7 +11,9 @@ let cachedLatenessesTime = 0 ;
 
 let lastNewsPostCache: NewsPost;
 
-export const load = (async ({fetch, params}) => {
+let first = true;
+
+export const load = (async ({fetch, params, url}) => {
     let fast = (!browser || (location && location.pathname !== "/"));
     const cacheBuster = fast ? "" : "&r=" + Date.now();
 
@@ -23,7 +25,10 @@ export const load = (async ({fetch, params}) => {
         fast = true;
     }
 
-    await fetch("/api/recordTestMetric");
+    if(browser && first) {
+        await fetch("/api/recordTestMetric");
+        first = false
+    }
 
     let liveStatus: AggregateResponse | undefined;
     let latenesses: Latenesses | undefined;
