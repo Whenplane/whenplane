@@ -7,7 +7,7 @@ import type { FpEndpointResponse } from "../(live-statuses)/floatplane/+server.t
 export const GET = (async ({fetch}) => {
   // In the future this will be from a database, but this will be fine for now.
 
-  const data: SpecialStream = {
+  const data: SpecialStream = /*{
     title: "Test, please ignore",
     thumbnail: "https://pbs.floatplane.com/stream_thumbnails/5c13f3c006f1be15e08e05c0/096166759055993_1715193799485.jpeg",
 
@@ -19,7 +19,7 @@ export const GET = (async ({fetch}) => {
     // twitchNotes: "first half",
 
     onYoutube: false
-  }// false;
+  }*/ false;
 
   if(!data) {
     return json(data);

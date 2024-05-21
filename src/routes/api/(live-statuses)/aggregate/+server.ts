@@ -108,6 +108,7 @@ export const GET = (async ({url, fetch, locals, platform}) => {
             platform?.context?.waitUntil(object.sendData("aggregate", thisWsMessage))
         }
     }
+    console.log({thisWsMessage, lastWsMessage})
     lastWsMessage = thisWsMessage;
 
     locals.addTiming({id: "twitch", duration: twitchTime ?? -1});
