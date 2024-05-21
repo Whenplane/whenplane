@@ -8,29 +8,36 @@ export const GET = (async ({fetch}) => {
   // In the future this will be from a database, but this will be fine for now.
 
   const data: SpecialStream = {
-    title: "I’m Selling This PC for $2… I Hope It Sucks",
+    title: "Test, please ignore",
     thumbnail: "https://pbs.floatplane.com/stream_thumbnails/5c13f3c006f1be15e08e05c0/096166759055993_1715193799485.jpeg",
 
-    start: "2024-05-08T21:10:00Z",
+    start: "2024-05-21T21:10:00Z",
 
-    onFloatplane: true,
+    onFloatplane: false,
 
-    onTwitch: true,
+    onTwitch: false,
     // twitchNotes: "first half",
 
-    onYoutube: true
+    onYoutube: false
+  }// false;
+
+  if(!data) {
+    return json(data);
   }
 
-  // hide an hour after the start time;
-  const hideTime = new Date(data.start as string)
-  hideTime.setHours(hideTime.getHours() + 1.5);
 
   const fpLive: FpEndpointResponse = await fetch("/api/floatplane?fast=true").then(r => r.json());
 
-  const timeUntil = getTimeUntil(hideTime);
-  if(timeUntil.late && !(timeUntil.distance < (2 * 60 * 60e3) && fpLive.isLive)) {
-    return json(false);
-  } // after
+  if(data.start) {
+    // hide an hour after the start time;
+    const hideTime = new Date(data.start as string)
+    hideTime.setHours(hideTime.getHours() + 1.5);
+
+    const timeUntil = getTimeUntil(hideTime);
+    if(timeUntil.late && !(timeUntil.distance < (2 * 60 * 60e3) && fpLive.isLive)) {
+      return json(false);
+    }
+  }
 
   return json(data);
 
