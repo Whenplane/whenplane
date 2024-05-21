@@ -1,7 +1,12 @@
 // See https://kit.svelte.dev/docs/types#app
 // for information about these interfaces
 // and what to do when importing types
-import type { IncomingRequestCfProperties, KVNamespace } from "@cloudflare/workers-types";
+import {
+    __DURABLE_OBJECT_BRAND,
+    type DurableObjectNamespace,
+    type IncomingRequestCfProperties,
+    type KVNamespace
+} from "@cloudflare/workers-types";
 
 
 declare global {
@@ -21,6 +26,7 @@ declare global {
 
                 FETCHER: DurableObjectNamespace;
                 FLOATPLANE_FETCHER: DurableObjectNamespace;
+                WS_OBJECT: DurableObjectNamespace<SocketObject>;
 
                 NOTIFICATION_THROTTLER: DurableObjectNamespace;
                 NOTIFICATION_QUEUE: Queue<NotificationMessage>
@@ -69,4 +75,8 @@ type NotificationMessage = {
     subscription: PushSubscription,
     message: PushMessage,
     isDummy?: boolean
+}
+
+interface SocketObject extends DurableObject {
+    sendData(event: string, data: object): Promise<void>;
 }

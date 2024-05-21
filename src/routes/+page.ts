@@ -4,6 +4,8 @@ import type { Latenesses } from "./api/latenesses/+server";
 import type { AggregateResponse } from "./api/(live-statuses)/aggregate/+server";
 import { nextFast } from "$lib/stores.ts";
 import type { NewsPost } from "$lib/news/news.ts";
+import { page } from "$app/stores";
+import { get } from "svelte/store";
 
 let cachedLatenesses: Latenesses;
 let cachedLatenessesTime = 0 ;
@@ -111,6 +113,8 @@ export const load = (async ({fetch, params, url}) => {
         notablePeople: liveStatus?.notablePeople,
         specialStream: liveStatus?.specialStream,
         lastNewsPost,
+        // TODO: when making WS default, set to false if 'poll' searchParam is set
+        useWebSocket: url.searchParams.has("ws"),
         isBot: /bot|googlebot|crawler|spider|robot|crawling/i
           .test(browser ? navigator?.userAgent : params.__h__userAgent),
     }

@@ -224,7 +224,7 @@ export type SpecialStream = {
 
     onYoutube?: boolean
     youtubeNotes?: string
-}
+} | false;
 
 export type TwitchToken = {
     token: string,

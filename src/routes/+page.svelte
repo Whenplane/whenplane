@@ -20,6 +20,7 @@
 	import AdPicker from "$lib/ads/AdPicker.svelte";
 	import NotablePersonLive from "$lib/NotablePersonLive.svelte";
 	import { getCookie } from "$lib/cookieUtils.ts";
+	import Socket from "$lib/Socket.svelte";
 
 	export let data;
 
@@ -67,6 +68,11 @@
 			return;
 		}
 
+		// When using a websocket, don't do a full update more than once every 5 minutes
+		if(data.useWebSocket && Date.now() - lastInvalidation < 5 * 60e3) {
+			return;
+		}
+
 		lastInvalidation = Date.now();
 		invalidateAll();
 
@@ -79,7 +85,7 @@
 	function startInvalidationInterval() {
 		if(invalidationInterval) clearInterval(invalidationInterval);
 		// VS code is getting the setInterval type from Node.js, so we need to override it
-		invalidationInterval = setInterval(invalidate, 5e3) as unknown as number;
+		invalidationInterval = setInterval(invalidate, data.useWebSocket ? 30e3 : 5e3) as unknown as number;
 	}
 
 	let mounted = false;
@@ -148,6 +154,10 @@
 	<title>When is the WAN Show?  {$page.url.hostname === "whenwan.show" ? "whenwan.show" : "Whenplane"}</title>
 	<meta name="description" content={description}/>
 </svelte:head>
+
+{#if data.useWebSocket}
+	<Socket events={["aggregate"]}/>
+{/if}
 
 <div class="absolute top-0 right-0">
 	{#if !isFrame}

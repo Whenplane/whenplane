@@ -6,13 +6,7 @@ import { isNearWan } from "$lib/timeUtils.ts";
 import type { GetStreamsResponse } from "ts-twitch-api";
 import type { TwitchToken } from "$lib/utils.ts";
 import type { DurableObjectNamespace } from "@cloudflare/workers-types";
-
-const people: { [channel: string]: string } = {
-  "bocabola_": "Elijah",
-  "buhdan": "Dan",
-  "luke_lafr": "Luke",
-  // "ajgeiss0702": "Test"
-}
+import {notablePeople as people} from "./notable-people";
 
 let fastCache: {
   lastFetch: number,

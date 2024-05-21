@@ -1,13 +1,17 @@
 import type {RequestHandler} from "@sveltejs/kit";
-import { error, json } from "@sveltejs/kit";
+import { json } from "@sveltejs/kit";
 import type { IsThereWanResponse } from "../isThereWan/+server";
 import type { TwitchResponse } from "../twitch/+server";
 import type { YoutubeResponse } from "../youtube/+server";
 import type { LatenessVotingOption } from "$lib/voting.ts";
-import type { FpLiveStatusResponse, SpecialStream } from "$lib/utils.ts";
-import type { WanDb_FloatplaneData } from "$lib/wdb_types.ts";
-import type { NotablePeopleResponse } from "../notable-streams/+server.ts";
+import type { SpecialStream } from "$lib/utils.ts";
+import type { NotablePeopleResponse, NotablePeopleShortResponse } from "../notable-streams/+server.ts";
 import type { FpEndpointResponse } from "../floatplane/+server.ts";
+import { notablePeople } from "../notable-streams/notable-people.ts";
+import type { DurableObjectNamespace } from "@cloudflare/workers-types";
+import type { SocketObject } from "../../../../app";
+
+let lastWsMessage: string;
 
 export const GET = (async ({url, fetch, locals, platform}) => {
 
@@ -93,6 +97,19 @@ export const GET = (async ({url, fetch, locals, platform}) => {
         // showExtension: await showExtension
     }
 
+    const thisWsMessage = makeWsMessage(response);
+    if(thisWsMessage !== lastWsMessage) {
+        const objectBinding = platform?.env?.WS_OBJECT;
+
+        if(objectBinding) {
+            const objectId = objectBinding.idFromName("a");
+            const object = objectBinding.get(objectId);
+
+            platform?.context?.waitUntil(object.sendData("aggregate", thisWsMessage))
+        }
+    }
+    lastWsMessage = thisWsMessage;
+
     locals.addTiming({id: "twitch", duration: twitchTime ?? -1});
     locals.addTiming({id: "youtube", duration: ytTime ?? -1});
     locals.addTiming({id: "votes", duration: votesTime ?? -1});
@@ -114,4 +131,33 @@ export type AggregateResponse = {
     notablePeople: NotablePeopleResponse
     reloadNumber: number
     // showExtension: boolean
+}
+
+function makeWsMessage(response: AggregateResponse) {
+    return JSON.stringify({
+        youtube: {
+            isLive: response.youtube.isLive,
+            upcoming: response.youtube.upcoming,
+            videoId: response.youtube.videoId,
+            started: response.youtube.started,
+            isWAN: response.youtube.isWAN,
+        },
+        twitch: {
+            isLive: response.twitch.isLive,
+            isWAN: response.twitch.isWAN,
+            started: response.twitch.started
+        },
+        specialStream: response.specialStream,
+        floatplane: {
+            isLive: response.floatplane.isLive,
+            isWAN: response.floatplane.isWAN,
+            isThumbnailNew: response.floatplane.isThumbnailNew
+        },
+        notablePeople: Object.keys(response.notablePeople)
+          .filter(key => Object.keys(notablePeople).includes(key))
+          .reduce((obj: NotablePeopleResponse, key) => {
+              obj[key] = response.notablePeople[key];
+              return obj;
+          }, {})
+    })
 }

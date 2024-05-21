@@ -1,6 +1,4 @@
 <script lang="ts">
-  import { floatplaneState } from "$lib/stores";
-  import { dev } from "$app/environment";
   import {popup} from "@skeletonlabs/skeleton";
   import Info from "$lib/svg/Info.svelte";
   import { removeAfterLastDash } from "$lib/utils.js";
