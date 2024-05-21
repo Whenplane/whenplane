@@ -167,7 +167,10 @@ function makeWsMessage(response: AggregateResponse) {
               return obj;
           }, {}),
         hasDone: response.hasDone,
-        isThereWan: response.isThereWan,
+        isThereWan: {
+            text: response.isThereWan.text,
+            image: response.isThereWan.image
+        },
         votes: response.votes
     })
 }
