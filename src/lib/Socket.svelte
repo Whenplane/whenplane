@@ -21,7 +21,7 @@
 
     webSocket.onopen = async () => {
       if(!first) {
-        if(Date.now() - lastInvalidate < 60e3) {
+        if(Date.now() - lastInvalidate > 60e3) {
           // if the websocket is reconnecting, go ahead and invalidate since it could be from a device sleep
           lastInvalidate = Date.now();
           await invalidateAll();
