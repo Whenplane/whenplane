@@ -105,7 +105,7 @@ export const GET = (async ({url, fetch, locals, platform}) => {
             const objectId = objectBinding.idFromName("a");
             const object = objectBinding.get(objectId);
 
-            platform?.context?.waitUntil(object.fetch("https://DO/sendData", {
+            platform?.context?.waitUntil(object.fetch("https://DO/sendData?event=aggregate", {
                 headers: {
                     "content-type": "application/json"
                 },
