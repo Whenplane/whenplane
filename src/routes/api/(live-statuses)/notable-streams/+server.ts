@@ -198,9 +198,14 @@ export const GET = (async ({platform, url}) => {
 function makeShortResponses(responses: Responses, url: URL): ShortResponses {
   const shortResponses: ShortResponses = {};
 
-  for (const channel in responses) {
+  for (const channel of Object.keys(people)) {
     const response = responses[channel];
     const name = people[channel];
+
+    if(!response) {
+      console.warn("Missing response for " + name);
+      continue;
+    }
 
     const isLive = response.data?.length != 0 /*|| dev*/;
 
