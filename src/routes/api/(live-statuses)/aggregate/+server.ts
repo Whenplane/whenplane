@@ -105,7 +105,13 @@ export const GET = (async ({url, fetch, locals, platform}) => {
             const objectId = objectBinding.idFromName("a");
             const object = objectBinding.get(objectId);
 
-            platform?.context?.waitUntil(object.sendData("aggregate", thisWsMessage))
+            platform?.context?.waitUntil(object.fetch("https://DO/sendData", {
+                headers: {
+                    "content-type": "application/json"
+                },
+                method: "POST",
+                body: JSON.stringify(thisWsMessage)
+            }))
         }
     }
     console.log({thisWsMessage, lastWsMessage})
