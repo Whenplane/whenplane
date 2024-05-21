@@ -33,14 +33,15 @@
 
     webSocket.onclose = (e) => {
       if(shuttingDown) return;
-      const delay = Math.min(Math.pow(2, ++reconnectAttempt) - 1, 30);
 
+      const delay = Math.min(Math.pow(2, ++reconnectAttempt) - 1, 30);
       if(delay > 2) console.debug("[whenplane:ws] WebSocket closed, reconnecting in", delay, "seconds");
 
       setTimeout(() => {
         console.debug("[whenplane:ws] Reconnecting websocket due to disconnection: ", e.code, e.reason)
         createWebSocket()
       }, delay * 1e3);
+
     }
 
     webSocket.onmessage = async (e) => {
