@@ -165,6 +165,9 @@ function makeWsMessage(response: AggregateResponse) {
           .reduce((obj: NotablePeopleResponse, key) => {
               obj[key] = response.notablePeople[key];
               return obj;
-          }, {})
+          }, {}),
+        hasDone: response.hasDone,
+        isThereWan: response.isThereWan,
+        votes: response.votes
     })
 }
