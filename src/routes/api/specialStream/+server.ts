@@ -7,19 +7,19 @@ import type { FpEndpointResponse } from "../(live-statuses)/floatplane/+server.t
 export const GET = (async ({fetch}) => {
   // In the future this will be from a database, but this will be fine for now.
 
-  const data: SpecialStream = /*{
-    title: "Test, please ignore",
-    thumbnail: "https://pbs.floatplane.com/stream_thumbnails/5c13f3c006f1be15e08e05c0/096166759055993_1715193799485.jpeg",
+  const data: SpecialStream = {
+    title: "Unknown Stream - To be announced",
+    thumbnail: "https://whenplane.com/question_marks.webp",
 
-    start: "2024-05-21T21:10:00Z",
+    start: "2024-05-22T21:00:00Z",
 
-    onFloatplane: false,
+    onFloatplane: true,
 
-    onTwitch: false,
+    onTwitch: true,
     // twitchNotes: "first half",
 
-    onYoutube: false
-  }*/ false;
+    onYoutube: true
+  };
 
   if(!data) {
     return json(data);
