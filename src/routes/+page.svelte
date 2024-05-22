@@ -188,7 +188,9 @@
 		{/if}
 		<div class="text-center">
 			{#if data.specialStream && !$page.data.isBot}
-				<SpecialStream {data}/>
+				{#key data.specialStream}
+					<SpecialStream {data}/>
+				{/key}
 			{/if}
 			<br>
 			<div class="card p-4 inline-block countdown-box text-left">
