@@ -8,7 +8,7 @@ export const GET = (async ({fetch}) => {
   // In the future this will be from a database, but this will be fine for now.
 
   const data: SpecialStream = {
-    title: "Unknown Stream - To be announced",
+    title: "Giant Screwdriver PC Building Challenge",
     thumbnail: "https://whenplane.com/question_marks.webp",
 
     start: "2024-05-22T21:00:00Z",
