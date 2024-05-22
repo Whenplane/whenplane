@@ -9,7 +9,7 @@ export const GET = (async ({fetch}) => {
 
   const data: SpecialStream = {
     title: "Giant Screwdriver PC Building Challenge",
-    thumbnail: "https://whenplane.com/question_marks.webp",
+    thumbnail: "https://pbs.floatplane.com/stream_thumbnails/5c13f3c006f1be15e08e05c0/128031488918121_1716395611847.jpeg",
 
     start: "2024-05-22T21:00:00Z",
 
