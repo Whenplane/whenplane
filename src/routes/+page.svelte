@@ -68,8 +68,8 @@
 			return;
 		}
 
-		// When using a websocket, don't do a full update more than once every 5 minutes
-		if(data.useWebSocket && Date.now() - lastInvalidation < 5 * 60e3) {
+		// When using a websocket (and is online), don't do a full update more than once every 5 minutes
+		if(data.useWebSocket && data.liveStatus && Date.now() - lastInvalidation < 5 * 60e3) {
 			return;
 		}
 
