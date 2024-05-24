@@ -141,6 +141,7 @@ export type AggregateResponse = {
 }
 
 function makeWsMessage(response: AggregateResponse) {
+    // If updating, don't forget to also update the part that reads this in the root page.ts
     return JSON.stringify({
         youtube: {
             isLive: response.youtube.isLive,

@@ -2,10 +2,8 @@ import type {PageLoad} from "./$types";
 import { browser, dev } from "$app/environment";
 import type { Latenesses } from "./api/latenesses/+server";
 import type { AggregateResponse } from "./api/(live-statuses)/aggregate/+server";
-import { nextFast } from "$lib/stores.ts";
+import { nextFast, overwriteData } from "$lib/stores.ts";
 import type { NewsPost } from "$lib/news/news.ts";
-import { page } from "$app/stores";
-import { get } from "svelte/store";
 
 let cachedLatenesses: Latenesses;
 let cachedLatenessesTime = 0 ;
@@ -91,6 +89,25 @@ export const load = (async ({fetch, params, url}) => {
         })
     }
     if(liveStatus?.floatplane && Date.now() - get(wdbSocketState).lastReceive > 300e3) floatplaneState.set(liveStatus?.floatplane)*/
+
+    if(liveStatus && overwriteData.data) {
+
+        console.debug("Before overwrite", JSON.parse(JSON.stringify(liveStatus)));
+
+        liveStatus.youtube = {...liveStatus.youtube, ...overwriteData.data.youtube};
+        liveStatus.twitch = {...liveStatus.twitch, ...overwriteData.data.twitch};
+        liveStatus.specialStream = overwriteData.data.specialStream ?? liveStatus.specialStream;
+        liveStatus.floatplane = {...liveStatus.floatplane, ...overwriteData.data.floatplane};
+        liveStatus.notablePeople = {...liveStatus.notablePeople, ...overwriteData.data.notablePeople};
+        liveStatus.hasDone = overwriteData.data.hasDone;
+        liveStatus.isThereWan = {...liveStatus.isThereWan, ...overwriteData.data.isThereWan};
+        liveStatus.votes = overwriteData.data.votes ?? liveStatus.votes;
+
+        console.debug("After overwrite", JSON.parse(JSON.stringify(liveStatus)));
+
+        overwriteData.data = undefined;
+    }
+
 
     const isPreShow = liveStatus ? (!liveStatus.youtube.isLive && (liveStatus.twitch.isWAN || (liveStatus.floatplane.isWAN && liveStatus.floatplane.isLive))) : false;
     const isMainShow = liveStatus ? (liveStatus.youtube.isWAN && liveStatus.youtube.isLive) : false;

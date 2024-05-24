@@ -2,6 +2,7 @@
   import { invalidateAll } from "$app/navigation";
   import { browser } from "$app/environment";
   import { onDestroy } from "svelte";
+  import { overwriteData } from "$lib/stores.ts";
 
   export let events: string[];
 
@@ -48,6 +49,8 @@
       const data = JSON.parse(e.data);
 
       console.debug("[whenplane:ws] Received data:", data);
+
+      overwriteData.data = data
 
       lastInvalidate = Date.now();
       await invalidateAll();
