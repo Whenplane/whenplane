@@ -166,7 +166,7 @@
     {:else}
       You are not subscribed to push notifications. Click the button below to subscribe. Once you subscribe, you will be able to customise which notifications you receive.<br>
       <br>
-      {#if Notification && Notification.permission === "denied"}
+      {#if typeof Notification !== "undefined" && Notification.permission === "denied"}
         <span class="text-red-500">
           You have specifically denied notification permissions for this site.
           You must allow notifications before enabling notifications.
@@ -175,7 +175,7 @@
         </span>
         <br>
         <br>
-      {:else if !Notification}
+      {:else if typeof Notification == "undefined"}
         <span class="text-red-500">
           Your browser does not appear to support notifications.
         </span>
