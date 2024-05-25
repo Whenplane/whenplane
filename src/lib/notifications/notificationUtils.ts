@@ -2,7 +2,7 @@ import { serviceWorker } from "$lib/stores";
 
 export async function getPushSubscription() {
   if(!serviceWorker) return null;
-  return await serviceWorker.pushManager.getSubscription();
+  return await serviceWorker?.pushManager?.getSubscription();
 }
 
 export const lang: {[key: string]: {name: string, description: string}} = {
