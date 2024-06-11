@@ -9,7 +9,7 @@ export const fallBackPlatformToMiniFlareInDev = async (_platform: App.Platform |
         log: new Log(LogLevel.INFO),
         kvPersist: './kv-data',
         kvNamespaces: ['CACHE', 'HISTORY', 'META', 'WDB_EPISODE_CACHE'],
-        d1Databases: ['DB'],
+        d1Databases: ['DB', "LTTSTORE_DB"],
         globalAsyncIO: true,
         globalTimers: true,
         globalRandom: true,
