@@ -29,8 +29,13 @@
   <br>
   <br>
   {#if typeof data.product?.purchasesPerHour === "number" && data.product?.purchasesPerHour >= 0}
-    Average of {data.product?.purchasesPerHour} sold per hour recently.
+    Average of {Math.round(data.product?.purchasesPerHour * 100)/100} sold per hour recently.
   {/if}
+  <br>
+  <br>
+  <a href="https://lttstore.com/products/{data.product?.handle}">
+    View or Buy on lttstore.com
+  </a>
 
   {#if dev}
     <br>
