@@ -17,7 +17,8 @@ export type ShopifyProduct = {
   vendor: "LTTStore",
   product_type: string,
   tags: string[],
-  images: ProductImage[]
+  images: ProductImage[],
+  featured_image?: string
   /**
    * For some reason the decimal is missing in this number, so it needs to be divided by 100
    */

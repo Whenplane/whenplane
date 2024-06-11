@@ -11,6 +11,8 @@ export const load = (async ({platform}) => {
   if(dev) {
     await db.prepare("create table if not exists products (handle text, id integer PRIMARY KEY, title text, product text, stock string, purchasesPerHour integer, regularPrice integer, currentPrice integer, firstSeen integer, available integer)")
       .run();
+    await db.prepare("create table if not exists stock_history (handle text, id integer, timestamp integer, stock string)")
+      .run();
   }
 
   const popularProducts = await db.prepare("select * from products order by purchasesPerHour DESC limit 10")
