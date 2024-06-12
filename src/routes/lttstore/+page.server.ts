@@ -27,9 +27,16 @@ export const load = (async ({platform}) => {
     .all()
     .then(r => r.results);
 
+  // hard-coded value is so that items added during the initial database seed are not counted as new. It can be removed in the future
+  const newProducts = db.prepare("select * from products where firstSeen > 1718211172431 and firstSeen > ? order by firstSeen DESC limit 10")
+    .bind(Date.now() - (6 * 24 * 60 * 60e3))
+    .all()
+    .then(r => r.results);
+
   return {
     popularProducts: await popularProducts,
     lowStock: await lowStock,
-    onSale: await onSale
+    onSale: await onSale,
+    newProducts: await newProducts
   }
 }) satisfies PageServerLoad

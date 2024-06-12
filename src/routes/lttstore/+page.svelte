@@ -15,7 +15,7 @@
 </ol>
 
 
-<div class="container mx-auto pt-8">
+<div class="container mx-auto pt-8 mb-64">
   <h1>Popular Products</h1>
   <div class="opacity-80 pl-2">
     From the past few hours
@@ -43,6 +43,16 @@
       These products are currently on sale. (excludes items that are out of stock)
     </div>
     {#each data.onSale as product}
+      <LTTProductCard product={JSON.parse(product.product)} goneIn={true} stock={JSON.parse(product.stock)} purchasesPerHour={product.purchasesPerHour}/>
+    {/each}
+  {/if}
+
+  {#if data.newProducts.length > 0}
+    <h1>New products</h1>
+    <div class="opacity-80 pl-2">
+      These products are new.
+    </div>
+    {#each data.newProducts as product}
       <LTTProductCard product={JSON.parse(product.product)} goneIn={true} stock={JSON.parse(product.stock)} purchasesPerHour={product.purchasesPerHour}/>
     {/each}
   {/if}
