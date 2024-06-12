@@ -15,9 +15,10 @@
 
   let chart;
 
-  let onlyTotal = false;
-
   const someStock = Object.keys(stockHistory).length > 1 ? JSON.parse(stockHistory[0]?.stock ?? "{}") : {};
+
+  // show only the total for items where the stock is just the default + the total
+  let onlyTotal = Object.keys(someStock).length <= 2;
 
   $: {
     onlyTotal;
@@ -129,9 +130,11 @@
 </script>
 
 <div bind:this={chartDiv}></div>
-<label>
-  <input type="checkbox" bind:checked={onlyTotal}>
-  Only show total in graph?
-</label>
+{#if Object.keys(someStock).length > 2}
+  <label>
+    <input type="checkbox" bind:checked={onlyTotal}>
+    Only show total in graph?
+  </label>
+{/if}
 <!--{JSON.stringify(stockHistory)}-->
 
