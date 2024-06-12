@@ -18,6 +18,17 @@
   <div class="inline-block title">
     {product.title}
   </div>
+  {#if product.price}
+    <br>
+    {#if !product.compare_at_price}
+      ${product.price/100}
+    {:else}
+        <span class="old-price">
+          ${product.compare_at_price/100}
+        </span>
+      ${product.price/100}
+    {/if}
+  {/if}
   {#if goneIn && stock && goneInHours < 10}
     <div class="opacity-80">
       Gone in {Math.round(goneInHours)}h
@@ -34,4 +45,10 @@
     .title {
         min-height: 3em;
     }
+
+    .old-price {
+        opacity: 70%;
+        text-decoration: line-through;
+    }
+
 </style>

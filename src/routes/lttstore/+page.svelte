@@ -36,4 +36,14 @@
       <LTTProductCard product={JSON.parse(product.product)} goneIn={true} stock={JSON.parse(product.stock)} purchasesPerHour={product.purchasesPerHour}/>
     {/each}
   {/if}
+
+  {#if data.onSale.length > 0}
+    <h1>On Sale</h1>
+    <div class="opacity-80 pl-2">
+      These products are currently on sale. (excludes items that are out of stock)
+    </div>
+    {#each data.onSale as product}
+      <LTTProductCard product={JSON.parse(product.product)} goneIn={true} stock={JSON.parse(product.stock)} purchasesPerHour={product.purchasesPerHour}/>
+    {/each}
+  {/if}
 </div>

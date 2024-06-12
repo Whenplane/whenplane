@@ -14,7 +14,7 @@ export type ShopifyProduct = {
   published_at: string,
   created_at: string,
   updated_at: string,
-  vendor: "LTTStore",
+  vendor: "LTTStore" | "Linus Tech Tips Store",
   product_type: string,
   tags: string[],
   images: ProductImage[],
@@ -95,6 +95,7 @@ export type ProductOptionCombination = {
 
 export type StockCounts = {
   [name: string]: number,
+  total?: number
 }
 
 export type CartAddErrorResponse = {
