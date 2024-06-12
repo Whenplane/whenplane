@@ -10,7 +10,7 @@ export const load = (async ({platform, params}) => {
 
   const handle = params.handle;
 
-  const product = db.prepare("select * from products where handle = ?")
+  const productPromise = db.prepare("select * from products where handle = ?")
     .bind(handle)
     .first();
 
@@ -19,12 +19,12 @@ export const load = (async ({platform, params}) => {
     .all()
     .then(r => r.results);
 
-  await product;
+  const product = await productPromise;
 
   if(product == null) throw error(404, "Product not found!");
 
   return {
-    product: await product,
+    product,
     stockHistory: await stockHistory
   }
 }) satisfies PageServerLoad

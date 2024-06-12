@@ -19,6 +19,10 @@
   <li class="crumb">{productInfo.title}</li>
 </ol>
 
+<svelte:head>
+  <title>{data.product.title} - Whenplane LTTStore Watcher</title>
+</svelte:head>
+
 <div class="container mx-auto pt-8 mb-64">
 
   <h1>{productInfo.title}</h1>
