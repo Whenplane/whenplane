@@ -13,9 +13,44 @@
     stock: string
   }[];
 
+  let chart;
+
+  let onlyTotal = false;
+
   const someStock = Object.keys(stockHistory).length > 1 ? JSON.parse(stockHistory[0]?.stock ?? "{}") : {};
 
-  console.log({someStock})
+  $: {
+    onlyTotal;
+    options.series = getSeries()
+    console.debug("Series:", options.series)
+    if(chart) chart.updateSeries(options.series)
+  }
+
+  function getSeries() {
+    if(!onlyTotal) {
+      return Object.keys(someStock).map(k => {
+        return {
+          name: k,
+          data: stockHistory.map(h => {
+            return {
+              x: h.timestamp,
+              y: JSON.parse(h.stock)[k]
+            }
+          })
+        }
+      })
+    } else {
+      return [{
+        name: "total",
+        data: stockHistory.map(h => {
+          return {
+            x: h.timestamp,
+            y: JSON.parse(h.stock)["total"]
+          }
+        })
+      }]
+    }
+  }
 
   const options = {
     chart: {
@@ -31,17 +66,7 @@
         autoSelected: 'zoom'
       }
     },
-    series: Object.keys(someStock).map(k => {
-      return {
-        name: k,
-        data: stockHistory.map(h => {
-          return {
-            x: h.timestamp,
-            y: JSON.parse(h.stock)[k]
-          }
-        })
-      }
-    }),
+    series: getSeries(),
     dataLabels: {
       enabled: false
     },
@@ -94,8 +119,6 @@
   let chartDiv: HTMLDivElement;
 
   let ApexCharts;
-
-  let chart;
   onMount(async () => {
     ApexCharts = (await import("apexcharts")).default;
     chart = new ApexCharts(chartDiv, options);
@@ -106,5 +129,9 @@
 </script>
 
 <div bind:this={chartDiv}></div>
+<label>
+  <input type="checkbox" bind:checked={onlyTotal}>
+  Only show total in graph?
+</label>
 <!--{JSON.stringify(stockHistory)}-->
 
