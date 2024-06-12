@@ -16,7 +16,8 @@ export const load = (async ({platform, params}) => {
 
   const stockHistory = db.prepare("select * from stock_history where handle = ? order by timestamp DESC limit 50")
     .bind(handle)
-    .all();
+    .all()
+    .then(r => r.results);
 
   await product;
 

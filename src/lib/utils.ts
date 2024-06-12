@@ -45,6 +45,10 @@ export function e(s: string) {
     return btoa(s);
 }
 
+export function commas(x) {
+    return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+}
+
 export type HistoricalEntry = {
     name: string,
     metadata: OldShowMeta,

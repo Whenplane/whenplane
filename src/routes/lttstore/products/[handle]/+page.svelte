@@ -2,6 +2,7 @@
   import type { ShopifyProduct } from "$lib/lttstore/lttstore_types.ts";
   import { page } from "$app/stores";
   import { dev } from "$app/environment";
+  import ProductStockHistoryGraph from "$lib/lttstore/product/ProductStockHistoryGraph.svelte";
 
   export let data;
 
@@ -36,6 +37,8 @@
   <a href="https://lttstore.com/products/{data.product?.handle}">
     View or Buy on lttstore.com
   </a>
+
+  <ProductStockHistoryGraph stockHistory={data.stockHistory}/>
 
   {#if dev}
     <br>
