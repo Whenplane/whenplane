@@ -4,6 +4,8 @@
   import { onMount } from "svelte";
   import { commas } from "$lib/utils.ts";
 
+  export let productName = undefined;
+
   export let stockHistory: {
     handle: string,
     id: number,
@@ -47,7 +49,7 @@
       size: 0,
     },
     title: {
-      text: 'Stock History',
+      text: productName ? 'Stock History - ' + productName : 'Stock History',
       align: 'left'
     },
     fill: {

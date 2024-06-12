@@ -19,7 +19,7 @@
   <li class="crumb">{productInfo.title}</li>
 </ol>
 
-<div class="container mx-auto pt-8">
+<div class="container mx-auto pt-8 mb-64">
 
   <h1>{productInfo.title}</h1>
   {#if productInfo.featured_image}
@@ -38,7 +38,13 @@
     View or Buy on lttstore.com
   </a>
 
-  <ProductStockHistoryGraph stockHistory={data.stockHistory}/>
+  <br>
+  <br>
+  <br>
+
+  <h1>Stock History</h1>
+  We check the stock of products occasionally, and here is that data for this product.
+  <ProductStockHistoryGraph stockHistory={data.stockHistory} productName={productInfo.title}/>
 
   {#if dev}
     <br>
