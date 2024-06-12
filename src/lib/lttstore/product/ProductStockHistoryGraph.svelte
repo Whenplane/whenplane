@@ -69,13 +69,19 @@
       },
     },
     xaxis: {
-      type: 'datetime',
+      type: 'datetime'
     },
     tooltip: {
       theme: "dark",
       shared: true,
       y: {
         formatter: commas
+      },
+      x: {
+        formatter: function (val: number) {
+          const date = new Date(val)
+          return date.toLocaleDateString(undefined, {dateStyle: "medium"}) + " " + date.toLocaleTimeString(undefined, {timeStyle: "short"})
+        }
       }
     },
     grid: {
