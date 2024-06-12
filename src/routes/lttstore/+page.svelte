@@ -1,8 +1,34 @@
 <script lang="ts">
   import LTTProductCard from "$lib/lttstore/LTTProductCard.svelte";
   import { page } from "$app/stores";
+  import { onMount } from "svelte";
+  import MiniSearch from "minisearch";
 
   export let data;
+
+  let miniSearch;
+
+  onMount(() => {
+    miniSearch = new MiniSearch({
+      fields: ["handle", "title"],
+      storeFields: ["handle", "title", "featured_image", "first_image"],
+      searchOptions: {
+        boost: { title: 2 },
+        fuzzy: 0.4
+      }
+    })
+
+    miniSearch.addAll(data.allProducts)
+
+    console.log(data.allProducts);
+  })
+
+
+  let searchResults = [];
+  let searchTerm = "";
+  $: if(miniSearch && searchTerm) {
+    searchResults = miniSearch.search(searchTerm);
+  } else searchResults = [];
 </script>
 <svelte:head>
   <title>LTTStore Watcher - Whenplane</title>
@@ -16,6 +42,17 @@
 
 
 <div class="container mx-auto pt-8 mb-64">
+
+  <input placeholder="Search for products" bind:value={searchTerm} class="input w-64 p-2 pl-4">
+  <br>
+  {#each searchResults as result (result.id)}
+    <a class="block card p-2 m-1" href="/lttstore/products/{result.handle}">
+      <img src={result.featured_image ?? result.first_image} class="inline-block h-8 w-8 rounded-md">
+      {result.title}<br>
+    </a>
+  {/each}
+  <br>
+
   <h1>Popular Products</h1>
   <div class="opacity-80 pl-2">
     From the past few hours

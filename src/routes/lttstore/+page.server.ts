@@ -15,6 +15,10 @@ export const load = (async ({platform}) => {
       .run();
   }
 
+  const allProducts = db.prepare("select id,handle,title,json_extract(product, '$.featured_image') as featured_image from products")
+    .all()
+    .then(r => r.results);
+
   const popularProducts = db.prepare("select * from products order by purchasesPerHour DESC limit 10")
     .all()
     .then(r => r.results);
@@ -34,6 +38,7 @@ export const load = (async ({platform}) => {
     .then(r => r.results);
 
   return {
+    allProducts: await allProducts,
     popularProducts: await popularProducts,
     lowStock: await lowStock,
     onSale: await onSale,
