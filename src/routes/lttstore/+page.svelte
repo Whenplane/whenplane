@@ -53,6 +53,19 @@
   {/each}
   <br>
 
+
+  {#if data.newProducts.length > 0}
+    <h1>New products</h1>
+    <div class="opacity-80 pl-2">
+      These products are new.
+    </div>
+    {#each data.newProducts as product}
+      <LTTProductCard product={JSON.parse(product.product)} goneIn={true} stock={JSON.parse(product.stock)} purchasesPerHour={product.purchasesPerHour}/>
+    {/each}
+    <br>
+    <br>
+  {/if}
+
   <h1>Popular Products</h1>
   <div class="opacity-80 pl-2">
     From the past few hours
@@ -64,15 +77,6 @@
   {/each}
   <br>
   <br>
-  {#if data.lowStock.length > 0}
-    <h1>Low Stock</h1>
-    <div class="opacity-80 pl-2">
-      Could be gone soon!
-    </div>
-    {#each data.lowStock as product}
-      <LTTProductCard product={JSON.parse(product.product)} goneIn={true} stock={JSON.parse(product.stock)} purchasesPerHour={product.purchasesPerHour}/>
-    {/each}
-  {/if}
 
   {#if data.onSale.length > 0}
     <h1>On Sale</h1>
@@ -82,15 +86,19 @@
     {#each data.onSale as product}
       <LTTProductCard product={JSON.parse(product.product)} goneIn={true} stock={JSON.parse(product.stock)} purchasesPerHour={product.purchasesPerHour}/>
     {/each}
+    <br>
+    <br>
   {/if}
 
-  {#if data.newProducts.length > 0}
-    <h1>New products</h1>
+  {#if data.lowStock.length > 0}
+    <h1>Low Stock</h1>
     <div class="opacity-80 pl-2">
-      These products are new.
+      Could be gone soon!
     </div>
-    {#each data.newProducts as product}
+    {#each data.lowStock as product}
       <LTTProductCard product={JSON.parse(product.product)} goneIn={true} stock={JSON.parse(product.stock)} purchasesPerHour={product.purchasesPerHour}/>
     {/each}
+    <br>
+    <br>
   {/if}
 </div>
