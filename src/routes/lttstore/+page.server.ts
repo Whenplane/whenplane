@@ -19,7 +19,7 @@ export const load = (async ({platform}) => {
     .all()
     .then(r => r.results);
 
-  const popularProducts = db.prepare("select * from products order by purchasesPerHour DESC limit 10")
+  const popularProducts = db.prepare("select * from products order by purchasesPerHour DESC limit 11")
     .all()
     .then(r => r.results);
 
