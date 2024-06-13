@@ -59,9 +59,11 @@
 
   Currently there is a total of {commas(currentStock.total)} of this item in stock.
   <br>
-  <small class="opacity-80">
-    Last checked <DateStamp epochSeconds={data.product.stockChecked / 1e3}/>
-  </small>
+  {#if data.product.stockChecked !== -1}
+    <small class="opacity-80">
+      Last checked <DateStamp epochSeconds={data.product.stockChecked / 1e3}/>
+    </small>
+  {/if}
   <br>
   <br>
 
