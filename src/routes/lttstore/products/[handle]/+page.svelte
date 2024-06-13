@@ -44,7 +44,7 @@
   {/if}
   <br>
   <br>
-  {#if typeof data.product?.purchasesPerHour === "number" && data.product?.purchasesPerHour >= 0}
+  {#if typeof data.product?.purchasesPerHour === "number" && data.product?.purchasesPerHour >= 0 && !(data.product?.purchasesPerHour === 0 && (currentStock.total ?? -1) < 0)}
     Average of {Math.round(data.product?.purchasesPerHour * 100)/100} sold per hour recently.
   {/if}
   <br>
@@ -62,12 +62,14 @@
   <br>
   <br>
 
-  Currently there is a total of {commas(currentStock.total)} of this item in stock.
-  <br>
-  {#if data.product.stockChecked !== -1}
-    <small class="opacity-80">
-      Last checked <DateStamp epochSeconds={data.product.stockChecked / 1e3}/>
-    </small>
+  {#if (currentStock.total ?? -1) >= 0}
+    Currently there is a total of {commas(currentStock.total)} of this item in stock.
+    <br>
+    {#if data.product.stockChecked !== -1}
+      <small class="opacity-80">
+        Last checked <DateStamp epochSeconds={data.product.stockChecked / 1e3}/>
+      </small>
+    {/if}
   {/if}
   <br>
   <br>
