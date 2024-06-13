@@ -27,7 +27,7 @@ export const load = (async ({platform}) => {
     .all()
     .then(r => r.results);
 
-  const onSale = db.prepare("select * from products where currentPrice != regularPrice and json_extract(stock, '$.total') > 0 and handle not like '%bundle%' and title not like '%bundle%' order by currentPrice ASC limit 10")
+  const onSale = db.prepare("select * from products where currentPrice < regularPrice and json_extract(stock, '$.total') > 0 and handle not like '%bundle%' and title not like '%bundle%' order by currentPrice ASC limit 10")
     .all()
     .then(r => r.results);
 
