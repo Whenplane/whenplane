@@ -11,7 +11,7 @@
   onMount(() => {
     miniSearch = new MiniSearch({
       fields: ["handle", "title"],
-      storeFields: ["handle", "title", "featured_image", "first_image"],
+      storeFields: ["handle", "title", "featured_image", "first_image", "available"],
       searchOptions: {
         boost: { title: 2 },
         fuzzy: 0.4
@@ -48,7 +48,10 @@
   {#each searchResults as result (result.id)}
     <a class="block card p-2 m-1" href="/lttstore/products/{result.handle}">
       <img src={result.featured_image ?? result.first_image} class="inline-block h-8 w-8 rounded-md">
-      {result.title}<br>
+      <span class:line-through={!(result.available ?? true)}>
+        {result.title}
+      </span>
+      <br>
     </a>
   {/each}
   <br>
@@ -60,7 +63,7 @@
       These products are new.
     </div>
     {#each data.newProducts as product}
-      <LTTProductCard product={JSON.parse(product.product)} goneIn={true} stock={JSON.parse(product.stock)} purchasesPerHour={product.purchasesPerHour}/>
+      <LTTProductCard product={JSON.parse(product.product)} goneIn={true} stock={JSON.parse(product.stock)} purchasesPerHour={product.purchasesPerHour} available={product.available}/>
     {/each}
     <br>
     <br>
@@ -84,7 +87,7 @@
       These products are currently on sale. (excludes items that are out of stock)
     </div>
     {#each data.onSale as product}
-      <LTTProductCard product={JSON.parse(product.product)} goneIn={true} stock={JSON.parse(product.stock)} purchasesPerHour={product.purchasesPerHour}/>
+      <LTTProductCard product={JSON.parse(product.product)} goneIn={true} stock={JSON.parse(product.stock)} purchasesPerHour={product.purchasesPerHour} available={product.available}/>
     {/each}
     <br>
     <br>
@@ -96,7 +99,7 @@
       Could be gone soon!
     </div>
     {#each data.lowStock as product}
-      <LTTProductCard product={JSON.parse(product.product)} goneIn={true} stock={JSON.parse(product.stock)} purchasesPerHour={product.purchasesPerHour}/>
+      <LTTProductCard product={JSON.parse(product.product)} goneIn={true} stock={JSON.parse(product.stock)} purchasesPerHour={product.purchasesPerHour} available={product.available}/>
     {/each}
     <br>
     <br>

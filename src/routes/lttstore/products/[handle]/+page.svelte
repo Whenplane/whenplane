@@ -28,7 +28,7 @@
 
 <div class="container mx-auto pt-8 mb-64">
 
-  <h1>{productInfo.title}</h1>
+  <h1 class:line-through={!data.product.available}>{productInfo.title}</h1>
   {#if productInfo.featured_image}
     <img src={productInfo.featured_image} class="product-image" alt={productInfo.title}/>
   {:else}
@@ -49,9 +49,14 @@
   {/if}
   <br>
   <br>
-  <a href="https://lttstore.com/products/{data.product?.handle}">
+  <a href="https://lttstore.com/products/{data.product?.handle}" class:!line-through={!data.product.available}>
     View or Buy on lttstore.com
   </a>
+  {#if !data.product.available}
+    <br>
+    This product appears to no longer be on lttstore.com.<br>
+    Usually this happens when a product is retired and will not be coming back.
+  {/if}
 
   <br>
   <br>

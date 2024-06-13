@@ -5,8 +5,9 @@
   export let stock: StockCounts;
   export let purchasesPerHour: number;
   export let goneIn = false;
+  export let available = true;
 
-  $: goneInHours = stock?.total / purchasesPerHour;
+  $: goneInHours = (stock?.total ?? -1) / purchasesPerHour;
 </script>
 
 <a class="card inline-block p-2 m-1 w-48 align-top h-full" href="/lttstore/products/{product.handle}">
@@ -15,7 +16,7 @@
   {:else}
     No featured image
   {/if}
-  <div class="inline-block title">
+  <div class="inline-block title" class:line-through={!available}>
     {product.title}
   </div>
   {#if product.price}
