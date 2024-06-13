@@ -1,12 +1,15 @@
 <script lang="ts">
-  import type { ShopifyProduct } from "$lib/lttstore/lttstore_types.ts";
+  import type { ShopifyProduct, StockCounts } from "$lib/lttstore/lttstore_types.ts";
   import { page } from "$app/stores";
   import { dev } from "$app/environment";
   import ProductStockHistoryGraph from "$lib/lttstore/product/ProductStockHistoryGraph.svelte";
+  import DateStamp from "$lib/DateStamp.svelte";
+  import { commas } from "$lib/utils.ts";
 
   export let data;
 
   $: productInfo = JSON.parse(data.product.product as string) as ShopifyProduct
+  $: currentStock = JSON.parse(data.product.stock as string) as StockCounts
 </script>
 
 <ol class="breadcrumb pt-2 pl-2">
@@ -31,6 +34,14 @@
   {:else}
     No featured image
   {/if}
+  {#if !productInfo.compare_at_price && typeof productInfo.price === "number"}
+    ${productInfo.price/100}
+  {:else if typeof productInfo.price === "number" && productInfo.compare_at_price}
+        <span class="old-price">
+          ${productInfo.compare_at_price/100}
+        </span>
+    ${productInfo.price/100}
+  {/if}
   <br>
   <br>
   {#if typeof data.product?.purchasesPerHour === "number" && data.product?.purchasesPerHour >= 0}
@@ -46,8 +57,16 @@
   <br>
   <br>
 
+  Currently there is a total of {commas(currentStock.total)} of this item in stock.
+  <br>
+  <small class="opacity-80">
+    Last checked <DateStamp epochSeconds={data.product.stockChecked / 1e3}/>
+  </small>
+  <br>
+  <br>
+
   <h1>Stock History</h1>
-  We check the stock of products occasionally, and here is that data for this product.
+  We check the stock of products occasionally. Here is the history of those stock numbers (the latest 50 datapoints are shown)
   <ProductStockHistoryGraph stockHistory={data.stockHistory} productName={productInfo.title}/>
 
   {#if dev}
@@ -65,5 +84,10 @@
   .product-image {
       max-width: 12em;
       border-radius: 12px;
+  }
+
+  .old-price {
+      opacity: 70%;
+      text-decoration: line-through;
   }
 </style>

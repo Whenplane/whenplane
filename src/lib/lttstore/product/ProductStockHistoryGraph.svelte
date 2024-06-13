@@ -1,10 +1,9 @@
 <script lang="ts">
-  import type { StockCounts } from "$lib/lttstore/lttstore_types.ts";
   import { browser } from "$app/environment";
   import { onMount } from "svelte";
   import { commas } from "$lib/utils.ts";
 
-  export let productName = undefined;
+  export let productName: string | undefined = undefined;
 
   export let stockHistory: {
     handle: string,
@@ -125,7 +124,7 @@
     chart = new ApexCharts(chartDiv, options);
     chart.render()
 
-    console.log({options})
+    // console.log({options})
   })
 </script>
 

@@ -2,6 +2,7 @@ import { error } from "@sveltejs/kit";
 import type { PageServerLoad } from "./$types";
 import type { D1Database } from "@cloudflare/workers-types";
 import { dev } from "$app/environment";
+import type { ProductsTableRow, StockHistoryTableRow } from "$lib/lttstore/lttstore_types.ts";
 
 
 export const load = (async ({platform, params}) => {
@@ -12,11 +13,11 @@ export const load = (async ({platform, params}) => {
 
   const productPromise = db.prepare("select * from products where handle = ?")
     .bind(handle)
-    .first();
+    .first<ProductsTableRow>();
 
   const stockHistory = db.prepare("select * from stock_history where handle = ? order by timestamp DESC limit 50")
     .bind(handle)
-    .all()
+    .all<StockHistoryTableRow>()
     .then(r => r.results);
 
   const product = await productPromise;

@@ -103,3 +103,25 @@ export type CartAddErrorResponse = {
   message: string,
   description: string
 }
+
+
+export type ProductsTableRow = {
+  handle: string,
+  id: number,
+  title: string,
+  product: string,
+  stock: string,
+  stockChecked: number,
+  purchasesPerHour: number,
+  regularPrice: number,
+  currentPrice: number,
+  firstSeen: number,
+  available: boolean
+}
+
+export type StockHistoryTableRow = {
+  handle: string,
+  id: number,
+  timestamp: number,
+  stock: string
+}
