@@ -49,7 +49,7 @@
   <input placeholder="Search for products" bind:value={searchTerm} class="input w-64 p-2 pl-4">
   <br>
   {#each searchResults as result (result.id)}
-    <a class="block card p-2 m-1" href="/lttstore/products/{result.handle}" animate:flip={{ duration: 200 }} out:slide>
+    <a class="block card p-2 m-1" href="/lttstore/products/{result.handle}" animate:flip={{ duration: 200 }} transition:slide|local>
       <img src={result.featured_image ?? result.first_image} class="inline-block h-8 w-8 rounded-md">
       <span class:line-through={!(result.available ?? true)}>
         {result.title}
