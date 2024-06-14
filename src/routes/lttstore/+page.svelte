@@ -104,4 +104,16 @@
     <br>
     <br>
   {/if}
+
+  {#if data.recentRestocks.length > 0}
+    <h1>Recently Re-stocked</h1>
+    <div class="opacity-80 pl-2">
+      These items have been restocked in the past 6 days.
+    </div>
+    {#each data.recentRestocks as product}
+      <LTTProductCard product={JSON.parse(product.product)} purchasesPerHour={product.purchasesPerHour} available={product.available}/>
+    {/each}
+    <br>
+    <br>
+  {/if}
 </div>

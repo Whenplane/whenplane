@@ -2,12 +2,12 @@
   import type { ShopifyProduct, StockCounts } from "$lib/lttstore/lttstore_types.ts";
 
   export let product: ShopifyProduct;
-  export let stock: StockCounts;
-  export let purchasesPerHour: number;
+  export let stock: StockCounts | undefined = undefined;
+  export let purchasesPerHour: number | undefined = undefined;
   export let goneIn = false;
   export let available = true;
 
-  $: goneInHours = (stock?.total ?? -1) / purchasesPerHour;
+  $: goneInHours = (stock?.total ?? -1) / (purchasesPerHour ?? -1);
 </script>
 
 <a class="card inline-block p-2 m-1 w-48 align-top h-full" href="/lttstore/products/{product.handle}">
@@ -32,7 +32,7 @@
   {/if}
   {#if goneIn && stock && goneInHours < 10}
     <div class="opacity-80">
-      Gone in {Math.round(goneInHours)}h
+      Could be gone in {Math.round(goneInHours)}h
     </div>
   {/if}
 </a>

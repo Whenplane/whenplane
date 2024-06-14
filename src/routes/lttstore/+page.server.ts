@@ -38,11 +38,17 @@ export const load = (async ({platform}) => {
     .all<ProductsTableRow>()
     .then(r => r.results);
 
+  const recentRestocks = db.prepare("select * from products where lastRestock > ? order by lastRestock DESC limit 30")
+    .bind(Date.now() - (6 * 24 * 60 * 60e3))
+    .all<ProductsTableRow>()
+    .then(r => r.results);
+
   return {
     allProducts: await allProducts,
     popularProducts: await popularProducts,
     lowStock: await lowStock,
     onSale: await onSale,
-    newProducts: await newProducts
+    newProducts: await newProducts,
+    recentRestocks: await recentRestocks
   }
 }) satisfies PageServerLoad
