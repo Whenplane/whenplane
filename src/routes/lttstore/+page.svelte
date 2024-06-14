@@ -96,7 +96,7 @@
   {#if data.lowStock.length > 0}
     <h1>Low Stock</h1>
     <div class="opacity-80 pl-2">
-      Could be gone soon!
+      These items are low in stock and selling fast enough to possibly run out of stock soon.
     </div>
     {#each data.lowStock as product}
       <LTTProductCard product={JSON.parse(product.product)} goneIn={true} stock={JSON.parse(product.stock)} purchasesPerHour={product.purchasesPerHour} available={product.available}/>
