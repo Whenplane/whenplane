@@ -3,6 +3,9 @@
   import { page } from "$app/stores";
   import { onMount } from "svelte";
   import MiniSearch from "minisearch";
+  import {flip} from "svelte/animate";
+  import {slide} from "svelte/transition";
+  import { invalidateAll } from "$app/navigation";
 
   export let data;
 
@@ -37,7 +40,7 @@
 <ol class="breadcrumb pt-2 pl-2">
   <li class="crumb"><a class="anchor hover-underline" href="/">{$page.url.hostname === "whenwan.show" ? "whenwan.show" : "Whenplane"}</a></li>
   <li class="crumb-separator" aria-hidden="true">&rsaquo;</li>
-  <li class="crumb">LTT Store Tracker</li>
+  <li class="crumb" on:click={invalidateAll}>LTT Store Tracker</li>
 </ol>
 
 
@@ -46,7 +49,7 @@
   <input placeholder="Search for products" bind:value={searchTerm} class="input w-64 p-2 pl-4">
   <br>
   {#each searchResults as result (result.id)}
-    <a class="block card p-2 m-1" href="/lttstore/products/{result.handle}">
+    <a class="block card p-2 m-1" href="/lttstore/products/{result.handle}" animate:flip={{ duration: 200 }} out:slide>
       <img src={result.featured_image ?? result.first_image} class="inline-block h-8 w-8 rounded-md">
       <span class:line-through={!(result.available ?? true)}>
         {result.title}
@@ -73,8 +76,10 @@
   <div class="opacity-80 pl-2">
     From the past few hours
   </div>
-  {#each data.popularProducts as product}
-    <LTTProductCard product={JSON.parse(product.product)}/>
+  {#each data.popularProducts as product (product.id)}
+    <div class="inline-block" animate:flip={{ duration: 200 }}>
+      <LTTProductCard product={JSON.parse(product.product)}/>
+    </div>
   {:else}
     No products are being tracked yet!
   {/each}
