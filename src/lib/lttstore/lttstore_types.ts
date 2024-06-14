@@ -112,6 +112,7 @@ export type ProductsTableRow = {
   product: string,
   stock: string,
   stockChecked: number,
+  lastRestock: number,
   purchasesPerHour: number,
   regularPrice: number,
   currentPrice: number,

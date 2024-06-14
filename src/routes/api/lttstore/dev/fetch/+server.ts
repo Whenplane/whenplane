@@ -1,6 +1,7 @@
 import { error, json, type RequestHandler } from "@sveltejs/kit";
 import type { D1Database } from "@cloudflare/workers-types";
 import { dev } from "$app/environment";
+import type { ProductsTableRow, StockHistoryTableRow } from "$lib/lttstore/lttstore_types.ts";
 
 
 export const GET = (async ({platform, params}) => {
@@ -11,32 +12,15 @@ export const GET = (async ({platform, params}) => {
   if(!db) throw error(503, "DB unavailable!");
 
   const data: {
-    products: {
-      handle: string,
-      id: number,
-      title: string,
-      product: string,
-      stock: string,
-      stockChecked: number,
-      purchasesPerHour: number,
-      regularPrice: number,
-      currentPrice: number,
-      firstSeen: number,
-      available: number
-    }[],
-    screwdriverStocks: {
-      handle: string,
-      id: number,
-      timestamp: number,
-      stock: string
-    }[]
+    products: ProductsTableRow[],
+    screwdriverStocks: StockHistoryTableRow[]
   } = await fetch("https://whenplane.com/api/lttstore/devData")
     .then(res => res.json());
 
   let i = 0;
   for (const product of data.products) {
     console.log("Inserting (" + ++i + "/" + data.products.length + ") " + product.title);
-    await db.prepare("insert or replace into products(handle, id, title, product, stock, stockChecked, purchasesPerHour, regularPrice, currentPrice, firstSeen, available) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)")
+    await db.prepare("insert or replace into products(handle, id, title, product, stock, stockChecked, lastRestock, purchasesPerHour, regularPrice, currentPrice, firstSeen, available) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)")
       .bind(
         product.handle,
         product.id,
@@ -44,6 +28,7 @@ export const GET = (async ({platform, params}) => {
         product.product,
         product.stock,
         product.stockChecked,
+        product.lastRestock,
         product.purchasesPerHour,
         product.regularPrice,
         product.currentPrice,

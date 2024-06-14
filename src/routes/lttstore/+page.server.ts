@@ -10,7 +10,7 @@ export const load = (async ({platform}) => {
   if(!db) throw error(503, "DB unavailable!");
 
   if(dev) {
-    await db.prepare("create table if not exists products (handle text, id integer PRIMARY KEY, title text, product text, stock string, stockChecked integer, purchasesPerHour integer, regularPrice integer, currentPrice integer, firstSeen integer, available integer)")
+    await db.prepare("create table if not exists products (handle text, id integer PRIMARY KEY, title text, product text, stock string, stockChecked integer, lastRestock integer, purchasesPerHour integer, regularPrice integer, currentPrice integer, firstSeen integer, available integer)")
       .run();
     await db.prepare("create table if not exists stock_history (handle text, id integer, timestamp integer, stock string)")
       .run();
