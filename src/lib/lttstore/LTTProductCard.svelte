@@ -10,7 +10,7 @@
   $: goneInHours = (stock?.total ?? -1) / (purchasesPerHour ?? -1);
 </script>
 
-<a class="card inline-block p-2 m-1 w-48 align-top h-full" href="/lttstore/products/{product.handle}">
+<a class="card inline-block p-2 m-1 w-48 align-top h-full" href="/lttstore/products/{product.handle}" class:opacity-50={!available}>
   {#if product.featured_image}
     <img src={product.featured_image} class="product-image rounded-xl h-47" alt={product.title}/>
   {:else}

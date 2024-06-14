@@ -1,0 +1,27 @@
+<script lang="ts">
+
+  import LTTProductCard from "$lib/lttstore/LTTProductCard.svelte";
+  import { page } from "$app/stores";
+
+  export let data;
+</script>
+
+<ol class="breadcrumb pt-2 pl-2">
+  <li class="crumb"><a class="anchor hover-underline" href="/">{$page.url.hostname === "whenwan.show" ? "whenwan.show" : "Whenplane"}</a></li>
+  <li class="crumb-separator" aria-hidden="true">&rsaquo;</li>
+  <li class="crumb"><a class="anchor hover-underline" href="/lttstore">LTT Store Tracker</a></li>
+  <li class="crumb-separator" aria-hidden="true">&rsaquo;</li>
+  <li class="crumb">Products</li>
+</ol>
+
+<div class="container mx-auto pt-8 mb-64">
+  <h1>All Products</h1>
+  <div class="opacity-80 pl-2">
+    Sorted by average sales per hour.
+  </div>
+  {#each data.allProducts as product}
+    <LTTProductCard product={JSON.parse(product.product)} available={product.available}/>
+  {:else}
+    No products are being tracked yet!
+  {/each}
+</div>

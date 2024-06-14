@@ -19,7 +19,7 @@
   <li class="crumb-separator" aria-hidden="true">&rsaquo;</li>
   <li class="crumb"><a class="anchor hover-underline" href="/lttstore">LTT Store Tracker</a></li>
   <li class="crumb-separator" aria-hidden="true">&rsaquo;</li>
-  <li class="crumb"><a class="anchor hover-underline" href="/lttstore">Products</a></li>
+  <li class="crumb"><a class="anchor hover-underline" href="/lttstore/products">Products</a></li>
   <li class="crumb-separator" aria-hidden="true">&rsaquo;</li>
   <li class="crumb">{productInfo.title}</li>
 </ol>
