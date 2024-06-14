@@ -112,7 +112,7 @@
       {#if Date.now() > 1718945975963}
         in the past 6 days.
       {:else}
-        recently <!-- if we dont have 6 days of data yet, dont say 6 days -->
+        recently. <!-- if we dont have 6 days of data yet, dont say 6 days -->
       {/if}
     </div>
     {#each data.recentRestocks as product}
