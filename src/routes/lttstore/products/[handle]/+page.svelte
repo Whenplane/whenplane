@@ -10,6 +10,8 @@
 
   $: productInfo = JSON.parse(data.product.product as string) as ShopifyProduct
   $: currentStock = JSON.parse(data.product.stock as string) as StockCounts
+
+  $: strippedTitle = productInfo.title.replace(/\(.*\)/g, "").replace("Knife", "Knive").trim()
 </script>
 
 <ol class="breadcrumb pt-2 pl-2">
@@ -63,7 +65,14 @@
   <br>
 
   {#if (currentStock.total ?? -1) >= 0}
-    Currently there is a total of {commas(currentStock.total)} of this item in stock.
+    {#if data.product.available}
+      Currently there is
+    {:else}
+      Before this product was removed, there was
+    {/if}
+    a total of {commas(currentStock.total)}
+    {strippedTitle}{currentStock.total === 1 || strippedTitle.endsWith("s") ? "" : "s"}
+    in stock.
     <br>
     {#if data.product.stockChecked !== -1}
       <small class="opacity-80">
