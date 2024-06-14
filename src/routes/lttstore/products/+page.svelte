@@ -2,6 +2,8 @@
 
   import LTTProductCard from "$lib/lttstore/LTTProductCard.svelte";
   import { page } from "$app/stores";
+  import {flip} from "svelte/animate";
+  import { invalidateAll } from "$app/navigation";
 
   export let data;
 </script>
@@ -11,7 +13,7 @@
   <li class="crumb-separator" aria-hidden="true">&rsaquo;</li>
   <li class="crumb"><a class="anchor hover-underline" href="/lttstore">LTT Store Tracker</a></li>
   <li class="crumb-separator" aria-hidden="true">&rsaquo;</li>
-  <li class="crumb">Products</li>
+  <li class="crumb" on:click={invalidateAll}>Products</li>
 </ol>
 
 <div class="container mx-auto pt-8 mb-64">
@@ -19,8 +21,10 @@
   <div class="opacity-80 pl-2">
     Sorted by average sales per hour.
   </div>
-  {#each data.allProducts as product}
-    <LTTProductCard product={JSON.parse(product.product)} available={product.available}/>
+  {#each data.allProducts as product (product.id)}
+    <div class="inline-block" animate:flip={{ duration: 200 }}>
+      <LTTProductCard product={JSON.parse(product.product)} available={product.available}/>
+    </div>
   {:else}
     No products are being tracked yet!
   {/each}
