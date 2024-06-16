@@ -3,9 +3,18 @@
   import LTTProductCard from "$lib/lttstore/LTTProductCard.svelte";
   import { page } from "$app/stores";
   import {flip} from "svelte/animate";
+  import { fade } from "svelte/transition"
   import { invalidateAll } from "$app/navigation";
+  import {ProgressRadial} from "@skeletonlabs/skeleton";
 
   export let data;
+
+  let loading = false;
+  async function reload() {
+    loading = true;
+    await invalidateAll()
+    loading = false;
+  }
 </script>
 
 <svelte:head>
@@ -17,7 +26,12 @@
   <li class="crumb-separator" aria-hidden="true">&rsaquo;</li>
   <li class="crumb"><a class="anchor hover-underline" href="/lttstore">LTT Store Tracker</a></li>
   <li class="crumb-separator" aria-hidden="true">&rsaquo;</li>
-  <li class="crumb" on:click={invalidateAll}>Products</li>
+  <li class="crumb" on:click={reload}>Products</li>
+  {#if loading}
+    <li class="crumb" transition:fade={{duration: 100}}>
+      <ProgressRadial width="w-6" stroke={250} value={loading ? undefined : 100}/>
+    </li>
+  {/if}
 </ol>
 
 <div class="container mx-auto pt-8 mb-64">

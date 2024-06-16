@@ -4,7 +4,8 @@
   import { onMount } from "svelte";
   import MiniSearch from "minisearch";
   import {flip} from "svelte/animate";
-  import {slide} from "svelte/transition";
+  import {slide, fade} from "svelte/transition";
+  import {ProgressRadial} from "@skeletonlabs/skeleton";
   import { invalidateAll } from "$app/navigation";
 
   export let data;
@@ -32,6 +33,14 @@
   $: if(miniSearch && searchTerm) {
     searchResults = miniSearch.search(searchTerm);
   } else searchResults = [];
+
+
+  let loading = false;
+  async function reload() {
+    loading = true;
+    await invalidateAll()
+    loading = false;
+  }
 </script>
 <svelte:head>
   <title>LTTStore Watcher - Whenplane</title>
@@ -40,7 +49,12 @@
 <ol class="breadcrumb pt-2 pl-2">
   <li class="crumb"><a class="anchor hover-underline" href="/">{$page.url.hostname === "whenwan.show" ? "whenwan.show" : "Whenplane"}</a></li>
   <li class="crumb-separator" aria-hidden="true">&rsaquo;</li>
-  <li class="crumb" on:click={invalidateAll}>LTT Store Tracker</li>
+  <li class="crumb" on:click={reload}>LTT Store Tracker</li>
+  {#if loading}
+    <li class="crumb" transition:fade={{duration: 100}}>
+      <ProgressRadial width="w-6" stroke={250} value={loading ? undefined : 100}/>
+    </li>
+  {/if}
 </ol>
 
 
