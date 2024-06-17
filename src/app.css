@@ -26,6 +26,10 @@ h1:not(.no-header-margin), h2:not(.no-header-margin), h3:not(.no-header-margin) 
     height: 11rem;
 }
 
+.max-w-64 {
+    max-width: 16rem;
+}
+
 .clear {
     color: rgba(0, 0, 0, 0);
 }

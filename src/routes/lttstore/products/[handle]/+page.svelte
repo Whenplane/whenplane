@@ -5,6 +5,9 @@
   import ProductStockHistoryGraph from "$lib/lttstore/product/ProductStockHistoryGraph.svelte";
   import DateStamp from "$lib/DateStamp.svelte";
   import { commas } from "$lib/utils.ts";
+  import { Accordion, AccordionItem } from "@skeletonlabs/skeleton";
+  import sanitizeHtml from "sanitize-html";
+  import { newsSanitizeSettings } from "$lib/news/news.js";
 
   export let data;
 
@@ -60,6 +63,21 @@
     Usually this happens when a product is retired and will not be coming back.
   {/if}
 
+  {#if productInfo.description}
+    <div class="max-w-xl my-4">
+      <Accordion class="mx-4" spacing="" regionPanel="">
+        <AccordionItem open={dev}>
+          <svelte:fragment slot="summary">Item Description</svelte:fragment>
+          <svelte:fragment slot="content">
+            <div class="item-description">
+              {@html sanitizeHtml(productInfo.description, newsSanitizeSettings)}
+            </div>
+          </svelte:fragment>
+        </AccordionItem>
+      </Accordion>
+    </div>
+  {/if}
+
   <br>
   <br>
   <br>
@@ -107,5 +125,9 @@
   .old-price {
       opacity: 70%;
       text-decoration: line-through;
+  }
+
+  .item-description :global(p) {
+      margin-bottom: 1em;
   }
 </style>

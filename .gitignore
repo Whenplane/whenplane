@@ -12,3 +12,4 @@ vite.config.ts.timestamp-*
 /static/time-extracting
 /time-extracting
 /eng.traineddata
+.mf

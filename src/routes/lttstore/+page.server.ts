@@ -9,12 +9,7 @@ export const load = (async ({platform}) => {
   const db: D1Database | undefined = platform?.env?.LTTSTORE_DB;
   if(!db) throw error(503, "DB unavailable!");
 
-  if(dev) {
-    await db.prepare("create table if not exists products (handle text, id integer PRIMARY KEY, title text, product text, stock string, stockChecked integer, lastRestock integer, purchasesPerHour integer, regularPrice integer, currentPrice integer, firstSeen integer, available integer)")
-      .run();
-    await db.prepare("create table if not exists stock_history (handle text, id integer, timestamp integer, stock string)")
-      .run();
-  }
+  if(dev) await createTables(db)
 
   const allProducts = db.prepare("select id,handle,title,json_extract(product, '$.featured_image') as featured_image, available from products")
     .all<ProductsTableRow>()
@@ -52,3 +47,10 @@ export const load = (async ({platform}) => {
     recentRestocks: await recentRestocks
   }
 }) satisfies PageServerLoad
+
+export async function createTables(db: D1Database) {
+  await db.prepare("create table if not exists products (handle text, id integer PRIMARY KEY, title text, product text, stock string, stockChecked integer, lastRestock integer, purchasesPerHour integer, regularPrice integer, currentPrice integer, firstSeen integer, available integer)")
+    .run();
+  await db.prepare("create table if not exists stock_history (handle text, id integer, timestamp integer, stock string)")
+    .run();
+}
