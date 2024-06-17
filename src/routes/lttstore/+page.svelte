@@ -140,4 +140,8 @@
     <br>
     <br>
   {/if}
+
+  <br>
+  <br>
+  <a href="/lttstore/products" class="btn variant-filled-secondary">All products</a>
 </div>
