@@ -33,8 +33,8 @@ dependencies:
     specifier: ^0.2.0
     version: 0.2.0
   sanitize-html:
-    specifier: ^2.11.0
-    version: 2.11.0
+    specifier: ^2.12.1
+    version: 2.13.0
   socket.io-client:
     specifier: ^4.7.2
     version: 4.7.2
@@ -2919,8 +2919,8 @@ packages:
       rimraf: 2.7.1
     dev: true
 
-  /sanitize-html@2.11.0:
-    resolution: {integrity: sha512-BG68EDHRaGKqlsNjJ2xUB7gpInPA8gVx/mvjO743hZaeMCZ2DwzW7xvsqZ+KNU4QKwj86HJ3uu2liISf2qBBUA==}
+  /sanitize-html@2.13.0:
+    resolution: {integrity: sha512-Xff91Z+4Mz5QiNSLdLWwjgBDm5b1RU6xBT0+12rapjiaR7SwfRdjw8f+6Rir2MXKLrDicRFHdb51hGOAxmsUIA==}
     dependencies:
       deepmerge: 4.3.1
       escape-string-regexp: 4.0.0

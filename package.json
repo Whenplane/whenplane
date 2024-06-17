@@ -63,7 +63,7 @@
 		"luxon": "^3.3.0",
 		"minisearch": "^6.3.0",
 		"nprogress": "^0.2.0",
-		"sanitize-html": "^2.11.0",
+		"sanitize-html": "^2.12.1",
 		"socket.io-client": "^4.7.2"
 	}
 }
