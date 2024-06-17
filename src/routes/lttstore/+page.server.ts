@@ -3,6 +3,7 @@ import type { PageServerLoad } from "./$types";
 import type { D1Database } from "@cloudflare/workers-types";
 import { dev } from "$app/environment";
 import type { ProductsTableRow } from "$lib/lttstore/lttstore_types.ts";
+import { createTables } from "./createTables.ts";
 
 
 export const load = (async ({platform}) => {
@@ -48,9 +49,3 @@ export const load = (async ({platform}) => {
   }
 }) satisfies PageServerLoad
 
-export async function createTables(db: D1Database) {
-  await db.prepare("create table if not exists products (handle text, id integer PRIMARY KEY, title text, product text, stock string, stockChecked integer, lastRestock integer, purchasesPerHour integer, regularPrice integer, currentPrice integer, firstSeen integer, available integer)")
-    .run();
-  await db.prepare("create table if not exists stock_history (handle text, id integer, timestamp integer, stock string)")
-    .run();
-}

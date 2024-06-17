@@ -3,7 +3,8 @@ import type { PageServerLoad } from "./$types";
 import type { D1Database } from "@cloudflare/workers-types";
 import { dev } from "$app/environment";
 import type { ProductsTableRow, StockHistoryTableRow } from "$lib/lttstore/lttstore_types.ts";
-import { createTables } from "../../+page.server.ts";
+
+import { createTables } from "../../createTables.ts";
 
 
 export const load = (async ({platform, params}) => {
