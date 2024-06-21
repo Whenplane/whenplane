@@ -127,12 +127,7 @@
   {#if data.recentRestocks.length > 0}
     <h1>Recently Re-stocked</h1>
     <div class="opacity-80 pl-2">
-      These items have been restocked
-      {#if Date.now() > 1718945975963}
-        in the past 6 days.
-      {:else}
-        recently. <!-- if we dont have 6 days of data yet, dont say 6 days -->
-      {/if}
+      These items have been restocked in the past 6 days.
     </div>
     {#each data.recentRestocks as product}
       <LTTProductCard product={JSON.parse(product.product)} purchasesPerHour={product.purchasesPerHour} available={product.available}/>
