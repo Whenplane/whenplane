@@ -221,7 +221,7 @@
 				</h1>
 				{#if $mainLate.isMainLate && data.isPreShow}
 					<div class="text-center">
-						The main show is late by
+						The main show is {$mainLate.late ? "late" : "early"} by
 						<span class="mono">
 							{$mainLate.string}
 						</span>
