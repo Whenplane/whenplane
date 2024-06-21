@@ -58,7 +58,7 @@ export function getNextWANLuxon(now = new Date(), buffer = true, hasDone?: boole
 
     // 2024/6/21 has an "early start" due to linus going to a funeral later
     if(wanDate.year == 2024 && wanDate.month == 6 && wanDate.day == 21) {
-        wanDate = wanDate.set({hour: 10, minute: 30})
+        wanDate = wanDate.set({hour: 10, minute: 0})
     }
 
     // 7/18/2023 skipped due to production shutdown (from GN callout)
@@ -87,7 +87,7 @@ export function getPreviousWANLuxon(now = new Date()): DateTime {
 
     // 2024/6/21 has an "early start" due to linus going to a funeral later
     if(wanDate.year == 2024 && wanDate.month == 6 && wanDate.day == 21) {
-        wanDate = wanDate.set({hour: 10, minute: 30})
+        wanDate = wanDate.set({hour: 10, minute: 0})
     }
 
     if(isBefore(now, wanDate.toJSDate())) {
@@ -110,7 +110,7 @@ export function getPreviousWANLuxon(now = new Date()): DateTime {
 
     // 2024/6/21 has an "early start" due to linus going to a funeral later
     if(wanDate.year == 2024 && wanDate.month == 6 && wanDate.day == 21) {
-        wanDate = wanDate.set({hour: 10, minute: 30})
+        wanDate = wanDate.set({hour: 10, minute: 0})
     }
 
     // 7/18/2023 skipped due to production shutdown (from GN callout)
