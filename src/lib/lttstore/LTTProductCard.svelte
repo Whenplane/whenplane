@@ -30,7 +30,7 @@
       ${product.price/100}
     {/if}
   {/if}
-  {#if goneIn && stock && goneInHours < 10}
+  {#if goneIn && stock && goneInHours < 10 && goneInHours >= 0}
     <div class="opacity-80">
       Could be gone in {Math.round(goneInHours)}h
     </div>
