@@ -32,7 +32,7 @@ export function getNextWANLuxon(now = new Date(), buffer = true, hasDone?: boole
     }
 
 
-    if(isBefore(wanDate.toJSDate(), now) && !shouldStay) {
+    if((hasDone || isBefore(wanDate.toJSDate(), now)) && !shouldStay) {
         wanDate = wanDate.plus({days: 7});
     }
 

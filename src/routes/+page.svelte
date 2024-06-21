@@ -149,6 +149,7 @@
 </script>
 <svelte:window
 		on:focus={onFocus}
+		on:visibilitychange={onFocus}
 />
 <svelte:head>
 	<title>When is the WAN Show?  {$page.url.hostname === "whenwan.show" ? "whenwan.show" : "Whenplane"}</title>

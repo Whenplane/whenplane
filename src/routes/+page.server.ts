@@ -16,7 +16,7 @@ export const actions = {
     if(!k) return;
 
     const kn = Number(atob(k));
-    if(n() - kn > 15e3) {
+    if(n() - kn > 14390) {
       return;
     }
 
