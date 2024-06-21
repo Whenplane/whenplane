@@ -28,8 +28,10 @@
   });
 </script>
 <span title="{shortMonths[date.getMonth()]} {date.getDate()}, {date.getFullYear()} at {date.toLocaleTimeString(undefined, {timeStyle: 'medium'})}">
-    {#if secondsAgo < 60 * 60}
-        {Math.round(secondsAgo / 60)} minutes ago
+    {#if secondsAgo < 30}
+        a few seconds ago
+    {:else if secondsAgo < 60 * 60}
+        {Math.round(secondsAgo / 60)} minute{Math.round(secondsAgo / 60) === 1 ? "" : "s"} ago
     {:else if isSameDay(new Date(), date)}
         Today at {date.toLocaleTimeString(undefined, {timeStyle: "short"})}
     {:else if isSameDay(yesterday(), date)}
