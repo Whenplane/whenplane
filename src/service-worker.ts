@@ -3,8 +3,6 @@
 /// <reference lib="esnext" />
 /// <reference lib="webworker" />
 
-import { cache } from "sharp";
-
 const sw = self as unknown as ServiceWorkerGlobalScope;
 
 import { build, files, prerendered, version } from "$service-worker";
