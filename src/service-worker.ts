@@ -11,7 +11,9 @@ const CACHE_PREFIX = "cache-"
 // Create a unique cache name for this deployment
 const CACHE = CACHE_PREFIX + version;
 
-const dontCache: string[] = [];
+const dontCache: string[] = [
+  "/_redirects"
+];
 
 const ASSETS = [
   ...build, // the app itself
