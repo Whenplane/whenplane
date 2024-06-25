@@ -3,6 +3,8 @@
 /// <reference lib="esnext" />
 /// <reference lib="webworker" />
 
+import { cache } from "sharp";
+
 const sw = self as unknown as ServiceWorkerGlobalScope;
 
 import { build, files, prerendered, version } from "$service-worker";
@@ -92,6 +94,22 @@ sw.addEventListener('fetch', (event) => {
   }
 
   if(ASSETS.includes(url.pathname) || cacheablePages.includes(url.pathname)) event.respondWith(respond());
+});
+
+sw.addEventListener('activate', (event) => {
+  // Remove previous cached data from disk
+  async function deleteOldCaches() {
+    const cacheNames = await caches.keys();
+    if(!cacheNames.includes(CACHE)) {
+      console.log("Current cache not in cache list! Skipping old cache deletion.");
+      return;
+    }
+    for (const key of cacheNames) {
+      if (key !== CACHE) await caches.delete(key);
+    }
+  }
+
+  event.waitUntil(deleteOldCaches());
 });
 
 
