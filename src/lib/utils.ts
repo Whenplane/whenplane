@@ -218,7 +218,8 @@ export type SpecialStream = {
     thumbnail?: string,
 
     start?: string,
-    end?: string
+    end?: string,
+    startIsEstimated?: boolean
 
     onFloatplane?: boolean,
     floatplaneNotes?: string

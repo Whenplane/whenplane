@@ -5,8 +5,10 @@
   import { onMount } from "svelte";
   import { getTimeUntil } from "$lib/timeUtils.ts";
   import Late from "$lib/Late.svelte";
+  import Info from "$lib/svg/Info.svelte";
+  import {popup} from "@skeletonlabs/skeleton";
 
-  export let specialStreamData: SpecialStream = $page.data.specialStream;
+  export let specialStreamData: SpecialStream = $page.data.specialStream as SpecialStream;
 
   export let data;
 
@@ -73,9 +75,31 @@
           {/if}
         {/if}
       </h3>
+      {#if countdownString && specialStreamData.startIsEstimated}
+        <div class="text-center text-xs">
+          estimated
+          <div
+            class="text-surface inline-block info [&>*]:pointer-events-none"
+            use:popup={{
+            event: 'hover',
+            target: 'estimated-special-stream-start',
+            placement: 'bottom'
+          }}
+          >
+            <Info/>
+          </div>
+        </div>
+      {/if}
     {/if}
   </div>
 
+</div>
+
+<div class="card p-4 whitespace-nowrap shadow-x1 z-10 font-normal" data-popup="estimated-special-stream-start" style="margin-top: 0;">
+  Often, LTT does not announce streams, they just go live.<br>
+  So the only way we know that a stream is happening is when they upload a title, description, and thumbnail.<br>
+  This usually happens a few hours before the stream starts, and a guess is made at the start time.<br>
+  It will be updated if there is any official word.
 </div>
 
 <style>
