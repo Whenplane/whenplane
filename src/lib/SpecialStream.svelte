@@ -75,7 +75,7 @@
           {/if}
         {/if}
       </h3>
-      {#if countdownString && specialStreamData.startIsEstimated}
+      {#if countdownString && !live && specialStreamData.startIsEstimated}
         <div class="text-center text-xs">
           estimated
           <div
