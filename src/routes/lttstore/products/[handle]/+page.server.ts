@@ -19,8 +19,11 @@ export const load = (async ({platform, params}) => {
     .bind(handle)
     .first<ProductsTableRow>();
 
-  const stockHistory = db.prepare("select * from stock_history where handle = ? order by timestamp DESC limit 50")
-    .bind(handle)
+  const stockHistory = db.prepare("select * from stock_history where handle = ? and timestamp > ? order by timestamp")
+    .bind(
+      handle,
+      Date.now() - (7 * 24 * 60 * 60e3)
+    )
     .all<StockHistoryTableRow>()
     .then(r => r.results);
 

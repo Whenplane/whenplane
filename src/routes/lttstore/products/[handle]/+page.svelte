@@ -102,7 +102,7 @@
   <br>
 
   <h1>Stock History</h1>
-  We check the stock of products occasionally. Here is the history of those stock numbers (the latest 50 datapoints are shown)
+  We check the stock of products occasionally. Here is the history of those stock numbers (data is currently only shown for the past week)
   <ProductStockHistoryGraph stockHistory={data.stockHistory} productName={productInfo.title}/>
 
   {#if dev}
