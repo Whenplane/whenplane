@@ -52,7 +52,7 @@
   <title>{data.product.title} - Whenplane LTTStore Watcher</title>
 </svelte:head>
 
-<div class="container mx-auto pt-8 mb-64">
+<div class="container mx-auto p-2 pt-8 mb-64">
 
   <h1 class:line-through={!data.product.available}>{productInfo.title}</h1>
   {#if productInfo.featured_image}
