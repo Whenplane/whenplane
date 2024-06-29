@@ -12,6 +12,8 @@
     stock: string
   }[];
 
+  export let chartUpdateNumber = 1;
+
   let chart;
 
   const someStock = Object.keys(stockHistory).length > 1 ? JSON.parse(stockHistory[0]?.stock ?? "{}") : {};
@@ -21,6 +23,7 @@
 
   $: {
     onlyTotal;
+    chartUpdateNumber;
     options.series = getSeries()
     console.debug("Series:", options.series)
     if(chart) chart.updateSeries(options.series)

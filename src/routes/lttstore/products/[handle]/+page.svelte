@@ -8,13 +8,34 @@
   import { Accordion, AccordionItem } from "@skeletonlabs/skeleton";
   import sanitizeHtml from "sanitize-html";
   import { newsSanitizeSettings } from "$lib/news/news.js";
+  import { invalidateAll } from "$app/navigation";
 
   export let data;
+
+  let chartUpdateNumber = 1;
 
   $: productInfo = JSON.parse(data.product.product as string) as ShopifyProduct
   $: currentStock = JSON.parse(data.product.stock as string) as StockCounts
 
-  $: strippedTitle = productInfo.title.replace(/\(.*\)/g, "").replace("Knife", "Knive").trim()
+  $: strippedTitle = productInfo.title.replace(/\(.*\)/g, "").replace("Knife", "Knive").trim();
+
+  let historyDays = $page.url.searchParams.get("historyDays") ?? "7";
+  let first = true;
+  $: {
+    console.log({historyDays})
+    if(first) {
+      first = false;
+    } else {
+      const newUrl = new URL(location.href);
+      newUrl.searchParams.set("historyDays", historyDays)
+
+      history.replaceState({}, document.title, newUrl.toString());
+      first = true;
+      invalidateAll().then(() => {
+        chartUpdateNumber++;
+      });
+    }
+  }
 </script>
 
 <ol class="breadcrumb pt-2 pl-2">
@@ -102,8 +123,25 @@
   <br>
 
   <h1>Stock History</h1>
-  We check the stock of products occasionally. Here is the history of those stock numbers (data is currently only shown for the past week)
-  <ProductStockHistoryGraph stockHistory={data.stockHistory} productName={productInfo.title}/>
+  We check the stock of products occasionally. Here is the history of those stock numbers.
+  <!-- stock started being recorded on 1718147742676 -->
+  <select class="select inline-block w-48" bind:value={historyDays}>
+    <option value="1">24 hours</option>
+    <option value="7">7 days</option>
+    <option value="30">30 days</option>
+    {#if Date.now() > 1720739742676}
+      <option value="90">3 months (90 days)</option>
+    {/if}
+    {#if Date.now() > 1725923742676}
+      <option value="180">6 months (180 days)</option>
+    {/if}
+    {#if Date.now() > 1733699742676}
+      <option value="365">1 year (365 days)</option>
+    {/if}
+  </select>
+  <ProductStockHistoryGraph stockHistory={data.stockHistory} productName={productInfo.title} {chartUpdateNumber}/>
+  <br>
+  Note that stock started being recorded on June 11th, 2024, so data before that is not available.
 
   {#if dev}
     <br>

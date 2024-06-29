@@ -7,7 +7,7 @@ import type { ProductsTableRow, StockHistoryTableRow } from "$lib/lttstore/lttst
 import { createTables } from "../../createTables.ts";
 
 
-export const load = (async ({platform, params}) => {
+export const load = (async ({platform, params, url}) => {
   const db: D1Database | undefined = platform?.env?.LTTSTORE_DB;
   if(!db) throw error(503, "DB unavailable!");
 
@@ -19,10 +19,12 @@ export const load = (async ({platform, params}) => {
     .bind(handle)
     .first<ProductsTableRow>();
 
+  const historyDays = Number(url.searchParams.get("historyDays") ?? 7);
+
   const stockHistory = db.prepare("select * from stock_history where handle = ? and timestamp > ? order by timestamp")
     .bind(
       handle,
-      Date.now() - (7 * 24 * 60 * 60e3)
+      Date.now() - (historyDays * 24 * 60 * 60e3)
     )
     .all<StockHistoryTableRow>()
     .then(r => r.results);
