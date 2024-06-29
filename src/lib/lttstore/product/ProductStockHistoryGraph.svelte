@@ -59,7 +59,7 @@
     chart: {
       type: 'area',
       stacked: false,
-      width: browser ? document.documentElement.clientWidth/1.5 : undefined,
+      height: browser ? document.documentElement.clientHeight/1.5 : undefined,
       zoom: {
         type: 'x',
         enabled: true,
