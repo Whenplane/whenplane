@@ -10,6 +10,8 @@ const cache: {
   lastData?: IsThereWanResponse
 } = {lastFetch: 0};
 
+const cacheURL = "https://whenplane/api/isThereWan"
+
 export const GET = (async ({platform}) => {
   const meta: KVNamespace = platform?.env?.META;
   if(!meta) throw error(503, "meta not available");
@@ -17,7 +19,7 @@ export const GET = (async ({platform}) => {
   // apparently caches apply to the whole datacenter, and not just memory, so we use that too
   const cfCache = await caches.open("whenplane:is-there-wan");
 
-  const cacheMatch = await cfCache.match("/api/isThereWan");
+  const cacheMatch = await cfCache.match(cacheURL);
   if(cacheMatch) {
     cacheMatch.headers.set("x-whenplane-cf-cached", "true");
     return cacheMatch;
@@ -64,7 +66,7 @@ export const GET = (async ({platform}) => {
     }
   });
 
-  platform?.context?.waitUntil(cfCache.put("/api/isThereWan", jsonResponse))
+  platform?.context?.waitUntil(cfCache.put(cacheURL, jsonResponse))
 
   return jsonResponse;
 }) satisfies RequestHandler
