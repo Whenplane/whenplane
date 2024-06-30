@@ -14,7 +14,7 @@ export const GET = (async ({platform}) => {
   const meta: KVNamespace = platform?.env?.META;
   if(!meta) throw error(503, "meta not available");
 
-  const cache_time = isNearWan() ? 9750 : 60e3; // just under 10 seconds on wan days, 1 minute on non-wan days
+  const cache_time = isNearWan() ? 9750 : 5 * 60e3; // just under 10 seconds on wan days, 5 minutes on non-wan days
 
   /*if(dev) {
     const response: IsThereWanResponse = {
