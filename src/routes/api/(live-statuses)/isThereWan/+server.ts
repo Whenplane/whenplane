@@ -14,6 +14,16 @@ export const GET = (async ({platform}) => {
   const meta: KVNamespace = platform?.env?.META;
   if(!meta) throw error(503, "meta not available");
 
+  // apparently caches apply to the whole datacenter, and not just memory, so we use that too
+  const cfCache = await caches.open("whenplane:is-there-wan");
+
+  const cacheMatch = await cfCache.match("/api/isThereWan");
+  if(cacheMatch) {
+    cacheMatch.headers.set("x-whenplane-cf-cached", "true");
+    return cacheMatch;
+  }
+
+
   const cache_time = isNearWan() ? 9750 : 5 * 60e3; // just under 10 seconds on wan days, 5 minutes on non-wan days
 
   /*if(dev) {
@@ -48,7 +58,15 @@ export const GET = (async ({platform}) => {
 
   cache.lastData = response;
 
-  return json(response);
+  const jsonResponse = json(response, {
+    headers: {
+      "Cache-Control": "public max-age=" + Math.ceil(cache_time / 1e3) + " must-revalidate"
+    }
+  });
+
+  platform?.context?.waitUntil(cfCache.put("/api/isThereWan", jsonResponse))
+
+  return jsonResponse;
 }) satisfies RequestHandler
 
 export type IsThereWanResponse = {
