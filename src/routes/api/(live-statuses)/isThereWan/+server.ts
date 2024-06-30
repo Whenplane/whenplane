@@ -17,7 +17,7 @@ export const GET = (async ({platform}) => {
   if(!meta) throw error(503, "meta not available");
 
   // apparently caches apply to the whole datacenter, and not just memory, so we use that too
-  const cfCache = await caches.open("whenplane:is-there-wan");
+  const cfCache = await caches.open("whenplane:isThereWan");
 
   const cacheMatch = await cfCache.match(cacheURL);
   if(cacheMatch) {
