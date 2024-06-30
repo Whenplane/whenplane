@@ -13,7 +13,7 @@ const cache: {
 const cacheURL = "https://whenplane/api/isThereWan"
 
 export const GET = (async ({platform}) => {
-  const meta: KVNamespace = platform?.env?.META;
+  const meta: KVNamespace | undefined = platform?.env?.META;
   if(!meta) throw error(503, "meta not available");
 
   // apparently caches apply to the whole datacenter, and not just memory, so we use that too
@@ -64,7 +64,8 @@ export const GET = (async ({platform}) => {
 
   const jsonResponse = json(response, {
     headers: {
-      "Cache-Control": "public max-age=" + Math.ceil(cache_time / 1e3) + " must-revalidate"
+      "Cache-Control": "public max-age=" + Math.ceil(cache_time / 1e3) + " must-revalidate",
+      "x-response-generated": new Date().toISOString()
     }
   });
 
@@ -79,7 +80,7 @@ export type IsThereWanResponse = {
 }
 
 
-function newResponse(res: Response, headerFn: (existingHeaders: Headers) => Headers) {
+function newResponse(res: Response, headerFn: (existingHeaders: Headers) => Headers): Promise<Response> {
 
   function cloneHeaders() {
     const headers = new Headers();
