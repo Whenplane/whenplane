@@ -16,20 +16,29 @@ export const GET = (async ({platform}) => {
   const meta: KVNamespace | undefined = platform?.env?.META;
   if(!meta) throw error(503, "meta not available");
 
+
+  const cache_time = isNearWan() ? 9750 : 5 * 60e3; // just under 10 seconds on wan days, 5 minutes on non-wan days
+
   // apparently caches apply to the whole datacenter, and not just memory, so we use that too
   const cfCache = await caches.open("whenplane:isThereWan");
 
   const cacheMatch = await cfCache.match(cacheURL);
   if(cacheMatch) {
-    console.log("Responding with cached response! (is-there-wan)")
-    return newResponse(cacheMatch, (headers) => {
-      headers.set("x-whenplane-cf-cached", "true");
-      return headers;
-    });
+
+    const responseGeneratedRaw = cacheMatch.headers.get("x-response-generated");
+
+    if(responseGeneratedRaw) {
+      const responseGenerated = new Date(responseGeneratedRaw);
+
+      if(Date.now() - responseGenerated.getTime() < cache_time) {
+        console.log("Responding with cached response! (is-there-wan)")
+        return newResponse(cacheMatch, (headers) => {
+          headers.set("x-whenplane-cf-cached", "true");
+          return headers;
+        });
+      }
+    }
   }
-
-
-  const cache_time = isNearWan() ? 9750 : 5 * 60e3; // just under 10 seconds on wan days, 5 minutes on non-wan days
 
   /*if(dev) {
     const response: IsThereWanResponse = {
