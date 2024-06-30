@@ -80,7 +80,7 @@ export const GET = (async ({platform}) => {
     }
   });
 
-  platform?.context?.waitUntil(cfCache.put(cacheURL, jsonResponse))
+  platform?.context?.waitUntil(cfCache.put(cacheURL, jsonResponse.clone()))
 
   return jsonResponse;
 }) satisfies RequestHandler
