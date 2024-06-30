@@ -21,9 +21,10 @@ export const GET = (async ({platform}) => {
 
   const cacheMatch = await cfCache.match(cacheURL);
   if(cacheMatch) {
-    const matchClone = cacheMatch.clone();
-    matchClone.headers.set("x-whenplane-cf-cached", "true");
-    return matchClone;
+    return newResponse(cacheMatch, (headers) => {
+      headers.set("x-whenplane-cf-cached", "true");
+      return headers;
+    });
   }
 
 
@@ -75,4 +76,29 @@ export const GET = (async ({platform}) => {
 export type IsThereWanResponse = {
   text: string | null
   image: string | null
+}
+
+
+function newResponse(res: Response, headerFn: (existingHeaders: Headers) => Headers) {
+
+  function cloneHeaders() {
+    const headers = new Headers();
+    for (const kv of res.headers.entries()) {
+      headers.append(kv[0], kv[1]);
+    }
+    return headers;
+  }
+
+  const headers = headerFn ? headerFn(cloneHeaders()) : res.headers;
+
+  return new Promise(function (resolve) {
+    return res.clone().blob().then((blob) => {
+      resolve(new Response(blob, {
+        status: res.status,
+        statusText: res.statusText,
+        headers: headers
+      }));
+    });
+  });
+
 }
