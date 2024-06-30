@@ -63,9 +63,10 @@ export const GET = (async ({platform}) => {
 
   cache.lastData = response;
 
+  const maxAge = Math.ceil(cache_time / 1e3);
   const jsonResponse = json(response, {
     headers: {
-      "Cache-Control": "public max-age=" + Math.ceil(cache_time / 1e3) + " must-revalidate",
+      "Cache-Control": `public max-age=${maxAge} s-maxage=${maxAge} must-revalidate`,
       "x-response-generated": new Date().toISOString()
     }
   });
