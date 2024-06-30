@@ -21,8 +21,9 @@ export const GET = (async ({platform}) => {
 
   const cacheMatch = await cfCache.match(cacheURL);
   if(cacheMatch) {
-    cacheMatch.headers.set("x-whenplane-cf-cached", "true");
-    return cacheMatch;
+    const matchClone = cacheMatch.clone();
+    matchClone.headers.set("x-whenplane-cf-cached", "true");
+    return matchClone;
   }
 
 
