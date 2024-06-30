@@ -21,6 +21,7 @@ export const GET = (async ({platform}) => {
 
   const cacheMatch = await cfCache.match(cacheURL);
   if(cacheMatch) {
+    console.log("Responding with cached response! (is-there-wan)")
     return newResponse(cacheMatch, (headers) => {
       headers.set("x-whenplane-cf-cached", "true");
       return headers;
