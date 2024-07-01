@@ -7,6 +7,7 @@ import type { GetStreamsResponse } from "ts-twitch-api";
 import type { TwitchToken } from "$lib/utils.ts";
 import type { DurableObjectNamespace } from "@cloudflare/workers-types";
 import {notablePeople as people} from "./notable-people";
+import { twitchTokenCache } from "$lib/stores.ts";
 
 let fastCache: {
   lastFetch: number,
@@ -16,11 +17,6 @@ let fastCache: {
   lastFetchData: {}
 };
 
-let lastToken: TwitchToken = {
-  token: "",
-  validUntil: 0,
-  dateGenerated: 0
-}
 
 const lastNotifSends: {[channel: string]: number} = {};
 
@@ -64,15 +60,15 @@ export const GET = (async ({platform, url}) => {
     return json(shortResponse);
   }*/
 
-  if(lastToken.validUntil < Date.now()) {
+  if(twitchTokenCache.token.validUntil < Date.now()) {
     const newToken = await cache.get<TwitchToken>("wheniswan:twitch:token", {type: "json"});
 
     if(newToken) {
-      lastToken = newToken;
+      twitchTokenCache.token = newToken;
     }
   }
 
-  if(lastToken.validUntil < Date.now()) {
+  if(twitchTokenCache.token.validUntil < Date.now()) {
     const details: {[key: string]: string} = {
       'client_id': env.TWITCH_CLIENT_ID,
       'client_secret': env.TWITCH_SECRET,
@@ -105,12 +101,12 @@ export const GET = (async ({platform, url}) => {
 
     console.log("Got access token: ", (access_token ? access_token.substring(0, 2) : access_token))
 
-    lastToken = {
+    twitchTokenCache.token = {
       token: access_token,
       validUntil: Date.now() + (expires_in * 1000) - 30, // fetch new token 30 seconds before it's supposed to expire,
       dateGenerated: Date.now()
     }
-    platform.context.waitUntil(cache.put("wheniswan:twitch:token", JSON.stringify(lastToken)))
+    platform.context.waitUntil(cache.put("wheniswan:twitch:token", JSON.stringify(twitchTokenCache.token)))
   }
 
   if(fastCache.lastFetchData) fastCache.lastFetch = Date.now();

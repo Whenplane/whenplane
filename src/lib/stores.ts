@@ -1,4 +1,5 @@
 import type { LatenessVotingOption } from "$lib/voting.ts";
+import type { TwitchToken } from "$lib/utils.ts";
 
 // export const floatplaneState = writable<WanDb_FloatplaneData>();
 // export const wdbSocketState = writable<WanDb_SocketState>({lastReceive: browser ? (get(page).data?.isWdbResponseValid ? Date.now() : 0) : 0});
@@ -25,3 +26,11 @@ export type LatenessVotingCache = {
 export const overwriteData: {data?: any} = {};
 
 export const nextFast = {nextFast: false};
+
+export const twitchTokenCache: { token: TwitchToken } = {
+  token: {
+    token: "",
+    validUntil: 0,
+    dateGenerated: 0
+  }
+}

@@ -6,6 +6,7 @@ import {getClosestWan, getUTCDate} from "$lib/timeUtils";
 import type { DurableObjectNamespace } from "@cloudflare/workers-types";
 import type { GetStreamsResponse } from "ts-twitch-api";
 import type { TwitchToken } from "$lib/utils.ts";
+import { twitchTokenCache } from "$lib/stores.ts";
 
 const cacheTime = 5000; // maximum fetch from twitch api once every 5 seconds
 
@@ -21,12 +22,6 @@ const fastCache: {
     lastFetch: 0,
     lastFetchData: undefined
 };
-
-let lastToken: TwitchToken = {
-    token: "",
-    validUntil: 0,
-    dateGenerated: 0
-}
 
 let lastNotifSend = 0;
 
@@ -66,14 +61,14 @@ export const GET = (async ({platform, url}) => {
     }
     // console.debug(2)
 
-    if(lastToken.validUntil < Date.now()) {
+    if(twitchTokenCache.token.validUntil < Date.now()) {
         const newToken = await cache.get<TwitchToken>("wheniswan:twitch:token", {type: "json"});
         if(newToken) {
-            lastToken = newToken;
+            twitchTokenCache.token = newToken;
         }
     }
 
-    if(lastToken.validUntil < Date.now()) {
+    if(twitchTokenCache.token.validUntil < Date.now()) {
         const details: {[key: string]: string} = {
             'client_id': env.TWITCH_CLIENT_ID,
             'client_secret': env.TWITCH_SECRET,
@@ -103,12 +98,12 @@ export const GET = (async ({platform, url}) => {
 
         console.log("Got access token: ", (access_token ? access_token.substring(0, 2) : access_token))
 
-        lastToken = {
+        twitchTokenCache.token = {
             token: access_token,
             validUntil: Date.now() + (expires_in * 1000) - 30e3, // fetch new token 30 seconds before it's supposed to expire,
             dateGenerated: Date.now()
         }
-        platform.context.waitUntil(cache.put("wheniswan:twitch:token", JSON.stringify(lastToken)))
+        platform.context.waitUntil(cache.put("wheniswan:twitch:token", JSON.stringify(twitchTokenCache.token)))
     }
 
     // console.debug(3)
@@ -118,7 +113,7 @@ export const GET = (async ({platform, url}) => {
         {
             headers: {
                 "Client-ID": env.TWITCH_CLIENT_ID,
-                "Authorization": "Bearer " + lastToken.token,
+                "Authorization": "Bearer " + twitchTokenCache.token.token,
                 "referer": "whenplane.com",
                 "x-whenplane-version": version,
                 "user-agent": "Whenplane/" + version
