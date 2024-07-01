@@ -49,6 +49,33 @@ export function commas(x) {
     return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 }
 
+export function newResponse(res: Response, headerFn: (existingHeaders: Headers) => Headers): Promise<Response> {
+
+    function cloneHeaders() {
+        const headers = new Headers();
+        for (const kv of res.headers.entries()) {
+            headers.append(kv[0], kv[1]);
+        }
+        return headers;
+    }
+
+    const headers = headerFn ? headerFn(cloneHeaders()) : res.headers;
+
+    return new Promise(function (resolve) {
+        return res.clone().blob().then((blob) => {
+            resolve(new Response(blob, {
+                status: res.status,
+                statusText: res.statusText,
+                headers: headers
+            }));
+        });
+    });
+
+}
+
+
+
+
 export type HistoricalEntry = {
     name: string,
     metadata: OldShowMeta,

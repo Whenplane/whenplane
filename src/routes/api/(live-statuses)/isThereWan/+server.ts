@@ -1,8 +1,8 @@
 import type { RequestHandler } from "@sveltejs/kit";
 import { error, json } from "@sveltejs/kit";
 import type { KVNamespace } from "@cloudflare/workers-types";
-import { dev } from "$app/environment";
 import { isNearWan } from "$lib/timeUtils.ts";
+import { newResponse } from "$lib/utils.ts";
 
 
 const cache: {
@@ -10,7 +10,7 @@ const cache: {
   lastData?: IsThereWanResponse
 } = {lastFetch: 0};
 
-const cacheURL = "https://whenplane/api/isThereWan"
+const cacheURL = "https://whenplane/api/isThereWan";
 
 export const GET = (async ({platform}) => {
   const meta: KVNamespace | undefined = platform?.env?.META;
@@ -91,26 +91,3 @@ export type IsThereWanResponse = {
 }
 
 
-function newResponse(res: Response, headerFn: (existingHeaders: Headers) => Headers): Promise<Response> {
-
-  function cloneHeaders() {
-    const headers = new Headers();
-    for (const kv of res.headers.entries()) {
-      headers.append(kv[0], kv[1]);
-    }
-    return headers;
-  }
-
-  const headers = headerFn ? headerFn(cloneHeaders()) : res.headers;
-
-  return new Promise(function (resolve) {
-    return res.clone().blob().then((blob) => {
-      resolve(new Response(blob, {
-        status: res.status,
-        statusText: res.statusText,
-        headers: headers
-      }));
-    });
-  });
-
-}
