@@ -16,8 +16,25 @@ export const GET = (async ({platform}) => {
   const meta: KVNamespace | undefined = platform?.env?.META;
   if(!meta) throw error(503, "meta not available");
 
-
   const cache_time = isNearWan() ? 9750 : 5 * 60e3; // just under 10 seconds on wan days, 5 minutes on non-wan days
+
+  /*if(dev) {
+    const response: IsThereWanResponse = {
+      text: "Linus will most likely be calling into the show today due to being at CES. This could lead to either the show being earlier than normal, or later than normal. <br><small>If you have further information, <i>please</i> let me know either on discord (ajgeiss0702) or email (<a href='mailto:aj@whenplane.com'>aj@whenplane.com</a>) so that I can publish it here</small>",
+      image: null
+    }
+    return json(response);
+  }*/
+
+  const cacheDistance = Date.now() - cache.lastFetch;
+  if(cacheDistance < cache_time) {
+    return json({
+      ...cache.lastData,
+      cached: true,
+      lastFetch: cache.lastFetch,
+      cacheDistance
+    })
+  }
 
   // apparently caches apply to the whole datacenter, and not just memory, so we use that too
   const cfCache = await caches.open("whenplane:isThereWan");
@@ -38,24 +55,6 @@ export const GET = (async ({platform}) => {
         });
       }
     }
-  }
-
-  /*if(dev) {
-    const response: IsThereWanResponse = {
-      text: "Linus will most likely be calling into the show today due to being at CES. This could lead to either the show being earlier than normal, or later than normal. <br><small>If you have further information, <i>please</i> let me know either on discord (ajgeiss0702) or email (<a href='mailto:aj@whenplane.com'>aj@whenplane.com</a>) so that I can publish it here</small>",
-      image: null
-    }
-    return json(response);
-  }*/
-
-  const cacheDistance = Date.now() - cache.lastFetch;
-  if(cacheDistance < cache_time) {
-    return json({
-      ...cache.lastData,
-      cached: true,
-      lastFetch: cache.lastFetch,
-      cacheDistance
-    })
   }
 
   cache.lastFetch = Date.now()
