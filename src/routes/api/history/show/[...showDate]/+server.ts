@@ -7,14 +7,16 @@ import type { WanDb_Episode } from "$lib/wdb_types.ts";
 
 export const GET = (async ({platform, params, url, locals}) => {
 
-    const history: KVNamespace = platform?.env?.HISTORY;
+    const history: KVNamespace | undefined = platform?.env?.HISTORY;
     if(!history) throw error(503, "History missing!");
 
-    const episode_cache: KVNamespace = platform?.env?.WDB_EPISODE_CACHE;
+    const episode_cache: KVNamespace | undefined = platform?.env?.WDB_EPISODE_CACHE;
     if(!episode_cache) throw error(503, "WDB episode cache missing!");
 
     const showDate = params.showDate;
     if(!showDate) throw error(400, "No show date!");
+
+    if(!platform) throw error(503, "No platform!");
 
     const fetchWdbData = url.searchParams.get("wdb") === "true";
     const start = Date.now();
@@ -46,53 +48,6 @@ export const GET = (async ({platform, params, url, locals}) => {
             wdb
         }, {headers: {"X-Generated-Metadata": generatedMetadata+""}});
     }
-    const preShowStartFragment = history.get(params.showDate + ":preShowStart");
-    const mainShowStartFragment = history.get(params.showDate + ":mainShowStart");
-    const showEndFragment = history.get(params.showDate + ":showEnd");
-    const snippetFragment = history.get(params.showDate + ":snippet", {type: 'json'});
-    const videoIdFragment = history.get(params.showDate + ":videoId");
-
-    if(await preShowStartFragment || await mainShowStartFragment || await showEndFragment || await snippetFragment || await videoIdFragment) {
-        const preShowStart = await preShowStartFragment;
-        const mainShowStart = await mainShowStartFragment;
-        const showEnd = await showEndFragment;
-        const snippet = await snippetFragment as OldShowMeta["snippet"] | undefined;
-        const videoId = await videoIdFragment;
-
-        const title = snippet?.title ? snippet.title.split(" - ")[0] : undefined;
-
-        const metadata = {
-            preShowStart,
-            mainShowStart,
-            showEnd,
-            title,
-            thumbnails: snippet?.thumbnails,
-            vods: {
-                youtube: videoId
-            }
-        }
-        const value = {
-            ...metadata,
-            snippet
-        }
-
-        locals.addTiming({id: "kv", duration: Date.now() - startKVFetch});
-
-        const startWdbFetch = Date.now();
-        const id = metadata?.vods?.youtube;
-        const wdb = fetchWdbData && id ? await getWdbData(id, episode_cache, platform) : undefined;
-        locals.addTiming({id: "wdb", duration: Date.now() - startWdbFetch});
-
-        locals.addTiming({id: "total", duration: Date.now() - start});
-
-
-        return json({
-            name: showDate,
-            metadata,
-            value,
-            wdb
-        })
-    }
 
     const oldHistory = await import("$lib/history/oldHistory.ts");
     for (const oldShow of oldHistory.history) {
@@ -104,6 +59,57 @@ export const GET = (async ({platform, params, url, locals}) => {
                 ...oldShow,
                 wdb
             });
+        }
+    }
+
+
+    const preShowStartFragment = await history.get(params.showDate + ":preShowStart");
+    if(preShowStartFragment) {
+        const mainShowStartFragment = history.get(params.showDate + ":mainShowStart");
+        const showEndFragment = history.get(params.showDate + ":showEnd");
+        const snippetFragment = history.get(params.showDate + ":snippet", {type: 'json'});
+        const videoIdFragment = history.get(params.showDate + ":videoId");
+
+        if(await mainShowStartFragment || await showEndFragment || await snippetFragment || await videoIdFragment) {
+            const preShowStart = preShowStartFragment;
+            const mainShowStart = await mainShowStartFragment;
+            const showEnd = await showEndFragment;
+            const snippet = await snippetFragment as OldShowMeta["snippet"] | undefined;
+            const videoId = await videoIdFragment;
+
+            const title = snippet?.title ? snippet.title.split(" - ")[0] : undefined;
+
+            const metadata = {
+                preShowStart,
+                mainShowStart,
+                showEnd,
+                title,
+                thumbnails: snippet?.thumbnails,
+                vods: {
+                    youtube: videoId
+                }
+            }
+            const value = {
+                ...metadata,
+                snippet
+            }
+
+            locals.addTiming({id: "kv", duration: Date.now() - startKVFetch});
+
+            const startWdbFetch = Date.now();
+            const id = metadata?.vods?.youtube;
+            const wdb = fetchWdbData && id ? await getWdbData(id, episode_cache, platform) : undefined;
+            locals.addTiming({id: "wdb", duration: Date.now() - startWdbFetch});
+
+            locals.addTiming({id: "total", duration: Date.now() - start});
+
+
+            return json({
+                name: showDate,
+                metadata,
+                value,
+                wdb
+            })
         }
     }
 
@@ -158,7 +164,7 @@ async function getWdbData(youtubeId: string, episode_cache: KVNamespace, platfor
         }
 
 
-        platform.context.waitUntil((async () => {
+        platform.context?.waitUntil((async () => {
             if(!(await cached) && result) {
                 await episode_cache.put(
                   youtubeId,
