@@ -127,7 +127,7 @@ export const GET = (async ({platform, url}) => {
         {
           headers: {
             "Client-ID": env.TWITCH_CLIENT_ID ?? "",
-            "Authorization": "Bearer " + lastToken.token,
+            "Authorization": "Bearer " + twitchTokenCache.token.token,
             "referer": "whenplane.com",
             "x-whenplane-version": version,
             "user-agent": "Whenplane/" + version
