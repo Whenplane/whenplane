@@ -26,5 +26,6 @@ export const fallBackPlatformToMiniFlareInDev = async (_platform: App.Platform |
             if(!dev) console.error("Attempted to use dev waitUntil in non-dev environment!");
         }
     }
-    return {env, context} as App.Platform;
+    const caches = await mf.getCaches() as unknown as CacheStorage;
+    return {env, context, caches} as App.Platform;
 };

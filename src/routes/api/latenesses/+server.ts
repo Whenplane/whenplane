@@ -1,7 +1,7 @@
 import type { RequestHandler } from "@sveltejs/kit";
 import { error, json } from "@sveltejs/kit";
 import { isNearWan } from "$lib/timeUtils.ts";
-import { newResponse } from "$lib/utils.ts";
+import { createMFResponse, newResponse } from "$lib/utils.ts";
 
 
 const cacheURL = "https://whenplane/api/latenesses";
@@ -11,11 +11,13 @@ export const GET = (async ({platform}) => {
   const meta = platform?.env?.META;
   if(!meta) throw error(503, "Missing meta KV!");
 
-  const cfCache = await caches.open("whenplane:latenesses");
+  if(!platform?.caches) throw error(503, "Cache not available");
+
+  const cfCache = await platform.caches.open("whenplane:latenesses");
 
   const cache_time = isNearWan() ? 5 * 60e3 : 60 * 60e3;
 
-  const cacheMatch = await cfCache.match(cacheURL);
+  const cacheMatch = await cfCache.match(cacheURL) as Response | undefined;
   if(cacheMatch) {
 
     const responseGeneratedRaw = cacheMatch.headers.get("x-response-generated");
@@ -51,7 +53,7 @@ export const GET = (async ({platform}) => {
     }
   });
 
-  platform?.context?.waitUntil(cfCache.put(cacheURL, jsonResponse.clone()))
+  platform?.context?.waitUntil(cfCache.put(cacheURL, await createMFResponse(jsonResponse.clone()) as Response))
 
   return jsonResponse;
 

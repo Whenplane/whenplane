@@ -1,3 +1,5 @@
+import { dev } from "$app/environment";
+
 export function wait(ms: number) {
     return new Promise((res) => {
         setTimeout(res, Math.floor(ms));
@@ -45,7 +47,7 @@ export function e(s: string) {
     return btoa(s);
 }
 
-export function commas(x) {
+export function commas(x: number) {
     return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 }
 
@@ -61,7 +63,7 @@ export function newResponse(res: Response, headerFn: (existingHeaders: Headers) 
 
     const headers = headerFn ? headerFn(cloneHeaders()) : res.headers;
 
-    return new Promise(function (resolve) {
+    return new Promise((resolve) => {
         return res.clone().blob().then((blob) => {
             resolve(new Response(blob, {
                 status: res.status,
@@ -71,6 +73,21 @@ export function newResponse(res: Response, headerFn: (existingHeaders: Headers) 
         });
     });
 
+}
+
+export async function createMFResponse(response: Response) {
+    if(dev) {
+        const text = await response.clone().text();
+        const { Response: MfResponse } = await import("miniflare");
+        return new MfResponse(text, {
+            status: response.status,
+            statusText: response.statusText,
+            headers: {
+                ...Object.fromEntries(response.headers.entries())
+            },
+        })
+    }
+    return response;
 }
 
 

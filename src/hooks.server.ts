@@ -5,6 +5,7 @@ import type { AnalyticsEngineDataset, KVNamespace,
     KVNamespaceGetOptions, KVNamespaceListOptions, KVNamespaceListResult, KVNamespacePutOptions } from "@cloudflare/workers-types";
 import type { TimingEntry } from "./app";
 import { report } from "$lib/server/instance-analytics.ts";
+import type { ReplaceWorkersTypes } from "miniflare";
 
 const reportedIds: {[key: string]: number} = {};
 
@@ -73,6 +74,11 @@ export const handle: Handle = async ({ event, resolve }) => {
             devBindings = await fallBackPlatformToMiniFlareInDev(event.platform);
         }
         event.platform = devBindings;
+    } else if(event.platform) {
+        event.platform = {
+            ...event.platform,
+            caches: caches
+        }
     }
 
     event.locals.id = id;
@@ -102,7 +108,7 @@ export const handle: Handle = async ({ event, resolve }) => {
                 HISTORY: createKVNamespaceWrapper(event.platform.env?.HISTORY, "wheniswan_history", event.platform),
                 META: createKVNamespaceWrapper(event.platform.env?.META, "wheniswan_meta", event.platform),
                 WDB_EPISODE_CACHE: createKVNamespaceWrapper(event.platform.env?.WDB_EPISODE_CACHE, "thewandb_episode_cache", event.platform),
-            }
+            },
         }
     }
 

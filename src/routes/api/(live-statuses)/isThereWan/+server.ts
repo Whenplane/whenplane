@@ -2,7 +2,7 @@ import type { RequestHandler } from "@sveltejs/kit";
 import { error, json } from "@sveltejs/kit";
 import type { KVNamespace } from "@cloudflare/workers-types";
 import { isNearWan } from "$lib/timeUtils.ts";
-import { newResponse } from "$lib/utils.ts";
+import { createMFResponse, newResponse } from "$lib/utils.ts";
 
 
 const cache: {
@@ -15,6 +15,8 @@ const cacheURL = "https://whenplane/api/isThereWan";
 export const GET = (async ({platform}) => {
   const meta: KVNamespace | undefined = platform?.env?.META;
   if(!meta) throw error(503, "meta not available");
+
+  if(!platform?.caches) throw error(503, "Cache not available!");
 
   const cache_time = isNearWan() ? 9750 : 5 * 60e3; // just under 10 seconds on wan days, 5 minutes on non-wan days
 
@@ -37,9 +39,9 @@ export const GET = (async ({platform}) => {
   }
 
   // apparently caches apply to the whole datacenter, and not just memory, so we use that too
-  const cfCache = await caches.open("whenplane:isThereWan");
+  const cfCache = await platform.caches.open("whenplane:isThereWan");
 
-  const cacheMatch = await cfCache.match(cacheURL);
+  const cacheMatch = await cfCache.match(cacheURL) as Response | undefined;
   if(cacheMatch) {
 
     const responseGeneratedRaw = cacheMatch.headers.get("x-response-generated");
@@ -79,7 +81,7 @@ export const GET = (async ({platform}) => {
     }
   });
 
-  platform?.context?.waitUntil(cfCache.put(cacheURL, jsonResponse.clone()))
+  platform?.context?.waitUntil(cfCache.put(cacheURL, await createMFResponse(jsonResponse.clone()) as Response))
 
   return jsonResponse;
 }) satisfies RequestHandler
