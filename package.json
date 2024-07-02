@@ -59,6 +59,7 @@
 		"airport-data-js": "^1.0.6",
 		"apexcharts": "^3.42.0",
 		"blurhash": "^2.0.5",
+		"currencies-map": "^3.3.5",
 		"fast-blurhash": "^1.1.2",
 		"luxon": "^3.3.0",
 		"minisearch": "^6.3.0",

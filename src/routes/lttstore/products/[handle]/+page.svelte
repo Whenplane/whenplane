@@ -9,6 +9,7 @@
   import sanitizeHtml from "sanitize-html";
   import { newsSanitizeSettings } from "$lib/news/news.js";
   import { invalidateAll } from "$app/navigation";
+  import Price from "$lib/lttstore/Price.svelte";
 
   export let data;
 
@@ -61,12 +62,12 @@
     No featured image
   {/if}
   {#if !productInfo.compare_at_price && typeof productInfo.price === "number"}
-    ${productInfo.price/100}
+    <Price usd={productInfo.price/100}/>
   {:else if typeof productInfo.price === "number" && productInfo.compare_at_price}
         <span class="old-price">
-          ${productInfo.compare_at_price/100}
+          <Price usd={productInfo.compare_at_price/100}/>
         </span>
-    ${productInfo.price/100}
+    <Price usd={productInfo.price/100}/>
   {/if}
   <br>
   <br>

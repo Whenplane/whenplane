@@ -1,5 +1,6 @@
 <script lang="ts">
   import type { ShopifyProduct, StockCounts } from "$lib/lttstore/lttstore_types.ts";
+  import Price from "$lib/lttstore/Price.svelte";
 
   export let product: ShopifyProduct;
   export let stock: StockCounts | undefined = undefined;
@@ -22,12 +23,12 @@
   {#if product.price}
     <br>
     {#if !product.compare_at_price}
-      ${product.price/100}
+      <Price usd={product.price/100}/>
     {:else}
         <span class="old-price">
-          ${product.compare_at_price/100}
+          <Price usd={product.compare_at_price/100}/>
         </span>
-      ${product.price/100}
+      <Price usd={product.price/100}/>
     {/if}
   {/if}
   {#if goneIn && stock && goneInHours < 10 && goneInHours >= 0}
