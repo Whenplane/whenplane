@@ -1,4 +1,4 @@
-import {Log, LogLevel, Miniflare} from 'miniflare';
+import {Log, LogLevel, Miniflare, Response as MfResponse} from 'miniflare';
 import {dev} from '$app/environment';
 
 export const fallBackPlatformToMiniFlareInDev = async (_platform: App.Platform | undefined) => {
@@ -29,3 +29,17 @@ export const fallBackPlatformToMiniFlareInDev = async (_platform: App.Platform |
     const caches = await mf.getCaches() as unknown as CacheStorage;
     return {env, context, caches} as App.Platform;
 };
+
+export async function realCreateMFResponse(response: Response) {
+    if(dev) {
+        const text = await response.clone().text();
+        return new MfResponse(text, {
+            status: response.status,
+            statusText: response.statusText,
+            headers: {
+                ...Object.fromEntries(response.headers.entries())
+            },
+        })
+    }
+    return response;
+}

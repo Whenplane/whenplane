@@ -5,7 +5,6 @@ import type { AnalyticsEngineDataset, KVNamespace,
     KVNamespaceGetOptions, KVNamespaceListOptions, KVNamespaceListResult, KVNamespacePutOptions } from "@cloudflare/workers-types";
 import type { TimingEntry } from "./app";
 import { report } from "$lib/server/instance-analytics.ts";
-import type { ReplaceWorkersTypes } from "miniflare";
 
 const reportedIds: {[key: string]: number} = {};
 

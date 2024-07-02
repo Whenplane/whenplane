@@ -7,7 +7,6 @@ import {
     type IncomingRequestCfProperties,
     type KVNamespace
 } from "@cloudflare/workers-types";
-import type { ReplaceWorkersTypes } from "miniflare";
 
 
 declare global {

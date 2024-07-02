@@ -75,21 +75,6 @@ export function newResponse(res: Response, headerFn: (existingHeaders: Headers) 
 
 }
 
-export async function createMFResponse(response: Response) {
-    if(dev) {
-        const text = await response.clone().text();
-        const { Response: MfResponse } = await import("miniflare");
-        return new MfResponse(text, {
-            status: response.status,
-            statusText: response.statusText,
-            headers: {
-                ...Object.fromEntries(response.headers.entries())
-            },
-        })
-    }
-    return response;
-}
-
 
 
 

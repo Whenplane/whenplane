@@ -2,7 +2,8 @@ import type { RequestHandler } from "@sveltejs/kit";
 import { error, json } from "@sveltejs/kit";
 import type { KVNamespace } from "@cloudflare/workers-types";
 import { isNearWan } from "$lib/timeUtils.ts";
-import { createMFResponse, newResponse } from "$lib/utils.ts";
+import { newResponse } from "$lib/utils.ts";
+import { createMFResponse } from "$lib/server/MfResponseConverter";
 
 
 const cache: {

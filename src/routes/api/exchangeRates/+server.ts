@@ -1,7 +1,8 @@
 import { error, json, type RequestHandler } from "@sveltejs/kit";
-import { createMFResponse, newResponse } from "$lib/utils.ts";
+import { newResponse } from "$lib/utils.ts";
 import type { LatestExchangeRate } from "./exchangeRateAPITypes.ts";
 import { dev } from "$app/environment";
+import { createMFResponse } from "$lib/server/MfResponseConverter";
 
 const cacheURL = "https://whenplane/api/exchangeRates";
 
