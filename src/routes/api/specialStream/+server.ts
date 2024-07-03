@@ -7,12 +7,12 @@ import type { FpEndpointResponse } from "../(live-statuses)/floatplane/+server.t
 export const GET = (async ({fetch}) => {
   // In the future this will be from a database, but this will be fine for now.
 
-  const data: SpecialStream | false = /*{
+  const data: SpecialStream | false = {
     title: "I’ll play ANY game you ask on Snapdragon X",
     thumbnail: "https://pbs.floatplane.com/stream_thumbnails/5c13f3c006f1be15e08e05c0/723373705837702_1719514298161.jpeg",
 
-    // start: "2024-06-27T22:00:00Z",
-    // startIsEstimated: true,
+    start: "2024-07-03T21:30:00Z",
+    startIsEstimated: true,
 
     onFloatplane: true,
 
@@ -20,7 +20,7 @@ export const GET = (async ({fetch}) => {
     // twitchNotes: "first half",
 
     onYoutube: true
-  }*/ false;
+  } //false;
 
   if(!data) {
     return json(data);
