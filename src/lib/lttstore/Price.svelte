@@ -14,4 +14,4 @@
 
   $: convertedPrice = usd * exchangeRates.rates[currency];
 </script>
-{symbol}{Math.round(convertedPrice * 100)/100}
+{symbol}{(Math.round(convertedPrice * 100)/100).toLocaleString(undefined, {minimumFractionDigits: 2})}
