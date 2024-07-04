@@ -43,6 +43,7 @@
     Conversion rates are only updated once per day,<br>
     and will probably <b>not</b> reflect the exact rate<br>
     used to charge you if you were to purchase.<br>
+    (although it will probably be close)<br>
     <br>
     LTTStore charges only in USD.<br>
     <br>
