@@ -44,7 +44,9 @@
     and will probably <b>not</b> reflect the exact rate<br>
     used to charge you if you were to purchase.<br>
     <br>
-    LTTStore charges only in USD.
+    LTTStore charges only in USD.<br>
+    <br>
+    1 USD &asymp; {data.exchangeRates.rates[selectedCurrency]} {selectedCurrency}
   </p>
   <div class="arrow variant-filled-surface" />
 </div>

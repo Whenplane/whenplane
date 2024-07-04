@@ -47,7 +47,8 @@ export function e(s: string) {
     return btoa(s);
 }
 
-export function commas(x: number) {
+export function commas(x: number | undefined) {
+    if(typeof x === "undefined") return x;
     return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 }
 

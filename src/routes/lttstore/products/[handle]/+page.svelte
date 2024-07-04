@@ -64,9 +64,9 @@
   {#if !productInfo.compare_at_price && typeof productInfo.price === "number"}
     <Price usd={productInfo.price/100}/>
   {:else if typeof productInfo.price === "number" && productInfo.compare_at_price}
-        <span class="old-price">
-          <Price usd={productInfo.compare_at_price/100}/>
-        </span>
+    <span class="old-price">
+      <Price usd={productInfo.compare_at_price/100}/>
+    </span>
     <Price usd={productInfo.price/100}/>
   {/if}
   <br>
@@ -88,7 +88,7 @@
   {#if productInfo.description}
     <div class="max-w-xl my-4">
       <Accordion class="mx-4" spacing="" regionPanel="">
-        <AccordionItem open={dev}>
+        <AccordionItem>
           <svelte:fragment slot="summary">Item Description</svelte:fragment>
           <svelte:fragment slot="content">
             <div class="item-description">
@@ -103,6 +103,7 @@
   <br>
   <br>
   <br>
+  <h2>Stock</h2>
 
   {#if (currentStock.total ?? -1) >= 0}
     {#if data.product.available}
@@ -123,7 +124,7 @@
   <br>
   <br>
 
-  <h1>Stock History</h1>
+  <h2>Stock History</h2>
   We check the stock of products occasionally. Here is the history of those stock numbers.
   <!-- stock started being recorded on 1718147742676 -->
   <select class="select inline-block w-48" bind:value={historyDays}>
