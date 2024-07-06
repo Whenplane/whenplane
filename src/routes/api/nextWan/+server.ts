@@ -7,6 +7,12 @@ const lastRequests: {[ip: string]: number} = {};
 
 export const GET = (async ({fetch, request}) => {
 
+  const userAgent = request.headers.get("user-agent");
+
+  if(!userAgent || userAgent.toLowerCase() === "node-fetch") {
+    throw error(400, "Please change your user agent to identify your service.");
+  }
+
   const ip = request.headers.get('cf-connecting-ip');
 
   if(!ip && !dev) {
