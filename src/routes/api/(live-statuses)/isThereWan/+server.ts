@@ -13,7 +13,7 @@ const cache: {
 
 const cacheURL = "https://whenplane/api/isThereWan";
 
-export const GET = (async ({platform}) => {
+export const GET = (async ({platform, locals}) => {
   const meta: KVNamespace | undefined = platform?.env?.META;
   if(!meta) throw error(503, "meta not available");
 
