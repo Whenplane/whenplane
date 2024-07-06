@@ -13,8 +13,10 @@ const setOrder = [
   "EUR"
 ]
 
-export const GET = (async ({platform, fetch}) => {
+export const GET = (async ({platform, fetch, locals}) => {
   if(!platform?.caches) throw error(503, "Missing cache!");
+
+  const cacheStart = Date.now();
 
   const cfCache = await platform.caches.open("whenplane:exchangeRates");
 
@@ -29,7 +31,8 @@ export const GET = (async ({platform, fetch}) => {
       const cacheMatchData: LatestExchangeRate = await cacheMatch.clone().json();
 
       if((cacheMatchData.time_next_update_unix * 1e3) - responseGenerated.getTime() > 0) {
-        console.log("Responding with cached response! (exchangeRates)")
+        console.log("Responding with cached response! (exchangeRates)");
+        locals.addTiming({id: "cf-cache", duration: Date.now() - cacheStart})
         return newResponse(cacheMatch, (headers) => {
           headers.set("x-whenplane-cf-cached", "true");
           return headers;
@@ -37,6 +40,8 @@ export const GET = (async ({platform, fetch}) => {
       }
     }
   }
+
+  locals.addTiming({id: "cf-cache", duration: Date.now() - cacheStart})
 
 
   const response = await fetch("https://open.er-api.com/v6/latest/USD")
