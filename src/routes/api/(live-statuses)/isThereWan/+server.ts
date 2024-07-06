@@ -39,6 +39,8 @@ export const GET = (async ({platform}) => {
     })
   }
 
+  const cacheStart = Date.now();
+
   // apparently caches apply to the whole datacenter, and not just memory, so we use that too
   const cfCache = await platform.caches.open("whenplane:isThereWan");
 
@@ -51,7 +53,8 @@ export const GET = (async ({platform}) => {
       const responseGenerated = new Date(responseGeneratedRaw);
 
       if(Date.now() - responseGenerated.getTime() < cache_time) {
-        console.log("Responding with cached response! (is-there-wan)")
+        console.log("Responding with cached response! (is-there-wan)");
+        locals.addTiming({id: "cf-cache", duration: Date.now() - cacheStart})
         return newResponse(cacheMatch, (headers) => {
           headers.set("x-whenplane-cf-cached", "true");
           return headers;
@@ -59,6 +62,8 @@ export const GET = (async ({platform}) => {
       }
     }
   }
+
+  locals.addTiming({id: "cf-cache", duration: Date.now() - cacheStart})
 
   cache.lastFetch = Date.now()
 
