@@ -5,11 +5,29 @@ import { dev } from "$app/environment";
 import type { ProductsTableRow } from "$lib/lttstore/lttstore_types.ts";
 
 
-export const load = (async ({platform}) => {
+export const load = (async ({platform, url}) => {
   const db: D1Database | undefined = platform?.env?.LTTSTORE_DB;
   if(!db) throw error(503, "DB unavailable!");
 
-  const allProducts = db.prepare("select * from products order by purchasesPerHour DESC")
+  let sortColumn = "purchasesPerHour";
+  if(url.searchParams.has("sort")) {
+    switch (url.searchParams.get("sort")) {
+      case "purchasesPerHour":
+        sortColumn = "purchasesPerHour";
+        break;
+      case "purchasesPerDay":
+        sortColumn = "purchasesPerDay";
+        break;
+      case "updated":
+        sortColumn = "stockChecked";
+        break;
+      case "restocked":
+        sortColumn = "lastRestock";
+        break;
+    }
+  }
+
+  const allProducts = db.prepare("select * from products order by " + sortColumn + " DESC")
     .all<ProductsTableRow>()
     .then(r => r.results);
 
