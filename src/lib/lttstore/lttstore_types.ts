@@ -94,9 +94,8 @@ export type ProductOptionCombination = {
 }
 
 export type StockCounts = {
-  [name: string]: number,
-  total?: number
-}
+  [name: string]: number
+} & {total?: number}
 
 export type CartAddErrorResponse = {
   status: number,
@@ -114,6 +113,7 @@ export type ProductsTableRow = {
   stockChecked: number,
   lastRestock: number,
   purchasesPerHour: number,
+  purchasesPerDay: number,
   regularPrice: number,
   currentPrice: number,
   firstSeen: number,
