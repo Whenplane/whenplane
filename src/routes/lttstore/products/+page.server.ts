@@ -9,7 +9,7 @@ export const load = (async ({platform, url}) => {
   const db: D1Database | undefined = platform?.env?.LTTSTORE_DB;
   if(!db) throw error(503, "DB unavailable!");
 
-  let sortColumn = "purchasesPerHour";
+  let sortColumn = "purchasesPerDay";
   if(url.searchParams.has("sort")) {
     switch (url.searchParams.get("sort")) {
       case "purchasesPerHour":
