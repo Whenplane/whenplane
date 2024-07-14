@@ -15,6 +15,23 @@
     await invalidateAll()
     loading = false;
   }
+
+  let sortedBy = $page.url.searchParams.get("sort") ?? "purchasesPerDay";
+  let first = true;
+  $: {
+    console.debug({sortedBy})
+    if(first) {
+      first = false;
+    } else {
+      const newUrl = new URL(location.href);
+      newUrl.searchParams.set("sort", sortedBy)
+
+      history.replaceState({}, document.title, newUrl.toString());
+      // first = true;
+      reload()
+    }
+  }
+
 </script>
 
 <svelte:head>
@@ -37,7 +54,13 @@
 <div class="container mx-auto pt-8 mb-64">
   <h1>All Products</h1>
   <div class="opacity-80 pl-2">
-    Sorted by average sales per hour.
+    Sorted by
+    <select bind:value={sortedBy} class="select w-56 py-1">
+      <option value="purchasesPerDay">average sales per day</option>
+      <option value="purchasesPerHour">average sales per hour</option>
+      <option value="updated">recently updated</option>
+      <option value="restocked">recently restocked</option>
+    </select>
   </div>
   {#each data.allProducts as product, i (product.id)}
     <div class="inline-block" animate:flip={{ duration: 200 }}>

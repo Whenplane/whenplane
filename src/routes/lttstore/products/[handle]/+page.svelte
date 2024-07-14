@@ -23,7 +23,7 @@
   let historyDays = $page.url.searchParams.get("historyDays") ?? "7";
   let first = true;
   $: {
-    console.log({historyDays})
+    console.debug({historyDays})
     if(first) {
       first = false;
     } else {

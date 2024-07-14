@@ -2,6 +2,7 @@ import { error, json, type RequestHandler } from "@sveltejs/kit";
 import type { D1Database } from "@cloudflare/workers-types";
 import { dev } from "$app/environment";
 import type { ProductsTableRow, StockHistoryTableRow } from "$lib/lttstore/lttstore_types.ts";
+import { createTables } from "../../../../lttstore/createTables.ts";
 
 
 export const GET = (async ({platform, params}) => {
@@ -16,6 +17,8 @@ export const GET = (async ({platform, params}) => {
     screwdriverStocks: StockHistoryTableRow[]
   } = await fetch("https://whenplane.com/api/lttstore/devData")
     .then(res => res.json());
+
+  await createTables(db);
 
   let i = 0;
   for (const product of data.products) {
