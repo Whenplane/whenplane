@@ -30,7 +30,7 @@
       const newUrl = new URL(location.href);
       newUrl.searchParams.set("historyDays", historyDays)
 
-      history.replaceState({}, document.title, newUrl.toString());
+      history.pushState({}, document.title, newUrl.toString());
       first = true;
       invalidateAll().then(() => {
         chartUpdateNumber++;
