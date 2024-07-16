@@ -45,7 +45,7 @@
         <td>{message.name}</td>
         <td>{message.type}</td>
         <td>{message.text}</td>
-        <td><a href="https://youtu.be/hdG4vuTAE3Q?t={(message.imageIndex*5)-5}">Timestamp</a></td>
+        <td><a href="https://youtu.be/{data.video.videoId}?t={(message.imageIndex*5)-5}">Timestamp</a></td>
         <td>
           {#if i > 10}
             <LargerLazyLoad>
