@@ -4,11 +4,12 @@
   export let data;
 </script>
 
-<div class="limit mx-auto">
-  <table class="table">
+<div class="mx-auto">
+  <table class="table rounded-none">
     <thead>
     <td>Name</td>
     <td>Type</td>
+    <td>Text</td>
     <td>Image</td>
     </thead>
     <tbody>
@@ -16,6 +17,7 @@
       <tr>
         <td>{message.name}</td>
         <td>{message.type}</td>
+        <td>{message.text}</td>
         <td>
           {#if i > 10}
             <LargerLazyLoad>
