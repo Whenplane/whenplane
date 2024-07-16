@@ -2,7 +2,7 @@
 // for information about these interfaces
 // and what to do when importing types
 import {
-    __DURABLE_OBJECT_BRAND,
+    __DURABLE_OBJECT_BRAND, type D1Database,
     type DurableObjectNamespace,
     type IncomingRequestCfProperties,
     type KVNamespace
@@ -39,6 +39,7 @@ declare global {
 
                 DB: D1Database;
                 LTTSTORE_DB: D1Database;
+                MERCHMESSAGES_DB: D1Database
             },
             context?: {
                 /**
