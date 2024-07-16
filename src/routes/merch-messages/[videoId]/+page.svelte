@@ -20,9 +20,17 @@
   <br>
   <h2>Merch Messages</h2>
   Hint: Use CTRL + F to search
+  {#if data.video.status === "inprogress"}
+    <br>
+    <br>
+    <span class="text-amber-300">
+                Merch messages for this episode are incomplete.
+            </span><br>
+    They may still be processing. You can view the ones we have so far, or come back later for the complete list.
+  {/if}
 </div>
 
-<div class="mx-auto">
+<div class="mx-auto pb-64">
   <table class="table rounded-none">
     <thead class="sticky top-0">
     <td>Name</td>
@@ -51,4 +59,14 @@
     {/each}
     </tbody>
   </table>
+  <div class="limit mx-auto">
+    {#if data.video.status === "inprogress"}
+      <br>
+      <br>
+      <span class="text-amber-300">
+      Merch messages for this episode are incomplete.
+    </span><br>
+      They may still be processing. You can view the ones we have so far, or come back later for the complete list.
+    {/if}
+  </div>
 </div>
