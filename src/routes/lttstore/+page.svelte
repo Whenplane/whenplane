@@ -138,5 +138,8 @@
 
   <br>
   <br>
-  <a href="/lttstore/products" class="btn variant-filled-secondary">All products</a>
+  <a href="/lttstore/products" class="btn variant-filled-secondary">All products</a><br>
+  <br>
+  <br>
+  Join the <a data-sveltekit-reload href="/discord">discord</a> where there is a channel that can alert you to useful info! (e.g. new products, sales, restocks)
 </div>
