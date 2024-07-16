@@ -23,10 +23,10 @@
         <td>
           {#if i > 10}
             <LargerLazyLoad>
-              <img src="https://merch-message-images.whenplane.com/{message.video}/images/img{message.imageIndex}.jpg">
+              <img src="https://merch-message-images.whenplane.com/{message.video}/images/img{message.imageIndex}.jpg" width="1000" height="200">
             </LargerLazyLoad>
           {:else}
-            <img src="https://merch-message-images.whenplane.com/{message.video}/images/img{message.imageIndex}.jpg">
+            <img src="https://merch-message-images.whenplane.com/{message.video}/images/img{message.imageIndex}.jpg" width="1000" height="200">
           {/if}
         </td>
       </tr>
