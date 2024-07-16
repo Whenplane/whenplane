@@ -113,6 +113,22 @@
     <br>
     <br>
 
+    {#if data.mm}
+        <h2>Merch Messages</h2>
+        <a href="/merch-messages/{data.mm.videoId}">View Merch Messages</a><br>
+
+        {#if data.mm.status === "inprogress"}
+            <br>
+            <span class="text-amber-300">
+                Merch messages for this episode are incomplete.
+            </span><br>
+            They may still be processing. You can view the ones we have so far, or come back later for the complete list.
+        {/if}
+
+        <br>
+        <br>
+    {/if}
+
     {#if topics && topics.length > 0}
         <h2>Show Info</h2>
         Provided by

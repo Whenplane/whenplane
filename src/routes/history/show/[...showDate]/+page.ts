@@ -4,7 +4,7 @@ import type { HistoricalEntry } from "$lib/utils.ts";
 import type { WanDb_Episode } from "$lib/wdb_types.ts";
 
 export const load = (async ({params, fetch}) => {
-    const response = await fetch(
+    const showResponsePromise = fetch(
         "/api/history/show/" + params.showDate + "?wdb=true",
         {
             headers: {
@@ -13,11 +13,21 @@ export const load = (async ({params, fetch}) => {
         }
     );
 
-    const data = await response.json() as HistoricalEntry & {wdb: WanDb_Episode, message?: string};
+    const showResponse = await showResponsePromise;
 
-    if(response.status != 200) {
-        throw error(response.status, data.message || response.statusText);
+    const data = await showResponse.json() as HistoricalEntry & {wdb: WanDb_Episode, message?: string};
+
+    if(showResponse.status != 200) {
+        throw error(showResponse.status, data.message || showResponse.statusText);
     }
 
-    return data;
+    const mm = data.value?.vods?.youtube ? await fetch("/api/merch-messages/info/" + data.value?.vods?.youtube)
+      .then(r => r.json())
+      .then(j => j.video as {videoId: string, status: string, title: string} | null)
+      : undefined;
+
+    return {
+        ...data,
+        mm
+    };
 }) satisfies ServerLoad
