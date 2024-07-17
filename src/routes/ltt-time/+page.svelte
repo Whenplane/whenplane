@@ -6,6 +6,7 @@
   import {fade} from "svelte/transition";
 
   $: isFrame = $page.url.searchParams.has("frame");
+  $: isBoca = $page.url.searchParams.has("boca")
 
   $: if(browser && isFrame) {
     document.body.classList.add("background-none")
@@ -15,8 +16,8 @@
   onMount(() => mounted = true)
 </script>
 <svelte:head>
-  <title>LTT Time</title>
-  <meta name="description" content="What time is it for LTT?">
+  <title>{isBoca ? "Boca" : "LTT"} Time</title>
+  <meta name="description" content="What time is it for {isBoca ? 'Boca' : 'LTT'}?">
 </svelte:head>
 
 {#if isFrame ? mounted : true}
