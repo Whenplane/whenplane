@@ -1,6 +1,7 @@
 <script lang="ts">
   import LargerLazyLoad from "$lib/LargerLazyLoad.svelte";
   import { getClosestWan, getUTCDate } from "$lib/timeUtils.ts";
+  import { page } from "$app/stores";
 
   export let data;
 
@@ -41,7 +42,7 @@
     </thead>
     <tbody>
     {#each data.messages as message, i}
-      <tr>
+      <tr id={message.id} class:hashHighlight={$page.url.hash === "#" + message.id}>
         <td>{message.name}</td>
         <td>{message.type}</td>
         <td>{message.text}</td>
@@ -70,3 +71,10 @@
     {/if}
   </div>
 </div>
+
+<style>
+  .hashHighlight {
+      border: #d4163c 2px solid;
+      border-radius: 12px;
+  }
+</style>
