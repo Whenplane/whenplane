@@ -17,7 +17,7 @@ export const GET = (async ({platform, params}) => {
   } = await fetch("https://whenplane.com/api/merch-messages/devData")
     .then(res => res.json());
 
-  await db.prepare("create table if not exists merch_messages(id text, video text, imageIndex integer, type text, text text, name text)")
+  await db.prepare("create table if not exists merch_messages(id text, video text, imageIndex integer, type text, text text, name text, jobId text)")
     .run();
   await db.prepare("create table if not exists videos(videoId text PRIMARY KEY, status text, title text)")
     .run();
@@ -29,14 +29,15 @@ export const GET = (async ({platform, params}) => {
   }
 
   for (const mm of data.merchMessages) {
-    await db.prepare("insert or replace into merch_messages(id, video, imageIndex, type, text, name) values (?, ?, ?, ?, ?, ?)")
+    await db.prepare("insert or replace into merch_messages(id, video, imageIndex, type, text, name) values (?, ?, ?, ?, ?, ?, ?)")
       .bind(
         mm.id,
         mm.video,
         mm.imageIndex,
         mm.type,
         mm.text,
-        mm.name
+        mm.name,
+        mm.jobId
       )
       .run();
   }

@@ -5,5 +5,6 @@ export type MMTableRow = {
   imageIndex: number,
   type: "message" | "reply",
   name: string,
-  text: string
+  text: string,
+  jobId: string
 }
