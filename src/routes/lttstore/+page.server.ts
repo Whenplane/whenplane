@@ -39,8 +39,8 @@ export const load = (async ({platform}) => {
     .then(r => r.results);
 
   if(newProducts.length > 12) { // if there are a lot of new products from the past week and also some recently, only show the more recent ones;
-    const twoDaysAgo = Date.now() - (24 * 60 * 60e3);
-    const afterFiltered = newProducts.filter(p => p.firstSeen > twoDaysAgo);
+    const cutoff = Date.now() - (24 * 60 * 60e3);
+    const afterFiltered = newProducts.filter(p => p.firstSeen > cutoff);
     if(afterFiltered.length > 2) {
       newProducts = afterFiltered
     }
