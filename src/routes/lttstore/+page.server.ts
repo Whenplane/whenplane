@@ -28,16 +28,24 @@ export const load = (async ({platform}) => {
     .all<ProductsTableRow>()
     .then(r => r.results);
 
-  // hard-coded value is so that items added during the initial database seed are not counted as new. It can be removed in the future
-  const newProducts = db.prepare("select * from products where firstSeen > 1718211172431 and firstSeen > ? order by firstSeen DESC limit 10")
-    .bind(Date.now() - (6 * 24 * 60 * 60e3))
-    .all<ProductsTableRow>()
-    .then(r => r.results);
-
   const recentRestocks = db.prepare("select * from products where lastRestock > ? order by lastRestock DESC limit 30")
     .bind(Date.now() - (6 * 24 * 60 * 60e3))
     .all<ProductsTableRow>()
     .then(r => r.results);
+
+  let newProducts = await db.prepare("select * from products where firstSeen > ? order by firstSeen DESC limit 50")
+    .bind(Date.now() - (6 * 24 * 60 * 60e3))
+    .all<ProductsTableRow>()
+    .then(r => r.results);
+
+  if(newProducts.length > 12) { // if there are a lot of new products from the past week and also some recently, only show the more recent ones;
+    const twoDaysAgo = Date.now() - (24 * 60 * 60e3);
+    const afterFiltered = newProducts.filter(p => p.firstSeen > twoDaysAgo);
+    if(afterFiltered.length > 2) {
+      newProducts = afterFiltered
+    }
+
+  }
 
   return {
     allProducts: await allProducts,
