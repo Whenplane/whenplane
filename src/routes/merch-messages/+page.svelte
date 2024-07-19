@@ -44,7 +44,8 @@
     searchPromise = searchClient.collections<MMTableRow>("merch_messages").documents()
       .search({
         q: text,
-        query_by: "text"
+        query_by: "text",
+        per_page: 100
       }, {cacheSearchResultsForSeconds: 60}).then(r => searchResults = r as SearchResponse<MMTableRow>) as Promise<SearchResponse<MMTableRow>>
   }
 </script>
