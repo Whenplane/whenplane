@@ -10,7 +10,8 @@ export const GET = (async ({platform, params}) => {
     .all()
     .then(r => r.results);
 
-  const merchMessages = await db.prepare("select * from merch_messages")
+  const merchMessages = await db.prepare("select * from merch_messages where video = ?")
+    .bind("hdG4vuTAE3Q")
     .all()
     .then(r => r.results);
 
