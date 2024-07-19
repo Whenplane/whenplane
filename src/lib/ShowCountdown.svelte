@@ -29,7 +29,7 @@
 
     function updateCountdown() {
         if(data.isMainShow || data.isPreShow) {
-            if(!data.isMainShow && data.isPreShow) {
+            if(!data.isMainShow && data.isPreShow && data.liveStatus.twitch.isLive) {
                 const mainScheduledStart = getClosestWan()
                 mainScheduledStart.setMinutes(mainScheduledStart.getMinutes() + 30);
 
@@ -40,7 +40,7 @@
             } else {
                 mainLate.set({isMainLate: false});
             }
-            const started = new Date(data.mainShowStarted ?? data.preShowStarted);
+            const started = new Date(data.mainShowStarted ?? data.preShowStarted ?? data.liveStatus.floatplane.started);
             isAfterStartTime = true;
             showPlayed = true;
             countdownText = getTimeUntil(started).string;

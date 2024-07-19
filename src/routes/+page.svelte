@@ -199,6 +199,8 @@
 					The WAN show is currently <span class="red"><Late/></span> by
 				{:else if data.isMainShow}
 					The WAN show has been live for
+				{:else if data.liveStatus?.floatplane.isLive && data.liveStatus?.floatplane.isWAN && !data.liveStatus.twitch.isLive}
+					The pre-pre-WAN show has been live for
 				{:else if data.isPreShow}
 					The pre-WAN show has been live for
 				{:else}
@@ -212,10 +214,14 @@
 							If you see this, youtube messed up again
 						</div>
 					{:else if data.isPreShow && !data.preShowStarted}
-						????
-						<div style="font-size: 0.25em;" class="pb-2">
-							If you see this, twitch is probably messing up
-						</div>
+						{#if data.liveStatus?.floatplane.isLive && data.liveStatus?.floatplane.isWAN && !data.liveStatus.twitch.isLive}
+							<ShowCountdown bind:isAfterStartTime={isAfterStartTime} {data}/>
+						{:else}
+							????
+							<div style="font-size: 0.25em;" class="pb-2">
+								If you see this, twitch is probably messing up
+							</div>
+						{/if}
 					{:else}
 						<ShowCountdown bind:isAfterStartTime={isAfterStartTime} {data}/>
 					{/if}
@@ -239,15 +245,17 @@
 				{:else if isLate}
 					It usually <i>actually</i> starts between 1 and 3 hours late.
 				{:else if (data.isMainShow && data.mainShowStarted) || data.isPreShow}
-					{#if data.isPreShow}
+					{#if data.isPreShow && data.liveStatus?.twitch.isLive}
 						Pre-show started
+					{:else if data.isPreShow && data.liveStatus?.floatplane.isLive}
+						Pre-pre-show started
 					{:else}
 						Started
 					{/if}
 					at
 					{#if mounted}
 						<span in:fade={{duration: 150}}>
-							{new Date(data.mainShowStarted ?? data.preShowStarted).toLocaleTimeString()}
+							{new Date(data.mainShowStarted ?? data.preShowStarted ?? data.liveStatus.floatplane.started).toLocaleTimeString()}
 						</span>
 					{/if}
 				{/if}
