@@ -14,7 +14,7 @@ export const GET = (async ({platform, params}) => {
 
   const data: {
     merchMessages: MMTableRow[],
-    videos: {videoId: string, status: string, title: string}[]
+    videos: {videoId: string, status: string, title: string, releaseDate: number}[]
   } = await fetch("https://whenplane.com/api/merch-messages/devData")
     .then(res => res.json());
 
@@ -27,12 +27,12 @@ export const GET = (async ({platform, params}) => {
 
   await db.prepare("create table if not exists merch_messages(id text, video text, imageIndex integer, type text, text text, name text, jobId text)")
     .run();
-  await db.prepare("create table if not exists videos(videoId text PRIMARY KEY, status text, title text)")
+  await db.prepare("create table if not exists videos(videoId text PRIMARY KEY, status text, title text, releaseDate integer)")
     .run();
 
   for (const video of data.videos) {
-    await db.prepare("insert or replace into videos(videoId, status, title) values (?, ?, ?)")
-      .bind(video.videoId, video.status, video.title)
+    await db.prepare("insert or replace into videos(videoId, status, title, releaseDate) values (?, ?, ?, ?)")
+      .bind(video.videoId, video.status, video.title, video.releaseDate)
       .run();
   }
 

@@ -8,6 +8,8 @@
   import {flip} from "svelte/animate";
   import {slide} from "svelte/transition";
 
+  export let data;
+
   const searchClient = new SearchClient({
     'nodes': [{
       'host': 'search.ajg0702.us',
@@ -48,11 +50,11 @@
         per_page: 100
       }, {cacheSearchResultsForSeconds: 60}).then(r => searchResults = r as SearchResponse<MMTableRow>) as Promise<SearchResponse<MMTableRow>>
   }
+
 </script>
 
 <div class="limit mx-auto">
   <h1>Merch messages</h1>
-
 
   <label>
     Search
@@ -88,4 +90,16 @@
       </table>
     {/if}
   </label>
+
+
+  <br>
+  <br>
+  <br>
+
+
+  {#each data.videos as video}
+    <a class="card block hidden-link p-2 my-1" href="/merch-messages/{video.videoId}">
+      {video.title}
+    </a>
+  {/each}
 </div>
