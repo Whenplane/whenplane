@@ -86,6 +86,7 @@ export const GET = (async ({platform, params, locals, fetch}) => {
                             const preStart = history.get(parts[0] + ":preShowStart", {cacheTtl});
                             const mainStart = history.get(parts[0] + ":mainShowStart", {cacheTtl});
                             const mainEnd = history.get(parts[0] + ":showEnd", {cacheTtl});
+                            const videoId = history.get(parts[0] + ":videoId", {cacheTtl});
                             const snippet: Promise<YoutubeSnippet | null> = history.get(parts[0] + ":snippet", {cacheTtl, type: "json"});
                             let isCurrentlyLive: Promise<boolean>;
                             if(Date.now() - new Date(parts[0]).getTime() < 35 * 60 * 60e3) {
@@ -107,9 +108,12 @@ export const GET = (async ({platform, params, locals, fetch}) => {
 
                                         return removeAfterLastDash(rawTitle)
                                     })(),
+                                    vods: {
+                                        youtube: await videoId
+                                    },
                                     isCurrentlyLive: await isCurrentlyLive
                                 }
-                            }
+                            } satisfies HistoricalEntry
                         })());
                     } else if(!k.metadata) {
                         keyPromises.push((async () => {
