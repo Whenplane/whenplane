@@ -10,6 +10,18 @@
   $: wanDate = data.video.title.includes("- WAN Show") ? getClosestWan(new Date(titleParts[titleParts.length - 1])) : undefined;
 </script>
 
+<svelte:head>
+  <title>{data.video.title} - Whenplane Merch Messages</title>
+</svelte:head>
+
+<ol class="breadcrumb pt-2 pl-2">
+  <li class="crumb"><a class="anchor hover-underline" href="/">{$page.url.hostname === "whenwan.show" ? "whenwan.show" : "Whenplane"}</a></li>
+  <li class="crumb-separator" aria-hidden="true">&rsaquo;</li>
+  <li class="crumb"><a class="anchor hover-underline" href="/merch-messages">Merch Messages</a></li>
+  <li class="crumb-separator" aria-hidden="true">&rsaquo;</li>
+  <li class="crumb">{data.video.title}</li>
+</ol>
+
 <div class="limit mx-auto">
   <svelte:element this={wanDate ? "a" : "span"} class="!text-white !no-underline" href={wanDate ? "/history/show/" + getUTCDate(wanDate) : undefined}>
     <h1>{titleParts.length === 1 ? data.video.title : titleParts[0]}</h1>
@@ -30,17 +42,6 @@
     They may still be processing. You can view the ones we have so far, or come back later for the complete list.
   {/if}
 </div>
-<svelte:head>
-  <title>{data.video.title} - Whenplane Merch Messages</title>
-</svelte:head>
-
-<ol class="breadcrumb pt-2 pl-2">
-  <li class="crumb"><a class="anchor hover-underline" href="/">{$page.url.hostname === "whenwan.show" ? "whenwan.show" : "Whenplane"}</a></li>
-  <li class="crumb-separator" aria-hidden="true">&rsaquo;</li>
-  <li class="crumb"><a class="anchor hover-underline" href="/merch-messages">Merch Messages</a></li>
-  <li class="crumb-separator" aria-hidden="true">&rsaquo;</li>
-  <li class="crumb">{data.video.title}</li>
-</ol>
 
 <div class="mx-auto pb-64">
   <table class="table rounded-none">
