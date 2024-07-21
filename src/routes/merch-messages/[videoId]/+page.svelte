@@ -30,6 +30,17 @@
     They may still be processing. You can view the ones we have so far, or come back later for the complete list.
   {/if}
 </div>
+<svelte:head>
+  <title>{data.video.title} - Whenplane Merch Messages</title>
+</svelte:head>
+
+<ol class="breadcrumb pt-2 pl-2">
+  <li class="crumb"><a class="anchor hover-underline" href="/">{$page.url.hostname === "whenwan.show" ? "whenwan.show" : "Whenplane"}</a></li>
+  <li class="crumb-separator" aria-hidden="true">&rsaquo;</li>
+  <li class="crumb"><a class="anchor hover-underline" href="/merch-messages">Merch Messages</a></li>
+  <li class="crumb-separator" aria-hidden="true">&rsaquo;</li>
+  <li class="crumb">{data.video.title}</li>
+</ol>
 
 <div class="mx-auto pb-64">
   <table class="table rounded-none">

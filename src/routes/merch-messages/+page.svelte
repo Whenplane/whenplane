@@ -7,6 +7,7 @@
   import { newsSanitizeSettings } from "$lib/news/news.ts";
   import {flip} from "svelte/animate";
   import {slide} from "svelte/transition";
+  import { page } from "$app/stores";
 
   export let data;
 
@@ -52,6 +53,15 @@
   }
 
 </script>
+<svelte:head>
+  <title>Whenplane Merch Messages</title>
+</svelte:head>
+
+<ol class="breadcrumb pt-2 pl-2">
+  <li class="crumb"><a class="anchor hover-underline" href="/">{$page.url.hostname === "whenwan.show" ? "whenwan.show" : "Whenplane"}</a></li>
+  <li class="crumb-separator" aria-hidden="true">&rsaquo;</li>
+  <li class="crumb"><a class="anchor hover-underline" href="/merch-messages">Merch Messages</a></li>
+</ol>
 
 <div class="limit mx-auto">
   <h1>Merch messages</h1>
