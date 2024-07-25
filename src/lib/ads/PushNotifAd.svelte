@@ -28,7 +28,7 @@
   })
 </script>
 {#if !$dismissed && mounted}
-  <div class="card p-3 m-2 relative" out:fade|local={{duration: 200}} in:fade|local={{duration: 1500, delay: 2e3}}>
+  <div class="card p-3 m-2 relative z-30" out:fade|local={{duration: 200}} in:fade|local={{duration: 1500, delay: 2e3}}>
     <h1>Push Notifications</h1>
     Whenplane now provides notifications!<br>
     Get faster notifications, and an imminent notification to get a warning up to 10 minutes before the show starts (even if you don't have the site open)<br>
