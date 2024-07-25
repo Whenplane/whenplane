@@ -21,6 +21,8 @@
 	import NotablePersonLive from "$lib/NotablePersonLive.svelte";
 	import { getCookie } from "$lib/cookieUtils.ts";
 	import Socket from "$lib/Socket.svelte";
+	import CaretDownFill from "svelte-bootstrap-icons/lib/CaretDownFill.svelte";
+	import {popup} from "@skeletonlabs/skeleton";
 
 	export let data;
 
@@ -311,6 +313,37 @@
 				<a href="/history" class="btn variant-ghost-surface">
 					History
 				</a>
+				<button class="btn variant-ghost-surface" use:popup={{
+					event: 'click',
+					target: 'moreDropdown',
+					placement: 'bottom'
+				}}>
+					<span class="capitalize">More</span>
+					<span><CaretDownFill/></span>
+				</button>
+				<div class="card w-48 !shadow-2xl overflow-hidden z-20" data-popup="moreDropdown">
+					<a class="btn variant-filled-surface rounded-none w-full" href="/notifications">
+						Push Notifications
+					</a>
+					<a class="btn variant-filled-surface rounded-none w-full" href="/merch-messages">
+						Merch Messages Index
+					</a>
+					<a class="btn variant-filled-surface rounded-none w-full" href="/extension">
+						Whenplane Extension
+					</a>
+					<a class="btn variant-filled-surface rounded-none w-full" href="/lttstore">
+						LTTStore Watcher
+					</a>
+					<a class="btn variant-filled-surface rounded-none w-full" href="/news">
+						Whenplane News
+					</a>
+					<a class="btn variant-filled-surface rounded-none w-full" href="/discord" data-sveltekit-reload>
+						Whenplane Discord
+					</a>
+
+
+					<div class="arrow bg-surface-400-500-token" />
+				</div>
 				<br>
 				<br>
 			{/if}
