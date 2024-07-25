@@ -115,8 +115,6 @@
   <br>
   You do <u>not</u> need to keep Whenplane open in order to get notifications. They also work on your phone (just requires some extra setup on iOS, which will show below if you are on iOS)<br>
   <br>
-  To get to this page without typing in the url, you can go to the about page, and there is a link to this page near the bottom (in the preferences box)
-  <br>
   {#if iOS}
     <div class="ios-alert mt-5">
       <aside class="alert variant-ghost-warning">
