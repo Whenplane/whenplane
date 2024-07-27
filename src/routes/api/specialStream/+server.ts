@@ -8,18 +8,18 @@ export const GET = (async ({fetch}) => {
   // In the future this will be from a database, but this will be fine for now.
 
   const data: SpecialStream | false = {
-    title: "I’ll play ANY game you ask on Snapdragon X",
-    thumbnail: "https://pbs.floatplane.com/stream_thumbnails/5c13f3c006f1be15e08e05c0/121243587037242_1720037977210.jpeg",
+    title: "FPX: Painting with 'AI Thermal Colored Pastes'",
+    thumbnail: "https://images.ajg0702.us/painting_stream_preview.jpeg",
 
-    start: "2024-07-03T21:30:00Z",
-    startIsEstimated: true,
+    start: "2024-07-29T18:30:00Z",
+    startIsEstimated: false,
 
     onFloatplane: true,
 
-    onTwitch: true,
+    onTwitch: false,
     // twitchNotes: "first half",
 
-    onYoutube: true
+    onYoutube: false
   } //false;
 
   if(!data) {
