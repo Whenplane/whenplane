@@ -130,7 +130,7 @@
     </div>
   {/if}
   {#if brave}
-    <div class="ios-alert mt-5">
+    <div class="mt-5">
       <aside class="alert variant-ghost-warning">
         <div><ExclamationTriangleFill/></div>
         <div class="alert-message">
