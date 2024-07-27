@@ -83,7 +83,7 @@
   }
 
   const iOS = browser ? !!navigator.userAgent.match(/iPad/i) || !!navigator.userAgent.match(/iPhone/i) : false;
-
+  const brave = browser ? !!navigator.userAgent.includes("Brave/") : false;
 </script>
 
 <svelte:head>
@@ -124,6 +124,21 @@
           <p>
             Because you appear to be on iOS, extra steps are required for push notifications to work.<br>
             <a href="/notifications/ios-add-to-home-screen">More info and instructions</a>
+          </p>
+        </div>
+      </aside>
+    </div>
+  {/if}
+  {#if brave}
+    <div class="ios-alert mt-5">
+      <aside class="alert variant-ghost-warning">
+        <div><ExclamationTriangleFill/></div>
+        <div class="alert-message">
+          <h3 class="h3">Extra steps are required!</h3>
+          <p>
+            Because you appear to be using Brave Browser, you need to enable push notifications in your browser settings first.<br>
+            <br>
+            Go to brave://settings/privacy and enable "Use Google services for push messaging"
           </p>
         </div>
       </aside>
