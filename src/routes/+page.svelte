@@ -337,6 +337,9 @@
 					<a class="btn variant-filled-surface rounded-none w-full" href="/news">
 						Whenplane News
 					</a>
+					<a class="btn variant-filled-surface rounded-none w-full" href="/about">
+						About & Preferences
+					</a>
 					<a class="btn variant-filled-surface rounded-none w-full" href="/discord" data-sveltekit-reload>
 						Whenplane Discord
 					</a>
