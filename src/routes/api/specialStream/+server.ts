@@ -11,7 +11,7 @@ export const GET = (async ({fetch}) => {
     title: "FPX: Painting with 'AI Thermal Colored Pastes'",
     thumbnail: "https://images.ajg0702.us/painting_stream_preview.jpeg",
 
-    start: "2024-07-29T18:30:00Z",
+    start: "2024-07-29T18:00:00Z",
     startIsEstimated: false,
 
     onFloatplane: true,
