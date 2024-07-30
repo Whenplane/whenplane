@@ -93,7 +93,7 @@ export const load = (async ({fetch, params, url}) => {
         liveStatus.floatplane = {...liveStatus.floatplane, ...overwriteData.data.floatplane};
         liveStatus.notablePeople = {...liveStatus.notablePeople, ...overwriteData.data.notablePeople};
         liveStatus.hasDone = overwriteData.data.hasDone;
-        liveStatus.isThereWan = {...liveStatus.isThereWan, ...overwriteData.data.isThereWan};
+        liveStatus.isThereWan = overwriteData.data.isThereWan;
         liveStatus.votes = overwriteData.data.votes ?? liveStatus.votes;
 
         console.debug("After overwrite", JSON.parse(JSON.stringify(liveStatus)));
