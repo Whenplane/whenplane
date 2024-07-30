@@ -1,7 +1,6 @@
 import type { SpecialStream } from "$lib/utils.ts";
 import { json } from "@sveltejs/kit";
 import { getTimeUntil } from "$lib/timeUtils.ts";
-import type { WanDb_FloatplaneData } from "$lib/wdb_types.ts";
 import type { FpEndpointResponse } from "../(live-statuses)/floatplane/+server.ts";
 
 export const GET = (async ({fetch}) => {
