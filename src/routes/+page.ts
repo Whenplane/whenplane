@@ -85,7 +85,7 @@ export const load = (async ({fetch, params, url}) => {
 
     if(liveStatus && overwriteData.data) {
 
-        console.debug("Before overwrite", JSON.parse(JSON.stringify(liveStatus)));
+        console.debug("Before overwrite", JSON.parse(JSON.stringify(liveStatus)), "with", overwriteData);
 
         liveStatus.youtube = {...liveStatus.youtube, ...overwriteData.data.youtube};
         liveStatus.twitch = {...liveStatus.twitch, ...overwriteData.data.twitch};

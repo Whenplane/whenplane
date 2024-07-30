@@ -50,7 +50,7 @@
 
       console.debug("[whenplane:ws] Received data:", data);
 
-      overwriteData.data = data
+      overwriteData.data = JSON.parse(data);
 
       lastInvalidate = Date.now();
       await invalidateAll();
