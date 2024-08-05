@@ -20,6 +20,10 @@
     return () => clearInterval(i);
   })
 </script>
+<svelte:head>
+  <title>Boca Subathon Progress</title>
+  <meta name="description" content="Boca subathon progress % and time remaining">
+</svelte:head>
 
 <div class="limit mx-auto pt-8">
   <h1>{string}</h1>
