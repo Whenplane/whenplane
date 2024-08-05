@@ -223,6 +223,24 @@ export function timeString(distance: number | undefined, long = false) {
     return daysS + hoursS + minutesS + and + secondsS;
 }
 
+export function timeStringHours(distance: number | undefined, long = false) {
+    if(distance == undefined) return undefined;
+    const hours = Math.floor((distance) / (1000 * 60 * 60));
+    const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+    const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+    const h = long ? (hours != 1 ? " hours " : " hour ") : "h ";
+    const m = long ? (minutes != 1 ? " minutes " : " minute ") : "m ";
+    const s = long ? (seconds != 1 ? " seconds " : " second ") : "s ";
+
+    const hoursS = hours > 0 ? hours+h : "";
+    const minutesS = minutes > 0 ? minutes+m : "";
+    const and = (long && (daysS || hoursS || minutesS)) ? "and " : "";
+    const secondsS = seconds+s;
+
+    return hoursS + minutesS + and + secondsS;
+}
+
 const daysInMonth = (year: number, month: number) => new Date(year, month, 0).getDate();
 
 export function n() {
