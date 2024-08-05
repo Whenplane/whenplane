@@ -1,6 +1,7 @@
 <script lang="ts">
   import { onMount } from "svelte";
   import {timeStringHours, timeString} from "$lib/timeUtils";
+  import {ProgressBar} from "@skeletonlabs/skeleton";
 
   const startTime = 1722647765000;
   const totalTime = (150 * 60 * 60e3);
@@ -35,7 +36,8 @@
 
   <br>
   <br>
-  The subathon is currently {((distance / totalTime) * 100).toFixed(3)}% complete.
+  The subathon is currently {((distance / totalTime) * 100).toFixed(3)}% complete.<br>
+  <ProgressBar value={distance} max={totalTime} />
   <br>
   <br>
   There is
