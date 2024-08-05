@@ -1,8 +1,9 @@
 <script lang="ts">
   import { onMount } from "svelte";
-  import {timeStringHours} from "$lib/timeUtils";
+  import {timeStringHours, timeString} from "$lib/timeUtils";
 
   const startTime = 1722647765000;
+  const totalTime = (150 * 60 * 60e3);
 
   let string: string | undefined = "";
   let distance: number;
@@ -30,6 +31,13 @@
 
   <br>
   <br>
-  The subathon is currently {((distance / (150 * 60 * 60e3)) * 100).toFixed(3)}% complete
+  The subathon is currently {((distance / totalTime) * 100).toFixed(3)}% complete.
+  <br>
+  <br>
+  There is
+  <span class="font-mono">
+    {timeString(totalTime - distance, true)}
+  </span>
+  remaining.
 
 </div>
