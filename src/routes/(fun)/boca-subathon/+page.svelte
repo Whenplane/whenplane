@@ -42,6 +42,10 @@
   <span class="font-mono">
     {timeString(totalTime - distance, true)}
   </span>
-  remaining.
+  remaining.<br>
+  aka
+  <span class="font-mono">
+    {timeStringHours(totalTime - distance)}
+  </span>
 
 </div>
