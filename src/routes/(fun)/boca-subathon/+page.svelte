@@ -3,7 +3,7 @@
   import {timeStringHours, timeString} from "$lib/timeUtils";
   import {ProgressBar} from "@skeletonlabs/skeleton";
 
-  const startTime = 1722647765000;
+  const startTime = 1722647764000;
   const totalTime = (150 * 60 * 60e3);
 
   let string: string | undefined = "";
