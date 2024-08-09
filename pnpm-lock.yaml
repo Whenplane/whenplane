@@ -44,6 +44,9 @@ importers:
       socket.io-client:
         specifier: ^4.7.2
         version: 4.7.2
+      svelte-confetti:
+        specifier: ^1.3.2
+        version: 1.4.0(svelte@3.54.0)
       typesense:
         specifier: ^1.8.2
         version: 1.8.2(@babel/runtime@7.24.8)
@@ -1962,6 +1965,11 @@ packages:
     hasBin: true
     peerDependencies:
       svelte: ^3.55.0
+
+  svelte-confetti@1.4.0:
+    resolution: {integrity: sha512-B0woNwpsFGwhkEoP48BIDQgvW0bMxPhavLVD+E+tsTWevlpr1aiz1S2wA8ArIXX957BiaZWHRHKmI5/pFRDbdg==}
+    peerDependencies:
+      svelte: ^4.0.0
 
   svelte-hmr@0.15.3:
     resolution: {integrity: sha512-41snaPswvSf8TJUhlkoJBekRrABDXDMdpNpT2tfHIv4JuhgvHqLMhEPGtaQn0BmbNSTkuz2Ed20DF2eHw0SmBQ==}
@@ -4067,6 +4075,10 @@ snapshots:
       - sass
       - stylus
       - sugarss
+
+  svelte-confetti@1.4.0(svelte@3.54.0):
+    dependencies:
+      svelte: 3.54.0
 
   svelte-hmr@0.15.3(svelte@3.54.0):
     dependencies:
