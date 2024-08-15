@@ -8,7 +8,7 @@
   const totalTime = (150 * 60 * 60e3);
   // this is multiple lines, so I can easily comment/uncomment
   const startTime =
-    dev ? Date.now() - totalTime + 2e3 :
+    dev ? Date.now() - totalTime + 15e3 :
       1722647766000;
 
   let string: string | undefined = "";
