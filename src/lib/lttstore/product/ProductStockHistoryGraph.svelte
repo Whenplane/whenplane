@@ -16,7 +16,7 @@
 
   let chart;
 
-  const someStock = Object.keys(stockHistory).length > 1 ? JSON.parse(stockHistory[0]?.stock ?? "{}") : {};
+  const someStock = Object.keys(stockHistory).length >= 1 ? JSON.parse(stockHistory[0]?.stock ?? "{}") : {};
 
   // show only the total for items where the stock is just the default + the total
   let onlyTotal = Object.keys(someStock).length <= 2;
