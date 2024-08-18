@@ -16,7 +16,7 @@
     loading = false;
   }
 
-  let sortedBy = $page.url.searchParams.get("sort") ?? "purchasesPerDay";
+  let sortedBy = $page.url.searchParams.get("sort") ?? data.sortColumn ?? "purchasesPerDay";
   let first = true;
   $: {
     console.debug({sortedBy})

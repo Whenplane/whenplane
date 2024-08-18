@@ -35,5 +35,6 @@ export const load = (async ({platform, url}) => {
 
   return {
     allProducts: await allProducts,
+    sortColumn,
   }
 }) satisfies PageServerLoad
