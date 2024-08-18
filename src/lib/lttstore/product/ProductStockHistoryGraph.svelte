@@ -20,6 +20,7 @@
 
   // show only the total for items where the stock is just the default + the total
   let onlyTotal = Object.keys(someStock).length <= 2;
+  console.debug({onlyTotal, length: Object.keys(someStock).length, someStock})
 
   $: {
     onlyTotal;
