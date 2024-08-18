@@ -11,7 +11,7 @@ export const load = (async ({platform, url}) => {
   const db: D1Database | undefined = platform?.env?.LTTSTORE_DB;
   if(!db) throw error(503, "DB unavailable!");
 
-  let sortColumn = Date.now() - stockStartedWorking > 7 * 24 * 60 * 60e3 ? "purchasesPerDay" : "updated";
+  let sortColumn = Date.now() - stockStartedWorking > 7 * 24 * 60 * 60e3 ? "purchasesPerDay" : "stockChecked";
   if(url.searchParams.has("sort")) {
     switch (url.searchParams.get("sort")) {
       case "purchasesPerHour":
