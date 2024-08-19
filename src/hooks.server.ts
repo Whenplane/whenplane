@@ -1,10 +1,11 @@
-import { error, type Handle } from "@sveltejs/kit";
+import { error, type Handle, type HandleServerError } from "@sveltejs/kit";
 import { building, dev } from "$app/environment";
 import { random } from "$lib/utils.ts";
 import type { AnalyticsEngineDataset, KVNamespace,
     KVNamespaceGetOptions, KVNamespaceListOptions, KVNamespaceListResult, KVNamespacePutOptions } from "@cloudflare/workers-types";
 import type { TimingEntry } from "./app";
 import { report } from "$lib/server/instance-analytics.ts";
+import { env } from "$env/dynamic/private";
 
 const reportedIds: {[key: string]: number} = {};
 
@@ -174,6 +175,53 @@ export const handle: Handle = async ({ event, resolve }) => {
 
     return response;
 }
+
+export const handleError: HandleServerError = async ({ error, event}) => {
+
+    if(env.ERROR_REPORTING_WEBHOOK) {
+
+        try {
+            const formData = new FormData();
+
+            formData.append("payload_json", JSON.stringify(
+              {
+                  content: `Error thrown on whenplane server worker!`
+              }
+            ));
+
+            formData.append(
+              "files[0]",
+              new Blob(
+                [JSON.stringify({error, event}, undefined, '\t')],
+                {type: 'application/json'}
+              ),
+              "items.json"
+            )
+
+            event.platform?.context?.waitUntil(
+              fetch(
+                env.ERROR_REPORTING_WEBHOOK as string,
+                {
+                    method: "POST",
+                    body: formData
+                }
+              )
+            )
+        } catch(e) {
+            console.error("Error while trying to report another error!", e);
+        }
+    } else {
+        console.warn("Error reporting webhook is falsy!")
+    }
+
+    // apparently this is the default behaviour for sveltekit 1.27.6: https://web.archive.org/web/20231114155539/https://kit.svelte.dev/docs/hooks#shared-hooks-handleerror
+    if(event.route.id === null) {
+        return { message: 'Not Found' };
+    } else {
+        return { message: 'Internal Error' }
+    }
+}
+
 
 
 function createKVNamespaceWrapper(real: KVNamespace | undefined, kvNamespaceName: string, realPlatform: App.Platform): KVNamespace {
