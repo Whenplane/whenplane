@@ -185,14 +185,18 @@ export const handleError: HandleServerError = async ({ error, event}) => {
 
             formData.append("payload_json", JSON.stringify(
               {
-                  content: `Error thrown on whenplane server worker!`
+                  content: `Error thrown on whenplane server worker! Path: \`${event.url.pathname}\``
               }
             ));
+
+            const eventClone = JSON.parse(JSON.stringify(event));
+
+            if(eventClone.platform?.env) eventClone.platform.env = undefined;
 
             formData.append(
               "files[0]",
               new Blob(
-                [JSON.stringify({error, event}, undefined, '\t')],
+                [JSON.stringify({error, eventClone}, undefined, '\t')],
                 {type: 'application/json'}
               ),
               "items.json"
