@@ -201,7 +201,7 @@
 					The WAN show is currently <span class="red"><Late/></span> by
 				{:else if data.isMainShow}
 					The WAN show has been live for
-				{:else if data.liveStatus?.floatplane.isLive && data.liveStatus?.floatplane.isWAN && !data.liveStatus.twitch.isLive}
+				{:else if data.liveStatus?.floatplane?.isLive && data.liveStatus?.floatplane?.isWAN && !data.liveStatus.twitch?.isLive}
 					The pre-pre-WAN show has been live for
 				{:else if data.isPreShow}
 					The pre-WAN show has been live for
@@ -216,7 +216,7 @@
 							If you see this, youtube messed up again
 						</div>
 					{:else if data.isPreShow && !data.preShowStarted}
-						{#if data.liveStatus?.floatplane.isLive && data.liveStatus?.floatplane.isWAN && !data.liveStatus.twitch.isLive}
+						{#if data.liveStatus?.floatplane?.isLive && data.liveStatus?.floatplane?.isWAN && !data.liveStatus?.twitch?.isLive}
 							<ShowCountdown bind:isAfterStartTime={isAfterStartTime} {data}/>
 						{:else}
 							????
@@ -249,7 +249,7 @@
 				{:else if (data.isMainShow && data.mainShowStarted) || data.isPreShow}
 					{#if data.isPreShow && data.liveStatus?.twitch.isLive}
 						Pre-show started
-					{:else if data.isPreShow && data.liveStatus?.floatplane.isLive}
+					{:else if data.isPreShow && data.liveStatus?.floatplane?.isLive}
 						Pre-pre-show started
 					{:else}
 						Started

@@ -29,7 +29,7 @@ export enum ImminenceEnumeration {
 }
 -->
 
-{#if floatplane && !floatplane.isLive && floatplane.isWAN && ((dayIsCloseEnough && floatplane.isThumbnailNew) /*|| dev*/)}
+{#if floatplane && !floatplane?.isLive && floatplane?.isWAN && ((dayIsCloseEnough && floatplane?.isThumbnailNew) /*|| dev*/)}
   <div class="card border-2 p-2 !border-green-600 !bg-opacity-20 !bg-green-600 block relative pb-0 mobile-add-padding">
     <a href={floatplane?.thumbnail} target="_blank" rel="noopener">
       <img src={floatplane?.thumbnail} class="inline-block h-32 rounded-lg mobile-full-width" alt="Dan">

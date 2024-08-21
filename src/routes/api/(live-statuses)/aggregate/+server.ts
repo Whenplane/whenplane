@@ -157,9 +157,9 @@ function makeWsMessage(response: AggregateResponse) {
         },
         specialStream: response.specialStream,
         floatplane: {
-            isLive: response.floatplane.isLive,
-            isWAN: response.floatplane.isWAN,
-            isThumbnailNew: response.floatplane.isThumbnailNew
+            isLive: response.floatplane?.isLive,
+            isWAN: response.floatplane?.isWAN,
+            isThumbnailNew: response.floatplane?.isThumbnailNew
         },
         notablePeople: Object.keys(response.notablePeople)
           .filter(key => Object.keys(notablePeople).includes(key))

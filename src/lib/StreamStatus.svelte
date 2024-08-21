@@ -80,16 +80,16 @@
         </span>
         <span>
             Floatplane<br>
-            <span class="status opacity-50" class:wan={data.liveStatus.floatplane.isWAN && data.liveStatus.floatplane.isLive} class:upcoming={data.liveStatus.floatplane.isThumbnailNew}>
-                {#if data.liveStatus.floatplane.isLive}
-                    {#if data.liveStatus.floatplane.isWAN}
+            <span class="status opacity-50" class:wan={data.liveStatus?.floatplane?.isWAN && data.liveStatus?.floatplane?.isLive} class:upcoming={data.liveStatus?.floatplane?.isThumbnailNew}>
+                {#if data.liveStatus.floatplane?.isLive}
+                    {#if data.liveStatus?.floatplane?.isWAN}
                         (live)
                     {:else}
                         (live non-WAN)
                     {/if}
                 {:else}
-                    {#if data.liveStatus.floatplane.isThumbnailNew}
-                        (upcoming{data.liveStatus.floatplane.isWAN ? "" : " non-wan"})
+                    {#if data.liveStatus?.floatplane?.isThumbnailNew}
+                        (upcoming{data.liveStatus?.floatplane?.isWAN ? "" : " non-wan"})
                     {:else}
                         (offline)
                     {/if}
