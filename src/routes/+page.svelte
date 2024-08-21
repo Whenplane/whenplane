@@ -240,7 +240,7 @@
 				{#if !isAfterStartTime && !data.isMainShow}
 					Next WAN:
 					{#if mounted} <!-- dont SSR next wan date, as server timezone and locale is probably different than the users' -->
-						<span in:fade={{duration: 150}}>
+						<span in:fade|global={{duration: 150}}>
 							{getNextWAN().toLocaleString()}
 						</span>
 					{/if}
@@ -256,7 +256,7 @@
 					{/if}
 					at
 					{#if mounted}
-						<span in:fade={{duration: 150}}>
+						<span in:fade|global={{duration: 150}}>
 							{new Date(data.mainShowStarted ?? data.preShowStarted ?? data.liveStatus.floatplane.started).toLocaleTimeString()}
 						</span>
 					{/if}

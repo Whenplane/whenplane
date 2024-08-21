@@ -37,7 +37,7 @@
   {:else if expanded && rest}
 
     {#each rest as topic}
-      <li in:slide={{easing: quintOut}}>
+      <li in:slide|global={{easing: quintOut}}>
         {topic.title}
 
         {#if topic.children}

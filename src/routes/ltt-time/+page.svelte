@@ -21,7 +21,7 @@
 </svelte:head>
 
 {#if isFrame ? mounted : true}
-  <div class="flex h-screen items-center justify-center" class:bigtext={!isFrame} in:fade>
+  <div class="flex h-screen items-center justify-center" class:bigtext={!isFrame} in:fade|global>
     <LTTTime border={isFrame} tooltip={!isFrame}/>
   </div>
 {/if}

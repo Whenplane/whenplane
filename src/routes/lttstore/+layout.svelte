@@ -21,7 +21,7 @@
         event: "hover",
         target: "currency-warning",
         placement: 'bottom'
-      }} transition:fade={{duration: 150}}>
+      }} transition:fade|global={{duration: 150}}>
         <ExclamationTriangle class="inline-block text-yellow-300 h-7 w-7"/>
       </span>
     {/if}

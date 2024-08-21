@@ -51,7 +51,7 @@
   <li class="crumb-separator" aria-hidden="true">&rsaquo;</li>
   <li class="crumb" on:click={reload}>LTT Store Tracker</li>
   {#if loading}
-    <li class="crumb" transition:fade={{duration: 100}}>
+    <li class="crumb" transition:fade|global={{duration: 100}}>
       <ProgressRadial width="w-6" stroke={250} value={loading ? undefined : 100}/>
     </li>
   {/if}
@@ -63,7 +63,7 @@
   <input placeholder="Search for products" bind:value={searchTerm} class="input w-64 p-2 pl-4">
   <br>
   {#each searchResults as result (result.id)}
-    <a class="block card p-2 m-1" href="/lttstore/products/{result.handle}" animate:flip={{ duration: 200 }} transition:slide|local>
+    <a class="block card p-2 m-1" href="/lttstore/products/{result.handle}" animate:flip={{ duration: 200 }} transition:slide>
       <img src={result.featured_image ?? result.first_image} class="inline-block h-8 w-8 rounded-md">
       <span class:line-through={!(result.available ?? true)}>
         {result.title}

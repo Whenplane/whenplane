@@ -28,7 +28,7 @@
   })
 </script>
 {#if !$dismissed && mounted}
-  <div class="card p-3 m-2 relative z-30" out:fade|local={{duration: 200}} in:fade|local={{duration: 1500, delay: 2e3}}>
+  <div class="card p-3 m-2 relative z-30" out:fade={{duration: 200}} in:fade={{duration: 1500, delay: 2e3}}>
     <h1>Browser Extension</h1>
     Hello fellow floaters! (and twitch too I guess)<br>
     I've made a browser extension that replaces the Floatplane/Twitch offline page with this site.<br>

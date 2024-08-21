@@ -89,7 +89,7 @@
         </thead>
         <tbody>
         {#each searchResults.hits as hit (hit.document.id)}
-          <tr animate:flip={{ duration: 100 }} transition:slide|local class="bg-surface-900">
+          <tr animate:flip={{ duration: 100 }} transition:slide class="bg-surface-900">
             <td>{hit.document.type}</td>
             <td>{hit.document.name}</td>
             <td>{@html sanitizeHtml((hit.highlight.text?.snippet ?? hit.highlight.name?.snippet)+"", newsSanitizeSettings)}</td>

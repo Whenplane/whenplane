@@ -89,7 +89,7 @@
         </h1>
         <div class="text-center opacity-50 relative bottom-3">
             {#if scrollY <= 10}
-                <span transition:fade>
+                <span transition:fade|global>
                     (scroll)
                 </span>
             {:else}

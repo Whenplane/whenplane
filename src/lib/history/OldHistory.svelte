@@ -52,7 +52,7 @@
     </div>
 {:then {history}}
     {#each history as show, i}
-        <span in:fade={{delay: i > 50 ? 0 : i * 50, duration: 350, easing: quadInOut}}>
+        <span in:fade|global={{delay: i > 50 ? 0 : i * 50, duration: 350, easing: quadInOut}}>
             <HistoricalShow {show} {withThumbnail} lazyLoadThumbnail={true}/>
         </span>
     {:else}

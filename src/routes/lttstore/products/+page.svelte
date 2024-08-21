@@ -46,7 +46,7 @@
   <li class="crumb-separator" aria-hidden="true">&rsaquo;</li>
   <li class="crumb" on:click={reload}>Products</li>
   {#if loading}
-    <li class="crumb" transition:fade={{duration: 100}}>
+    <li class="crumb" transition:fade|global={{duration: 100}}>
       <ProgressRadial width="w-6" stroke={250} value={loading ? undefined : 100}/>
     </li>
   {/if}

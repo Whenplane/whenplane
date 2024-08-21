@@ -110,7 +110,7 @@
                             target: 'floatplaneInfo',
                             placement: 'top'
                         }}
-                        in:fade={{duration: 150}}
+                        in:fade|global={{duration: 150}}
                 >
                     <Info/>
                 </span>

@@ -63,7 +63,7 @@
                             </LargerLazyLoad>
                         </div>
                         {#if !thumbnailLoaded && browser && localStorage.getItem("disableBlurHash") !== "true"}
-                            <div class="absolute top-0 left-0 rounded" out:fade={{duration: 400}}>
+                            <div class="absolute top-0 left-0 rounded" out:fade|global={{duration: 400}}>
                                 {#if thumbnail.blurhash}
                                     <LargerLazyLoad>
                                         <BlurHash blurhash={thumbnail.blurhash}/>
