@@ -176,7 +176,7 @@ export const handle: Handle = async ({ event, resolve }) => {
     return response;
 }
 
-export const handleError: HandleServerError = async ({ error, event}) => {
+export const handleError: HandleServerError = async ({ error, event, status, message}) => {
 
     if(error && error?.status !== 404) {
         if(env.ERROR_REPORTING_WEBHOOK) {
@@ -197,7 +197,7 @@ export const handleError: HandleServerError = async ({ error, event}) => {
                 formData.append(
                   "files[0]",
                   new Blob(
-                    [JSON.stringify({error, eventClone}, undefined, '\t')],
+                    [JSON.stringify({error, status, message, eventClone}, undefined, '\t')],
                     {type: 'application/json'}
                   ),
                   "items.json"
