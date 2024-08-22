@@ -103,10 +103,10 @@ export const load = (async ({fetch, params, url}) => {
 
 
     const isPreShow = liveStatus ? (!liveStatus.youtube?.isLive && (liveStatus.twitch?.isWAN || (liveStatus.floatplane?.isWAN && liveStatus.floatplane?.isLive))) : false;
-    const isMainShow = liveStatus ? (liveStatus.youtube.isWAN && liveStatus.youtube.isLive) : false;
+    const isMainShow = liveStatus ? (liveStatus.youtube?.isWAN && liveStatus.youtube?.isLive) : false;
 
-    const preShowStarted = liveStatus && isPreShow ? liveStatus.twitch.started : undefined;
-    const mainShowStarted = liveStatus && isMainShow ? liveStatus.youtube.started : undefined;
+    const preShowStarted = liveStatus && isPreShow ? liveStatus.twitch?.started : undefined;
+    const mainShowStarted = liveStatus && isMainShow ? liveStatus.youtube?.started : undefined;
 
     return {
         isPreShow,

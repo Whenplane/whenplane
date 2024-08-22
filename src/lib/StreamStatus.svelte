@@ -52,15 +52,15 @@
         </span>
         <span>
             Youtube<br>
-            <span class="status opacity-50" class:wan={data.liveStatus.youtube.isWAN} class:upcoming={data.liveStatus.youtube.upcoming}>
-                {#if data.liveStatus.youtube.isLive}
+            <span class="status opacity-50" class:wan={data.liveStatus.youtube?.isWAN} class:upcoming={data.liveStatus.youtube?.upcoming}>
+                {#if data.liveStatus.youtube?.isLive}
                     {#if data.liveStatus.youtube.isWAN}
                         (live)
                     {:else}
                         (live non-WAN)
                     {/if}
                 {:else}
-                    {#if data.liveStatus.youtube.upcoming}
+                    {#if data.liveStatus.youtube?.upcoming}
                         (upcoming)
                     {:else}
                         (offline)
