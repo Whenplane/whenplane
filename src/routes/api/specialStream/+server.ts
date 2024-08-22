@@ -18,7 +18,7 @@ export const GET = (async ({fetch}) => {
     onTwitch: true,
     // twitchNotes: "first half",
 
-    onYoutube: true
+    onYoutube: false
   } //false;
 
   if(!data) {
