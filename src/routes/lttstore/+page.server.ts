@@ -34,7 +34,7 @@ export const load = (async ({platform}) => {
     .then(r => r.results);
 
   let newProducts = await db.prepare("select * from products where firstSeen > ? order by firstSeen DESC limit 50")
-    .bind(Date.now() - (6 * 24 * 60 * 60e3))
+    .bind(Math.max(1724356079932, Date.now() - (6 * 24 * 60 * 60e3))) // this hard-coded value is to remove the "new" products that were released during the breakage in august
     .all<ProductsTableRow>()
     .then(r => r.results);
 
