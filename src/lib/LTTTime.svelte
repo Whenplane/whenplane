@@ -25,6 +25,7 @@
 <div
   class="ltttime background"
   class:border={border}
+  class:not-border={!border}
   use:popup={{
     event: 'hover',
     target: 'ltttime-info',
@@ -61,6 +62,10 @@
       border-right: none;
 
       border-bottom-left-radius: 0.5rem;
+  }
+  .ltttime.not-border {
+      border-radius: 2rem;
+      padding-bottom: 1.2rem;
   }
 
   .popup {
