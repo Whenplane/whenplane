@@ -8,7 +8,7 @@
   import { Accordion, AccordionItem } from "@skeletonlabs/skeleton";
   import sanitizeHtml from "sanitize-html";
   import { newsSanitizeSettings } from "$lib/news/news.js";
-  import { invalidateAll } from "$app/navigation";
+  import { goto } from "$app/navigation";
   import Price from "$lib/lttstore/Price.svelte";
 
   export let data;
@@ -30,11 +30,16 @@
       const newUrl = new URL(location.href);
       newUrl.searchParams.set("historyDays", historyDays)
 
-      history.pushState({}, document.title, newUrl.toString());
+      first = true;
+      goto(newUrl.toString(), { noScroll: true } ).then(() => {
+        chartUpdateNumber++;
+      })
+
+      /*history.pushState({}, document.title, newUrl.toString());
       first = true;
       invalidateAll().then(() => {
         chartUpdateNumber++;
-      });
+      });*/
     }
   }
 </script>

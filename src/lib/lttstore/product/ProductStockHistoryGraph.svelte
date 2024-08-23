@@ -26,7 +26,7 @@
     onlyTotal;
     chartUpdateNumber;
     options.series = getSeries()
-    console.debug("Series:", options.series)
+    // console.debug("Series:", options.series)
     if(chart) chart.updateSeries(options.series)
   }
 
