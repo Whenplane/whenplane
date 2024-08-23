@@ -73,6 +73,7 @@ export const GET = (async ({platform, locals}) => {
   ]);
 
   const response: IsThereWanResponse = {
+    timestamp: Date.now(),
     text: promises[0],
     image: promises[1]
   }
@@ -93,6 +94,7 @@ export const GET = (async ({platform, locals}) => {
 }) satisfies RequestHandler
 
 export type IsThereWanResponse = {
+  timestamp?: number,
   text: string | null
   image: string | null
 }

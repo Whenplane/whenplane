@@ -247,6 +247,7 @@ export const GET = (async ({platform, url}) => {
     }
 
     const response: TwitchResponse = {
+        timestamp: Date.now(),
         debug,
         twitchData,
         isLive,
@@ -283,6 +284,7 @@ export const GET = (async ({platform, url}) => {
 }) satisfies RequestHandler;
 
 export type TwitchResponse = {
+    timestamp: number,
     debug?: {
         limit: string | null,
         remaining: string | null,

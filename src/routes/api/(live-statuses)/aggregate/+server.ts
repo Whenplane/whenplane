@@ -26,7 +26,11 @@ export const GET = (async ({url, fetch, locals, platform}) => {
     const isNextFast = url.searchParams.get("isNextFast");
 
     const isThereWan = fetch("/api/isThereWan").then(r => r.json());
-    const hasDone = fetch("/api/hasDone").then(r => r.json()).then(r => r.hasDone);
+    let hasDoneTimestamp;
+    const hasDone = fetch("/api/hasDone").then(r => r.json()).then(r => {
+        hasDoneTimestamp = r.timestamp;
+        return r.hasDone;
+    });
     // const showExtension = (platform?.env?.META as KVNamespace)?.get("showExtension").then(r => r === "true");
 
     let votesTime: number | undefined;
@@ -97,9 +101,25 @@ export const GET = (async ({url, fetch, locals, platform}) => {
         // showExtension: await showExtension
     }
 
+    const lowestTimestamp = Math.min(
+      response.twitch.timestamp || Number.MAX_SAFE_INTEGER,
+      response.youtube.time || Number.MAX_SAFE_INTEGER,
+      response.isThereWan.timestamp || Number.MAX_SAFE_INTEGER,
+      hasDoneTimestamp || Number.MAX_SAFE_INTEGER,
+      response.floatplane.fetched || Number.MAX_SAFE_INTEGER
+    )
+    console.log({lowestTimestamp/*, timestamps: {
+            twitch: response.twitch.timestamp || Number.MAX_SAFE_INTEGER,
+            youtube: response.youtube.time || Number.MAX_SAFE_INTEGER,
+            isThereWan: response.isThereWan.timestamp || Number.MAX_SAFE_INTEGER,
+            hasDone: hasDoneTimestamp || Number.MAX_SAFE_INTEGER,
+            floatplane: response.floatplane.fetched || Number.MAX_SAFE_INTEGER
+        }*/})
+
     const thisWsMessage = makeWsMessage(response);
     if(thisWsMessage !== lastWsMessage) {
         const objectBinding = platform?.env?.WS_OBJECT;
+
 
         if(objectBinding) {
             const objectId = objectBinding.idFromName("a");
@@ -110,7 +130,10 @@ export const GET = (async ({url, fetch, locals, platform}) => {
                     "content-type": "application/json"
                 },
                 method: "POST",
-                body: JSON.stringify(thisWsMessage)
+                body: JSON.stringify({
+                    timestamp: Date.now(),
+                    ...thisWsMessage
+                })
             }))
         }
     }

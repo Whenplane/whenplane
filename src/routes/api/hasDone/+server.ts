@@ -35,6 +35,7 @@ export const GET = (async ({platform, url}) => {
     const partialEntry = history.get(date + ":mainShowStart");
 
     const response: HasDoneResponse = {
+        timestamp: Date.now(),
         hasDone: !!(await fullEntry) || !!(await partialEntry),
         cached: false
     };
@@ -46,6 +47,7 @@ export const GET = (async ({platform, url}) => {
 }) satisfies RequestHandler;
 
 export type HasDoneResponse = {
+    timestamp: number,
     hasDone: boolean,
 
     cached: boolean
