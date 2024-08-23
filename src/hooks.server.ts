@@ -176,57 +176,57 @@ export const handle: Handle = async ({ event, resolve }) => {
     return response;
 }
 
-export const handleError: HandleServerError = async ({ error, event, status, message}) => {
-
-    if(error && error?.status !== 404) {
-        if(env.ERROR_REPORTING_WEBHOOK) {
-
-            try {
-                const formData = new FormData();
-
-                formData.append("payload_json", JSON.stringify(
-                  {
-                      content: `Error thrown on whenplane server worker! Path: \`${event.url.pathname}\``
-                  }
-                ));
-
-                const eventClone = JSON.parse(JSON.stringify(event));
-
-                if(eventClone.platform?.env) eventClone.platform.env = undefined;
-
-                formData.append(
-                  "files[0]",
-                  new Blob(
-                    [JSON.stringify({error, status, message, eventClone}, undefined, '\t')],
-                    {type: 'application/json'}
-                  ),
-                  "items.json"
-                )
-
-                event.platform?.context?.waitUntil(
-                  fetch(
-                    env.ERROR_REPORTING_WEBHOOK as string,
-                    {
-                        method: "POST",
-                        body: formData
-                    }
-                  )
-                )
-            } catch(e) {
-                console.error("Error while trying to report another error!", e);
-            }
-        } else {
-            console.warn("Error reporting webhook is falsy!")
-        }
-    }
-
-    // apparently this is the default behaviour for sveltekit 1.27.6: https://web.archive.org/web/20231114155539/https://kit.svelte.dev/docs/hooks#shared-hooks-handleerror
-    if(event.route.id === null) {
-        return { message: 'Not Found' };
-    } else {
-        return { message: 'Internal Error' }
-    }
-}
+// export const handleError: HandleServerError = async ({ error, event, status, message}) => {
+//
+//     if(error && error?.status !== 404) {
+//         if(env.ERROR_REPORTING_WEBHOOK) {
+//
+//             try {
+//                 const formData = new FormData();
+//
+//                 formData.append("payload_json", JSON.stringify(
+//                   {
+//                       content: `Error thrown on whenplane server worker! Path: \`${event.url.pathname}\``
+//                   }
+//                 ));
+//
+//                 const eventClone = JSON.parse(JSON.stringify(event));
+//
+//                 if(eventClone.platform?.env) eventClone.platform.env = undefined;
+//
+//                 formData.append(
+//                   "files[0]",
+//                   new Blob(
+//                     [JSON.stringify({error, status, message, eventClone}, undefined, '\t')],
+//                     {type: 'application/json'}
+//                   ),
+//                   "items.json"
+//                 )
+//
+//                 event.platform?.context?.waitUntil(
+//                   fetch(
+//                     env.ERROR_REPORTING_WEBHOOK as string,
+//                     {
+//                         method: "POST",
+//                         body: formData
+//                     }
+//                   )
+//                 )
+//             } catch(e) {
+//                 console.error("Error while trying to report another error!", e);
+//             }
+//         } else {
+//             console.warn("Error reporting webhook is falsy!")
+//         }
+//     }
+//
+//     // apparently this is the default behaviour for sveltekit 1.27.6: https://web.archive.org/web/20231114155539/https://kit.svelte.dev/docs/hooks#shared-hooks-handleerror
+//     if(event.route.id === null) {
+//         return { message: 'Not Found' };
+//     } else {
+//         return { message: 'Internal Error' }
+//     }
+// }
 
 
 
