@@ -117,7 +117,8 @@ export const GET = (async ({url, fetch, locals, platform}) => {
         }*/})
 
     const thisWsMessage = makeWsMessage(response);
-    if(thisWsMessage !== lastWsMessage) {
+    const thisWsMessageString = JSON.stringify(thisWsMessage);
+    if(thisWsMessageString !== lastWsMessage) {
         const objectBinding = platform?.env?.WS_OBJECT;
 
 
@@ -138,7 +139,7 @@ export const GET = (async ({url, fetch, locals, platform}) => {
         }
     }
     console.log({thisWsMessage, lastWsMessage})
-    lastWsMessage = thisWsMessage;
+    lastWsMessage = thisWsMessageString;
 
     locals.addTiming({id: "twitch", duration: twitchTime ?? -1});
     locals.addTiming({id: "youtube", duration: ytTime ?? -1});
