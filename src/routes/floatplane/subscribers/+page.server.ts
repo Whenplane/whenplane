@@ -9,6 +9,9 @@ export const load = (async ({platform}) => {
   if(dev) {
     await db.prepare("create table if not exists totals (timestamp integer PRIMARY KEY, data string)")
       .run();
+    await db.prepare("insert or ignore into totals (timestamp, data) values (?, ?)")
+      .bind(1724385030688, "{\"totalSubscriberCount\": 36343, \"totalIncome\": null}")
+      .run();
   }
 
   const subHistory = await db.prepare("select * from totals")
