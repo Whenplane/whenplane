@@ -50,7 +50,13 @@
 
       console.debug("[whenplane:ws] Received data:", data);
 
-      overwriteData.data = JSON.parse(data);
+      if(typeof data === "string") {
+        overwriteData.data = JSON.parse(data);
+      } else if(typeof data === "object") {
+        overwriteData.data = data;
+      } else {
+        console.error("Unknown data type", typeof data)
+      }
 
       lastInvalidate = Date.now();
       await invalidateAll();
