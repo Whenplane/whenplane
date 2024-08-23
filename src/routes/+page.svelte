@@ -331,9 +331,9 @@
 					<a class="btn variant-filled-surface rounded-none w-full" href="/extension">
 						Whenplane Extension
 					</a>
-					<!--<a class="btn variant-filled-surface rounded-none w-full" href="/lttstore">
+					<a class="btn variant-filled-surface rounded-none w-full" href="/lttstore">
 						LTTStore Watcher
-					</a>-->
+					</a>
 					<a class="btn variant-filled-surface rounded-none w-full" href="/news">
 						Whenplane News
 					</a>
