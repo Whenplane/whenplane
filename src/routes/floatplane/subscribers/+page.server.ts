@@ -14,7 +14,7 @@ export const load = (async ({platform}) => {
       .run();
   }
 
-  const olderSubHistory = db.prepare("select * from oldHistory")
+  const olderSubHistory = db.prepare("select * from oldData")
     .all<{timestamp: number, data: string}>();
 
   const subHistory = db.prepare("select * from totals")
