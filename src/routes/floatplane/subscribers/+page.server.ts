@@ -14,10 +14,20 @@ export const load = (async ({platform}) => {
       .run();
   }
 
-  const subHistory = await db.prepare("select * from totals")
+  const olderSubHistory = db.prepare("select * from oldHistory")
     .all<{timestamp: number, data: string}>();
 
-  const parsedSubHistory = subHistory.results.map(e => {
+  const subHistory = db.prepare("select * from totals")
+    .all<{timestamp: number, data: string}>();
+
+
+  const parsedSubHistory = (await subHistory).results.map(e => {
+    return {
+      timestamp: e.timestamp,
+      ...JSON.parse(e.data)
+    }
+  })
+  const parsedOlderSubHistory = (await olderSubHistory).results.map(e => {
     return {
       timestamp: e.timestamp,
       ...JSON.parse(e.data)
@@ -25,7 +35,7 @@ export const load = (async ({platform}) => {
   })
 
   return {
-    subHistory: parsedSubHistory
+    subHistory: [...parsedOlderSubHistory, ...parsedSubHistory],
   }
 
 }) satisfies ServerLoad

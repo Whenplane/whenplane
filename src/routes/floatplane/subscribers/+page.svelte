@@ -6,4 +6,4 @@
 
 <SubscriberGraph subHistory={data.subHistory}/>
 
-<pre>{JSON.stringify(data, undefined, '\t')}</pre>
+<!--<pre>{JSON.stringify(data, undefined, '\t')}</pre>-->
