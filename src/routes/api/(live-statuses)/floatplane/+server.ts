@@ -3,6 +3,7 @@ import { dev } from "$app/environment";
 import type { DurableObjectNamespace, DurableObjectStub } from "@cloudflare/workers-types";
 import type { FpLiveStatusResponse } from "$lib/utils.ts";
 import { isNearWan } from "$lib/timeUtils.ts";
+import { log } from "$lib/server/server-utils.ts";
 
 let cache: {
   lastFetch: number,
@@ -17,87 +18,95 @@ let lastOtherStreamNotifSend = 0;
 
 export const GET = (async ({fetch, url, platform, locals}) => {
 
-  const fetcher: DurableObjectNamespace | undefined = platform?.env?.FLOATPLANE_FETCHER;
+  try {
 
-  const withDescription = url.searchParams.get("description") === "true";
+    const fetcher: DurableObjectNamespace | undefined = platform?.env?.FLOATPLANE_FETCHER;
 
-  const cache_time = isNearWan() ? 4.999e3 : 29.999e3;
+    const withDescription = url.searchParams.get("description") === "true";
 
-  const fast = url.searchParams.get("fast") === "true";
-  if(Date.now() - cache.lastFetch < (fast ? fast_cache_time : cache_time)) {
+    const cache_time = isNearWan() ? 4.999e3 : 29.999e3;
+
+    const fast = url.searchParams.get("fast") === "true";
+    if(Date.now() - cache.lastFetch < (fast ? fast_cache_time : cache_time)) {
+      return json({
+        cached: true,
+        lastFetch: cache.lastFetch,
+        ...cache.lastData,
+        description: withDescription ? cache.lastData?.description : undefined,
+        isWAN: cache.lastData?.title.toLowerCase().includes(" wan ")
+      });
+    }
+
+    cache.lastFetch = Date.now();
+
+    let stub: DurableObjectStub;
+    if(fetcher) {
+      const id = fetcher.idFromName("floatplane");
+      stub = fetcher.get(id, {locationHint: 'wnam'});
+    } else if(dev) {
+      stub = {fetch} as unknown as DurableObjectStub;
+    } else {
+      throw error(503, "Fetcher not available");
+    }
+
+    const doStart = Date.now();
+    const response = await stub.fetch("https://floatplane-live-status.ajg.workers.dev/channel/linustechtips");
+    locals.addTiming({id: 'doFetch', duration: Date.now() - doStart});
+
+
+    const data: FpLiveStatusResponse = await response.json();
+    const isWAN = data?.title?.includes("WAN")
+
+    const quickNotificationThrottleTime = 3 * 60 * 60e3;
+
+    const now = new Date();
+
+
+    const throttler = (platform?.env?.NOTIFICATION_THROTTLER as DurableObjectNamespace)
+
+    if(data.isThumbnailNew && throttler && Date.now() - lastImminentNotifSend > quickNotificationThrottleTime && (now.getUTCDay() >= 5 || now.getUTCDay() === 0)) {
+      lastImminentNotifSend = Date.now();
+
+      console.log("Sending wan imminent notification!");
+      const id = throttler.idFromName("n");
+      const stub = throttler.get(id);
+
+      const params = new URLSearchParams();
+      params.set("title", data.title);
+      params.set("image", data.thumbnail);
+
+      platform?.context?.waitUntil(stub.fetch("https://whenplane-notification-throttler/imminent?" + params.toString()))
+      // platform?.context?.waitUntil(stub.fetch("https://whenplane-notification-throttler/test?" + params.toString()))
+    } else if(!isWAN && data.isLive && throttler && Date.now() - lastOtherStreamNotifSend > quickNotificationThrottleTime) {
+      lastOtherStreamNotifSend = Date.now();
+
+      console.log("Sending other stream live notification!");
+      const id = throttler.idFromName("n");
+      const stub = throttler.get(id);
+
+      const params = new URLSearchParams();
+      params.set("title", data.title);
+      params.set("image", data.thumbnail);
+
+      platform?.context?.waitUntil(stub.fetch("https://whenplane-notification-throttler/other_streams?" + params.toString()))
+    }
+
+    cache = {
+      lastFetch: Date.now(),
+      lastData: data
+    }
+
     return json({
-      cached: true,
-      lastFetch: cache.lastFetch,
-      ...cache.lastData,
-      description: withDescription ? cache.lastData?.description : undefined,
-      isWAN: cache.lastData?.title.toLowerCase().includes(" wan ")
+      ...data,
+      description: withDescription ? data.description : undefined,
+      isWAN: data.title.toLowerCase().includes(" wan ")
     });
+
+
+  } catch(e) {
+    log("[/api/floatplane] Error thrown: " + e);
+    throw e;
   }
-
-  cache.lastFetch = Date.now();
-
-  let stub: DurableObjectStub;
-  if(fetcher) {
-    const id = fetcher.idFromName("floatplane");
-    stub = fetcher.get(id, {locationHint: 'wnam'});
-  } else if(dev) {
-    stub = {fetch} as unknown as DurableObjectStub;
-  } else {
-    throw error(503, "Fetcher not available");
-  }
-
-  const doStart = Date.now();
-  const response = await stub.fetch("https://floatplane-live-status.ajg.workers.dev/channel/linustechtips");
-  locals.addTiming({id: 'doFetch', duration: Date.now() - doStart});
-
-
-  const data: FpLiveStatusResponse = await response.json();
-  const isWAN = data?.title?.includes("WAN")
-
-  const quickNotificationThrottleTime = 3 * 60 * 60e3;
-
-  const now = new Date();
-
-
-  const throttler = (platform?.env?.NOTIFICATION_THROTTLER as DurableObjectNamespace)
-
-  if(data.isThumbnailNew && throttler && Date.now() - lastImminentNotifSend > quickNotificationThrottleTime && (now.getUTCDay() >= 5 || now.getUTCDay() === 0)) {
-    lastImminentNotifSend = Date.now();
-
-    console.log("Sending wan imminent notification!");
-    const id = throttler.idFromName("n");
-    const stub = throttler.get(id);
-
-    const params = new URLSearchParams();
-    params.set("title", data.title);
-    params.set("image", data.thumbnail);
-
-    platform?.context?.waitUntil(stub.fetch("https://whenplane-notification-throttler/imminent?" + params.toString()))
-    // platform?.context?.waitUntil(stub.fetch("https://whenplane-notification-throttler/test?" + params.toString()))
-  } else if(!isWAN && data.isLive && throttler && Date.now() - lastOtherStreamNotifSend > quickNotificationThrottleTime) {
-    lastOtherStreamNotifSend = Date.now();
-
-    console.log("Sending other stream live notification!");
-    const id = throttler.idFromName("n");
-    const stub = throttler.get(id);
-
-    const params = new URLSearchParams();
-    params.set("title", data.title);
-    params.set("image", data.thumbnail);
-
-    platform?.context?.waitUntil(stub.fetch("https://whenplane-notification-throttler/other_streams?" + params.toString()))
-  }
-
-  cache = {
-    lastFetch: Date.now(),
-    lastData: data
-  }
-
-  return json({
-    ...data,
-    description: withDescription ? data.description : undefined,
-    isWAN: data.title.toLowerCase().includes(" wan ")
-  });
 
 })
 
