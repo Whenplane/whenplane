@@ -47,7 +47,7 @@ export const GET = (async ({platform, locals, url, fetch}) => {
 
     let stub: DurableObjectStub;
     if(fetcher) {
-        const id = fetcher.idFromName("youtube");
+        const id = fetcher.idFromName("youtube1");
         stub = fetcher.get(id, {locationHint: 'wnam'});
     } else if(dev) {
         stub = {fetch} as unknown as DurableObjectStub;
