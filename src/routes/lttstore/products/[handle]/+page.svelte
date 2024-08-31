@@ -18,6 +18,8 @@
   $: productInfo = JSON.parse(data.product.product as string) as ShopifyProduct
   $: currentStock = JSON.parse(data.product.stock as string) as StockCounts
 
+  $: goneInHours = (currentStock.total ?? -1) / data.product?.purchasesPerHour;
+
   $: strippedTitle = productInfo.title.replace(/\(.*\)/g, "").replace("Knife", "Knive").trim();
 
   let historyDays = $page.url.searchParams.get("historyDays") ?? "7";
@@ -152,6 +154,18 @@
   <ProductStockHistoryGraph stockHistory={data.stockHistory} productName={productInfo.title} {chartUpdateNumber}/>
   <br>
   Note that stock started being recorded on June 11th, 2024, so data before that is not available.
+  <br>
+  <br>
+  <br>
+  <h2>Time remaining until out of stock</h2>
+  {#if goneInHours > 0 && (currentStock.total ?? -1) > 0 && typeof data.product?.purchasesPerHour === "number" && data.product?.purchasesPerHour >= 0 && !(data.product?.purchasesPerHour === 0 && (currentStock.total ?? -1) < 0)}
+    If this product keeps selling at {Math.round(data.product?.purchasesPerHour * 100)/100} units per hour, it could be gone in
+    {#if goneInHours < 48}
+      {goneInHours.toFixed(2)} hours
+    {:else}
+      {(goneInHours / 24).toFixed(2)} days
+    {/if}
+  {/if}
 
   {#if dev}
     <br>
