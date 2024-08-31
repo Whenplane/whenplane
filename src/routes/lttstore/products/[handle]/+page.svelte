@@ -160,7 +160,7 @@
   <br>
   <h2>Time remaining until out of stock</h2>
   {#if goneInHours > 0 && (currentStock.total ?? -1) > 0 && typeof data.product?.purchasesPerHour === "number" && data.product?.purchasesPerHour >= 0 && !(data.product?.purchasesPerHour === 0 && (currentStock.total ?? -1) < 0)}
-    If this product keeps selling at {Math.round(data.product?.purchasesPerHour * 100)/100} units per hour, it could be gone in
+    If this product keeps selling at {Math.round(nonZeroPurchasesPerHour * 100)/100} units per hour, it could be gone in
     {#if goneInHours < 48}
       {#if goneInHours <= 1}
         less than an hour
