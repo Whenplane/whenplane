@@ -18,7 +18,8 @@
   $: productInfo = JSON.parse(data.product.product as string) as ShopifyProduct
   $: currentStock = JSON.parse(data.product.stock as string) as StockCounts
 
-  $: goneInHours = ((currentStock.total ?? -1) / data.product?.purchasesPerHour) - ((Date.now() - data.product.stockChecked) / (60 * 60e3));
+  $: nonZeroPurchasesPerHour = (data.product?.purchasesPerHour === 0 ? (data.product.purchasesPerDay / 24) : data.product.purchasesPerHour);
+  $: goneInHours = ((currentStock.total ?? -1) / nonZeroPurchasesPerHour) - ((Date.now() - data.product.stockChecked) / (60 * 60e3));
 
   $: strippedTitle = productInfo.title.replace(/\(.*\)/g, "").replace("Knife", "Knive").trim();
 
