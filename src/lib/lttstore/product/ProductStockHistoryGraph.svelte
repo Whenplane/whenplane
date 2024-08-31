@@ -93,7 +93,9 @@
     },
     yaxis: {
       labels: {
-        formatter: commas,
+        formatter: (n: number) => {
+          return commas(Math.round(n))
+        },
       },
       title: {
         text: 'Stock'
