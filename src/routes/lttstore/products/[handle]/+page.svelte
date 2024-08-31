@@ -18,7 +18,7 @@
   $: productInfo = JSON.parse(data.product.product as string) as ShopifyProduct
   $: currentStock = JSON.parse(data.product.stock as string) as StockCounts
 
-  $: goneInHours = (currentStock.total ?? -1) / data.product?.purchasesPerHour;
+  $: goneInHours = ((currentStock.total ?? -1) / data.product?.purchasesPerHour) - ((Date.now() - data.product.stockChecked) / (60 * 60e3));
 
   $: strippedTitle = productInfo.title.replace(/\(.*\)/g, "").replace("Knife", "Knive").trim();
 
@@ -161,7 +161,11 @@
   {#if goneInHours > 0 && (currentStock.total ?? -1) > 0 && typeof data.product?.purchasesPerHour === "number" && data.product?.purchasesPerHour >= 0 && !(data.product?.purchasesPerHour === 0 && (currentStock.total ?? -1) < 0)}
     If this product keeps selling at {Math.round(data.product?.purchasesPerHour * 100)/100} units per hour, it could be gone in
     {#if goneInHours < 48}
-      {goneInHours.toFixed(2)} hours
+      {#if goneInHours <= 1}
+        less than an hour
+      {:else}
+        {goneInHours.toFixed(2)} hours
+      {/if}
     {:else}
       {(goneInHours / 24).toFixed(2)} days
     {/if}
