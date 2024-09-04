@@ -4,7 +4,7 @@
   import { page } from "$app/stores";
   import {flip} from "svelte/animate";
   import { fade } from "svelte/transition"
-  import { invalidateAll } from "$app/navigation";
+  import { goto, invalidateAll } from "$app/navigation";
   import {ProgressRadial} from "@skeletonlabs/skeleton";
 
   export let data;
@@ -27,9 +27,10 @@
       const newUrl = new URL(location.href);
       newUrl.searchParams.set("sort", sortedBy)
 
-      history.replaceState({}, document.title, newUrl.toString());
+      goto(newUrl.toString(), { noScroll: true } )
+      /*history.replaceState({}, document.title, newUrl.toString());
       // first = true;
-      reload()
+      reload()*/
     }
   }
 
