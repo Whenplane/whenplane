@@ -27,6 +27,7 @@ declare global {
                 FETCHER: DurableObjectNamespace;
                 FLOATPLANE_FETCHER: DurableObjectNamespace;
                 WS_OBJECT: DurableObjectNamespace<SocketObject>;
+                LTTSTORE_UPD_REQ_OBJ: DurableObjectNamespace;
 
                 NOTIFICATION_THROTTLER: DurableObjectNamespace;
                 NOTIFICATION_QUEUE: Queue<NotificationMessage>

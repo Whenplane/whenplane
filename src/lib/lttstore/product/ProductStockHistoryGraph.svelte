@@ -2,6 +2,7 @@
   import { browser } from "$app/environment";
   import { onMount } from "svelte";
   import { commas } from "$lib/utils.ts";
+  import { fade } from "svelte/transition";
 
   export let productName: string | undefined = undefined;
 
@@ -125,16 +126,24 @@
   let chartDiv: HTMLDivElement;
 
   let ApexCharts;
+  let mounted = false;
   onMount(async () => {
+    mounted = true;
     ApexCharts = (await import("apexcharts")).default;
     chart = new ApexCharts(chartDiv, options);
     chart.render()
 
     // console.log({options})
   })
+
+  // let style = browser ?  : undefined;
 </script>
 
-<div bind:this={chartDiv}></div>
+<div style="min-height: 69vh">
+  {#if mounted}
+    <div bind:this={chartDiv} in:fade></div>
+  {/if}
+</div>
 {#if Object.keys(someStock).length > 2}
   <label>
     <input type="checkbox" bind:checked={onlyTotal}>
