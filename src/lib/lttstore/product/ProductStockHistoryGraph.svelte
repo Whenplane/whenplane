@@ -109,7 +109,13 @@
       theme: "dark",
       shared: true,
       y: {
-        formatter: commas
+        formatter: (n: number) => {
+          if(n > 500000) {
+            return ">500,000"
+          } else {
+            return commas(n)
+          }
+        }
       },
       x: {
         formatter: function (val: number) {
