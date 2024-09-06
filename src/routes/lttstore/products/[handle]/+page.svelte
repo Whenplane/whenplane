@@ -123,7 +123,7 @@
     {:else}
       Before this product was removed, there was
     {/if}
-    {#if (currentStock.total ?? -1) > 500000}
+    {#if (currentStock.total ?? -1) <= 500000}
       a total of {commas(currentStock.total)}
     {:else}
       more than 500,000
