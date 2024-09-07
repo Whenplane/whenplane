@@ -164,8 +164,8 @@
   <br>
   <br>
   <br>
-  <h2>Time remaining until out of stock</h2>
   {#if goneInHours > 0 && (currentStock.total ?? -1) > 0 && typeof data.product?.purchasesPerHour === "number" && data.product?.purchasesPerHour >= 0 && !(data.product?.purchasesPerHour === 0 && (currentStock.total ?? -1) < 0)}
+    <h2>Time remaining until out of stock</h2>
     If this product keeps selling at {Math.round(nonZeroPurchasesPerHour * 100)/100} units per hour, it could be gone in
     {#if goneInHours < 48}
       {#if goneInHours <= 1}
@@ -176,11 +176,11 @@
     {:else}
       {(goneInHours / 24).toFixed(2)} days
     {/if}
+    <br>
+    <br>
+    <br>
+    <br>
   {/if}
-  <br>
-  <br>
-  <br>
-  <br>
   <h2>Request update</h2>
   If you want more up-to-date data for this product, you can request an update below.<br>
   To prevent abuse, you can only request updates once an hour per product, and 30 minutes between a request for any product.<br>
