@@ -7,7 +7,7 @@ export const GET = (async ({fetch}) => {
   // In the future this will be from a database, but this will be fine for now.
 
   const data: SpecialStream | false = {
-    title: "BEAT ME AND WIN [a prescision screwdriver]",
+    title: "BEAT ME AND WIN [a precision screwdriver]",
     thumbnail: "https://pbs.floatplane.com/stream_thumbnails/5c13f3c006f1be15e08e05c0/381010480841042_1725727387469.jpeg",
 
     start: "2024-09-07T17:00:00Z",
