@@ -7,18 +7,18 @@ export const GET = (async ({fetch}) => {
   // In the future this will be from a database, but this will be fine for now.
 
   const data: SpecialStream | false = {
-    title: "Scrapyard Wars Q&A/Watch Party Livestream",
-    thumbnail: "https://pbs.floatplane.com/stream_thumbnails/5c13f3c006f1be15e08e05c0/536544809802906_1724348232674.jpeg",
+    title: "BEAT ME AND WIN [a prescision screwdriver]",
+    thumbnail: "https://pbs.floatplane.com/stream_thumbnails/5c13f3c006f1be15e08e05c0/381010480841042_1725727387469.jpeg",
 
-    start: "2024-08-22T18:00:00Z",
-    startIsEstimated: false,
+    start: "2024-09-07T17:00:00Z",
+    startIsEstimated: true,
 
     onFloatplane: true,
 
     onTwitch: true,
     // twitchNotes: "first half",
 
-    onYoutube: false
+    onYoutube: true
   } //false;
 
   if(!data) {
