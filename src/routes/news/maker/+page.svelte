@@ -16,7 +16,7 @@
 
   function updateTimestamp() {
     if(timestampCopied || timestampCopying) return; // Don't change timestamp while the "copied!" text is there
-    timestamp = new Date().toISOString();
+    timestamp = Date.now()+"";
   }
   updateTimestamp();
 
