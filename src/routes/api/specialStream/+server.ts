@@ -11,7 +11,7 @@ export const GET = (async ({fetch}) => {
     thumbnail: "https://pbs.floatplane.com/stream_thumbnails/5c13f3c006f1be15e08e05c0/381010480841042_1725727387469.jpeg",
 
     start: "2024-09-07T18:30:00Z",
-    startIsEstimated: true,
+    startIsEstimated: false,
 
     onFloatplane: true,
 
