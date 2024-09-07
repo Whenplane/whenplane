@@ -334,6 +334,9 @@
 					<a class="btn variant-filled-surface rounded-none w-full" href="/lttstore">
 						LTTStore Watcher
 					</a>
+					<a class="btn variant-filled-surface rounded-none w-full" href="/floatplane">
+						Floatplane Watcher
+					</a>
 					<a class="btn variant-filled-surface rounded-none w-full" href="/news">
 						Whenplane News
 					</a>
