@@ -129,11 +129,12 @@
 		if(mainContainer.scrollHeight > window.innerHeight-50) {
 			outerContainer.classList.remove("items-center")
 			outerContainer.classList.add("too-short")
+			mainContainer.classList.add("pb-16"); // So that there is some space at the bottom when scrolling
 			if(dev) console.debug("too short")
 		} else {
 			outerContainer.classList.add("items-center")
 			outerContainer.classList.remove("too-short")
-			mainContainer.classList.remove("pb-5")
+			mainContainer.classList.remove("pb-16")
 		}
 	}
 
