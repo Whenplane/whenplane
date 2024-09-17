@@ -1,5 +1,5 @@
 <script lang="ts">
-  import type { ShopifyProduct, StockCounts } from "$lib/lttstore/lttstore_types.ts";
+  import type { BackorderAlerts, ShopifyProduct, StockCounts } from "$lib/lttstore/lttstore_types.ts";
   import { page } from "$app/stores";
   import ProductStockHistoryGraph from "$lib/lttstore/product/ProductStockHistoryGraph.svelte";
   import DateStamp from "$lib/DateStamp.svelte";
@@ -11,6 +11,7 @@
   import Price from "$lib/lttstore/Price.svelte";
   import { browser } from "$app/environment";
   import ProductUpdateRequestButton from "$lib/lttstore/product/ProductUpdateRequestButton.svelte";
+  import ExclamationTriangle from "svelte-bootstrap-icons/lib/ExclamationTriangle.svelte";
 
   export let data;
 
@@ -23,6 +24,20 @@
   $: goneInHours = ((currentStock.total ?? -1) / nonZeroPurchasesPerHour) - ((Date.now() - data.product.stockChecked) / (60 * 60e3));
 
   $: strippedTitle = productInfo.title.replace(/\(.*\)/g, "").replace("Knife", "Knive").trim();
+
+  let backorderNotices = new Set();
+  $: {
+    backorderNotices.clear();
+    let backorderAlerts = JSON.parse(data.product?.backorderAlerts) as BackorderAlerts;
+    if(backorderAlerts) {
+      Object.values(backorderAlerts).forEach(alert => {
+        if(alert && alert.trim()) {
+          backorderNotices.add(alert)
+        }
+      });
+      backorderNotices = backorderNotices;
+    }
+  }
 
   let historyDays = $page.url.searchParams.get("historyDays") ?? "7";
   let first = true;
@@ -140,6 +155,24 @@
   {/if}
   <br>
   <br>
+
+  {#if backorderNotices.size > 0}
+    <h2>Backorder Notice</h2>
+    {#each backorderNotices as backorderNotice}
+      <aside class="alert variant-ghost">
+        <!-- Icon -->
+        <div><ExclamationTriangle width="2em" height="2em"/></div>
+        <!-- Message -->
+        <div class="alert-message">
+<!--          <h4 class="h4">(title)</h4>-->
+          <p>{backorderNotice}</p>
+        </div>
+      </aside>
+      <br>
+    {/each}
+    <br>
+    <br>
+  {/if}
 
   <h2>Stock History</h2>
   We check the stock of products occasionally. Here is the history of those stock numbers.

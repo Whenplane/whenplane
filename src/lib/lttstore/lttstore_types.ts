@@ -117,7 +117,8 @@ export type ProductsTableRow = {
   regularPrice: number,
   currentPrice: number,
   firstSeen: number,
-  available: boolean
+  available: boolean,
+  backorderAlerts: string
 }
 
 export type StockHistoryTableRow = {
@@ -125,4 +126,9 @@ export type StockHistoryTableRow = {
   id: number,
   timestamp: number,
   stock: string
+}
+
+export type BackorderAlerts = {
+  /** The key is the variant id, the value is the message */
+  [variant_id: string]: string
 }
