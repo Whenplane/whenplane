@@ -172,7 +172,8 @@ export const GET = (async ({platform, url}) => {
 
   const response: TwitchResponse = {
     timestamp: Date.now(),
-    count
+    count,
+    debug
   }
 
   return json(response);
