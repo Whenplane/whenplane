@@ -4,7 +4,6 @@
 
   export let data;
 
-  console.log(data.followHistory)
 </script>
 
 <FollowerGraph followerHistory={data.followHistory}/>
