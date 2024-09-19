@@ -3,21 +3,21 @@
   import { onMount } from "svelte";
   import { commas } from "$lib/utils.ts";
 
-  export let subHistory: {
+  export let followerHistory: {
     timestamp: number,
     [key: string]: number | null
   }[];
 
   let chart;
 
-  let keys = [...new Set(subHistory.map(h => Object.keys(h).filter(k => k !== "timestamp")).flat())];
+  let keys = [...new Set(followerHistory.map(h => Object.keys(h).filter(k => k !== "timestamp")).flat())];
 
 
   function getSeries() {
     return keys.map(k => {
       return {
         name: k,
-        data: subHistory.map(h => {
+        data: followerHistory.map(h => {
           if(h[k] === null) return;
           return {
             x: h.timestamp,

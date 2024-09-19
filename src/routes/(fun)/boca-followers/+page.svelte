@@ -3,8 +3,10 @@
   import FollowerGraph from "./FollowerGraph.svelte";
 
   export let data;
+
+  console.log(data.followHistory)
 </script>
 
-<FollowerGraph subHistory={data.followHistory}/>
+<FollowerGraph followerHistory={data.followHistory}/>
 
 <!--<pre>{JSON.stringify(data, undefined, '\t')}</pre>-->
