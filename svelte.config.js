@@ -20,6 +20,8 @@ const config = {
 					"/*/wp-includes/*",
 					"/wp-includes",
 					"/wp-includes/*",
+					"/discord",
+					"/boca-time"
 				]
 			}
 		}),
