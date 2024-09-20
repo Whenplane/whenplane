@@ -64,7 +64,8 @@
           "/extension",
           "/ltt-time",
           "/youtube-redirect",
-          "/about"
+          "/about",
+          "/notifications"
       ];
 </script>
 
