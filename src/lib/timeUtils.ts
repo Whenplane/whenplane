@@ -41,6 +41,11 @@ export function getNextWANLuxon(now = new Date(), buffer = true, hasDone?: boole
         wanDate = wanDate.minus({days: 7})
     }
 
+    // If the show ends before the normal time, go ahead and skip over it
+    if(hasDone && wanDate.toMillis() - now.getTime() > 0) {
+        wanDate = wanDate.plus({days: 7})
+    }
+
     // LTX wan is on saturday instead of friday
     if(
       (wanDate.year == 2023 && wanDate.month == 7 && wanDate.day == 28) ||
