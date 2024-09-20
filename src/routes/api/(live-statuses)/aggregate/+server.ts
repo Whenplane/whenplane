@@ -138,7 +138,7 @@ export const GET = (async ({url, fetch, locals, platform}) => {
             }))
         }
     }
-    console.log({thisWsMessage, lastWsMessage})
+    // console.log({thisWsMessage, lastWsMessage})
     lastWsMessage = thisWsMessageString;
 
     locals.addTiming({id: "twitch", duration: twitchTime ?? -1});

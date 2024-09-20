@@ -42,7 +42,7 @@ export function getNextWANLuxon(now = new Date(), buffer = true, hasDone?: boole
     }
 
     // If the show ends before the normal time, go ahead and skip over it
-    if(hasDone && wanDate.toMillis() - now.getTime() > 0) {
+    if(hasDone && wanDate.toMillis() - now.getTime() < 24 * 60 * 60e3) {
         wanDate = wanDate.plus({days: 7})
     }
 
