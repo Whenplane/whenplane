@@ -37,6 +37,7 @@
 		"whenplane.com",
 		"whenwan.show",
 		"wheniswan.pages.dev",
+		"when.show",
 		"localhost"
 	]
 
