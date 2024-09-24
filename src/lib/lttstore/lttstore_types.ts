@@ -30,7 +30,9 @@ export type ShopifyProduct = {
   compare_at_price?: number | null,
   options: ProductOption[],
   variants: ProductVariant[],
-  url?: string
+  url?: string,
+  /** available as in in-stock */
+  available: boolean
 }
 export type ProductImage = {
   id: number,
@@ -120,6 +122,22 @@ export type ProductsTableRow = {
   available: boolean,
   backorderAlerts: string
 }
+export type ParsedProductsTableRow = {
+  handle: string,
+  id: number,
+  title: string,
+  product: ShopifyProduct,
+  stock?: StockCounts,
+  stockChecked?: number,
+  lastRestock?: number,
+  purchasesPerHour?: number,
+  purchasesPerDay?: number,
+  regularPrice?: number,
+  currentPrice: number,
+  firstSeen?: number,
+  available: boolean,
+  backorderAlerts: BackorderAlerts
+}
 
 export type StockHistoryTableRow = {
   handle: string,
@@ -131,4 +149,10 @@ export type StockHistoryTableRow = {
 export type BackorderAlerts = {
   /** The key is the variant id, the value is the message */
   [variant_id: string]: string
+}
+
+export type ProductDifference<Type = unknown> = {
+  key: string,
+  before: Type,
+  after: Type
 }

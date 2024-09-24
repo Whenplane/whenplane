@@ -1,7 +1,7 @@
 import { error, json, type RequestHandler } from "@sveltejs/kit";
 import type { D1Database } from "@cloudflare/workers-types";
 import { dev } from "$app/environment";
-import type { ProductsTableRow, StockHistoryTableRow } from "$lib/lttstore/lttstore_types.ts";
+import type { ProductDifference, ProductsTableRow, StockHistoryTableRow } from "$lib/lttstore/lttstore_types.ts";
 import { createTables } from "../../../../lttstore/createTables.ts";
 
 
@@ -14,7 +14,8 @@ export const GET = (async ({platform, params}) => {
 
   const data: {
     products: ProductsTableRow[],
-    screwdriverStocks: StockHistoryTableRow[]
+    screwdriverStocks: StockHistoryTableRow[],
+    waterBottleChanges: {id: number, timestamp: number, field: string, old: string, new: string}[]
   } = await fetch("https://whenplane.com/api/lttstore/devData")
     .then(res => res.json());
 
@@ -52,6 +53,20 @@ export const GET = (async ({platform, params}) => {
         stock.id,
         stock.timestamp,
         stock.stock
+      )
+      .run();
+  }
+
+  i = 0;
+  for (const change of data.waterBottleChanges) {
+    if(i % 10 === 0) console.log("Inserting " + ++i + "/" + data.waterBottleChanges.length + " water bottle change history");
+    await db.prepare("insert or replace into change_history(id, timestamp, field, old, new) values (?, ?, ?, ?, ?)")
+      .bind(
+        change.id,
+        change.timestamp,
+        change.field,
+        change.old,
+        change.new
       )
       .run();
   }

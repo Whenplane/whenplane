@@ -12,6 +12,7 @@
   import { browser } from "$app/environment";
   import ProductUpdateRequestButton from "$lib/lttstore/product/ProductUpdateRequestButton.svelte";
   import ExclamationTriangle from "svelte-bootstrap-icons/lib/ExclamationTriangle.svelte";
+  import { getDiffComponent, getFieldName } from "$lib/lttstore/field_names.ts";
 
   export let data;
 
@@ -214,6 +215,43 @@
     <br>
     <br>
   {/if}
+  <h2>Change history</h2>
+  {#await data.changeHistory}
+
+  {:then changeHistory}
+    <div class="table-container rounded-md">
+      <table class="table table-hover rounded-md">
+        <thead>
+        <tr>
+          <th>What changed</th>
+          <td>Change time</td>
+          <th>Before</th>
+          <th>After</th>
+        </tr>
+        </thead>
+        <tbody>
+        {#each changeHistory as change}
+          <tr>
+            <td>{getFieldName(change.field)}</td>
+            <td><DateStamp epochSeconds={change.timestamp/1e3}/></td>
+            <td><svelte:component this={getDiffComponent()} before={change.old} after={change.new} displaying="before"/></td>
+            <td><svelte:component this={getDiffComponent()} before={change.old} after={change.new} displaying="after"/></td>
+          </tr>
+        {/each}
+        </tbody>
+        {#if data.product.firstSeen < 1727147700624}
+          <tfoot>
+          <tr style="text-transform: initial !important;">
+            <td class="!p-2 opacity-70" colspan="3">Changes before <DateStamp epochSeconds={1727147700}/> are not available</td>
+          </tr>
+          </tfoot>
+        {/if}
+      </table>
+    </div>
+  {/await}
+  <br>
+  <br>
+  <br>
   <h2>Request update</h2>
   If you want more up-to-date data for this product, you can request an update below.<br>
   To prevent abuse, you can only request updates once an hour per product, and 30 minutes between a request for any product.<br>
