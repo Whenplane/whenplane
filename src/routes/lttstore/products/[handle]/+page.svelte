@@ -3,7 +3,7 @@
   import { page } from "$app/stores";
   import ProductStockHistoryGraph from "$lib/lttstore/product/ProductStockHistoryGraph.svelte";
   import DateStamp from "$lib/DateStamp.svelte";
-  import { commas } from "$lib/utils.ts";
+  import { commas, truncateText } from "$lib/utils.ts";
   import { Accordion, AccordionItem } from "@skeletonlabs/skeleton";
   import sanitizeHtml from "sanitize-html";
   import { newsSanitizeSettings } from "$lib/news/news.js";
@@ -76,6 +76,10 @@
 
 <svelte:head>
   <title>{data.product.title} - Whenplane LTTStore Watcher</title>
+  <meta name="description" content={truncateText(sanitizeHtml(productInfo.description ?? "", {allowedTags: []}), 200)}>
+  {#if productInfo.featured_image}
+    <meta property="og:image" content={productInfo.featured_image}>
+  {/if}
 </svelte:head>
 
 <div class="container mx-auto p-2 pt-8 mb-64">
