@@ -1,5 +1,10 @@
 <script lang="ts">
-  import type { BackorderAlerts, ShopifyProduct, StockCounts } from "$lib/lttstore/lttstore_types.ts";
+  import type {
+    BackorderAlerts,
+    ProductDetailModule,
+    ShopifyProduct,
+    StockCounts
+  } from "$lib/lttstore/lttstore_types.ts";
   import { page } from "$app/stores";
   import ProductStockHistoryGraph from "$lib/lttstore/product/ProductStockHistoryGraph.svelte";
   import DateStamp from "$lib/DateStamp.svelte";
@@ -20,6 +25,7 @@
 
   $: productInfo = JSON.parse(data.product.product as string) as ShopifyProduct
   $: currentStock = JSON.parse(data.product.stock as string) as StockCounts
+  $: productDetailModules = JSON.parse(data.product.productDetailModules) as ProductDetailModule[];
 
   $: nonZeroPurchasesPerHour = (data.product?.purchasesPerHour === 0 ? (data.product.purchasesPerDay / 24) : data.product.purchasesPerHour);
   $: goneInHours = ((currentStock.total ?? -1) / nonZeroPurchasesPerHour) - ((Date.now() - data.product.stockChecked) / (60 * 60e3));
@@ -130,6 +136,22 @@
         </AccordionItem>
       </Accordion>
     </div>
+  {/if}
+  {#if data.product.productDetailModules}
+    {#each productDetailModules as detailModule}
+      <div class="max-w-xl my-4">
+        <Accordion class="mx-4" spacing="" regionPanel="">
+          <AccordionItem>
+            <svelte:fragment slot="summary">{detailModule.title}</svelte:fragment>
+            <svelte:fragment slot="content">
+              <div class="item-description">
+                {@html sanitizeHtml(detailModule.content.replace(/\n/g, "<br>\n"), newsSanitizeSettings)}
+              </div>
+            </svelte:fragment>
+          </AccordionItem>
+        </Accordion>
+      </div>
+    {/each}
   {/if}
 
   <br>
