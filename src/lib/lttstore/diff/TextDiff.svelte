@@ -6,8 +6,14 @@
   export let before: string;
   export let after: string;
 
-  $: parsedBefore = JSON.parse(before) as string;
-  $: parsedAfter = JSON.parse(after) as string;
+  $: parsedBefore = JSON.parse(before);
+  $: parsedAfter = JSON.parse(after);
+
+  $: if((parsedBefore === 1 && parsedAfter === 0) || (parsedBefore === 0 && parsedAfter === 1)) {
+    parsedBefore = parsedBefore === 1;
+    parsedAfter = parsedAfter === 1;
+    diffType = "words"
+  }
 
   export let displaying: "before" | "after";
   export let diffType: "chars" | "words" = "chars";
@@ -18,11 +24,11 @@
     let diff;
     switch(diffType) {
       case "words":
-        diff = Diff.diffWords(parsedBefore, parsedAfter);
+        diff = Diff.diffWords(parsedBefore+"", parsedAfter+"");
         break;
       case "chars":
       default:
-        diff = Diff.diffChars(parsedBefore, parsedAfter)
+        diff = Diff.diffChars(parsedBefore+"", parsedAfter+"");
     }
     diff.forEach(part => {
       const color = part.added ? 'green' :
@@ -40,6 +46,10 @@
         }
       }
     })
+
+    if(diff.length === 0) { // if diff checking fails, just display the text
+      html = escapeHtml("" + (displaying === "after" ? parsedAfter : parsedBefore));
+    }
 
     html = html.replaceAll("&lt;br&gt;", "<br>");
   }
