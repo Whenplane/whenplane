@@ -198,7 +198,9 @@
   </select>
   <ProductStockHistoryGraph stockHistory={data.stockHistory} productName={productInfo.title} {chartUpdateNumber}/>
   <br>
-  Note that stock started being recorded on June 11th, 2024, so data before that is not available.
+  {#if data.product.firstSeen < 1718147750000}
+    Note that stock started being recorded on June 11th, 2024, so data before that is not available.
+  {/if}
   <br>
   <br>
   <br>
