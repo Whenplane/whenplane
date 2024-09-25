@@ -238,8 +238,8 @@
           <tr>
             <td>{getFieldName(change.field)}</td>
             <td><DateStamp epochSeconds={change.timestamp/1e3}/></td>
-            <td><svelte:component this={getDiffComponent()} before={change.old} after={change.new} displaying="before"/></td>
-            <td><svelte:component this={getDiffComponent()} before={change.old} after={change.new} displaying="after"/></td>
+            <td><svelte:component this={getDiffComponent(change.field)} before={change.old} after={change.new} displaying="before"/></td>
+            <td><svelte:component this={getDiffComponent(change.field)} before={change.old} after={change.new} displaying="after"/></td>
           </tr>
         {/each}
         </tbody>

@@ -15,7 +15,7 @@ export const GET = (async ({platform, params}) => {
   const data: {
     products: ProductsTableRow[],
     screwdriverStocks: StockHistoryTableRow[],
-    waterBottleChanges: {id: number, timestamp: number, field: string, old: string, new: string}[]
+    changeHistory: {id: number, timestamp: number, field: string, old: string, new: string}[]
   } = await fetch("https://whenplane.com/api/lttstore/devData")
     .then(res => res.json());
 
@@ -58,8 +58,8 @@ export const GET = (async ({platform, params}) => {
   }
 
   i = 0;
-  for (const change of data.waterBottleChanges) {
-    if(i % 10 === 0) console.log("Inserting " + ++i + "/" + data.waterBottleChanges.length + " water bottle change history");
+  for (const change of data.changeHistory) {
+    if(i % 10 === 0) console.log("Inserting " + ++i + "/" + data.changeHistory.length + " change history");
     await db.prepare("insert or replace into change_history(id, timestamp, field, old, new) values (?, ?, ?, ?, ?)")
       .bind(
         change.id,

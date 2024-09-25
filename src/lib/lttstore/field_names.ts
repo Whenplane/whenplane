@@ -1,4 +1,5 @@
 import TextDiff from "$lib/lttstore/diff/TextDiff.svelte";
+import BackorderAlertDiff from "$lib/lttstore/diff/BackorderAlertDiff.svelte";
 
 const field_names: {[key: string]: string} = {
   "product.description": "Product Description",
@@ -13,6 +14,9 @@ export function getFieldName(key: string) {
   return field_names[key] ?? key;
 }
 
-export function getDiffComponent() {
+export function getDiffComponent(field: string) {
+  if(field === "backorderAlerts") {
+    return BackorderAlertDiff;
+  }
   return TextDiff;
 }

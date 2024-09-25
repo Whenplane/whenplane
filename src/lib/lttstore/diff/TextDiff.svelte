@@ -10,11 +10,20 @@
   $: parsedAfter = JSON.parse(after) as string;
 
   export let displaying: "before" | "after";
+  export let diffType: "chars" | "words" = "chars";
 
   let html: string;
   $: {
     html = "";
-    const diff = Diff.diffChars(parsedBefore, parsedAfter);
+    let diff;
+    switch(diffType) {
+      case "words":
+        diff = Diff.diffWords(parsedBefore, parsedAfter);
+        break;
+      case "chars":
+      default:
+        diff = Diff.diffChars(parsedBefore, parsedAfter)
+    }
     diff.forEach(part => {
       const color = part.added ? 'green' :
         part.removed ? 'red' : false;
@@ -31,6 +40,8 @@
         }
       }
     })
+
+    html = html.replaceAll("&lt;br&gt;", "<br>");
   }
 </script>
 {@html html}
