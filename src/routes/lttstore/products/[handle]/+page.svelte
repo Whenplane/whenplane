@@ -228,7 +228,7 @@
         <thead>
         <tr>
           <th>What changed</th>
-          <td>Change time</td>
+          <td>Change seen</td>
           <th>Before</th>
           <th>After</th>
         </tr>
