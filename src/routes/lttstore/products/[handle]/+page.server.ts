@@ -1,4 +1,4 @@
-import { error } from "@sveltejs/kit";
+import { error, redirect } from "@sveltejs/kit";
 import type { PageServerLoad } from "./$types";
 import type { D1Database } from "@cloudflare/workers-types";
 import { dev } from "$app/environment";
@@ -14,6 +14,17 @@ export const load = (async ({platform, params, url}) => {
   if(dev) await createTables(db)
 
   const handle = params.handle;
+
+  // if the "handle" parameter is a number, then it's probably actually an id.
+  // Look up its handle and redirect if it is.
+  const handleNumber = Number(handle);
+  if(!Number.isNaN(handleNumber)) {
+    const productHandle = await db.prepare("select handle from products where id = ?")
+      .bind(handleNumber)
+      .first<{handle: string}>()
+      .then(r => r?.handle);
+    if(productHandle) throw redirect(301, productHandle)
+  }
 
   const productPromise = db.prepare("select * from products where handle = ?")
     .bind(handle)

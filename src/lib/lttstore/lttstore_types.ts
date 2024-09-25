@@ -120,7 +120,8 @@ export type ProductsTableRow = {
   currentPrice: number,
   firstSeen: number,
   available: boolean,
-  backorderAlerts: string
+  backorderAlerts: string,
+  productDetailModules: string
 }
 export type ParsedProductsTableRow = {
   handle: string,
@@ -136,7 +137,8 @@ export type ParsedProductsTableRow = {
   currentPrice: number,
   firstSeen?: number,
   available: boolean,
-  backorderAlerts: BackorderAlerts
+  backorderAlerts: BackorderAlerts,
+  productDetailModules: ProductDetailModule[],
 }
 
 export type StockHistoryTableRow = {
@@ -155,4 +157,9 @@ export type ProductDifference<Type = unknown> = {
   key: string,
   before: Type,
   after: Type
+}
+
+export type ProductDetailModule = {
+  title: string,
+  content: string
 }
