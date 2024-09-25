@@ -14,14 +14,15 @@ export const GET = (async ({platform, params}) => {
     .all()
     .then(r => r.results);
 
-  const waterBottleChanges = db.prepare("select * from change_history where id = 7117650296935")
+  // const waterBottleChanges = db.prepare("select * from change_history where id = 7117650296935")
+  const changeHistory = db.prepare("select * from change_history")
     .all()
     .then(r => r.results);
 
   return json({
     products: await products,
     screwdriverStocks: await screwdriverStocks,
-    waterBottleChanges: await waterBottleChanges
+    changeHistory: await changeHistory
   })
 
 }) satisfies RequestHandler
