@@ -33,7 +33,7 @@ export const load = (async ({platform, params, url}) => {
 
   if(product == null) throw error(404, "Product not found!");
 
-  const changeHistory = db.prepare("select * from change_history where id = ?")
+  const changeHistory = db.prepare("select * from change_history where id = ? order by timestamp desc")
     .bind(product.id)
     .all<{id: number, timestamp: number, field: string, old: string, new: string}>()
     .then(r => r.results);
