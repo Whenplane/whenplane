@@ -34,7 +34,7 @@
       const color = part.added ? 'green' :
         part.removed ? 'red' : false;
 
-      const text = escapeHtml(part.value)
+      const text = escapeHtml(part.value);
 
       if(!color) {
         html += text;
@@ -48,7 +48,11 @@
     })
 
     if(diff.length === 0) { // if diff checking fails, just display the text
-      html = escapeHtml("" + (displaying === "after" ? parsedAfter : parsedBefore));
+      console.debug("Diff did not return anything! Falling back to displaying text")
+      html = escapeHtml("" + (displaying === "after" ?
+          (typeof parsedAfter === "string" ? parsedAfter : JSON.stringify(parsedAfter)) :
+          (typeof parsedBefore === "string" ? parsedBefore : JSON.stringify(parsedBefore))
+      ));
     }
 
     html = html.replaceAll("&lt;br&gt;", "<br>");
