@@ -1,5 +1,6 @@
 import TextDiff from "$lib/lttstore/diff/TextDiff.svelte";
 import BackorderAlertDiff from "$lib/lttstore/diff/BackorderAlertDiff.svelte";
+import VariantDiff from "$lib/lttstore/diff/VariantDiff.svelte";
 
 const field_names: {[key: string]: string} = {
   "product.description": "Product Description",
@@ -7,16 +8,32 @@ const field_names: {[key: string]: string} = {
   "currentPrice": "Current Price",
   "regularPrice": "Regular Price",
   "title": "Title",
-  "backorderAlerts": "Backorder Alerts"
+  "backorderAlerts": "Backorder Alerts",
+  "product.variants": "Variant Metadata"
+}
+
+const variant_field_names: {[key: string]: string} = {
+  "available": "In stock",
+  "title": "Title",
+  "featured_image": "Featured Image",
+  "weight": "Shipping Weight",
+  "Price": "Price",
+  "compare_at_price": "Previous Price"
 }
 
 export function getFieldName(key: string) {
   return field_names[key] ?? key;
 }
+export function getVariantFieldName(key: string) {
+  return variant_field_names[key] ?? key;
+}
 
 export function getDiffComponent(field: string) {
   if(field === "backorderAlerts") {
     return BackorderAlertDiff;
+  }
+  if(field === "product.variants") {
+    return VariantDiff;
   }
   return TextDiff;
 }
