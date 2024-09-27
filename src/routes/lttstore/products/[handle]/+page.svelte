@@ -316,4 +316,9 @@
   .item-description :global(p) {
       margin-bottom: 1em;
   }
+  .item-description :global(ul) {
+      list-style: initial;
+      padding-left: 1.5em;
+      margin-bottom: 1em;
+  }
 </style>
