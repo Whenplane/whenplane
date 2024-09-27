@@ -5,6 +5,7 @@ export const newsSanitizeSettings: IOptions = {
   allowedTags: sanitizeHtml.defaults.allowedTags.concat([ 'img', 'video', 'source' ]),
   allowedAttributes: {
     ...sanitizeHtml.defaults.allowedAttributes,
+    "*": ["style"],
     a: sanitizeHtml.defaults.allowedAttributes.a.concat([
       "target",
       {
@@ -16,6 +17,11 @@ export const newsSanitizeSettings: IOptions = {
     img: sanitizeHtml.defaults.allowedAttributes.img.concat([ 'class' ]),
     video: [ "width", "height", "autoplay", "controls" ],
     source: ["src", "type"]
+  },
+  allowedStyles: {
+    "*": {
+      "text-decoration": [/^(( )?(none|underline|overline|line-through|blink|solid|double|dotted|dashed|wavy)){1,3}$/i]
+    }
   }
 }
 

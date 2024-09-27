@@ -321,4 +321,9 @@
       padding-left: 1.5em;
       margin-bottom: 1em;
   }
+  .item-description :global(ol) {
+      list-style: decimal;
+      padding-left: 1.5em;
+      margin-bottom: 1em;
+  }
 </style>
