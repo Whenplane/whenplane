@@ -9,14 +9,14 @@
   $: parsedBefore = JSON.parse(before);
   $: parsedAfter = JSON.parse(after);
 
+  export let displaying: "before" | "after";
+  export let diffType: "chars" | "words" = "chars";
+
   $: if((parsedBefore === 1 && parsedAfter === 0) || (parsedBefore === 0 && parsedAfter === 1)) {
     parsedBefore = parsedBefore === 1;
     parsedAfter = parsedAfter === 1;
     diffType = "words"
   }
-
-  export let displaying: "before" | "after";
-  export let diffType: "chars" | "words" = "chars";
 
   let html: string;
   $: {

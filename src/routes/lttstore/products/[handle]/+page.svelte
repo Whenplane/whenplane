@@ -145,7 +145,7 @@
             <svelte:fragment slot="summary">{detailModule.title}</svelte:fragment>
             <svelte:fragment slot="content">
               <div class="item-description">
-                {@html sanitizeHtml(detailModule.content.replace(/\n/g, "<br>\n"), newsSanitizeSettings)}
+                {@html sanitizeHtml(detailModule.content, newsSanitizeSettings)}
               </div>
             </svelte:fragment>
           </AccordionItem>

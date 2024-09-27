@@ -49,6 +49,8 @@
 </script>
 {#each parsedBefore.filter(m => changedModules.includes(m.title)) as module}
   <b>{module.title}</b><br>
-  <TextDiff before={JSON.stringify(module.content)} after={JSON.stringify(parsedAfter.find(m => m.title === module.title)?.content ?? "")} {displaying}/>
+  <div class="card p-2">
+    <TextDiff before={JSON.stringify(module.content)} after={JSON.stringify(parsedAfter.find(m => m.title === module.title)?.content ?? "")} {displaying} diffType="words"/>
+  </div>
   <br>
 {/each}
