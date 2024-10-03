@@ -6,14 +6,18 @@
   export let blurhash: BlurHash;
 
   let needsCanvas = true;
-  let canvas;
-  let imageURL;
+  let canvas: HTMLCanvasElement;
+  let imageURL: string;
 
-  const resolutionDecreaser = 20;
+  const resolutionDecreaser = blurhash.w > 1000 ? 20 : 1;
 
   onMount(() => {
     const pixels = decode(blurhash.hash, blurhash.w/resolutionDecreaser, blurhash.h/resolutionDecreaser);
     const ctx = canvas.getContext("2d");
+    if(!ctx) {
+      console.error("Failed to load canvas context!");
+      return;
+    }
     const imageData = ctx.createImageData(blurhash.w/resolutionDecreaser, blurhash.h/resolutionDecreaser);
 
     imageData.data.set(pixels);
