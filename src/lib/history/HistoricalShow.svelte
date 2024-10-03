@@ -7,7 +7,7 @@
     import BlurHash from "$lib/history/BlurHash.svelte";
     import {fade} from "svelte/transition";
     import LargerLazyLoad from "$lib/LargerLazyLoad.svelte";
-    import { browser } from "$app/environment";
+    import { browser, dev } from "$app/environment";
 
     export let show;
     export let withThumbnail = false;
@@ -15,7 +15,7 @@
 
     export let onlyTimes = false;
 
-    let thumbnailLoaded = !lazyLoadThumbnail;
+    let thumbnailLoaded = false;
 
     $: href = onlyTimes ? undefined : "/history/show/" + show.name;
 
@@ -73,10 +73,16 @@
                         {/if}
                     </div>
                 {:else}
-                    <img class="relative z-10" src={thumbnail.url} aria-hidden="true" alt={thumbnail.text ?? ""}>
-                    <div class="absolute top-0 left-0 rounded p-px">
-                        <img src={"/cdn-cgi/image/height=360,quality=10,format=auto,blur=20/" + thumbnail.url} aria-hidden="true" alt={thumbnail.text ?? ""}>
-                    </div>
+                    {#if browser}
+                        <img src={thumbnail.url} aria-hidden="true" alt={thumbnail.text ?? ""} on:load={() => thumbnailLoaded = true}>
+                    {:else}
+                        <div class="fake-img"></div>
+                    {/if}
+                    {#if !thumbnailLoaded}
+                        <div class="absolute top-0 left-0 rounded" out:fade|global={{duration: 400}}>
+                            <img class="blur-sm" src={(dev ? "https://whenplane.com" : "") + "/cdn-cgi/image/height=260,quality=10,format=auto,blur=20/" + thumbnail.url} aria-hidden="true" alt={thumbnail.text ?? ""}>
+                        </div>
+                    {/if}
                 {/if}
                 {#if show.metadata?.isCurrentlyLive}
                     <div class="inline-block absolute bottom-3 right-3">
@@ -190,8 +196,8 @@
         max-width: 100%;
     }
 
-    img {
-        width: min(30rem, 95vw);
+    img, .fake-img {
+        width: min(28.5em, 95vw);
         object-fit: cover;
         border-radius: var(--theme-rounded-base);
         aspect-ratio: 16 / 9;
