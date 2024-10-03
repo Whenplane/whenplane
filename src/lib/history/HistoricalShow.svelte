@@ -73,7 +73,10 @@
                         {/if}
                     </div>
                 {:else}
-                    <img src={thumbnail.url} aria-hidden="true" alt="">
+                    <img class="relative z-10" src={thumbnail.url} aria-hidden="true" alt={thumbnail.text ?? ""}>
+                    <div class="absolute top-0 left-0 rounded p-px">
+                        <img src={"/cdn-cgi/image/height=360,quality=10,format=auto,blur=20/" + thumbnail.url} aria-hidden="true" alt={thumbnail.text ?? ""}>
+                    </div>
                 {/if}
                 {#if show.metadata?.isCurrentlyLive}
                     <div class="inline-block absolute bottom-3 right-3">
