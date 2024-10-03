@@ -28,6 +28,13 @@ const config = {
 
 		serviceWorker: {
 			register: false
+		},
+
+		prerender: {
+			handleHttpError: ({path, status, referrer, referenceType}) => {
+				if(path.startsWith("/cdn-cgi")) return;
+				throw new Error(status + " " + path + " (" + referenceType + " from " + referrer + ")");
+			}
 		}
 	}
 };
