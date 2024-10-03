@@ -1,4 +1,4 @@
-<script>
+<script lang="ts">
     import { getClosestWan, getTimeUntil, timeString } from "../timeUtils";
     import Late from "../Late.svelte";
     import LazyLoad from "@dimfeld/svelte-lazyload";
@@ -8,6 +8,7 @@
     import {fade} from "svelte/transition";
     import LargerLazyLoad from "$lib/LargerLazyLoad.svelte";
     import { browser, dev } from "$app/environment";
+    import { onMount } from "svelte";
 
     export let show;
     export let withThumbnail = false;
@@ -15,7 +16,8 @@
 
     export let onlyTimes = false;
 
-    let thumbnailLoaded = false;
+    let nonLazyLoadedImage: HTMLImageElement | undefined = undefined;
+    let thumbnailLoaded = nonLazyLoadedImage ? nonLazyLoadedImage.complete : false;
 
     $: href = onlyTimes ? undefined : "/history/show/" + show.name;
 
@@ -43,6 +45,10 @@
 
     const onTimeDistance = mainShowStart ? (showDate.getTime() - mainShowStart.getTime()) : null;
     const onTime = mainShowStart ? getTimeUntil(showDate, mainShowStart.getTime()) : null;
+
+    onMount(() => {
+        if(nonLazyLoadedImage) thumbnailLoaded = nonLazyLoadedImage.complete
+    })
 </script>
 
 <svelte:element this={href ? "a" : "div"}
@@ -73,13 +79,9 @@
                         {/if}
                     </div>
                 {:else}
-                    {#if browser}
-                        <img src={thumbnail.url} aria-hidden="true" alt={thumbnail.text ?? ""} on:load={() => thumbnailLoaded = true}>
-                    {:else}
-                        <div class="fake-img"></div>
-                    {/if}
+                    <img src={thumbnail.url} aria-hidden="true" alt={thumbnail.text ?? ""} on:load={() => thumbnailLoaded = true} bind:this={nonLazyLoadedImage}>
                     {#if !thumbnailLoaded}
-                        <div class="absolute top-0 left-0 rounded" out:fade|global={{duration: 400}}>
+                        <div class="absolute top-0 left-0 rounded" out:fade|global={{duration: 200}}>
                             <img class="blur-sm" src={(dev ? "https://whenplane.com" : "") + "/cdn-cgi/image/height=260,quality=10,format=auto,blur=20/" + thumbnail.url} aria-hidden="true" alt={thumbnail.text ?? ""}>
                         </div>
                     {/if}
