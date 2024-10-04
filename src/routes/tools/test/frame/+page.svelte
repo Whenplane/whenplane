@@ -1,6 +1,7 @@
 <script lang="ts">
 
   import { onMount } from "svelte";
+  import { page } from "\$app/stores";
 
   let d: HTMLDivElement;
 
@@ -8,9 +9,9 @@
     const iframe = document.createElement("iframe");
     iframe.style.backgroundColor = "transparent";
     iframe.allowTransparency = "true";
-    iframe.classList.add("testframe");
+    if($page.url.searchParams.has("time")) iframe.classList.add("testframe");
 
-    iframe.src = "/ltt-time?frame"
+    iframe.src = $page.url.searchParams.has("time") ? "/ltt-time?frame" : "/?frame"
 
     d.appendChild(iframe)
   })
@@ -23,6 +24,10 @@
   :global(.testframe) {
       height: 33px;
       width: 75px;
+  }
+  :global(iframe:not(.testframe)) {
+    width: 90vw;
+    height: 90vh;
   }
 
   div {

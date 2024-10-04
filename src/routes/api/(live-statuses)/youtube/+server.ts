@@ -43,15 +43,19 @@ export const GET = (async ({platform, locals, url, fetch}) => {
         return json({...cache.value, cached: true, fetchDistance});
     }
 
-    const cCache = await caches.open("whenplane:youtube-DO-fetch");
-    const cacheRequest = new Request("https://cache/youtube");
-    const cacheMatch = await cCache.match(cacheRequest);
+    if(caches) {
+        const cCache = await caches.open("whenplane:youtube-DO-fetch");
+        const cacheRequest = new Request("https://cache/youtube");
+        const cacheMatch = await cCache.match(cacheRequest);
 
-    if(cacheMatch) {
-        const expires = cacheMatch.headers.get("expires")
-        if(!expires || new Date(expires).getTime() > Date.now()) {
-            return cacheMatch.clone();
+        if(cacheMatch) {
+            const expires = cacheMatch.headers.get("expires")
+            if(!expires || new Date(expires).getTime() > Date.now()) {
+                return cacheMatch.clone();
+            }
         }
+    } else {
+        console.warn("missing cache api!")
     }
 
 
