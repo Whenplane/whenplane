@@ -16,7 +16,7 @@
 
     export let onlyTimes = false;
 
-    let nonLazyLoadedImage: HTMLImageElement | undefined = undefined;
+    let nonLazyLoadedImage: HTMLImageElement | undefined;
     let thumbnailLoaded = nonLazyLoadedImage ? nonLazyLoadedImage.complete : false;
 
     $: href = onlyTimes ? undefined : "/history/show/" + show.name;
@@ -82,7 +82,7 @@
                     <img src={thumbnail.url} aria-hidden="true" alt={thumbnail.text ?? ""} on:load={() => thumbnailLoaded = true} bind:this={nonLazyLoadedImage}>
                     {#if !thumbnailLoaded}
                         <div class="absolute top-0 left-0 rounded" out:fade|global={{duration: 200}}>
-                            <img class="blur-sm" src={(dev ? "https://whenplane.com" : "") + "/cdn-cgi/image/height=260,quality=10,format=auto,blur=20/" + thumbnail.url} aria-hidden="true" alt={thumbnail.text ?? ""}>
+                            <img class="blur-sm" fetchpriority="high" src={(dev ? "https://whenplane.com" : "") + "/cdn-cgi/image/height=260,quality=10,format=auto,blur=20/" + thumbnail.url} aria-hidden="true" alt={thumbnail.text ?? ""}>
                         </div>
                     {/if}
                 {/if}
