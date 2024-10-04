@@ -48,7 +48,10 @@ export const GET = (async ({platform, locals, url, fetch}) => {
     const cacheMatch = await cCache.match(cacheRequest);
 
     if(cacheMatch) {
-        return cacheMatch.clone();
+        const expires = cacheMatch.headers.get("expires")
+        if(!expires || new Date(expires).getTime() > Date.now()) {
+            return cacheMatch.clone();
+        }
     }
 
 
@@ -154,8 +157,10 @@ export const GET = (async ({platform, locals, url, fetch}) => {
         );
     }
 
+    const cacheExpires = new Date(Date.now() + cacheTime).toISOString();
+
     cache.value = result;
-    platform.context.waitUntil(cCache.put(cacheRequest, json(result)));
+    platform.context.waitUntil(cCache.put(cacheRequest, json(result, {headers: {"Expires": cacheExpires}})));
     return json(result);
 
 }) satisfies RequestHandler;
