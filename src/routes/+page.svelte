@@ -125,17 +125,18 @@
 		window.history.replaceState({}, document.title, "/" + (newURL.searchParams.size > 0 ? "?" + newURL.searchParams.toString() : ""));
 	}
 
+	let addSpace = false;
 	function checkHeight() {
 		if(!browser || !mainContainer) return;
 		if(mainContainer.scrollHeight > window.innerHeight-50) {
 			outerContainer.classList.remove("items-center")
 			outerContainer.classList.add("too-short")
-			mainContainer.classList.add("pb-16"); // So that there is some space at the bottom when scrolling
+			addSpace = true // So that there is some space at the bottom when scrolling. for some stupid reason padding doesnt work here
 			if(dev) console.debug("too short")
 		} else {
 			outerContainer.classList.add("items-center")
 			outerContainer.classList.remove("too-short")
-			mainContainer.classList.remove("pb-16")
+			addSpace = false
 		}
 	}
 
@@ -412,6 +413,9 @@
 					</AccordionItem>
 				</Accordion>
 			</div>
+		{/if}
+		{#if addSpace}
+			<div class="h-16"></div>
 		{/if}
 	</div>
 </div>
