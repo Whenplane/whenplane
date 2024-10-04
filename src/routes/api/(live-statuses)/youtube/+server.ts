@@ -43,6 +43,15 @@ export const GET = (async ({platform, locals, url, fetch}) => {
         return json({...cache.value, cached: true, fetchDistance});
     }
 
+    const cCache = await caches.open("whenplane:youtube-DO-fetch");
+    const cacheRequest = new Request("https://cache/youtube");
+    const cacheMatch = await cCache.match(cacheRequest);
+
+    if(cacheMatch) {
+        return cacheMatch.clone();
+    }
+
+
     cache.lastFetch = Date.now();
 
     let stub: DurableObjectStub;
@@ -145,9 +154,9 @@ export const GET = (async ({platform, locals, url, fetch}) => {
         );
     }
 
-    cache.value = result
-
-    return json(result)
+    cache.value = result;
+    platform.context.waitUntil(cCache.put(cacheRequest, json(result)));
+    return json(result);
 
 }) satisfies RequestHandler;
 
