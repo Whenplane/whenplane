@@ -43,9 +43,11 @@ export const GET = (async ({platform, locals, url, fetch}) => {
         return json({...cache.value, cached: true, fetchDistance});
     }
 
-    if(caches) {
-        const cCache = await caches.open("whenplane:youtube-DO-fetch");
-        const cacheRequest = new Request("https://cache/youtube");
+    let cCache: Cache | undefined = undefined;
+    let cacheRequest: Request | undefined = undefined;
+    if(typeof caches !== "undefined") {
+        cCache = await caches.open("whenplane:youtube-DO-fetch");
+        cacheRequest = new Request("https://cache/youtube");
         const cacheMatch = await cCache.match(cacheRequest);
 
         if(cacheMatch) {
@@ -164,7 +166,7 @@ export const GET = (async ({platform, locals, url, fetch}) => {
     const cacheExpires = new Date(Date.now() + cacheTime).toISOString();
 
     cache.value = result;
-    platform.context.waitUntil(cCache.put(cacheRequest, json(result, {headers: {"Expires": cacheExpires}})));
+    if(cCache && cacheRequest) platform.context.waitUntil(cCache.put(cacheRequest, json(result, {headers: {"Expires": cacheExpires}})));
     return json(result);
 
 }) satisfies RequestHandler;
