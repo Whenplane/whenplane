@@ -17,11 +17,12 @@
 
   let chart;
 
-  const someStock = Object.keys(stockHistory).length >= 1 ? JSON.parse(stockHistory[0]?.stock ?? "{}") : {};
+  $: someStock = Object.keys(stockHistory).length >= 1 ? JSON.parse(stockHistory[0]?.stock ?? "{}") : {};
 
+  let onlyTotalCheck = false;
   // show only the total for items where the stock is just the default + the total
-  let onlyTotal = Object.keys(someStock).length <= 2;
-  console.debug({onlyTotal, length: Object.keys(someStock).length, someStock, stockHistory})
+  $: onlyTotal = Object.keys(someStock).length <= 2 || onlyTotalCheck;
+  $: console.debug({onlyTotal, length: Object.keys(someStock).length, someStock, stockHistory})
 
   $: {
     onlyTotal;
@@ -71,7 +72,7 @@
         autoSelected: 'zoom'
       }
     },
-    series: getSeries(),
+    series: {},
     dataLabels: {
       enabled: false
     },
@@ -134,6 +135,7 @@
   let ApexCharts;
   let mounted = false;
   onMount(async () => {
+    options.series = getSeries();
     mounted = true;
     ApexCharts = (await import("apexcharts")).default;
     chart = new ApexCharts(chartDiv, options);
@@ -152,7 +154,7 @@
 </div>
 {#if Object.keys(someStock).length > 2}
   <label>
-    <input type="checkbox" bind:checked={onlyTotal}>
+    <input type="checkbox" bind:checked={onlyTotalCheck}>
     Only show total in graph?
   </label>
 {/if}
