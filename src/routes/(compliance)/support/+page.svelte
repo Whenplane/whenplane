@@ -13,7 +13,7 @@ import { page } from "$app/stores";
 
 <div class="limit mx-auto text-center mt-16">
   <h1>Support</h1>
-  To get support with anything to do with whenplane, feel free to email <a href="mailto:support@whenplane.com">support@whenplane.com</a>
+  To get support with anything to do with whenplane, or just ask questions or give feedback, feel free to email <a href="mailto:support@whenplane.com">support@whenplane.com</a>
   <br>
   <br>
   <h2>Discord</h2>
