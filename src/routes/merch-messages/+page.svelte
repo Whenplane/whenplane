@@ -81,15 +81,18 @@
       <table class="table rounded-sm">
         <thead>
           <tr>
+            <td>Date</td>
             <td>Type</td>
             <td>Name</td>
-            <td>Message</td>
+            <td>Message Fragment</td>
             <td>Link</td>
           </tr>
         </thead>
         <tbody>
         {#each searchResults.hits as hit (hit.document.id)}
+          {@const releaseEpoch = data.videoReleaseDates[hit.document.video]}
           <tr animate:flip={{ duration: 100 }} transition:slide class="bg-surface-900">
+            <td>{releaseEpoch ? new Date(releaseEpoch).toLocaleDateString(undefined, {dateStyle: "medium"}) : ""}</td>
             <td>{hit.document.type}</td>
             <td>{hit.document.name}</td>
             <td>{@html sanitizeHtml((hit.highlight.text?.snippet ?? hit.highlight.name?.snippet)+"", newsSanitizeSettings)}</td>

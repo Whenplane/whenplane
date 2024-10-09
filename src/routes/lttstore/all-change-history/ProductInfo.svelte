@@ -32,7 +32,7 @@
   {/if}
 {/await}
 {#if browser}
-  <div style="height: 0; display: inline-block;" id="old-history">
+  <div style="height: 0; display: inline-block;">
     <div class="relative pointer-events-none" style="bottom: 50em">
       <LazyLoad on:visible={loadProduct} height="50em"/>
     </div>

@@ -9,10 +9,16 @@ export const load = (async ({platform, params}) => {
 
   const videos = await db.prepare("select * from videos order by releaseDate DESC")
     .bind()
-    .all<{videoId: string, status: string, title: string}>()
+    .all<{videoId: string, status: string, title: string, releaseDate: number}>()
     .then(r => r.results);
 
+  const videoReleaseDates = Object.fromEntries(videos.map(v => {
+    return [
+      v.videoId,
+      v.releaseDate
+    ]
+  }))
 
-  return {videos}
+  return {videos, videoReleaseDates};
 
 }) satisfies ServerLoad;
