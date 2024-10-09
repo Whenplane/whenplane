@@ -22,7 +22,7 @@
       for (let beforeEntry of Object.entries(beforeVariant)) {
         const key = beforeEntry[0];
         const beforeValue = beforeEntry[1];
-        const afterValue = (afterVariant as {[key: string]: any})[key];
+        const afterValue = (afterVariant as {[key: string]: any})?.[key];
         if(JSON.stringify(beforeValue) !== JSON.stringify(afterValue)) {
           html += beforeVariant.title + ": " + getVariantFieldName(key) + ": " +
             "<span style='background-color: rgba(" + (displaying == "before" ? "255, 0, 0" : "0, 255, 0") + ", 0.2)'>" +
