@@ -33,10 +33,22 @@
           }
         } else {
           if(JSON.stringify(beforeValue) !== JSON.stringify(afterValue)) {
-            html += beforeVariant.title + ": " + getVariantFieldName(key) + ": " +
-              "<span style='background-color: rgba(" + (displaying == "before" ? "255, 0, 0" : "0, 255, 0") + ", 0.2)'>" +
-              (displaying == "before" ? beforeValue : afterValue) +
-              "</span><br>";
+            if(typeof beforeValue === "object" || typeof afterValue === "object") {
+              for (let beforeValueEntry of Object.entries(beforeValue ?? {})) {
+                const subKey = beforeValueEntry[0];
+                const beforeSubValue = beforeValueEntry[1];
+                const afterSubValue = (afterValue as { [key: string]: any })?.[subKey];
+                html += beforeVariant.title + ": " + getVariantFieldName(key) + ": " + getVariantFieldName(subKey) + " " +
+                  "<span style='background-color: rgba(" + (displaying == "before" ? "255, 0, 0" : "0, 255, 0") + ", 0.2)'>" +
+                  (displaying == "before" ? beforeSubValue : afterSubValue) +
+                  "</span><br>";
+              }
+            } else {
+              html += beforeVariant.title + ": " + getVariantFieldName(key) + ": " +
+                "<span style='background-color: rgba(" + (displaying == "before" ? "255, 0, 0" : "0, 255, 0") + ", 0.2)'>" +
+                (displaying == "before" ? beforeValue : afterValue) +
+                "</span><br>";
+            }
           }
         }
       }

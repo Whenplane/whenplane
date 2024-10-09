@@ -19,6 +19,7 @@ const variant_field_names: {[key: string]: string} = {
   "available": "In stock",
   "title": "Title",
   "featured_image": "Featured Image",
+  "featured_media": "Featured Media",
   "weight": "Shipping Weight",
   "Price": "Price",
   "compare_at_price": "Previous Price"
