@@ -25,11 +25,15 @@
         const beforeValue = beforeEntry[1];
         const afterValue = (afterVariant as {[key: string]: any})?.[key];
         if(["null", "undefined"].includes(typeof afterValue)) {
-          if(displaying === "after" && !removed.includes(beforeVariant.title)) {
-            html += "<span style='background-color: rgba(255, 0, 0, 0.2)'>" +
-              "Removed " + beforeVariant.title +
-              "</span><br>";
-            removed.push(beforeVariant.title);
+          if(!removed.includes(beforeVariant.title)) {
+            if(displaying === "after") {
+              html += "<span style='background-color: rgba(255, 0, 0, 0.2)'>" +
+                "Removed " + beforeVariant.title +
+                "</span><br>";
+              removed.push(beforeVariant.title);
+            } else {
+              html += "<span style='background-color: rgba(255, 0, 0, 0.2)' class='opacity-40'>&ThinSpace;</span><br>"
+            }
           }
         } else {
           if(JSON.stringify(beforeValue) !== JSON.stringify(afterValue)) {
@@ -38,6 +42,7 @@
                 const subKey = beforeValueEntry[0];
                 const beforeSubValue = beforeValueEntry[1];
                 const afterSubValue = (afterValue as { [key: string]: any })?.[subKey];
+                if(JSON.stringify(beforeSubValue) === JSON.stringify(afterSubValue)) continue;
                 html += beforeVariant.title + ": " + getVariantFieldName(key) + ": " + getVariantFieldName(subKey) + " " +
                   "<span style='background-color: rgba(" + (displaying == "before" ? "255, 0, 0" : "0, 255, 0") + ", 0.2)'>" +
                   (displaying == "before" ? beforeSubValue : afterSubValue) +
