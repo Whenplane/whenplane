@@ -10,7 +10,7 @@
   $: parsedAfter = JSON.parse(after);
 
   export let displaying: "before" | "after";
-  export let diffType: "chars" | "words" = "chars";
+  export let diffType: "chars" | "words" | "lines" = "chars";
 
   $: if((parsedBefore === 1 && parsedAfter === 0) || (parsedBefore === 0 && parsedAfter === 1)) {
     parsedBefore = parsedBefore === 1;
@@ -23,6 +23,9 @@
     html = "";
     let diff;
     switch(diffType) {
+      case "lines":
+        diff = Diff.diffLines(parsedBefore+"", parsedAfter+"");
+        break;
       case "words":
         diff = Diff.diffWords(parsedBefore+"", parsedAfter+"");
         break;
