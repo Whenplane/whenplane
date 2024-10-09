@@ -27,7 +27,7 @@
         diff = Diff.diffLines(parsedBefore+"", parsedAfter+"");
         break;
       case "words":
-        diff = Diff.diffWords(parsedBefore+"", parsedAfter+"");
+        diff = Diff.diffWords(parsedBefore+"", parsedAfter+"", {ignoreWhitespace: true});
         break;
       case "chars":
       default:
