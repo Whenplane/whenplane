@@ -23,11 +23,17 @@
         const key = beforeEntry[0];
         const beforeValue = beforeEntry[1];
         const afterValue = (afterVariant as {[key: string]: any})?.[key];
-        if(JSON.stringify(beforeValue) !== JSON.stringify(afterValue)) {
-          html += beforeVariant.title + ": " + getVariantFieldName(key) + ": " +
-            "<span style='background-color: rgba(" + (displaying == "before" ? "255, 0, 0" : "0, 255, 0") + ", 0.2)'>" +
-            (displaying == "before" ? beforeValue : afterValue) +
-            "</span><br>"
+        if(["null" || "undefined"].includes(typeof afterValue)) {
+          html += "<span style='background-color: rgba(" + (displaying == "before" ? "255, 0, 0" : "0, 255, 0") + ", 0.2)'>" +
+            "Removed " + beforeVariant.title + afterValue +
+            "</span><br>";
+        } else {
+          if(JSON.stringify(beforeValue) !== JSON.stringify(afterValue)) {
+            html += beforeVariant.title + ": " + getVariantFieldName(key) + ": " +
+              "<span style='background-color: rgba(" + (displaying == "before" ? "255, 0, 0" : "0, 255, 0") + ", 0.2)'>" +
+              (displaying == "before" ? beforeValue : afterValue) +
+              "</span><br>";
+          }
         }
       }
     }
