@@ -21,7 +21,7 @@
     <tbody>
     {#each data.changeHistory as change, i}
       <span class="hidden">
-        {console.log("change", change?.id)}
+        {console.log("change", change?.id, change?.timestamp, change?.field)}
       </span>
       <tr>
         <td><ProductInfo productId={change.id} initiallyLoad={i < 5}/></td>
