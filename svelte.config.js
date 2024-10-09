@@ -16,10 +16,21 @@ const config = {
 			routes: {
 				exclude: [
 					"<all>",
+
+					// Stuff that vulnerability crawlers like to spam
 					"/*/wp-includes",
 					"/*/wp-includes/*",
 					"/wp-includes",
 					"/wp-includes/*",
+					"/wp-admin/*",
+					"/wp-content/*",
+					"/*.php",
+					"/*.php7",
+					"/*/*.php",
+					"/*/*.php7",
+					"/libraries/*",
+					"/.env",
+
 					"/discord",
 					"/boca-time"
 				]
