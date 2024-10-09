@@ -16,6 +16,7 @@
   let html: string;
   $: {
     html = "";
+    let removed: string[] = [];
     for (let i = 0; i < parsedBefore.length; i++) {
       const beforeVariant = parsedBefore[i];
       const afterVariant = parsedAfter[i];
@@ -24,9 +25,12 @@
         const beforeValue = beforeEntry[1];
         const afterValue = (afterVariant as {[key: string]: any})?.[key];
         if(["null", "undefined"].includes(typeof afterValue)) {
-          html += "<span style='background-color: rgba(" + (displaying == "before" ? "255, 0, 0" : "0, 255, 0") + ", 0.2)'>" +
-            "Removed " + beforeVariant.title + afterValue +
-            "</span><br>";
+          if(!removed.includes(beforeVariant.title)) {
+            html += "<span style='background-color: rgba(" + (displaying == "before" ? "255, 0, 0" : "0, 255, 0") + ", 0.2)'>" +
+              "Removed " + beforeVariant.title + afterValue +
+              "</span><br>";
+            removed.push(beforeVariant.title);
+          }
         } else {
           if(JSON.stringify(beforeValue) !== JSON.stringify(afterValue)) {
             html += beforeVariant.title + ": " + getVariantFieldName(key) + ": " +
