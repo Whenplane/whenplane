@@ -24,8 +24,8 @@
         const key = beforeEntry[0];
         const beforeValue = beforeEntry[1];
         const afterValue = (afterVariant as {[key: string]: any})?.[key];
-        if(displaying === "after" && ["null", "undefined"].includes(typeof afterValue)) {
-          if(!removed.includes(beforeVariant.title)) {
+        if(["null", "undefined"].includes(typeof afterValue)) {
+          if(displaying === "after" && !removed.includes(beforeVariant.title)) {
             html += "<span style='background-color: rgba(255, 0, 0, 0.2)'>" +
               "Removed " + beforeVariant.title +
               "</span><br>";
