@@ -4,7 +4,6 @@
   import ProductInfo from "./ProductInfo.svelte";
 
   export let data;
-  console.log("hello! (page)")
 </script>
 
 <div class="table-container rounded-md">
@@ -20,9 +19,6 @@
     </thead>
     <tbody>
     {#each data.changeHistory as change, i}
-      <span class="hidden">
-        {console.log("change", change?.id, change?.timestamp, change?.field)}
-      </span>
       <tr>
         <td><ProductInfo productId={change.id} initiallyLoad={i < 5}/></td>
         <td>{getFieldName(change.field)}</td>
