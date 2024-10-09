@@ -30,10 +30,10 @@
               html += "<span style='background-color: rgba(255, 0, 0, 0.2)'>" +
                 "Removed " + beforeVariant.title +
                 "</span><br>";
-              removed.push(beforeVariant.title);
             } else {
               html += "<span style='background-color: rgba(255, 0, 0, 0.2)' class='opacity-40'>&ThinSpace;</span><br>"
             }
+            removed.push(beforeVariant.title);
           }
         } else {
           if(JSON.stringify(beforeValue) !== JSON.stringify(afterValue)) {
