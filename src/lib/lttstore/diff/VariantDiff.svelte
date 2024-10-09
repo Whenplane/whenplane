@@ -19,7 +19,7 @@
     let removed: string[] = [];
     for (let i = 0; i < parsedBefore.length; i++) {
       const beforeVariant = parsedBefore[i];
-      const afterVariant = parsedAfter[i];
+      const afterVariant = parsedAfter.find(v => v.title === beforeVariant.title);
       for (let beforeEntry of Object.entries(beforeVariant)) {
         const key = beforeEntry[0];
         const beforeValue = beforeEntry[1];
