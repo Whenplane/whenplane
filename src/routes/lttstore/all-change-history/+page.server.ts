@@ -16,6 +16,8 @@ export const load = (async ({platform}) => {
     .all<{id: number, timestamp: number, field: string, old: string, new: string}>()
     .then(r => r.results);
 
+  console.log("After change history fetch")
+
   return {
     changeHistory: await changeHistory
   }
