@@ -41,7 +41,7 @@ export const load = (async ({platform, fetch}) => {
       const eventName = "start_" + liveData.game
       const startTime = Date.now();
       console.log("Adding game " + eventName + " with start time of " + startTime)
-      await db.prepare("insert into boca_events (event_name, event_timestamp, stream), (?, ?, ?)")
+      await db.prepare("insert into boca_events (event_name, event_timestamp, stream) (?, ?, ?)")
         .bind(eventName, startTime, currentStream).run();
       pastData.push({
         event_name: eventName,
