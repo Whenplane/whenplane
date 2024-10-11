@@ -49,7 +49,7 @@
     }
   })
 </script>
-<div class="container mx-auto pt-12">
+<div class="container mx-auto pt-12 pb-32">
   <h1>BocaBola Game Marathon</h1>
   <br>
   {#if data.liveData.isLive}
