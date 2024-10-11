@@ -35,9 +35,9 @@ export const load = (async ({platform, fetch}) => {
 
     if(!pastData.find(e => e.event_name === "streamStart")) {
       console.log("Adding stream start time")
-      const startTime = new Date(liveData.started).getTime()
+      const startTime = new Date(liveData.started ?? "").getTime()
       await db.prepare("insert into boca_events (event_name, event_timestamp, stream) values (?, ?, ?)")
-        .bind("streamStart", startTime, currentStream);
+        .bind("streamStart", startTime, currentStream).run();
       pastData.push({
         event_name: "streamStart",
         event_timestamp: startTime
@@ -54,7 +54,7 @@ export const load = (async ({platform, fetch}) => {
         event_name: eventName,
         event_timestamp: startTime
       })
-      await meta.put("boca_marathon_currentGame", liveData.game);
+      await meta.put("boca_marathon_currentGame", liveData.game ?? "");
     }
   } else {
     console.log("past cutoff or not live!")
