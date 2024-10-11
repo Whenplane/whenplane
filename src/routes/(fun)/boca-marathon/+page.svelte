@@ -12,7 +12,7 @@
   import DateStamp from "$lib/DateStamp.svelte";
   import { timeString } from "$lib/timeUtils.ts";
 
-  let modifiedEvents: {event_name: string, event_timestamp: number, length: number, current: boolean}[] = [];
+  let modifiedEvents: {event_name: string, event_timestamp: number, length: number, ended?: number, current: boolean}[] = [];
   $: {
     modifiedEvents = [];
     for (let i = 0; i < data.pastData.length; i++) {
@@ -23,6 +23,7 @@
         event_name: thisEvent.event_name,
         event_timestamp: thisEvent.event_timestamp,
         length: nextEvent ? nextEvent.event_timestamp - thisEvent.event_timestamp : Date.now() - thisEvent.event_timestamp,
+        ended: nextEvent ? nextEvent.event_timestamp : undefined,
         current: !nextEvent
       })
 
@@ -73,10 +74,14 @@
       <div class="flex">
         <img src="/games/{encodeURI(game.replaceAll(':', ''))}.webp" width="264" height="352" alt={game} class="game-image" class:just-chatting={game === "Just Chatting"}>
         <span class="content-center p-2">
-        <span class="text-2xl">
-          {game}
-        </span><br>
-        started <DateStamp {epochSeconds}/>.<br>
+          <span class="text-2xl">
+            {game}
+          </span><br>
+          started <DateStamp {epochSeconds}/>{event.ended ? "," : "."}
+          {#if event.ended}
+            ended <DateStamp epochSeconds={event.ended/1e3}/>
+          {/if}
+          <br>
           {event.current ? "Playing" : "Played"} for {timeString(event.length)}
       </span>
       </div>
