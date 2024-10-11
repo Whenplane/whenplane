@@ -49,34 +49,43 @@
     }
   })
 </script>
-{#if data.liveData.isLive}
-  <NotablePersonLive shortResponse={data.liveData}/>
-{/if}
-{#each modifiedEvents as event}
-  {@const epochSeconds = event.event_timestamp/1e3}
-  {#if event.event_name.startsWith("start_")}
-    {@const game = event.event_name.substring("start_".length)}
-    <div class="flex">
-      <img src="/games/{encodeURI(game.replaceAll(':', ''))}.webp" width="264" height="352" alt={game} class="game-image">
-      <span class="content-center p-2">
+<div class="container mx-auto pt-12">
+  <h1>BocaBola Game Marathon</h1>
+  <br>
+  {#if data.liveData.isLive}
+    <div class="max-w-5xl mx-auto">
+      <NotablePersonLive shortResponse={data.liveData}/>
+    </div>
+    <br>
+  {/if}
+  <br>
+  <h2>Games Played</h2>
+  {#each modifiedEvents as event}
+    {@const epochSeconds = event.event_timestamp/1e3}
+    {#if event.event_name.startsWith("start_")}
+      {@const game = event.event_name.substring("start_".length)}
+      <div class="flex">
+        <img src="/games/{encodeURI(game.replaceAll(':', ''))}.webp" width="264" height="352" alt={game} class="game-image">
+        <span class="content-center p-2">
         <span class="text-2xl">
           {game}
         </span><br>
         started <DateStamp {epochSeconds}/>.<br>
-        {event.current ? "Playing" : "Played"} for {timeString(event.length)}
+          {event.current ? "Playing" : "Played"} for {timeString(event.length)}
       </span>
-    </div>
-  {:else if event.event_name === "streamStart"}
-    Stream started <DateStamp {epochSeconds}/>
-  {:else if event.event_name === "timerStart"}
-    Marathon timer started <DateStamp {epochSeconds}/>
-  {:else}
-    Unknown event {event.event_name} <DateStamp {epochSeconds}/>
-  {/if}
-  <br>
-{/each}
+      </div>
+    {:else if event.event_name === "streamStart"}
+      Stream started <DateStamp {epochSeconds}/>
+    {:else if event.event_name === "timerStart"}
+      Marathon timer started <DateStamp {epochSeconds}/>
+    {:else}
+      Unknown event {event.event_name} <DateStamp {epochSeconds}/>
+    {/if}
+    <br>
+  {/each}
+</div>
 
-<pre>{JSON.stringify(data, undefined, '\t')}</pre>
+<!--<pre>{JSON.stringify(data, undefined, '\t')}</pre>-->
 
 <style>
   .game-image {
