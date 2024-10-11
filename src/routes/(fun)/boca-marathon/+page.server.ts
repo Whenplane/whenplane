@@ -38,7 +38,7 @@ export const load = (async ({platform, fetch}) => {
       const startTime = new Date(liveData.started ?? "").getTime()
       await db.prepare("insert into boca_events (event_name, event_timestamp, stream) values (?, ?, ?)")
         .bind("streamStart", startTime, currentStream).run();
-      pastData.push({
+      pastData.unshift({
         event_name: "streamStart",
         event_timestamp: startTime
       })
