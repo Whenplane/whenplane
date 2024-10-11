@@ -4,12 +4,17 @@
 
   export let data;
 
+  const initialReloadNumber = data.reloadNumber;
+
   import { onMount } from "svelte";
   import { invalidateAll } from "$app/navigation";
   import DateStamp from "$lib/DateStamp.svelte";
 
   onMount(() => {
-    let i = setInterval(invalidateAll, 10e3);
+    let i = setInterval(async () => {
+      await invalidateAll();
+      if(data.reloadNumber !== initialReloadNumber) location.href = ""
+    }, 10e3);
     return () => clearInterval(i);
   })
 </script>
