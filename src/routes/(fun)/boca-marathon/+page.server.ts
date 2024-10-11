@@ -46,6 +46,8 @@ export const load = (async ({platform, fetch}) => {
         event_timestamp: startTime
       })
     }
+  } else {
+    console.log("past cutoff or not live!")
   }
 
   return {
