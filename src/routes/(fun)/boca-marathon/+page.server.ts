@@ -17,6 +17,8 @@ export const load = (async ({platform, fetch}) => {
   if(dev) {
     await db.prepare("create table if not exists boca_events (event_name text, event_timestamp number, stream text)")
       .run();
+    await db.prepare("create table if not exists boca_meta (key text, value text)")
+      .run();
   }
 
   const liveData: NotablePeopleShortResponse = await fetch("/api/notable-streams")
@@ -31,8 +33,6 @@ export const load = (async ({platform, fetch}) => {
 
   if(Date.now() < cutoff_time && liveData.isLive) {
 
-    const lastGame = await meta.get("boca_marathon_currentGame");
-
     if(!pastData.find(e => e.event_name === "streamStart")) {
       console.log("Adding stream start time")
       const startTime = new Date(liveData.started ?? "").getTime()
@@ -44,7 +44,14 @@ export const load = (async ({platform, fetch}) => {
       })
     }
 
+    const lastGame = (await db.prepare("select value from boca_meta where key='marathon_currentGame'").first<{value: string}>())?.value ??
+      await meta.get("boca_marathon_currentGame");
+
     if(lastGame !== liveData.game) {
+
+      await db.prepare("insert or replace info boca_meta(key, value) values(?, ?)")
+        .bind("marathon_currentGame", liveData.game).run();
+
       const eventName = "start_" + liveData.game
       const startTime = Date.now();
       console.log("Adding game " + eventName + " with start time of " + startTime)
@@ -54,7 +61,7 @@ export const load = (async ({platform, fetch}) => {
         event_name: eventName,
         event_timestamp: startTime
       })
-      await meta.put("boca_marathon_currentGame", liveData.game ?? "");
+      // await meta.put("boca_marathon_currentGame", liveData.game ?? "");
     }
   } else {
     console.log("past cutoff or not live!")
