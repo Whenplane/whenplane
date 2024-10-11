@@ -53,7 +53,7 @@
   <title>BocaBola Game Marathon</title>
   <meta name="description" content="BocaBola Game Marathon tracker" />
 </svelte:head>
-<div class="container mx-auto pt-12 pb-32">
+<div class="container mx-auto p-2 pt-12 pb-32">
   <h1>BocaBola Game Marathon</h1>
   <br>
   {#if data.liveData.isLive}
