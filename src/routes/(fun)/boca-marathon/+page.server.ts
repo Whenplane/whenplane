@@ -2,6 +2,7 @@ import { error } from "@sveltejs/kit";
 import type { NotablePeopleShortResponse } from "../../api/(live-statuses)/notable-streams/+server.ts";
 import { type D1Database, type KVNamespace } from "@cloudflare/workers-types";
 import { dev } from "$app/environment";
+import {type PageServerLoad} from "./$types"
 
 export const load = (async ({platform, fetch}) => {
 
