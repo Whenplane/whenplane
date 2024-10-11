@@ -12,21 +12,22 @@
   }
 
 </script>
-<slot name="icon">
-  <div
-    use:popup={{
+<div
+  use:popup={{
       event: 'hover',
       target: id,
-      placement: placement
+      placement: placement,
     }}
-    class="inline-block [&>*]:pointer-events-none"
-  >
+  class="inline-block [&>*]:pointer-events-none"
+>
+  <slot name="icon">
     <Info classes="!inline-block"/>
-  </div>
-</slot>
+  </slot>
+</div>
 
 <div class="card p-4 shadow-x1 z-10 font-normal inline-block" data-popup={id}>
   <slot/>
+  <slot name="content"/>
 </div>
 
 <style>
