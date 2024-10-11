@@ -56,7 +56,16 @@
   {@const epochSeconds = event.event_timestamp/1e3}
   {#if event.event_name.startsWith("start_")}
     {@const game = event.event_name.substring("start_".length)}
-    {game} started <DateStamp {epochSeconds}/>. {event.current ? "Playing" : "Played"} for {timeString(event.length)}
+    <div class="flex">
+      <img src="/games/{encodeURI(game.replaceAll(':', ''))}.webp" width="264" height="352" alt={game} class="game-image">
+      <span class="content-center p-2">
+        <span class="text-2xl">
+          {game}
+        </span><br>
+        started <DateStamp {epochSeconds}/>.<br>
+        {event.current ? "Playing" : "Played"} for {timeString(event.length)}
+      </span>
+    </div>
   {:else if event.event_name === "streamStart"}
     Stream started <DateStamp {epochSeconds}/>
   {:else if event.event_name === "timerStart"}
@@ -68,3 +77,10 @@
 {/each}
 
 <pre>{JSON.stringify(data, undefined, '\t')}</pre>
+
+<style>
+  .game-image {
+      width: auto;
+      max-height: 15em;
+  }
+</style>
