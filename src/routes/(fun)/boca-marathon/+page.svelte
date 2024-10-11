@@ -62,6 +62,13 @@
 <div class="container mx-auto p-2 pt-12 pb-32">
   <h1>BocaBola/iitskasino Game Marathon</h1>
   <br>
+  <br>
+  BocaBola and iitskasino will be playing each of these games, no matter how long it takes.<br>
+  They are expecting the stream to last multiple days (they will apparently be sleeping on stream too)<br>
+  <br>
+  If games have multiple campaigns, they will only be playing through one of them.
+  <br>
+  <br>
   {#if data.liveData.isLive}
     <div class="max-w-5xl mx-auto">
       <NotablePersonLive shortResponse={data.liveData}/>
