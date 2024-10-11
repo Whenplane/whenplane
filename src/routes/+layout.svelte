@@ -65,7 +65,8 @@
           "/ltt-time",
           "/youtube-redirect",
           "/about",
-          "/notifications"
+          "/notifications",
+          "/boca-marathon"
       ];
 </script>
 
