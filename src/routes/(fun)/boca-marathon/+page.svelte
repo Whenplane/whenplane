@@ -5,6 +5,7 @@
   export let data;
 
   const initialReloadNumber = data.reloadNumber;
+  let nowish = Date.now()
 
   import { onMount } from "svelte";
   import { invalidateAll } from "$app/navigation";
@@ -42,6 +43,7 @@
           length: e.length + 1
         }
       })
+      nowish = Date.now();
     }, 1e3)
     return () => {
       clearInterval(i);
@@ -79,9 +81,9 @@
       </span>
       </div>
     {:else if event.event_name === "streamStart"}
-      Stream started <DateStamp {epochSeconds}/>
+      Stream started <DateStamp {epochSeconds}/> ({timeString(nowish - event.event_timestamp)?.trim()})
     {:else if event.event_name === "timerStart"}
-      Marathon timer started <DateStamp {epochSeconds}/>
+      Marathon timer started <DateStamp {epochSeconds}/> ({timeString(nowish - event.event_timestamp)?.trim()})
     {:else}
       Unknown event {event.event_name} <DateStamp {epochSeconds}/>
     {/if}
