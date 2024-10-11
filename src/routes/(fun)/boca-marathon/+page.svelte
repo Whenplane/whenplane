@@ -96,7 +96,7 @@
 <style>
   .game-image {
       width: auto;
-      max-height: 15em;
+      max-width: 10em;
   }
   .just-chatting {
       object-fit: cover;
