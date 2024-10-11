@@ -1,18 +1,19 @@
 <script lang="ts">
 
   import NotablePersonLive from "$lib/NotablePersonLive.svelte";
-
-  export let data;
-
-  const initialReloadNumber = data.reloadNumber;
-  let nowish = Date.now()
-
   import { onMount } from "svelte";
   import { invalidateAll } from "$app/navigation";
   import DateStamp from "$lib/DateStamp.svelte";
   import { timeString } from "$lib/timeUtils.ts";
   import { games } from "./games.ts";
   import ToolTip from "$lib/ToolTip.svelte";
+
+  export let data;
+
+  const initialReloadNumber = data.reloadNumber;
+  let nowish = Date.now();
+
+  console.log(Object.keys(games).join(", "))
 
   let modifiedEvents: {event_name: string, event_timestamp: number, length: number, ended?: number, current: boolean}[] = [];
   $: {
@@ -97,7 +98,6 @@
           <span class="text-lg">
             {game}
           </span>
-          <span class="hidden">{console.log(game, games[game])}</span>
           {#if games[game]}
             <br>
             {games[game]}

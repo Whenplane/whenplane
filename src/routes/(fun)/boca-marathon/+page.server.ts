@@ -70,7 +70,7 @@ export const load = (async ({platform, fetch}) => {
   return {
     pastData,
     liveData,
-    reloadNumber: 0
+    reloadNumber: 1
   }
 
 }) satisfies PageServerLoad
