@@ -70,7 +70,7 @@
   <br>
   <h2>Game List</h2>
   Games that have already been played are greyed out. This list is not in a specific order, as the next game is chosen by a wheel spin.<br>
-  <div class="game-list-container">
+  <div class="game-list-container text-center">
     {#each Object.keys(games) as game (game)}
       {@const foundEvent = modifiedEvents.find(e => e.event_name.startsWith("start_" + game.split(" ")[0]))}
       {@const played = !!foundEvent}
