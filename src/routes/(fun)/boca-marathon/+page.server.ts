@@ -38,11 +38,13 @@ export const load = (async ({platform, fetch}) => {
     }
 
     if(!pastData.find(e => e.event_name === "start_" + liveData.game)) {
+      const eventName = "start_" + liveData.game
       const startTime = Date.now();
+      console.log("Adding game " + eventName + " with start time of " + startTime)
       await db.prepare("insert into boca_events (event_name, event_timestamp, stream), (?, ?, ?)")
-        .bind("start_" + liveData.game, startTime, currentStream);
+        .bind(eventName, startTime, currentStream);
       pastData.push({
-        event_name: "start_" + liveData.game,
+        event_name: eventName,
         event_timestamp: startTime
       })
     }
