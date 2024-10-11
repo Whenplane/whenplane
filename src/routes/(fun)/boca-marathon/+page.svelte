@@ -71,7 +71,7 @@
     {#if event.event_name.startsWith("start_")}
       {@const game = event.event_name.substring("start_".length)}
       <div class="flex">
-        <img src="/games/{encodeURI(game.replaceAll(':', ''))}.webp" width="264" height="352" alt={game} class="game-image">
+        <img src="/games/{encodeURI(game.replaceAll(':', ''))}.webp" width="264" height="352" alt={game} class="game-image" class:just-chatting={game === "Just Chatting"}>
         <span class="content-center p-2">
         <span class="text-2xl">
           {game}
@@ -97,5 +97,9 @@
   .game-image {
       width: auto;
       max-height: 15em;
+  }
+  .just-chatting {
+      object-fit: cover;
+      aspect-ratio: 2/1;
   }
 </style>
