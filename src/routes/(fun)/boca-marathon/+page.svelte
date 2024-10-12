@@ -86,7 +86,7 @@
       <ToolTip id={game} placement="left-end">
         <svelte:fragment slot="icon">
           <div class="inline-block" class:opacity-10={played && !currentlyPlaying}>
-            {#if game === "Viewer submitted game"}
+            {#if game === "Streamers vs Chatters"}
               <div class="m-1 inline-block game-list-game">
                 <div class="fake-game-image inline-flex justify-center w-full align-middle" class:currently-playing={currentlyPlaying}>
                   <span class="content-center relative bottom-1.5">

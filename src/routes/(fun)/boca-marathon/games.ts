@@ -9,5 +9,5 @@ export const games: {[game: string]: string} = {
   "Bread & Fred": "",
   "Keep Talking and Nobody Explodes": "",
   "A Way Out": "",
-  "Viewer submitted game": "Near the end of the stream, chat will pick a game for the two to play."
+  "Streamers vs Chatters": "Near the end of the stream, the streamers will need to beat chat in a game. They cannot end stream until they beat chat."
 }
