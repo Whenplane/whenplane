@@ -79,7 +79,7 @@ export const load = (async ({platform, fetch}) => {
 
       console.log("I'm removing", remove);
 
-      const removePromises: Promise[] = [];
+      /*const removePromises: Promise[] = [];
       for (const eventRemove of remove) {
         removePromises.push(
           db.prepare("delete from boca_events where stream=? and event_name=? and event_timestamp=?")
@@ -88,7 +88,7 @@ export const load = (async ({platform, fetch}) => {
         )
       }
 
-      platform.context?.waitUntil(Promise.all(removePromises));
+      platform.context?.waitUntil(Promise.all(removePromises));*/
 
 
     }
