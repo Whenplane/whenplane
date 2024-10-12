@@ -5,12 +5,11 @@
 
   export let border = true;
   export let tooltip = true;
+  export let boca = $page.url.searchParams.has("boca");
 
   $: console.log({border})
 
   let timeString = "";
-
-  $: boca = $page.url.searchParams.has("boca")
 
   onMount(() => {
     let interval = setInterval(updateTimeString, 5e3);
@@ -41,7 +40,7 @@
 <div data-popup="ltttime-info" class="popup">
   {#if tooltip}
     <div class="card p-3 py-2 whitespace-nowrap shadow-x1 z-15 font-normal text-right">
-      The current time in LTT land<br>
+      The current time in {boca ? "Boca" : "LTT"} land<br>
       (Vancouver)
     </div>
   {/if}

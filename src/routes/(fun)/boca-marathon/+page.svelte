@@ -7,6 +7,7 @@
   import { timeString } from "$lib/timeUtils.ts";
   import { games } from "./games.ts";
   import ToolTip from "$lib/ToolTip.svelte";
+  import LTTTime from "$lib/LTTTime.svelte";
 
   export let data;
 
@@ -59,6 +60,9 @@
   <title>BocaBola/iitskasino Game Marathon</title>
   <meta name="description" content="BocaBola Game Marathon tracker" />
 </svelte:head>
+<div class="absolute top-0 right-0">
+  <LTTTime boca={true}/>
+</div>
 <div class="container mx-auto p-2 pt-12 pb-32">
   <h1>BocaBola/iitskasino Game Marathon</h1>
   <br>
