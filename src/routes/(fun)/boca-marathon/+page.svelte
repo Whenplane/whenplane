@@ -4,7 +4,7 @@
   import { onMount } from "svelte";
   import { invalidateAll } from "$app/navigation";
   import DateStamp from "$lib/DateStamp.svelte";
-  import { timeString } from "$lib/timeUtils.ts";
+  import { timeString, timeStringHours } from "$lib/timeUtils.ts";
   import { games } from "./games.ts";
   import ToolTip from "$lib/ToolTip.svelte";
   import LTTTime from "$lib/LTTTime.svelte";
@@ -177,9 +177,9 @@
         </span>
       </div>
     {:else if event.event_name === "streamStart"}
-      Stream started <DateStamp {epochSeconds}/> ({timeString(nowish - event.event_timestamp)?.trim()})
+      Stream started <DateStamp {epochSeconds}/> ({timeString(nowish - event.event_timestamp)?.trim()} / {timeStringHours(nowish - event.event_timestamp)?.trim()})
     {:else if event.event_name === "timerStart"}
-      Marathon timer started <DateStamp {epochSeconds}/> ({timeString(nowish - event.event_timestamp)?.trim()})
+      Marathon timer started <DateStamp {epochSeconds}/> ({timeString(nowish - event.event_timestamp)?.trim()} / {timeStringHours(nowish - event.event_timestamp)?.trim()})
     {:else}
       Unknown event {event.event_name} <DateStamp {epochSeconds}/>
     {/if}
