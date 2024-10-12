@@ -49,7 +49,7 @@ export const load = (async ({platform, fetch}) => {
 
     if(lastGame !== liveData.game) {
 
-      await db.prepare("insert or replace info boca_meta(key, value) values(?, ?)")
+      await db.prepare("insert or replace into boca_meta(key, value) values(?, ?)")
         .bind("marathon_currentGame", liveData.game).run();
 
       const eventName = "start_" + liveData.game
