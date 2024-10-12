@@ -77,7 +77,18 @@ export const load = (async ({platform, fetch}) => {
       remove.pop() // remove the last (oldest) element, since that should be the most accurate
       remove.push(pastData[0]); // add first element, as it usually wouldnt meet above requirements and is the furthest off
 
-      console.log("I would remove", remove)
+      console.log("I'm removing", remove);
+
+      const removePromises: Promise[] = [];
+      for (const eventRemove of remove) {
+        removePromises.push(
+          db.prepare("delete from boca_events where stream=? and event_name=? and event_timestamp=?")
+            .bind(currentStream, eventRemove.event_name, eventRemove.event_timestamp)
+            .run()
+        )
+      }
+
+      platform.context?.waitUntil(Promise.all(removePromises));
 
 
     }
