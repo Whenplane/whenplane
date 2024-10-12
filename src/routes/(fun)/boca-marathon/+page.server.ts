@@ -74,7 +74,7 @@ export const load = (async ({platform, fetch}) => {
 
         if(length < 15e3) remove.push(thisEvent);
       }
-      remove.push(pastdata[0]); // add first element, as it usually wouldnt meet above requirements and is the furthest off
+      remove.push(pastData[0]); // add first element, as it usually wouldnt meet above requirements and is the furthest off
       remove.pop() // remove the last (oldest) element, since that should be the most accurate
 
       console.log("I would remove", remove)
