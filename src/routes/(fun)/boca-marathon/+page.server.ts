@@ -62,6 +62,21 @@ export const load = (async ({platform, fetch}) => {
         event_timestamp: startTime
       })
       // await meta.put("boca_marathon_currentGame", liveData.game ?? "");
+    } else if(Date.now() - pastData[0].event_timestamp > 15e3 && Math.random() < 0.05) {
+
+      const remove: {event_name: string, event_timestamp: number}[] = [];
+
+      for (let i = 0; i < pastData.length; i++) {
+        const thisEvent = pastData[i];
+        const nextEvent = pastData[i-1];
+
+        const length = nextEvent ? nextEvent.event_timestamp - thisEvent.event_timestamp : Date.now() - thisEvent.event_timestamp;
+
+        if(length < 15e3) remove.push(thisEvent);
+      }
+
+      console.log("I would remove", remove)
+
     }
   } else {
     console.log("past cutoff or not live!")
