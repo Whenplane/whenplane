@@ -8,6 +8,10 @@
   import { games } from "./games.ts";
   import ToolTip from "$lib/ToolTip.svelte";
   import LTTTime from "$lib/LTTTime.svelte";
+  import { browser } from "$app/environment";
+  import {page} from "$app/stores"
+  import { toastStore } from "@skeletonlabs/skeleton";
+  import {clipboard} from "@skeletonlabs/skeleton";
 
   export let data;
 
@@ -55,7 +59,21 @@
       clearInterval(ii);
     }
   })
+
+  // remove ?attempt after 500 error
+  if(browser && $page.url.searchParams.has("attempt")) {
+    const newURL = new URL(location.href);
+    newURL.searchParams.delete("attempt");
+    window.history.replaceState({}, document.title, newURL.pathname + (newURL.searchParams.size > 0 ? "?" + newURL.searchParams.toString() : ""));
+  }
+
+  let holdingShift = false;
+
+  const updateHoldingShift = (e: KeyboardEvent | MouseEvent) => {
+    holdingShift = e.shiftKey;
+  }
 </script>
+<svelte:window on:keydown={updateHoldingShift} on:keyup={updateHoldingShift} on:mousemove={updateHoldingShift}/>
 <svelte:head>
   <title>BocaBola/iitskasino Game Marathon</title>
   <meta name="description" content="BocaBola Game Marathon tracker" />
@@ -144,7 +162,18 @@
             ended <DateStamp epochSeconds={event.ended/1e3}/>
           {/if}
           <br>
-          {event.current ? "Playing" : "Played"} for {timeString(event.length)}
+          {event.current ? "Playing" : "Played"} for
+          {#if holdingShift}
+            <button use:clipboard={Math.round(event.length/1e3)} on:click={() => {
+                    toastStore.trigger({
+                        message: "Copied to Clipboard!"
+                    })
+                }}>
+              {Math.round(event.length/1e3)}
+            </button>
+          {:else}
+            {timeString(event.length)}
+          {/if}
         </span>
       </div>
     {:else if event.event_name === "streamStart"}

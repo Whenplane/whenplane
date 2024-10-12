@@ -2,10 +2,23 @@
   import {timeString} from "$lib/timeUtils.ts";
 
   let frames = 250;
-  let secondsPerFrame = 30;
+  let secondsPerFrame: number | undefined = 30;
   let currentFrame = 0;
+  let totalTime: number | undefined = undefined;
 
-  $: secondsLeft = (frames-currentFrame) * secondsPerFrame;
+  let useTotalTime = false;
+
+  $: if(useTotalTime) {
+    secondsPerFrame = undefined;
+    totalTime = 60 * 60;
+  } else {
+    totalTime = undefined;
+    secondsPerFrame = 30;
+  }
+  $: console.log({useTotalTime})
+  $: console.log({totalTime})
+
+  $: secondsLeft = (frames-currentFrame) * (secondsPerFrame ?? ((totalTime ?? 0)/currentFrame));
 </script>
 
 <div class="container mx-auto pt-24">
@@ -15,8 +28,17 @@
   </label>
   <br>
   <label>
-    <span>Seconds per frame</span>
-    <input class="input w-24" type="number" bind:value={secondsPerFrame}>
+    <span>Use total time?</span>
+    <input type="checkbox" bind:checked={useTotalTime}/>
+  </label>
+  <label>
+    {#if useTotalTime}
+      <span>Total time (seconds)</span>
+      <input class="input w-24" type="number" bind:value={totalTime}>
+    {:else}
+      <span>Seconds per frame</span>
+      <input class="input w-24" type="number" bind:value={secondsPerFrame}>
+    {/if}
   </label>
   <label>
     <span>Current Frame</span>
