@@ -18,7 +18,9 @@
   $: console.log({useTotalTime})
   $: console.log({totalTime})
 
-  $: secondsLeft = (frames-currentFrame) * (secondsPerFrame ?? ((totalTime ?? 0)/currentFrame));
+  $: timePerFrame = totalTime ? totalTime/currentFrame : undefined;
+
+  $: secondsLeft = (frames-currentFrame) * (secondsPerFrame ?? timePerFrame ?? 0);
 </script>
 
 <div class="container mx-auto pt-24">
@@ -46,5 +48,8 @@
   </label>
   <br>
   <br>
-  {timeString(secondsLeft * 1e3)} left
+  {timeString(secondsLeft * 1e3)} left<br>
+  {#if timePerFrame}
+    {timeString(timePerFrame * 1e3)} per frame
+  {/if}
 </div>
