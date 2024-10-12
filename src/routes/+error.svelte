@@ -6,7 +6,12 @@
 
     let attempt = Number($page.url.searchParams.get("attempt") ?? 0);
 
-    if(browser && $page.status === 500 && $page.url.pathname === "/") {
+    const reloadPages = [
+      "/",
+      "/boca-marathon"
+    ]
+
+    if(browser && $page.status === 500 && reloadPages.includes($page.url.pathname)) {
         checkForReload();
     }
 
