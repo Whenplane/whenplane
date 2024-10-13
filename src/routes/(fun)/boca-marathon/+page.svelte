@@ -180,6 +180,8 @@
       Stream started <DateStamp {epochSeconds}/> ({timeString(nowish - event.event_timestamp)?.trim()} / {timeStringHours(nowish - event.event_timestamp)?.trim()})
     {:else if event.event_name === "timerStart"}
       Marathon timer started <DateStamp {epochSeconds}/> ({timeString(nowish - event.event_timestamp)?.trim()} / {timeStringHours(nowish - event.event_timestamp)?.trim()})
+    {:else if event.event_name === "streamEnd"}
+      Stream ended <DateStamp {epochSeconds}/>
     {:else}
       Unknown event {event.event_name} <DateStamp {epochSeconds}/>
     {/if}
