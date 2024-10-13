@@ -92,6 +92,17 @@ export const load = (async ({platform, fetch}) => {
 
 
     }
+  } if(!liveData.isLive && Date.now() < cutoff_time) {
+    if(!pastData.find(e => e.event_name === "streamEnd")) {
+      console.log("Adding stream end time")
+      const endTime = Date.now();
+      await db.prepare("insert into boca_events (event_name, event_timestamp, stream) values (?, ?, ?)")
+        .bind("streamEnd", endTime, currentStream).run();
+      pastData.unshift({
+        event_name: "streamEnd",
+        event_timestamp: endTime
+      })
+    }
   } else {
     console.log("past cutoff or not live!")
   }
