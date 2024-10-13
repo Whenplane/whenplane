@@ -7,7 +7,7 @@ import type { PageServerLoad } from "./$types";
 export const load = (async ({platform, fetch}) => {
 
   const currentStream = "boca-and-sammy-10-2024"
-  const cutoff_time = 1728932390707;
+  const cutoff_time = 1728801407090;
 
   const db: D1Database | undefined = platform?.env?.DB;
   const meta: KVNamespace | undefined = platform?.env?.META;
