@@ -115,7 +115,7 @@
 
     {#if data.mm}
         <h2>Merch Messages</h2>
-        <a href="/merch-messages/{data.mm.videoId}">View Merch Messages</a><br>
+        <a href="merch-messages/{data.mm.videoId}">View Merch Messages</a><br>
 
         {#if data.mm.status === "inprogress"}
             <br>

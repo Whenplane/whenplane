@@ -1,1 +1,0 @@
-<img src="/timeExtractor/testSharp/img"/>

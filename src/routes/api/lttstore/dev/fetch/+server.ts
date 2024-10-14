@@ -2,7 +2,7 @@ import { error, json, type RequestHandler } from "@sveltejs/kit";
 import type { D1Database } from "@cloudflare/workers-types";
 import { dev } from "$app/environment";
 import type { ProductDifference, ProductsTableRow, StockHistoryTableRow } from "$lib/lttstore/lttstore_types.ts";
-import { createTables } from "../../../../lttstore/createTables.ts";
+import { createTables } from "../../../../(info)/lttstore/createTables.ts";
 
 
 export const GET = (async ({platform, params}) => {

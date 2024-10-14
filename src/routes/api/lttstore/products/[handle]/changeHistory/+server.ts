@@ -1,7 +1,7 @@
 import { error, json } from "@sveltejs/kit";
 import type { D1Database } from "@cloudflare/workers-types";
 import { dev } from "$app/environment";
-import { createTables } from "../../../../../lttstore/createTables.ts";
+import { createTables } from "../../../../../(info)/lttstore/createTables.ts";
 
 
 export const GET = (async ({fetch, params, platform}) => {

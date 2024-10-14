@@ -2,7 +2,7 @@ import { error, json, type RequestHandler } from "@sveltejs/kit";
 import type { ProductsTableRow } from "$lib/lttstore/lttstore_types.ts";
 import type { D1Database } from "@cloudflare/workers-types";
 import { dev } from "$app/environment";
-import { createTables } from "../../../../../lttstore/createTables.ts";
+import { createTables } from "../../../../../(info)/lttstore/createTables.ts";
 
 export const GET = (async ({platform, params}) => {
   const db: D1Database | undefined = platform?.env?.LTTSTORE_DB;
