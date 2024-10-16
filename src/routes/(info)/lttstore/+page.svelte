@@ -23,8 +23,6 @@
     })
 
     miniSearch.addAll(data.allProducts)
-
-    console.log(data.allProducts);
   })
 
 

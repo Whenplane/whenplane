@@ -1,14 +1,18 @@
-import { type Actions, fail } from "@sveltejs/kit";
+import { type Actions, fail, redirect } from "@sveltejs/kit";
 import * as bcrypt from "bcryptjs";
 import { sendEmail, VERIFICATION_EMAIL } from "$lib/server/email.ts";
 import { escapeHtml } from "$lib/utils.ts";
 import { EMAIL_ENDPOINT, EMAIL_PASSWORD, EMAIL_PORT, EMAIL_PROXY_KEY, EMAIL_SERVER, EMAIL_USERNAME } from "$env/static/private";
 import { log } from "$lib/server/server-utils";
+import { dev } from "$app/environment";
+import { createTables } from "$lib/server/auth.ts";
 
 const simpleRateLimit: {[ip: string]: number[]} = {};
 
+let first = true;
+
 export const actions = {
-  login: (async ({platform, request, getClientAddress}) => {
+  login: (async ({platform, request, getClientAddress, cookies}) => {
     const data = await request.formData();
     const username = data.get("username") as string;
     const password = data.get("password") as string;
@@ -32,6 +36,11 @@ export const actions = {
 
     const kv = platform?.env?.AUTH_KV;
     if(!kv) return fail(500, {username, message: "Missing auth kv!"});
+
+    if(first) {
+      first = false;
+      await createTables(db);
+    }
 
     const user = await db.prepare("select username,password as hashedPassword,'2fa',email_verified,email from users where username = ?")
       .bind(username).first<{username: string, hashedPassword: string, "2fa": string, email_verified: boolean, email: string}>();
@@ -62,8 +71,27 @@ export const actions = {
       return fail(400, {username, emailVerificationNeeded: true, resendToken});
     }
 
+    let newSessionID: string;
+    do {
+      newSessionID = Date.now().toString(36) + "-" + crypto.randomUUID();
+    } while(
+      ![null, undefined, user.username].includes(
+        await db.prepare("select username from sessions where sessionID=?")
+          .bind(newSessionID)
+          .first<{username: string}>()
+          .then(r => r?.username)
+      )
+      )
 
-    return fail(500, {message: "TODO: success"});
+    const expires = new Date(Date.now() + (30 * 24 * 60 * 60e3));
+
+    await db.prepare("insert into sessions (sessionID, username, expires) values (?, ?, ?)")
+      .bind(newSessionID, user.username, expires.getTime()).run()
+
+    const secure = dev ? false : undefined;
+    cookies.set("session", newSessionID, {path: '/', expires: expires, secure});
+
+    throw redirect(302, "/auth");
   }),
 
 

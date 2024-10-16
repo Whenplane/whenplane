@@ -6,6 +6,7 @@ import { escapeHtml } from "$lib/utils.ts";
 import { dev } from "$app/environment";
 import * as bcrypt from "bcryptjs";
 import { log } from "$lib/server/server-utils.ts";
+import { createTables } from "$lib/server/auth.ts";
 
 const simpleRateLimit: {[ip: string]: number[]} = {}
 
@@ -23,6 +24,8 @@ const restrictedEmails = [
   "lttwanshow@gmail.com",
   "lttwanshow2@gmail.com"
 ]
+
+let first = true;
 
 export const actions = {
   default: async ({platform, request, getClientAddress}) => {
@@ -141,9 +144,9 @@ export const actions = {
     const kv = platform?.env?.AUTH_KV;
     if(!kv) return fail(500, {message: "Missing auth kv!"});
 
-    if(dev) {
-      await db.prepare("create table if not exists users (username text, email text, email_verified number, password text, '2fa' text, created number)")
-        .run();
+    if(first) {
+      first = false;
+      await createTables(db);
     }
 
     const usernameExists = await db.prepare("select username from users where username = ? COLLATE NOCASE")
