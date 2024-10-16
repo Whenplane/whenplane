@@ -30,15 +30,20 @@ export const load = (async ({fetch}) => {
   }
 
   const activeInstanceColos: {[colo: string]: number} = {};
+  const longestActiveColos: {[colo: string]: number} = {};
 
   for (const instance of activeInstances) {
     const old = activeInstanceColos[instance.colo] ?? 0;
     activeInstanceColos[instance.colo] = old + 1;
+
+    const oldFirstSeen = longestActiveColos[instance.colo] ?? Number.MAX_SAFE_INTEGER;
+    if(oldFirstSeen > instance.firstSeen) longestActiveColos[instance.colo] = instance.firstSeen;
   }
 
   return {
     activeInstances,
     activeInstanceColos,
+    longestActiveColos,
     inactiveInstances,
     inactiveInstanceColos
   };

@@ -6,7 +6,7 @@ import type { ProductsTableRow } from "$lib/lttstore/lttstore_types.ts";
 
 
 export const GET = (async ({platform, params}) => {
-  const db: D1Database = platform?.env?.LTTSTORE_DB;
+  const db: D1Database | undefined = platform?.env?.LTTSTORE_DB;
   if(!db) throw error(503, "DB unavailable!");
 
   if(dev) await createTables(db)

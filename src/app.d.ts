@@ -23,6 +23,7 @@ declare global {
                 HISTORY: KVNamespace;
                 META: KVNamespace;
                 WDB_EPISODE_CACHE: KVNamespace;
+                AUTH_KV: KVNamespace;
 
                 FETCHER: DurableObjectNamespace;
                 FLOATPLANE_FETCHER: DurableObjectNamespace;
@@ -40,8 +41,9 @@ declare global {
 
                 DB: D1Database;
                 LTTSTORE_DB: D1Database;
-                MERCHMESSAGES_DB: D1Database
-                FP_SUBS_DB: D1Database
+                MERCHMESSAGES_DB: D1Database;
+                FP_SUBS_DB: D1Database;
+                AUTH: D1Database;
             },
             context?: {
                 /**

@@ -4,6 +4,7 @@
 <div class="limit mx-auto mt-16 mb-32">
   <h1>Privacy Policy for Whenplane (whenplane.com)</h1>
   <br>
+  <b>This policy only applies to the extension and when using the website without an account.</b>
   <br>
   <div class="card p-3">
     <h2>TL;DR</h2>

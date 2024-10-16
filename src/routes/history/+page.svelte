@@ -10,7 +10,7 @@
     import CardImage from "svelte-bootstrap-icons/lib/CardImage.svelte"
     import Images from "svelte-bootstrap-icons/lib/Images.svelte"
     import Grid from "svelte-bootstrap-icons/lib/Grid.svelte"
-    import { countTo, type HistoricalEntry } from "$lib/utils.js";
+    import { countTo, type HistoricalEntry } from "$lib/utils";
     import LoadingHistoricalShow from "$lib/history/LoadingHistoricalShow.svelte";
     import LazyLoad from "@dimfeld/svelte-lazyload";
 

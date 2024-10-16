@@ -3,10 +3,13 @@
   import { onMount } from "svelte";
   import { invalidateAll } from "$app/navigation";
   import { browser, dev } from "$app/environment";
+  import {timeString} from "$lib/timeUtils.ts";
 
   const airportData = browser ? import("airport-data-js") : new Promise(() => {})
 
   export let data;
+
+  let nowish = Date.now()
 
   onMount(() => {
     let i = setInterval(invalidate, 5e3)
@@ -15,11 +18,11 @@
 
   let lastInvalidate = 0;
   function invalidate() {
+    nowish = Date.now();
     if(document.hidden && Date.now() - lastInvalidate < 5 * 60 * 60e3) return;
 
     lastInvalidate = Date.now();
     invalidateAll();
-
   }
 </script>
 <svelte:window on:focus={invalidate} on:visibilitychange={invalidate}/>
@@ -32,6 +35,7 @@
   <table>
     {#each Object.entries(data.activeInstanceColos).toSorted((a, b) => b[1] - a[1]) as [colo, count]}
       {@const airport = airportData.then(d => d.getAirportByIata(colo))}
+      {@const longest = data.longestActiveColos[colo]}
       <tr>
         <!--{@debug airport}-->
         <td>
@@ -47,6 +51,11 @@
         <td class="pl-8">
           {#if count > 1 || dev}
             x{count}
+          {/if}
+        </td>
+        <td class="pl-8">
+          {#if longest}
+            for {timeString(nowish - longest)}
           {/if}
         </td>
       </tr>

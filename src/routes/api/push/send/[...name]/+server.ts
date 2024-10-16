@@ -18,7 +18,7 @@ export const POST = (async ({platform, params, request, url}) => {
 
   if(!name) throw error(400);
 
-  const db: D1Database = platform?.env?.DB;
+  const db: D1Database | undefined = platform?.env?.DB;
   if(!db) throw error(503, "Database missing");
 
   const message = JSON.parse(JSON.stringify(messages[name]));
