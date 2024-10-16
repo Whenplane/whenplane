@@ -5,11 +5,31 @@ import { escapeHtml } from "$lib/utils.ts";
 import { EMAIL_ENDPOINT, EMAIL_PASSWORD, EMAIL_PORT, EMAIL_PROXY_KEY, EMAIL_SERVER, EMAIL_USERNAME } from "$env/static/private";
 import { log } from "$lib/server/server-utils";
 import { dev } from "$app/environment";
-import { createTables } from "$lib/server/auth.ts";
+import { createTables, getSession } from "$lib/server/auth.ts";
 
 const simpleRateLimit: {[ip: string]: number[]} = {};
 
 let first = true;
+
+export const load = (async ({platform, cookies}) => {
+
+  const sessionID = cookies.get("session");
+  if(!sessionID) return;
+
+  const sessionData = await getSession(platform, sessionID);
+  if(!sessionData) {
+    const verifyingSessionData = await getSession(platform, sessionID+":verifying");
+
+    if(!verifyingSessionData) {
+      return;
+    } else {
+      // user has a 2fa verifying session, redirect to 2fa page
+      throw redirect(302, "/auth/login/2fa")
+    }
+  }
+
+  throw redirect(302, "/auth");
+})
 
 export const actions = {
   login: (async ({platform, request, getClientAddress, cookies}) => {
@@ -21,6 +41,8 @@ export const actions = {
       return fail(400, {username, missing: true})
     }
 
+    // basic checks passed, start rate limiting
+
     let limits = simpleRateLimit[getClientAddress()] ?? [];
     // remove any requests older than 60 seconds (which will probably never happen but better to be safe)
     limits = limits.filter(t => t > (Date.now() - 60e3));
@@ -30,6 +52,8 @@ export const actions = {
     }
     limits.push(Date.now());
     simpleRateLimit[getClientAddress()] = limits;
+
+    // rate limiting passed
 
     const db = platform?.env?.AUTH;
     if(!db) return fail(500, {username, message: "Missing auth db!"});
@@ -42,7 +66,7 @@ export const actions = {
       await createTables(db);
     }
 
-    const user = await db.prepare("select username,password as hashedPassword,'2fa',email_verified,email from users where username = ?")
+    const user = await db.prepare("select username,password as hashedPassword,`2fa`,email_verified,email from users where username = ?")
       .bind(username).first<{username: string, hashedPassword: string, "2fa": string, email_verified: boolean, email: string}>();
 
     if(!user) {
@@ -54,7 +78,10 @@ export const actions = {
     }
 
 
-    if(!user.email_verified) {
+    // username and password are valid!
+
+
+    if(!user.email_verified) { // dont allow logging in if email isn't verified yet
 
       // generate a token that allows re-sending the verification email
       let resendToken: string | undefined = undefined;
@@ -71,6 +98,9 @@ export const actions = {
       return fail(400, {username, emailVerificationNeeded: true, resendToken});
     }
 
+    // email is verified!
+
+
     let newSessionID: string;
     do {
       newSessionID = Date.now().toString(36) + "-" + crypto.randomUUID();
@@ -83,15 +113,15 @@ export const actions = {
       )
       )
 
-    const expires = new Date(Date.now() + (30 * 24 * 60 * 60e3));
+    const expires = new Date(Date.now() + (user["2fa"] ? (30 * 60e3) : (30 * 24 * 60 * 60e3))); // 30 minutes for 2fa, 30 days for without
 
     await db.prepare("insert into sessions (sessionID, username, expires) values (?, ?, ?)")
-      .bind(newSessionID, user.username, expires.getTime()).run()
+      .bind(newSessionID + (user["2fa"] ? ":verifying" : ""), user.username, expires.getTime()).run();
 
     const secure = dev ? false : undefined;
     cookies.set("session", newSessionID, {path: '/', expires: expires, secure});
 
-    throw redirect(302, "/auth");
+    throw redirect(302, (user["2fa"] ? "/auth/login/2fa" : "/auth"));
   }),
 
 

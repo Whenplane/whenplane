@@ -1,9 +1,11 @@
 import type { D1Database } from "@cloudflare/workers-types";
 import { createMFResponse } from "$lib/server/MfResponseConverter.ts";
 import { json } from "@sveltejs/kit";
+import base32 from "hi-base32";
+import * as OTPAuth from "otpauth";
 
 export async function createTables(db: D1Database) {
-  await db.prepare("create table if not exists users (username text, email text, email_verified number, password text, '2fa' text, created number)")
+  await db.prepare("create table if not exists users (username text, email text, email_verified number, password text, `2fa` text, created number)")
     .run();
   await db.prepare("create table if not exists sessions (sessionID text UNIQUE, username text, expires number)")
     .run();
@@ -14,11 +16,16 @@ export async function createTables(db: D1Database) {
   await db.prepare("create index if not exists sessions_sid on sessions(sessionID)").run()
 }
 
-const session_cache_time = 5e3;
+
 const memorySessionCache: {[sid: string]: {cachedTime: number, userData: SessionData | null}} = {};
-export async function getSession(platform?: App.Platform, sessionID?: string, includeEmail = false): Promise<SessionData | null> {
+export async function getSession(platform?: App.Platform, sessionID?: string, includeEmail = false, include2fa = false): Promise<SessionData | null> {
 
   if(!sessionID) return null;
+
+  let session_cache_time = 5e3;
+  if(sessionID.endsWith(":verifying")) {
+    session_cache_time = 1e3; // only cache 2fa sessions for 1 second
+  }
 
   const db = platform?.env?.AUTH;
   if(!db) {
@@ -82,7 +89,7 @@ export async function getSession(platform?: App.Platform, sessionID?: string, in
 
   let user: SessionData | null = null;
   if(session) {
-    user = await db.prepare("select username" + (includeEmail ? ",email" : "") + ",email_verified,created from users where username = ?")
+    user = await db.prepare("select username" + (includeEmail ? ",email" : "") + ",email_verified,created" + (include2fa ? ",`2fa`" : "") + " from users where username = ?")
       .bind(session.username)
       .first<UserData>()
       .then(r => {
@@ -114,10 +121,36 @@ export async function getSession(platform?: App.Platform, sessionID?: string, in
   return user;
 }
 
+export function generateRandomBase32() {
+  const buffer = crypto.getRandomValues(new Uint8Array(15));
+  return base32.encode(buffer).replace(/=/g, "").substring(0, 24);
+}
+
+export function getTotp(secret: string) {
+  return new OTPAuth.TOTP({
+    issuer: "Whenplane",
+    label: "Whenplane two-factor",
+    algorithm: "SHA1",
+    digits: 6,
+    period: 30,
+    secret: secret
+  });
+}
+
+export function getUrl(secret: string) {
+  return getTotp(secret).toString()
+}
+
+export function validate2fa(secret: string, token: string, window = 1) {
+  const totp = getTotp(secret);
+  return totp.validate({token, window}) != null;
+}
+
 export type UserData = {
   username: string,
   email?: string,
   email_verified?: boolean,
+  "2fa"?: string,
   created: number
 }
 

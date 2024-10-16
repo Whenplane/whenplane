@@ -5,4 +5,4 @@ export const load = (async ({platform, cookies}) => {
 
   return {session: await getSession(platform, cookies.get("session"))}
 
-}) satisfies PageServerLoad
+}) satisfies PageServerLoad;
