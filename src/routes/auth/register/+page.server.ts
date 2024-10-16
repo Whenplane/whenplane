@@ -181,22 +181,24 @@ export const actions = {
     await kv.put("block-email:" + username, email, {expirationTtl: 19 * 60e3});
 
     log(platform, "Sending verification email to " + email);
-    await sendEmail(EMAIL_ENDPOINT, {
-      key: EMAIL_PROXY_KEY,
+    platform?.context?.waitUntil(
+      sendEmail(EMAIL_ENDPOINT, {
+        key: EMAIL_PROXY_KEY,
 
-      host: EMAIL_SERVER,
-      port: Number(EMAIL_PORT),
+        host: EMAIL_SERVER,
+        port: Number(EMAIL_PORT),
 
-      username: EMAIL_USERNAME,
-      password: EMAIL_PASSWORD,
+        username: EMAIL_USERNAME,
+        password: EMAIL_PASSWORD,
 
-      from: "Whenplane <bread@whenplane.com>",
-      to: email,
-      subject: "Verify your email for your Whenplane account",
-      body: VERIFICATION_EMAIL
-        .replaceAll("{VERIFICATION_LINK}", "https://whenplane.com/auth/verify-email?token=" + encodeURIComponent(emailVerifyToken))
-        .replaceAll("{USERNAME}", escapeHtml(username))
-    })
+        from: "Whenplane <bread@whenplane.com>",
+        to: email,
+        subject: "Verify your email for your Whenplane account",
+        body: VERIFICATION_EMAIL
+          .replaceAll("{VERIFICATION_LINK}", "https://whenplane.com/auth/verify-email?token=" + encodeURIComponent(emailVerifyToken))
+          .replaceAll("{USERNAME}", escapeHtml(username))
+      })
+    )
 
     throw redirect(302, "/auth/register/success");
 
