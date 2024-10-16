@@ -142,7 +142,7 @@ export const actions = {
     if(!kv) return fail(500, {message: "Missing auth kv!"});
 
     if(dev) {
-      await db.prepare("create table if not exists users (username text, email text, email_verified number, password text, '2fa' text)")
+      await db.prepare("create table if not exists users (username text, email text, email_verified number, password text, '2fa' text, created number)")
         .run();
     }
 
@@ -166,8 +166,8 @@ export const actions = {
 
     const passwordHash = await bcrypt.hash(password, 13);
 
-    await db.prepare("insert into users (username, email, email_verified, password) values (?, ?, ?, ?)")
-      .bind(username, email, 0, passwordHash)
+    await db.prepare("insert into users (username, email, email_verified, password, created) values (?, ?, ?, ?, ?)")
+      .bind(username, email, 0, passwordHash, Date.now())
       .run();
 
     const emailVerifyToken = randomString();
