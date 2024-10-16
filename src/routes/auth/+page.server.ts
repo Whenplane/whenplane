@@ -1,5 +1,5 @@
 import { getSession } from "$lib/server/auth.ts";
-import {type PageServerLoad} from "./$types";
+import type {PageServerLoad} from "./$types";
 
 export const load = (async ({platform, cookies}) => {
 
