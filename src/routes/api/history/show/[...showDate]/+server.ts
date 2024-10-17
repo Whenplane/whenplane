@@ -125,8 +125,9 @@ const wdb_cache: {
 } = {};
 
 async function getWdbData(youtubeId: string, episode_cache: KVNamespace, platform: App.Platform) {
+    return null; // TheWANDb is dead for now
 
-    const lastFetch = wdb_cache[youtubeId]?.lastFetch ?? 0;
+    /*const lastFetch = wdb_cache[youtubeId]?.lastFetch ?? 0;
 
     if(Date.now() - lastFetch < 60 * 60e3) { // cache for up to an hour
         return wdb_cache[youtubeId]?.lastData;
@@ -178,5 +179,5 @@ async function getWdbData(youtubeId: string, episode_cache: KVNamespace, platfor
 
     }
 
-    return result;
+    return result;*/
 }
