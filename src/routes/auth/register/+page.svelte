@@ -34,7 +34,7 @@
       <br>
       <label class="label">
         <span>Username</span>
-        <input class="input px-3" name="username" type="text" value={form?.username ?? ''} required minlength="3" maxlength="16"/>
+        <input class="input px-3" name="username" type="text" value={form?.username ?? ''} required minlength="3" maxlength="16" pattern="^[\w-]+$"/>
       </label>
       <br>
       <label class="label">

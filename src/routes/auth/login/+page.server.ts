@@ -6,6 +6,7 @@ import { EMAIL_ENDPOINT, EMAIL_PASSWORD, EMAIL_PORT, EMAIL_PROXY_KEY, EMAIL_SERV
 import { log } from "$lib/server/server-utils";
 import { dev } from "$app/environment";
 import { createTables, getSession } from "$lib/server/auth.ts";
+import type {PageServerLoad} from "./$types"
 
 const simpleRateLimit: {[ip: string]: number[]} = {};
 
@@ -29,7 +30,7 @@ export const load = (async ({platform, cookies}) => {
   }
 
   throw redirect(302, "/auth");
-})
+}) satisfies PageServerLoad
 
 export const actions = {
   login: (async ({platform, request, getClientAddress, cookies}) => {
@@ -39,6 +40,9 @@ export const actions = {
 
     if(!username || !password) {
       return fail(400, {username, missing: true})
+    }
+    if(username.length > 16 || password.length > 128) {
+      return fail(400, {username, message: "Too long!"})
     }
 
     // basic checks passed, start rate limiting

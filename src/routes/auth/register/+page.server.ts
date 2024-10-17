@@ -3,7 +3,6 @@ import { type Actions, fail, redirect } from "@sveltejs/kit";
 import { sendEmail, VERIFICATION_EMAIL } from "$lib/server/email.ts";
 import { EMAIL_ENDPOINT, EMAIL_PORT, EMAIL_PROXY_KEY, EMAIL_SERVER, EMAIL_USERNAME, EMAIL_PASSWORD } from "$env/static/private";
 import { escapeHtml } from "$lib/utils.ts";
-import { dev } from "$app/environment";
 import * as bcrypt from "bcryptjs";
 import { log } from "$lib/server/server-utils.ts";
 import { createTables } from "$lib/server/auth.ts";
@@ -48,8 +47,12 @@ export const actions = {
       return fail(400, {email, username, usernameLength: true})
     }
 
-    if(password.length < 10 || password.length > 1024) {
+    if(password.length < 10 || password.length > 128) {
       return fail(400, {email, username, passwordLength: true})
+    }
+
+    if(email.length > 128) {
+      return fail(400, {email, username, emailLength: true})
     }
 
 
@@ -68,6 +71,10 @@ export const actions = {
 
 
     // rate limit passed!
+
+    if(!username.match(/^[\w-]+$/)) {
+      return fail(400, {username, message: "Your username contains invalid characters!"});
+    }
 
     // Let's verify the turnstile
 
