@@ -23,7 +23,7 @@
     {#await jsonPromise}
       <div class="inline-block placeholder animate-pulse text-clear">{productId}</div>
     {:then brief}
-      <a href="lttstore/products/{brief.handle}">
+      <a href="/lttstore/products/{brief.handle}">
         {brief.title}
       </a>
     {/await}
