@@ -11,6 +11,7 @@ const field_names: {[key: string]: string} = {
   "title": "Title",
   "backorderAlerts": "Backorder Alerts",
   "productDetailModules": "Product Detail Modules",
+  "available": "Published",
 
   "product.description": "Product Description",
   "product.available": "In stock?",
