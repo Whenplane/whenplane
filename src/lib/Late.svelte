@@ -16,7 +16,8 @@
         "The Late Show",
         "fashionably late",
         "tardy",
-        "diligently delayed"
+        "diligently delayed",
+        "gregariously unpunctual"
     ];
 
     let current = writable("late");
