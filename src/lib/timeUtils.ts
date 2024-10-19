@@ -207,7 +207,7 @@ export function getTimeUntil(date: Date, now = Date.now()) {
     };
 }
 
-export function timeString(distance: number | undefined, long = false) {
+export function timeString(distance: number | undefined, long = false, showSeconds = true) {
     if(distance == undefined) return undefined;
     const days = Math.floor(distance / (1000 * 60 * 60 * 24));
     const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
@@ -225,7 +225,7 @@ export function timeString(distance: number | undefined, long = false) {
     const and = (long && (daysS || hoursS || minutesS)) ? "and " : "";
     const secondsS = seconds+s;
 
-    return daysS + hoursS + minutesS + and + secondsS;
+    return daysS + hoursS + minutesS + (showSeconds ? and + secondsS : "");
 }
 
 export function timeStringHours(distance: number | undefined, long = false) {
@@ -240,7 +240,7 @@ export function timeStringHours(distance: number | undefined, long = false) {
 
     const hoursS = hours > 0 ? hours+h : "";
     const minutesS = minutes > 0 ? minutes+m : "";
-    const and = (long && (daysS || hoursS || minutesS)) ? "and " : "";
+    const and = (long && (hoursS || minutesS)) ? "and " : "";
     const secondsS = seconds+s;
 
     return hoursS + minutesS + and + secondsS;
