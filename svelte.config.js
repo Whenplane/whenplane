@@ -30,6 +30,7 @@ const config = {
 					"/*/*.php7",
 					"/libraries/*",
 					"/.env",
+					"/.git/*",
 
 					"/discord",
 					"/boca-time"
