@@ -106,10 +106,10 @@
   {/if}
   <br>
   <br>
-  {#if typeof data.product?.purchasesPerHour === "number" && data.product?.purchasesPerHour >= 0 && !(data.product?.purchasesPerHour === 0 && (currentStock.total ?? -1) < 0)}
+  {#if typeof data.product?.purchasesPerHour === "number" && data.product?.purchasesPerHour >= 0 && !(data.product?.purchasesPerHour === 0 && (currentStock.total ?? -1) < 0) && (currentStock.total ?? -1) <= 500000}
     Average of {Math.round(data.product?.purchasesPerHour * 100)/100} sold per hour recently.<br>
   {/if}
-  {#if typeof data.product?.purchasesPerDay === "number" && data.product?.purchasesPerDay >= 0 && !(data.product?.purchasesPerDay === 0 && (currentStock.total ?? -1) < 0)}
+  {#if typeof data.product?.purchasesPerDay === "number" && data.product?.purchasesPerDay >= 0 && !(data.product?.purchasesPerDay === 0 && (currentStock.total ?? -1) < 0) && (currentStock.total ?? -1) <= 500000}
     Average of {Math.round(data.product?.purchasesPerDay * 100)/100} sold per day.<br>
   {/if}
   <br>
@@ -226,7 +226,7 @@
   <br>
   <br>
   <br>
-  {#if goneInHours > 0 && (currentStock.total ?? -1) > 0 && typeof data.product?.purchasesPerHour === "number" && data.product?.purchasesPerHour >= 0 && !(data.product?.purchasesPerHour === 0 && (currentStock.total ?? -1) < 0)}
+  {#if goneInHours > 0 && (currentStock.total ?? -1) > 0 && (currentStock.total ?? -1) <= 500000 && typeof data.product?.purchasesPerHour === "number" && data.product?.purchasesPerHour >= 0 && !(data.product?.purchasesPerHour === 0 && (currentStock.total ?? -1) < 0)}
     <h2>Time remaining until out of stock</h2>
     If this product keeps selling at {Math.round(nonZeroPurchasesPerHour * 100)/100} units per hour, it could be gone in
     {#if goneInHours < 48}
