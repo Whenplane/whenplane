@@ -4,6 +4,7 @@ import VariantDiff from "$lib/lttstore/diff/VariantDiff.svelte";
 import ProductDetailModulesDiff from "$lib/lttstore/diff/ProductDetailModulesDiff.svelte";
 import TextWordsDiff from "$lib/lttstore/diff/TextWordsDiff.svelte";
 import OptionsDiff from "$lib/lttstore/diff/OptionsDiff.svelte";
+import DateDiff from "$lib/lttstore/diff/DateDiff.svelte";
 
 const field_names: {[key: string]: string} = {
   "currentPrice": "Current Price",
@@ -17,6 +18,7 @@ const field_names: {[key: string]: string} = {
   "product.available": "In stock?",
   "product.variants": "Variant Metadata",
   "product.options": "Options",
+  "product.published_at": "Published"
 }
 
 const variant_field_names: {[key: string]: string} = {
@@ -51,6 +53,9 @@ export function getDiffComponent(field: string) {
   }
   if(field === "product.options") {
     return OptionsDiff;
+  }
+  if(field === "product.published_at") {
+    return DateDiff;
   }
   return TextDiff;
 }
