@@ -16,8 +16,9 @@ export const load = (async ({fetch, params, url}) => {
     const currentYear = now.getUTCFullYear();
     const years = [];
 
-    for (let i = 0; i < 2; i++) {
-        years.push(currentYear - i);
+    years.push(currentYear);
+    if(now.getMonth() < 4) {
+        years.push(currentYear - 1); // only fetch previous year if we are less than 4 months into a new year
     }
 
     let lowestYear = years[years.length-1];
