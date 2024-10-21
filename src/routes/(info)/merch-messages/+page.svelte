@@ -8,6 +8,7 @@
   import {flip} from "svelte/animate";
   import {slide} from "svelte/transition";
   import { page } from "$app/stores";
+  import Paginator from "$lib/util/Paginator.svelte";
 
   export let data;
 
@@ -25,6 +26,9 @@
   let waiting = false;
   let searchPromise: Promise<SearchResponse<MMTableRow>> | undefined;
   let searchResults: SearchResponse<MMTableRow> | undefined;
+  let networkError = false;
+
+  let searchLocation: HTMLLabelElement;
 
   let searchText = "";
   $: {
@@ -38,7 +42,10 @@
     }, 200)
   }
 
-  function search(text: string) {
+
+  const resultsPerPage = 50;
+
+  function search(text: string, page?: number) {
     if(!text) {
       searchPromise = undefined;
       searchResults = undefined;
@@ -48,8 +55,19 @@
       .search({
         q: text,
         query_by: "text",
-        per_page: 100
-      }, {cacheSearchResultsForSeconds: 60}).then(r => searchResults = r as SearchResponse<MMTableRow>) as Promise<SearchResponse<MMTableRow>>
+        page: page ?? 1,
+        per_page: resultsPerPage
+      }, {cacheSearchResultsForSeconds: 60})
+      .then(r => searchResults = r as SearchResponse<MMTableRow>)
+      .then(r => {
+        networkError = false;
+        return r;
+      })
+      .catch(e => {
+        console.error("Error while searching:", e);
+        searchResults = undefined;
+        networkError = true;
+      })
   }
 
 </script>
@@ -64,9 +82,24 @@
 </ol>
 
 <div class="limit mx-auto">
-  <h1>Merch messages</h1>
+  <h1>Merch Message Index</h1>
+  <br>
+  The Whenplane Merch Message Index is a tool that has processed nearly every WAN show that includes merch messages,
+  run some OCR on the part of the screen that displays merch messages, then indexes them for easy searching.<br>
+  <br>
+  If you cannot find your merch message in this index, here are a few places to search:<br>
+  <ul>
+    <li>When they are screen sharing</li>
+    <li>The outro</li>
+  </ul>
+  Whenplane does not currently read merch messages that only show up in these places,
+  because they are in a different part of the screen, and I have not yet written the code to process multiple parts of the screen.<br>
+  For some older WAN shows, the merch messages are only at the top of the screen,
+  so if you are looking for a really old merch message, you might not be able to find it here until I eventually finish the code to read other parts of the screen.
+  <br>
+  <br>
 
-  <label>
+  <label bind:this={searchLocation}>
     Search
     <input class="input w-64 py-1 px-2 inline-block" placeholder="Search Terms" bind:value={searchText}>
     {#await searchPromise}
@@ -78,6 +111,15 @@
     <br>
     {#if searchResults && searchResults.hits}
       <h3>Search Results ({searchResults.found})</h3>
+      <div class="text-right">
+        <Paginator
+          totalPages={Math.ceil(searchResults.found / resultsPerPage)}
+          currentPage={searchResults.page}
+          on:page={e => {
+            search(searchText, e.detail.page);
+          }}
+        />
+      </div>
       <table class="table rounded-sm">
         <thead>
           <tr>
@@ -91,7 +133,7 @@
         <tbody>
         {#each searchResults.hits as hit (hit.document.id)}
           {@const releaseEpoch = data.videoReleaseDates[hit.document.video]}
-          <tr animate:flip={{ duration: 100 }} transition:slide class="bg-surface-900">
+          <tr animate:flip={{ duration: 100 }} transition:slide|local class="bg-surface-900">
             <td>{releaseEpoch ? new Date(releaseEpoch).toLocaleDateString(undefined, {dateStyle: "medium"}) : ""}</td>
             <td>{hit.document.type}</td>
             <td>{hit.document.name}</td>
@@ -101,6 +143,25 @@
         {/each}
         </tbody>
       </table>
+      <div class="text-right">
+        <Paginator
+          totalPages={Math.ceil(searchResults.found / resultsPerPage)}
+          currentPage={searchResults.page}
+          on:page={e => {
+            search(searchText, e.detail.page);
+            searchLocation.scrollIntoView({behavior: "smooth"})
+          }}
+        />
+      </div>
+    {/if}
+    {#if networkError}
+      <span class="text-error-500">
+        <br>
+        A network error occurred while trying to get the results for your search.<br>
+        Check your internet connection.<br>
+        If your network connection is fine, the search server might be down.
+        Try again in a few minutes, and <a href="/support">contact me</a> if it is still down.
+      </span>
     {/if}
   </label>
 
@@ -116,3 +177,14 @@
     </a>
   {/each}
 </div>
+
+<style>
+    ul {
+        list-style: initial;
+        padding-left: 1.5em;
+    }
+    ol {
+        list-style: decimal;
+        padding-left: 1.5em;
+    }
+</style>

@@ -18,9 +18,9 @@ export const GET = (async ({platform, params}) => {
   } = await fetch("https://whenplane.com/api/merch-messages/devData")
     .then(res => res.json());
 
-  await db.prepare("drop table merch_messages")
+  await db.prepare("drop table if exists merch_messages")
     .run();
-  await db.prepare("drop table videos")
+  await db.prepare("drop table if exists videos")
     .run();
 
   await wait(500);
