@@ -72,7 +72,7 @@
          class:thumbnailless-inline={view === 3}
     >
         {#each shows as show, i (show.name)}
-            <HistoricalShow {show} withThumbnail={view < 2} lazyLoadThumbnail={i > 10}/>
+            <HistoricalShow {show} withThumbnail={view < 2} lazyLoadThumbnail={i > 10} lazyLoadGroup={Math.floor(i/6)}/>
             {#if i === 50}
                 <LinusFace/>
             {/if}
@@ -87,9 +87,11 @@
                 </div>
             </div>
 
-            {#each countTo(20) as i}
-                <LoadingHistoricalShow withThumbnail={view < 2}/>
-            {/each}
+            <LazyLoad>
+                {#each countTo(20) as i}
+                    <LoadingHistoricalShow withThumbnail={view < 2}/>
+                {/each}
+            </LazyLoad>
 
             <div style="height: 0; display: inline-block;">
                 <div class="relative pointer-events-none" style="bottom: 50em">

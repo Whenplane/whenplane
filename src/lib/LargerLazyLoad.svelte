@@ -1,5 +1,7 @@
 <script>
   import LazyLoad from "@dimfeld/svelte-lazyload";
+  import { createEventDispatcher } from "svelte";
+  const dispatch = createEventDispatcher();
 
   export let shown = false;
 
@@ -12,7 +14,7 @@
 <div class="relative no-pointer-events width-1">
   <div class="absolute">
     <div class="relative bottom width-1">
-      <LazyLoad on:visible={() => {shown = true; console.debug("loaded")}} height="50em"/>
+      <LazyLoad on:visible={() => {shown = true; dispatch("visible")}} height="50em"/>
     </div>
   </div>
 </div>

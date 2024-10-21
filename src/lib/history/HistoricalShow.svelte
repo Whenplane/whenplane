@@ -1,3 +1,12 @@
+<script lang="ts" context="module">
+
+    // lazy loaders are split into groups, because having too many individual groups causes slowdowns
+
+    import { type Writable, writable } from "svelte/store";
+
+    const lazyLoadGroups: {[key: number]: Writable<{thumbnailLoaded?: boolean}>} = {};
+
+</script>
 <script lang="ts">
     import { getClosestWan, getTimeUntil, timeString } from "../timeUtils";
     import Late from "../Late.svelte";
@@ -15,6 +24,15 @@
     export let lazyLoadThumbnail = false
 
     export let onlyTimes = false;
+
+    export let lazyLoadGroup = lazyLoadThumbnail ? Math.random() : -1;
+
+    let isLazyLoadTrigger = false;
+    if(lazyLoadThumbnail && !lazyLoadGroups[lazyLoadGroup]) {
+        lazyLoadGroups[lazyLoadGroup] = writable({})
+        isLazyLoadTrigger = true;
+    }
+    const groupStore = lazyLoadGroups[lazyLoadGroup];
 
     let nonLazyLoadedImage: HTMLImageElement | undefined;
     let thumbnailLoaded = nonLazyLoadedImage ? nonLazyLoadedImage.complete : false;
@@ -63,19 +81,21 @@
             <div class="thumbnail relative">
                 {#if lazyLoadThumbnail}
                     <div class="thumbnail-space relative">
-                        <div class="absolute top-0 left-0">
-                            <LargerLazyLoad>
+                        {isLazyLoadTrigger} {lazyLoadGroup}
+                        {#if isLazyLoadTrigger && !$groupStore.thumbnailLoaded}
+                            <LargerLazyLoad on:visible={() => {console.debug("Showing group", lazyLoadGroup); $groupStore.thumbnailLoaded = true;}}/>
+                        {/if}
+                        {#if $groupStore.thumbnailLoaded}
+                            <div class="absolute top-0 left-0">
                                 <img src={thumbnail.url} aria-hidden="true" alt={thumbnail.text ?? ""} title={thumbnail.text ?? ""} on:load={() => thumbnailLoaded = true}>
-                            </LargerLazyLoad>
-                        </div>
-                        {#if !thumbnailLoaded && browser && localStorage.getItem("disableBlurHash") !== "true"}
-                            <div class="absolute top-0 left-0 rounded" out:fade|global={{duration: 400}}>
-                                {#if thumbnail.blurhash}
-                                    <LargerLazyLoad>
-                                        <BlurHash blurhash={thumbnail.blurhash}/>
-                                    </LargerLazyLoad>
-                                {/if}
                             </div>
+                            {#if !thumbnailLoaded && browser && localStorage.getItem("disableBlurHash") !== "true"}
+                                <div class="absolute top-0 left-0 rounded" out:fade|global={{duration: 400}}>
+                                    {#if thumbnail.blurhash}
+                                        <BlurHash blurhash={thumbnail.blurhash}/>
+                                    {/if}
+                                </div>
+                            {/if}
                         {/if}
                     </div>
                 {:else}
