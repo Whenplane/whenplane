@@ -81,7 +81,9 @@
             <div class="thumbnail relative">
                 {#if lazyLoadThumbnail}
                     <div class="thumbnail-space relative">
-                        {isLazyLoadTrigger} {lazyLoadGroup}
+                        {#if dev}
+                            {isLazyLoadTrigger} {lazyLoadGroup}
+                        {/if}
                         {#if isLazyLoadTrigger && !$groupStore.thumbnailLoaded}
                             <LargerLazyLoad on:visible={() => {console.debug("Showing group", lazyLoadGroup); $groupStore.thumbnailLoaded = true;}}/>
                         {/if}
