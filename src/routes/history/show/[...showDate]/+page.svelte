@@ -8,6 +8,7 @@
     import { page } from "$app/stores";
     import type { WanDb_Topic } from "$lib/wdb_types.ts";
     import SubTopics from "$lib/subcomponents/SubTopics.svelte";
+    import { fade } from "svelte/transition";
 
     export let data;
 
@@ -113,21 +114,26 @@
     <br>
     <br>
 
-    {#if data.mm}
-        <h2>Merch Messages</h2>
-        <a href="/merch-messages/{data.mm.videoId}">View Merch Messages</a><br>
+    {#await data.mm}
+    {:then mm}
+        {#if mm}
+            <div in:fade={{duration: 100}}>
+                <h2>Merch Messages</h2>
+                <a href="/merch-messages/{mm.videoId}">View Merch Messages</a><br>
 
-        {#if data.mm.status === "inprogress"}
-            <br>
-            <span class="text-amber-300">
-                Merch messages for this episode are incomplete.
-            </span><br>
-            They may still be processing. You can view the ones we have so far, or come back later for the complete list.
+                {#if mm.status === "inprogress"}
+                    <br>
+                    <span class="text-amber-300">
+                        Merch messages for this episode are incomplete.
+                    </span><br>
+                    They may still be processing. You can view the ones we have so far, or come back later for the complete list.
+                {/if}
+
+                <br>
+                <br>
+            </div>
         {/if}
-
-        <br>
-        <br>
-    {/if}
+    {/await}
 
     {#if topics && topics.length > 0}
         <h2>Show Info</h2>

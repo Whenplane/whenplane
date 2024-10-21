@@ -21,7 +21,7 @@ export const load = (async ({params, fetch}) => {
         throw error(showResponse.status, data.message || showResponse.statusText);
     }
 
-    const mm = data.value?.vods?.youtube ? await fetch("/api/merch-messages/info/" + data.value?.vods?.youtube)
+    const mm = data.value?.vods?.youtube ? fetch("/api/merch-messages/info/" + data.value?.vods?.youtube)
       .then(r => r.json())
       .then(j => j.video as {videoId: string, status: string, title: string} | null)
       : undefined;
