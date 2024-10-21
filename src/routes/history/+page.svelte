@@ -1,3 +1,6 @@
+<script lang="ts" context="module">
+    let pageIndex = 0;
+</script>
 <script lang="ts">
     import HistoricalShow from "$lib/history/HistoricalShow.svelte";
     import { browser, dev } from "$app/environment";
@@ -45,6 +48,7 @@
           })
     }
 
+    if(browser) pageIndex++;
 </script>
 <svelte:head>
     <title>WAN Show History</title>
@@ -72,7 +76,7 @@
          class:thumbnailless-inline={view === 3}
     >
         {#each shows as show, i (show.name)}
-            <HistoricalShow {show} withThumbnail={view < 2} lazyLoadThumbnail={i > 10} lazyLoadGroup={Math.floor(i/6)}/>
+            <HistoricalShow {show} withThumbnail={view < 2} lazyLoadThumbnail={i > 10} lazyLoadGroup={Math.floor(i/6) + (1000 * pageIndex)}/>
             {#if i === 50}
                 <LinusFace/>
             {/if}
