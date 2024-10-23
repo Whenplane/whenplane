@@ -18,7 +18,8 @@ const field_names: {[key: string]: string} = {
   "product.available": "In stock?",
   "product.variants": "Variant Metadata",
   "product.options": "Options",
-  "product.published_at": "Published"
+  "product.published_at": "Published",
+  "product.type": "Product Type"
 }
 
 const variant_field_names: {[key: string]: string} = {
@@ -56,6 +57,9 @@ export function getDiffComponent(field: string) {
   }
   if(field === "product.published_at") {
     return DateDiff;
+  }
+  if(field === "product.type") {
+    return TextWordsDiff;
   }
   return TextDiff;
 }
