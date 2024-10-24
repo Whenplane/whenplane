@@ -113,6 +113,9 @@
         <br>
       </a>
     {/each}
+    {#if searchResults.hits.length === resultsPerPage}
+      {searchResults.found - resultsPerPage} more results hidden. Please narrow your search query.<br>
+    {/if}
   {/if}
   {#if networkError}
       <span class="text-error-500">
