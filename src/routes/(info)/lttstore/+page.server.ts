@@ -48,11 +48,11 @@ export const load = (async ({platform}) => {
   }
 
   return {
-    allProducts: await allProducts,
+    // allProducts: await allProducts,
     popularProducts: await popularProducts,
     lowStock: await lowStock,
     onSale: await onSale,
-    // newProducts: await newProducts,
+    newProducts,
     recentRestocks: await recentRestocks
   }
 }) satisfies PageServerLoad
