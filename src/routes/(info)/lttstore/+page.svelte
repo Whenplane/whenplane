@@ -30,8 +30,6 @@
   let searchResults: SearchResponse<ProductSearchIndex> | undefined;
   let networkError = false;
 
-  let searchLocation: HTMLLabelElement;
-
   let searchText = "";
   $: {
     let tmpText = searchText+"";
