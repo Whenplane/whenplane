@@ -7,31 +7,69 @@
   import {slide, fade} from "svelte/transition";
   import {ProgressRadial} from "@skeletonlabs/skeleton";
   import { invalidateAll } from "$app/navigation";
+  import { SearchClient } from "typesense";
+  import type { SearchResponse } from "typesense/lib/Typesense/Documents";
+  import type { MMTableRow } from "$lib/merch-messages/mm-types.ts";
+  import type { ProductSearchIndex } from "$lib/lttstore/lttstore_types.ts";
 
   export let data;
 
-  let miniSearch;
+  const searchClient = new SearchClient({
+    'nodes': [{
+      'host': 'search.ajg0702.us',
+      'port': 443,
+      'protocol': 'https'
+    }],
+    // this api key only has access to search, don't worry
+    'apiKey': "swyHTJhzz7MQIxDjBqE2dpOCM6DIU10P",
+    'connectionTimeoutSeconds': 10
+  });
 
-  onMount(() => {
-    miniSearch = new MiniSearch({
-      fields: ["handle", "title"],
-      storeFields: ["handle", "title", "featured_image", "first_image", "available"],
-      searchOptions: {
-        boost: { title: 2 },
-        fuzzy: 0.4
+  let waiting = false;
+  let searchPromise: Promise<SearchResponse<ProductSearchIndex>> | undefined;
+  let searchResults: SearchResponse<ProductSearchIndex> | undefined;
+  let networkError = false;
+
+  let searchLocation: HTMLLabelElement;
+
+  let searchText = "";
+  $: {
+    let tmpText = searchText+"";
+    waiting = true;
+    setTimeout(() => {
+      if(searchText === tmpText) {
+        waiting = false;
+        search(searchText);
       }
-    })
+    }, 100)
+  }
 
-    miniSearch.addAll(data.allProducts)
-  })
+  const resultsPerPage = 100;
 
-
-  let searchResults = [];
-  let searchTerm = "";
-  $: if(miniSearch && searchTerm) {
-    searchResults = miniSearch.search(searchTerm);
-  } else searchResults = [];
-
+  function search(text: string, page?: number) {
+    if(!text) {
+      searchPromise = undefined;
+      searchResults = undefined;
+      return;
+    }
+    searchPromise = searchClient.collections<ProductSearchIndex>("lttstore_products").documents()
+      .search({
+        q: text,
+        query_by: "title,handle,description",
+        page: page ?? 1,
+        per_page: resultsPerPage
+      }, {cacheSearchResultsForSeconds: 60})
+      .then(r => searchResults = r as SearchResponse<ProductSearchIndex>)
+      .then(r => {
+        networkError = false;
+        return r;
+      })
+      .catch(e => {
+        console.error("Error while searching:", e);
+        searchResults = undefined;
+        networkError = true;
+      })
+  }
 
   let loading = false;
   async function reload() {
@@ -58,17 +96,35 @@
 
 <div class="container mx-auto pt-8 mb-64">
 
-  <input placeholder="Search for products" bind:value={searchTerm} class="input w-64 p-2 pl-4">
+  <input placeholder="Search for products" bind:value={searchText} class="input w-64 p-2 pl-4">
+  {#await searchPromise}
+    <ProgressRadial class="inline-block" width="w-6" stroke={250}/>
+  {/await}
+  {#if waiting}
+    <ProgressRadial class="inline-block" width="w-6" stroke={250}/>
+  {/if}
   <br>
-  {#each searchResults as result (result.id)}
-    <a class="block card p-2 m-1" href="/lttstore/products/{result.handle}" animate:flip={{ duration: 200 }} transition:slide>
-      <img src={result.featured_image ?? result.first_image} class="inline-block h-8 w-8 rounded-md">
-      <span class:line-through={!(result.available ?? true)}>
-        {result.title}
+  {#if searchResults && searchResults.hits}
+    {#each searchResults.hits as result (result.document.id)}
+      {@const productData = JSON.parse(result.document.product)}
+      <a class="block card p-2 m-1" href="/lttstore/products/{result.document.handle}" animate:flip={{ duration: 90 }} transition:slide>
+        <img src={productData.featured_image ?? productData.images[0]} class="inline-block h-8 w-8 rounded-md">
+        <span class:line-through={!(result.document.available ?? true)}>
+          {result.document.title}
+        </span>
+        <br>
+      </a>
+    {/each}
+  {/if}
+  {#if networkError}
+      <span class="text-error-500">
+        <br>
+        A network error occurred while trying to get the results for your search.<br>
+        Check your internet connection.<br>
+        If your network connection is fine, the search server might be down.
+        Try again in a few minutes, and <a href="/support">contact me</a> if it is still down.
       </span>
-      <br>
-    </a>
-  {/each}
+  {/if}
   <br>
 
 

@@ -16,6 +16,7 @@ export type ShopifyProduct = {
   updated_at: string,
   vendor: "LTTStore" | "Linus Tech Tips Store",
   product_type: string,
+  type: string,
   tags: string[],
   images: ProductImage[],
   featured_image?: string
@@ -34,6 +35,8 @@ export type ShopifyProduct = {
   /** available as in in-stock */
   available: boolean
 }
+
+
 export type ProductImage = {
   id: number,
   created_at?: string,
@@ -162,4 +165,24 @@ export type ProductDifference<Type = unknown> = {
 export type ProductDetailModule = {
   title: string,
   content: string
+}
+
+
+export type ProductSearchIndex = {
+  id: string,
+  handle: string,
+  title: string,
+  product: string,
+  description: string,
+  productType: string,
+  tags: string[],
+  totalStock: number,
+  stockChecked: number,
+  lastRestock: number,
+  purchasesPerHour: number,
+  purchasesPerDay: number,
+  regularPrice: number,
+  currentPrice: number,
+  firstSeen: number,
+  available: boolean
 }
