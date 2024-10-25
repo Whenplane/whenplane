@@ -102,7 +102,9 @@
 
   <input placeholder="Search for products" bind:value={searchText} class="input w-64 p-2 pl-4">
   {#await searchPromise}
-    <ProgressRadial class="inline-block" width="w-6" stroke={250}/>
+    {#if !waiting}
+      <ProgressRadial class="inline-block" width="w-6" stroke={250}/>
+    {/if}
   {/await}
   {#if waiting}
     <ProgressRadial class="inline-block" width="w-6" stroke={250}/>

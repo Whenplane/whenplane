@@ -103,7 +103,9 @@
     Search
     <input class="input w-64 py-1 px-2 inline-block" placeholder="Search Terms" bind:value={searchText}>
     {#await searchPromise}
-      <ProgressRadial class="inline-block" width="w-6" stroke={250}/>
+      {#if !waiting}
+        <ProgressRadial class="inline-block" width="w-6" stroke={250}/>
+      {/if}
     {/await}
     {#if waiting}
       <ProgressRadial class="inline-block" width="w-6" stroke={250}/>
