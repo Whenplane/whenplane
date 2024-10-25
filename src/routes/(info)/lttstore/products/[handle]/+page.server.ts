@@ -30,15 +30,24 @@ export const load = (async ({platform, params, url}) => {
     .bind(handle)
     .first<ProductsTableRow>();
 
-  const historyDays = Number(url.searchParams.get("historyDays") ?? 7);
-
-  const stockHistory = db.prepare("select * from stock_history where handle = ? and timestamp > ? order by timestamp")
-    .bind(
-      handle,
-      Date.now() - (historyDays * 24 * 60 * 60e3)
-    )
-    .all<StockHistoryTableRow>()
-    .then(r => r.results);
+  let stockHistory: Promise<StockHistoryTableRow[]>;
+  if(url.searchParams.get("historyDays") === "all") {
+    stockHistory = db.prepare("select * from stock_history where handle = ? order by timestamp")
+      .bind(
+        handle
+      )
+      .all<StockHistoryTableRow>()
+      .then(r => r.results);
+  } else {
+    const historyDays = Number(url.searchParams.get("historyDays") ?? 7);
+    stockHistory = db.prepare("select * from stock_history where handle = ? and timestamp > ? order by timestamp")
+      .bind(
+        handle,
+        Date.now() - (historyDays * 24 * 60 * 60e3)
+      )
+      .all<StockHistoryTableRow>()
+      .then(r => r.results);
+  }
 
   const product = await productPromise;
 

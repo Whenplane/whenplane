@@ -46,7 +46,31 @@
     }
   }
 
-  let historyDays = $page.url.searchParams.get("historyDays") ?? "7";
+  const DAY = 24 * 60 * 60e3;
+
+  const stockCheckDistance = Date.now() - data.product.stockChecked;
+  let defaultHistoryDays = "7"
+  if(stockCheckDistance > 6 * DAY) {
+    defaultHistoryDays = "30";
+    if(stockCheckDistance > 20 * DAY) {
+      defaultHistoryDays = "90";
+      if(stockCheckDistance > 80 * DAY) {
+        defaultHistoryDays = "180";
+        if(stockCheckDistance > 170 * DAY) {
+          defaultHistoryDays = "365";
+          if(stockCheckDistance > 355 * DAY) {
+            defaultHistoryDays = "all";
+          }
+        }
+      }
+    }
+  }
+
+
+
+
+
+  let historyDays = $page.url.searchParams.get("historyDays") ?? defaultHistoryDays;
   let first = true;
   $: {
     console.debug({historyDays})
@@ -217,6 +241,7 @@
     {#if Date.now() > 1733699742676}
       <option value="365">1 year (365 days)</option>
     {/if}
+    <option value="all">all-time</option>
   </select>
   <ProductStockHistoryGraph stockHistory={data.stockHistory} productName={productInfo.title} {chartUpdateNumber}/>
   <br>
