@@ -24,7 +24,7 @@
   });
 
   let waiting = false;
-  let searchPromise: Promise<SearchResponse<MMTableRow>> | undefined;
+  let searchPromise: Promise<SearchResponse<MMTableRow> | undefined> | undefined;
   let searchResults: SearchResponse<MMTableRow> | undefined;
   let networkError = false;
 
@@ -67,6 +67,7 @@
         console.error("Error while searching:", e);
         searchResults = undefined;
         networkError = true;
+        return undefined;
       })
   }
 

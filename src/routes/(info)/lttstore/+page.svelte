@@ -11,6 +11,9 @@
   import type { SearchResponse } from "typesense/lib/Typesense/Documents";
   import type { MMTableRow } from "$lib/merch-messages/mm-types.ts";
   import type { ProductSearchIndex } from "$lib/lttstore/lttstore_types.ts";
+  import { escapeHtml } from "$lib/utils.ts";
+  import sanitizeHtml from "sanitize-html";
+  import { newsSanitizeSettings } from "$lib/news/news.ts";
 
   export let data;
 
@@ -54,6 +57,8 @@
       .search({
         q: text,
         query_by: "title,handle,description",
+        query_by_weights: "4,2,0",
+        text_match_type: "max_weight",
         page: page ?? 1,
         per_page: resultsPerPage
       }, {cacheSearchResultsForSeconds: 60})
@@ -98,7 +103,7 @@
 </ol>
 
 
-<div class="container mx-auto pt-8 mb-64">
+<div class="container mx-auto pt-8 mb-64 px-2">
 
   <input placeholder="Search for products" bind:value={searchText} class="input w-64 p-2 pl-4">
   {#await searchPromise}
@@ -113,10 +118,34 @@
   {#if searchResults && searchResults.hits}
     {#each searchResults.hits as result (result.document.id)}
       {@const productData = JSON.parse(result.document.product)}
-      <a class="block card p-2 m-1" href="/lttstore/products/{result.document.handle}" animate:flip={{ duration: 90 }} transition:slide>
+      {@const descriptionSnippet = result.highlight?.description?.snippet?.replaceAll("</p>", "\n")}
+      {@const openingIndex = descriptionSnippet?.indexOf("<")}
+      {@const closingIndex = descriptionSnippet?.indexOf(">")}
+      <a class="block card p-2 m-1 truncate" href="/lttstore/products/{result.document.handle}" animate:flip={{ duration: 90 }} transition:slide>
         <img src={productData.featured_image ?? productData.images[0]} class="inline-block h-8 w-8 rounded-md">
         <span class:line-through={!(result.document.available ?? true)}>
           {result.document.title}
+        </span>
+        &nbsp;
+        <span class="opacity-70 max-w-full truncate description-results">
+          <!--{descriptionSnippet}-->
+          {@html
+            sanitizeHtml(
+              descriptionSnippet
+                  ?.substring(
+                    closingIndex && openingIndex &&
+                    closingIndex >= 0 &&
+                    (
+                      openingIndex >= 0 ? openingIndex > closingIndex : true
+                    )
+                      ?
+                      closingIndex+1 :
+                      0
+                  ) ??
+                productData.description,
+              {allowedTags: ["mark"]}
+            )
+          }
         </span>
         <br>
       </a>
@@ -206,3 +235,10 @@
   <br>
   Join the <a data-sveltekit-reload href="/discord">discord</a> where there is a channel that can alert you to useful info! (e.g. new products, sales, restocks)
 </div>
+
+<style>
+  .description-results > :global(mark) {
+      background-color: rgb(var(--color-primary-500) / 0.4);
+      color: inherit;
+  }
+</style>
