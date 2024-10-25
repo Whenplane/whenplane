@@ -26,7 +26,7 @@
   });
 
   let waiting = false;
-  let searchPromise: Promise<SearchResponse<ProductSearchIndex>> | undefined;
+  let searchPromise: Promise<SearchResponse<ProductSearchIndex> | undefined> | undefined;
   let searchResults: SearchResponse<ProductSearchIndex> | undefined;
   let networkError = false;
 
@@ -57,7 +57,12 @@
         page: page ?? 1,
         per_page: resultsPerPage
       }, {cacheSearchResultsForSeconds: 60})
-      .then(r => searchResults = r as SearchResponse<ProductSearchIndex>)
+      .then(r => {
+        if(r.request_params.q === searchText) {
+          searchResults = r as SearchResponse<ProductSearchIndex>
+        }
+        return r as SearchResponse<ProductSearchIndex>;
+      })
       .then(r => {
         networkError = false;
         return r;
@@ -66,6 +71,7 @@
         console.error("Error while searching:", e);
         searchResults = undefined;
         networkError = true;
+        return undefined;
       })
   }
 
