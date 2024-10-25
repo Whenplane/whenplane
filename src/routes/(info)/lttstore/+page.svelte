@@ -123,11 +123,11 @@
       {@const closingIndex = descriptionSnippet?.indexOf(">")}
       <a class="block card p-2 m-1 truncate" href="/lttstore/products/{result.document.handle}" animate:flip={{ duration: 50 }} transition:slide>
         <img src={productData.featured_image ?? productData.images[0]} class="inline-block h-8 w-8 rounded-md">
-        <span class:line-through={!(result.document.available ?? true)}>
-          {result.document.title}
+        <span class="result-highlight" class:line-through={!(result.document.available ?? true)}>
+          {@html sanitizeHtml(result.highlight?.title?.snippet ?? result.document.title, {allowedTags: ["mark"]})}
         </span>
         &nbsp;
-        <span class="opacity-70 max-w-full truncate description-results">
+        <span class="opacity-70 max-w-full truncate result-highlight">
           <!--{descriptionSnippet}-->
           {@html
             sanitizeHtml(
@@ -239,7 +239,7 @@
 </div>
 
 <style>
-  .description-results > :global(mark) {
+  .result-highlight > :global(mark) {
       /*background-color: rgb(var(--color-primary-500) / 0.4);*/
       background-color: inherit;
       color: inherit;
