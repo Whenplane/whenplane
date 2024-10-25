@@ -121,7 +121,7 @@
       {@const descriptionSnippet = result.highlight?.description?.snippet?.replaceAll("</p>", "\n")}
       {@const openingIndex = descriptionSnippet?.indexOf("<")}
       {@const closingIndex = descriptionSnippet?.indexOf(">")}
-      <a class="block card p-2 m-1 truncate" href="/lttstore/products/{result.document.handle}" animate:flip={{ duration: 90 }} transition:slide>
+      <a class="block card p-2 m-1 truncate" href="/lttstore/products/{result.document.handle}" animate:flip={{ duration: 50 }} transition:slide>
         <img src={productData.featured_image ?? productData.images[0]} class="inline-block h-8 w-8 rounded-md">
         <span class:line-through={!(result.document.available ?? true)}>
           {result.document.title}
@@ -149,6 +149,8 @@
         </span>
         <br>
       </a>
+    {:else}
+      No results found.
     {/each}
     {#if searchResults.hits.length === resultsPerPage}
       {searchResults.found - resultsPerPage} more results hidden. Please narrow your search query.<br>
@@ -238,7 +240,9 @@
 
 <style>
   .description-results > :global(mark) {
-      background-color: rgb(var(--color-primary-500) / 0.4);
+      /*background-color: rgb(var(--color-primary-500) / 0.4);*/
+      background-color: inherit;
       color: inherit;
+      font-weight: bold;
   }
 </style>
