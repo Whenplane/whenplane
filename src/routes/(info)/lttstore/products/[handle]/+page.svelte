@@ -14,7 +14,7 @@
   import { newsSanitizeSettings } from "$lib/news/news";
   import { goto } from "$app/navigation";
   import Price from "$lib/lttstore/Price.svelte";
-  import { browser } from "$app/environment";
+  import { browser, dev } from "$app/environment";
   import ProductUpdateRequestButton from "$lib/lttstore/product/ProductUpdateRequestButton.svelte";
   import ExclamationTriangle from "svelte-bootstrap-icons/lib/ExclamationTriangle.svelte";
   import { getDiffComponent, getFieldName } from "$lib/lttstore/field_names.ts";
@@ -46,31 +46,8 @@
     }
   }
 
-  const DAY = 24 * 60 * 60e3;
 
-  const stockCheckDistance = Date.now() - data.product.stockChecked;
-  let defaultHistoryDays = "7"
-  if(stockCheckDistance > 6 * DAY) {
-    defaultHistoryDays = "30";
-    if(stockCheckDistance > 20 * DAY) {
-      defaultHistoryDays = "90";
-      if(stockCheckDistance > 80 * DAY) {
-        defaultHistoryDays = "180";
-        if(stockCheckDistance > 170 * DAY) {
-          defaultHistoryDays = "365";
-          if(stockCheckDistance > 355 * DAY) {
-            defaultHistoryDays = "all";
-          }
-        }
-      }
-    }
-  }
-
-
-
-
-
-  let historyDays = $page.url.searchParams.get("historyDays") ?? defaultHistoryDays;
+  let historyDays = data.historyDays+"";
   let first = true;
   $: {
     console.debug({historyDays})
@@ -78,7 +55,7 @@
       first = false;
     } else {
       const newUrl = new URL(location.href);
-      newUrl.searchParams.set("historyDays", historyDays)
+      newUrl.searchParams.set("historyDays", historyDays+"")
 
       first = true;
       goto(newUrl.toString(), { noScroll: true } ).then(() => {
@@ -314,15 +291,19 @@
 
   <ProductUpdateRequestButton/>
 
-  <!--{#if dev}
+  {#if dev}
     <br>
     <br>
-    <pre>{JSON.stringify(productInfo, undefined, '\t')}</pre>
+    <pre>{JSON.stringify({
+      ...data,
+      product: "shown below"
+    }, undefined, '\t')}</pre>
     <pre>{JSON.stringify({
       ...data.product,
-      product: "shown above"
+      product: "shown below"
     }, undefined, '\t')}</pre>
-  {/if}-->
+    <pre>{JSON.stringify(productInfo, undefined, '\t')}</pre>
+  {/if}
 </div>
 
 <style>

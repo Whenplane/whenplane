@@ -1,10 +1,12 @@
 import { error, redirect } from "@sveltejs/kit";
-import type { PageServerLoad } from "../../../../../../.svelte-kit/types/src/routes";
+import type { PageServerLoad } from "./$types";
 import type { D1Database } from "@cloudflare/workers-types";
 import { dev } from "$app/environment";
 import type { ProductsTableRow, StockHistoryTableRow } from "$lib/lttstore/lttstore_types.ts";
 
 import { createTables } from "../../createTables.ts";
+
+const DAY = 24 * 60 * 60e3;
 
 
 export const load = (async ({platform, params, url}) => {
@@ -26,12 +28,36 @@ export const load = (async ({platform, params, url}) => {
     if(productHandle) throw redirect(301, productHandle)
   }
 
-  const productPromise = db.prepare("select * from products where handle = ?")
+  const product = await db.prepare("select * from products where handle = ?")
     .bind(handle)
     .first<ProductsTableRow>();
 
+  if(product == null) throw error(404, "Product not found!");
+
+
+  const stockCheckDistance = Date.now() - product.stockChecked;
+  let defaultHistoryDays: number | string = 7
+  if(stockCheckDistance > 6 * DAY) {
+    defaultHistoryDays = 30;
+    if(stockCheckDistance > 20 * DAY) {
+      defaultHistoryDays = 90;
+      if(stockCheckDistance > 80 * DAY) {
+        defaultHistoryDays = 180;
+        if(stockCheckDistance > 170 * DAY) {
+          defaultHistoryDays = 365;
+          if(stockCheckDistance > 355 * DAY) {
+            defaultHistoryDays = "all";
+          }
+        }
+      }
+    }
+  }
+
+  let historyDays: number | string = Number(url.searchParams.get("historyDays") ?? defaultHistoryDays);
+
   let stockHistory: Promise<StockHistoryTableRow[]>;
-  if(url.searchParams.get("historyDays") === "all") {
+  if((url.searchParams.get("historyDays") ?? defaultHistoryDays) === "all") {
+    historyDays = "all";
     stockHistory = db.prepare("select * from stock_history where handle = ? order by timestamp")
       .bind(
         handle
@@ -39,7 +65,6 @@ export const load = (async ({platform, params, url}) => {
       .all<StockHistoryTableRow>()
       .then(r => r.results);
   } else {
-    const historyDays = Number(url.searchParams.get("historyDays") ?? 7);
     stockHistory = db.prepare("select * from stock_history where handle = ? and timestamp > ? order by timestamp")
       .bind(
         handle,
@@ -49,10 +74,6 @@ export const load = (async ({platform, params, url}) => {
       .then(r => r.results);
   }
 
-  const product = await productPromise;
-
-  if(product == null) throw error(404, "Product not found!");
-
   const changeHistory = db.prepare("select * from change_history where id = ? order by timestamp desc")
     .bind(product.id)
     .all<{id: number, timestamp: number, field: string, old: string, new: string}>()
@@ -60,6 +81,7 @@ export const load = (async ({platform, params, url}) => {
 
   return {
     product,
+    historyDays,
     stockHistory: await stockHistory,
     changeHistory
   }
