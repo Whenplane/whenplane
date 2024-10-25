@@ -132,7 +132,7 @@
           {@html
             sanitizeHtml(
               descriptionSnippet
-                  ?.substring(
+                  ?.substring( // we trim this so that if typesense starts the snippet in the middle of a html tag, we can remove that
                     closingIndex && openingIndex &&
                     closingIndex >= 0 &&
                     (
