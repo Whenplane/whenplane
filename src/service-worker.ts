@@ -21,8 +21,12 @@ const ASSETS = [
   ...build, // the app itself
   ...files,  // everything in `static`
   ...prerendered,
-  ...cacheablePages
 ].filter((a) => !dontCache.includes(a));
+
+const ALL_ASSETS = [
+  ...ASSETS,
+  ...cacheablePages
+]
 
 
 sw.addEventListener('install', (event) => {
@@ -34,7 +38,7 @@ sw.addEventListener('install', (event) => {
 
     // remove old keys
     const oldKeys = await cache.keys()
-      .then(ks => ks.filter(k => !ASSETS.includes(new URL(k.url).pathname)));
+      .then(ks => ks.filter(k => !ALL_ASSETS.includes(new URL(k.url).pathname)));
 
 
     for (const oldKey of oldKeys) {
@@ -123,8 +127,10 @@ sw.addEventListener("push", (event) => {
 
   console.debug("Got data to send notification", data);
 
-  sw.registration.showNotification(title, {
-    icon,
-    ...data
-  });
+  event.waitUntil(
+    sw.registration.showNotification(title, {
+      icon,
+      ...data
+    })
+  )
 });
