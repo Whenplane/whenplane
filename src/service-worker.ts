@@ -7,23 +7,22 @@ const sw = self as unknown as ServiceWorkerGlobalScope;
 
 import { build, files, prerendered, version } from "$service-worker";
 
-const CACHE_PREFIX = "cache-"
-// Create a unique cache name for this deployment
-const CACHE = CACHE_PREFIX + version;
+// const CACHE_PREFIX = "cache-"
+const CACHE = "cache";
 
 const dontCache: string[] = [
   "/_redirects"
 ];
+const cacheablePages = [
+  "/",
+]
 
 const ASSETS = [
   ...build, // the app itself
   ...files,  // everything in `static`
-  ...prerendered
+  ...prerendered,
+  ...cacheablePages
 ].filter((a) => !dontCache.includes(a));
-
-const cacheablePages = [
-  "/",
-]
 
 
 sw.addEventListener('install', (event) => {
@@ -32,14 +31,14 @@ sw.addEventListener('install', (event) => {
 
     const cache = await caches.open(CACHE);
     await cache.addAll(ASSETS);
-    await cache.addAll(cacheablePages);
 
-    const others = await caches.keys()
-      .then(keys => keys.filter(k => k !== CACHE))
-      .then(keys => keys.filter(k => k.startsWith(CACHE_PREFIX)));
+    // remove old keys
+    const oldKeys = await cache.keys()
+      .then(ks => ks.filter(k => !ASSETS.includes(new URL(k.url).pathname)));
 
-    for (const other of others) {
-      await caches.delete(other);
+
+    for (const oldKey of oldKeys) {
+      await caches.delete(oldKey.url);
     }
 
   }
