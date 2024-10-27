@@ -96,7 +96,7 @@ sw.addEventListener('fetch', (event) => {
     }
   }
 
-  if(ASSETS.includes(url.pathname) || cacheablePages.includes(url.pathname)) event.respondWith(respond());
+  if(ALL_ASSETS.includes(url.pathname)) event.respondWith(respond());
 });
 
 sw.addEventListener('activate', (event) => {
