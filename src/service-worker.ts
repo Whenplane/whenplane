@@ -15,6 +15,9 @@ const dontCache: string[] = [
 ];
 const cacheablePages = [
   "/",
+  "/about",
+  "/support",
+  "/extension"
 ]
 
 const ASSETS = [
