@@ -23,6 +23,11 @@
 <svelte:head>
     <title>About {$page.url.hostname === "whenwan.show" ? "whenwan.show" : "Whenplane"}</title>
 </svelte:head>
+<ol class="breadcrumb pt-2 pl-2">
+    <li class="crumb"><a class="anchor hover-underline" href="/">{$page.url.hostname === "whenwan.show" ? "whenwan.show" : "Whenplane"}</a></li>
+    <li class="crumb-separator" aria-hidden="true">&rsaquo;</li>
+    <li class="crumb">About & Preferences</li>
+</ol>
 <div class="container mx-auto items-center limit mt-16">
     <div class="space-y-5">
         <div class="card p-4 inline-block text-left m-2">
@@ -32,7 +37,7 @@
             <br>
             Unless noted otherwise, all times are converted to <b>your local timezone</b>.<br>
             <br>
-            This site is not affiliated with Linus Media Group. It is just a side project of a fan.
+            This site is not affiliated with Linus Media Group, Floatplane, etc. It is just a side project of a fan.
             <br>
             <br>
             The site is
@@ -119,11 +124,6 @@
 </div>
 
 <div class="pb-48"></div>
-
-
-<div class="absolute bottom-0 right-0 p-2">
-    <a href="/">Back to Countdown</a>
-</div>
 <style>
     .danwan {
         height: 60px;
