@@ -5,9 +5,11 @@
   import ExtensionAd from "$lib/ads/ExtensionAd.svelte";
 
   const count = 2
-  export const choice = random(1, count+1, true);
+  export const choice = random(0, count+1, true);
 </script>
-{#if choice === 1}
+{#if choice === 0}
+  <!-- no ad -->
+{:else if choice === 1}
   <ExtensionAd/>
 {:else if choice === 2}
   <PushNotifAd/>
