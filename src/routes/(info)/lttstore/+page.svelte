@@ -106,14 +106,17 @@
 <div class="container mx-auto pt-8 mb-64 px-2">
 
   <input placeholder="Search for products" bind:value={searchText} class="input w-64 p-2 pl-4">
-  {#await searchPromise}
-    {#if !waiting}
+  <div class="inline-block w-12">
+    {#await searchPromise}
+      {#if !waiting}
+        <ProgressRadial class="inline-block" width="w-6" stroke={250}/>
+      {/if}
+    {/await}
+    {#if waiting}
       <ProgressRadial class="inline-block" width="w-6" stroke={250}/>
     {/if}
-  {/await}
-  {#if waiting}
-    <ProgressRadial class="inline-block" width="w-6" stroke={250}/>
-  {/if}
+  </div>
+  <a href="/lttstore/advanced-search">Advanced Search</a>
   <br>
   {#if searchResults && searchResults.hits}
     {#each searchResults.hits as result (result.document.id)}
