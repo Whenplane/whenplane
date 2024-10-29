@@ -25,6 +25,9 @@
     throttleSearch();
   }
 
+  let onlyShowAvailable = false;
+  let onlyShowInStock = false;
+
   const minPrice = 0;
   const maxPrice = 59999 + 1
 
@@ -39,7 +42,9 @@
   $: searchParams = {
     filterMinPrice,
     filterMaxPrice,
-    sortBy
+    sortBy,
+    onlyShowAvailable,
+    onlyShowInStock
   }
   const productTypeFilters = new Set();
 
@@ -89,7 +94,9 @@
         sort_by: sortBy,
         facet_by: "currentPrice,productType",
         filter_by: "currentPrice:>=" + filterMinPrice + " && currentPrice:<=" + filterMaxPrice +
-          (productTypeFilters.size > 0 ?" && productType:=[" + [...productTypeFilters].map(t => "`" + t + "`").join(",") + "]" : ""),
+          (productTypeFilters.size > 0 ?" && productType:=[" + [...productTypeFilters].map(t => "`" + t + "`").join(",") + "]" : "") +
+          (onlyShowAvailable ? " && available:=true" : "") +
+          (onlyShowInStock ? " && totalStock:>0" : ""),
         page: page ?? 1,
         per_page: resultsPerPage
       }, {cacheSearchResultsForSeconds: 60})
@@ -160,6 +167,15 @@
 <div class="container min-[800px]:flex text-center">
   <div class="search-params pr-4 text-left">
     <b class="text-xl">Filters</b><br>
+    <br>
+    <label>
+      <input class="input" type="checkbox" bind:checked={onlyShowAvailable}>
+      <span>Only show available products</span>
+    </label>
+    <label class="pt-2">
+      <input class="input" type="checkbox" bind:checked={onlyShowInStock}>
+      <span>Only show in-stock products</span>
+    </label>
     <br>
     <hr>
     <br>
