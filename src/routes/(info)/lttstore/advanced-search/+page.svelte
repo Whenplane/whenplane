@@ -142,11 +142,17 @@
       <option value="_text_match(buckets: 10):desc,purchasesPerDay:asc">Purchases Per Day (ascending)</option>
       <option value="_text_match(buckets: 10):desc,purchasesPerHour:desc">Purchases Per Hour (descending)</option>
       <option value="_text_match(buckets: 10):desc,purchasesPerHour:asc">Purchases Per Hour (ascending)</option>
+      <option value="_text_match(buckets: 10):desc,currentPrice:desc">Price (descending)</option>
+      <option value="_text_match(buckets: 10):desc,currentPrice:asc">Price (ascending)</option>
+      <option value="_text_match:desc,purchasesPerDay:desc">Text Search Relevance</option>
     </select>
     <div class="inline-block self-center pl-2">
       <ToolTip id="asc-desc-explanation" popupClasses="w-full">
         descending = highest to lowest<br>
-        ascending = lowest to highest
+        ascending = lowest to highest<br>
+        <br>
+        "Text Search Relevance" just means that the search is only <b>sorted</b> by relevance to the search text.<br>
+        Other sorting methods will still show results relevant to the text search higher.
       </ToolTip>
     </div>
   </div>
