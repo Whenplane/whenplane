@@ -38,8 +38,8 @@ export const load = (async ({platform, params}) => {
   }
   await Promise.all(countingPromises).then(entries => {
     entries.forEach(entry => {
+      if(entry[1] == null) return;
       for (let i = 0; i < videos.length; i++) {
-        if(entry[1] == null) continue;
         if(videos[i].videoId !== entry[0]) continue;
         videos[i].messageCount = entry[1];
       }
