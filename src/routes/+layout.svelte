@@ -66,7 +66,8 @@
           "/youtube-redirect",
           "/about",
           "/notifications",
-          "/boca-marathon"
+          "/boca-marathon",
+          "/merch-messages"
       ];
 </script>
 
