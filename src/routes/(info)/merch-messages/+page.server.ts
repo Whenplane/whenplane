@@ -12,7 +12,7 @@ export const load = (async ({platform, params}) => {
     .all<{videoId: string, status: string, title: string, releaseDate: number, messageCount: number | null}>()
     .then(r => r.results);
 
-  const countingPromises: Promise<number | null>[] = [];
+  const countingPromises: Promise<[string, number | null]>[] = [];
   for (const video of videos) {
     if(video.messageCount !== null) continue;
     console.log("Adding message count for", video)
@@ -25,18 +25,26 @@ export const load = (async ({platform, params}) => {
 
       if(typeof count === "undefined") {
         console.warn("undefined count", count, "for video", video.videoId);
-        return null;
+        return [video.videoId, null];
       }
 
       await db.prepare("update videos set messageCount=? where videoId=?")
         .bind(count, video.videoId)
         .run();
 
-      return count;
+      return [video.videoId, count];
 
     })());
   }
-  await Promise.all(countingPromises);
+  await Promise.all(countingPromises).then(entries => {
+    entries.forEach(entry => {
+      for (let i = 0; i < videos.length; i++) {
+        if(entry[1] == null) continue;
+        if(videos[i].videoId !== entry[0]) continue;
+        videos[i].messageCount = entry[1];
+      }
+    })
+  });
 
   const videoReleaseDates = Object.fromEntries(videos.map(v => {
     return [
