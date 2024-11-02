@@ -83,7 +83,7 @@
   <li class="crumb">Merch Messages</li>
 </ol>
 
-<div class="limit mx-auto">
+<div class="limit mx-auto p-2">
   <h1>Merch Message Index</h1>
   <br>
   The Whenplane Merch Message Index is a tool that has processed nearly every WAN show that includes merch messages, and organized them into an organized and searchable index.<br>
@@ -176,8 +176,17 @@
 
 
   {#each data.videos as video}
-    <a class="card block hidden-link p-2 my-1" href="merch-messages/{video.videoId}">
-      {video.title}
+    {@const firstTitleParts = video.title.split(" - ")}
+    {@const lastTitlePart = firstTitleParts.pop()}
+    <a class="card flex hidden-link p-2 my-1" href="merch-messages/{video.videoId}">
+      <img class="thumbnail" src="https://i.ytimg.com/vi/{video.videoId}/mqdefault.jpg" alt="Thumbnail" aria-hidden="true" loading="lazy">
+      <div class="self-center px-4">
+        <span class="font-bold text-lg">
+          {firstTitleParts.join(" - ")}
+        </span><br>
+        {lastTitlePart}<br>
+        {video.messageCount} messages
+      </div>
     </a>
   {/each}
 </div>
@@ -190,5 +199,13 @@
     ol {
         list-style: decimal;
         padding-left: 1.5em;
+    }
+    .thumbnail {
+        display: inline-block;
+        width: min(12em, 20vw);
+        height: auto;
+        object-fit: cover;
+        border-radius: var(--theme-rounded-base);
+        aspect-ratio: 16 / 9;
     }
 </style>

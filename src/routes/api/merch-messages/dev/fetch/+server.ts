@@ -27,7 +27,7 @@ export const GET = (async ({platform, params}) => {
 
   await db.prepare("create table if not exists merch_messages(id text, video text, imageIndex integer, type text, text text, name text, jobId text)")
     .run();
-  await db.prepare("create table if not exists videos(videoId text PRIMARY KEY, status text, title text, releaseDate integer)")
+  await db.prepare("create table if not exists videos(videoId text PRIMARY KEY, status text, title text, releaseDate integer, messageCount integer)")
     .run();
 
   for (const video of data.videos) {
