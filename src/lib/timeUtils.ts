@@ -225,7 +225,7 @@ export function timeString(distance: number | undefined, long = false, showSecon
     const and = (long && (daysS || hoursS || minutesS)) ? "and " : "";
     const secondsS = seconds+s;
 
-    return daysS + hoursS + minutesS + (showSeconds ? and + secondsS : minutes > 0 ? "" : "<1 minute ago");
+    return daysS + hoursS + minutesS + (showSeconds ? and + secondsS : minutes > 0 ? "" : "<1 minute");
 }
 
 export function timeStringHours(distance: number | undefined, long = false) {
