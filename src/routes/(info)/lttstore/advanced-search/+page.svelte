@@ -75,7 +75,7 @@
         waiting = false;
         search(searchText);
       }
-    }, 100)
+    }, 50)
   }
 
   const resultsPerPage = 100;

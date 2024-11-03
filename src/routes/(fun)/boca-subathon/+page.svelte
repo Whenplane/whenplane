@@ -45,7 +45,7 @@
   <ProgressBar value={distance} max={totalTime} />
   <br>
   <br>
-  There is
+  There are
   <span class="font-mono">
     {timeString(totalTime - distance, true)?.trim()}
   </span>
