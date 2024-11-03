@@ -21,7 +21,7 @@
         <img src={product.featured_image} class="product-image rounded-xl h-47" alt={product.title}/>
       </LargerLazyLoad>
     {:else}
-      <img src={product.featured_image} class="product-image rounded-xl h-47" alt={product.title}/>
+      <img src={product.featured_image} class="product-image rounded-xl h-47" alt={product.title} loading="lazy"/>
     {/if}
   {:else}
     No featured image
