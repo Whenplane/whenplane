@@ -24,6 +24,7 @@ declare global {
                 META: KVNamespace;
                 WDB_EPISODE_CACHE: KVNamespace;
                 AUTH_KV: KVNamespace;
+                YOUTUBE_TO_DATE: KVNamespace;
 
                 FETCHER: DurableObjectNamespace;
                 FLOATPLANE_FETCHER: DurableObjectNamespace;
@@ -44,6 +45,7 @@ declare global {
                 MERCHMESSAGES_DB: D1Database;
                 FP_SUBS_DB: D1Database;
                 AUTH: D1Database;
+                TOPICS: D1Database;
             },
             context?: {
                 /**
