@@ -15,9 +15,9 @@ export const GET = (async ({platform, params}) => {
     .all<TimestampsDbRow>()
     .then(r => r.results);
 
-  function recurseChildren(row: TimestampsDbRow) {
+  function recurseChildren(row: TimestampsDbRow, deep = 0) {
     const timestamp = translate(row);
-    timestamp.subTimestamps = timestamps.filter(t => t.parent === row.id).map(recurseChildren);
+    if(deep < 10) timestamp.subTimestamps = timestamps.filter(t => t.parent === row.id).map(s => recurseChildren(s, deep + 1));
 
     return timestamp;
   }
