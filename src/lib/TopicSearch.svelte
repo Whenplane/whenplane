@@ -85,12 +85,12 @@
   </div>
 
   {#if searchResults && searchResults.hits}
-    <table class="table">
+    <table class="table table-hover">
       <thead>
         <tr>
           <td class="px-2">Show</td>
           <td></td>
-          <td class="px-2">Youtube Link</td>
+          <td class="px-2">Timestamp YT Link</td>
         </tr>
       </thead>
       <tbody>
@@ -102,12 +102,12 @@
                 {@html sanitizeHtml(result.highlight?.name?.snippet ?? result.document.name, {allowedTags: ["mark"]})}
               </a>
             </td>
-            <td>
+            <td class="text-right">
               <a
                 href="https://youtube.com/watch?v={result.document.videoId}&t={result.document.time}"
                 target="_blank" rel="noopener"
               >
-                Link
+                {result.document.timeString}
               </a>
             </td>
           </tr>
