@@ -33,16 +33,6 @@
     let onTimeString: string;
     $: if(onTimeUntil) onTimeString = onTimeUntil.distance < 5 * 60e3 ? "on time!" : (onTimeUntil.late ? onTimeUntil.string + "late" : onTimeUntil.string + "early!");
 
-
-    $: topics = (() => {
-        let r: WanDb_Topic[] = [];
-        if(!data.wdb?.topics) return [];
-        for (let topic of data.wdb.topics) {
-            const existing = r.find(t => t.start == topic.start)
-            if(!existing) r.push(topic);
-        }
-        return r;//r.filter(t => t.title !== "Merch Messages" && t.title !== "Sponsor Spots");
-    })()
 </script>
 <svelte:head>
     <title>{data.metadata.title ?? ""}{data.metadata.title ? " - " : ""}WAN Show {showDate.toLocaleDateString(undefined, {dateStyle: 'long'})}</title>
@@ -135,32 +125,37 @@
         {/if}
     {/await}
 
-    {#if topics && topics.length > 0}
-        <h2>Show Info</h2>
-        Provided by
-        <a href="https://thewandb.com/archive/{data.wdb.id}" target="_blank" rel="noopener">
-            <img src="/thewandb.svg" style="height: 2.5em; display: inline-block" alt="The WAN Database"/>
-        </a>
+    {#if data.timestamps}
+        {#await data.timestamps}
+        {:then timestamps}
+            {#if timestamps}
+                <h2>Timestamps</h2>
+                Provided by <a href="/noki">NoKi</a>
+                <br>
+                <div in:fade={{duration: 100}} class="text-left inline-block mx-auto">
+                    <ol class="normal-list">
+                        {#each timestamps as timestamp, i}
+                            {@const youtubeId = data.value?.vods?.youtube}
+                            <li class="!mt-0 !mb-0 !p-0" id="timestamp-{youtubeId}.{timestamp.time}" class:highlighted={$page.url.hash === "#timestamp-" + youtubeId + "." + timestamp.time}>
+                                <a
+                                  class="hidden-link"
+                                  href="https://youtube.com/watch?v={youtubeId}&t={timestamp.time}"
+                                  target="_blank" rel="noopener"
+                                >
+                                    {timestamp.name}
+                                </a>
 
-        <div class="text-left">
-            {#if topics && topics.length > 0}
-                <h3>Topics</h3>
-                <ol class="normal-list">
-                    {#each topics as topic, i}
-                        <li class="!mt-0 !mb-0 !p-0">
-                            <span>
-                                {topic.title}
-
-                                {#if topic.children}
-                                    <SubTopics subTopics={topic.children}/>
+                                {#if timestamp.subTimestamps && timestamp.subTimestamps.length > 0}
+                                    <SubTopics subTopics={timestamp.subTimestamps} {youtubeId}/>
                                 {/if}
-                            </span>
 
-                        </li>
-                    {/each}
-                </ol>
+                            </li>
+                        {/each}
+                    </ol>
+                </div>
             {/if}
-        </div>
+
+        {/await}
     {/if}
 </div>
 <span class="clear">.</span> <!-- this has to be here otherwise safari ignores the padding for some reason -->
@@ -196,5 +191,11 @@
         height: auto;
         aspect-ratio: 16 / 9;
         object-fit: cover;
+    }
+
+    .highlighted {
+        border: solid 2px rgba(255, 255, 0, 0.5);
+        border-radius: 4px;
+        padding: 2px;
     }
 </style>

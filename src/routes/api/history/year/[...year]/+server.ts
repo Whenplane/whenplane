@@ -3,6 +3,7 @@ import {error, json} from "@sveltejs/kit";
 import { type HistoricalEntry, removeAfterLastDash, type OldShowMeta, type YoutubeSnippet } from "$lib/utils.ts";
 import {history as historicalShows} from "$lib/history/oldHistory";
 import type { KVNamespace } from "@cloudflare/workers-types";
+import { dev } from "$app/environment";
 
 const cacheTtl = 60 * 60 * 24 * 6; // cache single keys for 6 days if possible
 
@@ -152,6 +153,16 @@ export const GET = (async ({platform, params, locals, fetch}) => {
     keys = keys.sort((a, b) => new Date(b.name).getTime() - new Date(a.name).getTime());
 
     locals.addTiming({id: "total", duration: Date.now() - start});
+
+    const youtubeToDate = platform?.env?.YOUTUBE_TO_DATE;
+    if(dev && youtubeToDate) {
+        keys.forEach(k => {
+            const videoId = k.metadata.vods?.youtube;
+            if(!videoId) return;
+            const p = youtubeToDate.put(videoId, k.name);
+            platform?.context?.waitUntil(p)
+        })
+    }
 
     cache[yearRaw] = {
         lastFetch: Date.now(),

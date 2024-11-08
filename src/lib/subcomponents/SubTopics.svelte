@@ -1,9 +1,12 @@
 <script lang="ts">
-  import type { WanDb_Topic } from "$lib/wdb_types.ts";
   import {slide} from "svelte/transition";
   import { quintOut } from "svelte/easing";
+  import type { Timestamp } from "$lib/timestamps/types.ts";
 
-  export let subTopics: WanDb_Topic[];
+  import { page } from "$app/stores";
+
+  export let subTopics: Timestamp[];
+  export let youtubeId: string;
 
   const firstFew = subTopics.filter((e, i) => i < 2)
   const rest = subTopics.filter((e, i) => i >= 2)
@@ -18,33 +21,55 @@
 
   const totalSub = rest.reduce(reduceFunc, 0)
 
-  let expanded = rest.length <= 1;
+  let expanded = rest.length <= 1 || rest.map(t => "#timestamp-" + youtubeId + "." + t.time).includes($page.url.hash);
 </script>
 
 <ul class="normal-list ml-4">
   {#each firstFew as topic}
 
-    <li>{topic.title}</li>
+    <li id="timestamp-{youtubeId}.{topic.time}" class:highlighted={$page.url.hash === "#timestamp-" + youtubeId + "." + topic.time}>
+      <a
+        class="hidden-link"
+        href="https://youtube.com/watch?v={youtubeId}&t={topic.time}"
+        target="_blank" rel="noopener"
+      >
+        {topic.name}
+      </a>
+    </li>
 
   {/each}
 
   {#if !expanded && rest}
 
-    <button class="opacity-75 hover-underline" on:click={() => expanded = true}>
+    <button class="opacity-70 hover-underline" on:click={() => expanded = true}>
       ... And {totalSub} more
     </button>
 
   {:else if expanded && rest}
 
     {#each rest as topic}
-      <li in:slide|global={{easing: quintOut}}>
-        {topic.title}
+      <li in:slide|global={{easing: quintOut}} id="timestamp-{youtubeId}.{topic.time}" class:highlighted={$page.url.hash === "#timestamp-" + youtubeId + "." + topic.time}>
+        <a
+          class="hidden-link"
+          href="https://youtube.com/watch?v={youtubeId}&t={topic.time}"
+          target="_blank" rel="noopener"
+        >
+          {topic.name}
+        </a>
 
-        {#if topic.children}
-          <svelte:self subTopics={topic.children}/>
+        {#if topic.subTimestamps && topic.subTimestamps.length > 0}
+          <svelte:self subTopics={topic.subTimestamps}/>
         {/if}
       </li>
     {/each}
 
   {/if}
 </ul>
+
+<style>
+    .highlighted {
+        border: solid 2px rgba(255, 255, 0, 0.5);
+        border-radius: 4px;
+        padding: 2px;
+    }
+</style>

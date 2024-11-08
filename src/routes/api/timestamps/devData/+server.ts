@@ -1,5 +1,5 @@
 import { error, json, type RequestHandler } from "@sveltejs/kit";
-import type { TimestampsDbRow } from "$lib/utils.ts";
+import type { TimestampsDbRow } from "$lib/timestamps/types.ts";
 
 
 export const GET = (async ({platform}) => {
