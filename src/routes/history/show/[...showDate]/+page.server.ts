@@ -34,7 +34,7 @@ export const load = (async ({params, fetch, platform, url}) => {
 
     const mm = youtubeId ? fetch("/api/merch-messages/info/" + youtubeId)
       .then(r => r.json())
-      .then(j => j.video as {videoId: string, status: string, title: string} | null)
+      .then(j => j.video as {videoId: string, status: string, title: string, messageCount?: number | null} | null)
       : undefined;
 
     const timestamps = youtubeId ? fetch("/api/timestamps/" + youtubeId).then(r => r.json() as Promise<Timestamp[]>) : undefined;
