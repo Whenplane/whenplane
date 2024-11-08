@@ -2,7 +2,7 @@ import type {RequestHandler} from "@sveltejs/kit";
 import {error, json} from "@sveltejs/kit";
 import { type HistoricalEntry, removeAfterLastDash, type OldShowMeta, type YoutubeSnippet } from "$lib/utils.ts";
 import {history as historicalShows} from "$lib/history/oldHistory";
-import type { KVNamespace } from "@cloudflare/workers-types";
+import type { KVNamespace, KVNamespaceListResult } from "@cloudflare/workers-types";
 import { dev } from "$app/environment";
 
 const cacheTtl = 60 * 60 * 24 * 6; // cache single keys for 6 days if possible
@@ -18,7 +18,7 @@ const cache: {
 } = {};
 
 export const GET = (async ({platform, params, locals, fetch}) => {
-    const history: KVNamespace = platform?.env?.HISTORY;
+    const history: KVNamespace | undefined = platform?.env?.HISTORY;
     if(!history) throw error(503, "History not available");
 
     const yearRaw = params.year;
@@ -33,7 +33,7 @@ export const GET = (async ({platform, params, locals, fetch}) => {
         return json(cache[yearRaw].lastData, {
             headers: {
                 "x-cached": "true",
-                "x-fetch-distance": fetchDistance
+                "x-fetch-distance": fetchDistance + ""
             }
         });
     }
@@ -46,7 +46,7 @@ export const GET = (async ({platform, params, locals, fetch}) => {
 
     const keyNames: string[] = []
 
-    const keyPromises: Promise<HistoricalEntry>[] = [];
+    const keyPromises: Promise<HistoricalEntry & {metadata: {isCurrentlyLive?: boolean}}>[] = [];
 
     let lists = 0;
 
@@ -60,7 +60,7 @@ export const GET = (async ({platform, params, locals, fetch}) => {
             let cursor: string | undefined = undefined;
             while(!list_complete) {
                 const listStart = Date.now();
-                const list: KVListResponse<OldShowMeta> = await history.list<OldShowMeta>({
+                const list: KVNamespaceListResult<OldShowMeta> & {cursor?: string} = await history.list<OldShowMeta>({
                     prefix: year == "all" ? undefined : year+"",
                     cursor
                 });
@@ -84,10 +84,10 @@ export const GET = (async ({platform, params, locals, fetch}) => {
 
                         keyNames.push(parts[0]);
                         keyPromises.push((async () => {
-                            const preStart = history.get(parts[0] + ":preShowStart", {cacheTtl});
-                            const mainStart = history.get(parts[0] + ":mainShowStart", {cacheTtl});
-                            const mainEnd = history.get(parts[0] + ":showEnd", {cacheTtl});
-                            const videoId = history.get(parts[0] + ":videoId", {cacheTtl});
+                            const preStart = history.get(parts[0] + ":preShowStart", {cacheTtl}).then(r => r ?? "");
+                            const mainStart = history.get(parts[0] + ":mainShowStart", {cacheTtl}).then(r => r ?? "");
+                            const mainEnd = history.get(parts[0] + ":showEnd", {cacheTtl}).then(r => r ?? "");
+                            const videoId = history.get(parts[0] + ":videoId", {cacheTtl}).then(r => r ?? "");
                             const snippet: Promise<YoutubeSnippet | null> = history.get(parts[0] + ":snippet", {cacheTtl, type: "json"});
                             let isCurrentlyLive: Promise<boolean>;
                             if(Date.now() - new Date(parts[0]).getTime() < 35 * 60 * 60e3) {
@@ -114,7 +114,7 @@ export const GET = (async ({platform, params, locals, fetch}) => {
                                     },
                                     isCurrentlyLive: await isCurrentlyLive
                                 }
-                            } satisfies HistoricalEntry
+                            } satisfies HistoricalEntry & {metadata: {isCurrentlyLive?: boolean}}
                         })());
                     } else if(!k.metadata) {
                         keyPromises.push((async () => {
@@ -124,7 +124,7 @@ export const GET = (async ({platform, params, locals, fetch}) => {
                             }
                         })());
                     } else {
-                        keyPromises.push(Promise.resolve(k));
+                        if(k) keyPromises.push(Promise.resolve(k))
                     }
                 }
                 list_complete = list.list_complete;
@@ -155,7 +155,7 @@ export const GET = (async ({platform, params, locals, fetch}) => {
     locals.addTiming({id: "total", duration: Date.now() - start});
 
     const youtubeToDate = platform?.env?.YOUTUBE_TO_DATE;
-    if(dev && youtubeToDate) {
+    if((dev || Date.now() < 1731092789853) && youtubeToDate) {
         keys.forEach(k => {
             const videoId = k.metadata.vods?.youtube;
             if(!videoId) return;

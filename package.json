@@ -16,7 +16,7 @@
 	},
 	"devDependencies": {
 		"@block65/webcrypto-web-push": "^0.3.2",
-		"@cloudflare/workers-types": "^4.20240512.0",
+		"@cloudflare/workers-types": "^4.20241106.0",
 		"@colour-extractor/colour-extractor": "^1.0.1",
 		"@playwright/test": "^1.28.1",
 		"@skeletonlabs/skeleton": "^1.2.5",
