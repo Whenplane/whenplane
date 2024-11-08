@@ -32,7 +32,7 @@
   <br>
   <br>
   <h2>Merch Messages</h2>
-  Hint: Use CTRL + F to search
+  Hint: Use CTRL + F to search messages in this show, or <a href="/merch-messages">go back</a> to search merch messages in all shows.
   {#if data.video.status === "inprogress"}
     <br>
     <br>
