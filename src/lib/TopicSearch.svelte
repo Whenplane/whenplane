@@ -7,6 +7,7 @@
   import { slide } from "svelte/transition";
   import { ProgressRadial } from "@skeletonlabs/skeleton";
   import type { TimestampsDbRow } from "$lib/timestamps/types.ts";
+  import MiniShow from "$lib/history/MiniShow.svelte";
 
   const searchClient = new SearchClient({
     'nodes': [{
@@ -71,17 +72,19 @@
 
 </script>
 
-<div class="limit p-2 mx-auto">
-  <input placeholder="Search for topics" bind:value={searchText} class="input w-64 p-2 pl-4">
-  <div class="inline-block w-12">
-    {#await searchPromise}
-      {#if !waiting}
+<div class="p-2 mx-auto">
+  <div class="limit mx-auto my-4">
+    <input placeholder="Search for topics" bind:value={searchText} class="input w-64 p-2 pl-4">
+    <div class="inline-block w-12">
+      {#await searchPromise}
+        {#if !waiting}
+          <ProgressRadial class="inline-block" width="w-6" stroke={250}/>
+        {/if}
+      {/await}
+      {#if waiting}
         <ProgressRadial class="inline-block" width="w-6" stroke={250}/>
       {/if}
-    {/await}
-    {#if waiting}
-      <ProgressRadial class="inline-block" width="w-6" stroke={250}/>
-    {/if}
+    </div>
   </div>
 
   {#if searchResults && searchResults.hits}
@@ -96,7 +99,11 @@
       <tbody>
       {#each searchResults.hits as result (result.document.id)}
           <tr animate:flip={{ duration: 50 }} transition:slide>
-            <td></td>
+            <td class="limit-show-width">
+              <a class="hidden-link truncate" href="/history/show/{result.document.videoId}?hash={encodeURIComponent('#timestamp-' + result.document.id)}">
+                <MiniShow showName={result.document.videoId}/>
+              </a>
+            </td>
             <td>
               <a class="hidden-link block truncate result-highlight" href="/history/show/{result.document.videoId}?hash={encodeURIComponent('#timestamp-' + result.document.id)}">
                 {@html sanitizeHtml(result.highlight?.name?.snippet ?? result.document.name, {allowedTags: ["mark"]})}
@@ -137,5 +144,8 @@
         background-color: inherit;
         color: inherit;
         font-weight: bold;
+    }
+    .limit-show-width {
+        max-width: 15vw;
     }
 </style>
