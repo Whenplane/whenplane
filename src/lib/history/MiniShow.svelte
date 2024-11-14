@@ -55,6 +55,7 @@
         color: rgba(0, 0, 0, 0);
     }
     img {
-        max-width: 20vw;
+        width: 20vw;
+        aspect-ratio: 16 / 9;
     }
 </style>
