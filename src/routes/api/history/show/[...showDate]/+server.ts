@@ -1,4 +1,4 @@
-import { redirect, type RequestHandler } from "@sveltejs/kit";
+import { type RequestHandler } from "@sveltejs/kit";
 import {error, json} from "@sveltejs/kit";
 import type {OldShowMeta} from "$lib/utils";
 import type {KVNamespace} from "@cloudflare/workers-types";
@@ -8,14 +8,14 @@ export const GET = (async ({platform, params, url, locals}) => {
     const history: KVNamespace | undefined = platform?.env?.HISTORY;
     if(!history) throw error(503, "History missing!");
 
-    const showDate = params.showDate;
+    let showDate = params.showDate;
     if(!showDate) throw error(400, "No show date!");
 
     const youtubeToDate = platform?.env?.YOUTUBE_TO_DATE;
-    if(params.showDate && !params.showDate.includes("/") && youtubeToDate) {
-        const date = await youtubeToDate.get(params.showDate);
+    if(showDate && !showDate.includes("/") && youtubeToDate) {
+        const date = await youtubeToDate.get(showDate);
         if(date) {
-            throw redirect(301, "/api/history/show/" + date + (url.searchParams.get("hash") ?? ""));
+            showDate = date;
         }
     }
 
@@ -39,7 +39,7 @@ export const GET = (async ({platform, params, url, locals}) => {
         locals.addTiming({id: "total", duration: Date.now() - start});
 
         return json({
-            name: params.showDate,
+            name: showDate,
             metadata: kvShowInfo.metadata,
             value: kvShowInfo.value,
         }, {headers: {"X-Generated-Metadata": generatedMetadata+""}});
@@ -47,19 +47,19 @@ export const GET = (async ({platform, params, url, locals}) => {
 
     const oldHistory = await import("$lib/history/oldHistory.ts");
     for (const oldShow of oldHistory.history) {
-        if(oldShow.name == params.showDate) {
+        if(oldShow.name == showDate) {
             oldShow.value = structuredClone(oldShow.metadata)
             return json(oldShow);
         }
     }
 
 
-    const preShowStartFragment = await history.get(params.showDate + ":preShowStart");
+    const preShowStartFragment = await history.get(showDate + ":preShowStart");
     if(preShowStartFragment) {
-        const mainShowStartFragment = history.get(params.showDate + ":mainShowStart");
-        const showEndFragment = history.get(params.showDate + ":showEnd");
-        const snippetFragment = history.get(params.showDate + ":snippet", {type: 'json'});
-        const videoIdFragment = history.get(params.showDate + ":videoId");
+        const mainShowStartFragment = history.get(showDate + ":mainShowStart");
+        const showEndFragment = history.get(showDate + ":showEnd");
+        const snippetFragment = history.get(showDate + ":snippet", {type: 'json'});
+        const videoIdFragment = history.get(showDate + ":videoId");
 
         if(await mainShowStartFragment || await showEndFragment || await snippetFragment || await videoIdFragment) {
             const preShowStart = preShowStartFragment;
