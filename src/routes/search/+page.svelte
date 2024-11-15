@@ -111,10 +111,12 @@
   }
   .search-logo {
       max-height: 15em;
+      width: auto;
       @apply p-2;
   }
   .search-logo-small {
       max-height: 5em;
+      width: auto;
   }
 
 
