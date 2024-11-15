@@ -89,7 +89,7 @@
   </div>
 
   {#if searchResults && searchResults.hits}
-    <table class="table table-hover">
+    <table class="table table-hover results-table">
       <thead>
         <tr>
           <td class="px-2">Show</td>
@@ -148,5 +148,8 @@
     }
     .limit-show-width {
         max-width: 8vw;
+    }
+    .results-table {
+        max-width: 100vw;
     }
 </style>
