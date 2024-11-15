@@ -131,7 +131,7 @@
     {#if data.timestamps}
         {#await data.timestamps}
         {:then timestamps}
-            {#if timestamps}
+            {#if timestamps && timestamps.length > 0}
                 <h2>Timestamps</h2>
                 Provided by <a href="/noki">NoKi</a>
                 <br>
