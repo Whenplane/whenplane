@@ -38,14 +38,25 @@ h1:not(.no-header-margin), h2:not(.no-header-margin), h3:not(.no-header-margin) 
     color: inherit !important;
     text-decoration: inherit !important;
 }
+.hidden-link.underline:hover {
+    text-decoration: underline !important;
+}
+
+.fake-link {
+    --tw-text-opacity: 1;
+    color: rgb(var(--color-primary-500) / var(--tw-text-opacity));
+}
+.fake-link:hover {
+    --tw-brightness: brightness(1.1);
+    filter: var(--tw-blur) var(--tw-brightness) var(--tw-contrast) var(--tw-grayscale) var(--tw-hue-rotate) var(--tw-invert) var(--tw-saturate) var(--tw-sepia) var(--tw-drop-shadow);
+    text-decoration: underline;
+}
 
 .text-90 {
     font-size: 0.9em;
 }
 
-.hidden-link.underline:hover {
-    text-decoration: underline !important;
-}
+
 
 #nprogress .spinner-icon {
     border-top-color: #d4163c !important;
