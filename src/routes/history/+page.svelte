@@ -61,9 +61,11 @@
 
     <HistoryRecords {data}/>
 
-    <div class="text-left">
-        <TopicSearch/>
-    </div>
+    <br>
+
+    <a href="/search" class="btn variant-ghost-primary">
+        Search for Shows
+    </a><br>
 
     <br>
     <RadioGroup>

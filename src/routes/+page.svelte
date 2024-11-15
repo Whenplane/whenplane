@@ -325,6 +325,9 @@
 					<span><CaretDownFill/></span>
 				</button>
 				<div class="card w-48 !shadow-2xl overflow-hidden z-20" data-popup="moreDropdown">
+					<a class="btn variant-filled-surface rounded-none w-full" href="/search">
+						WAN Show Search
+					</a>
 					<a class="btn variant-filled-surface rounded-none w-full" href="/notifications">
 						Push Notifications
 					</a>
