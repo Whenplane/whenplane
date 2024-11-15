@@ -59,7 +59,9 @@
   <div class="limit mx-auto p-2 mb-32">
     {#if data.result && data.result.hits}
       <div class="text-right">
-        <LinkPaginator currentPage={data.page} totalPages={Math.ceil(data.result.found / resultsPerPage)}/>
+        {#key q}
+          <LinkPaginator currentPage={data.page} totalPages={Math.ceil(data.result.found / resultsPerPage)}/>
+        {/key}
       </div>
       {#each data.result.hits as hit}
         {@const show = data.shows?.[hit.document.videoId]}
@@ -79,7 +81,9 @@
         No results found.
       {/each}
       <div class="text-right">
-        <LinkPaginator currentPage={data.page} totalPages={Math.ceil(data.result.found / resultsPerPage)}/>
+        {#key q}
+          <LinkPaginator currentPage={data.page} totalPages={Math.ceil(data.result.found / resultsPerPage)}/>
+        {/key}
       </div>
     {:else}
       No results.
