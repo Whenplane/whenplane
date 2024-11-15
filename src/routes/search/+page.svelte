@@ -92,7 +92,7 @@
 
 
 {:else}
-  <div class="h-almost-full w-full flex items-center justify-center">
+  <div class="h-almost-full w-full flex items-center justify-center p-2">
     <div class="text-center">
       <img src="/wan_show_search.png" class="search-logo mx-auto" alt="The WAN Show Search" title="The WAN Show Search">
       <br>
@@ -110,15 +110,16 @@
       height: 90vh;
   }
   .search-logo {
-      height: 15em;
+      max-height: 15em;
+      @apply p-2;
   }
   .search-logo-small {
-      height: 5em;
+      max-height: 5em;
   }
 
 
   .search-box {
-      width: 30vw;
+      width: min(550px, 90vw);
   }
   .search-box-top-bar {
       width: 60vw;

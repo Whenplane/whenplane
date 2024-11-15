@@ -14,8 +14,14 @@
 </div>
 <style>
     img {
-        width: 10vw;
+        height: 6em;
         aspect-ratio: 16 / 9;
         border-radius: var(--theme-rounded-base);
+    }
+    @media (max-width: 800px) {
+        img {
+            height: 4em;
+        }
+
     }
 </style>
