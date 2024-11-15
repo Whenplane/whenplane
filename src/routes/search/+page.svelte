@@ -75,6 +75,8 @@
             </span>
           {/if}
         </a><br>
+      {:else}
+        No results found.
       {/each}
       <div class="text-right">
         <LinkPaginator currentPage={data.page} totalPages={Math.ceil(data.result.found / resultsPerPage)}/>
