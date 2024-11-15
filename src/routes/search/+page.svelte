@@ -14,9 +14,13 @@
 
 <svelte:head>
   {#if q}
-    <title>Search for {q} - Whenplane</title>
+    <title>Search for {q} - Whenplane WAN Show Search</title>
+    {#if data.result}
+      <meta name="description" content="{data.result.found} results found in {data.result.search_time_ms}ms." />
+    {/if}
   {:else}
-    <title>Whenplane Search</title>
+    <title>Whenplane WAN Show Search</title>
+    <meta name="description" content="Currently you can only search for topics, but I hope to add more in the future!">
   {/if}
 </svelte:head>
 

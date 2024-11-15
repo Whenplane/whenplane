@@ -67,7 +67,8 @@
           "/about",
           "/notifications",
           "/boca-marathon",
-          "/merch-messages"
+          "/merch-messages",
+          "/search"
       ];
 </script>
 
