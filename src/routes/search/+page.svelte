@@ -65,7 +65,11 @@
       </div>
       {#each data.result.hits as hit}
         {@const show = data.shows?.[hit.document.videoId]}
-        <a class="hidden-link block p-2" href={"/history/show/" + (show ? show.name + "#timestamp-" + hit.document.id : `${hit.document.videoId}?hash=${encodeURIComponent('#timestamp-' + hit.document.id)}` )}>
+        <a
+          class="hidden-link block p-2"
+          href={"/history/show/" + (show ? show.name + "#timestamp-" + hit.document.id : `${hit.document.videoId}?hash=${encodeURIComponent('#timestamp-' + hit.document.id)}` )}
+          data-sveltekit-reload
+        >
           <span class="result-title result-highlight fake-link">
             {@html sanitizeHtml(hit.highlight?.name?.snippet ?? hit.document.name, {allowedTags: ["mark"]})}
           </span><br>
