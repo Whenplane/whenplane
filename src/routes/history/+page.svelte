@@ -16,6 +16,7 @@
     import { countTo, type HistoricalEntry } from "$lib/utils";
     import LoadingHistoricalShow from "$lib/history/LoadingHistoricalShow.svelte";
     import LazyLoad from "@dimfeld/svelte-lazyload";
+    import TopicSearch from "$lib/TopicSearch.svelte";
 
     export let data;
 
@@ -59,6 +60,10 @@
     <h1 class="text-center">WAN Show History</h1>
 
     <HistoryRecords {data}/>
+
+    <div class="text-left">
+        <TopicSearch/>
+    </div>
 
     <br>
     <RadioGroup>

@@ -33,7 +33,7 @@
     {#await jsonPromise}
       <div class="inline-block placeholder animate-pulse text-clear">{showName}</div>
     {:then showData}
-      <img src="{showData.metadata.thumbnails.maxres.url}" alt="" aria-hidden="true">
+      <img src="{showData.metadata?.thumbnails?.maxres.url ?? 'https://i.ytimg.com/vi/' + showData.metadata.vods?.youtube + '/maxresdefault.jpg'}" alt="" aria-hidden="true">
       <span class="text-[10px] leading-none">
         {showData.metadata.title}<br>
       </span>

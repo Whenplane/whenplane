@@ -8,6 +8,7 @@
   import { ProgressRadial } from "@skeletonlabs/skeleton";
   import type { TimestampsDbRow } from "$lib/timestamps/types.ts";
   import MiniShow from "$lib/history/MiniShow.svelte";
+  import { page } from "$app/stores";
 
   const searchClient = new SearchClient({
     'nodes': [{
@@ -25,7 +26,7 @@
   let searchResults: SearchResponse<TimestampsDbRow> | undefined;
   let networkError = false;
 
-  let searchText = "dan";
+  let searchText = $page.url.pathname === "/tools/test/topicSearch" ? "dan" : "";
   $: {
     let tmpText = searchText+"";
     waiting = true;
@@ -73,7 +74,7 @@
 </script>
 
 <div class="p-2 mx-auto">
-  <div class="limit mx-auto my-4">
+  <div class="limit mx-auto my-4 text-center">
     <input placeholder="Search for topics" bind:value={searchText} class="input w-64 p-2 pl-4">
     <div class="inline-block w-12">
       {#await searchPromise}
