@@ -33,8 +33,8 @@
     {#await jsonPromise}
       <div class="inline-block placeholder animate-pulse text-clear">{showName}</div>
     {:then showData}
+      <img src="{showData.metadata.thumbnails.maxres.url}" alt="" aria-hidden="true">
       <span class="text-[10px] leading-none">
-        <img src="{showData.metadata.thumbnails.maxres.url}" alt="" aria-hidden="true">
         {showData.metadata.title}<br>
       </span>
       {new Date(showData.name).toLocaleDateString()}
@@ -55,7 +55,7 @@
         color: rgba(0, 0, 0, 0);
     }
     img {
-        width: 20vw;
+        width: 10vw;
         aspect-ratio: 16 / 9;
     }
 </style>

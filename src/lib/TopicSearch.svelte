@@ -146,6 +146,6 @@
         font-weight: bold;
     }
     .limit-show-width {
-        max-width: 15vw;
+        max-width: 8vw;
     }
 </style>
