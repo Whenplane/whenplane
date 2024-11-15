@@ -52,7 +52,7 @@
   <br>
   {#if data.result?.found}
     <div class="limit mx-auto p-2 text-sm opacity-70">
-      {data.result.found} results found in {data.result.search_time_ms}ms. Page {data.page}
+      {data.result.found} results found in {data.result.search_time_ms}ms.
     </div>
   {/if}
   <br>
