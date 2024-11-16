@@ -104,7 +104,10 @@
         <input placeholder="Search for topics" name="q" class="input search-box p-2 pl-4">
       </form>
       <br>
-      Currently you can only search for topics, but I hope to add more in the future!
+      Currently you can only search for topics, but I hope to add more in the future!<br>
+      <span class="text-sm opacity-60">
+        Whenplane and The WAN Show Search on Whenplane is not affiliated or endorsed by LMG.
+      </span>
     </div>
   </div>
 {/if}
