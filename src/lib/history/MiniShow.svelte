@@ -4,9 +4,17 @@
   export let show: HistoricalEntry;
   export let i = 0;
 
+  const meta = show.metadata;
+  const thumbnail = meta?.thumbnails?.maxres ??
+    meta?.thumbnails?.standard ??
+    meta?.thumbnails?.high ??
+    meta?.thumbnails?.medium ??
+    meta?.thumbnails?.default ??
+    {url: 'https://i.ytimg.com/vi/' + show.metadata.vods?.youtube + '/maxresdefault.jpg'}
+
 </script>
 <div class="inline-flex items-center">
-  <img src="{show.metadata?.thumbnails?.maxres?.url ?? 'https://i.ytimg.com/vi/' + show.metadata.vods?.youtube + '/maxresdefault.jpg'}" alt="" aria-hidden="true" loading={i > 10 ? "lazy" : undefined}>
+  <img src="{thumbnail.url}" alt="" aria-hidden="true" loading={i > 10 ? "lazy" : undefined}>
   <div class="p-2">
     {show.metadata.title}<br>
     {new Date(show.name).toLocaleDateString(undefined, {dateStyle: "long"})}
