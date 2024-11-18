@@ -1,1 +1,1 @@
-export const resultsPerPage = 50;
+export const resultsPerPage = 30;
