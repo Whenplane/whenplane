@@ -1,6 +1,6 @@
 
-export function log(platform: App.Platform, message: string) {
-  if(!platform.env?.LOG_MESSAGES) {
+export function log(platform: App.Platform | undefined, message: string) {
+  if(!platform?.env?.LOG_MESSAGES) {
     console.warn("Log messages missing! Here is the message:", message);
     return;
   }

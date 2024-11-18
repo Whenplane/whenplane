@@ -4,6 +4,7 @@ import type { DurableObjectNamespace, DurableObjectStub } from "@cloudflare/work
 import type { FpLiveStatusResponse } from "$lib/utils.ts";
 import { isNearWan } from "$lib/timeUtils.ts";
 import { log } from "$lib/server/server-utils.ts";
+import { createMFResponse } from "$lib/server/MfResponseConverter.ts";
 
 let cache: {
   lastFetch: number,
@@ -27,7 +28,35 @@ export const GET = (async ({fetch, url, platform, locals}) => {
     const cache_time = isNearWan() ? 4.999e3 : 29.999e3;
 
     const fast = url.searchParams.get("fast") === "true";
-    if(Date.now() - cache.lastFetch < (fast ? fast_cache_time : cache_time)) {
+    const realCacheTime = fast ? fast_cache_time : cache_time;
+
+    const cacheRequest = new Request("https://whenplane/floatplane");
+    let cfCache;
+    if(!cache.lastData) {
+      if(typeof caches !== "undefined") {
+        cfCache = await caches.open("whenplane:sessions");
+
+        const cacheMatch = await cfCache.match(cacheRequest);
+
+        if(cacheMatch) {
+          const cacheTimeHeader = cacheMatch.headers.get("x-cache-time");
+          if(!cacheTimeHeader) console.warn("Cached session data does not have cache time header!")
+          const cachedTime = new Date(cacheTimeHeader ?? 0);
+          if(Date.now() - cachedTime.getDate() < realCacheTime) {
+            const data = await cacheMatch.json().then(r => r.data);
+            cache = {
+              lastFetch: cachedTime.getTime(),
+              lastData: data
+            };
+            return data;
+          }
+        }
+      } else {
+        console.warn("Cache API is missing!")
+      }
+    }
+
+    if(Date.now() - cache.lastFetch < realCacheTime) {
       return json({
         cached: true,
         lastFetch: cache.lastFetch,
@@ -95,6 +124,17 @@ export const GET = (async ({fetch, url, platform, locals}) => {
       lastFetch: Date.now(),
       lastData: data
     }
+    platform?.context?.waitUntil(
+      cfCache?.put(cacheRequest, await createMFResponse(json(
+        {
+          data,
+        },
+        {
+          headers: {
+            "x-cache-time": new Date().toISOString()
+          }
+        }
+      )) as Response));
 
     return json({
       ...data,
@@ -104,7 +144,7 @@ export const GET = (async ({fetch, url, platform, locals}) => {
 
 
   } catch(e) {
-    log("[/api/floatplane] Error thrown: " + e);
+    log(platform, "[/api/floatplane] Error thrown: " + e);
     throw e;
   }
 
