@@ -11,7 +11,7 @@ export type CombinedSearchResult =
   } |
   { // merch message
     id: string,
-    video: string,
+    videoId: string,
     imageIndex: number,
     type: "message" | "reply",
     name: string,
@@ -19,10 +19,12 @@ export type CombinedSearchResult =
     jobId: string
   } | { // show titles
     type: "title",
+    id: string,
     text: string,
   } | { // show transcripts
     type: "transcript",
     text: string,
     videoId: string,
+    id: string,
     showName: string
   }
