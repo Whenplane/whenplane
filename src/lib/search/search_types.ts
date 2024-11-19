@@ -18,11 +18,11 @@ export type CombinedSearchResult =
     text: string,
     jobId: string
   } | { // show titles
-  type: "title",
-  text: string,
-} | { // show transcripts
-  type: "transcript",
-  text: string,
-  videoId: string,
-  showName: string
-}
+    type: "title",
+    text: string,
+  } | { // show transcripts
+    type: "transcript",
+    text: string,
+    videoId: string,
+    showName: string
+  }
