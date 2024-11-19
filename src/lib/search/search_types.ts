@@ -21,6 +21,8 @@ export type CombinedSearchResult =
     type: "title",
     id: string,
     text: string,
+    showName: string,
+    videoId: string,
   } | { // show transcripts
     type: "transcript",
     text: string,
