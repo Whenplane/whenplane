@@ -5,10 +5,46 @@
   import sanitizeHtml from "sanitize-html";
   import Paginator from "$lib/util/Paginator.svelte";
   import LinkPaginator from "$lib/util/LinkPaginator.svelte";
+  import { browser } from "$app/environment";
 
   $: q = $page.url.searchParams.get("q")
 
   export let data;
+
+  let searchTitle = true;
+  let searchTopics = true;
+  let searchTranscripts = true;
+  let searchMerchMessages = false;
+
+  if(browser) {
+    const localTitle = localStorage.getItem("searchTitle");
+    if(localTitle != null) {
+      searchTitle = localTitle === "true";
+    }
+
+    const localTopics = localStorage.getItem("searchTopics");
+    if(localTopics != null) {
+      searchTopics = localTopics === "true";
+    }
+
+    const localTranscripts = localStorage.getItem("searchTranscripts");
+    if(localTranscripts != null) {
+      searchTranscripts = localTranscripts === "true";
+    }
+
+    const localMerchMessages = localStorage.getItem("searchMerchMessages");
+    if(localMerchMessages != null) {
+      searchMerchMessages = localMerchMessages === "true";
+    }
+  }
+
+  let first = true;
+  $: if(browser && !first) {
+    localStorage.setItem("searchTitle", searchTitle+"");
+    localStorage.setItem("searchTopics", searchTopics+"");
+    localStorage.setItem("searchTranscripts", searchTranscripts+"");
+    localStorage.setItem("searchMerchMessages", searchMerchMessages+"");
+  } else if(browser) first = false;
 
 </script>
 
@@ -48,6 +84,25 @@
   </div>
   <form method="GET" class="inline-block px-4">
     <input placeholder="Search for topics" name="q" class="input search-box-top-bar p-2 pl-4" value={q}>
+    <div class="inline-block px-2">
+      Search:
+      <label class="inline-block px-2">
+        <input type="checkbox" class="checkbox" name="title" bind:checked={searchTitle}>
+        <span>Show Title</span>
+      </label>
+      <label class="inline-block px-2">
+        <input type="checkbox" class="checkbox" name="topics" bind:checked={searchTopics}>
+        <span>Topics</span>
+      </label>
+      <label class="inline-block px-2">
+        <input type="checkbox" class="checkbox" name="transcripts" bind:checked={searchTranscripts}>
+        <span>Transcripts</span>
+      </label>
+      <label class="inline-block px-2">
+        <input type="checkbox" class="checkbox" name="merch-messages" bind:checked={searchMerchMessages}>
+        <span>Merch Messages</span>
+      </label>
+    </div>
   </form>
   <br>
   {#if data.result?.found}
@@ -64,15 +119,28 @@
         {/key}
       </div>
       {#each data.result.hits as hit}
-        {@const show = data.shows?.[hit.document.videoId]}
+        {@const show = data.shows?.[hit.document.videoId ?? hit.document.showName]}
+        {@const cleanedId = hit.document.id.replaceAll("topic-", "")}
+        {@const baseShowUrl = "/history/show/" + (show ? show.name : `${hit.document.videoId}` )}
+        {@const href = baseShowUrl + (hit.document.type === "topic" ? (show ? "#timestamp-" + cleanedId : `?hash=${encodeURIComponent('#timestamp-' + cleanedId)}` ) : "")}
+        <span class="opacity-70">
+          {#if hit.document.type === "topic"}
+            Topic
+          {:else if hit.document.type === "message" || hit.document.type === "reply"}
+            Merch Message
+          {:else if hit.document.type === "title"}
+            Show Title
+          {:else if hit.document.type === "transcript"}
+            Transcript
+          {:else}
+            {hit.document.type}
+          {/if}
+        </span>
         <a
           class="hidden-link block p-2"
-          href={"/history/show/" + (show ? show.name + "#timestamp-" + hit.document.id : `${hit.document.videoId}?hash=${encodeURIComponent('#timestamp-' + hit.document.id)}` )}
+          {href}
           data-sveltekit-reload
         >
-          <span class="result-title result-highlight fake-link">
-            {@html sanitizeHtml(hit.highlight?.name?.snippet ?? hit.document.name, {allowedTags: ["mark"]})}
-          </span><br>
           {#if show}
             <MiniShow {show}/>
           {:else}
@@ -80,6 +148,10 @@
               Couldn't find this show for some reason. Please report this!
             </span>
           {/if}
+          <br>
+          <div class="pl-4 result-highlight opacity-80 max-w-full">
+            {@html sanitizeHtml(hit.highlight?.text?.snippet ?? hit.document.text, {allowedTags: ["mark"]})}
+          </div><br>
         </a><br>
       {:else}
         No results found.
@@ -101,10 +173,27 @@
       <img src="/wan_show_search.png" class="search-logo mx-auto" alt="The WAN Show Search" title="The WAN Show Search" width="1330" height="529">
       <br>
       <form method="GET">
-        <input placeholder="Search for topics" name="q" class="input search-box p-2 pl-4">
+        <input placeholder="Search for topics" name="q" class="input search-box p-2 pl-4"><br>
+        Search:
+        <label class="inline-block px-2">
+          <input type="checkbox" class="checkbox" name="title" bind:checked={searchTitle}>
+          <span>Show Title</span>
+        </label>
+        <label class="inline-block px-2">
+          <input type="checkbox" class="checkbox" name="topics" bind:checked={searchTopics}>
+          <span>Topics</span>
+        </label>
+        <label class="inline-block px-2">
+          <input type="checkbox" class="checkbox" name="transcripts" bind:checked={searchTranscripts}>
+          <span>Transcripts</span>
+        </label>
+        <label class="inline-block px-2">
+          <input type="checkbox" class="checkbox" name="merch-messages" bind:checked={searchMerchMessages}>
+          <span>Merch Messages</span>
+        </label>
+
       </form>
       <br>
-      Currently you can only search for topics, but I hope to add more in the future!<br>
       <span class="text-sm opacity-60">
         Whenplane and The WAN Show Search on Whenplane is not affiliated with or endorsed by LMG.
       </span>
@@ -131,7 +220,7 @@
       width: min(550px, 90vw);
   }
   .search-box-top-bar {
-      width: 60vw;
+      width: calc(80vw - 580px);
   }
   @media (max-width: 800px) {
       .search-box-top-bar {
