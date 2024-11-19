@@ -88,7 +88,7 @@
       Search:
       <label class="inline-block px-2">
         <input type="checkbox" class="checkbox" name="title" bind:checked={searchTitle}>
-        <span>Show Title</span>
+        <span>Show Titles</span>
       </label>
       <label class="inline-block px-2">
         <input type="checkbox" class="checkbox" name="topics" bind:checked={searchTopics}>
@@ -177,7 +177,7 @@
         Search:
         <label class="inline-block px-2">
           <input type="checkbox" class="checkbox" name="title" bind:checked={searchTitle}>
-          <span>Show Title</span>
+          <span>Show Titles</span>
         </label>
         <label class="inline-block px-2">
           <input type="checkbox" class="checkbox" name="topics" bind:checked={searchTopics}>
