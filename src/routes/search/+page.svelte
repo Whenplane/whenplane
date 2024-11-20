@@ -174,26 +174,27 @@
       <br>
       <form method="GET">
         <input placeholder="Search for topics" name="q" class="input search-box p-2 pl-4"><br>
-        Search:
-        <label class="inline-block px-2">
-          <input type="checkbox" class="checkbox" name="title" bind:checked={searchTitle}>
-          <span>Show Titles</span>
-        </label>
-        <label class="inline-block px-2">
-          <input type="checkbox" class="checkbox" name="topics" bind:checked={searchTopics}>
-          <span>Topics</span>
-        </label>
-        <label class="inline-block px-2">
-          <input type="checkbox" class="checkbox" name="transcripts" bind:checked={searchTranscripts}>
-          <span>Transcripts</span>
-        </label>
-        <label class="inline-block px-2">
-          <input type="checkbox" class="checkbox" name="merch-messages" bind:checked={searchMerchMessages}>
-          <span>Merch Messages</span>
-        </label>
+        <div class="py-4">
+          Search:
+          <label class="inline-block px-2">
+            <input type="checkbox" class="checkbox" name="title" bind:checked={searchTitle}>
+            <span>Show Titles</span>
+          </label>
+          <label class="inline-block px-2">
+            <input type="checkbox" class="checkbox" name="topics" bind:checked={searchTopics}>
+            <span>Topics</span>
+          </label>
+          <label class="inline-block px-2">
+            <input type="checkbox" class="checkbox" name="transcripts" bind:checked={searchTranscripts}>
+            <span>Transcripts</span>
+          </label>
+          <label class="inline-block px-2">
+            <input type="checkbox" class="checkbox" name="merch-messages" bind:checked={searchMerchMessages}>
+            <span>Merch Messages</span>
+          </label>
+        </div>
 
       </form>
-      <br>
       <span class="text-sm opacity-60">
         Whenplane and The WAN Show Search on Whenplane is not affiliated with or endorsed by LMG.
       </span>
