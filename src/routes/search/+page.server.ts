@@ -40,7 +40,7 @@ export const load = (async ({fetch, url}) => {
     .search({
       q,
       query_by: "text",
-      sort_by: "_text_match(buckets: 10):desc,_eval([ (type:topic):3, (type:title):2, (type:message):1, (type:reply):1, (type:transcript):0 ]):desc",
+      sort_by: "_text_match(buckets: 10):desc,_eval([ (type:topic):3, (type:title):2, (type:message):1, (type:reply):1, (type:transcript):0 ]):desc,_text_match:desc",
       filter_by: "type:[" + types.join(",") + "]",
       page,
       per_page: resultsPerPage,
