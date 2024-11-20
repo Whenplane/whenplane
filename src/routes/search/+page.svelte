@@ -69,7 +69,7 @@
       <li class="crumb-separator" aria-hidden="true">&rsaquo;</li>
       <li class="crumb">{q}</li>
     {:else}
-      <li class="crumb">Search</li>
+      <li class="crumb">WAN Show Search</li>
     {/if}
   </ol>
 {/if}
@@ -164,6 +164,9 @@
     {:else}
       No results.
     {/if}
+  </div>
+  <div class="limit mx-auto p-2 mb-16">
+    If you have <b>any</b> suggestions, issues, or feedback, please <a href="/support">let me know</a>!
   </div>
 
 
