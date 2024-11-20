@@ -1,16 +1,20 @@
 <script lang="ts">
-  import type { HistoricalEntry } from "$lib/utils.ts";
+  import type { HistoricalEntry, YoutubeThumbnail } from "$lib/utils.ts";
 
   export let show: HistoricalEntry;
   export let i = 0;
 
-  const meta = show.metadata;
-  const thumbnail = meta?.thumbnails?.maxres ??
-    meta?.thumbnails?.standard ??
-    meta?.thumbnails?.high ??
-    meta?.thumbnails?.medium ??
-    meta?.thumbnails?.default ??
-    {url: 'https://i.ytimg.com/vi/' + show.metadata.vods?.youtube + '/maxresdefault.jpg'}
+  const thumbnails = show.metadata?.thumbnails ?? show.metadata?.snippet?.thumbnails ?? show.value?.snippet?.thumbnails;
+  const thumbnail = thumbnails?.maxres ??
+    thumbnails?.standard ??
+    thumbnails?.high ??
+    thumbnails?.medium ??
+    thumbnails?.default ??
+    {url: 'https://i.ytimg.com/vi/' + show.metadata.vods?.youtube + '/maxresdefault.jpg', generated: true}
+
+  if((thumbnail as YoutubeThumbnail & {generated?: true}).generated) {
+    console.warn("Generated link for", show)
+  }
 
 </script>
 <div class="inline-flex items-center">
