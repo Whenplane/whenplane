@@ -5,8 +5,9 @@
   import Info from "$lib/svg/Info.svelte";
 
   export let id = "default";
-  export const placement: Placement = 'top';
+  export let placement: Placement = 'top';
   export let popupClasses = "";
+  export let event: "hover" | "click" | "hover-click" | "focus" | "focus-click" = "hover";
 
   if(id == "default") {
     console.warn("Missing id on tooltip!");
@@ -15,11 +16,12 @@
 </script>
 <div
   use:popup={{
-      event: 'hover',
+      event,
       target: id,
       placement: placement,
     }}
-  class="inline-block [&>*]:pointer-events-none "
+  class="inline-block [&>*]:pointer-events-none"
+  class:cursor-pointer={event !== "hover"}
 >
   <slot name="icon">
     <Info classes="!inline-block"/>

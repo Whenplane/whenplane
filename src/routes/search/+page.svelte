@@ -6,6 +6,8 @@
   import Paginator from "$lib/util/Paginator.svelte";
   import LinkPaginator from "$lib/util/LinkPaginator.svelte";
   import { browser } from "$app/environment";
+  import ToolTip from "$lib/ToolTip.svelte";
+  import { setCookie } from "$lib/cookieUtils.ts";
 
   $: q = $page.url.searchParams.get("q")
 
@@ -15,6 +17,8 @@
   let searchTopics = true;
   let searchTranscripts = true;
   let searchMerchMessages = false;
+
+  let highlightVisibility = data.settings?.highlightVisibility === "true";
 
   if(browser) {
     const localTitle = localStorage.getItem("searchTitle");
@@ -106,8 +110,29 @@
   </form>
   <br>
   {#if data.result?.found}
-    <div class="limit mx-auto p-2 text-sm opacity-70">
-      {data.result.found} results found in {data.result.search_time_ms}ms.
+    <div class="limit mx-auto p-2 text-sm">
+      <span class="opacity-70">
+        {data.result.found} results found in {data.result.search_time_ms}ms.
+      </span>
+      <span class="float-right">
+        <ToolTip placement="bottom" event="click" id="search-settings">
+          <svelte:fragment slot="icon">
+            <span class="btn variant-filled-surface cursor-pointer">
+              Settings
+            </span>
+          </svelte:fragment>
+          <svelte:fragment slot="content">
+            <label>
+              <input type="checkbox" class="checkbox" on:change={e => {
+                const checked = e.target?.checked;
+                setCookie("searchHighlightVisibility", checked);
+                highlightVisibility = checked;
+              }}>
+              <span>Enhanced keyword match visibility</span>
+            </label>
+          </svelte:fragment>
+        </ToolTip>
+      </span>
     </div>
   {/if}
   <br>
@@ -149,7 +174,7 @@
             </span>
           {/if}
           <br>
-          <div class="pl-4 result-highlight opacity-80 max-w-full">
+          <div class="pl-4 result-highlight opacity-80 max-w-full" class:result-visibility-highlight={highlightVisibility}>
             {@html sanitizeHtml(hit.highlight?.text?.snippet ?? hit.document.text, {allowedTags: ["mark"]})}
           </div><br>
         </a><br>
@@ -246,5 +271,8 @@
       color: inherit;
       font-weight: bold;
       @apply brightness-200;
+  }
+  .result-highlight.result-visibility-highlight > :global(mark) {
+      color: rgb(var(--color-primary-500))
   }
 </style>

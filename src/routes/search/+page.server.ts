@@ -18,7 +18,7 @@ const searchClient = new SearchClient({
   'connectionTimeoutSeconds': 10
 });
 
-export const load = (async ({fetch, url}) => {
+export const load = (async ({fetch, url, cookies}) => {
   const sp = url.searchParams;
   const q = url.searchParams.get("q");
   let page = Number(url.searchParams.get("page") ?? 1)
@@ -74,6 +74,9 @@ export const load = (async ({fetch, url}) => {
   return {
     result,
     shows,
-    page
+    page,
+    settings: {
+      highlightVisibility: cookies.get("searchHighlightVisibility"),
+    }
   }
 }) satisfies PageServerLoad
