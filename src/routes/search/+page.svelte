@@ -143,12 +143,13 @@
           <LinkPaginator currentPage={data.page} totalPages={Math.ceil(data.result.found / resultsPerPage)}/>
         {/key}
       </div>
-      {#each data.result.hits as hit}
-        {@const show = data.shows?.[hit.document.videoId ?? hit.document.showName]}
-        {@const cleanedId = hit.document.id.replaceAll("topic-", "")}
-        {@const baseShowUrl = "/history/show/" + (show ? show.name : `${hit.document.videoId}` )}
-        {@const href = baseShowUrl + (hit.document.type === "topic" ? (show ? "#timestamp-" + cleanedId : `?hash=${encodeURIComponent('#timestamp-' + cleanedId)}` ) : "")}
-        <span class="opacity-70">
+      {#key data.result.hits}
+        {#each data.result.hits as hit}
+          {@const show = data.shows?.[hit.document.videoId ?? hit.document.showName]}
+          {@const cleanedId = hit.document.id.replaceAll("topic-", "")}
+          {@const baseShowUrl = "/history/show/" + (show ? show.name : `${hit.document.videoId}` )}
+          {@const href = baseShowUrl + (hit.document.type === "topic" ? (show ? "#timestamp-" + cleanedId : `?hash=${encodeURIComponent('#timestamp-' + cleanedId)}` ) : "")}
+          <span class="opacity-70">
           {#if hit.document.type === "topic"}
             Topic
           {:else if hit.document.type === "message" || hit.document.type === "reply"}
@@ -161,26 +162,27 @@
             {hit.document.type}
           {/if}
         </span>
-        <a
-          class="hidden-link block p-2"
-          {href}
-          data-sveltekit-reload
-        >
-          {#if show}
-            <MiniShow {show}/>
-          {:else}
+          <a
+            class="hidden-link block p-2"
+            {href}
+            data-sveltekit-reload
+          >
+            {#if show}
+              <MiniShow {show}/>
+            {:else}
             <span class="opacity-60">
               Couldn't find this show for some reason. Please report this!
             </span>
-          {/if}
-          <br>
-          <div class="pl-4 result-highlight opacity-80 max-w-full" class:result-visibility-highlight={highlightVisibility}>
-            {@html sanitizeHtml(hit.highlight?.text?.snippet ?? hit.document.text, {allowedTags: ["mark"]})}
-          </div><br>
-        </a><br>
-      {:else}
-        No results found.
-      {/each}
+            {/if}
+            <br>
+            <div class="pl-4 result-highlight opacity-80 max-w-full" class:result-visibility-highlight={highlightVisibility}>
+              {@html sanitizeHtml(hit.highlight?.text?.snippet ?? hit.document.text, {allowedTags: ["mark"]})}
+            </div><br>
+          </a><br>
+        {:else}
+          No results found.
+        {/each}
+      {/key}
       <div class="text-right">
         {#key q}
           <LinkPaginator currentPage={data.page} totalPages={Math.ceil(data.result.found / resultsPerPage)}/>
