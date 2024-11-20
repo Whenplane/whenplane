@@ -31,6 +31,7 @@
         height: 6em;
         aspect-ratio: 16 / 9;
         border-radius: var(--theme-rounded-base);
+        object-fit: cover;
     }
     @media (max-width: 800px) {
         img {
@@ -39,6 +40,6 @@
 
     }
     .title {
-
+      font-weight: bold;
     }
 </style>
