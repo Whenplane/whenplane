@@ -4,17 +4,17 @@
   export let show: HistoricalEntry;
   export let i = 0;
 
-  const thumbnails = show.metadata?.thumbnails ?? show.metadata?.snippet?.thumbnails ?? show.value?.snippet?.thumbnails;
-  const thumbnail = thumbnails?.maxres ??
+  $: thumbnails = show.metadata?.thumbnails ?? show.metadata?.snippet?.thumbnails ?? show.value?.snippet?.thumbnails;
+  $: thumbnail = thumbnails?.maxres ??
     thumbnails?.standard ??
     thumbnails?.high ??
     thumbnails?.medium ??
     thumbnails?.default ??
     {url: 'https://i.ytimg.com/vi/' + show.metadata.vods?.youtube + '/maxresdefault.jpg', generated: true}
 
-  if((thumbnail as YoutubeThumbnail & {generated?: true}).generated) {
+  /*if((thumbnail as YoutubeThumbnail & {generated?: true}).generated) {
     console.warn("Generated link for", show)
-  }
+  }*/
 
 </script>
 <div class="inline-flex items-center">
