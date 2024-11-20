@@ -220,7 +220,7 @@
       width: min(550px, 90vw);
   }
   .search-box-top-bar {
-      width: calc(80vw - 580px);
+      width: calc(80vw - 600px);
   }
   @media (max-width: 800px) {
       .search-box-top-bar {
