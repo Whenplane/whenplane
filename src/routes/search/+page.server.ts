@@ -6,6 +6,7 @@ import type { PageServerLoad } from "./$types";
 import { resultsPerPage } from "./search.ts";
 import type { CombinedSearchResult } from "$lib/search/search_types.ts";
 import { dev } from "$app/environment";
+import { error } from "@sveltejs/kit";
 
 const searchClient = new SearchClient({
   'nodes': [{
@@ -18,11 +19,30 @@ const searchClient = new SearchClient({
   'connectionTimeoutSeconds': 10
 });
 
+let showsCache: Promise<HistoricalEntry[]>;
+let showsFetched = 0;
+
 export const load = (async ({fetch, url, cookies}) => {
   const sp = url.searchParams;
   const q = url.searchParams.get("q");
-  let page = Number(url.searchParams.get("page") ?? 1)
-  if(!q) return {};
+  let page = Number(url.searchParams.get("page") ?? 1);
+
+  if(!showsCache || Date.now() - showsFetched < 60 * 60e3) {
+    showsFetched = Date.now()
+    showsCache = await fetch("/api/history/all")
+      .then(r => r.json())
+      .then(r => {
+        showsFetched = Date.now();
+        return r;
+      })
+  }
+
+  if(!q) {
+    return {};
+  }
+
+  const allShows = await showsCache;
+  if(!allShows) throw error(500, "Shows is falsy!");
 
   if(isNaN(page)) page = 1;
 
@@ -49,24 +69,16 @@ export const load = (async ({fetch, url, cookies}) => {
       highlight_affix_num_tokens: 15
     }, {cacheSearchResultsForSeconds: 60}) as SearchResponse<CombinedSearchResult>;
 
+  const showHits = [...new Set(result.hits?.map(h => (h.document.videoId ?? (h.document as {showName?: string}).showName)))]
+
   const shows: {[videoId: string]: HistoricalEntry} = Object.fromEntries(
-    await Promise.all(
-      [...new Set(result.hits?.map(h => (h.document.videoId ?? (h.document as {showName?: string}).showName)))]
-        .map(async (videoId) => {
-          return [
-            videoId,
-            await fetch("/api/history/show/" + videoId)
-              .then(r => {
-                if(r.ok) {
-                  return r.json();
-                } else {
-                  console.warn("Non-ok when fetching", videoId, r.status, r.statusText);
-                  return undefined;
-                }
-              })
-          ]
-        })
-    )
+    showHits.map(showId => {
+      const show = allShows.find(s => s.metadata.vods?.youtube === showId || s.name === showId);
+      if(!show) {
+        console.warn(`Unable to find ${showId}`);
+      }
+      return [showId, show];
+    })
   )
 
   if(dev) console.debug(JSON.stringify(result, undefined, '\t'));
