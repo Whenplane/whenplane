@@ -245,5 +245,6 @@
       background-color: inherit;
       color: inherit;
       font-weight: bold;
+      @apply brightness-200;
   }
 </style>
