@@ -20,9 +20,11 @@
 <div class="inline-flex items-center">
   <img src="{thumbnail.url}" alt="" aria-hidden="true" loading={i > 10 ? "lazy" : undefined}>
   <div class="p-2">
-    <span class="title">
-      {show.metadata.title}
-    </span><br>
+    {#if show.metadata.title}
+      <span class="title">
+        {show.metadata.title}
+      </span><br>
+    {/if}
     {new Date(show.name).toLocaleDateString(undefined, {dateStyle: "long"})}
   </div>
 </div>
