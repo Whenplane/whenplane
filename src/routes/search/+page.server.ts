@@ -29,7 +29,7 @@ export const load = (async ({fetch, url, cookies}) => {
 
   if(!showsCache || Date.now() - showsFetched < 60 * 60e3) {
     showsFetched = Date.now()
-    showsCache = await fetch("/api/history/all")
+    showsCache = fetch("/api/history/all")
       .then(r => r.json())
       .then(r => {
         showsFetched = Date.now();
