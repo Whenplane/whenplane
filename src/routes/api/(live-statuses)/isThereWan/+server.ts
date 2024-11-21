@@ -4,6 +4,7 @@ import type { KVNamespace } from "@cloudflare/workers-types";
 import { isNearWan } from "$lib/timeUtils.ts";
 import { newResponse } from "$lib/utils.ts";
 import { createMFResponse } from "$lib/server/MfResponseConverter";
+import { dev } from "$app/environment";
 
 
 const cache: {
@@ -23,7 +24,7 @@ export const GET = (async ({platform, locals}) => {
 
   /*if(dev) {
     const response: IsThereWanResponse = {
-      text: "Linus will most likely be calling into the show today due to being at CES. This could lead to either the show being earlier than normal, or later than normal. <br><small>If you have further information, <i>please</i> let me know either on discord (ajgeiss0702) or email (<a href='mailto:aj@whenplane.com'>aj@whenplane.com</a>) so that I can publish it here</small>",
+      text: "WAN will be happening early on November 21st. See above for the scheduled time converted to your time zone. Announced on <a href=\"https://nitter.poast.org/LinusTech/status/1859635421946224861\">Nitter</a>/<a href=\"https://x.com/LinusTech/status/1859635421946224861\">X</a> and <a href=\"https://www.floatplane.com/post/tjX1NsK10T\">Floatplane</a>",
       image: null
     }
     return json(response);

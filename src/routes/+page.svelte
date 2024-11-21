@@ -367,7 +367,7 @@
 		</div>
 
 
-		{#if data.notablePeople && !disableNotableStreams}
+		{#if (data.notablePeople && !disableNotableStreams) && !data.isBot}
 			{#each Object.values(data.notablePeople) as shortResponse}
 				{#if (typeof shortResponse === "object") && shortResponse.isLive}
 					<NotablePersonLive {shortResponse}/>
@@ -389,7 +389,7 @@
 		}}/>-->
 
 
-		{#if data.isThereWan?.text || data.isThereWan?.image}
+		{#if (data.isThereWan?.text || data.isThereWan?.image) && !data.isBot}
 			<div class="card border-2 p-2 !border-amber-600 !bg-opacity-20 !bg-amber-600 block text-center limit">
 				{#if data.isThereWan?.text}
 					{@html sanitizeHtml(data.isThereWan?.text, newsSanitizeSettings)}
