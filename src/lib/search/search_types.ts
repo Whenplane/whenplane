@@ -8,7 +8,8 @@ export type CombinedSearchResult =
     text: string,
     name: string,
     parent: string | null,
-    showDate: number
+    showDate: number,
+    sortWeight: number
   } |
   { // merch message
     id: string,
@@ -18,19 +19,22 @@ export type CombinedSearchResult =
     name: string,
     text: string,
     jobId: string,
-    showDate: number
+    showDate: number,
+    sortWeight: number
   } | { // show titles
     type: "title",
     id: string,
     text: string,
     showName: string,
     videoId: string,
-    showDate: number
+    showDate: number,
+    sortWeight: number
   } | { // show transcripts
     type: "transcript",
     text: string,
     videoId: string,
     id: string,
     showName: string,
-    showDate: number
+    showDate: number,
+    sortWeight: number
   }
