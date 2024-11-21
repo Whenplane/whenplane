@@ -150,18 +150,18 @@
           {@const baseShowUrl = "/history/show/" + (show ? show.name : `${hit.document.videoId}` )}
           {@const href = baseShowUrl + (hit.document.type === "topic" ? (show ? "#timestamp-" + cleanedId : `?hash=${encodeURIComponent('#timestamp-' + cleanedId)}` ) : "")}
           <span class="opacity-70">
-          {#if hit.document.type === "topic"}
-            Topic
-          {:else if hit.document.type === "message" || hit.document.type === "reply"}
-            Merch Message
-          {:else if hit.document.type === "title"}
-            Show Title
-          {:else if hit.document.type === "transcript"}
-            Transcript
-          {:else}
-            {hit.document.type}
-          {/if}
-        </span>
+            {#if hit.document.type === "topic"}
+              Topic
+            {:else if hit.document.type === "message" || hit.document.type === "reply"}
+              Merch Message
+            {:else if hit.document.type === "title"}
+              Show Title
+            {:else if hit.document.type === "transcript"}
+              Transcript
+            {:else}
+              {hit.document.type}
+            {/if}
+          </span>
           <a
             class="hidden-link block p-2"
             {href}
