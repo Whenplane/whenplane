@@ -367,6 +367,17 @@
 		</div>
 
 
+		{#if (data.isThereWan?.text || data.isThereWan?.image) && !data.isBot}
+			<div class="card border-2 p-2 !border-amber-600 !bg-opacity-20 !bg-amber-600 block text-center limit mx-auto">
+				{#if data.isThereWan?.text}
+					{@html sanitizeHtml(data.isThereWan?.text, newsSanitizeSettings)}
+				{/if}
+				{#if data.isThereWan?.image}
+					<img src={data.isThereWan.image} alt={data.isThereWan?.text ?? ""} style="height: 10em;" class="mx-auto">
+				{/if}
+			</div>
+		{/if}
+
 		{#if (data.notablePeople && !disableNotableStreams) && !data.isBot}
 			{#each Object.values(data.notablePeople) as shortResponse}
 				{#if (typeof shortResponse === "object") && shortResponse.isLive}
@@ -388,17 +399,6 @@
 			started: "2024-02-08T22:45:02.407Z"
 		}}/>-->
 
-
-		{#if (data.isThereWan?.text || data.isThereWan?.image) && !data.isBot}
-			<div class="card border-2 p-2 !border-amber-600 !bg-opacity-20 !bg-amber-600 block text-center limit">
-				{#if data.isThereWan?.text}
-					{@html sanitizeHtml(data.isThereWan?.text, newsSanitizeSettings)}
-				{/if}
-				{#if data.isThereWan?.image}
-					<img src={data.isThereWan.image} alt={data.isThereWan?.text ?? ""} style="height: 10em;" class="mx-auto">
-				{/if}
-			</div>
-		{/if}
 		{#if !$page.data.isBot && (nowish.getUTCDay() === 5 || nowish.getUTCDay() === 6 /*|| dev*/) && !data.hasDone && ($page.url.searchParams.has("showLatenessVoting") ? $page.url.searchParams.get("showLatenessVoting") === "true" : !isFrame)}
 			<div>
 				<Accordion padding="pb-2 px-4">
