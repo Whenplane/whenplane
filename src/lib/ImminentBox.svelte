@@ -6,34 +6,17 @@
   import {timeString} from "$lib/timeUtils.ts";
 
   export let floatplane: FpEndpointResponse | undefined;
+  export let hasDone = false;
 
   // the thumbnail age cutoff where the thumbnail wont be shown at all. currently 3 hours
-  const ageCutoff = 3 * 60 * 60e3;
+  const ageCutoff = 24 * 60 * 60e3;
 
   const day = new Date().getUTCDay();
   const dayIsCloseEnough = day === 5 || day === 6;
   // $: console.log("imminentbox show: ", (!hasDone) + " && " + (!$floatplaneState?.live) +" && "+ "((" +dayIsCloseEnough +" && "+ ($floatplaneState?.imminence) +" === 3)"+ /*|| dev*/")")
 </script>
 
-<!--
-/**
- * @description The imminence of the next episode as a number
- * @enum {number}
- * @readonly
- * @property {number} DISTANT - The next episode is more than 24 hours away still
- * @property {number} TODAY - The next episode is today
- * @property {number} SOON - The last check revealed a modification to the metadata of the next episode
- * @property {number} IMMINENT - The last check revealed the thumbnail had been updated
- */
-export enum ImminenceEnumeration {
-  DISTANT = 0,
-  TODAY = 1,
-  SOON = 2,
-  IMMINENT = 3,
-}
--->
-
-{#if floatplane && !floatplane?.isLive && floatplane?.isWAN && ((dayIsCloseEnough && (floatplane?.isThumbnailNew || floatplane?.thumbnailAge < ageCutoff)) /*|| dev*/)}
+{#if floatplane && !floatplane?.isLive && floatplane?.isWAN && ((dayIsCloseEnough && (floatplane?.isThumbnailNew || floatplane?.thumbnailAge < ageCutoff)) && !hasDone /*|| dev*/)}
   <div class="card border-2 p-2 !border-green-600 !bg-opacity-20 !bg-green-600 block relative pb-0 mobile-add-padding">
     <a href={floatplane?.thumbnail} target="_blank" rel="noopener">
       <img src={floatplane?.thumbnail} class="inline-block h-32 rounded-lg mobile-full-width" alt="Dan">

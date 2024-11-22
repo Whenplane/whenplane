@@ -190,7 +190,7 @@
 <div class="container h-full mx-auto justify-center items-center" bind:this={outerContainer} class:alwaysFlex={isFrame}>
 	<div class="space-y-3 inner" bind:this={mainContainer}>
 		{#if !$page.data.isBot} <!-- so the imminent box stops showing up in search results -->
-			<ImminentBox floatplane={data.liveStatus?.floatplane}/>
+			<ImminentBox floatplane={data.liveStatus?.floatplane} hasDone={data.hasDone}/>
 		{/if}
 		<div class="text-center">
 			{#if data.specialStream && !$page.data.isBot}
