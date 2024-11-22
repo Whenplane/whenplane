@@ -245,7 +245,7 @@
     <br>
     <br>
   {/if}
-  <h2>Change history</h2>
+  <h2 id="change-history">Change history</h2>
   {#await data.changeHistory}
 
   {:then changeHistory}
