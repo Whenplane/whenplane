@@ -60,7 +60,7 @@ export const load = (async ({fetch, url, cookies}) => {
     .search({
       q,
       query_by: "text",
-      sort_by: "_text_match(buckets: 30):desc,_eval([ (type:topic):3, (type:title):2, (type:message):1, (type:reply):1, (type:transcript):0 ]):desc,showDate:desc",
+      sort_by: "_text_match(buckets: 30):desc,sortWeight:desc,_text_match:desc",
       filter_by: "type:[" + types.join(",") + "]",
       page,
       per_page: resultsPerPage,
