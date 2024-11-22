@@ -1,7 +1,8 @@
 <script lang="ts">
-  import { getDiffComponent, getFieldName } from "$lib/lttstore/field_names.js";
+  import { getFieldName } from "$lib/lttstore/field_names.js";
   import DateStamp from "$lib/DateStamp.svelte";
   import ProductInfo from "./ProductInfo.svelte";
+  import { getDiffComponent } from "$lib/lttstore/field_components.ts";
 
   export let data;
 </script>

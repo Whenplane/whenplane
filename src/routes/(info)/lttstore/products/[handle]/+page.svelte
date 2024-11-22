@@ -17,7 +17,8 @@
   import { browser, dev } from "$app/environment";
   import ProductUpdateRequestButton from "$lib/lttstore/product/ProductUpdateRequestButton.svelte";
   import ExclamationTriangle from "svelte-bootstrap-icons/lib/ExclamationTriangle.svelte";
-  import { getDiffComponent, getFieldName } from "$lib/lttstore/field_names.ts";
+  import { getFieldName } from "$lib/lttstore/field_names.ts";
+  import { getDiffComponent } from "$lib/lttstore/field_components.ts";
 
   export let data;
 
