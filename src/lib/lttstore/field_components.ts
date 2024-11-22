@@ -17,7 +17,7 @@ export function getDiffComponent(field: string) {
     return ProductDetailModulesDiff;
   }
   if (field === "product.description") {
-   get_diff_component.ts return TextWordsDiff;
+   return TextWordsDiff;
   }
   if (field === "product.options") {
     return OptionsDiff;
