@@ -60,7 +60,7 @@
     {/if}
   {:else}
     <title>Whenplane WAN Show Search</title>
-    <meta name="description" content="Currently you can only search for topics, but I hope to add more in the future!">
+    <meta name="description" content="Find things that happened during The WAN Show">
   {/if}
 </svelte:head>
 
@@ -87,7 +87,7 @@
     </a>
   </div>
   <form method="GET" class="inline-block px-4">
-    <input placeholder="Search for topics" name="q" class="input search-box-top-bar p-2 pl-4" value={q}>
+    <input placeholder="Search" name="q" class="input search-box-top-bar p-2 pl-4" value={q}>
     <div class="inline-block px-2">
       Search:
       <label class="inline-block px-2">
@@ -211,7 +211,7 @@
       <img src="/wan_show_search.png" class="search-logo mx-auto" alt="The WAN Show Search" title="The WAN Show Search" width="1330" height="529">
       <br>
       <form method="GET">
-        <input placeholder="Search for topics" name="q" class="input search-box p-2 pl-4"><br>
+        <input placeholder="Search" name="q" class="input search-box p-2 pl-4"><br>
         <div class="py-4">
           Search:
           <label class="inline-block px-2">
