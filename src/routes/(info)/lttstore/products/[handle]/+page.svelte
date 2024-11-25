@@ -155,6 +155,200 @@
       </div>
     {/each}
   {/if}
+  <br>
+  <br>
+  <div class="max-w-3xl my-4">
+    <Accordion class="mx-4" spacing="" regionPanel="">
+      <AccordionItem>
+        <svelte:fragment slot="summary">Product Metadata</svelte:fragment>
+        <svelte:fragment slot="content">
+          <table class="padded-table">
+            <thead></thead>
+            <tbody>
+              <tr>
+                <td>ID</td>
+                <td>{data.product.id}</td>
+              </tr>
+              <tr>
+                <td>Title</td>
+                <td>{data.product.title}</td>
+              </tr>
+              <tr>
+                <td>Handle</td>
+                <td>{data.product.handle}</td>
+              </tr>
+              <tr>
+                <td>Creation Date</td>
+                <td><DateStamp epochSeconds={new Date(productInfo.created_at).getTime() / 1e3}/></td>
+              </tr>
+              <tr>
+                <td class="pr-8">Publication Date</td>
+                <td><DateStamp epochSeconds={new Date(productInfo.published_at).getTime() / 1e3}/></td>
+              </tr>
+              <tr>
+                <td>Vendor</td>
+                <td>{productInfo.vendor}</td>
+              </tr>
+              <tr>
+                <td>Type</td>
+                <td>{productInfo.type}</td>
+              </tr>
+              <tr>
+                <td class="align-top">Tags</td>
+                <td>
+                  {#if productInfo.tags.length > 1}
+                    <ul>
+                      {#each productInfo.tags as tag}
+                        <li>{tag}</li>
+                      {:else}
+                        <span class="opacity-70">[none]</span>
+                      {/each}
+                    </ul>
+                  {:else}
+                    {productInfo.tags[0]}
+                  {/if}
+                </td>
+              </tr>
+              <tr>
+                <td>Price</td>
+                <td><Price usd={productInfo.price/100}/></td>
+              </tr>
+              <tr>
+                <td>Compare Price</td>
+                <td>
+                  {#if productInfo.compare_at_price}
+                    <Price usd={productInfo.compare_at_price/100}/>
+                  {:else}
+                    <span class="opacity-70">[none]</span>
+                  {/if}
+                </td>
+              </tr>
+              <tr>
+                <td>In stock?</td>
+                <td>{productInfo.available}</td>
+              </tr>
+              <tr>
+                <td class="align-top">Options</td>
+                <td>
+                  <ul>
+                    {#each productInfo.options as option}
+                      <li>
+                        {option.name}
+                        <ul class="!list-[circle]">
+                          {#each option.values as value}
+                            <li>{value}</li>
+                          {/each}
+                        </ul>
+                      </li>
+                    {:else}
+                      <span class="opacity-70">[none]</span>
+                    {/each}
+                  </ul>
+                </td>
+              </tr>
+              <tr>
+                <td class="align-top">Variants</td>
+                <td>
+                  {#each productInfo.variants as variant}
+                    <li>
+                      {variant.title}
+                      <table class="ml-3 padded-table">
+                        <thead></thead>
+                        <tbody>
+                          <tr>
+                            <td>Title</td>
+                            <td>{variant.title}</td>
+                          </tr>
+                          <tr>
+                            <td>Name</td>
+                            <td>{variant.name}</td>
+                          </tr>
+                          <tr>
+                            <td>SKU</td>
+                            <td>{variant.sku}</td>
+                          </tr>
+                          <tr>
+                            <td>In stock?</td>
+                            <td>{variant.available}</td>
+                          </tr>
+                          <tr>
+                            <td class="align-top">Options</td>
+                            <td>
+                              <ul class="!list-[circle]">
+                                {#each variant.options as value}
+                                  <li>{value}</li>
+                                {/each}
+                              </ul>
+                            </td>
+                          </tr>
+                          <tr>
+                            <td>Price</td>
+                            <td><Price usd={variant.price/100}/></td>
+                          </tr>
+                          <tr>
+                            <td>Compare at price</td>
+                            <td>
+                              {#if variant.compare_at_price}
+                                <Price usd={(variant.compare_at_price)/100}/>
+                              {:else}
+                                <span class="opacity-70">[none]</span>
+                              {/if}
+                            </td>
+                          </tr>
+                          <tr>
+                            <td>Requires Shipping?</td>
+                            <td>{variant.requires_shipping}</td>
+                          </tr>
+                          <tr>
+                            <td>Taxable?</td>
+                            <td>{variant.taxable}</td>
+                          </tr>
+                          <tr>
+                            <td>Weight (g)</td>
+                            <td>{variant.weight}</td>
+                          </tr>
+                          <tr>
+                            <td>Inventory Management</td>
+                            <td>{variant.inventory_management}</td>
+                          </tr>
+                          {#if variant.barcode}
+                            <tr>
+                              <td>Barcode</td>
+                              <td>{variant.barcode}</td>
+                            </tr>
+                          {/if}
+                          <tr>
+                            <td>Minimum Quantity</td>
+                            <td>{variant.quantity_rule.min}</td>
+                          </tr>
+                          <tr>
+                            <td>Maximum Quantity</td>
+                            <td>
+                              {#if variant.quantity_rule.max !== null}
+                                {variant.quantity_rule.min}
+                              {:else}
+                                <span class="opacity-70">[none]</span>
+                              {/if}
+                            </td>
+                          </tr>
+                          <tr>
+                            <td>Quantity Increment</td>
+                            <td>{variant.quantity_rule.increment}</td>
+                          </tr>
+                        </tbody>
+                      </table>
+                    </li>
+                  {:else}
+                    <span class="opacity-70">[none]</span>
+                  {/each}
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </svelte:fragment>
+      </AccordionItem>
+    </Accordion>
+  </div>
 
   <br>
   <br>
@@ -332,5 +526,13 @@
       list-style: decimal;
       padding-left: 1.5em;
       margin-bottom: 1em;
+  }
+  ul {
+      list-style: initial;
+      padding-left: 1.5em;
+  }
+
+  .padded-table td {
+      padding-right: 1em;
   }
 </style>
