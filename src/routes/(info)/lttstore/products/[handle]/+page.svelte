@@ -196,7 +196,7 @@
               </tr>
               <tr>
                 <td>On lttstore?</td>
-                <td>{data.product.available === 1 ? "yes" : "no"}</td>
+                <td>{data.product.available ? "yes" : "no"}</td>
               </tr>
             </tbody>
           </table>
