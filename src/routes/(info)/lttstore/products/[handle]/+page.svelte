@@ -159,9 +159,49 @@
   <br>
   <div class="max-w-3xl my-4">
     <Accordion class="mx-4" spacing="" regionPanel="">
-      <AccordionItem>
+      <AccordionItem open={dev}>
         <svelte:fragment slot="summary">Product Metadata</svelte:fragment>
         <svelte:fragment slot="content">
+          <h2>Whenplane Metadata</h2>
+          <table class="padded-table">
+            <thead></thead>
+            <tbody>
+              <tr>
+                <td>Last Stock Check</td>
+                <td><DateStamp epochSeconds={data.product.stockChecked / 1e3}/></td>
+              </tr>
+              <tr>
+                <td>Last Restock Detected</td>
+                <td><DateStamp epochSeconds={data.product.lastRestock / 1e3}/></td>
+              </tr>
+              <tr>
+                <td>Average Purchases Per Hour</td>
+                <td>{data.product.purchasesPerHour}</td>
+              </tr>
+              <tr>
+                <td>Average Purchases Per Day</td>
+                <td>{data.product.purchasesPerDay}</td>
+              </tr>
+              <tr>
+                <td>Regular Price</td>
+                <td><Price usd={data.product.regularPrice/100}/></td>
+              </tr>
+              <tr>
+                <td>Current Price</td>
+                <td><Price usd={data.product.currentPrice/100}/></td>
+              </tr>
+              <tr>
+                <td>First Seen</td>
+                <td><DateStamp epochSeconds={data.product.firstSeen / 1e3}/></td>
+              </tr>
+              <tr>
+                <td>On lttstore?</td>
+                <td>{data.product.available === 1 ? "yes" : "no"}</td>
+              </tr>
+            </tbody>
+          </table>
+          <br>
+          <h2>LTTStore Metadata</h2>
           <table class="padded-table">
             <thead></thead>
             <tbody>
