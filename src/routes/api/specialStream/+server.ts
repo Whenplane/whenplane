@@ -7,7 +7,7 @@ export const GET = (async ({fetch}) => {
   // In the future this will be from a database, but this will be fine for now.
 
   const data: SpecialStream | false = {
-    title: "Building PCs until I get good at it - 16 year LTT aniversary",
+    title: "Building PCs until I get good at it - 16 year LTT anniversary",
     thumbnail: "https://i.ytimg.com/vi/mFYfAQPcMRU/maxresdefault.jpg",
 
     start: "2024-11-26T21:30:00Z",
