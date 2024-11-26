@@ -8,7 +8,7 @@ export const GET = (async ({fetch}) => {
 
   const data: SpecialStream | false = {
     title: "Building PCs until I get good at it - 16 year LTT anniversary",
-    thumbnail: "https://i.ytimg.com/vi/mFYfAQPcMRU/maxresdefault.jpg",
+    thumbnail: "https://pbs.floatplane.com/stream_thumbnails/5c13f3c006f1be15e08e05c0/366499966927487_1732654576268.jpeg",
 
     start: "2024-11-26T21:30:00Z",
     startIsEstimated: true,
