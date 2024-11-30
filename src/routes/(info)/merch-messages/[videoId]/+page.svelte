@@ -2,6 +2,7 @@
   import LargerLazyLoad from "$lib/LargerLazyLoad.svelte";
   import { getClosestWan, getUTCDate } from "$lib/timeUtils.ts";
   import { page } from "$app/stores";
+  import Socket from "$lib/Socket.svelte";
 
   export let data;
 
@@ -13,6 +14,10 @@
 <svelte:head>
   <title>{data.video.title} - Whenplane Merch Messages</title>
 </svelte:head>
+
+{#if data.video.status === "inprogress"}
+  <Socket events={["mm_progress-" + data.video.videoId]}/>
+{/if}
 
 <ol class="breadcrumb pt-2 pl-2">
   <li class="crumb"><a class="anchor hover-underline" href="/">{$page.url.hostname === "whenwan.show" ? "whenwan.show" : "Whenplane"}</a></li>
