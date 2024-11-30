@@ -15,6 +15,7 @@ export const load = (async ({platform, params}) => {
   const countingPromises: Promise<[string, number | null]>[] = [];
   for (const video of videos) {
     if(video.messageCount !== null) continue;
+    if(video.status === "inprogress") continue;
     console.log("Adding message count for", video)
     countingPromises.push((async () => {
 
