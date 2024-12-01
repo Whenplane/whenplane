@@ -12,7 +12,7 @@ export const load = (async ({platform}) => {
 
   if(dev) await createTables(db);
 
-  const changeHistory = db.prepare("select * from change_history order by timestamp desc")
+  const changeHistory = db.prepare("select * from change_history order by timestamp desc limit 200")
     .all<{id: number, timestamp: number, field: string, old: string, new: string}>()
     .then(r => r.results);
 
