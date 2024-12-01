@@ -172,7 +172,13 @@
               </tr>
               <tr>
                 <td>Last Restock Detected</td>
-                <td><DateStamp epochSeconds={data.product.lastRestock / 1e3}/></td>
+                <td>
+                  {#if data.product.lastRestock > 0}
+                    <DateStamp epochSeconds={data.product.lastRestock / 1e3}/>
+                  {:else}
+                    <span class="opacity-70">[none]</span>
+                  {/if}
+                </td>
               </tr>
               <tr>
                 <td>Average Purchases Per Hour</td>
