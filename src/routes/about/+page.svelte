@@ -32,7 +32,8 @@
     <div class="space-y-5">
         <div class="card p-4 inline-block text-left m-2">
             <h1 class="text-center">About</h1>
-            This website was made so it can be easier to tell when the WAN is starting, without having to go back between twitch/youtube.
+            This website was made so it can be easier to tell when the WAN is starting, without having to go back between twitch/youtube.<br>
+            There are also a bunch of other tools around LTT. Check the "More" dropdown on the countdown page for a list of these tools.
             <br>
             <br>
             Unless noted otherwise, all times are converted to <b>your local timezone</b>.<br>
@@ -43,7 +44,10 @@
             The site is
             <a href="https://github.com/ajgeiss0702/whenplane" target="_blank" rel="noopener">
                 open-sourced</a>.
-            Feel free to make contributions!
+            Feel free to make contributions!<br>
+            <br>
+            If you are able to, I would highly appreciate <a href="https://paypal.me/ajgeiss0702">donations</a>.<br>
+            Note that all of whenplane services and domains work around to costing around US$20 per month to run, so any amount past that is just a thank-you to me.
             <br>
             <br>
             Huge thanks to
@@ -51,6 +55,12 @@
                 The WAN DB
             </a>
             for helping me understand Floatplane's API.
+            <br>
+            Also massive thanks to
+            <a href="/noki" target="_blank" rel="noopener">
+                NoKi
+            </a>
+            for allowing me to use his timestamps.
 
             <br>
             <br>
