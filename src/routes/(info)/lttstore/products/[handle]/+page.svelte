@@ -254,7 +254,7 @@
               <tr>
                 <td class="align-top">Tags</td>
                 <td>
-                  {#if productInfo.tags.length > 1}
+                  {#if productInfo.tags}
                     <ul>
                       {#each productInfo.tags as tag}
                         <li>{tag}</li>
@@ -263,7 +263,7 @@
                       {/each}
                     </ul>
                   {:else}
-                    {productInfo.tags[0]}
+                    <span class="opacity-70">[none]</span>
                   {/if}
                 </td>
               </tr>
