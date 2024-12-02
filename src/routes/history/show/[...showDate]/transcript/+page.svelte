@@ -26,7 +26,7 @@
           let time = Math.floor((event.tStartMs + (seg.tOffsetMs ?? 0)) / 1e3);
           let currentIndex = textOnly.length;
           if(browser) textOnly += seg.utf8;
-          const isMatch = matchIndex !== -1 && currentIndex >= matchIndex && currentIndex <= (matchIndex + matchLength);
+          const isMatch = matchIndex !== -1 && currentIndex >= matchIndex-1 && currentIndex < (matchIndex + matchLength);
           if(isMatch && !startedMatch) {
             console.debug("Starting match at", currentIndex, "for", matchIndex)
             startedMatch = true;
