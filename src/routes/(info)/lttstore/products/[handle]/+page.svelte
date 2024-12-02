@@ -182,11 +182,23 @@
               </tr>
               <tr>
                 <td>Average Purchases Per Hour</td>
-                <td>{data.product.purchasesPerHour}</td>
+                <td>
+                  {#if data.product.purchasesPerHour >= 0}
+                    {data.product.purchasesPerHour}
+                  {:else}
+                    <span class="opacity-70">N/A</span>
+                  {/if}
+                </td>
               </tr>
               <tr>
                 <td>Average Purchases Per Day</td>
-                <td>{data.product.purchasesPerDay}</td>
+                <td>
+                  {#if data.product.purchasesPerDay >= 0}
+                    {data.product.purchasesPerDay}
+                  {:else}
+                    <span class="opacity-70">N/A</span>
+                  {/if}
+                </td>
               </tr>
               <tr>
                 <td>Regular Price</td>
