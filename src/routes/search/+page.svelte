@@ -148,7 +148,7 @@
           {@const show = data.shows?.[hit.document.videoId ?? hit.document.showName]}
           {@const cleanedId = hit.document.id.replaceAll("topic-", "")}
           {@const baseShowUrl = "/history/show/" + (show ? show.name : `${hit.document.videoId}` )}
-          {@const href = baseShowUrl + (hit.document.type === "topic" ? (show ? "#timestamp-" + cleanedId : `?hash=${encodeURIComponent('#timestamp-' + cleanedId)}` ) : "")}
+          {@const href = (hit.document.type === "message" || hit.document.type === "reply") ? `merch-messages/${hit.document.videoId}#${hit.document.videoId}.${hit.document.imageIndex}` : baseShowUrl + (hit.document.type === "topic" ? (show ? "#timestamp-" + cleanedId : `?hash=${encodeURIComponent('#timestamp-' + cleanedId)}` ) : "")}
           <span class="opacity-70">
             {#if hit.document.type === "topic"}
               Topic
