@@ -83,7 +83,7 @@
 
   <div class="inline-block logo-container">
     <a href="/search" class="inline-block p-2 logo-link">
-      <img src="/wan_show_search.png" class="search-logo-small inline-block px-2" alt="The WAN Show Search" title="The WAN Show Search" width="1330" height="529">
+      <enhanced:img src="./wan_show_search.png" class="search-logo-small inline-block px-2" alt="The WAN Show Search" title="The WAN Show Search" width="1330" height="529" />
     </a>
   </div>
   <form method="GET" class="inline-block px-4">
@@ -209,7 +209,7 @@
 {:else}
   <div class="h-almost-full w-full flex items-center justify-center p-2">
     <div class="text-center">
-      <img src="/wan_show_search.png" class="search-logo mx-auto" alt="The WAN Show Search" title="The WAN Show Search" width="1330" height="529">
+      <enhanced:img src="./wan_show_search.png" class="search-logo mx-auto" alt="The WAN Show Search" title="The WAN Show Search" />
       <br>
       <form method="GET">
         <input placeholder="Search" name="q" class="input search-box p-2 pl-4"><br>
