@@ -539,7 +539,7 @@
   If you want more up-to-date data for this product, you can request an update below.<br>
   To prevent abuse, you can only request updates once an hour per product, and 30 minutes between a request for any product.<br>
   <br>
-  If your request is successful, it usually takes between 30 seconds and 5 minutes for the data to appear on this page. You will need to reload.<br>
+  If your request is successful, it usually takes between 30 seconds and 15 minutes for the data to appear on this page. You will need to reload.<br>
   <br>
 
   <ProductUpdateRequestButton/>
