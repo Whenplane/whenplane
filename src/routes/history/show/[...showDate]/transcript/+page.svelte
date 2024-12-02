@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { escapeHtml } from "$lib/utils.ts";
+  import { escapeHtml, truncateText } from "$lib/utils.ts";
   import { getClosestWan } from "$lib/timeUtils.ts";
   import { page } from "$app/stores";
   import { browser } from "$app/environment";
@@ -73,6 +73,14 @@
 
   const showDate = getClosestWan(new Date(preShowStart ?? mainShowStart ?? showEnd ?? snippet?.publishedAt ?? data.name));
 </script>
+
+<svelte:head>
+  <title>Transcript of {data.metadata.title ?? ""}{data.metadata.title ? " - " : ""}WAN Show {showDate.toLocaleDateString(undefined, {dateStyle: 'long'})}</title>
+  <meta name="description" content="{truncateText(textOnly, 500)}">
+  {#if thumbnail}
+    <meta property="og:image" content={thumbnail.url}>
+  {/if}
+</svelte:head>
 
 {#if thumbnail}
   <div class="thumbnail-backdrop" aria-hidden="true">
