@@ -7,7 +7,7 @@
   import LinkPaginator from "$lib/util/LinkPaginator.svelte";
   import { browser } from "$app/environment";
   import ToolTip from "$lib/ToolTip.svelte";
-  import { setCookie } from "$lib/cookieUtils.ts";
+  import { setCookie, strip } from "$lib/cookieUtils.ts";
 
   $: q = $page.url.searchParams.get("q")
 
@@ -148,7 +148,8 @@
           {@const show = data.shows?.[hit.document.videoId ?? hit.document.showName]}
           {@const cleanedId = hit.document.id.replaceAll("topic-", "")}
           {@const baseShowUrl = "/history/show/" + (show ? show.name : `${hit.document.videoId}` )}
-          {@const href = (hit.document.type === "message" || hit.document.type === "reply") ? `merch-messages/${hit.document.videoId}#${hit.document.videoId}.${hit.document.imageIndex}` : baseShowUrl + (hit.document.type === "topic" ? (show ? "#timestamp-" + cleanedId : `?hash=${encodeURIComponent('#timestamp-' + cleanedId)}` ) : "")}
+          {@const strippedSnippet = hit.highlight?.text?.snippet?.replaceAll("<mark>", "").replaceAll("</mark>", "")}
+          {@const href = (hit.document.type === "message" || hit.document.type === "reply") ? `merch-messages/${hit.document.videoId}#${hit.document.videoId}.${hit.document.imageIndex}` : baseShowUrl + (hit.document.type === "transcript" ? "/transcript?find=" + encodeURIComponent(strippedSnippet) + "#match" : "") + (hit.document.type === "topic" ? (show ? "#timestamp-" + cleanedId : `?hash=${encodeURIComponent('#timestamp-' + cleanedId)}` ) : "")}
           <span class="opacity-70">
             {#if hit.document.type === "topic"}
               Topic

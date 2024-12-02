@@ -8,8 +8,15 @@
   export let data;
 
   let text = "";
+  let textOnly = "";
+  let matchIndex = -1;
   function parseText() {
     text = "";
+    textOnly = "";
+    const find = $page.url.searchParams.get("find")
+    const matchLength = find?.length ?? 0;
+    let startedMatch = false;
+    let endedMatch = true;
     let processed = 0;
     for (let event of data.transcript.events) {
       if(!event.segs) continue;
@@ -17,6 +24,20 @@
         for (let seg of event.segs) {
           if(!seg.utf8) continue;
           let time = Math.floor((event.tStartMs + (seg.tOffsetMs ?? 0)) / 1e3);
+          let currentIndex = textOnly.length;
+          if(browser) textOnly += seg.utf8;
+          const isMatch = matchIndex !== -1 && currentIndex >= matchIndex && currentIndex <= (matchIndex + matchLength);
+          if(isMatch && !startedMatch) {
+            console.debug("Starting match at", currentIndex, "for", matchIndex)
+            startedMatch = true;
+            text += `<span class="match" id="match">`;
+            endedMatch = false;
+          }
+          if(!isMatch && !endedMatch) {
+            console.debug("Ending match at", currentIndex, "for", matchIndex)
+            endedMatch = true;
+            text += `</span>`;
+          }
           text +=
             `<a href="https://youtube.com/watch?v=${data.videoId}&t=${time}" class="hidden-link underline" target="_blank" rel="noopener">` +
             escapeHtml(seg.utf8).replaceAll("\n", "<br>\n") +
@@ -27,9 +48,16 @@
         break;
       }
     }
+    if(find) {
+      matchIndex = textOnly.indexOf(find);
+      console.log("Found match at", matchIndex)
+    }
   }
   if(!browser) parseText();
-  onMount(parseText)
+  onMount(() => {
+    parseText();
+    if($page.url.searchParams.has("find") && matchIndex !== -1) parseText();
+  })
 
   const thumbnail = data.value?.snippet?.thumbnails?.maxres ??
     data.value?.snippet?.thumbnails?.standard ??
@@ -105,5 +133,9 @@
         height: auto;
         aspect-ratio: 16 / 9;
         object-fit: cover;
+    }
+
+    :global(.match) {
+        background-color: rgb(var(--color-primary-800));
     }
 </style>
