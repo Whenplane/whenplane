@@ -46,6 +46,8 @@ declare global {
                 FP_SUBS_DB: D1Database;
                 AUTH: D1Database;
                 TOPICS: D1Database;
+
+                CAPTIONS: R2Bucket;
             },
             context?: {
                 /**

@@ -11,6 +11,7 @@ export const fallBackPlatformToMiniFlareInDev = async (_platform: App.Platform |
         d1Persist: true,
         kvNamespaces: ['CACHE', 'HISTORY', 'META', 'WDB_EPISODE_CACHE', "AUTH_KV", "YOUTUBE_TO_DATE"],
         d1Databases: ['DB', "LTTSTORE_DB", "MERCHMESSAGES_DB", "FP_SUBS_DB", "AUTH", "TOPICS"],
+        r2Buckets: ['CAPTIONS'],
         globalAsyncIO: true,
         globalTimers: true,
         globalRandom: true,

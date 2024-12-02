@@ -3,32 +3,9 @@ import {error} from "@sveltejs/kit";
 import { wait, type HistoricalEntry } from "$lib/utils.ts";
 import type { Timestamp } from "$lib/timestamps/types.ts";
 
-export const load = (async ({params, fetch, platform, url}) => {
+export const load = (async ({params, fetch, platform, url, parent}) => {
 
-    const youtubeToDate = platform?.env?.YOUTUBE_TO_DATE;
-    if(params.showDate && !params.showDate.includes("/") && youtubeToDate) {
-        const date = await youtubeToDate.get(params.showDate);
-        if(date) {
-            throw redirect(301, "/history/show/" + date + (url.searchParams.get("hash") ?? ""));
-        }
-    }
-
-    const showResponsePromise = fetch(
-        "/api/history/show/" + params.showDate,
-        {
-            headers: {
-                "Accept": "application/json"
-            }
-        }
-    );
-
-    const showResponse = await showResponsePromise;
-
-    const data = await showResponse.json() as HistoricalEntry & {message?: string};
-
-    if(showResponse.status != 200) {
-        throw error(showResponse.status, data.message || showResponse.statusText);
-    }
+    const data = await parent();
 
     const youtubeId = data.value?.vods?.youtube;
 
@@ -42,7 +19,6 @@ export const load = (async ({params, fetch, platform, url}) => {
     if(youtubeId) await wait(25); // wait 25ms for above two promises to have a small chance of finishing
 
     return {
-        ...data,
         mm,
         timestamps
     };
