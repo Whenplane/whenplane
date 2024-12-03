@@ -28,13 +28,13 @@ export const load = (async ({platform}) => {
     .all<ProductsTableRow>()
     .then(r => r.results);
 
-  const recentRestocks = db.prepare("select * from products where lastRestock > ? and lastRestock > ? order by lastRestock DESC limit 30")
-    .bind(Date.now() - (6 * 24 * 60 * 60e3), 1724184000000) // this hard-coded value is to remove the "restock"s that happened when the db was rebuilding after the breakage in august
+  const recentRestocks = db.prepare("select * from products where lastRestock > ? order by lastRestock DESC limit 30")
+    .bind(Date.now() - (6 * 24 * 60 * 60e3))
     .all<ProductsTableRow>()
     .then(r => r.results);
 
   let newProducts = await db.prepare("select * from products where firstSeen > ? order by firstSeen DESC limit 50")
-    .bind(Math.max(1724356079932, Date.now() - (6 * 24 * 60 * 60e3))) // this hard-coded value is to remove the "new" products that were released during the breakage in august
+    .bind(Date.now() - (6 * 24 * 60 * 60e3))
     .all<ProductsTableRow>()
     .then(r => r.results);
 
