@@ -59,7 +59,7 @@
       <meta name="description" content="{data.result.found} results found in {data.result.search_time_ms}ms." />
     {/if}
   {:else}
-    <title>Whenplane WAN Show Search</title>
+    <title>WAN Show Search - Whenplane</title>
     <meta name="description" content="Find things that happened during The WAN Show">
   {/if}
 </svelte:head>
