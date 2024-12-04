@@ -66,7 +66,8 @@ export const load = (async ({fetch, url, cookies}) => {
       per_page: resultsPerPage,
       exclude_fields: ["text"],
       highlight_fields: ["text"],
-      highlight_affix_num_tokens: 15
+      highlight_affix_num_tokens: 15,
+      split_join_tokens: "always"
     }, {cacheSearchResultsForSeconds: 60}) as SearchResponse<CombinedSearchResult>;
 
   const showHits = [...new Set(result.hits?.map(h => (h.document.videoId ?? (h.document as {showName?: string}).showName)))]
