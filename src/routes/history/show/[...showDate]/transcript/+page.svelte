@@ -111,6 +111,16 @@
     <br>
     <br>
     <h3>Transcript</h3>
+    <br>
+    <div class="text-left">
+      These transcripts are taken from YouTube's auto-generated subtitles,
+      so they might not be perfectly accurate. They are accurate enough to be useful in most cases though.<br>
+      <br>
+      Click on a word to go to the video and jump to where that word was said.
+    </div>
+    <br>
+    <hr>
+    <br>
     <div class="mx-auto inline-block text-left">
       {@html text}
     </div>
