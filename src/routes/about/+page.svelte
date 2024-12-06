@@ -66,7 +66,12 @@
             <br>
             <div class="text-center w-full">
                 <h2 class="text-center">Why does it say WAN starts at 4:30?</h2>
-                <img class="mx-auto danwan" src="/430.webp" alt="Dan confirming 4:30"/>
+                <div class="inline-block mx-auto">
+                    <a href="/430.png">
+                        <enhanced:img src="$lib/images/430-ai-upscaled.png" class="danwan" title="This image is AI upscaled due to the original screenshot being very low-resolution. Click the image to see the original."/>
+                    </a>
+                </div><br>
+<!--                <img class="mx-auto danwan" src="/430.webp" alt="Dan confirming 4:30"/>-->
                 <i>always has been</i>
             </div>
             <br>
@@ -136,6 +141,7 @@
 <div class="pb-48"></div>
 <style>
     .danwan {
-        height: 60px;
+        height: 100px;
+        width: auto;
     }
 </style>
