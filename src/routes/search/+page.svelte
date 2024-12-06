@@ -177,7 +177,7 @@
             {/if}
             <br>
             <div class="pl-4 result-highlight opacity-80 max-w-full" class:result-visibility-highlight={highlightVisibility}>
-              {@html sanitizeHtml(hit.highlight?.text?.snippet ?? hit.document.text, {allowedTags: ["mark"]})}
+              {@html sanitizeHtml(hit.highlight?.text?.snippet ?? hit.document.text ?? hit.highlight?.name?.snippet ?? hit.document.name, {allowedTags: ["mark"]})}
             </div><br>
           </a><br>
         {:else}

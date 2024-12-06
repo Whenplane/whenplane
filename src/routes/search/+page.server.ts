@@ -18,6 +18,16 @@ const searchClient = new SearchClient({
   'apiKey': "kxB1kGPA1HWgWuYtbDmWcr4y5aGKYsQf",
   'connectionTimeoutSeconds': 10
 });
+const hybridSearchClient = new SearchClient({
+  'nodes': [{
+    'host': 'search.ajg0702.us',
+    'port': 443,
+    'protocol': 'https'
+  }],
+  // this api key only has access to search, don't worry
+  'apiKey': "AdXAmPk7dwQJHdpIx7sAA1Fmil2WHoRi",
+  'connectionTimeoutSeconds': 10
+});
 
 let showsCache: Promise<HistoricalEntry[]>;
 let showsFetched = 0;
@@ -56,7 +66,22 @@ export const load = (async ({fetch, url, cookies}) => {
     types.push("title", "topic", "transcript")
   }
 
-  const result = await searchClient.collections<CombinedSearchResult>("whenplane-all").documents()
+  const result = sp.has("hybrid") ?
+    await hybridSearchClient.collections<CombinedSearchResult>("whenplane-timestamps").documents()
+      .search({
+        q,
+        query_by: "name,embedding",
+        sort_by: "_text_match:desc",
+        // filter_by: "type:[" + types.join(",") + "]",
+        page,
+        per_page: resultsPerPage,
+        exclude_fields: ["embedding"],
+        vector_query: "embedding:([], k: 200)",
+        highlight_fields: ["name"],
+        highlight_affix_num_tokens: 15,
+        prefix: false
+      }, {cacheSearchResultsForSeconds: 60}) as SearchResponse<CombinedSearchResult>
+    : await searchClient.collections<CombinedSearchResult>("whenplane-all").documents()
     .search({
       q,
       query_by: "text",
