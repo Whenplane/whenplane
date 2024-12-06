@@ -47,7 +47,7 @@
             Feel free to make contributions!<br>
             <br>
             If you are able to, I would highly appreciate <a href="https://paypal.me/ajgeiss0702">donations</a>.<br>
-            Note that all of whenplane services and domains work around to costing around US$20 per month to run, so any amount past that is just a thank-you to me.
+            Note that all of Whenplane services and domains work around to costing around US$20 per month to run, so any amount past that is just a thank-you to me.
             <br>
             <br>
             Huge thanks to
