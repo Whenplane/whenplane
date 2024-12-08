@@ -3,11 +3,15 @@ import { error, redirect } from "@sveltejs/kit";
 import type { HistoricalEntry } from "$lib/utils.ts";
 
 export const load: LayoutServerLoad = async ({platform, params, url, fetch}) => {
+  console.log("bruh")
   const youtubeToDate = platform?.env?.YOUTUBE_TO_DATE;
   if(params.showDate && !params.showDate.includes("/") && youtubeToDate) {
     const date = await youtubeToDate.get(params.showDate);
+    const afterId = url.pathname.split(params.showDate)[1];
     if(date) {
-      throw redirect(301, "/history/show/" + date + (url.searchParams.get("hash") ?? ""));
+      const searchParams = url.searchParams.size > 0 ? "?" + url.searchParams : ""
+      console.log({searchParams})
+      throw redirect(301, "/history/show/" + date + afterId + searchParams + (url.searchParams.get("hash") ?? ""));
     }
   }
 
