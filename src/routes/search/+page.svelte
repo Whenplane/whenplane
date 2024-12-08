@@ -13,14 +13,18 @@
 
   export let data;
 
-  let searchTitle = true;
-  let searchTopics = true;
-  let searchTranscripts = true;
-  let searchMerchMessages = false;
+  let searchForm: HTMLFormElement;
+
+  let searchTitle = ($page.url.searchParams.get("title") ?? "on") === "on";
+  let searchTopics = ($page.url.searchParams.get("topics") ?? "on") === "on";
+  let searchTranscripts = ($page.url.searchParams.get("transcripts") ?? "on") === "on";
+  let searchMerchMessages = ($page.url.searchParams.get("merch-messages") ?? "on") === "on";
+
+  let searchSort = $page.url.searchParams.get("sort") ?? "default";
 
   let highlightVisibility = data.settings?.highlightVisibility === "true";
 
-  if(browser) {
+  if(browser && !q) {
     const localTitle = localStorage.getItem("searchTitle");
     if(localTitle != null) {
       searchTitle = localTitle === "true";
@@ -86,25 +90,32 @@
       <enhanced:img src="./wan_show_search.png" class="search-logo-small inline-block px-2" alt="The WAN Show Search" title="The WAN Show Search" sizes="min(1330px, 13em)" />
     </a>
   </div>
-  <form method="GET" class="inline-block px-4">
+  <form method="GET" class="inline-block px-4 text-center" bind:this={searchForm}>
     <input placeholder="Search" name="q" class="input search-box-top-bar p-2 pl-4" value={q}>
     <div class="inline-block px-2">
-      Search:
       <label class="inline-block px-2">
-        <input type="checkbox" class="checkbox" name="title" bind:checked={searchTitle}>
-        <span>Show Titles</span>
+        <input type="checkbox" class="checkbox" name="title" bind:checked={searchTitle} on:change={() => searchForm.submit()}>
+        <span>Titles</span>
       </label>
       <label class="inline-block px-2">
-        <input type="checkbox" class="checkbox" name="topics" bind:checked={searchTopics}>
+        <input type="checkbox" class="checkbox" name="topics" bind:checked={searchTopics} on:change={() => searchForm.submit()}>
         <span>Topics</span>
       </label>
       <label class="inline-block px-2">
-        <input type="checkbox" class="checkbox" name="transcripts" bind:checked={searchTranscripts}>
+        <input type="checkbox" class="checkbox" name="transcripts" bind:checked={searchTranscripts} on:change={() => searchForm.submit()}>
         <span>Transcripts</span>
       </label>
       <label class="inline-block px-2">
-        <input type="checkbox" class="checkbox" name="merch-messages" bind:checked={searchMerchMessages}>
+        <input type="checkbox" class="checkbox" name="merch-messages" bind:checked={searchMerchMessages} on:change={() => searchForm.submit()}>
         <span>Merch Messages</span>
+      </label>
+      <label class="inline-block px-2">
+        <span>Sort</span>
+        <select class="input w-36" name="sort" bind:value={searchSort} on:change={() => searchForm.submit()}>
+          <option value="default" selected>Default (Show Date & Type & Relevance)</option>
+          <option value="showDate">Show Date & Relevance</option>
+          <option value="type">Type & Relevance</option>
+        </select>
       </label>
     </div>
   </form>
@@ -260,9 +271,9 @@
       width: min(550px, 90vw);
   }
   .search-box-top-bar {
-      width: calc(80vw - 600px);
+      width: calc(80vw - 690px);
   }
-  @media (max-width: 800px) {
+  @media (max-width: 1400px) {
       .search-box-top-bar {
           width: 90vw;
       }

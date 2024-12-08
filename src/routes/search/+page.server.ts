@@ -51,6 +51,8 @@ export const load = (async ({fetch, url, cookies}) => {
     return {};
   }
 
+  let warnings: string[] = [];
+
   const allShows = await showsCache;
   if(!allShows) throw error(500, "Shows is falsy!");
 
@@ -66,26 +68,23 @@ export const load = (async ({fetch, url, cookies}) => {
     types.push("title", "topic", "transcript")
   }
 
-  const result = sp.has("hybrid") ?
-    await hybridSearchClient.collections<CombinedSearchResult>("whenplane-timestamps").documents()
-      .search({
-        q,
-        query_by: "name,embedding",
-        sort_by: "_text_match:desc",
-        // filter_by: "type:[" + types.join(",") + "]",
-        page,
-        per_page: resultsPerPage,
-        exclude_fields: ["embedding"],
-        vector_query: "embedding:([], k: 200)",
-        highlight_fields: ["name"],
-        highlight_affix_num_tokens: 15,
-        prefix: false
-      }, {cacheSearchResultsForSeconds: 60}) as SearchResponse<CombinedSearchResult>
-    : await searchClient.collections<CombinedSearchResult>("whenplane-all").documents()
+  const urlSort = sp.get("sort")
+  let sort = "_text_match(buckets: 30):desc,sortWeight:desc,_text_match:desc";
+  if(urlSort && urlSort !== "default") {
+    if(urlSort === "showDate") {
+      sort = "_text_match(buckets: 30):desc,showDate:desc,_text_match:desc";
+    } else if(urlSort === "type") {
+      sort = "_text_match(buckets: 30):desc,_eval([ (type:topic):3, (type:title):2, (type:message):1, (type:reply):1, (type:transcript):0 ]):desc,_text_match:desc";
+    } else {
+      warnings.push(`Unknown sorting type '${sort}'. Using default sorting.`);
+    }
+  }
+
+  const result = await searchClient.collections<CombinedSearchResult>("whenplane-all").documents()
     .search({
       q,
       query_by: "text",
-      sort_by: "_text_match(buckets: 30):desc,sortWeight:desc,_text_match:desc",
+      sort_by: sort,
       filter_by: "type:[" + types.join(",") + "]",
       page,
       per_page: resultsPerPage,
