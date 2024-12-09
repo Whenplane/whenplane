@@ -1,6 +1,7 @@
 <script lang="ts">
   import {onMount} from "svelte";
   import {shortMonths, isSameDay, yesterday} from "$lib/timeUtils";
+  import { getTimePreference } from "$lib/utils.ts";
 
   export let epochSeconds: number;
 
@@ -27,15 +28,15 @@
     return () => clearInterval(i);
   });
 </script>
-<span title="{shortMonths[date.getMonth()]} {date.getDate()}, {date.getFullYear()} at {date.toLocaleTimeString(undefined, {timeStyle: 'medium'})}">
+<span title="{shortMonths[date.getMonth()]} {date.getDate()}, {date.getFullYear()} at {date.toLocaleTimeString(undefined, {timeStyle: 'medium', hour12: getTimePreference()})}">
     {#if secondsAgo < 30}
         a few seconds ago
     {:else if secondsAgo < 60 * 60}
         {Math.round(secondsAgo / 60)} minute{Math.round(secondsAgo / 60) === 1 ? "" : "s"} ago
     {:else if isSameDay(new Date(), date)}
-        Today at {date.toLocaleTimeString(undefined, {timeStyle: "short"})}
+        Today at {date.toLocaleTimeString(undefined, {timeStyle: "short", hour12: getTimePreference()})}
     {:else if isSameDay(yesterday(), date)}
-        Yesterday at {date.toLocaleTimeString(undefined, {timeStyle: "short"})}
+        Yesterday at {date.toLocaleTimeString(undefined, {timeStyle: "short", hour12: getTimePreference()})}
     {:else}
         {shortMonths[date.getMonth()]} {date.getDate()}, {date.getFullYear()}
     {/if}

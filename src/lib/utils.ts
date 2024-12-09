@@ -1,4 +1,4 @@
-import { dev } from "$app/environment";
+import { browser, dev } from "$app/environment";
 
 export function wait(ms: number) {
     return new Promise((res) => {
@@ -122,6 +122,7 @@ export function escapeHtml(unsafe: string)
 
 
 export function getTimePreference() {
+    if(!browser) return undefined;
     const setting = localStorage.getItem("timeFormat");
     if(setting === null) return undefined;
     return setting === "12h";

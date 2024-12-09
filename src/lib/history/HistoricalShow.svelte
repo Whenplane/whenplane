@@ -18,6 +18,7 @@
     import LargerLazyLoad from "$lib/LargerLazyLoad.svelte";
     import { browser, dev } from "$app/environment";
     import { onMount } from "svelte";
+    import { getTimePreference } from "$lib/utils.ts";
 
     export let show;
     export let withThumbnail = false;
@@ -131,7 +132,7 @@
         <h4>Pre Show</h4>
         <span class="time">
             {#if preShowStart}
-                {preShowStart.toLocaleTimeString(undefined, {timeStyle: "short"})}
+                {preShowStart.toLocaleTimeString(undefined, {timeStyle: "short", hour12: getTimePreference()})}
             {:else}
                 <span class="opacity-50">
                     N/A
@@ -141,7 +142,7 @@
         -
         <span class="time">
             {#if mainShowStart}
-                {mainShowStart.toLocaleTimeString(undefined, {timeStyle: "short"})}
+                {mainShowStart.toLocaleTimeString(undefined, {timeStyle: "short", hour12: getTimePreference()})}
             {:else}
                 <span class="opacity-50">
                     N/A
@@ -161,7 +162,7 @@
         <h4>Main Show</h4>
         <span class="time">
             {#if mainShowStart}
-                {mainShowStart.toLocaleTimeString(undefined, {timeStyle: "short"})}
+                {mainShowStart.toLocaleTimeString(undefined, {timeStyle: "short", hour12: getTimePreference()})}
             {:else}
                 <span class="opacity-50">
                     N/A
@@ -171,7 +172,7 @@
         -
         <span class="time">
             {#if showEnd}
-                {showEnd.toLocaleTimeString(undefined, {timeStyle: "short"})}
+                {showEnd.toLocaleTimeString(undefined, {timeStyle: "short", hour12: getTimePreference()})}
             {:else}
                 <span class="opacity-50">
                     N/A
