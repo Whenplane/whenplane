@@ -7,6 +7,7 @@
   import {timeString} from "$lib/timeUtils";
   import DateStamp from "$lib/DateStamp.svelte";
   import { browser } from "$app/environment";
+  import { getTimePreference } from "$lib/utils.js";
 
   export let data;
 
@@ -71,7 +72,7 @@
 <div class="limit mx-auto px-2 pt-4 pb-16">
   <h1>Floatplane Metadata</h1>
   This info is fetched directly from Floatplane.<br>
-  Up-to-date as of {new Date(data.floatplane?.fetched).toLocaleTimeString(undefined, {timeStyle: "medium"})}<br>
+  Up-to-date as of {new Date(data.floatplane?.fetched).toLocaleTimeString(undefined, {timeStyle: "medium", hour12: getTimePreference()})}<br>
   <br>
 
 

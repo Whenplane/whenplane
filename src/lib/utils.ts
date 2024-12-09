@@ -76,6 +76,40 @@ export function newResponse(res: Response, headerFn: (existingHeaders: Headers) 
 
 }
 
+export function getSupportedLocales() {
+    const supportedLanguages = [];
+    const letters = 'abcdefghijklmnopqrstuvwxyz';
+
+    function isLanguageCodeSupported(code) {
+        const locale = new Intl.Locale(code);
+        return locale.maximize().region !== undefined;
+    }
+
+    // ISO 639-1 (2-letter)
+    for (let i = 0; i < letters.length; i++) {
+        for (let j = 0; j < letters.length; j++) {
+            const code = letters[i] + letters[j];
+            if (isLanguageCodeSupported(code)) {
+                supportedLanguages.push(code);
+            }
+        }
+    }
+
+    // ISO 639-2 (3-letter)
+    for (let i = 0; i < letters.length; i++) {
+        for (let j = 0; j < letters.length; j++) {
+            for (let k = 0; k < letters.length; k++) {
+                const code = letters[i] + letters[j] + letters[k];
+                if (isLanguageCodeSupported(code)) {
+                    supportedLanguages.push(code);
+                }
+            }
+        }
+    }
+
+    return supportedLanguages;
+}
+
 export function escapeHtml(unsafe: string)
 {
     return unsafe
@@ -84,6 +118,13 @@ export function escapeHtml(unsafe: string)
       .replace(/>/g, "&gt;")
       .replace(/"/g, "&quot;")
       .replace(/'/g, "&#039;");
+}
+
+
+export function getTimePreference() {
+    const setting = localStorage.getItem("timeFormat");
+    if(setting === null) return undefined;
+    return setting === "12h";
 }
 
 

@@ -2,7 +2,7 @@
   import { page } from "$app/stores";
   import sanitizeHtml from "sanitize-html";
   import { newsSanitizeSettings } from "$lib/news/news";
-  import { truncateText } from "$lib/utils";
+  import { getTimePreference, truncateText } from "$lib/utils";
 
   export let data;
 
@@ -28,7 +28,7 @@
   <div class="date text-right opacity-70">
     {postDate.toLocaleDateString(undefined, {dateStyle: "long"})}
     at
-    {postDate.toLocaleTimeString(undefined, {timeStyle: "short"})}
+    {postDate.toLocaleTimeString(undefined, {timeStyle: "short", hour12: getTimePreference()})}
   </div>
   <hr>
   {@html sanitizeHtml(data.post.body, newsSanitizeSettings)}

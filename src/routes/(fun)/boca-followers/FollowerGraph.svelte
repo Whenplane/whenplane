@@ -1,7 +1,7 @@
 <script lang="ts">
   import { browser } from "$app/environment";
   import { onMount } from "svelte";
-  import { commas } from "$lib/utils.ts";
+  import { commas, getTimePreference } from "$lib/utils.ts";
 
   export let followerHistory: {
     timestamp: number,
@@ -83,7 +83,7 @@
       x: {
         formatter: function (val: number) {
           const date = new Date(val)
-          return date.toLocaleDateString(undefined, {dateStyle: "medium"}) + " " + date.toLocaleTimeString(undefined, {timeStyle: "short"})
+          return date.toLocaleDateString(undefined, {dateStyle: "medium"}) + " " + date.toLocaleTimeString(undefined, {timeStyle: "short", hour12: getTimePreference()})
         }
       }
     },

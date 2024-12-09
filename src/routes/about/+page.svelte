@@ -4,6 +4,8 @@
     import {browser} from "$app/environment";
     import { page } from "$app/stores";
     import { getCookie, setCookie } from "$lib/cookieUtils";
+    import { getSupportedLocales } from "$lib/utils";
+    import ToolTip from "$lib/ToolTip.svelte";
 
     let scrollY = 0;
 
@@ -15,6 +17,29 @@
 
     let disableNotableStreams = browser ? !(getCookie("disableNotableStreams") !== "true") : !($page.params.__c__disableNotableStreams !== "true")
     $: if(browser) setCookie("disableNotableStreams", disableNotableStreams + "");
+
+    let timeFormat = browser ? localStorage.getItem("timeFormat") ?? "detect" : undefined;
+    $: if(browser) {
+        if(timeFormat && timeFormat !== "detect") {
+            localStorage.setItem("timeFormat", timeFormat);
+        } else {
+            console.debug("Removing timeFormat");
+            localStorage.removeItem("timeFormat");
+        }
+    }
+
+    let dateFormat = browser ? localStorage.getItem("dateFormat") ?? "detect" : undefined;
+    $: if(browser) {
+        if(dateFormat && dateFormat !== "detect") {
+            localStorage.setItem("dateFormat", dateFormat);
+        } else {
+            console.debug("Removing dateFormat");
+            localStorage.removeItem("dateFormat");
+        }
+    }
+
+
+    const supportedLocales = browser ? getSupportedLocales() : [];
 
     console.log({disableNotableStreams, server: $page.params.__c__disableNotableStreams, client: browser ? getCookie("disableNotableStreams") : undefined})
 
@@ -131,6 +156,44 @@
             Disable "notable" stream (e.g. Elijah, Dan, Luke) boxes
         </SlideToggle>
         <br>
+        <br>
+        <label class="py-1">
+            <span>Date Format:</span>
+            <select class="input w-44 p-1 px-2" bind:value={dateFormat}>
+                <optgroup label="Common formats">
+                    <option value="detect">auto</option>
+                    <option value="en-US">US (mm/dd/yyyy)</option>
+                    <option value="en-UK">UK (dd/mm/yyyy)</option>
+                    <option value="de">DE (dd.mm.yyyy)</option>
+                </optgroup>
+                <optgroup label="All locales">
+                    {#each supportedLocales as locale}
+                        <option value={locale}>{locale}</option>
+                    {/each}
+                </optgroup>
+            </select>
+            <ToolTip id="date-locale-info">
+                Unfortunately, browsers do not let you pick a specific date format, only a locale.<br>
+                I have provided some common formats and a locale at the top, then a list of every locale your browser supports after,
+                so no matter the format you prefer, it should be available.<br>
+                This selection <b>only</b> effects the date format, so feel free to pick whichever locale has your preferred date format.
+                It will not effect anything else.
+            </ToolTip>
+        </label>
+        <label class="py-1">
+            <span>Time Format:</span>
+            <select class="input w-44 p-1 px-2" bind:value={timeFormat}>
+                <option value="detect">auto</option>
+                <option value="12h">12 hour (AM/PM)</option>
+                <option value="24h">24 hour</option>
+            </select>
+            <ToolTip id="time-format-info">
+                auto = auto detect from your browser's locale (<b>not</b> the locale selected above)<br>
+                12 hour = 12 hour (AM/PM) format. e.g. 4:30:00 PM<br>
+                24 hour = 24 hour format. e.g. 16:30:00
+            </ToolTip>
+        </label>
+
 
         <br>
         <a href="/notifications">Push Notification Settings</a>

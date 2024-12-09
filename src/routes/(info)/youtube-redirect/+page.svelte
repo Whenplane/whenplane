@@ -5,6 +5,7 @@
   import { browser } from "$app/environment";
   import { SlideToggle } from "@skeletonlabs/skeleton";
   import { page } from "$app/stores";
+  import { getTimePreference } from "$lib/utils.ts";
 
   export let data;
 
@@ -75,7 +76,7 @@
   <br>
   <br>
   <span class="opacity-70">
-    Last checked {lastCheck.toLocaleTimeString(undefined, {timeStyle: "medium"})}
+    Last checked {lastCheck.toLocaleTimeString(undefined, {timeStyle: "medium", hour12: getTimePreference()})}
   </span>
   <br>
   <br>

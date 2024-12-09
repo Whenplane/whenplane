@@ -23,6 +23,7 @@
 	import Socket from "$lib/Socket.svelte";
 	import CaretDownFill from "svelte-bootstrap-icons/lib/CaretDownFill.svelte";
 	import {popup} from "@skeletonlabs/skeleton";
+	import { getTimePreference } from "$lib/utils.ts";
 
 	export let data;
 
@@ -251,7 +252,9 @@
 					Next WAN:
 					{#if mounted} <!-- dont SSR next wan date, as server timezone and locale is probably different than the users' -->
 						<span in:fade|global={{duration: 150}}>
-							{getNextWAN().toLocaleString()}
+							<!--{getNextWAN().toLocaleString()}-->
+							{getNextWAN().toLocaleDateString(localStorage.getItem("dateFormat") ?? undefined)}
+							{getNextWAN().toLocaleTimeString(undefined, {hour12: getTimePreference()})}
 						</span>
 					{/if}
 				{:else if isLate}
@@ -267,7 +270,7 @@
 					at
 					{#if mounted}
 						<span in:fade|global={{duration: 150}}>
-							{new Date(data.mainShowStarted ?? data.preShowStarted ?? data.liveStatus.floatplane.started).toLocaleTimeString()}
+							{new Date(data.mainShowStarted ?? data.preShowStarted ?? data.liveStatus.floatplane.started).toLocaleTimeString(undefined, {hour12: getTimePreference()})}
 						</span>
 					{/if}
 				{/if}
