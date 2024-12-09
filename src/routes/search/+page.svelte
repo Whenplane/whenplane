@@ -47,12 +47,12 @@
   }
 
   let first = true;
-  $: if(browser && !first) {
+  $: if(!q && browser && !first) {
     localStorage.setItem("searchTitle", searchTitle+"");
     localStorage.setItem("searchTopics", searchTopics+"");
     localStorage.setItem("searchTranscripts", searchTranscripts+"");
     localStorage.setItem("searchMerchMessages", searchMerchMessages+"");
-  } else if(browser) first = false;
+  } else if(!q && browser) first = false;
 
 </script>
 
