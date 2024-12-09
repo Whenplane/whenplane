@@ -1,7 +1,7 @@
 <script lang="ts">
   import { onMount } from "svelte";
   import { browser } from "$app/environment";
-  import type { DataTransformFunction, HistoricalEntry } from "$lib/utils";
+  import { type DataTransformFunction, getDateFormatLocale, type HistoricalEntry } from "$lib/utils";
   import { timeString } from "$lib/timeUtils.ts";
 
   export let shows: HistoricalEntry[];
@@ -39,7 +39,7 @@
     xaxis: {
       categories: showNames,
       labels: {
-        formatter: (name) => new Date(name).toLocaleDateString(localStorage.getItem("dateFormat") ?? undefined)
+        formatter: (name) => new Date(name).toLocaleDateString(getDateFormatLocale())
       }
     },
     yaxis: {

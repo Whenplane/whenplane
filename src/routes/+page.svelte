@@ -23,7 +23,7 @@
 	import Socket from "$lib/Socket.svelte";
 	import CaretDownFill from "svelte-bootstrap-icons/lib/CaretDownFill.svelte";
 	import {popup} from "@skeletonlabs/skeleton";
-	import { getTimePreference } from "$lib/utils.ts";
+	import { getDateFormatLocale, getTimePreference } from "$lib/utils.ts";
 
 	export let data;
 
@@ -253,7 +253,7 @@
 					{#if mounted} <!-- dont SSR next wan date, as server timezone and locale is probably different than the users' -->
 						<span in:fade|global={{duration: 150}}>
 							<!--{getNextWAN().toLocaleString()}-->
-							{getNextWAN().toLocaleDateString(localStorage.getItem("dateFormat") ?? undefined)}
+							{getNextWAN().toLocaleDateString(getDateFormatLocale())}
 							{getNextWAN().toLocaleTimeString(undefined, {hour12: getTimePreference()})}
 						</span>
 					{/if}

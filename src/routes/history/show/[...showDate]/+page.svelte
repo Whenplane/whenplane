@@ -9,6 +9,7 @@
     import type { WanDb_Topic } from "$lib/wdb_types.ts";
     import SubTopics from "$lib/subcomponents/SubTopics.svelte";
     import { fade } from "svelte/transition";
+    import { getDateFormatLocale } from "$lib/utils.ts";
 
     export let data;
 
@@ -54,7 +55,7 @@
     <li class="crumb-separator" aria-hidden="true">&rsaquo;</li>
     <li class="crumb"><a class="anchor hover-underline" href="/history">History</a></li>
     <li class="crumb-separator" aria-hidden="true">&rsaquo;</li>
-    <li class="crumb"><a class="anchor hover-underline" href="/history{backHash}">{showDate.toLocaleDateString(localStorage.getItem("dateFormat") ?? undefined)}</a></li>
+    <li class="crumb"><a class="anchor hover-underline" href="/history{backHash}">{showDate.toLocaleDateString(getDateFormatLocale())}</a></li>
 </ol>
 
 <div class="text-center limit mx-auto big-wrapper mb-96 px-2">

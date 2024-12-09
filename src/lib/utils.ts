@@ -128,6 +128,11 @@ export function getTimePreference() {
     return setting === "12h";
 }
 
+export function getDateFormatLocale() {
+    if(!browser) return undefined;
+    const setting = localStorage.getItem("dateFormat");
+    return setting ?? undefined;
+}
 
 
 

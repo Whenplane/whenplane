@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { escapeHtml, truncateText } from "$lib/utils.ts";
+  import { escapeHtml, getDateFormatLocale, truncateText } from "$lib/utils.ts";
   import { getClosestWan } from "$lib/timeUtils.ts";
   import { page } from "$app/stores";
   import { browser } from "$app/environment";
@@ -93,7 +93,7 @@
   <li class="crumb-separator" aria-hidden="true">&rsaquo;</li>
   <li class="crumb"><a class="anchor hover-underline" href="/history">History</a></li>
   <li class="crumb-separator" aria-hidden="true">&rsaquo;</li>
-  <li class="crumb"><a class="anchor hover-underline" href="/history/show/{data.name}">{showDate.toLocaleDateString(localStorage.getItem("dateFormat") ?? undefined)}</a></li>
+  <li class="crumb"><a class="anchor hover-underline" href="/history/show/{data.name}">{showDate.toLocaleDateString(getDateFormatLocale())}</a></li>
   <li class="crumb-separator" aria-hidden="true">&rsaquo;</li>
   <li class="crumb">Transcript</li>
 </ol>

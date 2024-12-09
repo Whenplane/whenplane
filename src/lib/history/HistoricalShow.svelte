@@ -18,7 +18,7 @@
     import LargerLazyLoad from "$lib/LargerLazyLoad.svelte";
     import { browser, dev } from "$app/environment";
     import { onMount } from "svelte";
-    import { getTimePreference } from "$lib/utils.ts";
+    import { getDateFormatLocale, getTimePreference } from "$lib/utils.ts";
 
     export let show;
     export let withThumbnail = false;
@@ -116,7 +116,7 @@
                 {/if}
             </div>
         {/if}
-        <h3>{showDate.toLocaleDateString(localStorage.getItem("dateFormat") ?? undefined)}</h3>
+        <h3>{showDate.toLocaleDateString(getDateFormatLocale())}</h3>
         {#if !(withThumbnail && thumbnail) && show.metadata?.isCurrentlyLive}
             <div class="inline-block absolute top-3 right-3">
                 <Live/>

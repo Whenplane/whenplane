@@ -1,6 +1,7 @@
 <script lang="ts">
     import {getClosestWan, timeString} from "$lib/timeUtils";
     import Late from "$lib/Late.svelte";
+    import { getDateFormatLocale } from "$lib/utils.ts";
     export let record: BestShow | number;
     export let asTime = true;
     export let color = true;
@@ -35,7 +36,7 @@
         {#if record.name}
             <span class="small">
                 <a href="/history/show/{record.name}" class="hidden-link underline">
-                    {getClosestWan(new Date(record.name)).toLocaleDateString(localStorage.getItem("dateFormat") ?? undefined)}
+                    {getClosestWan(new Date(record.name)).toLocaleDateString(getDateFormatLocale())}
                 </a>
             </span>
         {/if}
