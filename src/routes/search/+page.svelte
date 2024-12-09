@@ -115,6 +115,7 @@
           <option value="default" selected>Default (Show Date & Type & Relevance)</option>
           <option value="showDate">Show Date & Relevance</option>
           <option value="type">Type & Relevance</option>
+          <option value="relevance">Relevance Only</option>
         </select>
       </label>
     </div>
