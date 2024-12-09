@@ -1,7 +1,7 @@
 <script lang="ts">
   import { page } from "$app/stores";
   import { routeNames } from "./routeNames.ts";
-  import { capitalize } from "$lib/utils.js";
+  import { capitalize } from "$lib/utils";
 
   let pathHierarchy: string[] = []
   $: {

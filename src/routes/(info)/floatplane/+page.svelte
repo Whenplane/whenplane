@@ -7,7 +7,7 @@
   import {timeString} from "$lib/timeUtils";
   import DateStamp from "$lib/DateStamp.svelte";
   import { browser } from "$app/environment";
-  import { getTimePreference } from "$lib/utils.js";
+  import { getTimePreference } from "$lib/utils";
 
   export let data;
 
