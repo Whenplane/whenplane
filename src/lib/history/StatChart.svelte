@@ -39,7 +39,7 @@
     xaxis: {
       categories: showNames,
       labels: {
-        formatter: (name) => new Date(name).toLocaleDateString()
+        formatter: (name) => new Date(name).toLocaleDateString(localStorage.getItem("dateFormat") ?? undefined)
       }
     },
     yaxis: {

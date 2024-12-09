@@ -35,7 +35,7 @@
         {#if record.name}
             <span class="small">
                 <a href="/history/show/{record.name}" class="hidden-link underline">
-                    {getClosestWan(new Date(record.name)).toLocaleDateString()}
+                    {getClosestWan(new Date(record.name)).toLocaleDateString(localStorage.getItem("dateFormat") ?? undefined)}
                 </a>
             </span>
         {/if}

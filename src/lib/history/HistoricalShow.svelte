@@ -116,7 +116,7 @@
                 {/if}
             </div>
         {/if}
-        <h3>{showDate.toLocaleDateString()}</h3>
+        <h3>{showDate.toLocaleDateString(localStorage.getItem("dateFormat") ?? undefined)}</h3>
         {#if !(withThumbnail && thumbnail) && show.metadata?.isCurrentlyLive}
             <div class="inline-block absolute top-3 right-3">
                 <Live/>
