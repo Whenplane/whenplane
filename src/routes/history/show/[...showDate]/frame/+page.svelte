@@ -7,3 +7,9 @@
 <div class="text-center">
   <HistoricalShow onlyTimes={true} show={data}/>
 </div>
+
+<style>
+  :global(body,html) {
+      overflow: hidden;
+  }
+</style>
