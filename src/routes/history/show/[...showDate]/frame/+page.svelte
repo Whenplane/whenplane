@@ -4,9 +4,9 @@
   export let data;
 </script>
 
-<div class="text-center">
+<a href="https://whenplane.com/history/show/{data.name}" class="block text-center hidden-link" target="_parent">
   <HistoricalShow onlyTimes={true} show={data}/>
-</div>
+</a>
 
 <style>
   :global(body,html) {
