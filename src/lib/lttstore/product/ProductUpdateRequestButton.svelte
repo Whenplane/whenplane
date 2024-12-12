@@ -4,7 +4,7 @@
   import { ProgressRadial } from "@skeletonlabs/skeleton";
 
 
-  let promise: Promise<{message?: string, success?: true}>;
+  let promise: Promise<{message?: string, success?: true, allowBypass?: boolean}>;
   let status = {done: true};
 
   function request() {
@@ -40,6 +40,9 @@
   {#if data?.success}
     <span class="text-green-300">
       Update queued! Please reload this page in a few minutes.
+      {#if data?.allowBypass}
+        Also bypassing was allowed.
+      {/if}
     </span>
   {/if}
 {/await}
