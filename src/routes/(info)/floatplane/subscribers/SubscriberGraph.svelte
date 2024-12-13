@@ -67,9 +67,6 @@
       labels: {
         formatter: commas,
       },
-      title: {
-        text: 'Stock'
-      },
     },
     xaxis: {
       type: 'datetime'
