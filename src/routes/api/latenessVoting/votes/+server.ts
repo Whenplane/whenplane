@@ -15,7 +15,7 @@ export const GET = (async ({platform, url}) => {
 
   const fast = url.searchParams.get("fast") === "true";
 
-  if(Date.now() - latenessVotesCache.lastFetch < cache_time || (fast && Date.now() - latenessVotesCache.lastFetch < 5 * 60 * 60e3)) {
+  if(latenessVotesCache.lastData && Date.now() - latenessVotesCache.lastFetch < cache_time || (fast && Date.now() - latenessVotesCache.lastFetch < 5 * 60 * 60e3)) {
     return json(latenessVotesCache.lastData);
   }
   latenessVotesCache.lastFetch = Date.now();
