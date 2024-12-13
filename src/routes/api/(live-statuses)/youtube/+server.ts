@@ -159,7 +159,7 @@ export const GET = (async ({platform, locals, url, fetch}) => {
                 },
                 body: JSON.stringify(result)
             }
-          )
+          ).catch()
         );
     }
 
