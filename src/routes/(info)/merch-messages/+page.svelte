@@ -74,8 +74,14 @@
 </script>
 <svelte:head>
   <title>Whenplane Merch Messages</title>
-  <meta name="description" content="The Whenplane Merch Message Index is a tool that has processed nearly every WAN show that includes merch messages, and organized them into an organized and searchable index."/>
+  <meta name="description" content="The Whenplane Merch Message Index is a tool that has processed nearly every WAN show that includes merch messages, and organized them into an organized and searchable index/archive."/>
 </svelte:head>
+
+<span class="clear inline-block absolute pointer-events-none" style="z-index: -5;">
+  The Whenplane Merch Message Index is a tool that has processed nearly every WAN show that includes merch messages,
+  and organized them into an organized and searchable index/archive.<br>
+  I hope that this WAN Show Merch Message Archive is helpful to you.
+</span>
 
 <ol class="breadcrumb pt-2 pl-2">
   <li class="crumb"><a class="anchor hover-underline" href="/">{$page.url.hostname === "whenwan.show" ? "whenwan.show" : "Whenplane"}</a></li>
