@@ -38,8 +38,14 @@ export const GET = (async ({url, fetch, locals, platform}) => {
     const votes = (async () => {
         const start = Date.now();
         const response = await fetch("/api/latenessVoting/votes?fast=" + (fast && !isNextFast))
-          .then(r => r.json())
-          .catch(e => {throw new Error("Error while fetching votes: " + e.message, { cause: e })});
+          .then(async (r) => {
+              const text = await r.text();
+              try {
+                  return JSON.parse(text);
+              } catch(e: any) {
+                  throw new Error("Error while fetching votes: " + e.message + ": " + text, { cause: e })
+              }
+          })
         votesTime = Date.now() - start;
         return response;
     })();
