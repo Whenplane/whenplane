@@ -62,7 +62,7 @@ export const GET = (async ({fetch, url, platform, locals}) => {
         lastFetch: cache.lastFetch,
         ...cache.lastData,
         description: withDescription ? cache.lastData?.description : undefined,
-        isWAN: cache.lastData?.title.toLowerCase().includes(" wan ")
+        isWAN: cache.lastData?.title?.toLowerCase().includes(" wan ")
       });
     }
 
@@ -139,7 +139,7 @@ export const GET = (async ({fetch, url, platform, locals}) => {
     return json({
       ...data,
       description: withDescription ? data.description : undefined,
-      isWAN: data.title.toLowerCase().includes(" wan ")
+      isWAN: data.title?.toLowerCase().includes(" wan ")
     });
 
 
