@@ -25,19 +25,21 @@ export const GET = (async ({url, fetch, locals, platform}) => {
     const fast = url.searchParams.get("fast");
     const isNextFast = url.searchParams.get("isNextFast");
 
-    const isThereWan = fetch("/api/isThereWan").then(r => r.json());
+    const isThereWan = fetch("/api/isThereWan").then(r => r.json())
+      .catch(e => {throw new Error("Error while fetching isThereWan: " + e.message, { cause: e })});
     let hasDoneTimestamp;
     const hasDone = fetch("/api/hasDone").then(r => r.json()).then(r => {
         hasDoneTimestamp = r.timestamp;
         return r.hasDone;
-    });
+    }).catch(e => {throw new Error("Error while fetching hasDone: " + e.message, { cause: e })});
     // const showExtension = (platform?.env?.META as KVNamespace)?.get("showExtension").then(r => r === "true");
 
     let votesTime: number | undefined;
     const votes = (async () => {
         const start = Date.now();
         const response = await fetch("/api/latenessVoting/votes?fast=" + (fast && !isNextFast))
-          .then(r => r.json());
+          .then(r => r.json())
+          .catch(e => {throw new Error("Error while fetching votes: " + e.message, { cause: e })});
         votesTime = Date.now() - start;
         return response;
     })();
@@ -46,7 +48,8 @@ export const GET = (async ({url, fetch, locals, platform}) => {
     const twitch = (async () => {
         const start = Date.now();
         const response = await fetch("/api/twitch?short&fast=" + fast)
-          .then(r => r.json());
+          .then(r => r.json())
+          .catch(e => {throw new Error("Error while fetching twitch: " + e.message, { cause: e })});
         twitchTime = Date.now() - start;
         return response;
     })();
@@ -55,7 +58,8 @@ export const GET = (async ({url, fetch, locals, platform}) => {
     const youtube = (async () => {
         const start = Date.now();
         const response = await fetch("/api/youtube?short&fast=" + fast)
-          .then(r => r.json());
+          .then(r => r.json())
+          .catch(e => {throw new Error("Error while fetching youtube: " + e.message, { cause: e })});
         ytTime = Date.now() - start;
         return response;
     })();
@@ -64,7 +68,8 @@ export const GET = (async ({url, fetch, locals, platform}) => {
     const specialStream = (async () => {
         const start = Date.now();
         const response = await fetch("/api/specialStream?short&fast=" + fast)
-          .then(r => r.json());
+          .then(r => r.json())
+          .catch(e => {throw new Error("Error while fetching specialStream: " + e.message, { cause: e })});
         spTime = Date.now() - start;
         return response;
     })();
@@ -73,7 +78,8 @@ export const GET = (async ({url, fetch, locals, platform}) => {
     const floatplane = (async () => {
         const start = Date.now();
         const response = await fetch("/api/floatplane?fast=" + fast)
-          .then(r => r.json());
+          .then(r => r.json())
+          .catch(e => {throw new Error("Error while fetching floatplane: " + e.message, { cause: e })});
         fpTime = Date.now() - start;
         return response;
     })();
@@ -82,7 +88,8 @@ export const GET = (async ({url, fetch, locals, platform}) => {
     const notable = (async () => {
         const start = Date.now();
         const response = await fetch("/api/notable-streams?short&fast=" + fast)
-          .then(r => r.json());
+          .then(r => r.json())
+          .catch(e => {throw new Error("Error while fetching notable-streams: " + e.message, { cause: e })});
         notableTime = Date.now() - start;
         return response;
     })();
