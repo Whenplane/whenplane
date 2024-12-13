@@ -16,7 +16,6 @@
     import { countTo, type HistoricalEntry } from "$lib/utils";
     import LoadingHistoricalShow from "$lib/history/LoadingHistoricalShow.svelte";
     import LazyLoad from "@dimfeld/svelte-lazyload";
-    import TopicSearch from "$lib/TopicSearch.svelte";
 
     export let data;
 
@@ -37,12 +36,21 @@
         }
     }
 
+    let fetched: number[] = [];
+
     function loadNextYear() {
+        if(fetched.includes(nextYear)) {
+            console.warn("Already fetched " + nextYear + ", ignoring duplicate.");
+            return;
+        }
+        fetched.push(nextYear);
         console.debug("Fetching", nextYear)
         fetch("/api/history/year/" + nextYear)
           .then(r => r.json() as Promise<HistoricalEntry[]>)
           .then(newShows => {
-              console.debug("Adding " + newShows.length + " shows from " + newShows[0]?.name.split("/")[0])
+              const fetchedYear = Number(newShows[0]?.name.split("/")[0]);
+              console.debug("Adding " + newShows.length + " shows from " + fetchedYear)
+              fetched.push(fetchedYear);
               shows.push(...newShows);
               shows = shows;
               nextYear--;
