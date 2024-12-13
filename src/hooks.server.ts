@@ -198,7 +198,7 @@ export const handleError: HandleServerError = async ({ error, event, status, mes
                 formData.append(
                   "files[0]",
                   new Blob(
-                    [JSON.stringify({error, status, message, eventClone}, undefined, '\t')],
+                    [JSON.stringify({error, eMessage: error?.message, status, message, eventClone}, undefined, '\t')],
                     {type: 'application/json'}
                   ),
                   "items.json"
