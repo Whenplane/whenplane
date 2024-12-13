@@ -179,6 +179,7 @@ export const handle: Handle = async ({ event, resolve }) => {
 export const handleError: HandleServerError = async ({ error, event, status, message}) => {
 
     if(!building && error && error?.status !== 404) {
+        console.debug("Reporting error!")
         if(env.ERROR_REPORTING_WEBHOOK) {
 
             try {
