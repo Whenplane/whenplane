@@ -16,7 +16,7 @@
   let late = false;
   $: startTime = specialStreamData.start ? new Date(specialStreamData.start) : undefined;
 
-  $: live = data.liveStatus.floatplane?.isLive;
+  $: live = data.liveStatus.floatplane?.isLive && !data.liveStatus.floatplane?.isWAN;
 
   $: thumbnailStyle = specialStreamData.thumbnail ? `background: linear-gradient(rgba(21,23,31,.75), rgba(21,23,31,.75)), url(${JSON.stringify(specialStreamData.thumbnail)});` : "";
 
