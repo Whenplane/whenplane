@@ -1,9 +1,10 @@
-<script>
+<script lang="ts">
   import { setCookie } from "$lib/cookieUtils";
   import { invalidateAll } from "$app/navigation";
   import ExclamationTriangle from "svelte-bootstrap-icons/lib/ExclamationTriangle.svelte";
-  import {popup} from "@skeletonlabs/skeleton";
+  import { modalStore, popup } from "@skeletonlabs/skeleton";
   import {fade} from "svelte/transition"
+  import ProductSearchModal from "./ProductSearchModal.svelte";
 
   export let data;
 
@@ -13,7 +14,19 @@
     invalidateAll();
   }
 
+  function keypress(event: KeyboardEvent) {
+    if(event.key === "P") {
+      modalStore.trigger({
+        type: 'component',
+        component: {
+          ref: ProductSearchModal
+        }
+      })
+    }
+  }
+
 </script>
+<svelte:window on:keyup={keypress}/>
 <div class="float-right pr-5 h-0">
   <div class="inline-block">
     {#if selectedCurrency !== "USD"}

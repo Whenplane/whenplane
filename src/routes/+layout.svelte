@@ -17,6 +17,8 @@
     import { onMount } from "svelte";
 
     import { Toast } from '@skeletonlabs/skeleton';
+    import { Modal, modalStore } from '@skeletonlabs/skeleton';
+    import type { ModalSettings, ModalComponent } from '@skeletonlabs/skeleton';
 
     NProgress.configure({
         // Full list: https://github.com/rstacruz/nprogress#configuration
@@ -45,6 +47,7 @@
             NProgress.done();
         }
     }
+
 
     storePopup.set({ computePosition, autoUpdate, flip, shift, offset, arrow });
 
@@ -85,6 +88,7 @@
     {/if}
 </svelte:head>
 
+<Modal />
 <Toast/>
 
 <slot />

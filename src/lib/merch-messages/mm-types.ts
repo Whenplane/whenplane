@@ -8,3 +8,11 @@ export type MMTableRow = {
   text: string,
   jobId: string
 }
+
+export type MMVideo = {
+  videoId: string,
+  status: string,
+  title: string,
+  releaseDate: number,
+  messageCount: number | null
+}
