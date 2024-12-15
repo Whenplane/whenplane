@@ -2,6 +2,8 @@
   import { onMount } from "svelte";
   import { invalidateAll } from "$app/navigation";
   import { timeString } from "$lib/timeUtils.ts";
+  import { page } from "$app/stores";
+  import { ProgressRadial } from "@skeletonlabs/skeleton";
 
   export let data;
 
@@ -10,13 +12,34 @@
 
 
   let liveStatusChangeTime = "";
-  let lastInvalidate = 0;
+  let lastInvalidate = Date.now();
+  let tries = 0;
+
+  $: isDataOutdated = data.floatplane?.isLive !== ($page.url.searchParams.has("live") ? $page.url.searchParams.get("live") === "true" : data.floatplane?.isLive);
 
   onMount(() => {
     let i = setInterval(() => {
-      if(!document.hidden) {
-        invalidateAll();
-        lastInvalidate = Date.now();
+
+
+      if(
+        // refresh if the detected status from extension is not what we have
+        isDataOutdated ||
+        // the extension should automatically reload us when the status changes, but re-check every hour anyway
+        (!document.hidden && Date.now() - lastInvalidate > 60 * 60e3)
+      ) {
+        let delay = 0;
+        if(tries > 10) delay = 30;
+        if(tries > 20) delay = 60;
+        if(tries > 30) delay = 2 * 60;
+        if(tries > 40) delay = 5 * 60;
+        if(tries > 50) delay = 15 * 60;
+        if(Date.now() - lastInvalidate > delay * 1e3 && (tries < 30 || !document.hidden)) {
+          console.debug("[whenplane live status frame] Re-fetching data")
+          invalidateAll();
+          lastInvalidate = Date.now();
+        }
+      } else {
+        tries = 0;
       }
 
       updateLiveStatusChangeTime();
@@ -41,11 +64,18 @@
 
 </script>
 
-<div class="inline-block p-2">
-  <span class:green={data.floatplane?.isLive}>
-    {data.floatplane?.isLive ? "Live" : "Offline"}
+<div class="inline-block p-2 relative">
+  <span class:opacity-30={isDataOutdated}>
+    <span class:green={data.floatplane?.isLive}>
+      {data.floatplane?.isLive ? "Live" : "Offline"}
+    </span>
+    for {liveStatusChangeTime}
   </span>
-  for {liveStatusChangeTime}
+  {#if isDataOutdated}
+    <div class="absolute top-2.5 left-6">
+      <ProgressRadial class="inline-block" width="w-5" stroke={250}/>
+    </div>
+  {/if}
 </div>
 
 <style>
