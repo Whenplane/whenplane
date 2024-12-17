@@ -64,7 +64,7 @@
 
 </script>
 
-<div class="inline-block p-2 relative">
+<div class="inline-block p-2 relative h-full content-center">
   <span class:opacity-30={isDataOutdated}>
     <span class:green={data.floatplane?.isLive}>
       {data.floatplane?.isLive ? "Live" : "Offline"}
@@ -81,5 +81,9 @@
 <style>
     .green {
         color: lawngreen;
+    }
+
+    :global(body,html) {
+        overflow: hidden;
     }
 </style>
