@@ -35,15 +35,18 @@ export const GET = (async ({platform, url}) => {
     // return json(voteTotals);
   }
 
-  const votes = await (db.prepare("select * from lateness_votes where timestamp > ? order by timestamp desc")
+  const utcDay = new Date().getUTCDay();
+
+  const votes = (utcDay === 5 || utcDay === 6) ? await (db.prepare("select * from lateness_votes where timestamp > ? order by timestamp desc")
     .bind(Date.now() - vote_valid_for) as D1PreparedStatement)
-    .all() as unknown as D1Result<{id: string, timestamp: string, vote: string}>;
+    .all<{id: string, timestamp: string, vote: string}>()
+    .then(r => r?.results) : [];
 
   const processedIds: string[] = [];
 
   const voteTotals = structuredClone(options);
 
-  for (const vote of (votes.results ?? [])) {
+  for (const vote of (votes ?? [])) {
 
     if(processedIds.includes(vote.id)) continue;
     processedIds.push(vote.id)
