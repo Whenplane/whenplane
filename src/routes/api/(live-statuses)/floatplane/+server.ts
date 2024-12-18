@@ -19,6 +19,24 @@ let lastOtherStreamNotifSend = 0;
 
 export const GET = (async ({fetch, url, platform, locals}) => {
 
+  /*if(dev) return json({
+    "cached": true,
+    "lastFetch": 1715992785281,
+    "isLive": true,
+    "started": "2024-12-18T00:25:25.184Z",
+    "isThumbnailNew": false,
+    "title": "iPhones Are Undeleting Nudes?? - WAN Show May 17, 2024",
+    "titleFirstSeen": "2024-05-18T00:20:15.333Z",
+    "thumbnail": "https://pbs.floatplane.com/stream_thumbnails/5c13f3c006f1be15e08e05c0/658708756715044_1715388246628.jpeg",
+    "thumbnailFirstSeen": "2024-05-11T00:44:11.045Z",
+    "thumbnailAge": 604530807,
+    "thumbnailAgePretty": "6d 23h 55m 30s",
+    "description": "<p>Visit <a href=\"https://www.squarespace.com/WAN\" rel=\"noopener noreferrer\" target=\"_blank\">https://www.squarespace.com/WAN</a> and use offer code WAN for 10% off</p><p><br></p><p>Improve your website’s SEO performance FOR FREE with Ahref’s Webmaster Tools. Check it out at <a href=\"https://ahrefs.com/awt\" rel=\"noopener noreferrer\" target=\"_blank\">https://ahrefs.com/awt</a>&nbsp;</p><p><br></p><p>Download the free Magical extension and save some precious time during your day to day grind at <a href=\"https://getmagical.com/WANshow\" rel=\"noopener noreferrer\" target=\"_blank\">https://getmagical.com/WANshow</a>.</p><p><br></p><p>Podcast Download: TBD</p><p><br></p>",
+    "descriptionFirstSeen": "2024-05-17T23:27:05.516Z",
+    "fetched": 1715992781000,
+    "isWAN": true
+  }) // */
+
   try {
 
     const fetcher: DurableObjectNamespace | undefined = platform?.env?.FLOATPLANE_FETCHER;
