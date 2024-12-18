@@ -4,9 +4,11 @@ import { getTimeUntil } from "$lib/timeUtils.ts";
 import type { FpEndpointResponse } from "../(live-statuses)/floatplane/+server.ts";
 
 export const GET = (async ({fetch}) => {
-  // In the future this will be from a database, but this will be fine for now.
+  // In the future this will be from a database, but this will be fine for now. (update a year later: heh)
 
-  const data: SpecialStream | false = {
+  const fpLive: FpEndpointResponse = await fetch("/api/floatplane?fast=true").then(r => r.json());
+
+  const data: SpecialStream | false = fpLive.isLive ? {
     title: "The Ultimate 500 Dollar Gaming PC (using Intel Arc)",
     thumbnail: "https://pbs.floatplane.com/stream_thumbnails/5c13f3c006f1be15e08e05c0/579051666835092_1734546782275.jpeg",
 
@@ -18,7 +20,7 @@ export const GET = (async ({fetch}) => {
     onTwitch: true,
 
     onYoutube: true
-  } /*{
+  } : {
     title: "Streams with Sarah - Shirt Design Stream 2",
     thumbnail: "https://pbs.floatplane.com/blogPost_thumbnails/4xXdEpaceQ/351967502414299_1734130110413_400x225.jpeg",
 
@@ -31,14 +33,12 @@ export const GET = (async ({fetch}) => {
     // twitchNotes: "first half",
 
     onYoutube: false
-  }*/ //false;
+  } //false;
 
   if(!data) {
     return json(data);
   }
 
-
-  const fpLive: FpEndpointResponse = await fetch("/api/floatplane?fast=true").then(r => r.json());
 
   if(data.start) {
     // hide an hour after the start time;
