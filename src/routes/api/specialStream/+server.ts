@@ -8,19 +8,7 @@ export const GET = (async ({fetch}) => {
 
   const fpLive: FpEndpointResponse = await fetch("/api/floatplane?fast=true").then(r => r.json());
 
-  const data: SpecialStream | false = fpLive.isLive ? {
-    title: "The Ultimate 500 Dollar Gaming PC (using Intel Arc)",
-    thumbnail: "https://pbs.floatplane.com/stream_thumbnails/5c13f3c006f1be15e08e05c0/579051666835092_1734546782275.jpeg",
-
-    start: "2024-12-18T19:00:00Z",
-    startIsEstimated: true,
-
-    onFloatplane: true,
-
-    onTwitch: true,
-
-    onYoutube: true
-  } : {
+  const data: SpecialStream | false = {
     title: "Streams with Sarah - Shirt Design Stream 2",
     thumbnail: "https://pbs.floatplane.com/blogPost_thumbnails/4xXdEpaceQ/351967502414299_1734130110413_400x225.jpeg",
 
