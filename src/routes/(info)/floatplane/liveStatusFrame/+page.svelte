@@ -60,7 +60,6 @@
   function updateLiveStatusChangeTime() {
     distance = Date.now() - (liveStatusChangedDate ?? initialLiveStatusChangedDate).getTime();
     const initial = timeString(distance, true)?.split(" ");
-    console.log({distance})
     if(!data.floatplane.isLive && distance >= 24 * 60 * 60e3) {
       initial?.pop();
       initial?.pop();
