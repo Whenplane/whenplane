@@ -65,9 +65,9 @@ export const load = (async ({platform, params, url}) => {
       .all<StockHistoryTableRow>()
       .then(r => r.results);
   } else {
-    stockHistory = db.prepare("select * from stock_history where handle = ? and timestamp > ? order by timestamp")
+    stockHistory = db.prepare("select * from stock_history where id = ? and timestamp > ? order by timestamp")
       .bind(
-        handle,
+        product.id,
         Date.now() - (historyDays * 24 * 60 * 60e3)
       )
       .all<StockHistoryTableRow>()
