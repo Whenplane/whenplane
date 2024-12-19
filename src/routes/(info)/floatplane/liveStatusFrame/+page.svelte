@@ -24,7 +24,7 @@
     let i = setInterval(() => {
       intervalCounter++;
       // only update every 5 seconds when the distance is more than an hour
-      if(!isDataOutdated && (!data.floatplane.isLive && distance >= 24 * 60 * 60e3) && intervalCounter % 5 !== 0) return;
+      if(!isDataOutdated && (!data.floatplane.isLive && distance >= 60 * 60e3) && intervalCounter % 5 !== 0) return;
 
 
       if(
@@ -60,7 +60,7 @@
   function updateLiveStatusChangeTime() {
     distance = Date.now() - (liveStatusChangedDate ?? initialLiveStatusChangedDate).getTime();
     const initial = timeString(distance, true)?.split(" ");
-    if(!data.floatplane.isLive && distance >= 24 * 60 * 60e3) {
+    if(!data.floatplane.isLive && distance >= 60 * 60e3) {
       initial?.pop();
       initial?.pop();
       initial?.pop();
