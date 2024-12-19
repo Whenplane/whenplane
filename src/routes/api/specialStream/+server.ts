@@ -10,7 +10,7 @@ export const GET = (async ({fetch}) => {
 
   const data: SpecialStream | false = {
     title: "Streams with Sarah - Shirt Design Stream 2",
-    thumbnail: "https://pbs.floatplane.com/blogPost_thumbnails/4xXdEpaceQ/351967502414299_1734130110413_400x225.jpeg",
+    thumbnail: "https://pbs.floatplane.com/stream_thumbnails/5c13f3c006f1be15e08e05c0/718785454040303_1734628840769.jpeg",
 
     start: "2024-12-19T18:00:00Z",
     startIsEstimated: false,
