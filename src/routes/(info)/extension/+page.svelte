@@ -43,7 +43,9 @@
       Download for Chrome
     </a>
     <br>
-    or <a href="https://downloads.whenplane.com/whenplane_widget-1.2.2.zip" download>download zip</a>
+    or download zip for
+    <a href="https://downloads.whenplane.com/whenplane_widget-firefox-2.1.0.zip" download>firefox</a> /
+    <a href="https://downloads.whenplane.com/whenplane_widget-chrome-2.1.0.zip" download>chrome</a>
     <br>
     <br>
     <a
