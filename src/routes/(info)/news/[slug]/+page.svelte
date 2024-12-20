@@ -28,7 +28,7 @@
   <li class="crumb">{data.post.title}</li>
 </ol>
 
-<div class="limit mx-auto pb-32">
+<div class="limit mx-auto pb-32 px-2">
   <h1>{data.post.title}</h1>
   <div class="date text-right opacity-70">
     {postDate.toLocaleDateString(undefined, {dateStyle: "long"})}

@@ -19,7 +19,7 @@
 </ol>
 <br>
 
-<div class="limit mx-auto">
+<div class="limit mx-auto px-2">
   <h1>{$page.url.hostname === "whenwan.show" ? "whenwan.show" : "Whenplane"} News</h1>
   I will occasionally post news and updates here related to {$page.url.hostname === "whenwan.show" ? "whenwan.show" : "Whenplane"} here.<br>
   <br>
