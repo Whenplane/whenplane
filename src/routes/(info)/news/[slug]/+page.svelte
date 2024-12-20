@@ -13,6 +13,11 @@
   <title>{data.post.title} - Whenplane News</title>
   <meta name="description" content={truncateText(sanitizeHtml(data.post.body, {allowedTags: []}), 200)}>
   <meta name="created" content="{postDate.toISOString()}">
+  <meta name="date" content="{postDate.toISOString()}">
+  <meta name="available" content="{postDate.toISOString()}">
+  <meta name="author" content="ajgeiss0702">
+  <meta name="creator" content="ajgeiss0702">
+  <meta name="publisher" content="Whenplane">
 </svelte:head>
 
 <ol class="breadcrumb pt-2 pl-2">
