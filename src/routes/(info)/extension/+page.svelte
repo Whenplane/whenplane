@@ -60,13 +60,16 @@
     <br>
     <br>
     <br>
-    <ClickableImage src="/extension/screenshots/late.png" style="width: 25em;" width="1920" height="994"/>
+    <ClickableImage src="/extension/screenshots/late.png" style="width: 25em;" width="2940" height="1670"/>
     <ClickableImage src="/extension/screenshots/late-filled.png" style="width: 25em;" width="1920" height="994"/>
 
-    <ClickableImage src="/extension/screenshots/after.png" style="width: 25em;" width="1920" height="994"/>
+    <ClickableImage src="/extension/screenshots/after.png" style="width: 25em;" width="2940" height="1668"/>
     <ClickableImage src="/extension/screenshots/filled.png" style="width: 25em;" width="1920" height="994"/>
 
     <ClickableImage src="/extension/screenshots/twitch-filled.png" style="width: 25em;" width="1920" height="994"/>
+
+    <ClickableImage src="/extension/screenshots/vod-info-fp.png" style="width: 25em;" width="2144" height="1346"/>
+    <ClickableImage src="/extension/screenshots/vod-info-yt.png" style="width: 25em;" width="2052" height="1392"/>
     <br>
     <br>
     <div class="text-center">
