@@ -9,16 +9,17 @@
   import ToolTip from "$lib/ToolTip.svelte";
   import { setCookie, strip } from "$lib/cookieUtils.ts";
 
+  let q = $page.url.searchParams.get("q");
   $: q = $page.url.searchParams.get("q")
 
   export let data;
 
   let searchForm: HTMLFormElement;
 
-  let searchTitle = ($page.url.searchParams.get("title") ?? "on") === "on";
-  let searchTopics = ($page.url.searchParams.get("topics") ?? "on") === "on";
-  let searchTranscripts = ($page.url.searchParams.get("transcripts") ?? "on") === "on";
-  let searchMerchMessages = ($page.url.searchParams.get("merch-messages") ?? "on") === "on";
+  let searchTitle = ($page.url.searchParams.get("title")) === "on";
+  let searchTopics = ($page.url.searchParams.get("topics")) === "on";
+  let searchTranscripts = ($page.url.searchParams.get("transcripts")) === "on";
+  let searchMerchMessages = ($page.url.searchParams.get("merch-messages")) === "on";
 
   let searchSort = $page.url.searchParams.get("sort") ?? "default";
 
