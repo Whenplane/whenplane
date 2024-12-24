@@ -1,5 +1,5 @@
 import { error } from "@sveltejs/kit";
-import type { PageServerLoad } from "../../../../../.svelte-kit/types/src/routes";
+import type { PageServerLoad } from "./$types";
 import type { D1Database } from "@cloudflare/workers-types";
 import { dev } from "$app/environment";
 import type { ProductsTableRow } from "$lib/lttstore/lttstore_types.ts";
