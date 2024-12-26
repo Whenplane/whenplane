@@ -46,7 +46,7 @@ export type LegacyShopifyProduct = {
   id: number,
   title: string,
   handle: string,
-  body_html: string,
+  body_html?: string,
   published_at: string,
   created_at: string,
   updated_at: string,
@@ -179,7 +179,8 @@ export type ProductsTableRow = {
   firstSeen: number,
   available: boolean,
   backorderAlerts: string,
-  productDetailModules: string
+  productDetailModules: string,
+  productDiscount: string
 }
 export type ParsedProductsTableRow = {
   handle: string,
@@ -197,6 +198,7 @@ export type ParsedProductsTableRow = {
   available: boolean,
   backorderAlerts: BackorderAlerts,
   productDetailModules: ProductDetailModule[],
+  productDiscount: string[]
 }
 
 export type StockHistoryTableRow = {
@@ -239,5 +241,37 @@ export type ProductSearchIndex = {
   regularPrice: number,
   currentPrice: number,
   firstSeen: number,
+  available: boolean
+}
+
+
+
+export type ShopifyCollection = {
+  id: number,
+  title: string,
+  handle: string,
+  description: string,
+  published_at: string,
+  updated_at: string,
+  image: CollectionImage | null,
+  products_count: number
+}
+export type CollectionImage = {
+  id: number,
+  created_at: string,
+  src: string,
+  alt: string | null
+}
+
+export type CollectionDbRow = {
+  id: number,
+  title: string,
+  handle: string,
+  description: string,
+  published_at: number,
+  updated_at: number,
+  image: string | null,
+  reportedCount: number,
+  products: string,
   available: boolean
 }

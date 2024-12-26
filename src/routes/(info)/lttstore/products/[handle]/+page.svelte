@@ -17,6 +17,7 @@
   import { browser, dev } from "$app/environment";
   import ProductUpdateRequestButton from "$lib/lttstore/product/ProductUpdateRequestButton.svelte";
   import ExclamationTriangle from "svelte-bootstrap-icons/lib/ExclamationTriangle.svelte";
+  import Tags from "svelte-bootstrap-icons/lib/Tags.svelte";
   import { getFieldName } from "$lib/lttstore/field_names.ts";
   import { getDiffComponent } from "$lib/lttstore/field_components.ts";
 
@@ -32,6 +33,8 @@
   $: goneInHours = ((currentStock.total ?? -1) / nonZeroPurchasesPerHour) - ((Date.now() - data.product.stockChecked) / (60 * 60e3));
 
   $: strippedTitle = productInfo.title.replace(/\(.*\)/g, "").replace("Knife", "Knive").trim();
+
+  $: productDiscounts = JSON.parse(data.product.productDiscount ?? "[]");
 
   let backorderNotices = new Set();
   $: {
@@ -437,6 +440,24 @@
   <br>
   <br>
 
+  {#if productDiscounts.length > 0}
+    <h2>Product Discount</h2>
+    {#each productDiscounts as productDiscount}
+      <aside class="alert variant-ghost">
+        <!-- Icon -->
+        <div><Tags width="2em" height="2em"/></div>
+        <!-- Message -->
+        <div class="alert-message">
+          <!--          <h4 class="h4">(title)</h4>-->
+          <p class="product-discount-text">
+            {@html sanitizeHtml(productDiscount, newsSanitizeSettings)}
+          </p>
+        </div>
+      </aside>
+      <br>
+    {/each}
+  {/if}
+
   {#if backorderNotices.size > 0}
     <h2>Backorder Notice</h2>
     {#each backorderNotices as backorderNotice}
@@ -592,5 +613,9 @@
 
   .padded-table td {
       padding-right: 1em;
+  }
+
+  .product-discount-text > :global(hr) {
+      margin: 1rem;
   }
 </style>

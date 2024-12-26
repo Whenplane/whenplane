@@ -1,10 +1,18 @@
 import type { D1Database } from "@cloudflare/workers-types";
 
-export async function createTables(db: D1Database) {
-  await db.prepare("create table if not exists products (handle text, id integer PRIMARY KEY, title text, product text, stock string, stockChecked integer, lastRestock integer, purchasesPerHour integer, purchasesPerDay integer, regularPrice integer, currentPrice integer, firstSeen integer, available integer, backorderAlerts text, productDetailModules text)")
+export async function createTables(DB: D1Database) {
+  await DB.prepare("create table if not exists products (handle text, id integer PRIMARY KEY, title text, product text, stock string, stockChecked integer, lastRestock integer, purchasesPerHour integer, purchasesPerDay integer, regularPrice integer, currentPrice integer, firstSeen integer, available integer, backorderAlerts text, productDetailModules text, productDiscount text)")
     .run();
-  await db.prepare("create table if not exists stock_history (handle text, id integer, timestamp integer, stock string, unique(id, timestamp))")
+  await DB.prepare("create table if not exists stock_history (handle text, id integer, timestamp integer, stock string)")
     .run();
-  await db.prepare("create table if not exists change_history (id integer, timestamp integer, field TEXT, old TEXT, new TEXT, unique(id, timestamp, field))")
+  await DB.prepare("create table if not exists change_history (id integer, timestamp integer, field TEXT, old TEXT, new TEXT)")
+    .run();
+  await DB.prepare("create table if not exists collections (id integer PRIMARY KEY, title text, handle text, description text, published_at integer, updated_at integer, image text, reportedCount integer, products text, available integer)")
+    .run();
+
+  await DB.prepare("create table if not exists collection_changes (id integer, timestamp integer, field TEXT, old TEXT, new TEXT)")
+    .run();
+
+  await DB.prepare("create table if not exists product_carts (id integer PRIMARY KEY, cookies text)")
     .run();
 }
