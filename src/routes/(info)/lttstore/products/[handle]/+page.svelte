@@ -162,7 +162,7 @@
   <br>
   <div class="max-w-3xl my-4">
     <Accordion class="mx-4" spacing="" regionPanel="">
-      <AccordionItem open={dev}>
+      <AccordionItem>
         <svelte:fragment slot="summary">Product Metadata</svelte:fragment>
         <svelte:fragment slot="content">
           <h2>Whenplane Metadata</h2>
