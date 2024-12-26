@@ -15,7 +15,7 @@
   }
 
   function keypress(event: KeyboardEvent) {
-    if(event.key === "P") {
+    if(event.key === "P" && document.activeElement?.tagName !== "INPUT") {
       modalStore.trigger({
         type: 'component',
         component: {
