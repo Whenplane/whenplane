@@ -383,7 +383,7 @@
 					{@html sanitizeHtml(data.isThereWan?.text, newsSanitizeSettings)}
 				{/if}
 				{#if data.isThereWan?.image}
-					<img src={data.isThereWan.image} alt={data.isThereWan?.text ?? ""} style="height: 10em;" class="mx-auto">
+					<img src={data.isThereWan.image} alt={data.isThereWan?.text ?? ""} style="max-height: 10em;" class="mx-auto">
 				{/if}
 			</div>
 		{/if}

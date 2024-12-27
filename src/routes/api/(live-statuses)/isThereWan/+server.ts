@@ -24,8 +24,8 @@ export const GET = (async ({platform, locals}) => {
 
   /*if(dev) {
     const response: IsThereWanResponse = {
-      text: "WAN will be happening early on November 21st. See above for the scheduled time converted to your time zone. Announced on <a href=\"https://nitter.poast.org/LinusTech/status/1859635421946224861\">Nitter</a>/<a href=\"https://x.com/LinusTech/status/1859635421946224861\">X</a> and <a href=\"https://www.floatplane.com/post/tjX1NsK10T\">Floatplane</a>",
-      image: null
+      text: "WAN WAS supposed to start at <a href=\"https://www.youtube.com/channel/UCXuqSBlHAE6Xw-yeJA0Tunw/community?lb=Ugkx4p78bEAbdtJeIL0YUj_ZCcoHXB-whC3D\" target=\"_blank\" rel=\"noopener\">1pm PST</a>, but then BuhDan said in Floatplane chat that they pushed it back to be 3.5 hours from 11:40am PST (when that message was sent) which means around 3pm PST. I have updated the countdown to reflect this time.",
+      image: "https://images.ajg0702.us/dan-3.5-hr.png"
     }
     return json(response);
   }*/
