@@ -12,10 +12,6 @@ export const load = (async ({platform}) => {
 
   if(dev) await createTables(db)
 
-  /*const allProducts = db.prepare("select id,handle,title,json_extract(product, '$.featured_image') as featured_image, available from products")
-    .all<ProductsTableRow>()
-    .then(r => r.results);*/ // was used for local search index. No longer needed.
-
   const popularProducts = db.prepare("select * from products order by purchasesPerHour DESC limit 11")
     .all<ProductsTableRow>()
     .then(r => r.results);
@@ -48,12 +44,11 @@ export const load = (async ({platform}) => {
   }
 
   return {
-    // allProducts: await allProducts,
-    popularProducts: await popularProducts,
-    lowStock: await lowStock,
-    onSale: await onSale,
     newProducts,
-    recentRestocks: await recentRestocks
+    popularProducts: await popularProducts,
+    lowStock,
+    onSale,
+    recentRestocks
   }
 }) satisfies PageServerLoad
 

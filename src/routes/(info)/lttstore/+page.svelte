@@ -86,6 +86,11 @@
     await invalidateAll()
     loading = false;
   }
+
+  let mounted = false;
+  onMount(() => {
+    setTimeout(() => mounted = true, 0)
+  });
 </script>
 <svelte:head>
   <title>LTTStore Watcher - Whenplane</title>
@@ -103,7 +108,7 @@
 </ol>
 
 
-<div class="container mx-auto pt-8 mb-64 px-2">
+<div class="container mx-auto pt-8 mb-96 px-2">
 
   <input placeholder="Search for products" bind:value={searchText} class="input w-64 p-2 pl-4">
   <div class="inline-block w-12">
@@ -197,41 +202,59 @@
   <br>
   <br>
 
-  {#if data.onSale.length > 0}
-    <h1>On Sale</h1>
-    <div class="opacity-80 pl-2">
-      These products are currently on sale. (excludes items that are out of stock)
-    </div>
-    {#each data.onSale as product}
-      <LTTProductCard product={JSON.parse(product.product)} goneIn={true} stock={JSON.parse(product.stock)} purchasesPerHour={product.purchasesPerHour} available={product.available}/>
-    {/each}
-    <br>
-    <br>
-  {/if}
+  {#await data.onSale}
+    <div class="height-0 width-0"></div>
+  {:then onSale}
+    {#if onSale.length > 0 && mounted}
+      <div in:slide>
+        <h1>On Sale</h1>
+        <div class="opacity-80 pl-2">
+          These products are currently on sale. (excludes items that are out of stock)
+        </div>
+        {#each onSale as product}
+          <LTTProductCard product={JSON.parse(product.product)} goneIn={true} stock={JSON.parse(product.stock)} purchasesPerHour={product.purchasesPerHour} available={product.available}/>
+        {/each}
+        <br>
+        <br>
+      </div>
+    {/if}
+  {/await}
 
-  {#if data.lowStock.length > 0}
-    <h1>Low Stock</h1>
-    <div class="opacity-80 pl-2">
-      These items are low in stock and selling fast enough to possibly run out of stock soon.
-    </div>
-    {#each data.lowStock as product}
-      <LTTProductCard product={JSON.parse(product.product)} goneIn={true} stock={JSON.parse(product.stock)} purchasesPerHour={product.purchasesPerHour} available={product.available}/>
-    {/each}
-    <br>
-    <br>
-  {/if}
+  {#await data.lowStock}
+    <div class="height-0 width-0"></div>
+  {:then lowStock}
+    {#if lowStock.length > 0 && mounted}
+      <div in:slide>
+        <h1>Low Stock</h1>
+        <div class="opacity-80 pl-2">
+          These items are low in stock and selling fast enough to possibly run out of stock soon.
+        </div>
+        {#each lowStock as product}
+          <LTTProductCard product={JSON.parse(product.product)} goneIn={true} stock={JSON.parse(product.stock)} purchasesPerHour={product.purchasesPerHour} available={product.available}/>
+        {/each}
+        <br>
+        <br>
+      </div>
+    {/if}
+  {/await}
 
-  {#if data.recentRestocks.length > 0}
-    <h1>Recently Re-stocked</h1>
-    <div class="opacity-80 pl-2">
-      These items have been restocked in the past 6 days.
-    </div>
-    {#each data.recentRestocks as product}
-      <LTTProductCard product={JSON.parse(product.product)} purchasesPerHour={product.purchasesPerHour} available={product.available}/>
-    {/each}
-    <br>
-    <br>
-  {/if}
+  {#await data.recentRestocks}
+    <div class="height-0 width-0"></div>
+  {:then recentRestocks}
+    {#if recentRestocks.length > 0 && mounted}
+      <div in:slide>
+        <h1>Recently Re-stocked</h1>
+        <div class="opacity-80 pl-2">
+          These items have been restocked in the past 6 days.
+        </div>
+        {#each recentRestocks as product}
+          <LTTProductCard product={JSON.parse(product.product)} purchasesPerHour={product.purchasesPerHour} available={product.available}/>
+        {/each}
+        <br>
+        <br>
+      </div>
+    {/if}
+  {/await}
 
   <br>
   <br>
