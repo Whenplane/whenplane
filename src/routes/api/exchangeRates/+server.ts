@@ -11,10 +11,17 @@ const setOrder = [
   "CAD",
   "GBP",
   "EUR"
-]
+];
+
+let memCache: LatestExchangeRate;
+let memCacheLastFetch = 0;
 
 export const GET = (async ({platform, fetch, locals}) => {
   if(!platform?.caches) throw error(503, "Missing cache!");
+
+  if(memCacheLastFetch > 0 && memCache && Date.now() <= memCache.time_next_update_unix*1e3 && Date.now() - memCacheLastFetch < 24 * 60 * 60e3) {
+    return json(memCache);
+  }
 
   const cacheStart = Date.now();
 
@@ -31,6 +38,11 @@ export const GET = (async ({platform, fetch, locals}) => {
       const cacheMatchData: LatestExchangeRate = await cacheMatch.clone().json();
 
       if((cacheMatchData.time_next_update_unix * 1e3) - responseGenerated.getTime() > 0) {
+        const clonedResponse = cacheMatch.clone().json();
+        platform.context?.waitUntil(async () => {
+          memCache = await clonedResponse;
+          memCacheLastFetch = responseGenerated.getTime();
+        })
         console.log("Responding with cached response! (exchangeRates)");
         locals.addTiming({id: "cf-cache", duration: Date.now() - cacheStart})
         return newResponse(cacheMatch, (headers) => {
@@ -73,6 +85,9 @@ export const GET = (async ({platform, fetch, locals}) => {
       "x-response-generated": new Date().toISOString()
     }
   });
+
+  memCache = response;
+  memCacheLastFetch = Date.now();
 
   platform?.context?.waitUntil(cfCache.put(cacheURL, await createMFResponse(jsonResponse.clone()) as Response))
 
