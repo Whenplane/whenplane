@@ -164,6 +164,12 @@
 
 <pre>{JSON.stringify(data.floatplane, undefined, '\t')}</pre>
 
+<div class="p-4">
+  <span class="text-sm opacity-60">
+    Whenplane and the Whenplane Floatplane Watcher is not affiliated with or endorsed by Linus Media Group.
+  </span>
+</div>
+
 <style>
   .out {
       border-radius: 5px;
