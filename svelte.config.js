@@ -33,7 +33,8 @@ const config = {
 					"/.git/*",
 
 					"/discord",
-					"/boca-time"
+					"/boca-time",
+					"/products/*"
 				]
 			}
 		}),
