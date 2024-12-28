@@ -98,6 +98,15 @@
                 </div><br>
 <!--                <img class="mx-auto danwan" src="/430.webp" alt="Dan confirming 4:30"/>-->
                 <i>always has been</i>
+                <br>
+                <br>
+                Also, here is a rant from dan about what time things are supposed to happen<br>
+                <small>(from <a href="https://www.floatplane.com/post/x5S8KYg9Uv">this FPX</a> @ 26:44)</small><br>
+                <div class="video inline-block overflow-hidden">
+                    <video controls width="1280" height="720" style="max-height: 10em; width: auto;">
+                        <source src="https://files.ajg0702.us/dan-wan-time.mp4" type="video/mp4">
+                    </video>
+                </div>
             </div>
             <br>
 
