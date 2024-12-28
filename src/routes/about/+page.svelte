@@ -114,7 +114,7 @@
             <div class="text-left w-full">
                 <h2 class="text-center">Contact</h2>
                 If you have questions, concerns, or just want to send me a message, you can email me at
-                <a href="mailto:hi@whenplane.com" target="_blank" rel="noopener">aj@whenplane.com</a>,
+                <a href="mailto:aj@whenplane.com" target="_blank" rel="noopener">aj@whenplane.com</a>,
                 or you can <a href="https://discord.gg/PmN9AJh6KR">join the Discord server</a>.<br>
                 <br>
                 If you want to contact me about something other than this site, you can see my
