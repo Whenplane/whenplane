@@ -124,7 +124,7 @@
   </a>
   {#if !data.product.available}
     <br>
-    This product appears to no longer be on lttstore.com.<br>
+    This product appears to no longer be on lttstore.com. It is preserved here for archival purposes.<br>
     Usually this happens when a product is retired and will not be coming back.
   {/if}
 
