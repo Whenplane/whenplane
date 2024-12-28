@@ -34,7 +34,8 @@ const config = {
 
 					"/discord",
 					"/boca-time",
-					"/products/*"
+					"/products/*",
+					"/history/show/*/*/merch-messages/:id"
 				]
 			}
 		}),
