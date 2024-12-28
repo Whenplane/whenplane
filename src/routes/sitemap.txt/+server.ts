@@ -17,6 +17,7 @@ export const GET = (async ({platform, fetch, url}) => {
       "/about",
       "/ltt-time",
       "/lttstore",
+      "/lttstore/archive",
       "/extension",
       "/notifications",
     ]
