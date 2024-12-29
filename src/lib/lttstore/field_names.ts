@@ -11,7 +11,12 @@ const field_names: {[key: string]: string} = {
   "product.variants": "Variant Metadata",
   "product.options": "Options",
   "product.published_at": "Published",
-  "product.type": "Product Type"
+  "product.type": "Product Type",
+
+  "collection-updated_at": "Updated Timestamp",
+  "collection-products": "Products",
+  "collection-available": "Published",
+  "collection-reportedCount": "Reported Product Count",
 }
 
 const variant_field_names: {[key: string]: string} = {
@@ -25,7 +30,7 @@ const variant_field_names: {[key: string]: string} = {
 }
 
 export function getFieldName(key: string) {
-  return field_names[key] ?? key;
+  return field_names[key] ?? key.replace("collection-", "");
 }
 export function getVariantFieldName(key: string) {
   return variant_field_names[key] ?? key;

@@ -1,7 +1,12 @@
 import { error, json, type RequestHandler } from "@sveltejs/kit";
 import type { D1Database } from "@cloudflare/workers-types";
 import { dev } from "$app/environment";
-import type { ProductDifference, ProductsTableRow, StockHistoryTableRow } from "$lib/lttstore/lttstore_types.ts";
+import type {
+  CollectionDbRow,
+  ProductDifference,
+  ProductsTableRow,
+  StockHistoryTableRow
+} from "$lib/lttstore/lttstore_types.ts";
 import { createTables } from "../../../../(info)/lttstore/createTables.ts";
 
 
@@ -14,8 +19,10 @@ export const GET = (async ({platform, params}) => {
 
   const data: {
     products: ProductsTableRow[],
+    collections: CollectionDbRow[]
     screwdriverStocks: StockHistoryTableRow[],
-    changeHistory: {id: number, timestamp: number, field: string, old: string, new: string}[]
+    changeHistory: {id: number, timestamp: number, field: string, old: string, new: string}[],
+    collectionChanges: {id: number, timestamp: number, field: string, old: string, new: string}[]
   } = await fetch("https://whenplane.com/api/lttstore/devData")
     .then(res => res.json());
 
@@ -47,8 +54,28 @@ export const GET = (async ({platform, params}) => {
   }
 
   i = 0;
+  for (const collection of data.collections) {
+    console.log("Inserting (" + ++i + "/" + data.collections.length + ") " + collection.title);
+    await db.prepare("insert or replace into collections(handle, id, title, description, published_at, updated_at, image, reportedCount, products, available) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)")
+      .bind(
+        collection.handle,
+        collection.id,
+        collection.title,
+        collection.description,
+        collection.published_at,
+        collection.updated_at,
+        collection.image,
+        collection.reportedCount,
+        collection.products,
+        collection.available
+      )
+      .run();
+  }
+
+  i = 0;
   for (const stock of data.screwdriverStocks) {
-    if(i % 10 === 0) console.log("Inserting " + ++i + "/" + data.screwdriverStocks.length + " screwdriver stock history");
+    i++;
+    if(i % 10 === 0) console.log("Inserting " + i + "/" + data.screwdriverStocks.length + " screwdriver stock history");
     await db.prepare("insert or replace into stock_history(handle, id, timestamp, stock) values (?, ?, ?, ?)")
       .bind(
         stock.handle,
@@ -61,8 +88,24 @@ export const GET = (async ({platform, params}) => {
 
   i = 0;
   for (const change of data.changeHistory) {
-    if(i % 10 === 0) console.log("Inserting " + ++i + "/" + data.changeHistory.length + " change history");
+    i++;
+    if(i % 10 === 0) console.log("Inserting " + i + "/" + data.changeHistory.length + " change history");
     await db.prepare("insert or replace into change_history(id, timestamp, field, old, new) values (?, ?, ?, ?, ?)")
+      .bind(
+        change.id,
+        change.timestamp,
+        change.field,
+        change.old,
+        change.new
+      )
+      .run();
+  }
+
+  i = 0;
+  for (const change of data.collectionChanges) {
+    i++;
+    if(i % 10 === 0) console.log("Inserting " + i + "/" + data.collectionChanges.length + " collection change history");
+    await db.prepare("insert or replace into collection_changes(id, timestamp, field, old, new) values (?, ?, ?, ?, ?)")
       .bind(
         change.id,
         change.timestamp,
