@@ -25,7 +25,7 @@
   </div>
   <br>
   <div class="p-2">
-    {#each data.products as product}
+    {#each data.products as product (product.id)}
       <LTTProductCard product={JSON.parse(product.product)}/>
     {/each}
   </div>

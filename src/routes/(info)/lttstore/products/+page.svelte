@@ -6,6 +6,7 @@
   import { fade } from "svelte/transition"
   import { goto, invalidateAll } from "$app/navigation";
   import {ProgressRadial} from "@skeletonlabs/skeleton";
+  import { dev } from "$app/environment";
 
   export let data;
 
@@ -72,3 +73,6 @@
     No products are being tracked yet!
   {/each}
 </div>
+{#if dev}
+  <pre>{JSON.stringify(data, undefined, '\t')}</pre>
+{/if}
