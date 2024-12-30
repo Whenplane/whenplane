@@ -99,7 +99,7 @@
 <ol class="breadcrumb pt-2 pl-2">
   <li class="crumb"><a class="anchor hover-underline" href="/">{$page.url.hostname === "whenwan.show" ? "whenwan.show" : "Whenplane"}</a></li>
   <li class="crumb-separator" aria-hidden="true">&rsaquo;</li>
-  <li class="crumb" on:click={reload}>LTT Store Tracker</li>
+  <li class="crumb" on:click={reload}>LTT Store Watcher</li>
   {#if loading}
     <li class="crumb" transition:fade|global={{duration: 100}}>
       <ProgressRadial width="w-6" stroke={250} value={loading ? undefined : 100}/>
@@ -109,6 +109,16 @@
 
 
 <div class="container mx-auto pt-8 mb-96 px-2">
+
+  <h1 class="text-center mb-2">LTTStore Watcher</h1>
+
+  <div class="flex justify-between link-header mx-auto">
+    <a href="/lttstore/products" class="btn variant-glass-primary">All Products</a>
+    <a href="/lttstore/archive" class="btn variant-glass-primary">Product Archive</a>
+    <a href="/lttstore/collections" class="btn variant-glass-primary">Collections</a>
+  </div>
+  <br>
+  <br>
 
   <input placeholder="Search for products" bind:value={searchText} class="input w-64 p-2 pl-4">
   <div class="inline-block w-12">
@@ -177,7 +187,7 @@
 
 
   {#if data.newProducts.length > 0}
-    <h1>New products</h1>
+    <h2>New products</h2>
     <div class="opacity-80 pl-2">
       These products are new.
     </div>
@@ -188,7 +198,7 @@
     <br>
   {/if}
 
-  <h1>Popular Products</h1>
+  <h2>Popular Products</h2>
   <div class="opacity-80 pl-2">
     From the past few hours
   </div>
@@ -207,7 +217,7 @@
   {:then onSale}
     {#if onSale.length > 0 && mounted}
       <div in:slide>
-        <h1>On Sale</h1>
+        <h2>On Sale</h2>
         <div class="opacity-80 pl-2">
           These products are currently on sale. (excludes items that are out of stock)
         </div>
@@ -225,7 +235,7 @@
   {:then lowStock}
     {#if lowStock.length > 0 && mounted}
       <div in:slide>
-        <h1>Low Stock</h1>
+        <h2>Low Stock</h2>
         <div class="opacity-80 pl-2">
           These items are low in stock and selling fast enough to possibly run out of stock soon.
         </div>
@@ -243,7 +253,7 @@
   {:then recentRestocks}
     {#if recentRestocks.length > 0 && mounted}
       <div in:slide>
-        <h1>Recently Re-stocked</h1>
+        <h2>Recently Re-stocked</h2>
         <div class="opacity-80 pl-2">
           These items have been restocked in the past 6 days.
         </div>
@@ -270,5 +280,13 @@
       background-color: inherit;
       color: inherit;
       font-weight: bold;
+  }
+
+  .link-header {
+      max-width: 50rem;
+  }
+  .link-header > a {
+    margin-left: 0.5rem;
+    margin-right: 0.5rem;
   }
 </style>
