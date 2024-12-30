@@ -29,7 +29,7 @@ export const load = (async ({platform, url}) => {
     }
   }
 
-  const allProducts = db.prepare("select handle,available,json_remove(json_remove(json_remove(product, '$.images'), '$.variants'), '$.description') as product from products order by " + sortColumn + " DESC")
+  const allProducts = db.prepare("select handle,id,available,json_remove(json_remove(json_remove(product, '$.images'), '$.variants'), '$.description') as product from products order by " + sortColumn + " DESC")
     .all<ProductsTableRow>()
     .then(r => r.results);
 
