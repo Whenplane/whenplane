@@ -8,7 +8,7 @@ export const load = (async ({platform}) => {
   const db: D1Database | undefined = platform?.env?.LTTSTORE_DB;
   if(!db) throw error(503, "DB unavailable!");
 
-  const products = await db.prepare("select title,handle,product from products where available=0 order by json_extract(product, '$.created_at') ASC")
+  const products = await db.prepare("select handle,id,available,json_remove(json_remove(json_remove(product, '$.images'), '$.variants'), '$.description') as product from products where available=0 order by json_extract(product, '$.created_at') ASC")
     .all<ProductsTableRow>()
     .then(r => r.results);
 
