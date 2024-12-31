@@ -5,6 +5,7 @@ const field_names: {[key: string]: string} = {
   "backorderAlerts": "Backorder Alerts",
   "productDetailModules": "Product Detail Modules",
   "available": "Published",
+  "productDiscount": "Product Discount",
 
   "product.description": "Product Description",
   "product.available": "In stock?",
@@ -12,6 +13,7 @@ const field_names: {[key: string]: string} = {
   "product.options": "Options",
   "product.published_at": "Published",
   "product.type": "Product Type",
+  "product.featured_image": "Featured Image",
 
   "collection-updated_at": "Updated Timestamp",
   "collection-products": "Products",
