@@ -7,6 +7,7 @@
   import { dev } from "$app/environment";
   import {slide} from "svelte/transition";
   import { onMount } from "svelte";
+  import { invalidateAll } from "$app/navigation";
 
   export let data;
 
@@ -36,7 +37,12 @@
 </svelte:head>
 
 {#if data.video.status === "inprogress"}
-  <Socket events={["mm_progress-" + data.video.videoId]} on:data={d => lastData = d.data}/>
+  <Socket events={["mm_progress-" + data.video.videoId]} on:data={d => {
+    lastData = d.data;
+    if(typeof lastData.progressAt !== "undefined") {
+      invalidateAll();
+    }
+  }} invalidate={false}/>
 {/if}
 
 <ol class="breadcrumb pt-2 pl-2">

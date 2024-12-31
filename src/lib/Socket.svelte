@@ -6,6 +6,7 @@
   import type { MMJobData } from "$lib/utils.ts";
 
   export let events: string[];
+  export let invalidate = true;
 
   const dispatch = createEventDispatcher<{data: {data: MMJobData}}>();
 
@@ -62,8 +63,10 @@
         console.error("Unknown data type", typeof data)
       }
 
-      lastInvalidate = Date.now();
-      await invalidateAll();
+      if(invalidate) {
+        lastInvalidate = Date.now();
+        await invalidateAll();
+      }
     }
   }
 
