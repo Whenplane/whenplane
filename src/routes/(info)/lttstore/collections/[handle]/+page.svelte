@@ -42,6 +42,7 @@
   <h1>{data.collection.title}</h1>
   {@html sanitizeHtml(data.collection.description ?? "")}
   <br>
+  <a href="https://www.lttstore.com/collections/{data.collection.handle}">View on LTTStore</a><br>
   <br>
   This collection has {data.collection.reportedCount} product{data.collection.reportedCount === 1 ? "" : "s"} in it{data.collection.reportedCount === products.length ? "." : ","}
   {#if data.collection.reportedCount !== products.length}
