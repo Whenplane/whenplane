@@ -12,6 +12,9 @@ export function getDiffComponent(field: string) {
     if(field === "collection-products") {
       return CollectionProductsDiff;
     }
+    if(field === "collection-updated_at") {
+      return DateDiff;
+    }
   }
   if (field === "backorderAlerts") {
     return BackorderAlertDiff;
