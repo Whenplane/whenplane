@@ -1,10 +1,13 @@
 <script lang="ts">
   import { invalidateAll } from "$app/navigation";
   import { browser } from "$app/environment";
-  import { onDestroy } from "svelte";
+  import { createEventDispatcher, onDestroy } from "svelte";
   import { overwriteData } from "$lib/stores.ts";
+  import type { MMJobData } from "$lib/utils.ts";
 
   export let events: string[];
+
+  const dispatch = createEventDispatcher<{data: {data: MMJobData}}>();
 
   if(!events || events.length < 1) {
     console.error("Missing required events parameter");
@@ -48,6 +51,7 @@
     webSocket.onmessage = async (e) => {
       const data = JSON.parse(e.data);
 
+      dispatch("data", { data });
       console.debug("[whenplane:ws] Received data:", data);
 
       if(typeof data === "string") {

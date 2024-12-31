@@ -353,3 +353,15 @@ export type FpLiveStatusResponse = {
     description?: string,
     descriptionFirstSeen?: string
 }
+
+
+export type MMJobData = {
+    videoId: string;
+    status: "starting" | "running" | "cancelled" | "finished" | "errored",
+    step: "starting" | "downloading" | "extracting" | "reading" | "finishing",
+    progressAt?: number,
+    progressTotal?: number,
+    downloadPercent?: number,
+    preProcessPercent?: number,
+    frameExtractPercent?: number
+}

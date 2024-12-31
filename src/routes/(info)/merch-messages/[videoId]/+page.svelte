@@ -3,12 +3,32 @@
   import { getClosestWan, getUTCDate } from "$lib/timeUtils.ts";
   import { page } from "$app/stores";
   import Socket from "$lib/Socket.svelte";
+  import type { MMJobData } from "$lib/utils.ts";
+  import { dev } from "$app/environment";
+  import {slide} from "svelte/transition";
+  import { onMount } from "svelte";
 
   export let data;
 
   $: titleParts = data.video.title.split("- WAN Show");
 
   $: wanDate = data.video.title.includes("- WAN Show") ? getClosestWan(new Date(titleParts[titleParts.length - 1])) : undefined;
+  let lastData: MMJobData;
+
+  onMount(() => {
+    if(dev && $page.params.videoId === "test") {
+      setTimeout(() => {
+        lastData = {
+          videoId: "7LGuglDdliw",
+          status: "running",
+          step: "extracting",
+          downloadPercent: 53/347,
+          // preProcessPercent: 2837/23823,
+          // frameExtractPercent: 3483/23823
+        }
+      }, Math.random() * 4e3);
+    }
+  })
 </script>
 
 <svelte:head>
@@ -16,7 +36,7 @@
 </svelte:head>
 
 {#if data.video.status === "inprogress"}
-  <Socket events={["mm_progress-" + data.video.videoId]}/>
+  <Socket events={["mm_progress-" + data.video.videoId]} on:data={d => lastData = d.data}/>
 {/if}
 
 <ol class="breadcrumb pt-2 pl-2">
@@ -42,9 +62,36 @@
     <br>
     <br>
     <span class="text-amber-300">
-                Merch messages for this episode are incomplete.
-            </span><br>
+      Merch messages for this episode are incomplete.
+    </span><br>
     They may still be processing. You can view the ones we have so far, or come back later for the complete list.
+    <br>
+    <br>
+    {#if lastData}
+      <div class="text-center mb-8" in:slide>
+        <div class="py-1">
+          VOD Download<br>
+          <progress value={lastData.downloadPercent ?? 0} max={1} style="width: calc(100% - 5em);"/>
+          {((lastData.downloadPercent ?? 0) * 100).toFixed(2)}%
+        </div>
+        <div class="py-1">
+          VOD pre-process<br>
+          <progress value={lastData.preProcessPercent ?? 0} max={1} style="width: calc(100% - 5em);"/>
+          {((lastData.preProcessPercent ?? 0) * 100).toFixed(2)}%
+        </div>
+        <div class="py-1">
+          Frame Extraction<br>
+          <progress value={lastData.frameExtractPercent ?? 0} max={1} style="width: calc(100% - 5em);"/>
+          {((lastData.frameExtractPercent ?? 0) * 100).toFixed(2)}%
+        </div>
+        <div class="py-1">
+          Frame reading<br>
+          <progress value={lastData.progressAt ?? 0} max={lastData.progressTotal ?? 1} style="width: calc(100% - 5em);"/>
+          {(((lastData.progressAt ?? 0) / (lastData.progressTotal ?? 1)) * 100).toFixed(2)}%
+        </div>
+      </div>
+    {/if}
+
   {/if}
 </div>
 
