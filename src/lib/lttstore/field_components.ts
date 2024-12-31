@@ -5,8 +5,14 @@ import TextWordsDiff from "$lib/lttstore/diff/TextWordsDiff.svelte";
 import OptionsDiff from "$lib/lttstore/diff/OptionsDiff.svelte";
 import DateDiff from "$lib/lttstore/diff/DateDiff.svelte";
 import TextDiff from "$lib/lttstore/diff/TextDiff.svelte";
+import CollectionProductsDiff from "$lib/lttstore/diff/CollectionProductsDiff.svelte";
 
 export function getDiffComponent(field: string) {
+  if (field.startsWith("collection-")) {
+    if(field === "collection-products") {
+      return CollectionProductsDiff;
+    }
+  }
   if (field === "backorderAlerts") {
     return BackorderAlertDiff;
   }
