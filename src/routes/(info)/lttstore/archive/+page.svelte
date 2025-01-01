@@ -21,7 +21,8 @@
   <div class="p-2 limit mx-auto">
     <h1>LTTStore Product Archive</h1>
     <br>
-    These products are no longer on lttstore. They are preserved here for archival purposes.
+    These products are no longer on lttstore. They are preserved here for archival purposes.<br>
+    Currently this archive only goes back to June 2024, but I plan to go back further in the future.
   </div>
   <br>
   <div class="p-2">
