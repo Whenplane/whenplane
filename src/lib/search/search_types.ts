@@ -30,7 +30,7 @@ export type CombinedSearchResult =
     showDate: number,
     sortWeight: number
   } | { // show transcripts
-    type: "transcript",
+    type: "transcript" | "transcript-chunk",
     text: string,
     videoId: string,
     id: string,
