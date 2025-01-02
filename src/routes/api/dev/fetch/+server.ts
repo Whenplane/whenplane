@@ -23,12 +23,12 @@ export const GET = (async ({platform}) => {
 }) satisfies RequestHandler;
 
 async function putHistory(history: KVNamespace) {
-    const prodData = await fetch("https://wheniswan.pages.dev/api/history/year/all")
+    const prodData = await fetch("https://whenplane.pages.dev/api/history/year/all")
         .then(r => r.json()) as HistoricalEntry[];
 
 
     for (const show of prodData) {
-        const response = await fetch("https://wheniswan.pages.dev/api/history/show/" + show.name);
+        const response = await fetch("https://whenplane.pages.dev/api/history/show/" + show.name);
         if(response.status != 200) {
             console.warn("Skipping '" + show.name + "' due to " + response.status + " " + response.statusText);
             continue;
@@ -39,7 +39,7 @@ async function putHistory(history: KVNamespace) {
 }
 
 async function putRecords(meta: KVNamespace) {
-    const prodData = await fetch("https://wheniswan.pages.dev/api/history/records")
+    const prodData = await fetch("https://whenplane.pages.dev/api/history/records")
         .then(r => r.json());
 
     await meta.put("earliest", JSON.stringify(prodData.earliest));
