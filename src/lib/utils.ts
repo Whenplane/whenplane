@@ -1,4 +1,3 @@
-import { browser, dev } from "$app/environment";
 
 export function wait(ms: number) {
     return new Promise((res) => {
@@ -80,7 +79,7 @@ export function getSupportedLocales() {
     const supportedLanguages = [];
     const letters = 'abcdefghijklmnopqrstuvwxyz';
 
-    function isLanguageCodeSupported(code) {
+    function isLanguageCodeSupported(code: string) {
         const locale = new Intl.Locale(code);
         return locale.maximize().region !== undefined;
     }
@@ -118,20 +117,6 @@ export function escapeHtml(unsafe: string)
       .replace(/>/g, "&gt;")
       .replace(/"/g, "&quot;")
       .replace(/'/g, "&#039;");
-}
-
-
-export function getTimePreference() {
-    if(!browser) return undefined;
-    const setting = localStorage.getItem("timeFormat");
-    if(setting === null) return undefined;
-    return setting === "12h";
-}
-
-export function getDateFormatLocale() {
-    if(!browser) return undefined;
-    const setting = localStorage.getItem("dateFormat");
-    return setting ?? undefined;
 }
 
 

@@ -1,7 +1,8 @@
 <script lang="ts">
   import { browser } from "$app/environment";
   import { onMount } from "svelte";
-  import { commas, getTimePreference } from "$lib/utils.ts";
+  import { commas } from "$lib/utils.ts";
+  import { getTimePreference } from "$lib/prefUtils.ts";
 
   export let followerHistory: {
     timestamp: number,

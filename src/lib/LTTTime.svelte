@@ -2,7 +2,8 @@
   import { onMount } from "svelte";
   import {popup} from "@skeletonlabs/skeleton";
   import { page } from "$app/stores";
-  import { getTimePreference } from "$lib/utils";
+
+  import { getTimePreference } from "$lib/prefUtils.js";
 
   export let border = true;
   export let tooltip = true;

@@ -1,9 +1,10 @@
 <script lang="ts">
-  import { escapeHtml, getDateFormatLocale, truncateText } from "$lib/utils.ts";
+  import { escapeHtml, truncateText } from "$lib/utils.ts";
   import { getClosestWan } from "$lib/timeUtils.ts";
   import { page } from "$app/stores";
   import { browser } from "$app/environment";
   import { onMount } from "svelte";
+  import { getDateFormatLocale } from "$lib/prefUtils.ts";
 
   export let data;
 

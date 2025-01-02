@@ -23,7 +23,7 @@
 	import Socket from "$lib/Socket.svelte";
 	import CaretDownFill from "svelte-bootstrap-icons/lib/CaretDownFill.svelte";
 	import {popup} from "@skeletonlabs/skeleton";
-	import { getDateFormatLocale, getTimePreference } from "$lib/utils.ts";
+	import { getDateFormatLocale, getTimePreference } from "$lib/prefUtils.ts";
 
 	export let data;
 

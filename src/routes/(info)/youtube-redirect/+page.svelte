@@ -5,7 +5,8 @@
   import { browser } from "$app/environment";
   import { SlideToggle } from "@skeletonlabs/skeleton";
   import { page } from "$app/stores";
-  import { getTimePreference } from "$lib/utils.ts";
+
+  import { getTimePreference } from "$lib/prefUtils.ts";
 
   export let data;
 

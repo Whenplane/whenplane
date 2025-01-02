@@ -9,7 +9,8 @@
     import type { WanDb_Topic } from "$lib/wdb_types.ts";
     import SubTopics from "$lib/subcomponents/SubTopics.svelte";
     import { fade } from "svelte/transition";
-    import { getDateFormatLocale } from "$lib/utils.ts";
+
+    import { getDateFormatLocale } from "$lib/prefUtils.ts";
 
     export let data;
 

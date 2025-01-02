@@ -1,7 +1,8 @@
 <script lang="ts">
     import {getClosestWan, timeString} from "$lib/timeUtils";
     import Late from "$lib/Late.svelte";
-    import { getDateFormatLocale } from "$lib/utils.ts";
+
+    import { getDateFormatLocale } from "$lib/prefUtils.ts";
     export let record: BestShow | number;
     export let asTime = true;
     export let color = true;

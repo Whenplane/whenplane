@@ -2,7 +2,8 @@
   import { page } from "$app/stores";
   import sanitizeHtml from "sanitize-html";
   import { newsSanitizeSettings } from "$lib/news/news";
-  import { getTimePreference, truncateText } from "$lib/utils";
+  import { truncateText } from "$lib/utils";
+  import { getTimePreference } from "$lib/prefUtils.js";
 
   export let data;
 

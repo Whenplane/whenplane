@@ -18,7 +18,7 @@
     import LargerLazyLoad from "$lib/LargerLazyLoad.svelte";
     import { browser, dev } from "$app/environment";
     import { onMount } from "svelte";
-    import { getDateFormatLocale, getTimePreference } from "$lib/utils.ts";
+    import { getDateFormatLocale, getTimePreference } from "$lib/prefUtils.ts";
 
     export let show;
     export let withThumbnail = false;

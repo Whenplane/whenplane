@@ -1,7 +1,8 @@
 <script lang="ts">
   import {onMount} from "svelte";
   import {shortMonths, isSameDay, yesterday} from "$lib/timeUtils";
-  import { getTimePreference } from "$lib/utils.ts";
+
+  import { getTimePreference } from "$lib/prefUtils.ts";
 
   export let epochSeconds: number;
 
