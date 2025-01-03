@@ -3,7 +3,7 @@
   import {popup} from "@skeletonlabs/skeleton";
   import { page } from "$app/stores";
 
-  import { getTimePreference } from "$lib/prefUtils.js";
+  import { getTimePreference } from "$lib/prefUtils";
 
   export let border = true;
   export let tooltip = true;

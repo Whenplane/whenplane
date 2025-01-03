@@ -3,7 +3,7 @@
   import sanitizeHtml from "sanitize-html";
   import { newsSanitizeSettings } from "$lib/news/news";
   import { truncateText } from "$lib/utils";
-  import { getTimePreference } from "$lib/prefUtils.js";
+  import { getTimePreference } from "$lib/prefUtils";
 
   export let data;
 

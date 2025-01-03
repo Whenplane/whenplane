@@ -8,7 +8,7 @@
   import DateStamp from "$lib/DateStamp.svelte";
   import { browser } from "$app/environment";
 
-  import { getTimePreference } from "$lib/prefUtils.js";
+  import { getTimePreference } from "$lib/prefUtils";
 
   export let data;
 
