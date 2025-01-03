@@ -4,6 +4,7 @@ import type { Latenesses } from "./api/latenesses/+server";
 import type { AggregateResponse } from "./api/(live-statuses)/aggregate/+server";
 import { nextFast, overwriteData } from "$lib/stores.ts";
 import type { NewsPost } from "$lib/news/news.ts";
+import { getNextWAN } from "$lib/timeUtils.ts";
 
 let cachedLatenesses: Latenesses;
 let cachedLatenessesTime = 0 ;
@@ -116,7 +117,7 @@ export const load = (async ({fetch, params, url}) => {
         preShowStarted,
         mainShowStarted,
         fast,
-        hasDone: liveStatus ? liveStatus.hasDone : true,
+        hasDone: liveStatus ? liveStatus.hasDone : getNextWAN().getTime() > Date.now(),
         averageLateness: latenesses?.averageLateness,
         latenessStandardDeviation: latenesses?.latenessStandardDeviation,
         medianLateness: latenesses?.medianLateness,
