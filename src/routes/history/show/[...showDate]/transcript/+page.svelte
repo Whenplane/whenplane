@@ -57,7 +57,7 @@
     }
     if(browser && matchIndex !== -1) {
       setTimeout(() => {
-        document.getElementById("match")?.scrollTo();
+        document.getElementById("match")?.scrollIntoView();
         done = true;
       }, 500);
     }
