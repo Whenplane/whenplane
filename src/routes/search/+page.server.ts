@@ -61,7 +61,7 @@ export const load = (async ({fetch, url, cookies}) => {
   const types: string[] = [];
   if(sp.get("title") === "on") types.push("title");
   if(sp.get("topics") === "on") types.push("topic");
-  if(sp.get("transcripts") === "on") types.push("transcript");
+  if(sp.get("transcripts") === "on") types.push("transcript-chunk");
   if(sp.get("merch-messages") === "on") types.push("message", "reply");
   if(types.length === 0) {
     console.warn("No search type given! Defaulting to title,topics,transcripts")

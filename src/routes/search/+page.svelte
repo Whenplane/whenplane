@@ -162,7 +162,7 @@
           {@const cleanedId = hit.document.id.replaceAll("topic-", "")}
           {@const baseShowUrl = "/history/show/" + (show ? show.name : `${hit.document.videoId}` )}
           {@const strippedSnippet = hit.highlight?.text?.snippet?.replaceAll("<mark>", "").replaceAll("</mark>", "")}
-          {@const href = (hit.document.type === "message" || hit.document.type === "reply") ? `merch-messages/${hit.document.videoId}#${hit.document.videoId}.${hit.document.imageIndex}` : baseShowUrl + (hit.document.type === "transcript" ? "/transcript?find=" + encodeURIComponent(strippedSnippet) + "#match" : "") + (hit.document.type === "topic" ? (show ? "#timestamp-" + cleanedId : `?hash=${encodeURIComponent('#timestamp-' + cleanedId)}` ) : "")}
+          {@const href = (hit.document.type === "message" || hit.document.type === "reply") ? `merch-messages/${hit.document.videoId}#${hit.document.videoId}.${hit.document.imageIndex}` : baseShowUrl + (hit.document.type.startsWith("transcript") ? "/transcript?find=" + encodeURIComponent(strippedSnippet) + "#match" : "") + (hit.document.type === "topic" ? (show ? "#timestamp-" + cleanedId : `?hash=${encodeURIComponent('#timestamp-' + cleanedId)}` ) : "")}
           <span class="opacity-70">
             {#if hit.document.type === "topic"}
               Topic
@@ -170,7 +170,7 @@
               Merch Message
             {:else if hit.document.type === "title"}
               Show Title
-            {:else if hit.document.type === "transcript"}
+            {:else if hit.document.type.startsWith("transcript")}
               Transcript
             {:else}
               {hit.document.type}

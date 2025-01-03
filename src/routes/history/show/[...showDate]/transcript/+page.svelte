@@ -5,12 +5,14 @@
   import { browser } from "$app/environment";
   import { onMount } from "svelte";
   import { getDateFormatLocale } from "$lib/prefUtils.ts";
+  import { ProgressRadial } from "@skeletonlabs/skeleton";
 
   export let data;
 
   let text = "";
   let textOnly = "";
   let matchIndex = -1;
+  let done = false;
   function parseText() {
     text = "";
     textOnly = "";
@@ -50,9 +52,16 @@
       }
     }
     if(find) {
-      matchIndex = textOnly.indexOf(find);
+      matchIndex = textOnly.replaceAll(/\s+/g, " ").indexOf(find.replaceAll(/\s+/g, " "));
       console.log("Found match at", matchIndex)
     }
+    if(browser && matchIndex !== -1) {
+      setTimeout(() => {
+        document.getElementById("match")?.scrollTo();
+        done = true;
+      }, 500);
+    }
+    if(browser && matchIndex === -1) done = true;
   }
   if(!browser) parseText();
   onMount(() => {
@@ -116,6 +125,17 @@
     <div class="text-left">
       These transcripts are taken from YouTube's auto-generated subtitles,
       so they might not be perfectly accurate. They are accurate enough to be useful in most cases though.<br>
+      {#if $page.url.searchParams.has("find") && !done}
+        <br>
+        <div class="bg-amber-600 rounded-md p-2">
+          <ProgressRadial width="w-6" stroke={250} class="inline-block align-bottom"/>
+          Finding the text you clicked on. This might take a second...
+        </div>
+
+      {:else}
+        <br>
+        <div class="p-2 clear">.</div>
+      {/if}
       <br>
       Click on a word to go to the video and jump to where that word was said.
     </div>
