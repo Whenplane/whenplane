@@ -45,7 +45,7 @@
         if((color === 'green' && displaying === "after") || (color === 'red' && displaying === "before")) {
           html += "<span style='color:" + color + "'>" + text + "</span>";
         } else {
-          html += "<span style='background-color:" + color + "' class='opacity-40'>&ThinSpace;</span>";
+          html += "<span style='background-color:" + color + "' class='opacity-40 pl-1'></span>";
         }
       }
     })

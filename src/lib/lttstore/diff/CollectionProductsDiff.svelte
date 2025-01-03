@@ -32,7 +32,7 @@
                 "Removed " + beforeProduct.title +
                 "</a><br>";
             } else {
-              html += "<span style='background-color: rgba(255, 0, 0, 0.2)' class='opacity-40'>&ThinSpace;</span><br>"
+              html += "<span style='background-color: rgba(255, 0, 0, 0.2)' class='opacity-40 pl-1'></span><br>"
             }
             removed.push(beforeProduct.title);
           }
