@@ -38,6 +38,7 @@
 
 {#if data.video.status === "inprogress"}
   <Socket events={["mm_progress-" + data.video.videoId]} on:data={d => {
+    console.debug({d})
     lastData = d.data;
     if(typeof lastData.progressAt !== "undefined") {
       invalidateAll();
