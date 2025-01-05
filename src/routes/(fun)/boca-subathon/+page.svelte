@@ -46,7 +46,7 @@
 </script>
 <svelte:head>
   <title>Boca Subathon Progress</title>
-  <meta name="description" content="Boca subathon progress % and time remaining">
+  <meta name="description" content="Boca stream marathon progress % and time remaining">
 </svelte:head>
 
 <div class="limit mx-auto pt-8 p-2">
@@ -54,8 +54,8 @@
   {#if distance > 0}
     into the 168 hour marathon.
   {:else}
-    until the streaming marathon is supposed to start.<br>
-    {scheduledStart.toLocaleDateString(getDateFormatLocale(), {dateStyle: "full"})}
+    until the streaming marathon is supposed to start on {scheduledStart.toLocaleDateString(getDateFormatLocale(), {dateStyle: "full"})}<br>
+    <small class="opacity-60">Date may change as it gets closer</small>
   {/if}
   <br>
   <br>
