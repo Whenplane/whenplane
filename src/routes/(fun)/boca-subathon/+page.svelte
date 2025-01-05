@@ -4,26 +4,43 @@
   import {ProgressBar} from "@skeletonlabs/skeleton";
   import Confetti from "svelte-confetti"
   import { dev } from "$app/environment";
+  import { getDateFormatLocale } from "$lib/prefUtils.ts";
+  import { updated } from "$app/stores";
 
-  const totalTime = (150 * 60 * 60e3);
+  const totalTime = (168 * 60 * 60e3);
   // this is multiple lines, so I can easily comment/uncomment
-  const startTime =
-    dev ? Date.now() - totalTime + 15e3 :
-      1722647766000;
+  const startTime: number | undefined =
+    // dev ? Date.now() - totalTime + 15e3 :
+      undefined;
+
+  const scheduledStart = new Date("2025-06-12T17:20:21.245Z");
 
   let string: string | undefined = "";
   let distance: number;
 
   function update() {
-    distance = Math.min(Date.now() - startTime, totalTime);
-    string = timeStringHours(distance);
+    distance = Math.min(Date.now() - (startTime ?? scheduledStart.getTime()), totalTime);
+    string = distance > 0 ? timeStringHours(distance) : timeString(Math.abs(distance));
+    if(distance < 0) {
+      string = string?.replaceAll(/[0-9]+(s|m|h)/g, "").trim();
+    }
   }
+
+  $: updateAvailable = $updated
 
   update();
 
   onMount(() => {
     let i = setInterval(update, 1e3);
-    return () => clearInterval(i);
+    let ri = setInterval(async () => {
+      if(!document.hidden || Math.random() < 0.25) { // 25% chance of checking when we are hidden
+        if(await updated.check()) location.href = "";
+      }
+    }, 30e3)
+    return () => {
+      clearInterval(i);
+      clearInterval(ri);
+    }
   })
 </script>
 <svelte:head>
@@ -33,7 +50,12 @@
 
 <div class="limit mx-auto pt-8 p-2">
   <h1>{string}</h1>
-  into the subathon.
+  {#if distance > 0}
+    into the 168 hour marathon.
+  {:else}
+    until the streaming marathon is supposed to start.<br>
+    {scheduledStart.toLocaleDateString(getDateFormatLocale(), {dateStyle: "full"})}
+  {/if}
   <br>
   <br>
 
@@ -41,20 +63,22 @@
 
   <br>
   <br>
-  The subathon is currently {((distance / totalTime) * 100).toFixed(3)}% complete.<br>
-  <ProgressBar value={distance} max={totalTime} />
-  <br>
-  <br>
-  There are
-  <span class="font-mono">
+  {#if distance > 0}
+    The subathon is currently {((distance / totalTime) * 100).toFixed(3)}% complete.<br>
+    <ProgressBar value={distance} max={totalTime} />
+    <br>
+    <br>
+    There are
+    <span class="font-mono">
     {timeString(totalTime - distance, true)?.trim()}
   </span>
-  remaining.<br>
-  {#if totalTime - distance > 24 * 60 * 60e3}
-    aka
-    <span class="font-mono">
+    remaining.<br>
+    {#if totalTime - distance > 24 * 60 * 60e3}
+      aka
+      <span class="font-mono">
       {timeStringHours(totalTime - distance)}
     </span>
+    {/if}
   {/if}
 
   <div class="confetti-container">
