@@ -26,6 +26,7 @@
     }
   }
 
+  // this is needed because for some weird reason I can't check for an update without subscribing to the $updated store
   $: updateAvailable = $updated
 
   update();
@@ -36,7 +37,7 @@
       if(!document.hidden || Math.random() < 0.25) { // 25% chance of checking when we are hidden
         if(await updated.check()) location.href = "";
       }
-    }, 30e3)
+    }, 30e3);
     return () => {
       clearInterval(i);
       clearInterval(ri);
