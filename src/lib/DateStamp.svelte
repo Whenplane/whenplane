@@ -6,7 +6,12 @@
 
   export let epochSeconds: number;
 
-  let date = new Date(epochSeconds * 1000);
+  $: date = new Date(epochSeconds * 1000);
+
+  $: {
+      epochSeconds;
+      updateSecondsAgo();
+  }
 
   let secondsAgo: number;
   function updateSecondsAgo() {
