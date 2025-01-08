@@ -16,8 +16,19 @@
   let html: string;
   $: {
     html = "";
+    const beforeTitles = parsedBefore.map(p => p.title)
     let removed: string[] = [];
-    console.debug({before, after, parsedBefore, parsedAfter})
+    const added = parsedAfter.filter(p => !beforeTitles.includes(p.title));
+    console.debug({before, after, parsedBefore, parsedAfter});
+    for (let addedProduct of added) {
+      if(displaying === "before") {
+        html += "<span style='background-color: rgba(0, 255, 0, 0.2)' class='opacity-40 pl-1'></span><br>";
+      } else {
+        html += "<a href='/lttstore/products/" + addedProduct.handle + "' class='hidden-link' style='background-color: rgba(0, 255, 0, 0.2)'>" +
+          "Added " + addedProduct.title +
+          "</a><br>";
+      }
+    }
     for (let i = 0; i < parsedBefore.length; i++) {
       const beforeProduct = parsedBefore[i];
       const afterProduct = parsedAfter.find(v => v.title === beforeProduct.title);
