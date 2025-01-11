@@ -37,10 +37,24 @@ export const GET = (async ({platform, url}) => {
 
   const utcDay = new Date().getUTCDay();
 
-  const votes = (utcDay === 5 || utcDay === 6) ? await (db.prepare("select * from lateness_votes where timestamp > ? order by timestamp desc")
-    .bind(Date.now() - vote_valid_for) as D1PreparedStatement)
-    .all<{id: string, timestamp: string, vote: string}>()
-    .then(r => r?.results) : [];
+  async function tryDB(attempt = 1): Promise<{id: string, timestamp: string, vote: string}[]> {
+    if(!db) throw error(503, "Database unavailable!");
+    return await (db.prepare("select * from lateness_votes where timestamp > ? order by timestamp desc")
+      .bind(Date.now() - vote_valid_for) as D1PreparedStatement)
+      .all<{id: string, timestamp: string, vote: string}>()
+      .then(r => r?.results)
+      .catch(e => {
+        console.warn("Attempt number " + attempt + " failed." + (attempt < 3 ? " Retrying." : ""));
+        if(attempt < 3) {
+          return tryDB(++attempt);
+        } else {
+          throw e;
+        }
+      })
+  }
+
+
+  const votes = (utcDay === 5 || utcDay === 6) ? await tryDB() : [];
 
   const processedIds: string[] = [];
 
