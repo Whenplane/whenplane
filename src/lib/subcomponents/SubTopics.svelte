@@ -33,6 +33,9 @@
         href="https://youtube.com/watch?v={youtubeId}&t={topic.time}"
         target="_blank" rel="noopener"
       >
+        <span class="opacity-70">
+          {topic.timeString}
+        </span>
         {topic.name}
       </a>
     </li>

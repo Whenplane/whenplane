@@ -46,9 +46,11 @@ export function e(s: string) {
     return btoa(s);
 }
 
-export function commas(x: number | undefined | null) {
+export function commas(x: number | undefined | null, decimals?: undefined | number) {
     if(typeof x === "undefined" || x === null) return x;
-    return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+    const parts = (typeof decimals === "undefined" ? x.toString() : x.toFixed(decimals ?? 100))
+      .split(".")
+    return parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ",") + (parts.length > 1 ? "." : "") + parts.slice(1).join(".");
 }
 
 export function newResponse(res: Response, headerFn: (existingHeaders: Headers) => Headers): Promise<Response> {

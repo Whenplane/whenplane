@@ -20,6 +20,7 @@
   import Tags from "svelte-bootstrap-icons/lib/Tags.svelte";
   import { getFieldName } from "$lib/lttstore/field_names.ts";
   import { getDiffComponent } from "$lib/lttstore/field_components.ts";
+  import ProductMoveRateGraph from "$lib/lttstore/product/ProductMoveRateGraph.svelte";
 
   export let data;
 
@@ -495,6 +496,7 @@
     <option value="all">all-time</option>
   </select>
   <ProductStockHistoryGraph stockHistory={data.stockHistory} productName={productInfo.title} {chartUpdateNumber}/>
+  <ProductMoveRateGraph stockHistory={data.stockHistory} productName={productInfo.title} {chartUpdateNumber}/>
   <br>
   {#if data.product.firstSeen < 1719248750000}
     Note that stock started being recorded on June 11th, 2024, so data before that is not available.
