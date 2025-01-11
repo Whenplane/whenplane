@@ -56,8 +56,23 @@ export const GET = (async ({platform, fetch, locals}) => {
   locals.addTiming({id: "cf-cache", duration: Date.now() - cacheStart})
 
 
-  const response = await fetch("https://open.er-api.com/v6/latest/USD")
-    .then(response => response.json()) as LatestExchangeRate;
+  const response: LatestExchangeRate = await fetch("https://open.er-api.com/v6/latest/USD")
+    .then(response => response.json())
+    .catch(() => {
+      return {
+        result: "success",
+        provider: "local",
+        time_last_update_unix: Date.now(),
+        time_last_update_utc: new Date().toISOString(),
+        time_next_update_unix: Date.now() + 5e3,
+        time_next_update_utc: new Date(Date.now() + 5e3).toISOString(),
+        time_eol_unix: 1894314516122,
+        base_code: "USD",
+        rates: {
+          "USD": 1
+        }
+      }
+    })
 
   const setOrderRates = (() => {
     const rates = {};
