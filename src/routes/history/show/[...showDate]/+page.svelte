@@ -147,6 +147,9 @@
                                   href="https://youtube.com/watch?v={youtubeId}&t={timestamp.time}"
                                   target="_blank" rel="noopener"
                                 >
+                                    <span class="opacity-70">
+                                      {timestamp.timeString}
+                                    </span>
                                     {timestamp.name}
                                 </a>
 
