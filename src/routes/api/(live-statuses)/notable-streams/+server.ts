@@ -157,7 +157,7 @@ export const GET = (async ({platform, url}) => {
       if(remaining) minRemaining = Math.min(Number(remaining), minRemaining ?? Number(remaining))
       if(reset) maxResetTime = Math.min(Number(reset), maxResetTime ?? Number(reset))
 
-      if(channel === "bocabola_" && twitchJSON.data.length > 0 && !dev) {
+      if(channel === "bocabola" && twitchJSON.data.length > 0 && !dev) {
         const throttler = (platform?.env?.NOTIFICATION_THROTTLER as DurableObjectNamespace)
         lastNotifSends[channel] = Date.now();
         const id = throttler.idFromName("n");

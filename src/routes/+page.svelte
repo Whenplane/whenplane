@@ -370,8 +370,8 @@
 				<br>
 			{/if}
 			<!--{#if nowish.getTime() < 1710572400000}
-				<a href="https://www.twitch.tv/bocabola_" target="_blank" rel="noopener" class="!no-underline">
-					Elijah (BocaBola_) will be streaming during After Dark and after WAN Show!
+				<a href="https://www.twitch.tv/bocabola" target="_blank" rel="noopener" class="!no-underline">
+					Elijah (BocaBola) will be streaming during After Dark and after WAN Show!
 				</a>
 			{/if}-->
 		</div>
@@ -405,7 +405,7 @@
 			isLive: true,
 			name: "Elijah",
 			title: "(stream title will be here)",
-			channel: "bocabola_",
+			channel: "bocabola",
 			started: "2024-02-08T22:45:02.407Z"
 		}}/>-->
 

@@ -23,7 +23,7 @@ export const load = (async ({platform, fetch}) => {
 
   const liveData: NotablePeopleShortResponse = await fetch("/api/notable-streams")
     .then(r => r.json())
-    .then(r => r.bocabola_ as NotablePeopleShortResponse);
+    .then(r => r.bocabola as NotablePeopleShortResponse);
 
   if(!liveData) throw error(503, "Boca live data missing");
 

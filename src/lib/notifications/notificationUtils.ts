@@ -30,7 +30,7 @@ export const lang: {[key: string]: {name: string, description: string}} = {
 
   elijah_stream: {
     name: "Elijah Stream Notifications",
-    description: "Get a notification when Elijah (BocaBola_) starts streaming on twitch"
+    description: "Get a notification when Elijah (BocaBola) starts streaming on twitch"
   },
   dan_stream: {
     name: "Dan Stream Notifications",
