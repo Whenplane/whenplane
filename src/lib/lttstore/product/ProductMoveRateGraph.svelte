@@ -59,7 +59,7 @@
       })
     } else {
       return [{
-        name: "total",
+        name: "average",
         data: stockHistory.map((h, i, a) => {
           if(i > 0) {
             const previous = a[i-1];
@@ -103,7 +103,7 @@
       size: 0,
     },
     title: {
-      text: productName ? 'Stock History - ' + productName : 'Stock History',
+      text: productName ? 'Move Rate History - ' + productName : 'Move Rate History',
       align: 'left'
     },
     fill: {
