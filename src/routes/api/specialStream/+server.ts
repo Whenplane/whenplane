@@ -9,18 +9,18 @@ export const GET = (async ({fetch}) => {
   const fpLive: FpEndpointResponse = await fetch("/api/floatplane?fast=true").then(r => r.json());
 
   const data: SpecialStream | false = {
-    title: "Streams with Sarah - Shirt Design Stream 2",
-    thumbnail: "https://pbs.floatplane.com/stream_thumbnails/5c13f3c006f1be15e08e05c0/718785454040303_1734628840769.jpeg",
+    title: "Arc Battlemage Game Compatability Challenge",
+    thumbnail: "https://pbs.floatplane.com/stream_thumbnails/5c13f3c006f1be15e08e05c0/314301655780212_1737048742498.jpeg",
 
-    start: "2024-12-19T18:00:00Z",
-    startIsEstimated: false,
+    start: "2025-01-16T19:00:00Z",
+    startIsEstimated: true,
 
     onFloatplane: true,
 
-    onTwitch: false,
+    onTwitch: true,
     // twitchNotes: "first half",
 
-    onYoutube: false
+    onYoutube: true
   } //false;
 
   if(!data) {
