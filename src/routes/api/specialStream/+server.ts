@@ -12,7 +12,7 @@ export const GET = (async ({fetch}) => {
     title: "Arc Battlemage Game Compatability Challenge",
     thumbnail: "https://pbs.floatplane.com/stream_thumbnails/5c13f3c006f1be15e08e05c0/314301655780212_1737048742498.jpeg",
 
-    start: "2025-01-16T19:00:00Z",
+    start: "2025-01-16T21:00:00Z",
     startIsEstimated: true,
 
     onFloatplane: true,
