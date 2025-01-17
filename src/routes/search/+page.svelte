@@ -22,6 +22,11 @@
   let searchMerchMessages = ($page.url.searchParams.get("merch-messages")) === "on";
 
   let searchSort = $page.url.searchParams.get("sort") ?? "default";
+  let before = $page.url.searchParams.get("before");
+  let after = $page.url.searchParams.get("after");
+  console.debug({before, after})
+
+  let moreOptionsUsed = (!before ? 0 : 1) + (!after ? 0 : 1);
 
   let highlightVisibility = data.settings?.highlightVisibility === "true";
 
@@ -119,6 +124,31 @@
           <option value="relevance">Relevance Only</option>
         </select>
       </label>
+
+      <ToolTip placement="bottom" event="click" id="more-search-params">
+        <svelte:fragment slot="icon">
+            <span class="btn variant-filled-surface cursor-pointer">
+              More
+              {#if moreOptionsUsed > 0}
+                <span class="badge-icon variant-filled-warning ml-2">
+                  {moreOptionsUsed}
+                </span>
+              {/if}
+            </span>
+        </svelte:fragment>
+        <svelte:fragment slot="content">
+          <label>
+            <span>Before</span>
+            <input type="date" name="before" class="input" bind:value={before} on:change={() => searchForm.submit()}>
+          </label>
+          <br>
+          <label>
+            <span>After</span>
+            <input type="date" name="after" class="input" bind:value={after} on:change={() => searchForm.submit()}>
+          </label>
+        </svelte:fragment>
+      </ToolTip>
+
     </div>
   </form>
   <br>
@@ -273,7 +303,7 @@
       width: min(550px, 90vw);
   }
   .search-box-top-bar {
-      width: calc(80vw - 690px);
+      width: calc(80vw - 750px);
   }
   @media (max-width: 1400px) {
       .search-box-top-bar {
