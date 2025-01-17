@@ -6,7 +6,7 @@ import type { PageServerLoad } from "./$types";
 import { resultsPerPage } from "./search.ts";
 import type { CombinedSearchResult } from "$lib/search/search_types.ts";
 import { dev } from "$app/environment";
-import { error } from "@sveltejs/kit";
+import { error, redirect } from "@sveltejs/kit";
 
 const searchClient = new SearchClient({
   'nodes': [{
@@ -64,8 +64,8 @@ export const load = (async ({fetch, url, cookies}) => {
   if(sp.get("transcripts") === "on") types.push("transcript-chunk");
   if(sp.get("merch-messages") === "on") types.push("message", "reply");
   if(types.length === 0) {
-    console.warn("No search type given! Defaulting to title,topics,transcripts")
-    types.push("title", "topic", "transcript")
+    console.warn("No search type given! Redirecting to add to title,topics,transcripts")
+    throw redirect(302, "/search?q=" + encodeURIComponent(q) + "&title=on&topics=on&transcripts=on")
   }
 
   const urlSort = sp.get("sort")
