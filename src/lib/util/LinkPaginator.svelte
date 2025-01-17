@@ -32,9 +32,11 @@
 {/if}
 
 
-<span class="px-2">
-  {currentPage}
-</span>
+{#if totalPages > 1}
+  <span class="px-2">
+    {currentPage}
+  </span>
+{/if}
 
 
 {#if currentPage < totalPages}
