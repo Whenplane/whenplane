@@ -225,7 +225,7 @@
       <enhanced:img src="./wan_show_search.png" class="search-logo mx-auto" alt="The WAN Show Search" title="The WAN Show Search" sizes="min(1330px, 38em)" />
       <br>
       <form method="GET">
-        <input placeholder="Search" name="q" class="input search-box p-2 pl-4"><br>
+        <input placeholder="Search" name="q" class="input search-box p-2 pl-4" autofocus><br>
         <div class="py-4">
           Search:
           <label class="inline-block px-2">
