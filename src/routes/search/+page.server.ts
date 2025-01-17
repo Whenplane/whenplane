@@ -37,7 +37,7 @@ export const load = (async ({fetch, url, cookies}) => {
   const q = url.searchParams.get("q");
   let page = Number(url.searchParams.get("page") ?? 1);
 
-  if(!showsCache || Date.now() - showsFetched < 60 * 60e3) {
+  if(!showsCache || Date.now() - showsFetched > 60 * 60e3) {
     showsFetched = Date.now()
     showsCache = fetch("/api/history/all")
       .then(r => r.json())
