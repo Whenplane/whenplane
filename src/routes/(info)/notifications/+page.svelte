@@ -111,9 +111,9 @@
   Subscribe to push notifications to get a notification when the show is imminent, or when the pre/main show start.<br>
   <br>
   This is an alternative to floatplane/youtube notifications which can be significantly delayed.
-  You should receive these notifications within 5 seconds of the event happening (usually less)<br>
+  You should receive these notifications within 10 seconds of the event happening (usually less)<br>
   <br>
-  You do <u>not</u> need to keep Whenplane open in order to get notifications. They also work on your phone (just requires some extra setup on iOS, which will show below if you are on iOS)<br>
+  You do <u>not</u> need to keep Whenplane open in order to get push notifications. They also work on your phone (just requires some extra setup on iOS, which will show below if you are on iOS)<br>
   <br>
   {#if iOS}
     <div class="ios-alert mt-5">
