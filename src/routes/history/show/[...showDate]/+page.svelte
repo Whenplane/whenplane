@@ -145,7 +145,7 @@
                                 <a
                                   class="hidden-link"
                                   href="https://youtube.com/watch?v={youtubeId}&t={timestamp.time}"
-                                  target="_blank" rel="noopener"
+                                  rel="noopener"
                                 >
                                     <span class="opacity-70">
                                       {timestamp.timeString}
