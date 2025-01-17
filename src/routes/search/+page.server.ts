@@ -68,8 +68,8 @@ export const load = (async ({fetch, url, cookies}) => {
     throw redirect(302, "/search?q=" + encodeURIComponent(q) + "&title=on&topics=on&transcripts=on")
   }
 
-  const before = sp.get("before").replaceAll("-", "");
-  const after = sp.get("after").replaceAll("-", "");
+  const before = sp.get("before")?.replaceAll("-", "");
+  const after = sp.get("after")?.replaceAll("-", "");
 
   const urlSort = sp.get("sort")
   let sort = "_text_match(buckets: 30):desc,sortWeight:desc,_text_match:desc";
