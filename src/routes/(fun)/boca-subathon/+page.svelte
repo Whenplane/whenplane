@@ -13,7 +13,7 @@
     // dev ? Date.now() - totalTime + 15e3 :
       undefined;
 
-  const scheduledStart = new Date("2025-06-12T17:20:21.245Z");
+  const scheduledStart = new Date("2025-06-11T17:20:21.245Z");
 
   let string: string | undefined = "";
   let distance: number;
