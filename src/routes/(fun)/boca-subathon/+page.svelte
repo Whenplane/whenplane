@@ -60,7 +60,7 @@
   <br>
   <br>
 
-  <a href="https://twitch.tv/bocabola">twitch.tv/bocabola_</a>
+  <a href="https://twitch.tv/bocabola">twitch.tv/bocabola</a>
 
   <br>
   <br>
