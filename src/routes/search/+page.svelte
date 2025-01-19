@@ -96,9 +96,9 @@
       <enhanced:img src="./wan_show_search.png" class="search-logo-small inline-block px-2" alt="The WAN Show Search" title="The WAN Show Search" sizes="min(1330px, 13em)" />
     </a>
   </div>
-  <form method="GET" class="inline-block px-4 text-center" bind:this={searchForm}>
+  <form method="GET" class="inline-block pl-4 text-center" bind:this={searchForm}>
     <input placeholder="Search" name="q" class="input search-box-top-bar p-2 pl-4" value={q}>
-    <div class="inline-block px-2">
+    <div class="inline-block pl-2">
       <label class="inline-block px-2">
         <input type="checkbox" class="checkbox" name="title" bind:checked={searchTitle} on:change={() => searchForm.submit()}>
         <span>Titles</span>
@@ -303,7 +303,7 @@
       width: min(550px, 90vw);
   }
   .search-box-top-bar {
-      width: calc(80vw - 750px);
+      width: calc(95vw - 800px - 13em);
   }
   @media (max-width: 1400px) {
       .search-box-top-bar {
