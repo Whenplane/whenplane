@@ -9,48 +9,82 @@
   import ToolTip from "$lib/ToolTip.svelte";
   import { setCookie, strip } from "$lib/cookieUtils.ts";
 
-  let q = $page.url.searchParams.get("q");
-  $: q = $page.url.searchParams.get("q")
+  let sp = $page.url.searchParams;
+  $: sp = $page.url.searchParams
+
+  let q = sp.get("q");
+  $: q = sp.get("q")
 
   export let data;
 
   let searchForm: HTMLFormElement;
 
-  $: searchTitle = ($page.url.searchParams.get("title")) === "on";
-  $: searchTopics = ($page.url.searchParams.get("topics")) === "on";
-  $: searchTranscripts = ($page.url.searchParams.get("transcripts")) === "on";
-  $: searchMerchMessages = ($page.url.searchParams.get("merch-messages")) === "on";
+  let defaultTitle = true;
+  let defaultTopics = true;
+  let defaultTranscripts = true;
+  let defaultMerchMessages = false;
 
-  $: searchSort = $page.url.searchParams.get("sort") ?? "default";
-  $: before = $page.url.searchParams.get("before");
-  $: after = $page.url.searchParams.get("after");
-  console.debug({before, after})
+  let searchTitle = defaultTitle;
+  let searchTopics = defaultTopics;
+  let searchTranscripts = defaultTranscripts;
+  let searchMerchMessages = defaultMerchMessages;
+
+  $: updateDefaults(q);
+  updateDefaults(q);
+  function updateDefaults(q: string | null) {
+    if(browser && !q) {
+      const localTitle = localStorage.getItem("searchTitle");
+      if(localTitle != null) {
+        defaultTitle = localTitle === "true";
+      } else {
+        defaultTitle = true;
+      }
+
+      const localTopics = localStorage.getItem("searchTopics");
+      if(localTopics != null) {
+        defaultTopics = localTopics === "true";
+      } else {
+        defaultTopics = true;
+      }
+
+      const localTranscripts = localStorage.getItem("searchTranscripts");
+      if(localTranscripts != null) {
+        defaultTranscripts = localTranscripts === "true";
+      } else {
+        defaultTranscripts = true;
+      }
+
+      const localMerchMessages = localStorage.getItem("searchMerchMessages");
+      if(localMerchMessages != null) {
+        defaultMerchMessages = localMerchMessages === "true";
+      }
+
+      console.log({localTitle, localTopics, localTranscripts, localMerchMessages})
+      searchTitle = defaultTitle;
+      searchTopics = defaultTopics;
+      searchTranscripts = defaultTranscripts;
+      searchMerchMessages = defaultMerchMessages;
+    }
+  }
+
+  $: if(q) update(sp);
+
+  function update(sp: URLSearchParams) {
+    searchTitle = (sp.get("title")) === "on";
+    searchTopics = (sp.get("topics")) === "on";
+    searchTranscripts = (sp.get("transcripts")) === "on";
+    searchMerchMessages = (sp.get("merch-messages")) === "on";
+  }
+
+  $: searchSort = sp.get("sort") ?? "default";
+  $: before = sp.get("before");
+  $: after = sp.get("after");
+
+  $: console.debug({searchTitle, searchTopics, searchTranscripts, searchMerchMessages})
 
   $: moreOptionsUsed = (!before ? 0 : 1) + (!after ? 0 : 1);
 
   $: highlightVisibility = data.settings?.highlightVisibility === "true";
-
-  if(browser && !q) {
-    const localTitle = localStorage.getItem("searchTitle");
-    if(localTitle != null) {
-      searchTitle = localTitle === "true";
-    }
-
-    const localTopics = localStorage.getItem("searchTopics");
-    if(localTopics != null) {
-      searchTopics = localTopics === "true";
-    }
-
-    const localTranscripts = localStorage.getItem("searchTranscripts");
-    if(localTranscripts != null) {
-      searchTranscripts = localTranscripts === "true";
-    }
-
-    const localMerchMessages = localStorage.getItem("searchMerchMessages");
-    if(localMerchMessages != null) {
-      searchMerchMessages = localMerchMessages === "true";
-    }
-  }
 
   let first = true;
   $: if(!q && browser && !first) {
