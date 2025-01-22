@@ -16,19 +16,19 @@
 
   let searchForm: HTMLFormElement;
 
-  let searchTitle = ($page.url.searchParams.get("title")) === "on";
-  let searchTopics = ($page.url.searchParams.get("topics")) === "on";
-  let searchTranscripts = ($page.url.searchParams.get("transcripts")) === "on";
-  let searchMerchMessages = ($page.url.searchParams.get("merch-messages")) === "on";
+  $: searchTitle = ($page.url.searchParams.get("title")) === "on";
+  $: searchTopics = ($page.url.searchParams.get("topics")) === "on";
+  $: searchTranscripts = ($page.url.searchParams.get("transcripts")) === "on";
+  $: searchMerchMessages = ($page.url.searchParams.get("merch-messages")) === "on";
 
-  let searchSort = $page.url.searchParams.get("sort") ?? "default";
-  let before = $page.url.searchParams.get("before");
-  let after = $page.url.searchParams.get("after");
+  $: searchSort = $page.url.searchParams.get("sort") ?? "default";
+  $: before = $page.url.searchParams.get("before");
+  $: after = $page.url.searchParams.get("after");
   console.debug({before, after})
 
-  let moreOptionsUsed = (!before ? 0 : 1) + (!after ? 0 : 1);
+  $: moreOptionsUsed = (!before ? 0 : 1) + (!after ? 0 : 1);
 
-  let highlightVisibility = data.settings?.highlightVisibility === "true";
+  $: highlightVisibility = data.settings?.highlightVisibility === "true";
 
   if(browser && !q) {
     const localTitle = localStorage.getItem("searchTitle");
@@ -60,6 +60,8 @@
     localStorage.setItem("searchMerchMessages", searchMerchMessages+"");
   } else if(!q && browser) first = false;
 
+  const description = "Find things that happened during The WAN Show. The WAN Show Search was made to make it much easier to find moments that happened during the WAN show. It includes useful features such as date filtering, multiple sorting options, and filtering based on result type. You can search through Topics/Timestamps (courtesy of Noki aka \"Timestamp Guy\"), transcripts, show titles, and optionally even Merch Messages.";
+
 </script>
 
 <svelte:head>
@@ -70,9 +72,15 @@
     {/if}
   {:else}
     <title>WAN Show Search - Whenplane</title>
-    <meta name="description" content="Find things that happened during The WAN Show">
+    <meta name="description" content={description}>
   {/if}
 </svelte:head>
+
+{#if !q}
+  <span class="clear inline-block absolute pointer-events-none" style="z-index: -5;">
+		{description}
+	</span>
+{/if}
 
 {#if !q}
   <ol class="breadcrumb pt-2 pl-2">
