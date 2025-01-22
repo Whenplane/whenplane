@@ -8,6 +8,7 @@
   import { browser } from "$app/environment";
   import ToolTip from "$lib/ToolTip.svelte";
   import { setCookie, strip } from "$lib/cookieUtils.ts";
+  import LastUpdate from "./indexUpdateStatus/LastUpdate.svelte";
 
   let sp = $page.url.searchParams;
   $: sp = $page.url.searchParams
@@ -291,7 +292,12 @@
   </div>
 
 
-{:else}
+{:else} <!-------------------------------------------------    no query, show the big search page      ------------------------------------------------->
+
+
+
+
+
   <div class="h-almost-full w-full flex items-center justify-center p-2">
     <div class="text-center">
       <enhanced:img src="./wan_show_search.png" class="search-logo mx-auto" alt="The WAN Show Search" title="The WAN Show Search" sizes="min(1330px, 38em)" />
@@ -319,9 +325,21 @@
         </div>
 
       </form>
-      <span class="text-sm opacity-60">
+
+      <span class="block text-sm opacity-60">
         Whenplane and The WAN Show Search on Whenplane is not affiliated with or endorsed by LMG.
       </span>
+
+      <ToolTip placement="bottom" event="click" id="last-update-info">
+        <svelte:fragment slot="icon">
+            <span class="btn btn-sm variant-filled-surface cursor-pointer">
+              Last Update Info
+            </span>
+        </svelte:fragment>
+        <svelte:fragment slot="content">
+          <LastUpdate/>
+        </svelte:fragment>
+      </ToolTip>
     </div>
   </div>
 {/if}
