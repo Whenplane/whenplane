@@ -8,11 +8,11 @@ import { page } from "$app/stores";
 <ol class="breadcrumb pt-2 pl-2">
   <li class="crumb"><a class="anchor hover-underline" href="/">{$page.url.hostname === "whenwan.show" ? "whenwan.show" : "Whenplane"}</a></li>
   <li class="crumb-separator" aria-hidden="true">&rsaquo;</li>
-  <li class="crumb">Support</li>
+  <li class="crumb">Contact / Support</li>
 </ol>
 
 <div class="limit mx-auto text-center mt-16">
-  <h1>Support</h1>
+  <h1>Contact / Support</h1>
   To get support with anything to do with whenplane, or just ask questions or give feedback, feel free to email <a href="mailto:support@whenplane.com">support@whenplane.com</a>
   <br>
   <br>
