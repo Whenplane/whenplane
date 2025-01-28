@@ -13,7 +13,12 @@
   }
 
   let mounted = false;
-  onMount(() => mounted = true)
+  onMount(() => {
+    mounted = true;
+    if(isBoca) {
+      history.replaceState(null, "", "/boca-time")
+    }
+  })
 </script>
 <svelte:head>
   <title>{isBoca ? "Boca" : "LTT"} Time</title>
