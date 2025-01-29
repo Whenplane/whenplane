@@ -71,7 +71,7 @@
                 open-sourced</a>.
             Feel free to make contributions!<br>
             <br>
-            If you are able to, I would highly appreciate <a href="https://paypal.me/ajgeiss0702">donations</a>.<br>
+            If you are able to, I would highly appreciate <a href="https://www.paypal.com/donate/?hosted_button_id=KJCFZLPHLD5GQ">donations</a>.<br>
             Note that all of Whenplane services and domains work around to costing around US$20 per month to run, so any amount past that is just a thank-you to me.
             <br>
             <br>
