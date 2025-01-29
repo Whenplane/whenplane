@@ -9,7 +9,7 @@
   export let tooltip = true;
   export let boca = $page.url.searchParams.has("boca");
 
-  $: console.log({border})
+  $: console.debug({border})
 
   let timeString = "";
 
