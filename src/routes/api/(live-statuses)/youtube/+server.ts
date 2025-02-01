@@ -75,7 +75,7 @@ export const GET = (async ({platform, locals, url, fetch}) => {
 
     const doStart = Date.now();
     // eslint-disable-next-line prefer-const
-    let {isLive, isWAN, started, videoId, snippet, upcoming} =
+    let {isLive, isWAN, started, videoId, snippet, upcoming, scheduledStart} =
       await stub.fetch("https://wheniswan-fetcher.ajg.workers.dev/youtube")
         .then(r => r.json()) as DOResponse;
     locals.addTiming({id: 'doFetch', duration: Date.now() - doStart})
@@ -128,7 +128,8 @@ export const GET = (async ({platform, locals, url, fetch}) => {
         started,
         videoId,
         forced,
-        upcoming
+        upcoming,
+        scheduledStart
     };
 
     const throttler = (platform?.env?.NOTIFICATION_THROTTLER as DurableObjectNamespace)
@@ -187,5 +188,6 @@ type DOResponse = {
     started?: string,
     videoId?: string,
     snippet?: OldShowMeta["snippet"],
-    upcoming: boolean
+    upcoming: boolean,
+    scheduledStart?: string
 }
