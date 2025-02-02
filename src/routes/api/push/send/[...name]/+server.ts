@@ -93,8 +93,8 @@ export const POST = (async ({platform, params, request, url}) => {
 const messages: {[key: string]: PushMessage} = {
   imminent: {
     data: {
-      title: "The WAN show is imminent!",
-      body: "The pre show should be starting in the next 10 minutes. Get ready! \"{title}\""
+      title: "The WAN show might start soon!",
+      body: "A thumbnail was uploaded! The pre show could start in the next 10 minutes. Get ready! \"{title}\""
     },
     options: {
       ttl: 60,
