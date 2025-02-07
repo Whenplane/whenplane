@@ -27,10 +27,10 @@ const lastNotifSends: {[channel: string]: number} = {};
 
 export const GET = (async ({platform, url, request}) => {
 
-  const origin = request.headers.origin;
-  let accessControlAllowOrigin: string | undefined = undefined
-  if(allowedHosts.includes(origin ? new URL(request.headers.origin).host : request.headers.origin)) {
-    accessControlAllowOrigin = request.headers.origin;
+  const origin = request.headers.get("origin");
+  let accessControlAllowOrigin: string | undefined = undefined;
+  if(allowedHosts.includes(origin ? new URL(origin).host : origin)) {
+    accessControlAllowOrigin = origin;
   }
 
   const cache = platform?.env?.CACHE;
