@@ -17,10 +17,21 @@ let fastCache: {
   lastFetchData: {}
 };
 
+const allowedHosts = [
+  "localhost:5173",
+  "boca.lol",
+  "boca.gay"
+]
 
 const lastNotifSends: {[channel: string]: number} = {};
 
-export const GET = (async ({platform, url}) => {
+export const GET = (async ({platform, url, request}) => {
+
+  const origin = request.headers.origin;
+  let accessControlAllowOrigin: string | undefined = undefined
+  if(allowedHosts.includes(origin ? new URL(request.headers.origin).host : request.headers.origin)) {
+    accessControlAllowOrigin = request.headers.origin;
+  }
 
   const cache = platform?.env?.CACHE;
   if(!cache) throw error(503, "Cache not available");
@@ -44,6 +55,11 @@ export const GET = (async ({platform, url}) => {
       cached: true,
       fetchDistance,
       cacheTime
+    }, {
+      headers: {
+        "Access-Control-Allow-Origin": accessControlAllowOrigin,
+        "Vary": "Origin"
+      }
     });
   }
 
@@ -187,7 +203,12 @@ export const GET = (async ({platform, url}) => {
 
   const shortResponses: ShortResponses = makeShortResponses(responses, url);
 
-  return json(shortResponses)
+  return json(shortResponses, {
+    headers: {
+      "Access-Control-Allow-Origin": accessControlAllowOrigin,
+      "Vary": "Origin"
+    }
+  })
 }) satisfies RequestHandler;
 
 
