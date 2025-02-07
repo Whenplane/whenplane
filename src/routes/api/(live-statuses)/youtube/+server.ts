@@ -179,7 +179,8 @@ export type YoutubeResponse = {
     started?: string,
     videoId?: string,
     forced: boolean,
-    upcoming: boolean
+    upcoming: boolean,
+    scheduledStart?: string
 }
 
 type DOResponse = {
