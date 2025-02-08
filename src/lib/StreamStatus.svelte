@@ -4,14 +4,23 @@
     import Floatplane from "./svg/Floatplane.svelte";
     import {onMount} from "svelte";
     import { page } from "$app/stores";
+    import {timeString} from "$lib/timeUtils";
 
     export let data;
 
     // $: useTwitchFallback = (!data.isWdbResponseValid && (Date.now() - $wdbSocketState.lastReceive > 300e3));
     // $: if(useTwitchFallback) console.debug("Using twitch fallback:", data.isWdbResponseValid, $wdbSocketState.lastReceive);
 
+    let nowish = Date.now();
+
     let mounted = false;
-    onMount(() => mounted = true);
+    onMount(() => {
+        mounted = true;
+        let i = setInterval(() => {
+            nowish = Date.now();
+        }, 1e3);
+        return () => clearInterval(i);
+    });
 </script>
 
 <!--<WdbListener/>-->
@@ -61,7 +70,11 @@
                     {/if}
                 {:else}
                     {#if data.liveStatus.youtube?.upcoming}
-                        (upcoming)
+                        {#if data.liveStatus.youtube.scheduledStart}
+                            (scheduled: {timeString(new Date(data.liveStatus.youtube.scheduledStart).getTime() - nowish).trim()})
+                        {:else}
+                            (upcoming)
+                        {/if}
                     {:else}
                         (offline)
                     {/if}
