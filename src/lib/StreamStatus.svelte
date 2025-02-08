@@ -70,7 +70,7 @@
                     {/if}
                 {:else}
                     {#if data.liveStatus.youtube?.upcoming}
-                        {#if data.liveStatus.youtube.scheduledStart}
+                        {#if data.liveStatus.youtube.scheduledStart && new Date(data.liveStatus.youtube.scheduledStart).getTime() > nowish}
                             (scheduled: {timeString(new Date(data.liveStatus.youtube.scheduledStart).getTime() - nowish).trim()})
                         {:else}
                             (upcoming)
