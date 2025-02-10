@@ -74,7 +74,7 @@
 </script>
 <svelte:head>
   <title>Whenplane Merch Messages</title>
-  <meta name="description" content="The Whenplane Merch Message Index is a tool that has processed nearly every WAN show that includes merch messages, and organized them into an organized and searchable index/archive."/>
+  <meta name="description" content="The Whenplane Merch Message Index is a tool that has processed nearly every WAN show that includes merch messages, and put them in an organized and searchable index/archive."/>
 </svelte:head>
 
 <span class="clear inline-block absolute pointer-events-none" style="z-index: -5;">
@@ -92,7 +92,7 @@
 <div class="limit mx-auto p-2">
   <h1>Merch Message Index</h1>
   <br>
-  The Whenplane Merch Message Index is a tool that has processed nearly every WAN show that includes merch messages, and organized them into an organized and searchable index.<br>
+  The Whenplane Merch Message Index is a tool that has processed nearly every WAN show that includes merch messages, and put them in an organized and searchable index.<br>
   To do this, it runs OCR on the part of the screen that displays merch messages, then indexes them.<br>
   <br>
   If you cannot find your merch message in this index, here are a few places to search:<br>
