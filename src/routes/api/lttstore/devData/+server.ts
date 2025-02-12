@@ -14,7 +14,8 @@ export const GET = (async ({platform, params}) => {
     .all()
     .then(r => r.results);
 
-  const collectionChanges = db.prepare("select * from collection_changes")
+  const collectionChanges = db.prepare("select * from collection_changes where field is not \"updated_at\" or timestamp > ?")
+    .bind(Date.now() - (2 * 24 * 60 * 60e3)) // only get update_at entries from the past 2 days
     .all()
     .then(r => r.results);
 
@@ -23,7 +24,8 @@ export const GET = (async ({platform, params}) => {
     .then(r => r.results);
 
   // const waterBottleChanges = db.prepare("select * from change_history where id = 7117650296935")
-  const changeHistory = db.prepare("select * from change_history")
+  const changeHistory = db.prepare("select * from change_history where id = 6649895092327 or timestamp > ?")
+    .bind(Date.now() - (30 * 24 * 60 * 60e3)) // only get non-screwdriver changes from the past 30 days
     .all()
     .then(r => r.results);
 
