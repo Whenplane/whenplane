@@ -12,8 +12,8 @@ export const GET = (async ({fetch}) => {
     title: "Our New $4500 Workstation PCs for Editing",
     thumbnail: "https://pbs.floatplane.com/stream_thumbnails/5c13f3c006f1be15e08e05c0/970015889418361_1739470500944.jpeg",
 
-    start: "2025-02-13T20:30:00Z",
-    startIsEstimated: true,
+    start: "2025-02-13T19:45:00Z",
+    startIsEstimated: false,
 
     onFloatplane: true,
 
