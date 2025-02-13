@@ -6,6 +6,7 @@
   import { dev } from "$app/environment";
   import { getDateFormatLocale } from "$lib/prefUtils.ts";
   import { updated } from "$app/stores";
+  import { page } from "$app/stores";
 
   const totalTime = (168 * 60 * 60e3);
   // this is multiple lines, so I can easily comment/uncomment
@@ -47,6 +48,7 @@
 <svelte:head>
   <title>Boca Subathon Progress</title>
   <meta name="description" content="Boca stream marathon progress % and time remaining">
+  <link rel="canonical" href="{$page.url.origin}{$page.url.pathname}"/>
 </svelte:head>
 
 <div class="limit mx-auto pt-8 p-2">
