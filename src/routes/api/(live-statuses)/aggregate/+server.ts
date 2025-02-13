@@ -122,30 +122,32 @@ export const GET = (async ({url, fetch, locals, platform}) => {
             floatplane: response.floatplane.fetched || Number.MAX_SAFE_INTEGER
         }*/})
 
-    const thisWsMessage = makeWsMessage(response);
-    const thisWsMessageString = JSON.stringify(thisWsMessage);
-    if(thisWsMessageString !== lastWsMessage && Object.keys(response.floatplane).length > 0) {
-        const objectBinding = platform?.env?.WS_OBJECT;
+    if(Object.keys(response.floatplane).length > 0) {
+        const thisWsMessage = makeWsMessage(response);
+        const thisWsMessageString = JSON.stringify(thisWsMessage);
+        if(thisWsMessageString !== lastWsMessage) {
+            const objectBinding = platform?.env?.WS_OBJECT;
 
 
-        if(objectBinding) {
-            const objectId = objectBinding.idFromName("a");
-            const object = objectBinding.get(objectId);
+            if(objectBinding) {
+                const objectId = objectBinding.idFromName("a");
+                const object = objectBinding.get(objectId);
 
-            platform?.context?.waitUntil(object.fetch("https://DO/sendData?event=aggregate", {
-                headers: {
-                    "content-type": "application/json"
-                },
-                method: "POST",
-                body: JSON.stringify({
-                    timestamp: Date.now(),
-                    ...thisWsMessage
-                })
-            }))
+                platform?.context?.waitUntil(object.fetch("https://DO/sendData?event=aggregate", {
+                    headers: {
+                        "content-type": "application/json"
+                    },
+                    method: "POST",
+                    body: JSON.stringify({
+                        timestamp: Date.now(),
+                        ...thisWsMessage
+                    })
+                }))
+            }
         }
+        // console.log({thisWsMessage, lastWsMessage})
+        lastWsMessage = thisWsMessageString;
     }
-    // console.log({thisWsMessage, lastWsMessage})
-    lastWsMessage = thisWsMessageString;
 
     locals.addTiming({id: "twitch", duration: twitchTime ?? -1});
     locals.addTiming({id: "youtube", duration: ytTime ?? -1});
