@@ -128,6 +128,7 @@ export const GET = (async ({url, fetch, locals, platform}) => {
         }*/})
 
     if(Object.keys(response.floatplane).length > 0) {
+        log(platform, "[/api/aggregate] fp keys " + Object.keys(response.floatplane).join(","))
         const thisWsMessage = makeWsMessage(response);
         const thisWsMessageString = JSON.stringify(thisWsMessage);
         if(thisWsMessageString !== lastWsMessage) {
