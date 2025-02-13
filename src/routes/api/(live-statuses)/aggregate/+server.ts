@@ -10,6 +10,7 @@ import type { FpEndpointResponse } from "../floatplane/+server.ts";
 import { notablePeople } from "../notable-streams/notable-people.ts";
 import type { DurableObjectNamespace } from "@cloudflare/workers-types";
 import type { SocketObject } from "../../../../app";
+import { log } from "$lib/server/server-utils.ts";
 
 let lastWsMessage: string;
 
@@ -78,7 +79,11 @@ export const GET = (async ({url, fetch, locals, platform}) => {
         const start = Date.now();
         const response = await fetch("/api/floatplane?fast=" + fast)
           .then(r => r.json())
-          .catch(e => {throw new Error("Error while fetching floatplane: " + e.message, { cause: e })});
+          .catch(e => {
+              const ee = new Error("Error while fetching floatplane: " + e.message, { cause: e });
+              log(platform, "[/api/aggregate] FPE: " + ee);
+              throw ee;
+          });
         fpTime = Date.now() - start;
         return response;
     })();
