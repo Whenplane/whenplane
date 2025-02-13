@@ -33,7 +33,8 @@
 </script>
 
 <svelte:head>
-  <title>{data.video.title} - Whenplane Merch Messages</title>
+  <title>{data.video.title.replaceAll(" - WAN Show ", " - ")} - Whenplane Merch Messages</title>
+  <meta name="description" content="View (most) of the merch messages that were displayed on '{data.video.title}'" />
 </svelte:head>
 
 {#if data.video.status === "inprogress"}
