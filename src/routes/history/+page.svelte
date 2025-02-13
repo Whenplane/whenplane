@@ -16,6 +16,7 @@
     import { countTo, type HistoricalEntry } from "$lib/utils";
     import LoadingHistoricalShow from "$lib/history/LoadingHistoricalShow.svelte";
     import LazyLoad from "@dimfeld/svelte-lazyload";
+    import { page } from "$app/stores";
 
     export let data;
 
@@ -62,6 +63,7 @@
 <svelte:head>
     <title>WAN Show History</title>
     <meta name="description" content="How late has the WAN show been before? (spoiler: very!) See a list of every WAN show that has ever happened, and when they started."/>
+    <link rel="canonical" href="{$page.url.origin}{$page.url.pathname}"/>
 </svelte:head>
 <a href="/" class="pt-2 pl-2">Back to Countdown</a>
 <div class="text-center">
