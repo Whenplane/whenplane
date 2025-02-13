@@ -160,6 +160,7 @@
 <svelte:head>
 	<title>When is the WAN Show?  {$page.url.hostname === "whenwan.show" ? "whenwan.show" : "Whenplane"}</title>
 	<meta name="description" content={description}/>
+	<link rel="canonical" href="https://whenplane.com/"/>
 </svelte:head>
 
 {#if data.useWebSocket}
