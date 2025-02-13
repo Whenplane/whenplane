@@ -150,7 +150,7 @@
 
 	const disableNotableStreams = browser ? !(getCookie("disableNotableStreams") !== "true") : !($page.params.__c__disableNotableStreams !== "true");
 
-	const description = "Is the WAN show late? Yes. How late is the WAN show? Probably very! See a countdown to when WAN is supposed to start, as well as how late it's been before.";
+	const description = "Is The WAN Show late? Yes. How late is The WAN Show? Probably very! See a countdown to when WAN is supposed to start, as well as how late it's been before.";
 
 </script>
 <svelte:window
