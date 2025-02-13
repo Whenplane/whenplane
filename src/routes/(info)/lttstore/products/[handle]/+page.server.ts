@@ -2,7 +2,7 @@ import { error, redirect } from "@sveltejs/kit";
 import type { PageServerLoad } from "./$types";
 import type { D1Database } from "@cloudflare/workers-types";
 import { dev } from "$app/environment";
-import type { ProductsTableRow, StockHistoryTableRow } from "$lib/lttstore/lttstore_types.ts";
+import type { ProductsTableRow, SimilarProductsTableRow, StockHistoryTableRow } from "$lib/lttstore/lttstore_types.ts";
 
 import { createTables } from "../../createTables.ts";
 
@@ -79,10 +79,16 @@ export const load = (async ({platform, params, url}) => {
     .all<{id: number, timestamp: number, field: string, old: string, new: string}>()
     .then(r => r.results);
 
+  const similarProducts = db.prepare("select * from similar_products where id = ?")
+    .bind(product.id)
+    .first<SimilarProductsTableRow>()
+    .then(r => r ? {timestamp: r.timestamp, similar: JSON.parse(r.similar).filter(p => p.id != product.id)} : r);
+
   return {
     product,
     historyDays,
     stockHistory: await stockHistory,
-    changeHistory
+    changeHistory,
+    similarProducts,
   }
 }) satisfies PageServerLoad

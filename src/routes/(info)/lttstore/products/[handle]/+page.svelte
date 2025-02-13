@@ -21,6 +21,8 @@
   import { getFieldName } from "$lib/lttstore/field_names.ts";
   import { getDiffComponent } from "$lib/lttstore/field_components.ts";
   import ProductMoveRateGraph from "$lib/lttstore/product/ProductMoveRateGraph.svelte";
+  import LTTProductCard from "$lib/lttstore/LTTProductCard.svelte";
+  import ToolTip from "$lib/ToolTip.svelte";
 
   export let data;
 
@@ -411,7 +413,43 @@
       </AccordionItem>
     </Accordion>
   </div>
+  <br>
 
+  <div class="max-w-4xl my-4">
+    <Accordion class="mx-4" spacing="" regionPanel="">
+      <AccordionItem open>
+        <svelte:fragment slot="summary">
+          Similar Products
+          <ToolTip id="similar-products">
+            Whenplane uses an AI embedding model to determine products that are similar to each other.<br>
+            The product description is used for comparison, so products with similar descriptions will show as similar to each other.<br>
+            These similar products were last updated
+            {#await data.similarProducts}
+              <div class="inline-block w-32 placeholder animate-pulse align-bottom rounded-md"></div>
+            {:then similarProducts}
+              <DateStamp epochSeconds={similarProducts.timestamp/1e3}/>
+            {/await}
+            <br>
+            Similar products are updated roughly every 7 days.
+          </ToolTip>
+        </svelte:fragment>
+        <svelte:fragment slot="content">
+          {#key data}
+            <div class="min-h-[298px] overflow-y-visible overflow-x-auto pr-64 edge-fade" style="text-wrap: nowrap;">
+              {#await data.similarProducts}
+                ...
+              {:then similarProducts}
+                {#each similarProducts?.similar as similar (similar.id)}
+                  {@const product = similar.metadata.product}
+                  <LTTProductCard {product} available={similar.metadata.available} />
+                {/each}
+              {/await}
+            </div>
+          {/key}
+        </svelte:fragment>
+      </AccordionItem>
+    </Accordion>
+  </div>
   <br>
   <br>
   <br>
@@ -579,6 +617,12 @@
       product: "shown below"
     }, undefined, '\t')}</pre>
     <pre>{JSON.stringify(productInfo, undefined, '\t')}</pre>
+    similar:
+    {#await data.similarProducts}
+      ...
+    {:then similar}
+      <pre>{JSON.stringify(similar, undefined, '\t')}</pre>
+    {/await}
   {/if}
 </div>
 
@@ -619,5 +663,14 @@
 
   .product-discount-text > :global(hr) {
       margin: 1rem;
+  }
+
+  .edge-fade {
+      --mask: linear-gradient(to right,
+          rgba(0,0,0, 1) 0,   rgba(0,0,0, 1) 90%,
+          rgba(0,0,0, 0) 100%, rgba(0,0,0, 0) 0
+        ) 100% 50% / 100% 100% repeat-x;
+      -webkit-mask: var(--mask);
+      mask: var(--mask);
   }
 </style>

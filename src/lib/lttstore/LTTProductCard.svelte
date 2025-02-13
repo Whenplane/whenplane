@@ -62,4 +62,8 @@
         text-decoration: line-through;
     }
 
+    a {
+        text-wrap: initial;
+    }
+
 </style>

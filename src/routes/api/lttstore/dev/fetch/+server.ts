@@ -4,7 +4,7 @@ import { dev } from "$app/environment";
 import type {
   CollectionDbRow,
   ProductDifference,
-  ProductsTableRow,
+  ProductsTableRow, SimilarProductsTableRow,
   StockHistoryTableRow
 } from "$lib/lttstore/lttstore_types.ts";
 import { createTables } from "../../../../(info)/lttstore/createTables.ts";
@@ -22,7 +22,8 @@ export const GET = (async ({platform, params}) => {
     collections: CollectionDbRow[]
     screwdriverStocks: StockHistoryTableRow[],
     changeHistory: {id: number, timestamp: number, field: string, old: string, new: string}[],
-    collectionChanges: {id: number, timestamp: number, field: string, old: string, new: string}[]
+    collectionChanges: {id: number, timestamp: number, field: string, old: string, new: string}[],
+    similarProducts: SimilarProductsTableRow[]
   } = await fetch("https://whenplane.com/api/lttstore/devData")
     .then(res => res.json());
 
@@ -49,6 +50,20 @@ export const GET = (async ({platform, params}) => {
         product.backorderAlerts,
         product.productDetailModules,
         product.productDiscount
+      )
+      .run();
+  }
+
+  i = 0;
+  for (const product of data.similarProducts) {
+    console.log("Inserting similar product (" + ++i + "/" + data.similarProducts.length + ") " + product.handle);
+    await db.prepare("insert or replace into similar_products(id, handle, hash, timestamp, similar) values (?, ?, ?, ?, ?)")
+      .bind(
+        product.id,
+        product.handle,
+        product.hash,
+        product.timestamp,
+        product.similar
       )
       .run();
   }
