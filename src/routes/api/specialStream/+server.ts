@@ -9,10 +9,10 @@ export const GET = (async ({fetch}) => {
   const fpLive: FpEndpointResponse = await fetch("/api/floatplane?fast=true").then(r => r.json());
 
   const data: SpecialStream | false = {
-    title: "Arc Battlemage Game Compatability Challenge",
-    thumbnail: "https://pbs.floatplane.com/stream_thumbnails/5c13f3c006f1be15e08e05c0/314301655780212_1737048742498.jpeg",
+    title: "Our New $4500 Workstation PCs for Editing",
+    thumbnail: "https://pbs.floatplane.com/stream_thumbnails/5c13f3c006f1be15e08e05c0/970015889418361_1739470500944.jpeg",
 
-    start: "2025-01-16T20:30:00Z",
+    start: "2025-02-13T20:30:00Z",
     startIsEstimated: true,
 
     onFloatplane: true,
