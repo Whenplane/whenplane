@@ -82,6 +82,9 @@
     </div>
   </div>
 </div>
+<span class="text-sm opacity-60 p-4">
+  Whenplane and the Whenplane Widget Extension is not affiliated with or endorsed by Linus Media Group.
+</span>
 
 <style>
   .browser-icon {
