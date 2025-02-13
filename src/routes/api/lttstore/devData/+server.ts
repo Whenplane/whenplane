@@ -29,12 +29,17 @@ export const GET = (async ({platform, params}) => {
     .all()
     .then(r => r.results);
 
+  const similarProducts = db.prepare("select * from similar_products")
+    .all()
+    .then(r => r.results)
+
   return json({
     products: await products,
     screwdriverStocks: await screwdriverStocks,
     changeHistory: await changeHistory,
     collections: await collections,
-    collectionChanges: await collectionChanges
+    collectionChanges: await collectionChanges,
+    similarProducts: await similarProducts
   })
 
 }) satisfies RequestHandler

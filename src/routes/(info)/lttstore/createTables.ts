@@ -15,4 +15,7 @@ export async function createTables(DB: D1Database) {
 
   await DB.prepare("create table if not exists product_carts (id integer PRIMARY KEY, cookies text)")
     .run();
+
+  await DB.prepare("create table if not exists similar_products (id interger PRIMARY KEY, handle TEXT, hash TEXT, timestamp integer, similar TEXT)")
+    .run();
 }

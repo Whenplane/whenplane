@@ -201,6 +201,14 @@ export type ParsedProductsTableRow = {
   productDiscount: string[]
 }
 
+export type SimilarProductsTableRow = {
+  id: number,
+  hash: string,
+  handle: string,
+  timestamp: number,
+  similar: string
+}
+
 export type StockHistoryTableRow = {
   handle: string,
   id: number,
