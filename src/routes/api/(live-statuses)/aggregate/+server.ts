@@ -124,7 +124,7 @@ export const GET = (async ({url, fetch, locals, platform}) => {
 
     const thisWsMessage = makeWsMessage(response);
     const thisWsMessageString = JSON.stringify(thisWsMessage);
-    if(thisWsMessageString !== lastWsMessage) {
+    if(thisWsMessageString !== lastWsMessage && Object.keys(response.floatplane).length > 0) {
         const objectBinding = platform?.env?.WS_OBJECT;
 
 
