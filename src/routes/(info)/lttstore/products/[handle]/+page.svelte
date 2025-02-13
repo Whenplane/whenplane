@@ -88,7 +88,7 @@
 
 <svelte:head>
   <title>{data.product.title} - Whenplane LTTStore Watcher</title>
-  <meta name="description" content={truncateText(sanitizeHtml(productInfo.description ?? "", {allowedTags: []}), 200)}>
+  <meta name="description" content={truncateText(sanitizeHtml(productInfo.description ?? productDetailModules[0]?.content ?? "", {allowedTags: []}), 160)}>
   {#if productInfo.featured_image}
     <meta property="og:image" content={productInfo.featured_image}>
   {/if}
