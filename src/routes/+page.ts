@@ -67,23 +67,6 @@ export const load = (async ({fetch, params, url}) => {
         })()
     ]);
 
-    /* wdb live stuff
-    const isWdbResponseValid = liveStatus &&
-      typeof liveStatus?.floatplane?.live === "boolean" &&
-        (liveStatus?.floatplane?.live || liveStatus?.twitch.isLive) ? (
-        liveStatus.twitch.isWAN === liveStatus.floatplane.isWAN &&
-        liveStatus.twitch.isLive === liveStatus.floatplane.live
-      ) : true;
-    if(!isWdbResponseValid && liveStatus && dev) {
-        console.debug("wdb api response invalid!", {
-            typeofLive: typeof liveStatus?.floatplane?.live,
-            twitch: liveStatus.twitch.isWAN,
-            fp: liveStatus?.floatplane?.isWAN,
-            fpState: liveStatus?.floatplane
-        })
-    }
-    if(liveStatus?.floatplane && Date.now() - get(wdbSocketState).lastReceive > 300e3) floatplaneState.set(liveStatus?.floatplane)*/
-
     if(liveStatus && overwriteData.data) {
 
         console.debug("Before overwrite", JSON.parse(JSON.stringify(liveStatus)), "with", JSON.parse(JSON.stringify(overwriteData)));
@@ -96,6 +79,7 @@ export const load = (async ({fetch, params, url}) => {
         liveStatus.hasDone = overwriteData.data.hasDone;
         liveStatus.isThereWan = overwriteData.data.isThereWan;
         liveStatus.votes = overwriteData.data.votes ?? liveStatus.votes;
+        liveStatus.reloadNumber = Math.max(overwriteData.data.reloadNumber, liveStatus.reloadNumber);
 
         console.debug("After overwrite", JSON.parse(JSON.stringify(liveStatus)));
 

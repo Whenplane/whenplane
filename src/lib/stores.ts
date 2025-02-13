@@ -23,7 +23,7 @@ export type LatenessVotingCache = {
   lastData?: LatenessVotingOption[]
 };
 
-export const overwriteData: {data?: any} = {};
+export const overwriteData: {data?: any, lastMessage: number} = {lastMessage: 0};
 
 export const nextFast = {nextFast: false};
 

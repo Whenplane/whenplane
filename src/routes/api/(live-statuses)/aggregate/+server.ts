@@ -15,13 +15,6 @@ let lastWsMessage: string;
 
 export const GET = (async ({url, fetch, locals, platform}) => {
 
-
-    /*const now = new Date();
-    if(now.getUTCMonth() === 0 && now.getUTCDate() === 12 && now.getUTCHours() === 21 && now.getUTCMinutes() === 1 && now.getUTCSeconds() < 45) {
-        throw error(500, "Reload Forcer");
-    }*/
-
-
     const fast = url.searchParams.get("fast");
     const isNextFast = url.searchParams.get("isNextFast");
 
@@ -209,6 +202,7 @@ function makeWsMessage(response: AggregateResponse) {
             text: response.isThereWan.text,
             image: response.isThereWan.image
         },
-        votes: response.votes
+        votes: response.votes,
+        reloadNumber: response.reloadNumber
     }
 }

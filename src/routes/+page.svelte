@@ -164,7 +164,7 @@
 </svelte:head>
 
 {#if data.useWebSocket}
-	<Socket events={["aggregate"]}/>
+	<Socket events={["aggregate"]} autoInvalidateAfterNoData={true}/>
 {/if}
 
 <div class="absolute top-0 right-0">

@@ -1,12 +1,13 @@
 <script lang="ts">
   import { invalidateAll } from "$app/navigation";
   import { browser } from "$app/environment";
-  import { createEventDispatcher, onDestroy } from "svelte";
+  import { createEventDispatcher, onDestroy, onMount } from "svelte";
   import { overwriteData } from "$lib/stores.ts";
   import type { MMJobData } from "$lib/utils.ts";
 
   export let events: string[];
   export let invalidate = true;
+  export let autoInvalidateAfterNoData = false;
 
   const dispatch = createEventDispatcher<{data: {data: MMJobData}}>();
 
@@ -50,6 +51,11 @@
     }
 
     webSocket.onmessage = async (e) => {
+      // for ping messages, only record that we got a message.
+      if(e.data === "pong") {
+        overwriteData.lastMessage = Date.now();
+        return;
+      }
       const data = JSON.parse(e.data);
 
       dispatch("data", { data });
@@ -62,6 +68,7 @@
       } else {
         console.error("Unknown data type", typeof data)
       }
+      overwriteData.lastMessage = Date.now();
 
       if(invalidate) {
         lastInvalidate = Date.now();
@@ -73,6 +80,29 @@
 
   if(browser) {
     createWebSocket();
+  }
+
+  if(autoInvalidateAfterNoData) {
+    onMount(() => {
+      let i = 0
+      // we pick a random offset so hopefully there wont be a bunch of browsers requesting data at once
+      let randomOffset = 10e3 * Math.random();
+      let interval = setInterval(async () => {
+        // shuffle offset every minute so its not always the same client
+        if(i++ > 12) {
+          randomOffset = 10e3 * Math.random()
+        }
+        if(Date.now() - overwriteData.lastMessage > 5e3+randomOffset) {
+          if(webSocket.readyState === webSocket.OPEN) {
+            webSocket.send("ping");
+            await invalidateAll();
+          } else {
+            console.warn("[whenplane socket] socket is not open! Unable to send ping");
+          }
+        }
+      }, 5e3);
+      return () => clearInterval(interval);
+    })
   }
 
   onDestroy(() => {
