@@ -109,7 +109,7 @@ export const load = (async ({fetch, params, url}) => {
         specialStream: liveStatus?.specialStream,
         lastNewsPost,
         // TODO: when making WS default, set to false if 'poll' searchParam is set
-        useWebSocket: url.searchParams.has("ws"),
+        useWebSocket: !url.searchParams.has("poll"),
         isBot: /bot|googlebot|crawler|spider|robot|crawling/i
           .test(browser ? navigator?.userAgent : params.__h__userAgent),
     }
