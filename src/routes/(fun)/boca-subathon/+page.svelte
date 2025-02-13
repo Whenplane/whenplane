@@ -48,7 +48,7 @@
 <svelte:head>
   <title>Boca Subathon Progress</title>
   <meta name="description" content="Boca stream marathon progress % and time remaining">
-  <link rel="canonical" href="{$page.url.origin}{$page.url.pathname}"/>
+  <link rel="canonical" href="https://whenplane.com{$page.url.pathname}"/>
 </svelte:head>
 
 <div class="limit mx-auto pt-8 p-2">
