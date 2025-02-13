@@ -1,6 +1,6 @@
 <script lang="ts">
     import HistoricalShow from "$lib/history/HistoricalShow.svelte";
-    import {getClosestWan} from "$lib/timeUtils";
+    import { getClosestWan, timeString } from "$lib/timeUtils";
     import Floatplane from "$lib/svg/Floatplane.svelte";
     import Youtube from "$lib/svg/Youtube.svelte";
     import {getTimeUntil} from "$lib/timeUtils";
@@ -35,14 +35,23 @@
     let onTimeString: string;
     $: if(onTimeUntil) onTimeString = onTimeUntil.distance < 5 * 60e3 ? "on time!" : (onTimeUntil.late ? onTimeUntil.string + "late" : onTimeUntil.string + "early!");
 
+
+    $: description = "WAN show from " + showDate.toLocaleDateString(undefined, {dateStyle: 'long'}) +
+      (data.metadata.title ? " titled '" + data.metadata.title + "'" : "") + ". " +
+      (onTimeString ? 'It was ' + onTimeString.trim() : '') +
+      ((mainShowStart instanceof Date && showEnd instanceof Date) || data.metadata.mainShowLength ? (onTimeString ? ", and" : "It") + " was live for " + timeString(data.metadata.mainShowLength ?? (showEnd?.getTime() - mainShowStart?.getTime()))?.trim() + "." : ".");
 </script>
 <svelte:head>
-    <title>{data.metadata.title ?? ""}{data.metadata.title ? " - " : ""}WAN Show {showDate.toLocaleDateString(undefined, {dateStyle: 'long'})}</title>
-    <meta name="description" content="WAN show from {showDate.toLocaleDateString(undefined, {dateStyle: 'long'})}. {onTimeString ? 'It was ' + onTimeString : ''}">
+    <title>{data.metadata.title ?? ""}{data.metadata.title ? " - " : ""} {showDate.toLocaleDateString(undefined, {dateStyle: 'long'})}</title>
+    <meta name="description" content={description}>
     {#if thumbnail}
         <meta property="og:image" content={thumbnail.url}>
     {/if}
 </svelte:head>
+
+<span class="clear inline-block absolute pointer-events-none" style="z-index: -5;">
+    {description}
+</span>
 
 {#if thumbnail}
     <div class="thumbnail-backdrop" aria-hidden="true">
