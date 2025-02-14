@@ -8,11 +8,9 @@ export function log(platform: App.Platform | undefined, message: string) {
     console.warn("waitUntil is missing! Here is the message:", message);
     return;
   }
-  platform.context.waitUntil((async () => {
-    await platform.env?.LOG_MESSAGES.writeDataPoint({
-      blobs: [message],
-      doubles: [],
-      indexes: []
-    })
-  }));
+  platform.env?.LOG_MESSAGES.writeDataPoint({
+    blobs: [message],
+    doubles: [],
+    indexes: []
+  })
 }
