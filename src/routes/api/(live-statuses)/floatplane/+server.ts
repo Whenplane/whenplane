@@ -74,7 +74,7 @@ export const GET = (async ({fetch, url, platform, locals}) => {
       }
     }
 
-    if(Date.now() - cache.lastFetch < realCacheTime) {
+    if(Date.now() - cache.lastFetch < realCacheTime && cache.lastData) {
       return json({
         cached: true,
         lastFetch: cache.lastFetch,
