@@ -128,6 +128,9 @@ export const GET = (async ({url, fetch, locals, platform}) => {
         }*/})
 
     if(Object.keys(response.floatplane).length > 0) {
+        if(JSON.stringify(response.floatplane) === "{}") {
+            log(platform, "[api/aggregate] somehow we have keys but string doesnt? " + Object.keys(response.floatplane).join(","))
+        }
         const thisWsMessage = makeWsMessage(response);
         const thisWsMessageString = JSON.stringify(thisWsMessage);
         if(thisWsMessageString !== lastWsMessage) {
