@@ -155,6 +155,8 @@ export const GET = (async ({url, fetch, locals, platform}) => {
         }
         // console.log({thisWsMessage, lastWsMessage})
         lastWsMessage = thisWsMessageString;
+    } else {
+        log(platform, "[api/aggregate] Floatplane response is missing data! ", JSON.stringify(response.floatplane));
     }
 
     locals.addTiming({id: "twitch", duration: twitchTime ?? -1});

@@ -1,5 +1,5 @@
 
-export function log(platform: App.Platform | undefined, message: string) {
+export function log(platform: App.Platform | undefined, message: string, extra?: string) {
   if(!platform?.env?.LOG_MESSAGES) {
     console.warn("Log messages missing! Here is the message:", message);
     return;
@@ -9,7 +9,7 @@ export function log(platform: App.Platform | undefined, message: string) {
     return;
   }
   platform.env?.LOG_MESSAGES.writeDataPoint({
-    blobs: [message],
+    blobs: [message, extra],
     doubles: [],
     indexes: []
   })
