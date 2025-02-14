@@ -94,6 +94,7 @@
 </script>
 <svelte:head>
   <title>LTTStore Watcher - Whenplane</title>
+  <meta name="description" content="The Whenplane LTT Store Watcher watches for changes on LTTStore, and records them. You can also see how much stock they have of an item." />
 </svelte:head>
 
 <ol class="breadcrumb pt-2 pl-2">
