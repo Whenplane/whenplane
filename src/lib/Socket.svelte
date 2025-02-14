@@ -4,6 +4,7 @@
   import { createEventDispatcher, onDestroy, onMount } from "svelte";
   import { overwriteData } from "$lib/stores.ts";
   import type { MMJobData } from "$lib/utils.ts";
+  import { isNearWan } from "$lib/timeUtils.ts";
 
   export let events: string[];
   export let invalidate = true;
@@ -92,7 +93,11 @@
         if(i++ % 12 === 0) {
           randomOffset = 10e3 * Math.random();
         }
-        if(Date.now() - overwriteData.lastMessage > 5e3+randomOffset && i > 3) {
+
+        // minimum of 5 seconds when near wan time. Minimum of 30 when not near wan time
+        const baseLength = isNearWan() ? 5e3 : 30e3;
+
+        if(Date.now() - overwriteData.lastMessage > baseLength+randomOffset && i > 3) {
           if(webSocket.readyState === webSocket.OPEN) {
             webSocket.send("ping");
             await invalidateAll();
