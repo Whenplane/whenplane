@@ -32,9 +32,13 @@
 
   let notificationPromptOpen = false;
 
+  let subscribeError = "";
+
 
   async function subscribe() {
+    subscribeError = "";
     if(!serviceWorker) {
+      subscribeError = "Missing service worker! Make sure you are not in a private tab, and try again."
       console.error("Service worker not registered! Unable to subscribe to push notifications without the service worker");
       return;
     }
@@ -45,6 +49,7 @@
 
     const hasPermission = await requestingNotificationPromise;
     if(hasPermission !== "granted") {
+      subscribeError = "Notification permission was denied! You must allow notifications if you want to subscribe to notifications."
       console.error("Notification permission denied!", {hasPermission});
       return;
     }
@@ -63,8 +68,18 @@
       },
       body: JSON.stringify(subscription)
     })
-
-    pushSubscription = serviceWorker.pushManager.getSubscription();
+      .catch(e => {
+        subscribeError = "Unable to send subscription info to Whenplane, so your notifications will not work, even if the settings show up on this page. Please unsubscribe and try again.";
+        console.error("Sending subscription to server failed!", e);
+      })
+      .then(() => {
+        if(!serviceWorker) { // this shouldn't happen, but check anyway bc otherwise my ide complains
+          subscribeError = "Missing service worker! Make sure you are not in a private tab, and try again."
+          console.error("Service worker not registered! Unable to subscribe to push notifications without the service worker");
+          return;
+        }
+        pushSubscription = serviceWorker.pushManager.getSubscription();
+      });
   }
 
 
@@ -157,6 +172,11 @@
     If the issue persists, <a href="/support">contact me</a>
     <br>
     <br>
+  {/if}
+  {#if subscribeError}
+    <span class="text-red-500">
+      {subscribeError}
+    </span>
   {/if}
   {#await pushSubscription}
     {#if !givenUp}
