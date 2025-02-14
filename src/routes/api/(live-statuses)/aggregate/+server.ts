@@ -127,7 +127,7 @@ export const GET = (async ({url, fetch, locals, platform}) => {
             floatplane: response.floatplane.fetched || Number.MAX_SAFE_INTEGER
         }*/})
 
-    if(Object.keys(response.floatplane).length > 0) {
+    if(Object.keys(response.floatplane).length > 2) {
         const thisWsMessage = makeWsMessage(response);
         const thisWsMessageString = JSON.stringify(thisWsMessage);
         if(thisWsMessageString.includes('"floatplane":{}')) {
