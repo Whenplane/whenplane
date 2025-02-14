@@ -89,10 +89,10 @@
       let randomOffset = 10e3 * Math.random();
       let interval = setInterval(async () => {
         // shuffle offset every minute so its not always the same client
-        if(i++ > 12) {
-          randomOffset = 10e3 * Math.random()
+        if(i++ % 12 === 0) {
+          randomOffset = 10e3 * Math.random();
         }
-        if(Date.now() - overwriteData.lastMessage > 5e3+randomOffset) {
+        if(Date.now() - overwriteData.lastMessage > 5e3+randomOffset && i > 3) {
           if(webSocket.readyState === webSocket.OPEN) {
             webSocket.send("ping");
             await invalidateAll();
