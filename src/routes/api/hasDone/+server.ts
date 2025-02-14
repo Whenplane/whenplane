@@ -12,7 +12,7 @@ const cache: {
 export const GET = (async ({platform, url}) => {
     // if(dev) return json({hasDone: true, dev})
 
-    if(Date.now() - cache.lastFetch < cache_time) {
+    if(Date.now() - cache.lastFetch < cache_time && cache.lastData) {
         return json({
             ...cache.lastData,
             cached: true,
