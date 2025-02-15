@@ -9,6 +9,7 @@
   import ToolTip from "$lib/ToolTip.svelte";
   import { setCookie, strip } from "$lib/cookieUtils.ts";
   import LastUpdate from "./indexUpdateStatus/LastUpdate.svelte";
+  import { truncateText } from "$lib/utils.ts";
 
   let sp = $page.url.searchParams;
   $: sp = $page.url.searchParams
@@ -107,7 +108,7 @@
     {/if}
   {:else}
     <title>WAN Show Search - Whenplane</title>
-    <meta name="description" content={description}>
+    <meta name="description" content={truncateText(description, 159)}>
   {/if}
 </svelte:head>
 

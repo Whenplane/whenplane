@@ -12,7 +12,7 @@
 
 <svelte:head>
   <title>{data.post.title} - Whenplane News</title>
-  <meta name="description" content={truncateText(sanitizeHtml(data.post.body, {allowedTags: []}), 200)}>
+  <meta name="description" content={truncateText(sanitizeHtml(data.post.body, {allowedTags: []}), 159)}>
   <meta name="created" content="{postDate.toISOString()}">
   <meta name="date" content="{postDate.toISOString()}">
   <meta name="available" content="{postDate.toISOString()}">
