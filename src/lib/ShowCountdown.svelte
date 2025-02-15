@@ -31,7 +31,6 @@
         if(data.isMainShow || data.isPreShow) {
             if(!data.isMainShow && data.isPreShow && data.liveStatus.twitch.isLive) {
                 const mainScheduledStart = getClosestWan()
-                mainScheduledStart.setMinutes(mainScheduledStart.getMinutes() + 30);
 
                 mainLate.set({
                     isMainLate: true,
