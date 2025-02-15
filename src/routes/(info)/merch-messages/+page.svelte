@@ -74,7 +74,7 @@
 </script>
 <svelte:head>
   <title>Whenplane Merch Messages</title>
-  <meta name="description" content="The Whenplane Merch Message Index is a tool that has processed nearly every WAN show that includes merch messages, and put them in an organized and searchable index/archive."/>
+  <meta name="description" content="The Whenplane Merch Message Index is a tool that has processed nearly every WAN show with merch messages, and put them in a searchable index/archive."/>
 </svelte:head>
 
 <span class="clear inline-block absolute pointer-events-none" style="z-index: -5;">
