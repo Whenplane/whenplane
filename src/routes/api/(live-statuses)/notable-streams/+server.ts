@@ -180,8 +180,8 @@ export const GET = (async ({platform, url, request}) => {
         const stub = throttler.get(id);
 
         const params = new URLSearchParams();
-        params.set("title", twitchJSON.data[0]?.title+"");
-        params.set("image", twitchJSON.data[0]?.thumbnail_url+"");
+        params.set("title", twitchJSON.data?.[0]?.title+"");
+        params.set("image", twitchJSON.data?.[0]?.thumbnail_url+"");
 
         platform?.context?.waitUntil(stub.fetch("https://whenplane-notification-throttler/elijah_stream?" + params.toString()))
       }
@@ -227,9 +227,9 @@ function makeShortResponses(responses: Responses, url: URL): ShortResponses {
     const isLive = response.data?.length != 0 /*|| dev*/;
 
     const twitchData = url.searchParams.has("short") ? undefined : response;
-    const started = isLive ? response.data[0]?.started_at : undefined;
-    const title = isLive ? response.data[0]?.title : undefined;
-    const game = isLive ? response.data[0]?.game_name : undefined;
+    const started = isLive ? response.data?.[0]?.started_at : undefined;
+    const title = isLive ? response.data?.[0]?.title : undefined;
+    const game = isLive ? response.data?.[0]?.game_name : undefined;
 
     shortResponses[channel] = {
       twitchData,
