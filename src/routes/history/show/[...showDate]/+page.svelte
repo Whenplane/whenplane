@@ -44,7 +44,7 @@
 </script>
 <svelte:head>
     <title>{data.metadata.title ?? ""}{data.metadata.title ? " - " : ""} {showDate.toLocaleDateString(undefined, {dateStyle: 'long'})}</title>
-    <meta name="description" content={description}>
+    <meta name="description" content={(description.length < 110 ? "The " : "") + description}>
     {#if thumbnail}
         <meta property="og:image" content={thumbnail.url}>
     {/if}
