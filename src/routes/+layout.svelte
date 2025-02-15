@@ -80,8 +80,8 @@
 />-->
 
 <svelte:head>
-    {#if !pathname.startsWith("/history/show/") && !pathname.startsWith("/history/graph") && !pathname.startsWith("/news") && !pagesWithDescription.includes(pathname) && !pathname.startsWith("/lttstore") && !pathname.startsWith("merch-messages")}
-        <meta name="description" content="When is WAN? Who knows! At least you can look at when it started before.. (spoiler: it's late)">
+    {#if !pathname.startsWith("/history/show/") && !pathname.startsWith("/history/graph") && !pathname.startsWith("/news") && !pagesWithDescription.includes(pathname) && !pathname.startsWith("/lttstore") && !pathname.startsWith("/merch-messages")}
+        <meta name="description" content="When is WAN? Who knows! At least you can look at when it started before.. (spoiler: it's late) and view a countdown until its supposed to start">
     {/if}
     {#if $page.url.hostname !== "whenplane.com"}
         <link rel="canonical" href="https://whenplane.com{$page.url.pathname}">
