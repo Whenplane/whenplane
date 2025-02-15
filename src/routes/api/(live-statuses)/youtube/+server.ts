@@ -36,9 +36,10 @@ export const GET = (async ({platform, locals, url, fetch}) => {
 
     const fetchDistance = Date.now() - cache.lastFetch;
     if(
-        fetchDistance < cacheTime ||
+        cache.value &&
+        (fetchDistance < cacheTime ||
         // With the fast flag (added for initial page load requests), always fetch cached data if its from within the past 5 hours
-        (fast && cache.value && fetchDistance < 5 * 60 * 60e3)
+        (fast && cache.value && fetchDistance < 5 * 60 * 60e3))
     ) {
         return json({...cache.value, cached: true, fetchDistance});
     }
