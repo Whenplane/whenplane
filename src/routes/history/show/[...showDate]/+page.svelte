@@ -11,6 +11,7 @@
     import { fade } from "svelte/transition";
 
     import { getDateFormatLocale } from "$lib/prefUtils.ts";
+    import { truncateText } from "$lib/utils.js";
 
     export let data;
 
@@ -37,7 +38,7 @@
 
 
     $: description = "WAN show from " + showDate.toLocaleDateString(undefined, {dateStyle: 'long'}) +
-      (data.metadata.title ? " titled '" + data.metadata.title + "'" : "") + ". " +
+      (data.metadata.title ? " titled '" + truncateText(data.metadata.title.trim(), 65) + "'" : "") + ". " +
       (onTimeString ? 'It was ' + onTimeString.trim() : '') +
       ((mainShowStart instanceof Date && showEnd instanceof Date) || data.metadata.mainShowLength ? (onTimeString ? ", and" : "It") + " was live for " + timeString(data.metadata.mainShowLength ?? (showEnd?.getTime() - mainShowStart?.getTime()))?.trim() + "." : ".");
 </script>
