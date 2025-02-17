@@ -48,7 +48,7 @@
 <slot/>
 <br>
 <div class="p-4">
-  Images and products from <a href="https://lttstore.com/?ref=whenplane.com" class="anchor">lttstore.com</a><br>
+  Images and products from <a href="https://www.lttstore.com/?ref=whenplane.com" class="anchor">lttstore.com</a><br>
   <span class="text-sm opacity-60">
     Whenplane and the Whenplane LTTStore Watcher is not affiliated with or endorsed by Linus Media Group.
   </span>
