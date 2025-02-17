@@ -50,7 +50,7 @@
     <br>
     <a
       class="btn variant-filled-surface my-1"
-      href="https://github.com/ajgeiss0702/whenplane-fp-extension"
+      href="https://github.com/Whenplane/extension"
       target="_blank"
       rel="noopener"
       >
