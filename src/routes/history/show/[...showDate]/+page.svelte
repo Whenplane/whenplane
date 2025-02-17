@@ -92,7 +92,7 @@
     {/if}
 
     {#if data.metadata.vods?.floatplane}
-        <a href="https://floatplane.com/post/{data.metadata.vods.floatplane}" target="_blank" rel="noopener">
+        <a href="https://www.floatplane.com/post/{data.metadata.vods.floatplane}" target="_blank" rel="noopener">
             <Floatplane/> VOD on Floatplane
         </a>
     {/if}
