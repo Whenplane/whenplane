@@ -216,6 +216,10 @@ export function getUTCDate(date = new Date()) {
     return date.getUTCFullYear() + "/" + month + "/" + day;
 }
 
+export function dateToNumber(date: string) {
+    return Number(date.replaceAll("/", ""))
+}
+
 export function addZero(n: number): string {
     return n > 9 ? "" + n : "0" + n
 }

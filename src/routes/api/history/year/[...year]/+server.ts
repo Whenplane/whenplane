@@ -4,11 +4,13 @@ import { type HistoricalEntry, removeAfterLastDash, type OldShowMeta, type Youtu
 import {history as historicalShows} from "$lib/history/oldHistory";
 import type { KVNamespace, KVNamespaceListResult } from "@cloudflare/workers-types";
 import { dev } from "$app/environment";
+import { isNearWan } from "$lib/timeUtils.ts";
 
 const cacheTtl = 60 * 60 * 24 * 6; // cache single keys for 6 days if possible
 
-const CURRENT_YEAR_CACHE = 60e3; // cache the current year for 60 seconds
-const OTHER_CACHE = 60 * 60e3; // cache other years for 60 minutes
+const CURRENT_YEAR_CACHE = 24 * 60 * 60e3; // cache the current year for up to 24h (when not near wan)
+const CURRENT_YEAR_NEAR_CACHE = 60e3; // cache the current year for 60 seconds (when near wan)
+const OTHER_CACHE = 30 * 24 * 60 * 60e3; // cache other years for up to 30 days
 
 const cache: {
     [key: string]: {
@@ -26,7 +28,7 @@ export const GET = (async ({platform, params, locals, fetch}) => {
     const years = yearRaw.split(",");
 
 
-    const cache_time = years.includes(new Date().getUTCFullYear()) ? CURRENT_YEAR_CACHE : OTHER_CACHE;
+    const cache_time = years.includes(new Date().getUTCFullYear()+"") ? (isNearWan() ? CURRENT_YEAR_NEAR_CACHE : CURRENT_YEAR_CACHE) : OTHER_CACHE;
 
     const fetchDistance = Date.now() - (cache[yearRaw]?.lastFetch ?? 0);
     if(fetchDistance < cache_time) {

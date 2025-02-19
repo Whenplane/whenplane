@@ -2,6 +2,7 @@ import { type RequestHandler } from "@sveltejs/kit";
 import {error, json} from "@sveltejs/kit";
 import type {OldShowMeta} from "$lib/utils";
 import type {KVNamespace} from "@cloudflare/workers-types";
+import { dateToNumber, getPreviousWAN, getUTCDate } from "$lib/timeUtils.ts";
 
 export const GET = (async ({platform, params, url, locals}) => {
 
@@ -21,10 +22,13 @@ export const GET = (async ({platform, params, url, locals}) => {
 
     if(!platform) throw error(503, "No platform!");
 
+    // If this show is from before the previous show, then use a large cacheTtl (90 days, even though it would probably be evicted before then most of the time)
+    const cacheTtl = dateToNumber(showDate) < dateToNumber(getUTCDate(getPreviousWAN())) ? 90 * 24 * 60 * 60 : undefined;
+
     const start = Date.now();
 
-    const startKVFetch = Date.now()
-    const kvShowInfo = await history.getWithMetadata<OldShowMeta, OldShowMeta>(showDate, {type: 'json'});
+    const startKVFetch = Date.now();
+    const kvShowInfo = await history.getWithMetadata<OldShowMeta, OldShowMeta>(showDate, {type: 'json', cacheTtl});
 
     if(kvShowInfo.value) {
         let generatedMetadata = false
