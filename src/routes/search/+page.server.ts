@@ -72,12 +72,12 @@ export const load = (async ({fetch, url, cookies}) => {
   const after = sp.get("after")?.replaceAll("-", "");
 
   const urlSort = sp.get("sort")
-  let sort = "_text_match(buckets: 30):desc,sortWeight:desc,_text_match:desc";
+  let sort = "_text_match(bucket_size: 5):desc,sortWeight:desc,_text_match:desc";
   if(urlSort && urlSort !== "default") {
     if(urlSort === "showDate") {
-      sort = "_text_match(buckets: 30):desc,showDate:desc,_text_match:desc";
+      sort = "_text_match(bucket_size: 5):desc,showDate:desc,_text_match:desc";
     } else if(urlSort === "type") {
-      sort = "_text_match(buckets: 30):desc,_eval([ (type:topic):3, (type:title):2, (type:message):1, (type:reply):1, (type:transcript):0 ]):desc,_text_match:desc";
+      sort = "_text_match(bucket_size: 5):desc,_eval([ (type:topic):3, (type:title):2, (type:message):1, (type:reply):1, (type:transcript):0 ]):desc,_text_match:desc";
     } else if(urlSort === "relevance") {
       sort = "_text_match:desc"
     } else {
