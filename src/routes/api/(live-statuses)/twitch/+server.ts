@@ -140,7 +140,7 @@ export const GET = (async ({platform, url}) => {
 
     fastCache.lastFetch = Date.now();
 
-    const isLive = twitchJSON.data?.length != 0;
+    const isLive = (twitchJSON.data?.length ?? 0) != 0;
     const isWAN = isLive && (twitchJSON.data[0]?.title?.includes("WAN") || makeAlwaysWAN);
 
     if(savedStartTime && !isLive) savedStartTime = false;
