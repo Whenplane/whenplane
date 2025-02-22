@@ -224,7 +224,7 @@ function makeShortResponses(responses: Responses, url: URL): ShortResponses {
       continue;
     }
 
-    const isLive = response.data?.length != 0 /*|| dev*/;
+    const isLive = (response.data?.length ?? 0) != 0 /*|| dev*/;
 
     const twitchData = url.searchParams.has("short") ? undefined : response;
     const started = isLive ? response.data?.[0]?.started_at : undefined;
