@@ -73,6 +73,7 @@ export const actions = {
 
 
     if(username == null || await kv.get("block-password-reset:" + email) !== null) {
+      console.log("Email without an account was entered. delaying response.")
       // wait a random delay (50-800ms) to prevent ppl using the response delay to figure out if an account exists or not
       await wait(50 + (Math.random() * 750));
 
@@ -103,6 +104,8 @@ export const actions = {
     )
 
     await kv.put("block-password-reset:" + email, "yes", {expirationTtl: 19 * 60});
+
+    console.log("started password reset progress")
   }
 }
 
