@@ -81,7 +81,7 @@ export const actions = {
     const kv: KVNamespace | undefined = platform?.env?.AUTH_KV;
     if(!kv) return fail(500, {message: "Missing auth kv!"});
 
-    const email = kv.get("password-reset:" + resetToken);
+    const email = await kv.get("password-reset:" + resetToken);
     if(email == null) throw redirect(302, "/auth/login/forgot-password?expiredToken");
 
     const passwordHash = await bcrypt.hash(password, 13);
