@@ -56,6 +56,9 @@
         <span>Password</span>
         <input class="input px-3" name="password" type="password" required/>
       </label>
+      <div class="w-full text-sm text-right">
+        <a href="/auth/login/forgot-password">forgot password?</a>
+      </div>
       <br>
       {#key turnstileCounter}
         <Turnstile siteKey="0x4AAAAAAAxkT_jDLpLOTZfP" bind:passed={turnstileCompleted}/>
