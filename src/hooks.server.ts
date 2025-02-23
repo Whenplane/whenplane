@@ -1,7 +1,8 @@
 import { error, type Handle, type HandleServerError } from "@sveltejs/kit";
 import { building, dev } from "$app/environment";
 import { random } from "$lib/utils.ts";
-import type { AnalyticsEngineDataset, KVNamespace,
+import type {
+    AnalyticsEngineDataPoint, AnalyticsEngineDataset, KVNamespace,
     KVNamespaceGetOptions, KVNamespaceListOptions, KVNamespaceListResult, KVNamespacePutOptions } from "@cloudflare/workers-types";
 import type { TimingEntry } from "./app";
 import { report } from "$lib/server/instance-analytics.ts";
@@ -237,21 +238,28 @@ function createKVNamespaceWrapper(real: KVNamespace | undefined, kvNamespaceName
     if(!real) { // @ts-ignore
         return real;
     }
+    function write(data: AnalyticsEngineDataPoint) {
+        try {
+            analytics?.writeDataPoint(data);
+        } catch(e) {
+            console.warn("Unable to write KV analytics:", e);
+        }
+    }
     // eslint-disable-next-line @typescript-eslint/ban-ts-comment
     // @ts-ignore
     return {
         delete(key: string): Promise<void> {
-            analytics?.writeDataPoint({blobs: [kvNamespaceName, "DELETE", key, `DELETE ${kvNamespaceName}/${key}`]});
+            write({blobs: [kvNamespaceName, "DELETE", key, `DELETE ${kvNamespaceName}/${key}`]});
             return real.delete(key);
         },
         list<Metadata>(options: KVNamespaceListOptions | undefined): Promise<KVNamespaceListResult<Metadata, string>> {
-            analytics?.writeDataPoint({blobs: [kvNamespaceName, "LIST", null, `LIST ${kvNamespaceName}`]});
+            write({blobs: [kvNamespaceName, "LIST", null, `LIST ${kvNamespaceName}`]});
             return real.list(options);
         },
         // eslint-disable-next-line @typescript-eslint/ban-ts-comment
         // @ts-ignore
         put(key: string, value: string | ArrayBuffer | ArrayBufferView | ReadableStream, options: KVNamespacePutOptions | undefined): Promise<void> {
-            analytics?.writeDataPoint({blobs: [kvNamespaceName, "PUT", key, `PUT ${kvNamespaceName}/${key}`]});
+            write({blobs: [kvNamespaceName, "PUT", key, `PUT ${kvNamespaceName}/${key}`]});
             // eslint-disable-next-line @typescript-eslint/ban-ts-comment
             // @ts-ignore
             return real.put(key, value, options);
@@ -259,13 +267,13 @@ function createKVNamespaceWrapper(real: KVNamespace | undefined, kvNamespaceName
         // eslint-disable-next-line @typescript-eslint/ban-ts-comment
         // @ts-ignore
         get(key: string, options?: KVNamespaceGetOptions<never>): Promise<string | null> {
-            analytics?.writeDataPoint({blobs: [kvNamespaceName, "GET", key, `GET ${kvNamespaceName}/${key}`]});
+            write({blobs: [kvNamespaceName, "GET", key, `GET ${kvNamespaceName}/${key}`]});
             return real.get(key, options);
         },
         // eslint-disable-next-line @typescript-eslint/ban-ts-comment
         // @ts-ignore
         getWithMetadata(key: string, options?: KVNamespaceGetOptions<never>): any {
-            analytics?.writeDataPoint({blobs: [kvNamespaceName, "GETwMETA", key, `GETwMETA ${kvNamespaceName}/${key}`]});
+            write({blobs: [kvNamespaceName, "GETwMETA", key, `GETwMETA ${kvNamespaceName}/${key}`]});
             return real.getWithMetadata(key, options);
         }
 
