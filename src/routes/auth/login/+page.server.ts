@@ -19,7 +19,7 @@ export const load = (async ({platform, cookies}) => {
 
   const sessionData = await getSession(platform, sessionID);
   if(!sessionData) {
-    const verifyingSessionData = await getSession(platform, sessionID+":verifying");
+    const verifyingSessionData = await getSession(platform, sessionID+":verifying", undefined, undefined, true);
 
     if(!verifyingSessionData) {
       return;

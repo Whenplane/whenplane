@@ -13,7 +13,7 @@ export const load = (async ({platform, cookies}) => {
   const sessionID = cookies.get("session");
   if(!sessionID) throw redirect(302, "/auth/login");
 
-  if(!await getSession(platform, sessionID+":verifying")) {
+  if(!await getSession(platform, sessionID+":verifying", undefined, undefined, true)) {
     throw redirect(302, "/auth/login");
   }
 }) satisfies PageServerLoad
@@ -48,7 +48,7 @@ export const actions = {
     const sessionID = cookies.get("session");
     if(!sessionID) throw redirect(303, "/auth/login");
 
-    const session = await getSession(platform, sessionID+":verifying", undefined, true);
+    const session = await getSession(platform, sessionID+":verifying", undefined, true, true);
     if(!session) throw redirect(303, "/auth/login?reauth");
 
     const secret = session["2fa"];

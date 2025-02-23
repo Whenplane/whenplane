@@ -18,9 +18,11 @@ export async function createTables(db: D1Database) {
 
 
 const memorySessionCache: {[sid: string]: {cachedTime: number, userData: SessionData | null}} = {};
-export async function getSession(platform?: App.Platform, sessionID?: string, includeEmail = false, include2fa = false): Promise<SessionData | null> {
+export async function getSession(platform?: App.Platform, sessionID?: string, includeEmail = false, include2fa = false, allowVerifying = false): Promise<SessionData | null> {
 
   if(!sessionID) return null;
+
+  if(sessionID.endsWith(":verifying") && !allowVerifying) return null;
 
   let session_cache_time = 5e3;
   if(sessionID.endsWith(":verifying")) {
