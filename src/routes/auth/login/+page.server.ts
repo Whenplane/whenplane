@@ -96,7 +96,7 @@ export const actions = {
         await kv.put("email-resend:" + resendToken, JSON.stringify({
           email: user.email,
           username: user.username
-        }), {expirationTtl: 5 * 60e3})
+        }), {expirationTtl: 5 * 60})
       }
 
       return fail(400, {username, emailVerificationNeeded: true, resendToken});
@@ -159,10 +159,10 @@ export const actions = {
 
     const emailVerifyToken = randomString();
 
-    await kv.put("email:" + emailVerifyToken, username, {expirationTtl: 20 * 60e3});
+    await kv.put("email:" + emailVerifyToken, username, {expirationTtl: 20 * 60});
 
     // prevents re-sending of the email before the previous one has expired
-    await kv.put("block-email:" + username, email, {expirationTtl: 19 * 60e3});
+    await kv.put("block-email:" + username, email, {expirationTtl: 19 * 60});
 
     log(platform, "Sending verification email to " + email);
     await sendEmail(EMAIL_ENDPOINT, {

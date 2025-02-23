@@ -29,6 +29,13 @@
     <br>
     <br>
   {/if}
+  {#if $page.url.searchParams.has("passwordResetSuccess")}
+    <span class="text-success-500-400-token">
+        Your password was successfully reset! You can now log in.
+    </span>
+    <br>
+    <br>
+  {/if}
   <div class="mx-auto card login-box p-4">
     <form method="POST" action="?/login" use:enhance={() => {
         loading = true

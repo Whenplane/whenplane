@@ -32,7 +32,62 @@ export const EMAIL_FOOTER = `
   </span>
 `
 
-export const VERIFICATION_EMAIL = `
+export const VERIFICATION_EMAIL = email_template(`
+            <img src="https://whenplane.com/wan-ios-logo.png" style="width: 10em; height: auto; border-radius: 3em;"><br>
+            <br>
+            <h1>Verify your email</h1>
+            <p>
+              Hello, {USERNAME}!<br>
+              If you are receiving this email, it is because your email has been used
+              to create an account on <a href="https://whenplane.com">Whenplane</a>.<br>
+              <br>
+              If this was you, please click the following link to verify your email.<br>
+              <br>
+              This link is only valid for 20 minutes.
+            </p>
+            <a href="{VERIFICATION_LINK}" class="btn variant-glass-primary">Verify Email</a><br>
+            <p>
+              If you are unable to click the above button, copy this link into a new tab: {VERIFICATION_LINK}<br>
+            </p>
+            <br>
+            <p>
+              <b>If this was not you</b> then you can safely ignore this email.
+            </p>
+            <p>
+              If you would like to disallow registrations using your email,
+              please reach out to <a href="mailto:support@whenplane.com">support@whenplane.com</a>.
+            </p>
+`);
+
+export const PASSWORD_RESET_EMAIL = email_template(`
+            <img src="https://whenplane.com/wan-ios-logo.png" style="width: 10em; height: auto; border-radius: 3em;"><br>
+            <br>
+            <h1>Reset your password</h1>
+            <p>
+              Hello, {USERNAME}!<br>
+              You are receiving this email because a password reset was requested for your email.<br>
+              <br>
+              If you did not request this, you can safely ignore this email.<br>
+              <br>
+              To continue, click the following link.<br>
+              <br>
+              This link is only valid for 20 minutes.
+            </p>
+            <a href="{RESET_LINK}" class="btn variant-glass-primary">Reset Password</a><br>
+            <p>
+              If you are unable to click the above button, copy this link into a new tab: {RESET_LINK}<br>
+            </p>
+            <p>
+              <b>If this was not you</b> then you can safely ignore this email.
+            </p>
+            <p>
+              If password resets are being requested for your email too often,
+              please reach out to <a href="mailto:support@whenplane.com">support@whenplane.com</a>.
+            </p>
+`);
+
+function email_template(body: string) {
+  return `
 <!doctype html>
 <html lang="en">
   <head>
@@ -111,33 +166,11 @@ export const VERIFICATION_EMAIL = `
   </head>
     <body style="color: white; background-color: rgb(21 23 31); padding: 1em;">
         <div class="content limit">
-            <img src="https://whenplane.com/wan-ios-logo.png" style="width: 10em; height: auto; border-radius: 3em;"><br>
-            <br>
-            <h1>Verify your email</h1>
-            <p>
-              Hello, {USERNAME}!<br>
-              If you are receiving this email, it is because your email has been used
-              to create an account on <a href="https://whenplane.com">Whenplane</a>.<br>
-              <br>
-              If this was you, please click the following link to verify your email.<br>
-              <br>
-              This link is only valid for 20 minutes.
-            </p>
-            <a href="{VERIFICATION_LINK}" class="btn variant-glass-primary">Verify Email</a><br>
-            <p>
-              If you are unable to click the above button, copy this link into a new tab: {VERIFICATION_LINK}<br>
-            </p>
-            <br>
-            <p>
-              <b>If this was not you</b> then you can safely ignore this email.
-            </p>
-            <p>
-              If you would like to disallow registrations using your email,
-              please reach out to <a href="mailto:support@whenplane.com">support@whenplane.com</a>.
-            </p>
+            ${body}<br>
             ${EMAIL_FOOTER}
         </div>
 
     </body>
 </html>
 `
+}
