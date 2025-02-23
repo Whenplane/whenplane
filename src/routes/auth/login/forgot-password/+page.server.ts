@@ -105,7 +105,8 @@ export const actions = {
 
     await kv.put("block-password-reset:" + email, "yes", {expirationTtl: 19 * 60});
 
-    console.log("started password reset progress")
+    console.log("started password reset progress");
+    return {email, success: true};
   }
 }
 
