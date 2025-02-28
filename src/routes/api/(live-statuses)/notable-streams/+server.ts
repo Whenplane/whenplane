@@ -192,11 +192,11 @@ export const GET = (async ({platform, url, request}) => {
           platform?.context?.waitUntil((async () => {
             if(firstBoca) {
               firstBoca = false;
-              await db.prepare("create table if not exists boca_streams (startedEpoch integer unique, started text unique, ended text)")
+              await db.prepare("create table if not exists boca_streams (startedEpoch integer, started text, ended text, UNIQUE(startedEpoch, started))")
                 .run();
             }
 
-            await db.prepare("insert into boca_streams (startedEpoch, started) values (?, ?) on conflict(startedEpoch, started) do nothing")
+            await db.prepare("insert into boca_streams (startedEpoch, started) values (?, ?) ON CONFLICT(startedEpoch, started) DO NOTHING")
               .bind(startedEpoch, started)
               .run();
           })());
