@@ -226,7 +226,7 @@ export const GET = (async ({platform, url, request}) => {
             await db.prepare("update boca_streams set ended=? where started=? and ended IS NULL")
               .bind(new Date().toISOString(), bocaWasLive)
               .run();
-          }));
+          })());
           bocaWasLive = false;
         }
       }
