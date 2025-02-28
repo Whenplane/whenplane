@@ -183,7 +183,7 @@ export const GET = (async ({platform, url, request}) => {
         if(!recordedBocaStreamStart) {
           const db: D1Database | undefined = platform?.env?.BOCA_DB;
           if(!db) {
-            log("Unable to insert boca stream due to missing db!");
+            log(platform, "Unable to insert boca stream due to missing db!");
             return;
           }
 
@@ -219,11 +219,11 @@ export const GET = (async ({platform, url, request}) => {
           platform?.context?.waitUntil((async () => {
             const db: D1Database | undefined = platform?.env?.BOCA_DB;
             if(!db) {
-              log("Unable to insert boca stream due to missing db!");
+              log(platform, "Unable to insert boca stream due to missing db!");
               return;
             }
 
-            await db.prepare("update boca_streams set ended=? where started=? and ended is null")
+            await db.prepare("update boca_streams set ended=? where started=? and ended IS NULL")
               .bind(new Date().toISOString(), bocaWasLive)
               .run();
           }));
