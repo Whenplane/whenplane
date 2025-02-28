@@ -181,6 +181,8 @@ export const GET = (async ({platform, url, request}) => {
       if(channel === "bocabola" && twitchJSON.data.length > 0 && !dev) {
 
         if(!recordedBocaStreamStart) {
+          const started = twitchJSON.data[0].started_at;
+          const startedEpoch = new Date(started).getTime();
           platform?.context?.waitUntil((async () => {
             const db: D1Database | undefined = platform?.env?.DB;
             if(!db) {
@@ -193,9 +195,6 @@ export const GET = (async ({platform, url, request}) => {
               await db.prepare("create table if not exists boca_streams (startedEpoch number unique, started text unique, ended text)")
                 .run();
             }
-
-            const started = twitchJSON.data[0].started_at;
-            const startedEpoch = new Date(started).getTime();
 
             await db.prepare("insert into boca_streams (startedEpoch, started) values (?, ?) on conflict(startedEpoch, started) do nothing")
               .bind(startedEpoch, started)
