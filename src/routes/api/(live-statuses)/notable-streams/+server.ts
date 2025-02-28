@@ -181,25 +181,25 @@ export const GET = (async ({platform, url, request}) => {
       if(channel === "bocabola" && twitchJSON.data.length > 0 && !dev) {
 
         if(!recordedBocaStreamStart) {
+          const db: D1Database | undefined = platform?.env?.DB;
+          if(!db) {
+            log("Unable to insert boca stream due to missing db!");
+            return;
+          }
+
           const started = twitchJSON.data[0].started_at;
           const startedEpoch = new Date(started).getTime();
           platform?.context?.waitUntil((async () => {
-            const db: D1Database | undefined = platform?.env?.DB;
-            if(!db) {
-              log("Unable to insert boca stream due to missing db!");
-              return;
-            }
-
             if(firstBoca) {
               firstBoca = false;
-              await db.prepare("create table if not exists boca_streams (startedEpoch number unique, started text unique, ended text)")
+              await db.prepare("create table if not exists boca_streams (startedEpoch integer unique, started text unique, ended text)")
                 .run();
             }
 
             await db.prepare("insert into boca_streams (startedEpoch, started) values (?, ?) on conflict(startedEpoch, started) do nothing")
               .bind(startedEpoch, started)
               .run();
-          }));
+          })());
           recordedBocaStreamStart = true;
           bocaWasLive = started;
         }
