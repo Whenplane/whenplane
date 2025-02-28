@@ -41,6 +41,7 @@ declare global {
                 TEST_WS_ANALYTICS?: AnalyticsEngineDataset;
 
                 DB: D1Database;
+                BOCA_DB: D1Database;
                 LTTSTORE_DB: D1Database;
                 MERCHMESSAGES_DB: D1Database;
                 FP_SUBS_DB: D1Database;
