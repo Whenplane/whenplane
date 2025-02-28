@@ -5,9 +5,10 @@ import { dev, version } from "$app/environment";
 import { isNearWan } from "$lib/timeUtils.ts";
 import type { GetStreamsResponse } from "ts-twitch-api";
 import type { TwitchToken } from "$lib/utils.ts";
-import type { DurableObjectNamespace } from "@cloudflare/workers-types";
+import type { D1Database, DurableObjectNamespace } from "@cloudflare/workers-types";
 import {notablePeople as people} from "./notable-people";
 import { twitchTokenCache } from "$lib/stores.ts";
+import { log } from "$lib/server/server-utils"
 
 let fastCache: {
   lastFetch: number,
@@ -21,7 +22,11 @@ const allowedHosts = [
   "localhost:5173",
   "boca.lol",
   "boca.gay"
-]
+];
+
+let recordedBocaStreamStart = false;
+let firstBoca = true;
+let bocaWasLive: string | false = false;
 
 const lastNotifSends: {[channel: string]: number} = {};
 
@@ -174,6 +179,32 @@ export const GET = (async ({platform, url, request}) => {
       if(reset) maxResetTime = Math.min(Number(reset), maxResetTime ?? Number(reset))
 
       if(channel === "bocabola" && twitchJSON.data.length > 0 && !dev) {
+
+        if(!recordedBocaStreamStart) {
+          platform?.context?.waitUntil((async () => {
+            const db: D1Database | undefined = platform?.env?.DB;
+            if(!db) {
+              log("Unable to insert boca stream due to missing db!");
+              return;
+            }
+
+            if(firstBoca) {
+              firstBoca = false;
+              await db.prepare("create table if not exists boca_streams (startedEpoch number unique, started text unique, ended text)")
+                .run();
+            }
+
+            const started = twitchJSON.data[0].started_at;
+            const startedEpoch = new Date(started).getTime();
+
+            await db.prepare("insert into boca_streams (startedEpoch, started) values (?, ?) on conflict(startedEpoch, started) do nothing")
+              .bind(startedEpoch, started)
+              .run();
+          }));
+          recordedBocaStreamStart = true;
+          bocaWasLive = started;
+        }
+
         const throttler = (platform?.env?.NOTIFICATION_THROTTLER as DurableObjectNamespace)
         lastNotifSends[channel] = Date.now();
         const id = throttler.idFromName("n");
@@ -184,6 +215,21 @@ export const GET = (async ({platform, url, request}) => {
         params.set("image", twitchJSON.data?.[0]?.thumbnail_url+"");
 
         platform?.context?.waitUntil(stub.fetch("https://whenplane-notification-throttler/elijah_stream?" + params.toString()))
+      } else if(channel === "bocabola" && !dev) {
+        if(bocaWasLive) {
+          platform?.context?.waitUntil((async () => {
+            const db: D1Database | undefined = platform?.env?.DB;
+            if(!db) {
+              log("Unable to insert boca stream due to missing db!");
+              return;
+            }
+
+            await db.prepare("update boca_streams set ended=? where started=? and ended is null")
+              .bind(new Date().toISOString(), bocaWasLive)
+              .run();
+          }));
+          bocaWasLive = false;
+        }
       }
     })())
   }
