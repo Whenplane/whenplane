@@ -437,7 +437,9 @@
 {#if isFrame}
 	<div class="absolute top-0 left-0 p-2">
 		<span style="font-size: 0.75rem;">
-			whenplane.com
+			<a href="https://whenplane.com" target="_blank" class="hidden-link">
+				whenplane.com
+			</a>
 		</span>
 	</div>
 {:else}
