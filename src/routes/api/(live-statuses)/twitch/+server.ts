@@ -59,6 +59,23 @@ export const GET = (async ({platform, url}) => {
             }
         )
     }
+
+    let cCache: Cache | undefined = undefined;
+    let cacheRequest: Request | undefined = undefined;
+    if(typeof caches !== "undefined") {
+        cCache = await caches.open("whenplane:twitch-fetch");
+        cacheRequest = new Request("https://cache/twitch");
+        const cacheMatch = await cCache.match(cacheRequest);
+
+        if(cacheMatch) {
+            const expires = cacheMatch.headers.get("expires")
+            if(!expires || new Date(expires).getTime() > Date.now()) {
+                return cacheMatch.clone();
+            }
+        }
+    } else {
+        console.warn("missing cache api!")
+    }
     // console.debug(2)
 
     if(twitchTokenCache.token.validUntil < Date.now()) {
@@ -280,6 +297,7 @@ export const GET = (async ({platform, url}) => {
     }
     // console.debug(10)
 
+    if(cCache && cacheRequest) platform.context.waitUntil(cCache.put(cacheRequest, json(response, {headers: {"Expires": cacheExpires}})));
     return json(response);
 }) satisfies RequestHandler;
 
