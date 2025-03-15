@@ -18,6 +18,12 @@ const fastCache: {
   lastFetchData: undefined
 };
 
+const allowedHosts = [
+  "localhost:5173",
+  "boca.lol",
+  "boca.gay"
+];
+
 
 export const GET = (async ({platform, url}) => {
 
@@ -29,6 +35,12 @@ export const GET = (async ({platform, url}) => {
 
   if(!env.TWITCH_CLIENT_ID) throw error(503, "Missing twitch client id!");
   if(!env.TWITCH_SECRET) throw error(503, "Missing twitch client secret!");
+
+  const origin = request.headers.get("origin");
+  let accessControlAllowOrigin: string | undefined = undefined;
+  if(allowedHosts.includes(origin ? new URL(origin).host : origin)) {
+    accessControlAllowOrigin = origin;
+  }
 
   const fast = url.searchParams.get("fast") === "true";
 
@@ -43,6 +55,12 @@ export const GET = (async ({platform, url}) => {
         cached: true,
         lastFetch: fastCache.lastFetch,
         count
+      },
+      {
+        headers: {
+          "Access-Control-Allow-Origin": accessControlAllowOrigin,
+          "Vary": "Origin"
+        }
       }
     )
   }
@@ -176,7 +194,15 @@ export const GET = (async ({platform, url}) => {
     debug
   }
 
-  return json(response);
+  return json(
+    response,
+    {
+      headers: {
+        "Access-Control-Allow-Origin": accessControlAllowOrigin,
+        "Vary": "Origin"
+      }
+    }
+  );
 }) satisfies RequestHandler;
 
 export type TwitchResponse = {
