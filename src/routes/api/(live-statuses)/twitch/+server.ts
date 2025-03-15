@@ -76,6 +76,8 @@ export const GET = (async ({platform, url}) => {
     } else {
         console.warn("missing cache api!")
     }
+
+    fastCache.lastFetch = Date.now();
     // console.debug(2)
 
     if(twitchTokenCache.token.validUntil < Date.now()) {
@@ -154,8 +156,6 @@ export const GET = (async ({platform, url}) => {
             }));
         }
     }
-
-    fastCache.lastFetch = Date.now();
 
     const isLive = (twitchJSON.data?.length ?? 0) != 0;
     const isWAN = isLive && (twitchJSON.data[0]?.title?.includes("WAN") || makeAlwaysWAN);
