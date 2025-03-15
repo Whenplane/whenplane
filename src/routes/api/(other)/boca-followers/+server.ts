@@ -25,7 +25,7 @@ const allowedHosts = [
 ];
 
 
-export const GET = (async ({platform, url}) => {
+export const GET = (async ({platform, url, request}) => {
 
   const cache = platform?.env?.CACHE;
   const history = platform?.env?.HISTORY;
