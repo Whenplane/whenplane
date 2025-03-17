@@ -108,7 +108,7 @@ export const GET = (async ({url, fetch, locals, platform}) => {
         specialStream: await specialStream,
         floatplane: await floatplane,
         notablePeople: await notable,
-        reloadNumber: 51
+        reloadNumber: 52
         // showExtension: await showExtension
     }
 
@@ -166,7 +166,11 @@ export const GET = (async ({url, fetch, locals, platform}) => {
     locals.addTiming({id: "floatplane", duration: fpTime ?? -1});
     locals.addTiming({id: "notable", duration: notableTime ?? -1});
 
-    return json(response)
+    return json(response, {
+        headers: {
+            "cache-control": "max-age=4, public",
+        }
+    })
 }) satisfies RequestHandler;
 
 export type AggregateResponse = {
