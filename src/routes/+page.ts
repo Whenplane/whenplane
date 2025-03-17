@@ -14,7 +14,6 @@ let lastNewsPostCache: NewsPost;
 
 export const load = (async ({fetch, params, url}) => {
     let fast = (!browser || (location && location.pathname !== "/"));
-    const cacheBuster = fast ? "" : "&r=" + Date.now();
 
     let isNextFast = false;
 
@@ -32,7 +31,7 @@ export const load = (async ({fetch, params, url}) => {
         (async () => {
 
 
-            liveStatus = await fetch("/api/aggregate?fast=" + fast + cacheBuster + "&isNextFast=" + isNextFast)
+            liveStatus = await fetch("/api/aggregate?fast=" + fast + "&isNextFast=" + isNextFast)
               .then(r => r.json())
               .catch(() => false);
 
