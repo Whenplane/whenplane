@@ -68,6 +68,23 @@ export const GET = (async ({platform, url, request}) => {
     });
   }
 
+  let cCache: Cache | undefined = undefined;
+  let cacheRequest: Request | undefined = undefined;
+  if(typeof caches !== "undefined") {
+    cCache = await caches.open("whenplane:twitch-fetch");
+    cacheRequest = new Request("https://cache/twitch?short=" + (url.searchParams.get("short")));
+    const cacheMatch = await cCache.match(cacheRequest);
+
+    if(cacheMatch) {
+      const expires = cacheMatch.headers.get("expires")
+      if(!expires || new Date(expires).getTime() > Date.now()) {
+        return cacheMatch.clone();
+      }
+    }
+  } else {
+    console.warn("missing cache api!")
+  }
+
   // don't check for other streams when close to wan (no longer used, longer cache is used instead)
   /*if(isNearWan()) {
     const shortResponse: {[channel: string]: unknown} = {};
@@ -248,12 +265,16 @@ export const GET = (async ({platform, url, request}) => {
 
   const shortResponses: ShortResponses = makeShortResponses(responses, url);
 
-  return json(shortResponses, {
+  const response = json(shortResponses, {
     headers: {
       "Access-Control-Allow-Origin": accessControlAllowOrigin,
       "Vary": "Origin"
     }
-  })
+  });
+  const cacheExpires = new Date(Date.now() + cacheTime).toISOString();
+
+  if(cCache && cacheRequest) platform.context.waitUntil(cCache.put(cacheRequest, json(response, {headers: {"Expires": cacheExpires}})));
+  return response
 }) satisfies RequestHandler;
 
 
