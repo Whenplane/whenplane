@@ -17,7 +17,11 @@ export const load = (async ({platform, parent}) => {
   }
 
   const objectKey = showData.name.split("/")[0] + "/" + videoId;
-  let captions = await bucket.get(objectKey);
+  let captions = await bucket.get(objectKey)
+    .catch(e => {
+      console.warn("Got " + (e.message ? "'" + e.message + "'" : "error") + " on 1st attempt, retrying due to:", e)
+      return bucket.get(objectKey);
+    });
 
   if(dev && captions === null) {
     const fetchedCaptionsResponse = await fetch("https://captions.whenplane.com/" + objectKey);
