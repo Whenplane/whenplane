@@ -273,7 +273,7 @@ export const GET = (async ({platform, url, request}) => {
   });
   const cacheExpires = new Date(Date.now() + cacheTime).toISOString();
 
-  if(cCache && cacheRequest) platform.context.waitUntil(cCache.put(cacheRequest, json(response, {headers: {"Expires": cacheExpires}})));
+  if(cCache && cacheRequest) platform.context.waitUntil(cCache.put(cacheRequest, json(response.clone(), {headers: {"Expires": cacheExpires}})));
   return response
 }) satisfies RequestHandler;
 
