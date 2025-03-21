@@ -57,7 +57,8 @@ export const handle: Handle = async ({ event, resolve }) => {
 
         event.cookies.set("id", id, {
             path: "/",
-            expires
+            expires,
+            sameSite: "none"
         });
     }
 
