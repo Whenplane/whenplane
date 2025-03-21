@@ -72,7 +72,7 @@ export const GET = (async ({platform, url, request}) => {
   let cacheRequest: Request | undefined = undefined;
   if(typeof caches !== "undefined") {
     cCache = await caches.open("whenplane:twitch-fetch");
-    cacheRequest = new Request("https://cache/twitch?short=" + (url.searchParams.get("short")));
+    cacheRequest = new Request("https://cache/twitch?short=" + (url.searchParams.get("short") + "&origin=" + origin));
     const cacheMatch = await cCache.match(cacheRequest);
 
     if(cacheMatch) {
