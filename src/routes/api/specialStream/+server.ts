@@ -8,20 +8,20 @@ export const GET = (async ({fetch}) => {
 
   const fpLive: FpEndpointResponse = await fetch("/api/floatplane?fast=true").then(r => r.json());
 
-  const data: SpecialStream | false = {
-    title: "Our New $4500 Workstation PCs for Editing",
-    thumbnail: "https://pbs.floatplane.com/stream_thumbnails/5c13f3c006f1be15e08e05c0/970015889418361_1739470500944.jpeg",
+  const data: SpecialStream | false = Date.now() > 1742608091103 ? {
+    title: "Derpy Dinos - Streams with Sarah FP Exclusive",
+    thumbnail: "https://images.ajg0702.us/vlcsnap-2025-03-21-15h40m41s212.png",
 
-    start: "2025-02-13T19:45:00Z",
+    start: "2025-03-27T19:00:00Z",
     startIsEstimated: false,
 
     onFloatplane: true,
 
-    onTwitch: true,
+    onTwitch: false,
     // twitchNotes: "first half",
 
-    onYoutube: true
-  } //false;
+    onYoutube: false
+  } : false //false;
 
   if(!data) {
     return json(data);
