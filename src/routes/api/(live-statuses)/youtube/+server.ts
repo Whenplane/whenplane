@@ -114,8 +114,8 @@ export const GET = (async ({platform, locals, url, fetch}) => {
 
     let forced = false;
 
-    // ignore youtube saying that wan is still live even though it is no longer live (only if theyve been live for more than a minute)
-    if(isWAN && started && Date.now() - new Date(started).getTime() > 60e3) {
+    // ignore youtube saying that wan is still live even though it is no longer live (only if they've been live for more than 5 minutes)
+    if(isWAN && started && Date.now() - new Date(started).getTime() > 10 * 60e3) {
         isWAN = await fetch("/api/twitch?fast=true").then(r => r.json())
           .then(d => !!d.isWAN);
         if(!isWAN) forced = true;
