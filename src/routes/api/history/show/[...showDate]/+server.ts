@@ -60,12 +60,12 @@ export const GET = (async ({platform, params, url, locals}) => {
     }
 
 
-    const preShowStartFragment = await history.get(showDate + ":preShowStart");
+    const preShowStartFragment = await history.get(showDate + ":preShowStart", {cacheTtl: 60});
     if(preShowStartFragment) {
-        const mainShowStartFragment = history.get(showDate + ":mainShowStart");
-        const showEndFragment = history.get(showDate + ":showEnd");
-        const snippetFragment = history.get(showDate + ":snippet", {type: 'json'});
-        const videoIdFragment = history.get(showDate + ":videoId");
+        const mainShowStartFragment = history.get(showDate + ":mainShowStart", {cacheTtl: 60});
+        const showEndFragment = history.get(showDate + ":showEnd", {cacheTtl: 60});
+        const snippetFragment = history.get(showDate + ":snippet", {type: 'json', cacheTtl: 60});
+        const videoIdFragment = history.get(showDate + ":videoId", {cacheTtl: 60});
 
         if(await mainShowStartFragment || await showEndFragment || await snippetFragment || await videoIdFragment) {
             const preShowStart = preShowStartFragment;
