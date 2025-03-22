@@ -40,12 +40,15 @@ export const GET = (async ({platform, url}) => {
     const fast = url.searchParams.get("fast") === "true";
 
     // console.debug(1)
+    const cachedIsLive = fastCache.lastFetchData?.data?.length != 0;
+    const cachedTitle = fastCache.lastFetchData?.data[0]?.title;
+    const cachedIsWAN = cachedIsLive && (cachedTitle?.includes("WAN") || makeAlwaysWAN);
 
     // With the fast flag (added for initial page load requests), always fetch cached data if its from within the past 5 hours
-    if(Date.now() - fastCache.lastFetch < cacheTime || (fast && Date.now() - fastCache.lastFetch < 5 * 60 * 60e3)) {
-        const isLive = fastCache.lastFetchData?.data?.length != 0;
-        const title = fastCache.lastFetchData?.data[0]?.title;
-        const isWAN = isLive && (title?.includes("WAN") || makeAlwaysWAN);
+    if(Date.now() - fastCache.lastFetch < cacheTime || (fast && Date.now() - fastCache.lastFetch < 5 * 60 * 60e3 && (!cachedIsLive || (cachedIsLive && cachedTitle)))) {
+        const isLive = cachedIsLive;
+        const isWAN = cachedIsWAN;
+        const title = cachedTitle;
 
         const twitchData = url.searchParams.has("short") ? undefined : fastCache.lastFetchData;
         const started = isLive ? fastCache.lastFetchData?.data[0].started_at : undefined;
