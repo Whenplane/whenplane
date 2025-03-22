@@ -2,11 +2,12 @@ import type {RequestHandler} from "@sveltejs/kit";
 import {error, json} from "@sveltejs/kit";
 import {env} from "$env/dynamic/private";
 import { dev, version } from "$app/environment";
-import {getClosestWan, getUTCDate} from "$lib/timeUtils";
+import { getClosestWan, getUTCDate, isNearWan } from "$lib/timeUtils";
 import type { DurableObjectNamespace } from "@cloudflare/workers-types";
 import type { GetStreamsResponse } from "ts-twitch-api";
 import type { TwitchToken } from "$lib/utils.ts";
 import { twitchTokenCache } from "$lib/stores.ts";
+import { log } from "$lib/server/server-utils.ts";
 
 const cacheTime = 5000; // maximum fetch from twitch api once every 5 seconds
 
@@ -276,6 +277,10 @@ export const GET = (async ({platform, url}) => {
         title
     }
     // console.debug(9)
+
+    if(!isWAN && isNearWan()) {
+        log(platform, "Not wan stream when near wan!", title);
+    }
 
     const throttler = (platform?.env?.NOTIFICATION_THROTTLER as DurableObjectNamespace)
     if(isLive && isWAN && throttler && Date.now() - lastNotifSend > (12 * 60 * 60e3) && twitchJSON?.data[0]) {
