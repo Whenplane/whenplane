@@ -5,6 +5,7 @@ import { dev, version } from "$app/environment";
 import type {KVNamespace, DurableObjectNamespace, DurableObjectStub} from "@cloudflare/workers-types";
 import type {OldShowMeta} from "$lib/utils";
 import { env } from "$env/dynamic/private";
+import { log } from "$lib/server/server-utils";
 
 
 const cache: {
@@ -116,9 +117,12 @@ export const GET = (async ({platform, locals, url, fetch}) => {
 
     // ignore youtube saying that wan is still live even though it is no longer live (only if they've been live for more than 5 minutes)
     if(isWAN && started && Date.now() - new Date(started).getTime() > 10 * 60e3) {
-        isWAN = await fetch("/api/twitch?fast=true").then(r => r.json())
-          .then(d => !!d.isWAN);
-        if(!isWAN) forced = true;
+        const twitchData = await fetch("/api/twitch?fast=true").then(r => r.json());
+        isWAN = !!twitchData.isWAN;
+        if(!isWAN) {
+            log(platform, "Forcing youtube isWAN to false bc twitch is offline", JSON.stringify(twitchData));
+            forced = true;
+        }
     }
 
 
