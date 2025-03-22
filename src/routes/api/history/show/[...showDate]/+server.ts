@@ -31,6 +31,7 @@ export const GET = (async ({platform, params, url, locals}) => {
     const kvShowInfo = await history.getWithMetadata<OldShowMeta, OldShowMeta>(showDate, {type: 'json', cacheTtl});
 
     if(kvShowInfo.value) {
+        console.log("Got exact key match");
         let generatedMetadata = false
         if(!kvShowInfo.metadata) {
             kvShowInfo.metadata = structuredClone(kvShowInfo.value);
@@ -52,6 +53,7 @@ export const GET = (async ({platform, params, url, locals}) => {
     const oldHistory = await import("$lib/history/oldHistory.ts");
     for (const oldShow of oldHistory.history) {
         if(oldShow.name == showDate) {
+            console.log("Got history match")
             oldShow.value = structuredClone(oldShow.metadata)
             return json(oldShow);
         }
@@ -93,6 +95,7 @@ export const GET = (async ({platform, params, url, locals}) => {
 
             locals.addTiming({id: "total", duration: Date.now() - start});
 
+            console.log("Returning fragmented key match")
 
             return json({
                 name: showDate,
