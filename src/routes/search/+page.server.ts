@@ -76,6 +76,8 @@ export const load = (async ({fetch, url, cookies}) => {
   if(urlSort && urlSort !== "default") {
     if(urlSort === "showDate") {
       sort = "_text_match(bucket_size: 5):desc,showDate:desc,_text_match:desc";
+    } else if(urlSort === "showDateOldest") {
+      sort = "_text_match(bucket_size: 5):desc,showDate:asc,_text_match:desc";
     } else if(urlSort === "type") {
       sort = "_text_match(bucket_size: 5):desc,_eval([ (type:topic):3, (type:title):2, (type:message):1, (type:reply):1, (type:transcript):0 ]):desc,_text_match:desc";
     } else if(urlSort === "relevance") {

@@ -163,7 +163,8 @@
         <span>Sort</span>
         <select class="input w-36" name="sort" bind:value={searchSort} on:change={() => searchForm.submit()}>
           <option value="default" selected>Default (Show Date & Type & Relevance)</option>
-          <option value="showDate">Show Date & Relevance</option>
+          <option value="showDate">Show Date & Relevance (newest first)</option>
+          <option value="showDateOldest">Show Date & Relevance (oldest first)</option>
           <option value="type">Type & Relevance</option>
           <option value="relevance">Relevance Only</option>
         </select>
