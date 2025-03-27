@@ -10,7 +10,7 @@ export const GET = (async ({fetch}) => {
 
   const data: SpecialStream | false = Date.now() > 1742608091103 ? {
     title: "Derpy Dinos - Streams with Sarah FP Exclusive",
-    thumbnail: "https://images.ajg0702.us/vlcsnap-2025-03-21-15h40m41s212.png",
+    thumbnail: "https://pbs.floatplane.com/stream_thumbnails/5c13f3c006f1be15e08e05c0/690027088370846_1743099965628.jpeg",
 
     start: "2025-03-27T19:00:00Z",
     startIsEstimated: false,
