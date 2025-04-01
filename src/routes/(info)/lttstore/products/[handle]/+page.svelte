@@ -35,6 +35,38 @@
   $: nonZeroPurchasesPerHour = (data.product?.purchasesPerHour === 0 ? (data.product.purchasesPerDay / 24) : data.product.purchasesPerHour);
   $: goneInHours = ((currentStock.total ?? -1) / nonZeroPurchasesPerHour) - ((Date.now() - data.product.stockChecked) / (60 * 60e3));
 
+  $: variantsGoneIn = Object.keys(Object.keys(data.stockHistory).length >= 1 ? JSON.parse(data.stockHistory[0]?.stock ?? "{}") : {})
+    .filter(n => n !== "total") // we already do total above, we dont need to do it again
+    .map(k => {
+      let previous = data.stockHistory[data.stockHistory.length - 2];
+      const latest = data.stockHistory[data.stockHistory.length - 1];
+
+      let previousStock = JSON.parse(previous.stock)[k];
+      const currentStock = JSON.parse(latest.stock)[k];
+
+      let i = data.stockHistory.length - 2;
+      while(latest.timestamp - previous.timestamp < 12 * 60 * 60e3) {
+        let newPrevious = data.stockHistory[--i];
+        if(!newPrevious) break;
+        let newPreviousStock = JSON.parse(newPrevious.stock)[k];
+        if(newPreviousStock < currentStock) break;
+        previous = newPrevious;
+        previousStock = newPreviousStock;
+      }
+
+      const timeDiff = latest.timestamp - previous.timestamp;
+      const stockDiff = previousStock - currentStock;
+
+      const salesPerHour = stockDiff / (timeDiff / (60 * 60e3));
+      const goneIn = (currentStock / salesPerHour) - ((Date.now() - data.product.stockChecked) / (60 * 60e3));
+      return {
+        name: k,
+        salesPerHour,
+        goneIn,
+        currentStock
+      }
+  })
+
   $: strippedTitle = productInfo.title.replace(/\(.*\)/g, "").replace("Knife", "Knive").trim();
 
   $: productDiscounts = JSON.parse(data.product.productDiscount ?? "[]");
@@ -501,11 +533,8 @@
     <h2>Backorder Notice</h2>
     {#each backorderNotices as backorderNotice}
       <aside class="alert variant-ghost">
-        <!-- Icon -->
         <div><ExclamationTriangle width="2em" height="2em"/></div>
-        <!-- Message -->
         <div class="alert-message">
-<!--          <h4 class="h4">(title)</h4>-->
           <p>{backorderNotice}</p>
         </div>
       </aside>
@@ -554,6 +583,25 @@
     {:else}
       {(goneInHours / 24).toFixed(2)} days
     {/if}
+    <br>
+    <br>
+    {#each variantsGoneIn as variantGoneIn}
+      {@const goneInHours = variantGoneIn.goneIn}
+      {#if typeof variantGoneIn.salesPerHour === "number" && variantGoneIn.salesPerHour >= 0 && variantGoneIn.currentStock > 0}
+        If <b>{variantGoneIn.name}</b> keeps selling at {Math.round(variantGoneIn.salesPerHour * 100)/100} units per hour,
+        it could be gone in
+        {#if goneInHours < 48}
+          {#if goneInHours <= 1}
+            less than an hour
+          {:else}
+            {goneInHours.toFixed(2)} hours
+          {/if}
+        {:else}
+          {(goneInHours / 24).toFixed(2)} days
+        {/if}
+        <br>
+      {/if}
+    {/each}
     <br>
     <br>
     <br>

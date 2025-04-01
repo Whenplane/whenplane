@@ -90,6 +90,7 @@ export const actions = {
       .bind(passwordHash, email)
       .run();
 
-    throw redirect(302, "/auth/login?passwordResetSuccess")
+    throw redirect(302, "/auth/login?passwordResetSuccess");
+    // TODO: send email notifying of a successful password change
   }
 } satisfies Actions
