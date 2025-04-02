@@ -41,6 +41,8 @@
       let previous = data.stockHistory[data.stockHistory.length - 2];
       const latest = data.stockHistory[data.stockHistory.length - 1];
 
+      if(!previous || !latest) return undefined;
+
       let previousStock = JSON.parse(previous.stock)[k];
       const currentStock = JSON.parse(latest.stock)[k];
 
@@ -65,7 +67,7 @@
         goneIn,
         currentStock
       }
-  })
+  }).filter(v => typeof v !== "undefined");
 
   $: strippedTitle = productInfo.title.replace(/\(.*\)/g, "").replace("Knife", "Knive").trim();
 
