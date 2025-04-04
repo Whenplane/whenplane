@@ -46,7 +46,7 @@
   </div>
 </div>
 <div class="limit mx-auto p-2 m-2 card variant-ghost-warning">
-  All product updates are currently paused due to a Shopify issue.
+  Most product updates are currently paused due to a Shopify issue.
   I hope to have them back soon, but there is a chance that this might be the end of us being able to see stock numbers.
 </div>
 <slot/>
