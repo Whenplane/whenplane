@@ -9,7 +9,7 @@ export const load = (async ({platform, fetch}) => {
   const currentStream = "boca-and-sammy-10-2024"
   const cutoff_time = 1728801407090;
 
-  const db: D1Database | undefined = platform?.env?.DB;
+  const db = platform?.env?.DB?.withSession();
   const meta: KVNamespace | undefined = platform?.env?.META;
   if(!db) throw error(503, "Database missing");
   if(!meta) throw error(503, "Meta missing");
@@ -79,7 +79,7 @@ export const load = (async ({platform, fetch}) => {
 
       console.log("I'm removing", remove);
 
-      const removePromises: Promise<void>[] = [];
+      const removePromises: Promise<unknown>[] = [];
       for (const eventRemove of remove) {
         removePromises.push(
           db.prepare("delete from boca_events where stream=? and event_name=? and event_timestamp=?")

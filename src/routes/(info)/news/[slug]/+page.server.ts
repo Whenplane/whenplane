@@ -1,10 +1,9 @@
-import type {PageServerLoad} from "../../../../../.svelte-kit/types/src/routes";
-import type { D1Database } from "@cloudflare/workers-types";
+import type {PageServerLoad} from "./$types";
 import { error } from "@sveltejs/kit";
 
 export const load = (async ({platform, params}) => {
 
-  const db: D1Database = platform?.env?.DB;
+  const db = platform?.env?.DB?.withSession();
   if(!db) throw error(503, "Database missing");
 
   const post = await db.prepare("select * from news where url=?")

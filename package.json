@@ -17,7 +17,7 @@
 	},
 	"devDependencies": {
 		"@block65/webcrypto-web-push": "^0.3.2",
-		"@cloudflare/workers-types": "^4.20241106.0",
+		"@cloudflare/workers-types": "^4.20250410.0",
 		"@colour-extractor/colour-extractor": "^1.0.1",
 		"@playwright/test": "^1.28.1",
 		"@skeletonlabs/skeleton": "^1.2.5",
@@ -41,7 +41,7 @@
 		"eslint": "^8.28.0",
 		"eslint-config-prettier": "^8.5.0",
 		"eslint-plugin-svelte3": "^4.0.0",
-		"miniflare": "^3.20230922.0",
+		"miniflare": "^4.20250408.0",
 		"postcss": "^8.4.23",
 		"prettier": "^2.8.0",
 		"prettier-plugin-svelte": "^2.10.1",

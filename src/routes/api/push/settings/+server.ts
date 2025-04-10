@@ -3,19 +3,19 @@ import type { D1Database } from "@cloudflare/workers-types";
 import { dev } from "$app/environment";
 import { createNotificationsTable } from "$lib/server/notifications/notification-server-tools.ts";
 
-export const GET = (async ({ url, platform }) => {
+export const GET = (async ({ url, platform, cookies }) => {
 
-  const db: D1Database = platform?.env?.DB;
-  if(!db) throw error(503, "Database missing");
+  const session = platform?.env?.DB.withSession(cookies.get("notificationSettingConsistency"));
+  if(!session) throw error(503, "Database missing");
 
   const hash = url.searchParams.get("hash");
   if(!hash) throw error(400, "Missing hash");
 
   if(dev) {
-    await createNotificationsTable(db);
+    await createNotificationsTable(session);
   }
 
-  const settings: NotificationRows | undefined = await db.prepare("select * from notifications where endpoint_hash = ?")
+  const settings: NotificationRows | undefined = await session.prepare("select * from notifications where endpoint_hash = ?")
     .bind(hash)
     .all()
     .then(r => {
@@ -31,18 +31,26 @@ export const GET = (async ({ url, platform }) => {
 
 }) satisfies RequestHandler;
 
-export const PUT = (async ({url, request, platform}) => {
-  const db: D1Database = platform?.env?.DB;
-  if(!db) throw error(503, "Database missing");
+export const PUT = (async ({url, request, platform, cookies}) => {
+  const session = platform?.env?.DB.withSession(cookies.get("notificationSettingConsistency"));
+  if(!session) throw error(503, "Database missing");
 
   const hash = url.searchParams.get("hash");
   if(!hash) throw error(400, "Missing hash");
 
   const data = await request.json() as NotificationRows;
 
-  const response = await db.prepare("update notifications set imminent=?, preshow_live=?, mainshow_live=?, other_streams=?, elijah_stream=? where endpoint_hash=?")
+  const response = await session.prepare("update notifications set imminent=?, preshow_live=?, mainshow_live=?, other_streams=?, elijah_stream=? where endpoint_hash=?")
     .bind(data.imminent, data.preshow_live, data.mainshow_live, data.other_streams, data.elijah_stream, hash)
     .run()
+
+  cookies.set("notificationSettingConsistency", session.getBookmark(), {
+    path: "/",
+    // 5 minutes is MORE than enough time for the db write to be replicated
+    // (according to the blog post, its usually under 100ms)
+    expires: new Date(Date.now() + (5 * 60e3)),
+    secure: dev ? false : undefined
+  })
 
   return json(response, {status: response.success ? 200 : 500});
 }) satisfies RequestHandler;

@@ -11,7 +11,7 @@ const names = options.map(o => o.name);
 // cache for (just under) 5 seconds to reduce requests to d1
 const cache_time = 4750;
 
-export const GET = (async ({platform, url}) => {
+export const GET = (async ({platform, url, cookies}) => {
 
   const fast = url.searchParams.get("fast") === "true";
 
@@ -20,7 +20,7 @@ export const GET = (async ({platform, url}) => {
   }
   latenessVotesCache.lastFetch = Date.now();
 
-  const db = platform?.env?.DB;
+  const db = platform?.env?.DB.withSession(cookies.get("voteConsistencySession"));
 
   if(!db) throw error(503, "Database unavailable!");
 

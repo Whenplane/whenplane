@@ -1,13 +1,14 @@
-import type { D1Database } from "@cloudflare/workers-types";
+import type { D1Database, D1DatabaseSession } from "@cloudflare/workers-types";
 import type { Actions } from "@sveltejs/kit";
 import { fail } from "@sveltejs/kit";
 import { latenessVotesCache } from "$lib/stores.ts";
 import { wait } from "$lib/utils.ts";
 import { n } from "$lib/timeUtils.ts";
+import { dev } from "$app/environment";
 
 
 export const actions = {
-  vote: (async ({platform, url, locals}) => {
+  vote: (async ({platform, url, locals, cookies}) => {
 
     const votingFor = url.searchParams.get("for");
     if(!votingFor) return fail(400, {message: "Missing thing to vote for!"});
@@ -20,7 +21,18 @@ export const actions = {
       return;
     }
 
-    await vote(locals.id, votingFor, platform?.env?.DB);
+    const session = platform?.env?.DB.withSession()
+
+    await vote(locals.id, votingFor, session);
+
+
+    cookies.set("voteConsistencySession", session?.getBookmark(), {
+      path: "/",
+      // 5 minutes is MORE than enough time for the db write to be replicated
+      // (according to the blog post, its usually under 100ms)
+      expires: new Date(Date.now() + (5 * 60e3)),
+      secure: dev ? false : undefined
+    })
 
     // invalidate lateness voting cache
     latenessVotesCache.lastFetch = 0;
@@ -31,7 +43,7 @@ export const actions = {
   })
 } satisfies Actions;
 
-async function vote(id: string, vote: string, db: D1Database) {
+async function vote(id: string, vote: string, db: D1Database | D1DatabaseSession) {
   await (db.prepare("insert into lateness_votes (id, timestamp, vote) values (?, ?, ?)")
     .bind(id, Date.now(), vote)
     .run());
