@@ -141,7 +141,7 @@
     </a>
   </div>
   <form method="GET" class="inline-block pl-4 text-center" bind:this={searchForm}>
-    <input placeholder="Search" name="q" class="input search-box-top-bar p-2 pl-4" value={q}>
+    <input type="search" placeholder="Search" name="q" class="input search-box-top-bar p-2 pl-4" value={q}>
     <div class="inline-block pl-2">
       <label class="inline-block px-2">
         <input type="checkbox" class="checkbox" name="title" bind:checked={searchTitle} on:change={() => searchForm.submit()}>
@@ -305,7 +305,7 @@
       <enhanced:img src="./wan_show_search.png" class="search-logo mx-auto" alt="The WAN Show Search" title="The WAN Show Search" sizes="min(1330px, 38em)" />
       <br>
       <form method="GET">
-        <input placeholder="Search" name="q" class="input search-box p-2 pl-4" autofocus><br>
+        <input type="search" placeholder="Search" name="q" class="input search-box p-2 pl-4" autofocus><br>
         <div class="py-4">
           Search:
           <label class="inline-block px-2">
