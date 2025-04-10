@@ -1,9 +1,9 @@
-import type { D1Database } from "@cloudflare/workers-types";
 import { error } from "@sveltejs/kit";
 import type { CollectionDbRow } from "$lib/lttstore/lttstore_types.ts";
+import type {PageServerLoad} from "./$types";
 
 export const load = (async ({platform, params}) => {
-  const db: D1Database | undefined = platform?.env?.LTTSTORE_DB;
+  const db = platform?.env?.LTTSTORE_DB.withSession();
   if(!db) throw error(503, "DB unavailable!");
 
   const collection = await db.prepare("select * from collections where handle=?")
@@ -22,4 +22,4 @@ export const load = (async ({platform, params}) => {
     changes
   }
 
-})
+}) satisfies PageServerLoad

@@ -1,14 +1,12 @@
 import { error } from "@sveltejs/kit";
 import type { PageServerLoad } from "./$types";
-import type { D1Database } from "@cloudflare/workers-types";
-import { dev } from "$app/environment";
 import type { ProductsTableRow } from "$lib/lttstore/lttstore_types.ts";
 
 const stockStartedWorking = 1723950660000;
 
 
 export const load = (async ({platform, url}) => {
-  const db: D1Database | undefined = platform?.env?.LTTSTORE_DB;
+  const db = platform?.env?.LTTSTORE_DB.withSession();
   if(!db) throw error(503, "DB unavailable!");
 
   let sortColumn = Date.now() - stockStartedWorking > 5 * 24 * 60 * 60e3 ? "purchasesPerDay" : "stockChecked";

@@ -1,8 +1,12 @@
 import { error, redirect } from "@sveltejs/kit";
 import type { PageServerLoad } from "./$types";
-import type { D1Database } from "@cloudflare/workers-types";
 import { dev } from "$app/environment";
-import type { ProductsTableRow, SimilarProductsTableRow, StockHistoryTableRow } from "$lib/lttstore/lttstore_types.ts";
+import type {
+  ProductsTableRow,
+  ShopifyProduct,
+  SimilarProductsTableRow,
+  StockHistoryTableRow
+} from "$lib/lttstore/lttstore_types.ts";
 
 import { createTables } from "../../createTables.ts";
 
@@ -10,7 +14,7 @@ const DAY = 24 * 60 * 60e3;
 
 
 export const load = (async ({platform, params, url}) => {
-  const db: D1Database | undefined = platform?.env?.LTTSTORE_DB;
+  const db = platform?.env?.LTTSTORE_DB.withSession();
   if(!db) throw error(503, "DB unavailable!");
 
   if(dev) await createTables(db)
@@ -82,7 +86,7 @@ export const load = (async ({platform, params, url}) => {
   const similarProducts = db.prepare("select * from similar_products where id = ?")
     .bind(product.id)
     .first<SimilarProductsTableRow>()
-    .then(r => r ? {timestamp: r.timestamp, similar: JSON.parse(r.similar).filter(p => p.id != product.id)} : r);
+    .then(r => r ? {timestamp: r.timestamp, similar: JSON.parse(r.similar).filter((p: ShopifyProduct) => p.id != product.id)} : r);
 
   return {
     product,

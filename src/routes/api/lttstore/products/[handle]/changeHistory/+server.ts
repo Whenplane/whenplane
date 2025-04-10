@@ -1,11 +1,11 @@
 import { error, json } from "@sveltejs/kit";
-import type { D1Database } from "@cloudflare/workers-types";
 import { dev } from "$app/environment";
 import { createTables } from "../../../../../(info)/lttstore/createTables.ts";
+import type {RequestHandler} from "./$types";
 
 
 export const GET = (async ({fetch, params, platform}) => {
-  const db: D1Database | undefined = platform?.env?.LTTSTORE_DB;
+  const db = platform?.env?.LTTSTORE_DB.withSession();
   if(!db) throw error(503, "DB unavailable!");
 
   if(dev) await createTables(db);
@@ -21,4 +21,4 @@ export const GET = (async ({fetch, params, platform}) => {
     .then(r => r.results);
 
   return json(changeHistory);
-})
+}) satisfies RequestHandler

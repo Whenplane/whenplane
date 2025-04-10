@@ -1,20 +1,19 @@
-import { error, json, type RequestHandler } from "@sveltejs/kit";
-import type { D1Database } from "@cloudflare/workers-types";
+import { error, json } from "@sveltejs/kit";
 import { dev } from "$app/environment";
 import type {
   CollectionDbRow,
-  ProductDifference,
   ProductsTableRow, SimilarProductsTableRow,
   StockHistoryTableRow
 } from "$lib/lttstore/lttstore_types.ts";
 import { createTables } from "../../../../(info)/lttstore/createTables.ts";
+import type {RequestHandler} from "./$types";
 
 
-export const GET = (async ({platform, params}) => {
+export const GET = (async ({platform}) => {
 
   if(!dev) throw error(403)
 
-  const db: D1Database | undefined = platform?.env?.LTTSTORE_DB;
+  const db = platform?.env?.LTTSTORE_DB;
   if(!db) throw error(503, "DB unavailable!");
 
   const data: {

@@ -1,13 +1,12 @@
-import { error, redirect } from "@sveltejs/kit";
-import type { PageServerLoad } from "../../../../../.svelte-kit/types/src/routes";
-import type { D1Database } from "@cloudflare/workers-types";
+import { error } from "@sveltejs/kit";
+import type { PageServerLoad } from "./$types";
 import { dev } from "$app/environment";
 import { createTables } from "../createTables.ts";
 
 
 
 export const load = (async ({platform}) => {
-  const db: D1Database | undefined = platform?.env?.LTTSTORE_DB;
+  const db = platform?.env?.LTTSTORE_DB.withSession();
   if(!db) throw error(503, "DB unavailable!");
 
   if(dev) await createTables(db);
