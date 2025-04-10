@@ -44,13 +44,16 @@ export const PUT = (async ({url, request, platform, cookies}) => {
     .bind(data.imminent, data.preshow_live, data.mainshow_live, data.other_streams, data.elijah_stream, hash)
     .run()
 
-  cookies.set("notificationSettingConsistency", session.getBookmark(), {
-    path: "/",
-    // 5 minutes is MORE than enough time for the db write to be replicated
-    // (according to the blog post, its usually under 100ms)
-    expires: new Date(Date.now() + (5 * 60e3)),
-    secure: dev ? false : undefined
-  })
+  const bookmark = session.getBookmark();
+  if(bookmark) {
+    cookies.set("notificationSettingConsistency", bookmark, {
+      path: "/",
+      // 5 minutes is MORE than enough time for the db write to be replicated
+      // (according to the blog post, its usually under 100ms)
+      expires: new Date(Date.now() + (5 * 60e3)),
+      secure: dev ? false : undefined
+    })
+  }
 
   return json(response, {status: response.success ? 200 : 500});
 }) satisfies RequestHandler;

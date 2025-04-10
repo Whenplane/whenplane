@@ -26,13 +26,16 @@ export const actions = {
     await vote(locals.id, votingFor, session);
 
 
-    cookies.set("voteConsistencySession", session?.getBookmark(), {
-      path: "/",
-      // 5 minutes is MORE than enough time for the db write to be replicated
-      // (according to the blog post, its usually under 100ms)
-      expires: new Date(Date.now() + (5 * 60e3)),
-      secure: dev ? false : undefined
-    })
+    const bookmark = session?.getBookmark();
+    if(bookmark) {
+      cookies.set("voteConsistencySession", bookmark, {
+        path: "/",
+        // 5 minutes is MORE than enough time for the db write to be replicated
+        // (according to the blog post, its usually under 100ms)
+        expires: new Date(Date.now() + (5 * 60e3)),
+        secure: dev ? false : undefined
+      })
+    }
 
     // invalidate lateness voting cache
     latenessVotesCache.lastFetch = 0;

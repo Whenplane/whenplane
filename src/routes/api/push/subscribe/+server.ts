@@ -25,13 +25,16 @@ export const POST = (async ({platform, request, cookies}) => {
     return json({message: "Already Subscribed"}, {status: 400});
   }
 
-  cookies.set("notificationSettingConsistency", session?.getBookmark(), {
-    path: "/",
-    // 5 minutes is MORE than enough time for the db write to be replicated
-    // (according to the blog post, its usually under 100ms)
-    expires: new Date(Date.now() + (5 * 60e3)),
-    secure: dev ? false : undefined
-  })
+  const bookmark = session.getBookmark();
+  if(bookmark) {
+    cookies.set("notificationSettingConsistency", bookmark, {
+      path: "/",
+      // 5 minutes is MORE than enough time for the db write to be replicated
+      // (according to the blog post, its usually under 100ms)
+      expires: new Date(Date.now() + (5 * 60e3)),
+      secure: dev ? false : undefined
+    })
+  }
 
   return json(
     await session.prepare("insert into notifications (subscription, endpoint_hash) values(?, ?)")
