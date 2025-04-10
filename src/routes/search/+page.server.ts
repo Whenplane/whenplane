@@ -1,7 +1,7 @@
 import { SearchClient } from "typesense";
 import type { TimestampsDbRow } from "$lib/timestamps/types.ts";
 import type { SearchResponse } from "typesense/lib/Typesense/Documents";
-import type { HistoricalEntry } from "$lib/utils.ts";
+import { type HistoricalEntry, wait } from "$lib/utils.ts";
 import type { PageServerLoad } from "./$types";
 import { resultsPerPage } from "./search.ts";
 import type { CombinedSearchResult } from "$lib/search/search_types.ts";
@@ -53,8 +53,9 @@ export const load = (async ({fetch, url, cookies}) => {
 
   let warnings: string[] = [];
 
-  const allShows = await showsCache;
+  const allShows = await Promise.any([showsCache, wait(5e3).then(() => "Timed Out")]);
   if(!allShows) throw error(500, "Shows is falsy!");
+  if(allShows === "Timed Out") throw error(500, "Timed out fetching shows!")
 
   if(isNaN(page)) page = 1;
 
