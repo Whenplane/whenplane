@@ -29,10 +29,10 @@ const hybridSearchClient = new SearchClient({
   'connectionTimeoutSeconds': 10
 });
 
-let showsCache: Promise<HistoricalEntry[]>;
+let showsCache: Promise<HistoricalEntry[]> | undefined;
 let showsFetched = 0;
 
-export const load = (async ({fetch, url, cookies}) => {
+export const load = (async ({fetch, url, cookies, platform}) => {
   const sp = url.searchParams;
   const q = url.searchParams.get("q");
   let page = Number(url.searchParams.get("page") ?? 1);
@@ -45,6 +45,7 @@ export const load = (async ({fetch, url, cookies}) => {
         showsFetched = Date.now();
         return r;
       })
+    platform?.context?.waitUntil(showsCache)
   }
 
   if(!q) {
@@ -55,7 +56,13 @@ export const load = (async ({fetch, url, cookies}) => {
 
   const allShows = await Promise.any([showsCache, wait(5e3).then(() => "Timed Out")]);
   if(!allShows) throw error(500, "Shows is falsy!");
-  if(allShows === "Timed Out") throw error(500, "Timed out fetching shows!")
+  if(allShows === "Timed Out") {
+    if(Date.now() - showsFetched > 30e3) {
+      // Fetching all shows really shouldn't take more than 30 seconds. lets invalidate the cache
+      showsCache = undefined;
+    }
+    throw error(500, "Timed out fetching shows!")
+  }
 
   if(isNaN(page)) page = 1;
 
