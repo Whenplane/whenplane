@@ -31,7 +31,7 @@ export const load = (async ({fetch, params, url}) => {
         (async () => {
 
 
-            liveStatus = await fetch("/api/aggregate?fast=" + fast + "&isNextFast=" + isNextFast)
+            liveStatus = await fetch("/api/aggregate?fast=" + fast + "&isNextFast=" + isNextFast + (isNextFast ? "&r="+Date.now() : ""))
               .then(r => r.json())
               .catch(() => false);
 
