@@ -23,6 +23,34 @@ export function countTo(a: number, b?: number) {
     return r;
 }
 
+export async function retryD1<T>(run: () => Promise<T>, shouldRetry = shouldRetryD1): Promise<T> {
+    let err: unknown | undefined = undefined;
+    let attempt = 1;
+    do {
+        try {
+            return await run();
+        } catch(e) {
+            console.warn("Got error on attempt #" + attempt, e)
+            err = e;
+            if(attempt >= 2) {
+                await wait(500);
+            }
+        }
+    } while(shouldRetry(err, ++attempt));
+
+    throw err;
+}
+
+export function shouldRetryD1(err: unknown, nextAttempt: number) {
+    const errMsg = String(err);
+    const isRetryableError =
+      errMsg.includes("Network connection lost") ||
+      errMsg.includes("storage caused object to be reset") ||
+      errMsg.includes("reset because its code was updated");
+
+    return nextAttempt <= 5 && isRetryableError;
+}
+
 export function capitalize(string: string) {
     return string.charAt(0).toUpperCase() + string.slice(1);
 }

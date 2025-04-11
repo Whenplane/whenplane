@@ -2,7 +2,7 @@ import { error, type RequestHandler } from "@sveltejs/kit";
 
 import { PUSH_KEY } from "$env/static/private"
 import type { NotificationRows } from "../../settings/+server.ts";
-import type { D1Database, Queue } from "@cloudflare/workers-types";
+import type { Queue } from "@cloudflare/workers-types";
 import { getClosestWan, getUTCDate } from "$lib/timeUtils.ts";
 
 import type {PushMessage} from '@block65/webcrypto-web-push';
@@ -18,7 +18,7 @@ export const POST = (async ({platform, params, request, url}) => {
 
   if(!name) throw error(400);
 
-  const db: D1Database | undefined = platform?.env?.DB;
+  const db = platform?.env?.DB;
   if(!db) throw error(503, "Database missing");
 
   const message = JSON.parse(JSON.stringify(messages[name]));

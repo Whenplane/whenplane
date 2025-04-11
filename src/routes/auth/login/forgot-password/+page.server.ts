@@ -2,7 +2,7 @@ import { fail } from "@sveltejs/kit";
 import { escapeHtml, wait } from "$lib/utils.ts";
 import { PASSWORD_RESET_EMAIL, sendEmail } from "$lib/server/email.ts";
 import { EMAIL_ENDPOINT, EMAIL_PORT, EMAIL_PROXY_KEY, EMAIL_SERVER, EMAIL_USERNAME, EMAIL_PASSWORD } from "$env/static/private";
-import type { D1Database, KVNamespace } from "@cloudflare/workers-types";
+import type { KVNamespace } from "@cloudflare/workers-types";
 import { env } from "$env/dynamic/private";
 
 const simpleRateLimit: {[ip: string]: number[]} = {}
@@ -61,7 +61,7 @@ export const actions = {
       return fail(400, {email, invalidEmail: true})
     }
 
-    const db: D1Database | undefined = platform?.env?.AUTH;
+    const db = platform?.env?.AUTH;
     if(!db) return fail(500, {message: "Missing auth db!"});
 
     const kv: KVNamespace | undefined = platform?.env?.AUTH_KV;

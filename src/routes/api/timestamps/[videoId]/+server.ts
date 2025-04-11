@@ -1,5 +1,7 @@
-import { error, json, type RequestHandler } from "@sveltejs/kit";
+import { error, json } from "@sveltejs/kit";
 import type { Timestamp, TimestampsDbRow } from "$lib/timestamps/types.ts";
+import { retryD1 } from "$lib/utils.ts";
+import type { RequestHandler } from "./$types";
 
 
 export const GET = (async ({platform, params}) => {
@@ -7,13 +9,15 @@ export const GET = (async ({platform, params}) => {
   const videoId = params.videoId;
   if(!videoId) throw error(400, "Missing video id!");
 
-  const topics = platform?.env?.TOPICS;
+  const topics = platform?.env?.TOPICS.withSession();
   if (!topics) throw error(503, "Missing topics db!");
 
-  const timestamps = await topics.prepare("select * from timestamps where videoId = ? order by time asc")
-    .bind(videoId)
-    .all<TimestampsDbRow>()
-    .then(r => r.results);
+  const timestamps = await retryD1(() =>
+    topics.prepare("select * from timestamps where videoId = ? order by time asc")
+      .bind(videoId)
+      .all<TimestampsDbRow>()
+      .then(r => r.results)
+  );
 
   let maxDeep = 0;
   function recurseChildren(row: TimestampsDbRow, deep = 0) {

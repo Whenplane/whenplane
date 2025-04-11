@@ -1,13 +1,16 @@
-import { error, json, type RequestHandler } from "@sveltejs/kit";
-import type { D1Database } from "@cloudflare/workers-types";
+import { error, json } from "@sveltejs/kit";
+import { retryD1 } from "$lib/utils";
+import type { RequestHandler } from "./$types";
 
 export const GET = (async ({platform, params}) => {
-  const db: D1Database | undefined = platform?.env?.MERCHMESSAGES_DB;
+  const db = platform?.env?.MERCHMESSAGES_DB.withSession();
   if(!db) throw error(503, "DB unavailable!");
 
-  const video = await db.prepare("select * from videos where videoId=?")
-    .bind(params.videoId)
-    .first<{videoId: string, status: string, title: string}>();
+  const video = await retryD1(() =>
+    db.prepare("select * from videos where videoId=?")
+      .bind(params.videoId)
+      .first<{videoId: string, status: string, title: string}>()
+  );
 
   return json({video});
 

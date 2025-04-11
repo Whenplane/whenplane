@@ -1,7 +1,7 @@
 import { env } from "$env/dynamic/private";
 import { type Actions, fail, redirect } from "@sveltejs/kit";
 import * as bcrypt from "bcryptjs";
-import type { D1Database, KVNamespace } from "@cloudflare/workers-types";
+import type { KVNamespace } from "@cloudflare/workers-types";
 
 const simpleRateLimit: {[ip: string]: number[]} = {}
 
@@ -75,7 +75,7 @@ export const actions = {
 
     // turnstile passed!
 
-    const db: D1Database | undefined = platform?.env?.AUTH;
+    const db = platform?.env?.AUTH;
     if(!db) return fail(500, {message: "Missing auth db!"});
 
     const kv: KVNamespace | undefined = platform?.env?.AUTH_KV;

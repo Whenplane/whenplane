@@ -3,7 +3,6 @@ import { error, redirect } from "@sveltejs/kit";
 import type { HistoricalEntry } from "$lib/utils.ts";
 
 export const load: LayoutServerLoad = async ({platform, params, url, fetch}) => {
-  console.log("bruh")
   const youtubeToDate = platform?.env?.YOUTUBE_TO_DATE;
   if(params.showDate && !params.showDate.includes("/") && youtubeToDate) {
     const date = await youtubeToDate.get(params.showDate);

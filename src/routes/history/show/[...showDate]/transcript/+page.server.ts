@@ -38,7 +38,7 @@ export const load = (async ({platform, parent}) => {
   }
 
   return {
-    transcript: await (captions.json() as Promise<YoutubeAutoSubtitles>),
+    transcript: (await captions.json()) as YoutubeAutoSubtitles,
     videoId
   };
 

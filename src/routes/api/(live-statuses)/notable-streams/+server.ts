@@ -4,8 +4,8 @@ import {env} from "$env/dynamic/private";
 import { dev, version } from "$app/environment";
 import { isNearWan } from "$lib/timeUtils.ts";
 import type { GetStreamsResponse } from "ts-twitch-api";
-import type { TwitchToken } from "$lib/utils.ts";
-import type { D1Database, DurableObjectNamespace } from "@cloudflare/workers-types";
+import { retryD1, type TwitchToken } from "$lib/utils.ts";
+import type { DurableObjectNamespace } from "@cloudflare/workers-types";
 import {notablePeople as people} from "./notable-people";
 import { twitchTokenCache } from "$lib/stores.ts";
 import { log } from "$lib/server/server-utils"
@@ -201,7 +201,7 @@ export const GET = (async ({platform, url, request}) => {
       if(channel === "bocabola" && twitchJSON.data.length > 0 && !dev) {
 
         if(!recordedBocaStreamStart) {
-          const db: D1Database | undefined = platform?.env?.BOCA_DB;
+          const db = platform?.env?.BOCA_DB.withSession();
           if(!db) {
             log(platform, "Unable to insert boca stream due to missing db!");
             return;
@@ -236,16 +236,19 @@ export const GET = (async ({platform, url, request}) => {
         platform?.context?.waitUntil(stub.fetch("https://whenplane-notification-throttler/elijah_stream?" + params.toString()))
       } else if(channel === "bocabola" && !dev) {
         if(bocaWasLive) {
+          const time = new Date().toISOString()
           platform?.context?.waitUntil((async () => {
-            const db: D1Database | undefined = platform?.env?.BOCA_DB;
+            const db = platform?.env?.BOCA_DB.withSession();
             if(!db) {
               log(platform, "Unable to insert boca stream due to missing db!");
               return;
             }
 
-            await db.prepare("update boca_streams set ended=? where started=? and ended IS NULL")
-              .bind(new Date().toISOString(), bocaWasLive)
-              .run();
+            await retryD1(() =>
+              db.prepare("update boca_streams set ended=? where started=? and ended IS NULL")
+                .bind(time, bocaWasLive)
+                .run()
+            );
           })());
           bocaWasLive = false;
         }

@@ -1,15 +1,14 @@
 import { error, json, type RequestHandler } from "@sveltejs/kit";
-import type { D1Database } from "@cloudflare/workers-types";
 import { dev } from "$app/environment";
 import type { MMTableRow } from "$lib/merch-messages/mm-types.ts";
 import { wait } from "$lib/utils.ts";
 
 
-export const GET = (async ({platform, params}) => {
+export const GET = (async ({platform}) => {
 
   if(!dev) throw error(403)
 
-  const db: D1Database | undefined = platform?.env?.MERCHMESSAGES_DB;
+  const db = platform?.env?.MERCHMESSAGES_DB;
   if(!db) throw error(503, "DB unavailable!");
 
   const data: {

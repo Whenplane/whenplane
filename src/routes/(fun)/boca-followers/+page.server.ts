@@ -1,5 +1,6 @@
 import { error, type ServerLoad } from "@sveltejs/kit";
 import { dev } from "$app/environment";
+import { retryD1 } from "$lib/utils.ts";
 
 export const load = (async ({platform}) => {
 
@@ -17,8 +18,11 @@ export const load = (async ({platform}) => {
       .run();
   }
 
-  const followHistory = await db.prepare("select * from boca_follower_history")
-    .all<{timestamp: number, followers: number}>().then(r => r.results);
+  const followHistory = await retryD1(() =>
+    db.prepare("select * from boca_follower_history")
+      .all<{timestamp: number, followers: number}>()
+      .then(r => r.results)
+  );
 
 
   return {

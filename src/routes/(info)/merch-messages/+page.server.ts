@@ -1,16 +1,17 @@
 import { error, type ServerLoad } from "@sveltejs/kit";
-import type { D1Database } from "@cloudflare/workers-types";
-import type { MMTableRow } from "$lib/merch-messages/mm-types.ts";
+import { retryD1 } from "$lib/utils.ts";
 
-export const load = (async ({platform, params}) => {
+export const load = (async ({platform}) => {
 
-  const db: D1Database | undefined = platform?.env?.MERCHMESSAGES_DB;
+  const db = platform?.env?.MERCHMESSAGES_DB.withSession();
   if(!db) throw error(503, "DB unavailable!");
 
-  const videos = await db.prepare("select * from videos order by releaseDate DESC")
-    .bind()
-    .all<{videoId: string, status: string, title: string, releaseDate: number, messageCount: number | null}>()
-    .then(r => r.results);
+  const videos = await retryD1(() =>
+    db.prepare("select * from videos order by releaseDate DESC")
+      .bind()
+      .all<{videoId: string, status: string, title: string, releaseDate: number, messageCount: number | null}>()
+      .then(r => r.results)
+  );
 
   const countingPromises: Promise<[string, number | null]>[] = [];
   for (const video of videos) {
@@ -19,19 +20,23 @@ export const load = (async ({platform, params}) => {
     console.log("Adding message count for", video)
     countingPromises.push((async () => {
 
-      const count = await db.prepare("select count() as count from merch_messages where video=?")
-        .bind(video.videoId)
-        .first<{count: number}>()
-        .then(r => r?.count);
+      const count = await retryD1(() =>
+        db.prepare("select count() as count from merch_messages where video=?")
+          .bind(video.videoId)
+          .first<{count: number}>()
+          .then(r => r?.count)
+      );
 
       if(typeof count === "undefined") {
         console.warn("undefined count", count, "for video", video.videoId);
         return [video.videoId, null];
       }
 
-      await db.prepare("update videos set messageCount=? where videoId=?")
-        .bind(count, video.videoId)
-        .run();
+      await retryD1(() =>
+        db.prepare("update videos set messageCount=? where videoId=?")
+          .bind(count, video.videoId)
+          .run()
+      );
 
       return [video.videoId, count];
 

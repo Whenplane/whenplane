@@ -1,6 +1,7 @@
 import { error } from "@sveltejs/kit";
 import type { PageServerLoad } from "./$types";
 import type { ProductsTableRow } from "$lib/lttstore/lttstore_types.ts";
+import { retryD1 } from "$lib/utils.ts";
 
 const stockStartedWorking = 1723950660000;
 
@@ -27,9 +28,11 @@ export const load = (async ({platform, url}) => {
     }
   }
 
-  const allProducts = db.prepare("select handle,id,available,json_remove(json_remove(json_remove(json_remove(product, '$.media'), '$.images'), '$.variants'), '$.description') as product from products order by " + sortColumn + " DESC")
-    .all<ProductsTableRow>()
-    .then(r => r.results);
+  const allProducts = retryD1(() =>
+    db.prepare("select handle,id,available,json_remove(json_remove(json_remove(json_remove(product, '$.media'), '$.images'), '$.variants'), '$.description') as product from products order by " + sortColumn + " DESC")
+      .all<ProductsTableRow>()
+      .then(r => r.results)
+  );
 
   return {
     allProducts: await allProducts,

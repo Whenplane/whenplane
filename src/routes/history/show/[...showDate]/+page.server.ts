@@ -1,9 +1,8 @@
-import { redirect, type ServerLoad } from "@sveltejs/kit";
-import {error} from "@sveltejs/kit";
-import { wait, type HistoricalEntry } from "$lib/utils.ts";
+import { wait } from "$lib/utils.ts";
 import type { Timestamp } from "$lib/timestamps/types.ts";
+import type {PageServerLoad} from "./$types"
 
-export const load = (async ({params, fetch, platform, url, parent}) => {
+export const load = (async ({fetch, parent}) => {
 
     const data = await parent();
 
@@ -16,10 +15,11 @@ export const load = (async ({params, fetch, platform, url, parent}) => {
 
     const timestamps = youtubeId ? fetch("/api/timestamps/" + youtubeId).then(r => r.json() as Promise<Timestamp[]>) : undefined;
 
-    if(youtubeId) await wait(25); // wait 25ms for above two promises to have a small chance of finishing
+    // wait 25ms for above two promises to have a small chance of finishing
+    if(youtubeId) await Promise.any([wait(25), mm, timestamps]);
 
     return {
         mm,
         timestamps
     };
-}) satisfies ServerLoad
+}) satisfies PageServerLoad

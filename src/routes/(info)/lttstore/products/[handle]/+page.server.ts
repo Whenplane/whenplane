@@ -9,6 +9,7 @@ import type {
 } from "$lib/lttstore/lttstore_types.ts";
 
 import { createTables } from "../../createTables.ts";
+import { retryD1 } from "$lib/utils.ts";
 
 const DAY = 24 * 60 * 60e3;
 
@@ -25,10 +26,12 @@ export const load = (async ({platform, params, url}) => {
   // Look up its handle and redirect if it is.
   const handleNumber = Number(handle);
   if(!Number.isNaN(handleNumber)) {
-    const productHandle = await db.prepare("select handle from products where id = ?")
+    const productHandle = await retryD1(() =>
+      db.prepare("select handle from products where id = ?")
       .bind(handleNumber)
       .first<{handle: string}>()
-      .then(r => r?.handle);
+      .then(r => r?.handle)
+    );
     if(productHandle) throw redirect(301, productHandle)
   }
 
@@ -62,32 +65,38 @@ export const load = (async ({platform, params, url}) => {
   let stockHistory: Promise<StockHistoryTableRow[]>;
   if((url.searchParams.get("historyDays") ?? defaultHistoryDays) === "all") {
     historyDays = "all";
-    stockHistory = db.prepare("select * from stock_history where handle = ? order by timestamp")
-      .bind(
-        handle
-      )
-      .all<StockHistoryTableRow>()
-      .then(r => r.results);
+    stockHistory = retryD1(() =>
+      db.prepare("select * from stock_history where handle = ? order by timestamp")
+        .bind(handle)
+        .all<StockHistoryTableRow>()
+        .then(r => r.results)
+    );
   } else {
-    stockHistory = db.prepare("select * from stock_history where id = ? and timestamp > ? order by timestamp")
-      .bind(
-        product.id,
-        Date.now() - (historyDays * 24 * 60 * 60e3)
-      )
-      .all<StockHistoryTableRow>()
-      .then(r => r.results);
+    stockHistory = retryD1(() =>
+      db.prepare("select * from stock_history where id = ? and timestamp > ? order by timestamp")
+        .bind(
+          product.id,
+          Date.now() - ((historyDays as number) * 24 * 60 * 60e3)
+        )
+        .all<StockHistoryTableRow>()
+        .then(r => r.results)
+    );
   }
 
-  const changeHistory = db.prepare("select * from change_history where id = ? order by timestamp desc")
-    .bind(product.id)
-    .all<{id: number, timestamp: number, field: string, old: string, new: string}>()
-    .then(r => r.results);
+  const changeHistory = retryD1(() =>
+    db.prepare("select * from change_history where id = ? order by timestamp desc")
+      .bind(product.id)
+      .all<{id: number, timestamp: number, field: string, old: string, new: string}>()
+      .then(r => r.results)
+  );
 
-  const similarProducts = db.prepare("select * from similar_products where id = ?")
-    .bind(product.id)
-    .first<SimilarProductsTableRow>()
-    .then(r => r ? {timestamp: r.timestamp, similar: JSON.parse(r.similar).filter((p: ShopifyProduct) => p.id != product.id)} : r);
-
+  const similarProducts = retryD1(() =>
+    db.prepare("select * from similar_products where id = ?")
+      .bind(product.id)
+      .first<SimilarProductsTableRow>()
+      .then(r => r ? {timestamp: r.timestamp, similar: JSON.parse(r.similar).filter((p: ShopifyProduct) => p.id != product.id)} : r)
+  );
+  
   return {
     product,
     historyDays,

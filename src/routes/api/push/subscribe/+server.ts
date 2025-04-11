@@ -1,5 +1,4 @@
 import { error, json, type RequestHandler } from "@sveltejs/kit";
-import type { D1Database } from "@cloudflare/workers-types";
 import { sha256 } from "$lib/notifications/notificationUtils.ts";
 import { dev } from "$app/environment";
 import { createNotificationsTable } from "$lib/server/notifications/notification-server-tools.ts";
