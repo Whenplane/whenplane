@@ -1,7 +1,7 @@
 import type { D1Database, D1DatabaseSession } from "@cloudflare/workers-types";
 
 export async function createTables(DB: D1Database | D1DatabaseSession) {
-  await DB.prepare("create table if not exists products (handle text, id integer PRIMARY KEY, title text, product text, stock string, stockChecked integer, lastRestock integer, purchasesPerHour integer, purchasesPerDay integer, regularPrice integer, currentPrice integer, firstSeen integer, available integer, backorderAlerts text, productDetailModules text, productDiscount text)")
+  await DB.prepare("create table if not exists products (handle text, id integer PRIMARY KEY, title text, product text, stock string, metadataUpdate integer, stockChecked integer, lastRestock integer, purchasesPerHour integer, purchasesPerDay integer, regularPrice integer, currentPrice integer, firstSeen integer, available integer, backorderAlerts text, productDetailModules text, productDiscount text)")
     .run();
   await DB.prepare("create table if not exists stock_history (handle text, id integer, timestamp integer, stock string)")
     .run();
