@@ -33,7 +33,7 @@ export async function retryD1<T>(run: () => Promise<T>, shouldRetry = shouldRetr
             console.warn("Got error on attempt #" + attempt, e)
             err = e;
             if(attempt >= 2) {
-                await wait(500);
+                await wait(500 * (attempt-1));
             }
         }
     } while(shouldRetry(err, ++attempt));
@@ -48,7 +48,7 @@ export function shouldRetryD1(err: unknown, nextAttempt: number) {
       errMsg.includes("storage caused object to be reset") ||
       errMsg.includes("reset because its code was updated");
 
-    return nextAttempt <= 5 && isRetryableError;
+    return nextAttempt <= 7 && isRetryableError;
 }
 
 export function capitalize(string: string) {
