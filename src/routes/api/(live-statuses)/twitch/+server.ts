@@ -265,7 +265,7 @@ export const GET = (async ({platform, url}) => {
             resetPretty: new Date(Number(reset) * 1000)
                 .toLocaleString('en-US', {timeZone: "America/Phoenix"}),
             other: {
-                ...Object.fromEntries(twitchResponse.headers)
+                ...Object.fromEntries(twitchResponse.headers as unknown as Iterable<[string, string]>)
             }
         }
     }

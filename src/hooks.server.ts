@@ -3,7 +3,8 @@ import { building, dev } from "$app/environment";
 import { random } from "$lib/utils.ts";
 import type {
     AnalyticsEngineDataPoint, AnalyticsEngineDataset, KVNamespace,
-    KVNamespaceGetOptions, KVNamespaceListOptions, KVNamespaceListResult, KVNamespacePutOptions } from "@cloudflare/workers-types";
+    KVNamespaceGetOptions,
+    KVNamespaceGetWithMetadataResult, KVNamespaceListOptions, KVNamespaceListResult, KVNamespacePutOptions } from "@cloudflare/workers-types";
 import type { TimingEntry } from "./app";
 import { report } from "$lib/server/instance-analytics.ts";
 import { env } from "$env/dynamic/private";
@@ -110,6 +111,8 @@ export const handle: Handle = async ({ event, resolve }) => {
                 HISTORY: createKVNamespaceWrapper(event.platform.env?.HISTORY, "wheniswan_history", event.platform),
                 META: createKVNamespaceWrapper(event.platform.env?.META, "wheniswan_meta", event.platform),
                 WDB_EPISODE_CACHE: createKVNamespaceWrapper(event.platform.env?.WDB_EPISODE_CACHE, "thewandb_episode_cache", event.platform),
+                AUTH_KV: createKVNamespaceWrapper(event.platform.env?.AUTH_KV, "whenplane-auth", event.platform),
+                YOUTUBE_TO_DATE: createKVNamespaceWrapper(event.platform.env?.YOUTUBE_TO_DATE, "whenplane-youtube-to-date", event.platform),
             },
         }
     }
@@ -178,9 +181,13 @@ export const handle: Handle = async ({ event, resolve }) => {
     return response;
 }
 
-export const handleError: HandleServerError = async ({ error, event, status, message}) => {
+export const handleError: HandleServerError = async ({ error: e, event, status, message}) => {
 
-    if(!building && error && error?.status !== 404) {
+    const error = e as Error;
+
+    if(building) console.error(error)
+
+    if(!building && error && status !== 404) {
         console.debug("Reporting error!", error)
         if(env.ERROR_REPORTING_WEBHOOK) {
 
@@ -273,7 +280,7 @@ function createKVNamespaceWrapper(real: KVNamespace | undefined, kvNamespaceName
         },
         // eslint-disable-next-line @typescript-eslint/ban-ts-comment
         // @ts-ignore
-        getWithMetadata(key: string, options?: KVNamespaceGetOptions<never>): any {
+        getWithMetadata(key: string, options?: KVNamespaceGetOptions<never>): Promise<KVNamespaceGetWithMetadataResult<string, unknown>> {
             write({blobs: [kvNamespaceName, "GETwMETA", key, `GETwMETA ${kvNamespaceName}/${key}`]});
             return real.getWithMetadata(key, options);
         }

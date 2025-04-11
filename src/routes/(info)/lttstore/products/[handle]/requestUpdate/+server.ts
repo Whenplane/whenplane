@@ -1,4 +1,5 @@
-import { error, type RequestHandler } from "@sveltejs/kit";
+import { error } from "@sveltejs/kit";
+import type {RequestHandler} from "./$types";
 
 export const POST = (async ({platform, params, cookies}) => {
 
@@ -8,9 +9,9 @@ export const POST = (async ({platform, params, cookies}) => {
   if(!params.handle) throw error(400, "Missing handle!");
 
   const id = object.idFromName("69");
-  const stub = await object.get(id);
+  const stub = object.get(id);
 
-  // I get the session, so I can bypass the ratelimits when I am logged in
+  // Get the session, so I (aj) can bypass the ratelimits when I am logged in
   // The update request object will verify the session
   const session = cookies.get("session");
 
@@ -19,5 +20,6 @@ export const POST = (async ({platform, params, cookies}) => {
   if(session) searchParams.set("session", session);
 
   return await stub.fetch("https://UPD_REQ_DO/?" + searchParams)
+    .then(r => r as unknown as Response)
 
 }) satisfies RequestHandler;

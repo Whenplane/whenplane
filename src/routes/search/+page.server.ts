@@ -1,5 +1,4 @@
 import { SearchClient } from "typesense";
-import type { TimestampsDbRow } from "$lib/timestamps/types.ts";
 import type { SearchResponse } from "typesense/lib/Typesense/Documents";
 import { type HistoricalEntry, wait } from "$lib/utils.ts";
 import type { PageServerLoad } from "./$types";
@@ -52,16 +51,21 @@ export const load = (async ({fetch, url, cookies, platform}) => {
     return {};
   }
 
-  let warnings: string[] = [];
+  const warnings: string[] = [];
 
   const allShows = await Promise.any([showsCache, wait(5e3).then(() => "Timed Out")]);
   if(!allShows) throw error(500, "Shows is falsy!");
-  if(allShows === "Timed Out") {
-    if(Date.now() - showsFetched > 30e3) {
-      // Fetching all shows really shouldn't take more than 30 seconds. lets invalidate the cache
-      showsCache = undefined;
+  if(typeof allShows === "string") {
+    if(allShows === "Timed Out") {
+      if(Date.now() - showsFetched > 30e3) {
+        // Fetching all shows really shouldn't take more than 30 seconds. lets invalidate the cache
+        showsCache = undefined;
+      }
+      throw error(500, "Timed out fetching shows!")
+    } else {
+      console.error("Fetching shows failed with unknown reason:", allShows);
+      throw error(500, "Fetching shows failed with unknown reason!")
     }
-    throw error(500, "Timed out fetching shows!")
   }
 
   if(isNaN(page)) page = 1;
@@ -117,7 +121,7 @@ export const load = (async ({fetch, url, cookies, platform}) => {
         console.warn(`Unable to find ${showId}`);
       }
       return [showId, show];
-    })
+    }).filter(s => s[1] !== null && typeof s[1] !== "undefined")
   )
 
   if(dev) console.debug(JSON.stringify(result, undefined, '\t'));
@@ -126,6 +130,7 @@ export const load = (async ({fetch, url, cookies, platform}) => {
     result,
     shows,
     page,
+    warnings,
     settings: {
       highlightVisibility: cookies.get("searchHighlightVisibility"),
     }

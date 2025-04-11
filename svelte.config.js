@@ -46,9 +46,9 @@ const config = {
 		},
 
 		prerender: {
-			handleHttpError: ({path, status, referrer, referenceType}) => {
+			handleHttpError: ({path, status, referrer, referenceType, message}) => {
 				if(path.startsWith("/cdn-cgi")) return;
-				throw new Error(status + " " + path + " (" + referenceType + " from " + referrer + ")");
+				throw new Error(status + (message !== status+" "+path ? " " + message : "") + " " + path + " (" + referenceType + " from " + referrer + ")");
 			}
 		}
 	}

@@ -126,7 +126,7 @@ export const GET = (async ({platform, params, locals, fetch}) => {
                             }
                         })());
                     } else {
-                        if(k) keyPromises.push(Promise.resolve(k))
+                        if(k) keyPromises.push(Promise.resolve(k as HistoricalEntry))
                     }
                 }
                 list_complete = list.list_complete;

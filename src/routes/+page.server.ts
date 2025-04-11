@@ -22,6 +22,7 @@ export const actions = {
     }
 
     const session = platform?.env?.DB.withSession()
+    if(!session) return fail(500, {message: "Missing DB!"})
 
     await vote(locals.id, votingFor, session);
 

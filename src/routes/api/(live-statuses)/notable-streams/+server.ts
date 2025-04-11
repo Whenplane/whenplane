@@ -34,8 +34,9 @@ export const GET = (async ({platform, url, request}) => {
 
   const origin = request.headers.get("origin");
   let accessControlAllowOrigin: string | undefined = undefined;
-  if(allowedHosts.includes(origin ? new URL(origin).host : origin)) {
-    accessControlAllowOrigin = origin;
+  const host = origin ? new URL(origin).host : origin
+  if(host && allowedHosts.includes(host)) {
+    accessControlAllowOrigin = origin ?? undefined;
   }
 
   const cache = platform?.env?.CACHE;
@@ -61,6 +62,8 @@ export const GET = (async ({platform, url, request}) => {
       fetchDistance,
       cacheTime
     }, {
+      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+      // @ts-ignore
       headers: {
         "Access-Control-Allow-Origin": accessControlAllowOrigin,
         "Vary": "Origin"
@@ -266,6 +269,8 @@ export const GET = (async ({platform, url, request}) => {
   const shortResponses: ShortResponses = makeShortResponses(responses, url);
 
   const response = json(shortResponses, {
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+    // @ts-ignore
     headers: {
       "Access-Control-Allow-Origin": accessControlAllowOrigin,
       "Vary": "Origin"

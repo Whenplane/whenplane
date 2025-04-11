@@ -1,4 +1,4 @@
-import type { PageLoad } from "../../../../.svelte-kit/types/src/routes";
+import type { PageLoad } from "./$types";
 import type { YoutubeResponse } from "../../api/(live-statuses)/youtube/+server.ts";
 import { redirect } from "@sveltejs/kit";
 import { browser } from "$app/environment";

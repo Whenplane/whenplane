@@ -2,8 +2,6 @@ import type {RequestHandler} from "@sveltejs/kit";
 import {error, json} from "@sveltejs/kit";
 import {env} from "$env/dynamic/private";
 import { dev, version } from "$app/environment";
-import {getClosestWan, getUTCDate} from "$lib/timeUtils";
-import type { DurableObjectNamespace } from "@cloudflare/workers-types";
 import type { GetChannelFollowersResponse } from "ts-twitch-api";
 import type { TwitchToken } from "$lib/utils.ts";
 import { twitchTokenCache } from "$lib/stores.ts";
@@ -38,8 +36,9 @@ export const GET = (async ({platform, url, request}) => {
 
   const origin = request.headers.get("origin");
   let accessControlAllowOrigin: string | undefined = undefined;
-  if(allowedHosts.includes(origin ? new URL(origin).host : origin)) {
-    accessControlAllowOrigin = origin;
+  const host = origin ? new URL(origin).host : origin
+  if(host && allowedHosts.includes(host)) {
+    accessControlAllowOrigin = origin ?? undefined;
   }
 
   const fast = url.searchParams.get("fast") === "true";
@@ -50,6 +49,7 @@ export const GET = (async ({platform, url, request}) => {
   if(Date.now() - fastCache.lastFetch < cacheTime || (fast && Date.now() - fastCache.lastFetch < 5 * 60 * 60e3)) {
     const count = fastCache.lastFetchData?.total;
 
+
     return json(
       {
         cached: true,
@@ -57,6 +57,8 @@ export const GET = (async ({platform, url, request}) => {
         count
       },
       {
+        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+        // @ts-ignore
         headers: {
           "Access-Control-Allow-Origin": accessControlAllowOrigin,
           "Vary": "Origin"
@@ -126,7 +128,7 @@ export const GET = (async ({platform, url, request}) => {
     }
   )
 
-  const twitchJSON = await twitchResponse.json() as GetChannelFollowersResponse;
+  const twitchJSON = await twitchResponse.json() as GetChannelFollowersResponse & {message?: string};
 
   // console.debug(4)
 
@@ -183,12 +185,12 @@ export const GET = (async ({platform, url, request}) => {
       resetPretty: new Date(Number(reset) * 1000)
         .toLocaleString('en-US', {timeZone: "America/Phoenix"}),
       other: {
-        ...Object.fromEntries(twitchResponse.headers)
+        ...Object.fromEntries(twitchResponse.headers as unknown as Iterable<[string, string]>)
       }
     }
   }
 
-  const response: TwitchResponse = {
+  const response = {
     timestamp: Date.now(),
     count,
     debug
@@ -197,6 +199,8 @@ export const GET = (async ({platform, url, request}) => {
   return json(
     response,
     {
+      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+      // @ts-ignore
       headers: {
         "Access-Control-Allow-Origin": accessControlAllowOrigin,
         "Vary": "Origin"
@@ -204,23 +208,6 @@ export const GET = (async ({platform, url, request}) => {
     }
   );
 }) satisfies RequestHandler;
-
-export type TwitchResponse = {
-  timestamp: number,
-  debug?: {
-    limit: string | null,
-    remaining: string | null,
-    reset: string | null,
-    resetPretty: string,
-    other: {
-      [header: string]: string
-    }
-  },
-  twitchData?: GetStreamsResponse,
-  isLive: boolean,
-  isWAN: boolean,
-  started?: string
-}
 
 /*
 type TwitchAPIResponse = {

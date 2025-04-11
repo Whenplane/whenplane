@@ -57,7 +57,7 @@ export function newResponse(res: Response, headerFn: (existingHeaders: Headers) 
 
     function cloneHeaders() {
         const headers = new Headers();
-        for (const kv of res.headers.entries()) {
+        for (const kv of res.headers as unknown as Iterable<[string, string]>) {
             headers.append(kv[0], kv[1]);
         }
         return headers;
@@ -338,7 +338,8 @@ export type FpLiveStatusResponse = {
     thumbnailAge: number,
     thumbnailFirstSeen: string,
     description?: string,
-    descriptionFirstSeen?: string
+    descriptionFirstSeen?: string,
+    fetched?: number
 }
 
 

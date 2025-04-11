@@ -12,9 +12,6 @@ export const fallBackPlatformToMiniFlareInDev = async (_platform: App.Platform |
         kvNamespaces: ['CACHE', 'HISTORY', 'META', 'WDB_EPISODE_CACHE', "AUTH_KV", "YOUTUBE_TO_DATE"],
         d1Databases: ['DB', "LTTSTORE_DB", "MERCHMESSAGES_DB", "FP_SUBS_DB", "AUTH", "TOPICS"],
         r2Buckets: ['CAPTIONS'],
-        globalAsyncIO: true,
-        globalTimers: true,
-        globalRandom: true,
 
         modules: true,
         script: `export default { fetch() { return new Response(null, { status: 404 }) } } `,
@@ -38,7 +35,7 @@ export async function realCreateMFResponse(response: Response) {
             status: response.status,
             statusText: response.statusText,
             headers: {
-                ...Object.fromEntries(response.headers.entries())
+                ...Object.fromEntries(response.headers as unknown as Iterable<[string, string]>)
             },
         })
     }

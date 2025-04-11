@@ -75,7 +75,7 @@ export const GET = (async ({platform, fetch, locals}) => {
     })
 
   const setOrderRates = (() => {
-    const rates = {};
+    const rates: {[c: string]: number} = {};
     setOrder.toReversed().forEach(c => rates[c] = response.rates[c]);
     return Object.entries(rates);
   })()

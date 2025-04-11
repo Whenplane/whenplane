@@ -201,7 +201,7 @@ export const actions = {
     );
 
     const timeAtStart = timeInImage.minus({minute: imageIndex});
-    const timeAtEnd = timeAtStart.plus({millisecond: data.show.metadata.mainShowLength});
+    const timeAtEnd = timeAtStart.plus({millisecond: data.show.metadata.mainShowLength ?? undefined});
 
     const mainShowStart = timeAtStart.toISO();
     const showEnd = timeAtEnd.toISO();
@@ -247,7 +247,7 @@ export const actions = {
     );
 
     const timeAtStart = timeInImage.minus({minute: imageIndex/2});
-    const timeAtEnd = timeAtStart.plus({millisecond: data.show.metadata.mainShowLength});
+    const timeAtEnd = timeAtStart.plus({millisecond: data.show.metadata.mainShowLength ?? undefined});
 
     const mainShowStart = timeAtStart.toISO();
     const showEnd = timeAtEnd.toISO();
