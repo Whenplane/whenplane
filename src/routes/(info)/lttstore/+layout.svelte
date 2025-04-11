@@ -5,6 +5,7 @@
   import { modalStore, popup } from "@skeletonlabs/skeleton";
   import {fade} from "svelte/transition"
   import ProductSearchModal from "./ProductSearchModal.svelte";
+  import DateStamp from "$lib/DateStamp.svelte";
 
   export let data;
 
@@ -46,8 +47,8 @@
   </div>
 </div>
 <div class="limit mx-auto p-2 m-2 card variant-ghost-warning">
-  Most product updates are currently paused due to a <a href="https://changelog.shopify.com/posts/new-add-to-cart-limit">Shopify change</a>.
-  I hope to have them back sometime in the next week or so, but there is a chance that this might be the end of us being able to see stock numbers.
+  Product metadata updates are running again as of <DateStamp epochSeconds={1744411631}/>,
+  but most stock updates are failing due to a <a href="https://changelog.shopify.com/posts/new-add-to-cart-limit">Shopify change</a>.
 </div>
 <slot/>
 <br>
