@@ -3,7 +3,7 @@ import {error, json} from "@sveltejs/kit";
 import {env} from "$env/dynamic/private";
 import { dev, version } from "$app/environment";
 import type { GetChannelFollowersResponse } from "ts-twitch-api";
-import type { TwitchToken } from "$lib/utils.ts";
+import { retryD1, type TwitchToken } from "$lib/utils.ts";
 import { twitchTokenCache } from "$lib/stores.ts";
 
 const cacheTime = 60e3; // maximum fetch from twitch api once every 60 seconds
@@ -21,6 +21,10 @@ const allowedHosts = [
   "boca.lol",
   "boca.gay"
 ];
+
+let lastRecentFollowersSave = 0;
+let lastOldClear = 0;
+let firstRecentFollowers = true;
 
 
 export const GET = (async ({platform, url, request}) => {
@@ -128,6 +132,8 @@ export const GET = (async ({platform, url, request}) => {
     }
   )
 
+  const timestamp = Date.now();
+
   const twitchJSON = await twitchResponse.json() as GetChannelFollowersResponse & {message?: string};
 
   // console.debug(4)
@@ -190,8 +196,50 @@ export const GET = (async ({platform, url, request}) => {
     }
   }
 
+  if(Date.now() - lastRecentFollowersSave > 5 * 60e3) {
+    lastRecentFollowersSave = Date.now();
+    platform.context.waitUntil((async () => {
+      const db = platform?.env?.BOCA_DB.withSession("first-primary");
+      if(!db) return;
+
+      if(firstRecentFollowers) {
+        firstRecentFollowers = false;
+        await retryD1(() =>
+          db.prepare("create table if not exists recent_followers (timestamp number PRIMARY KEY, count number)")
+            .run()
+        );
+      }
+
+      let oldClear: Promise<unknown> = Promise.resolve();
+      if(Date.now() - lastOldClear > 12 * 60 * 60e3) {
+        lastOldClear = Date.now();
+        oldClear = retryD1(() =>
+          db.prepare("delete from recent_followers where timestamp < ?")
+            .bind(Date.now() - (12 * 60 * 60e3))
+            .run()
+        );
+      }
+
+      const latest = (await retryD1(() =>
+        db.prepare("select timestamp from recent_followers order by timestamp DESC limit 1")
+          .first<number>("timestamp")
+      )) ?? 0;
+
+      // only insert a new value if another one hasn't been inserted in the past 4 minutes
+      if(Date.now() - latest > 4 * 60e3) {
+        await retryD1(() =>
+          db.prepare("insert into recent_followers (timestamp, count) values (?, ?)")
+            .bind(timestamp, count)
+            .run()
+        );
+      }
+
+      await oldClear;
+    })())
+  }
+
   const response = {
-    timestamp: Date.now(),
+    timestamp,
     count,
     debug
   }
