@@ -222,11 +222,11 @@ export const GET = (async ({platform, url, request}) => {
 
       const latest = (await retryD1(() =>
         db.prepare("select timestamp from recent_followers order by timestamp DESC limit 1")
-          .first<number>("timestamp")
-      )) ?? 0;
+          .first<{timestamp: number, count: number}>()
+      )) ?? {timestamp: 0, count: 0};
 
       // only insert a new value if another one hasn't been inserted in the past 4 minutes
-      if(Date.now() - latest > 4 * 60e3) {
+      if(latest.count !== count && Date.now() - latest.timestamp > 4 * 60e3) {
         await retryD1(() =>
           db.prepare("insert into recent_followers (timestamp, count) values (?, ?)")
             .bind(timestamp, count)
