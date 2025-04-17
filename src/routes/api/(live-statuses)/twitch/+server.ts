@@ -41,7 +41,7 @@ export const GET = (async ({platform, url}) => {
 
     // console.debug(1)
     const cachedIsLive = fastCache.lastFetchData?.data?.length != 0;
-    const cachedTitle = fastCache.lastFetchData?.data[0]?.title;
+    const cachedTitle = fastCache.lastFetchData?.data?.[0]?.title;
     const cachedIsWAN = cachedIsLive && (cachedTitle?.includes("WAN") || makeAlwaysWAN);
 
     // With the fast flag (added for initial page load requests), always fetch cached data if its from within the past 5 hours
@@ -51,7 +51,7 @@ export const GET = (async ({platform, url}) => {
         const title = cachedTitle;
 
         const twitchData = url.searchParams.has("short") ? undefined : fastCache.lastFetchData;
-        const started = isLive ? fastCache.lastFetchData?.data[0].started_at : undefined;
+        const started = isLive ? fastCache.lastFetchData?.data?.[0].started_at : undefined;
 
         return json(
             {
@@ -164,14 +164,14 @@ export const GET = (async ({platform, url}) => {
     }
 
     const isLive = (twitchJSON.data?.length ?? 0) != 0;
-    const title = twitchJSON.data[0]?.title;
+    const title = twitchJSON.data?.[0]?.title;
     const isWAN = isLive && (title?.includes("WAN") || makeAlwaysWAN);
 
     if(savedStartTime && !isLive) savedStartTime = false;
     if(savedEndTime && fastCache.lastFetchData?.data?.length == 0) savedEndTime = false;
 
     const twitchData = url.searchParams.has("short") ? undefined : twitchJSON;
-    const started = isLive ? twitchJSON.data[0].started_at : undefined;
+    const started = isLive ? twitchJSON.data?.[0].started_at : undefined;
 
     // console.debug(5)
 
@@ -286,7 +286,7 @@ export const GET = (async ({platform, url}) => {
     }
 
     const throttler = (platform?.env?.NOTIFICATION_THROTTLER as DurableObjectNamespace)
-    if(isLive && isWAN && throttler && Date.now() - lastNotifSend > (12 * 60 * 60e3) && twitchJSON?.data[0]) {
+    if(isLive && isWAN && throttler && Date.now() - lastNotifSend > (12 * 60 * 60e3) && twitchJSON?.data?.[0]) {
         // console.debug(9.1)
         lastNotifSend = Date.now();
         const id = throttler.idFromName("n");
@@ -305,7 +305,7 @@ export const GET = (async ({platform, url}) => {
         }
     } else {
         // console.debug(9.5)
-        console.debug("Not sending preshow notification: ", isLive, isWAN, !!throttler, Date.now() - lastNotifSend > (12 * 60 * 60e3), !!twitchJSON?.data[0])
+        console.debug("Not sending preshow notification: ", isLive, isWAN, !!throttler, Date.now() - lastNotifSend > (12 * 60 * 60e3), !!twitchJSON?.data?.[0])
     }
     // console.debug(10)
 

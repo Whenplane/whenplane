@@ -198,7 +198,7 @@ export const GET = (async ({platform, url, request}) => {
       if(remaining) minRemaining = Math.min(Number(remaining), minRemaining ?? Number(remaining))
       if(reset) maxResetTime = Math.min(Number(reset), maxResetTime ?? Number(reset))
 
-      if(channel === "bocabola" && twitchJSON.data.length > 0 && !dev) {
+      if(channel === "bocabola" && twitchJSON.data && twitchJSON.data.length > 0 && !dev) {
 
         if(!recordedBocaStreamStart) {
           const db = platform?.env?.BOCA_DB.withSession();
