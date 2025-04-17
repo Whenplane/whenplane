@@ -184,6 +184,8 @@ export const handle: Handle = async ({ event, resolve }) => {
 export const handleError: HandleServerError = async ({ error: e, event, status, message}) => {
 
     const error = e as Error;
+    const eMessage = error?.message;
+    const eStack = error?.stack;
 
     if(building) console.error(error)
 
@@ -207,7 +209,7 @@ export const handleError: HandleServerError = async ({ error: e, event, status, 
                 formData.append(
                   "files[0]",
                   new Blob(
-                    [JSON.stringify({error, eMessage: error?.message, status, message, eventClone}, undefined, '\t')],
+                    [JSON.stringify({error, eMessage, eStack, status, message, eventClone}, undefined, '\t')],
                     {type: 'application/json'}
                   ),
                   "items.json"
