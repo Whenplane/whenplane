@@ -281,7 +281,23 @@ export const GET = (async ({platform, url, request}) => {
   });
   const cacheExpires = new Date(Date.now() + cacheTime).toISOString();
 
-  if(cCache && cacheRequest) platform.context.waitUntil(cCache.put(cacheRequest, json(response.clone(), {headers: {"Expires": cacheExpires}})));
+  if(cCache && cacheRequest) platform.context.waitUntil(
+    cCache.put(
+      cacheRequest,
+      json(
+        shortResponses,
+        {
+          // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+          // @ts-ignore
+          headers: {
+            "Expires": cacheExpires,
+            "Access-Control-Allow-Origin": accessControlAllowOrigin,
+            "Vary": "Origin"
+          }
+        }
+        )
+    )
+  );
   return response
 }) satisfies RequestHandler;
 
