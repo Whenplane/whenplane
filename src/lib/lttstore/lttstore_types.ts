@@ -36,7 +36,23 @@ export type ShopifyProduct = {
   /** available as in in-stock */
   available: boolean,
   requires_selling_plan: boolean,
-  selling_plan_groups: unknown[]
+  selling_plan_groups: unknown[],
+  media: {
+    alt: string,
+    id: number,
+    position: number,
+    preview_image: {
+      aspect_ratio: number,
+      height: number,
+      width: number,
+      src: string,
+    },
+    aspect_ratio: number,
+    height: number,
+    media_type: "image",
+    src: string,
+    width: number,
+  }[]
 }
 
 /**

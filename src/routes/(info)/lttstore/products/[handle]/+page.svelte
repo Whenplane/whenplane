@@ -133,11 +133,20 @@
 <div class="container mx-auto p-2 pt-8 mb-64">
 
   <h1 class:line-through={!data.product.available}>{productInfo.title}</h1>
-  {#if productInfo.featured_image}
+  <div class=" overflow-y-visible overflow-x-auto pr-64 edge-fade" style="text-wrap: nowrap;">
+    {#each productInfo.media as image}
+      {#if image.media_type === "image"}
+        <a href={image.src} class="m-1 !no-underline">
+          <img src={image.src} class="product-image inline-block" alt={image.alt}/>
+        </a>
+      {/if}
+    {/each}
+  </div>
+  <!--{#if productInfo.featured_image}
     <img src={productInfo.featured_image} class="product-image" alt={productInfo.title}/>
   {:else}
     No featured image
-  {/if}
+  {/if}-->
   {#if !productInfo.compare_at_price && typeof productInfo.price === "number"}
     <Price usd={productInfo.price/100}/>
   {:else if typeof productInfo.price === "number" && productInfo.compare_at_price}
@@ -695,7 +704,7 @@
 
 <style>
   .product-image {
-      height: 12em;
+      height: 15em;
       max-width: 90vw;
       object-fit: contain;
       border-radius: 12px;
