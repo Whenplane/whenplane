@@ -199,19 +199,21 @@
     <br>
   {/if}
 
-  <h2>Popular Products</h2>
-  <div class="opacity-80 pl-2">
-    From the past few hours
-  </div>
-  {#each data.popularProducts as product (product.id)}
-    <div class="inline-block" animate:flip={{ duration: 200 }}>
-      <LTTProductCard product={JSON.parse(product.product)}/>
+  {#if data.popularProducts.length > 0}
+    <h2>Popular Products</h2>
+    <div class="opacity-80 pl-2">
+      From the past few hours
     </div>
-  {:else}
-    No products are being tracked yet!
-  {/each}
-  <br>
-  <br>
+    {#each data.popularProducts as product (product.id)}
+      <div class="inline-block" animate:flip={{ duration: 200 }}>
+        <LTTProductCard product={JSON.parse(product.product)}/>
+      </div>
+    {:else}
+      No products are being tracked yet!
+    {/each}
+    <br>
+    <br>
+  {/if}
 
   {#await data.onSale}
     <div class="height-0 width-0"></div>

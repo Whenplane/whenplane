@@ -148,10 +148,10 @@
   {/if}
   <br>
   <br>
-  {#if typeof data.product?.purchasesPerHour === "number" && data.product?.purchasesPerHour >= 0 && !(data.product?.purchasesPerHour === 0 && (currentStock.total ?? -1) < 0) && (currentStock.total ?? -1) !== 500000}
+  {#if typeof data.product?.purchasesPerHour === "number" && data.product?.purchasesPerHour >= 0 && !(data.product?.purchasesPerHour === 0 && (currentStock.total ?? -1) < 0) && (currentStock.total ?? -1) !== 500000 && Date.now() - data.product.stockChecked < (7 * 24 * 60 * 60e3)}
     Average of {Math.round(data.product?.purchasesPerHour * 100)/100} sold per hour recently.<br>
   {/if}
-  {#if typeof data.product?.purchasesPerDay === "number" && data.product?.purchasesPerDay >= 0 && !(data.product?.purchasesPerDay === 0 && (currentStock.total ?? -1) < 0) && (currentStock.total ?? -1) !== 500000}
+  {#if typeof data.product?.purchasesPerDay === "number" && data.product?.purchasesPerDay >= 0 && !(data.product?.purchasesPerDay === 0 && (currentStock.total ?? -1) < 0) && (currentStock.total ?? -1) !== 500000 && Date.now() - data.product.stockChecked < (7 * 24 * 60 * 60e3)}
     Average of {Math.round(data.product?.purchasesPerDay * 100)/100} sold per day.<br>
   {/if}
   <br>
@@ -487,9 +487,9 @@
   <br>
   <br>
   <br>
-  <h2>Stock</h2>
 
-  {#if (currentStock.total ?? -1) >= 0}
+  {#if (currentStock.total ?? -1) >= 0 && (!data.product.available || Date.now() - data.product.stockChecked < (7 * 24 * 60 * 60e3))}
+    <h2>Stock</h2>
     {#if data.product.available}
       Currently there is
     {:else}
@@ -546,69 +546,82 @@
     <br>
   {/if}
 
-  <h2>Stock History</h2>
-  We check the stock of products occasionally. Here is the history of those stock numbers.
-  <!-- stock started being recorded on 1718147742676 -->
-  <select class="select inline-block w-48" bind:value={historyDays}>
-    <option value="1">24 hours</option>
-    <option value="7">7 days</option>
-    <option value="30">30 days</option>
-    {#if Date.now() > 1720739742676}
-      <option value="90">3 months (90 days)</option>
-    {/if}
-    {#if Date.now() > 1725923742676}
-      <option value="180">6 months (180 days)</option>
-    {/if}
-    {#if Date.now() > 1733699742676}
-      <option value="365">1 year (365 days)</option>
-    {/if}
-    <option value="all">all-time</option>
-  </select>
-  <ProductStockHistoryGraph stockHistory={data.stockHistory} productName={productInfo.title} {chartUpdateNumber}/>
-  <ProductMoveRateGraph stockHistory={data.stockHistory} productName={productInfo.title} {chartUpdateNumber}/>
-  <br>
-  {#if data.product.firstSeen < 1719248750000}
-    Note that stock started being recorded on June 11th, 2024, so data before that is not available.
-  {/if}
-  <br>
-  <br>
-  <br>
-  {#if goneInHours > 0 && (currentStock.total ?? -1) > 0 && (currentStock.total ?? -1) <= 500000 && typeof data.product?.purchasesPerHour === "number" && data.product?.purchasesPerHour >= 0 && !(data.product?.purchasesPerHour === 0 && (currentStock.total ?? -1) < 0)}
-    <h2>Time remaining until out of stock</h2>
-    If this product keeps selling at {Math.round(nonZeroPurchasesPerHour * 100)/100} units per hour, it could be gone in
-    {#if goneInHours < 48}
-      {#if goneInHours <= 1}
-        less than an hour
-      {:else}
-        {goneInHours.toFixed(2)} hours
-      {/if}
-    {:else}
-      {(goneInHours / 24).toFixed(2)} days
-    {/if}
-    <br>
-    <br>
-    {#each variantsGoneIn as variantGoneIn}
-      {@const goneInHours = variantGoneIn.goneIn}
-      {#if typeof variantGoneIn.salesPerHour === "number" && variantGoneIn.salesPerHour >= 0 && variantGoneIn.currentStock > 0}
-        If <b>{variantGoneIn.name}</b> keeps selling at {Math.round(variantGoneIn.salesPerHour * 100)/100} units per hour,
-        it could be gone in
-        {#if goneInHours < 48}
-          {#if goneInHours <= 1}
-            less than an hour
-          {:else}
-            {goneInHours.toFixed(2)} hours
+  <Accordion>
+    <AccordionItem open={dev}>
+      <svelte:fragment slot="summary">Stock History</svelte:fragment>
+      <svelte:fragment slot="content">
+        <h2>Stock History</h2>
+        <div class="limit mx-auto p-2 m-2 card variant-ghost-warning">
+          Due to a <a href="https://changelog.shopify.com/posts/new-add-to-cart-limit">Shopify change</a>,
+          we are not longer able to see stock of products if theyre above <span class="font-mono">40</span>.
+          <br>
+          Please <a href="/support">let me know</a> if you find a new way to check the stock.
+        </div>
+        We check the stock of products occasionally. Here is the history of those stock numbers.
+        <!-- stock started being recorded on 1718147742676 -->
+        <select class="select inline-block w-48" bind:value={historyDays}>
+          <option value="1">24 hours</option>
+          <option value="7">7 days</option>
+          <option value="30">30 days</option>
+          {#if Date.now() > 1720739742676}
+            <option value="90">3 months (90 days)</option>
           {/if}
-        {:else}
-          {(goneInHours / 24).toFixed(2)} days
+          {#if Date.now() > 1725923742676}
+            <option value="180">6 months (180 days)</option>
+          {/if}
+          {#if Date.now() > 1733699742676}
+            <option value="365">1 year (365 days)</option>
+          {/if}
+          <option value="all">all-time</option>
+        </select>
+        <ProductStockHistoryGraph stockHistory={data.stockHistory} productName={productInfo.title} {chartUpdateNumber}/>
+        <ProductMoveRateGraph stockHistory={data.stockHistory} productName={productInfo.title} {chartUpdateNumber}/>
+        <br>
+        {#if data.product.firstSeen < 1719248750000}
+          Note that stock started being recorded on June 11th, 2024, so data before that is not available.
         {/if}
         <br>
-      {/if}
-    {/each}
-    <br>
-    <br>
-    <br>
-    <br>
-  {/if}
+        <br>
+        <br>
+        {#if goneInHours > 0 && (currentStock.total ?? -1) > 0 && (currentStock.total ?? -1) <= 500000 && typeof data.product?.purchasesPerHour === "number" && data.product?.purchasesPerHour >= 0 && !(data.product?.purchasesPerHour === 0 && (currentStock.total ?? -1) < 0)}
+          <h2>Time remaining until out of stock</h2>
+          If this product keeps selling at {Math.round(nonZeroPurchasesPerHour * 100)/100} units per hour, it could be gone in
+          {#if goneInHours < 48}
+            {#if goneInHours <= 1}
+              less than an hour
+            {:else}
+              {goneInHours.toFixed(2)} hours
+            {/if}
+          {:else}
+            {(goneInHours / 24).toFixed(2)} days
+          {/if}
+          <br>
+          <br>
+          {#each variantsGoneIn as variantGoneIn}
+            {@const goneInHours = variantGoneIn.goneIn}
+            {#if typeof variantGoneIn.salesPerHour === "number" && variantGoneIn.salesPerHour >= 0 && variantGoneIn.currentStock > 0}
+              If <b>{variantGoneIn.name}</b> keeps selling at {Math.round(variantGoneIn.salesPerHour * 100)/100} units per hour,
+              it could be gone in
+              {#if goneInHours < 48}
+                {#if goneInHours <= 1}
+                  less than an hour
+                {:else}
+                  {goneInHours.toFixed(2)} hours
+                {/if}
+              {:else}
+                {(goneInHours / 24).toFixed(2)} days
+              {/if}
+              <br>
+            {/if}
+          {/each}
+          <br>
+        {/if}
+      </svelte:fragment>
+    </AccordionItem>
+  </Accordion>
+  <br>
+  <br>
+  <br>
   <h2 id="change-history">Change history</h2>
   {#await data.changeHistory}
 

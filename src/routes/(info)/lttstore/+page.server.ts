@@ -10,16 +10,20 @@ export const load = (async ({platform}) => {
   const db = platform?.env?.LTTSTORE_DB.withSession();
   if(!db) throw error(503, "DB unavailable!");
 
-  if(dev) await createTables(db)
+  if(dev) await createTables(db);
+
+  const oneWeekAgo = Date.now() - (7 * 24 * 60 * 60e3);
 
   const popularProducts = retryD1(() =>
-    db.prepare("select * from products order by purchasesPerHour DESC limit 11")
+    db.prepare("select * from products where stockChecked > ? and purchasesPerHour > 10 order by purchasesPerHour DESC limit 11")
+      .bind(oneWeekAgo)
       .all<ProductsTableRow>()
       .then(r => r.results)
   );
 
   const lowStock = retryD1(() =>
-    db.prepare("select * from products where json_extract(stock, '$.total') > 0 and purchasesPerHour > 0 and json_extract(stock, '$.total')/purchasesPerHour < 24 order by json_extract(stock, '$.total')/purchasesPerHour ASC limit 10")
+    db.prepare("select * from products where json_extract(stock, '$.total') > 0 and purchasesPerHour > 0 and json_extract(stock, '$.total')/purchasesPerHour < 24 and stockChecked > ? order by json_extract(stock, '$.total')/purchasesPerHour ASC limit 10")
+      .bind(oneWeekAgo)
       .all<ProductsTableRow>()
       .then(r => r.results)
   );

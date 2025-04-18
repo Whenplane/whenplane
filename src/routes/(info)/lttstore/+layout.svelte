@@ -46,10 +46,6 @@
     </select>
   </div>
 </div>
-<div class="limit mx-auto p-2 m-2 card variant-ghost-warning">
-  Product metadata updates are running again as of <DateStamp epochSeconds={1744411631}/>,
-  but most stock updates are failing due to a <a href="https://changelog.shopify.com/posts/new-add-to-cart-limit">Shopify change</a>.
-</div>
 <slot/>
 <br>
 <div class="p-4">
