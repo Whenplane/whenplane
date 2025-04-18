@@ -137,7 +137,7 @@
     {#each productInfo.media as image}
       {#if image.media_type === "image"}
         <a href={image.src} class="m-1 !no-underline">
-          <img src={image.src} class="product-image inline-block" alt={image.alt}/>
+          <img src={image.src} class="product-image inline-block" alt={image.alt} title={image.alt} />
         </a>
       {/if}
     {/each}
