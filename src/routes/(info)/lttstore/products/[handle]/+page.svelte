@@ -217,7 +217,7 @@
             <tbody>
             <tr>
               <td>Last Metadata update</td>
-              <td><DateStamp epochSeconds={data.product.metadataUpdate / 1e3}/></td>
+              <td><DateStamp epochSeconds={(data.product.metadataUpdate && data.product.metadataUpdate > 0 ? data.product.metadataUpdate : data.product.stockChecked) / 1e3}/></td>
             </tr>
               <tr>
                 <td>Last Stock Check</td>
