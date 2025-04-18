@@ -81,7 +81,11 @@ export const GET = (async ({platform, url, request}) => {
     if(cacheMatch) {
       const expires = cacheMatch.headers.get("expires")
       if(!expires || new Date(expires).getTime() > Date.now()) {
-        return cacheMatch.clone();
+        return new Response(cacheMatch.body, {
+          headers: {
+            ...cacheMatch.headers
+          }
+        });
       }
     }
   } else {
