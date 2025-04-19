@@ -82,8 +82,11 @@ export const GET = (async ({platform, url, request}) => {
       const expires = cacheMatch.headers.get("expires")
       if(!expires || new Date(expires).getTime() > Date.now()) {
         return new Response(cacheMatch.body, {
+          // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+          // @ts-ignore
           headers: {
-            ...cacheMatch.headers
+            "Access-Control-Allow-Origin": accessControlAllowOrigin,
+            "Vary": "Origin"
           }
         });
       }
