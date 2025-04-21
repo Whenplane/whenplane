@@ -239,6 +239,7 @@ export const GET = (async ({platform, url, request}) => {
         const params = new URLSearchParams();
         params.set("title", twitchJSON.data?.[0]?.title+"");
         params.set("image", twitchJSON.data?.[0]?.thumbnail_url+"");
+        params.set("started", twitchJSON.data?.[0]?.started_at+"");
 
         platform?.context?.waitUntil(stub.fetch("https://whenplane-notification-throttler/elijah_stream?" + params.toString()))
       } else if(channel === "bocabola" && !dev) {
