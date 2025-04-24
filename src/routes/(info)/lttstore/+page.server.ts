@@ -16,7 +16,7 @@ export const load = (async ({platform}) => {
 
   const popularProducts = retryD1(() =>
     db.prepare("select * from products where stockChecked > ? and purchasesPerHour > 10 order by purchasesPerHour DESC limit 11")
-      .bind(oneWeekAgo)
+      .bind(Math.max(oneWeekAgo, 1745474690241))
       .all<ProductsTableRow>()
       .then(r => r.results)
   );
