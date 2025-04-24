@@ -4,6 +4,7 @@
   import { commas } from "$lib/utils.ts";
   import { fade } from "svelte/transition";
   import { getTimePreference } from "$lib/prefUtils.ts";
+  import type { StockCounts } from "$lib/lttstore/lttstore_types.ts";
 
   export let productName: string | undefined = undefined;
 
@@ -18,7 +19,15 @@
 
   let chart;
 
-  $: someStock = Object.keys(stockHistory).length >= 1 ? JSON.parse(stockHistory[0]?.stock ?? "{}") : {};
+  $: someStock = Object.keys(stockHistory).length >= 1 ?
+    stockHistory.map(h => JSON.parse(h.stock ?? "{}") as StockCounts)
+      .reduce((p, c) => {
+        return {
+          ...c,
+          ...p
+        }
+      }, {})
+    : {};
 
   let onlyTotalCheck = false;
   // show only the total for items where the stock is just the default + the total
