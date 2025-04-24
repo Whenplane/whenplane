@@ -33,7 +33,7 @@
   $: productDetailModules = JSON.parse(data.product.productDetailModules) as ProductDetailModule[];
 
   $: nonZeroPurchasesPerHour = (data.product?.purchasesPerHour === 0 ? (data.product.purchasesPerDay / 24) : data.product.purchasesPerHour);
-  $: goneInHours = ((currentStock.total ?? -1) / nonZeroPurchasesPerHour) - ((Date.now() - data.product.stockChecked) / (60 * 60e3));
+  $: goneInHours = ((currentStock?.total ?? -1) / nonZeroPurchasesPerHour) - ((Date.now() - data.product.stockChecked) / (60 * 60e3));
 
   $: variantsGoneIn = Object.keys(Object.keys(data.stockHistory).length >= 1 ? JSON.parse(data.stockHistory[0]?.stock ?? "{}") : {})
     .filter(n => n !== "total") // we already do total above, we dont need to do it again
@@ -157,10 +157,10 @@
   {/if}
   <br>
   <br>
-  {#if typeof data.product?.purchasesPerHour === "number" && data.product?.purchasesPerHour >= 0 && !(data.product?.purchasesPerHour === 0 && (currentStock.total ?? -1) < 0) && (currentStock.total ?? -1) !== 500000 && Date.now() - data.product.stockChecked < (7 * 24 * 60 * 60e3)}
+  {#if typeof data.product?.purchasesPerHour === "number" && data.product?.purchasesPerHour >= 0 && !(data.product?.purchasesPerHour === 0 && (currentStock?.total ?? -1) < 0) && (currentStock?.total ?? -1) !== 500000 && Date.now() - data.product.stockChecked < (7 * 24 * 60 * 60e3)}
     Average of {Math.round(data.product?.purchasesPerHour * 100)/100} sold per hour recently.<br>
   {/if}
-  {#if typeof data.product?.purchasesPerDay === "number" && data.product?.purchasesPerDay >= 0 && !(data.product?.purchasesPerDay === 0 && (currentStock.total ?? -1) < 0) && (currentStock.total ?? -1) !== 500000 && Date.now() - data.product.stockChecked < (7 * 24 * 60 * 60e3)}
+  {#if typeof data.product?.purchasesPerDay === "number" && data.product?.purchasesPerDay >= 0 && !(data.product?.purchasesPerDay === 0 && (currentStock?.total ?? -1) < 0) && (currentStock?.total ?? -1) !== 500000 && Date.now() - data.product.stockChecked < (7 * 24 * 60 * 60e3)}
     Average of {Math.round(data.product?.purchasesPerDay * 100)/100} sold per day.<br>
   {/if}
   <br>
@@ -501,7 +501,7 @@
   <br>
   <br>
 
-  {#if (currentStock.total ?? -1) >= 0 && (!data.product.available || Date.now() - data.product.stockChecked < (7 * 24 * 60 * 60e3))}
+  {#if (currentStock?.total ?? -1) >= 0 && (!data.product.available || Date.now() - data.product.stockChecked < (7 * 24 * 60 * 60e3))}
     <h2>Stock</h2>
     {#if data.product.available}
       Currently there is
@@ -509,7 +509,7 @@
       Before this product was removed, there was
     {/if}
     {#if (currentStock.total ?? -1) <= 500000}
-      a total of {commas(currentStock.total)}
+      a total of {commas(currentStock?.total)}
     {:else}
       more than 500,000
     {/if}
@@ -596,7 +596,7 @@
         <br>
         <br>
         <br>
-        {#if goneInHours > 0 && (currentStock.total ?? -1) > 0 && (currentStock.total ?? -1) <= 500000 && typeof data.product?.purchasesPerHour === "number" && data.product?.purchasesPerHour >= 0 && !(data.product?.purchasesPerHour === 0 && (currentStock.total ?? -1) < 0)}
+        {#if goneInHours > 0 && (currentStock?.total ?? -1) > 0 && (currentStock?.total ?? -1) <= 500000 && typeof data.product?.purchasesPerHour === "number" && data.product?.purchasesPerHour >= 0 && !(data.product?.purchasesPerHour === 0 && (currentStock?.total ?? -1) < 0)}
           <h2>Time remaining until out of stock</h2>
           If this product keeps selling at {Math.round(nonZeroPurchasesPerHour * 100)/100} units per hour, it could be gone in
           {#if goneInHours < 48}
