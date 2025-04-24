@@ -15,7 +15,7 @@ export const load = (async ({platform}) => {
   const oneWeekAgo = Date.now() - (7 * 24 * 60 * 60e3);
 
   const popularProducts = retryD1(() =>
-    db.prepare("select * from products where stockChecked > ? and purchasesPerHour > 10 order by purchasesPerHour DESC limit 11")
+    db.prepare("select * from products where stockChecked > ? and purchasesPerHour > 10 and stock is not null and json_extract(stock, '$.total') is not null order by purchasesPerHour DESC limit 11")
       .bind(Math.max(oneWeekAgo, 1745474690241))
       .all<ProductsTableRow>()
       .then(r => r.results)
