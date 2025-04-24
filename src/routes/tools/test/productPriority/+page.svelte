@@ -16,7 +16,7 @@
       const velocityInfluence = (product.available && product.purchasesPerHour == -1 ? 100 : product.purchasesPerHour) * (Math.random()/2);
       let distance = (Date.now() - product.stockChecked);
       if(!product.available && distance > 10) distance *= (Math.random()/32)
-      rankings[product.handle] = ((distance / (3 * 60 * 60e3)) + velocityInfluence) / (lastStock.total === 0 ? 100 : (lastStock.total === -1 ? 10 : 1));
+      rankings[product.handle] = ((distance / (3 * 60 * 60e3)) + velocityInfluence) / (lastStock?.total === 0 ? 100 : (lastStock?.total === -1 ? 10 : 1));
       
     }
 
