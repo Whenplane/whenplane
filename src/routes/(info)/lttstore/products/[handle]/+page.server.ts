@@ -35,9 +35,11 @@ export const load = (async ({platform, params, url}) => {
     if(productHandle) throw redirect(301, productHandle)
   }
 
-  const product = await db.prepare("select * from products where handle = ?")
-    .bind(handle)
-    .first<ProductsTableRow>();
+  const product = await retryD1(() =>
+    db.prepare("select * from products where handle = ?")
+      .bind(handle)
+      .first<ProductsTableRow>()
+  );
 
   if(product == null) throw error(404, "Product not found!");
 
