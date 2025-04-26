@@ -109,6 +109,7 @@
   {:else}
     <title>WAN Show Search - Whenplane</title>
     <meta name="description" content={truncateText(description, 159)}>
+    <link rel="canonical" href="https://whenplane.com{$page.url.pathname}"/>
   {/if}
 </svelte:head>
 
