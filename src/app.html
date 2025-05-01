@@ -20,6 +20,9 @@
 			if(location.pathname === "/ltt-time" && url.searchParams.has("frame")) {
 				document.body.classList.add("background-none")
 			}
+			if(location.pathname.startsWith("/lttstore/products") && location.pathname.endsWith("/page")) {
+				document.body.classList.add("background-none")
+			}
 
 			if(url.searchParams.has("boca")) {
 				document.documentElement.classList.add("boca-theme");
