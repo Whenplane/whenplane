@@ -1,5 +1,6 @@
 import type { PageServerLoad } from "./$types";
 import { error } from "@sveltejs/kit";
+import { retryD1 } from "$lib/utils.ts";
 
 export const load = (async ({params, platform, url}) => {
   const productId = Number(params.handle ?? "NaN");
@@ -13,9 +14,11 @@ export const load = (async ({params, platform, url}) => {
   const db = platform?.env?.LTTSTORE_DB.withSession(bookmark ?? "first-primary");
   if(!db) throw error(503, "Missing db!");
 
-  const change = await db.prepare("select * from change_history where id = ? and timestamp = ? and field = ?")
-    .bind(productId, timestamp, field)
-    .first<{id: number, timestamp: number, field: string, old: string, new: string}>();
+  const change = await retryD1(() =>
+    db.prepare("select * from change_history where id = ? and timestamp = ? and field = ?")
+      .bind(productId, timestamp, field)
+      .first<{id: number, timestamp: number, field: string, old: string, new: string}>()
+  );
 
   if(!change) throw error(404);
 

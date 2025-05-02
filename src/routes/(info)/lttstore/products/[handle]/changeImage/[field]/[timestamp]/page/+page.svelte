@@ -1,7 +1,6 @@
 <script>
   import { getFieldName } from "$lib/lttstore/field_names";
   import { getDiffComponent } from "$lib/lttstore/field_components";
-  import DateStamp from "$lib/DateStamp.svelte";
 
   export let data;
 </script>
