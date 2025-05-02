@@ -5,6 +5,10 @@ export const GET = (async ({platform}) => {
   const db = platform?.env?.LTTSTORE_DB.withSession();
   if(!db) throw error(503, "DB unavailable!");
 
+  if(platform?.cf?.asOrganization === "Google Cloud") {
+    throw error(403);
+  }
+
   const products = db.prepare("select * from products")
     .all()
     .then(r => r.results);
