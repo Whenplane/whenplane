@@ -14,12 +14,13 @@ export const GET = (async ({params, platform}) => {
   if(!platform?.caches) throw error(503, "Cache not available");
 
   const cacheKey = `${productId}/${field}/${timestamp}`;
+  const cacheUrl = "http://changeImageCache/" + cacheKey;
 
   const cfCache = await platform.caches.open("whenplane:changeImages");
 
   const cache_time = 14 * 24 * 60 * 60e3;
 
-  const cacheMatch = await cfCache.match(cacheKey) as Response | undefined;
+  const cacheMatch = await cfCache.match(cacheUrl) as Response | undefined;
   if(cacheMatch) {
 
     const responseGeneratedRaw = cacheMatch.headers.get("x-response-generated");
@@ -44,7 +45,7 @@ export const GET = (async ({params, platform}) => {
   const {value: cached, metadata: cachedMeta} = await cache.getWithMetadata<{type: string, expires: number, generated: number}>(cacheKey, {type: "arrayBuffer"})
   if(cached) {
     const type = cachedMeta?.type ?? "image/png";
-    platform.context?.waitUntil(cfCache.put(cacheKey, respond(cached, type, {"x-response-generated": cachedMeta?.generated+""})))
+    platform.context?.waitUntil(cfCache.put(cacheUrl, respond(cached, type, {"x-response-generated": cachedMeta?.generated+""})))
     return respond(cached, type);
   }
 
@@ -77,7 +78,7 @@ export const GET = (async ({params, platform}) => {
     expiration: Math.ceil(expires / 1e3) // cache for 2 weeks
   }))
 
-  platform.context?.waitUntil(cfCache.put(cacheKey, respond(image, type, {"x-response-generated": Date.now()+""})))
+  platform.context?.waitUntil(cfCache.put(cacheUrl, respond(image, type, {"x-response-generated": Date.now()+""})))
 
   return respond(image, type);
 
