@@ -2,7 +2,7 @@ import type { D1Database, D1DatabaseSession } from "@cloudflare/workers-types";
 import type { Actions } from "@sveltejs/kit";
 import { fail } from "@sveltejs/kit";
 import { latenessVotesCache } from "$lib/stores.ts";
-import { wait } from "$lib/utils.ts";
+import { retryD1, wait } from "$lib/utils.ts";
 import { n } from "$lib/timeUtils.ts";
 import { dev } from "$app/environment";
 
@@ -48,7 +48,9 @@ export const actions = {
 } satisfies Actions;
 
 async function vote(id: string, vote: string, db: D1Database | D1DatabaseSession) {
-  await (db.prepare("insert into lateness_votes (id, timestamp, vote) values (?, ?, ?)")
-    .bind(id, Date.now(), vote)
-    .run());
+  await retryD1(() =>
+    db.prepare("insert into lateness_votes (id, timestamp, vote) values (?, ?, ?)")
+      .bind(id, Date.now(), vote)
+      .run()
+  );
 }
