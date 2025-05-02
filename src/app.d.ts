@@ -25,6 +25,7 @@ declare global {
                 WDB_EPISODE_CACHE: KVNamespace;
                 AUTH_KV: KVNamespace;
                 YOUTUBE_TO_DATE: KVNamespace;
+                LTTSTORE_CHANGE_IMAGES: KVNamespace;
 
                 FETCHER: DurableObjectNamespace;
                 FLOATPLANE_FETCHER: DurableObjectNamespace;
