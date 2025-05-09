@@ -1,10 +1,10 @@
 <script lang="ts">
     import { page } from "$app/stores";
-    import { browser } from "$app/environment";
+    import { browser, building } from "$app/environment";
 
     let alt = "\"This is Awkward\" - Thumbnail from March 12th, 2021"
 
-    let attempt = Number($page.url.searchParams.get("attempt") ?? 0);
+    let attempt = !building ? Number($page.url.searchParams.get("attempt") ?? 0) : 0;
 
     const reloadPages = [
       "/",
