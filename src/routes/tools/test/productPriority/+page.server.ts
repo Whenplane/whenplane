@@ -4,7 +4,7 @@ import type { ProductsTableRow } from "$lib/lttstore/lttstore_types.ts";
 let products: ProductsTableRow[];
 let fetched: string;
 
-export const load = (async ({fetch}) => {
+export const load = (async () => {
 
   if(products) {
     return {
