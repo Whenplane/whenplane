@@ -149,6 +149,14 @@ export function escapeHtml(unsafe: string)
       .replace(/'/g, "&#039;");
 }
 
+export function isIterable(obj: never) {
+    // checks for null and undefined
+    if (obj == null) {
+        return false;
+    }
+    return typeof obj[Symbol.iterator] === 'function';
+}
+
 
 
 export type HistoricalEntry = {
