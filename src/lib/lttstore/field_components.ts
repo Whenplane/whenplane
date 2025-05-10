@@ -25,7 +25,7 @@ export function getDiffComponent(field: string) {
   if (field === "productDetailModules") {
     return ProductDetailModulesDiff;
   }
-  if (field === "product.description") {
+  if (field === "product.description" || field === "productDiscount") {
    return TextWordsDiff;
   }
   if (field === "product.options") {
