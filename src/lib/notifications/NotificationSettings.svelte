@@ -25,13 +25,14 @@
     "dan_stream",
   ]
 
+  let hash: string;
   async function fetchSettings() {
     const sub = await getPushSubscription();
     if(!sub) {
       location.href = '';
       return null;
     }
-    const hash = await sha256(sub.endpoint)
+    hash = await sha256(sub.endpoint)
     const response = await fetch("/api/push/settings?hash=" + hash);
     if(response.status === 404) {
       await sub.unsubscribe();
@@ -130,6 +131,9 @@
     {/if}
 
   </div>
+  <span class="opacity-50 text-sm">
+    Subscription id (for debugging): {hash?.substring(0, 5)}
+  </span>
   <br>
   <button
     class="btn variant-ghost-success"
