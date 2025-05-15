@@ -12,7 +12,7 @@ export const POST = (async ({platform, params, request, url}) => {
   const { key } = await request.json();
 
   const isTest = params.name?.includes("test") ?? false;
-  const name = params.name?.replaceAll("test", "");
+  const name = params.name?.replace("test", "");
 
   if(key != PUSH_KEY && !isTest) throw error(401);
 
