@@ -135,6 +135,7 @@
     Subscription id (for debugging): {hash?.substring(0, 5)}
   </span>
   <br>
+  <br>
   <button
     class="btn variant-ghost-success"
     disabled={JSON.stringify(stagedSettings) === JSON.stringify(knownSettings)}
