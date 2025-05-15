@@ -37,7 +37,7 @@ export const POST = (async ({platform, params, request, url}) => {
 
   if(isTest) {
     subs = await db.prepare("select * from notifications where endpoint_hash = ?")
-      .bind("4a446187f188ea1fb29bfb1bae13ccbc605a8deb89230d36658cf30f8d5c6418")
+      .bind("daafd8ad0cfd5cabf20c1a6e3d4e3834017374cf704bbecfcb5e646f6db054df")
       .all()
       .then(r => r.results as unknown as NotificationRows[]);
   } else {
