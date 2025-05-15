@@ -53,6 +53,7 @@ export const POST = (async ({platform, params, request, url}) => {
 
 
   const pushMessages: NotificationMessage[] = subs.filter(sub => sub.subscription).map(sub => {
+    console.debug("Trying ", name, sub.subscription)
     return {
       type: name,
       subscription: JSON.parse(<string>sub.subscription) as PushSubscription,
