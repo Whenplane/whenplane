@@ -187,6 +187,13 @@ export const handleError: HandleServerError = async ({ error: e, event, status, 
     const eMessage = error?.message;
     const eStack = error?.stack;
 
+    const isDbError = eMessage.includes("D1_ERROR");
+    const isRetryableDbError = isDbError && (
+      eMessage.includes("Network connection lost") ||
+      eMessage.includes("storage caused object to be reset") ||
+      eMessage.includes("reset because its code was updated")
+    );
+
     if(building) console.error(error)
 
     if(!building && error && status !== 404) {
@@ -236,7 +243,18 @@ export const handleError: HandleServerError = async ({ error: e, event, status, 
     if(event.route.id === null) {
         return { message: 'Not Found' };
     } else {
-        return { message: 'Internal Error' }
+        let m = "Internal Error";
+        if(isDbError) {
+            m = "A Database error occurred.";
+            if(isRetryableDbError) {
+                m += " Please try reloading, and report if this happens often.";
+            }
+        }
+        return {
+            message: m,
+            isDbError,
+            isRetryableDbError
+        }
     }
 }
 
