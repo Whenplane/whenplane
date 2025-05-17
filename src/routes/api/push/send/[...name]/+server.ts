@@ -6,6 +6,7 @@ import type { Queue } from "@cloudflare/workers-types";
 import { getClosestWan, getUTCDate } from "$lib/timeUtils.ts";
 
 import type {PushMessage} from '@block65/webcrypto-web-push';
+import { log } from "$lib/server/server-utils.ts";
 
 export const POST = (async ({platform, params, request, url}) => {
 
@@ -49,7 +50,7 @@ export const POST = (async ({platform, params, request, url}) => {
       });
   }
 
-  console.log("Got " + subs.length + " subs for " + name)
+  log(platform, "Got " + subs.length + " subs for " + name)
 
 
   const pushMessages: NotificationMessage[] = subs.filter(sub => sub.subscription).map(sub => {
