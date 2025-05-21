@@ -2,6 +2,7 @@
   import type { ShopifyProduct, StockCounts } from "$lib/lttstore/lttstore_types.ts";
   import Price from "$lib/lttstore/Price.svelte";
   import LargerLazyLoad from "$lib/LargerLazyLoad.svelte";
+  import { productRedirects } from "$lib/lttstore/product_redirects.ts";
 
   export let product: ShopifyProduct;
   export let stock: StockCounts | undefined = undefined;
@@ -12,9 +13,11 @@
   export let lazyLoadImage = false;
 
   $: goneInHours = (stock?.total ?? -1) / (purchasesPerHour ?? -1);
+
+  $: handle = productRedirects[product.handle] ?? product.handle;
 </script>
 
-<a class="card inline-block p-2 m-1 w-48 align-top h-full" href="/lttstore/products/{product.handle}" class:opacity-50={!available}>
+<a class="card inline-block p-2 m-1 w-48 align-top h-full" href="/lttstore/products/{handle}" class:opacity-50={!available}>
   {#if product.featured_image}
     {#if lazyLoadImage}
       <LargerLazyLoad>
