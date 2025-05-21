@@ -10,6 +10,7 @@ import type {
 
 import { createTables } from "../../createTables.ts";
 import { retryD1 } from "$lib/utils.ts";
+import { productRedirects } from "$lib/lttstore/product_redirects.ts";
 
 const DAY = 24 * 60 * 60e3;
 
@@ -41,7 +42,14 @@ export const load = (async ({platform, params, url}) => {
       .first<ProductsTableRow>()
   );
 
-  if(product == null) throw error(404, "Product not found!");
+  if(product == null) {
+    const to = productRedirects[handle];
+    if(to) {
+      throw redirect(301, to);
+    } else {
+      throw error(404, "Product not found!");
+    }
+  }
 
 
   const stockCheckDistance = Date.now() - product.stockChecked;
