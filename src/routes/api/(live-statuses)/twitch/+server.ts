@@ -44,7 +44,7 @@ export const GET = (async ({platform, url}) => {
     const cachedTitle = fastCache.lastFetchData?.data?.[0]?.title;
     const cachedIsWAN = cachedIsLive && (cachedTitle?.includes("WAN") || makeAlwaysWAN);
 
-    // With the fast flag (added for initial page load requests), always fetch cached data if its from within the past 5 hours
+    // With the fast flag (added for initial page load requests), always fetch cached data if its from within the past 5 hours. It only uses cached data when live if it has a title
     if((Date.now() - fastCache.lastFetch < cacheTime && (!fast || (fast && (!cachedIsLive || (cachedIsLive && cachedTitle))))) || (fast && Date.now() - fastCache.lastFetch < 5 * 60 * 60e3 && (!cachedIsLive || (cachedIsLive && cachedTitle)))) {
         const isLive = cachedIsLive;
         const isWAN = cachedIsWAN;
@@ -70,7 +70,10 @@ export const GET = (async ({platform, url}) => {
     let cacheRequest: Request | undefined = undefined;
     if(typeof caches !== "undefined") {
         cCache = await caches.open("whenplane:twitch-fetch");
-        cacheRequest = new Request("https://cache/twitch");
+        const search = [];
+        if(url.searchParams.has("short")) search.push("short");
+        if(url.searchParams.get("fast") === "true") search.push("fast=true");
+        cacheRequest = new Request("https://cache/twitch?" + search.join("&"));
         const cacheMatch = await cCache.match(cacheRequest);
 
         if(cacheMatch) {
