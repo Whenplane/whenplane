@@ -48,6 +48,16 @@ export const GET = (async ({fetch, url, platform, locals}) => {
     const fast = url.searchParams.get("fast") === "true";
     const realCacheTime = fast ? fast_cache_time : cache_time;
 
+    if(Date.now() - cache.lastFetch < realCacheTime && cache.lastData) {
+      return json({
+        cached: true,
+        lastFetch: cache.lastFetch,
+        ...cache.lastData,
+        description: withDescription ? cache.lastData?.description : undefined,
+        isWAN: cache.lastData?.title?.toLowerCase().includes(" wan ")
+      });
+    }
+
     const cacheRequest = new Request("https://whenplane/floatplane");
     let cfCache;
     if(!cache.lastData) {
@@ -72,16 +82,6 @@ export const GET = (async ({fetch, url, platform, locals}) => {
       } else {
         console.warn("Cache API is missing!")
       }
-    }
-
-    if(Date.now() - cache.lastFetch < realCacheTime && cache.lastData) {
-      return json({
-        cached: true,
-        lastFetch: cache.lastFetch,
-        ...cache.lastData,
-        description: withDescription ? cache.lastData?.description : undefined,
-        isWAN: cache.lastData?.title?.toLowerCase().includes(" wan ")
-      });
     }
 
     cache.lastFetch = Date.now();
