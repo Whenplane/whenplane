@@ -5,6 +5,7 @@ import {history as historicalShows} from "$lib/history/oldHistory";
 import type { KVNamespace, KVNamespaceListResult } from "@cloudflare/workers-types";
 import { dev } from "$app/environment";
 import { isNearWan } from "$lib/timeUtils.ts";
+import type { HasDoneResponse } from "../../../hasDone/+server.ts";
 
 const cacheTtl = 60 * 60 * 24 * 6; // cache single keys for 6 days if possible
 
@@ -28,7 +29,7 @@ export const GET = (async ({platform, params, locals, fetch}) => {
     const years = yearRaw.split(",");
 
 
-    const cache_time = years.includes(new Date().getUTCFullYear()+"") ? (isNearWan() ? CURRENT_YEAR_NEAR_CACHE : CURRENT_YEAR_CACHE) : OTHER_CACHE;
+    const cache_time = years.includes(new Date().getUTCFullYear()+"") ? (isNearWan() && await hasDone(fetch) ? CURRENT_YEAR_NEAR_CACHE : CURRENT_YEAR_CACHE) : OTHER_CACHE;
 
     const fetchDistance = Date.now() - (cache[yearRaw]?.lastFetch ?? 0);
     if(fetchDistance < cache_time) {
@@ -178,3 +179,9 @@ export const GET = (async ({platform, params, locals, fetch}) => {
     });
 
 }) satisfies RequestHandler;
+
+async function hasDone(f: typeof fetch) {
+    return await f("/api/hasDone")
+      .then(r => r.json() as Promise<HasDoneResponse>)
+      .then(d => d.hasDone)
+}

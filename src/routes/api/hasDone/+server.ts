@@ -9,7 +9,7 @@ const cache: {
     lastData?: HasDoneResponse
 } = {lastFetch: 0};
 
-export const GET = (async ({platform, url}) => {
+export const GET = (async ({platform, url, locals}) => {
     // if(dev) return json({hasDone: true, dev})
 
     if(Date.now() - cache.lastFetch < cache_time && cache.lastData) {
@@ -31,14 +31,26 @@ export const GET = (async ({platform, url}) => {
         date = getUTCDate(getClosestWan())
     }
 
-    const fullEntry = history.get(date);
-    const partialEntry = history.get(date + ":mainShowStart");
+    let fullTime: number | undefined = undefined;
+    let partialTime: number | undefined = undefined;
+
+    const start = Date.now();
+    const fullEntry = history.get(date).then(r => {fullTime = Date.now() - start; return r;});
+
+    const partialStart = Date.now();
+    const partialEntry = history.get(date + ":mainShowStart").then(r => {partialTime = Date.now() - partialStart; return r;});
 
     const response: HasDoneResponse = {
         timestamp: Date.now(),
         hasDone: !!(await fullEntry) || !!(await partialEntry),
         cached: false
     };
+
+    locals.addTiming(
+      {id: "fullEntry", duration: fullTime ?? -1},
+      {id: "partialEntry", duration: partialTime ?? -1},
+      {id: "total", duration: Date.now() - start}
+    );
 
     cache.lastData = response;
 

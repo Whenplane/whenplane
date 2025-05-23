@@ -88,8 +88,8 @@ export const handle: Handle = async ({ event, resolve }) => {
 
     const timings: TimingEntry[] = [];
 
-    event.locals.addTiming = (timing: TimingEntry) => {
-        timings.push(timing)
+    event.locals.addTiming = (...timing: TimingEntry[]) => {
+        timings.push(...timing)
     }
 
     if(event.url.pathname === "/history") {
@@ -137,6 +137,8 @@ export const handle: Handle = async ({ event, resolve }) => {
 
     if(timings.length > 0) {
         const timingStrings: string[] = [];
+
+        console.debug({ timings })
 
         for (const timing of timings) {
             if(timing.description) {

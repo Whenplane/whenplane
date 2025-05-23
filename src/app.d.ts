@@ -12,7 +12,7 @@ import {
 declare global {
     namespace App {
         interface Locals {
-            addTiming: (timing: TimingEntry) => void,
+            addTiming: (...timing: TimingEntry[]) => void,
             id: string
         }
         // interface PageData {}
