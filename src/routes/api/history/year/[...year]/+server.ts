@@ -87,6 +87,7 @@ export const GET = (async ({platform, params, locals, fetch}) => {
 
                         keyNames.push(parts[0]);
                         keyPromises.push((async () => {
+                            const start = Date.now();
                             const preStart = history.get(parts[0] + ":preShowStart", {cacheTtl}).then(r => r ?? "");
                             const mainStart = history.get(parts[0] + ":mainShowStart", {cacheTtl}).then(r => r ?? "");
                             const mainEnd = history.get(parts[0] + ":showEnd").then(r => r ?? "");
@@ -99,7 +100,7 @@ export const GET = (async ({platform, params, locals, fetch}) => {
                             } else {
                                 isCurrentlyLive = Promise.resolve(false);
                             }
-                            return {
+                            const r = {
                                 name: parts[0],
                                 metadata: {
                                     preShowStart: await preStart,
@@ -117,13 +118,26 @@ export const GET = (async ({platform, params, locals, fetch}) => {
                                     },
                                     isCurrentlyLive: await isCurrentlyLive
                                 }
-                            } satisfies HistoricalEntry & {metadata: {isCurrentlyLive?: boolean}}
+                            } satisfies HistoricalEntry & {metadata: {isCurrentlyLive?: boolean}};
+                            locals.addTiming({
+                                id: "partial" + parts[0].replaceAll("/", ""),
+                                description: "Partial " + parts[0],
+                                duration: Date.now() - start
+                            })
+                            return r;
                         })());
                     } else if(!k.metadata) {
                         keyPromises.push((async () => {
+                            const start = Date.now();
+                            const metadata = (await history.get(k.name, {type: 'json', cacheTtl}) as unknown as OldShowMeta);
+                            locals.addTiming({
+                                id: "missingMeta" + k.name.replaceAll("/", ""),
+                                description: "missingMeta " + k.name,
+                                duration: Date.now() - start
+                            })
                             return {
                                 name: k.name,
-                                metadata: (await history.get(k.name, {type: 'json', cacheTtl}) as unknown as OldShowMeta)
+                                metadata
                             }
                         })());
                     } else {
