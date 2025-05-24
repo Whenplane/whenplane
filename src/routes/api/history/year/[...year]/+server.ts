@@ -89,7 +89,7 @@ export const GET = (async ({platform, params, locals, fetch}) => {
                         keyPromises.push((async () => {
                             const preStart = history.get(parts[0] + ":preShowStart", {cacheTtl}).then(r => r ?? "");
                             const mainStart = history.get(parts[0] + ":mainShowStart", {cacheTtl}).then(r => r ?? "");
-                            const mainEnd = history.get(parts[0] + ":showEnd", {cacheTtl}).then(r => r ?? "");
+                            const mainEnd = history.get(parts[0] + ":showEnd").then(r => r ?? "");
                             const videoId = history.get(parts[0] + ":videoId", {cacheTtl}).then(r => r ?? "");
                             const snippet: Promise<YoutubeSnippet | null> = history.get(parts[0] + ":snippet", {cacheTtl, type: "json"});
                             let isCurrentlyLive: Promise<boolean>;
