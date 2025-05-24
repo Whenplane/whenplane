@@ -184,15 +184,24 @@
   {#each data.videos as video}
     {@const firstTitleParts = video.title.split(" - ")}
     {@const lastTitlePart = firstTitleParts.pop()}
-    <a class="card flex hidden-link p-2 my-1" href="merch-messages/{video.videoId}">
+    <a class="card flex hidden-link p-2 my-1 relative" href="merch-messages/{video.videoId}">
       <img class="thumbnail" src="https://i.ytimg.com/vi/{video.videoId}/mqdefault.jpg" alt="Thumbnail" aria-hidden="true" loading="lazy">
       <div class="self-center px-4">
         <span class="font-bold text-lg">
           {firstTitleParts.join(" - ")}
         </span><br>
         {lastTitlePart}<br>
-        {video.messageCount} messages
+        {#if video.messageCount}
+          {video.messageCount} messages
+        {:else}
+          &nbsp;
+        {/if}
       </div>
+      {#if video.status === "inprogress"}
+        <div class="absolute self-center right-2">
+          <ProgressRadial class="inline-block" width="w-6" stroke={250}/>
+        </div>
+      {/if}
     </a>
   {/each}
 </div>
