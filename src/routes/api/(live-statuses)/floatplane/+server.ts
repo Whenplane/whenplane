@@ -43,7 +43,7 @@ export const GET = (async ({fetch, url, platform, locals}) => {
 
     const withDescription = url.searchParams.get("description") === "true";
 
-    const cache_time = isNearWan() ? 4.999e3 : 29.999e3;
+    const cache_time = isNearWan() ? 14.999e3 : 59.999e3;
 
     const fast = url.searchParams.get("fast") === "true";
     const realCacheTime = fast ? fast_cache_time : cache_time;
