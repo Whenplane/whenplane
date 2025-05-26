@@ -41,6 +41,25 @@ export const GET = (async ({platform, params, locals, fetch}) => {
         });
     }
 
+    let cCache: Cache | undefined = undefined;
+    let cacheRequest: Request | undefined = undefined;
+    if(typeof caches !== "undefined") {
+        cCache = await caches.open("whenplane:history");
+        const search = new URLSearchParams();
+        search.set("year", yearRaw);
+        cacheRequest = new Request("https://cache/history?" + search);
+        const cacheMatch = await cCache.match(cacheRequest);
+
+        if(cacheMatch) {
+            const expires = cacheMatch.headers.get("expires")
+            if(!expires || new Date(expires).getTime() > Date.now()) {
+                return cacheMatch.clone();
+            }
+        }
+    } else {
+        console.warn("missing cache api!")
+    }
+
     if(cache[yearRaw]?.lastData) {
         cache[yearRaw].lastFetch = Date.now();
     }
@@ -185,6 +204,10 @@ export const GET = (async ({platform, params, locals, fetch}) => {
         lastFetch: Date.now(),
         lastData: keys
     }
+
+    const cacheExpires = new Date(Date.now() + cache_time).toISOString();
+    if(cCache && cacheRequest) platform?.context?.waitUntil(cCache.put(cacheRequest, json(keys, {headers: {"Expires": cacheExpires}})));
+
 
     return json(keys, {
         headers: {
