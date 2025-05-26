@@ -29,18 +29,21 @@ export const GET = (async ({platform, params, locals, fetch}) => {
     const years = yearRaw.split(",");
 
 
-    const cache_time = years.includes(new Date().getUTCFullYear()+"") ? (isNearWan() && await hasDone(fetch) ? CURRENT_YEAR_NEAR_CACHE : CURRENT_YEAR_CACHE) : OTHER_CACHE;
+    const isCurrentYear = years.includes(new Date().getUTCFullYear()+"");
+    const cache_time = isCurrentYear ? (isNearWan() && await hasDone(fetch) ? CURRENT_YEAR_NEAR_CACHE : CURRENT_YEAR_CACHE) : OTHER_CACHE;
 
     const fetchDistance = Date.now() - (cache[yearRaw]?.lastFetch ?? 0);
     if(fetchDistance < cache_time) {
         return json(cache[yearRaw].lastData, {
             headers: {
                 "x-cached": "true",
+                "x-cache": "mem",
                 "x-fetch-distance": fetchDistance + ""
             }
         });
     }
 
+    const dcCacheStart = Date.now();
     let cCache: Cache | undefined = undefined;
     let cacheRequest: Request | undefined = undefined;
     if(typeof caches !== "undefined") {
@@ -51,14 +54,16 @@ export const GET = (async ({platform, params, locals, fetch}) => {
         const cacheMatch = await cCache.match(cacheRequest);
 
         if(cacheMatch) {
-            const expires = cacheMatch.headers.get("expires")
-            if(!expires || new Date(expires).getTime() > Date.now()) {
+            const fetched = cacheMatch.headers.get("x-fetched")
+            if(fetched && Date.now() - new Date(fetched).getTime() < cache_time) {
+                locals.addTiming({id: "dcCache", duration: Date.now() - dcCacheStart});
                 return cacheMatch.clone();
             }
         }
     } else {
         console.warn("missing cache api!")
     }
+    locals.addTiming({id: "dcCache", duration: Date.now() - dcCacheStart});
 
     if(cache[yearRaw]?.lastData) {
         cache[yearRaw].lastFetch = Date.now();
@@ -205,8 +210,7 @@ export const GET = (async ({platform, params, locals, fetch}) => {
         lastData: keys
     }
 
-    const cacheExpires = new Date(Date.now() + cache_time).toISOString();
-    if(cCache && cacheRequest) platform?.context?.waitUntil(cCache.put(cacheRequest, json(keys, {headers: {"Expires": cacheExpires}})));
+    if(cCache && cacheRequest) platform?.context?.waitUntil(cCache.put(cacheRequest, json(keys, {headers: {"x-fetched": new Date().toISOString(), "x-cached": "true", "x-cache": "dc"}})));
 
 
     return json(keys, {

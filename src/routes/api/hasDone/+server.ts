@@ -1,8 +1,9 @@
 import type {RequestHandler} from "@sveltejs/kit";
 import {error, json} from "@sveltejs/kit";
-import {getClosestWan, getUTCDate} from "$lib/timeUtils";
+import { getClosestWan, getUTCDate, isNearWan } from "$lib/timeUtils";
 
-const cache_time =  30 * 60e3; // 30 minutes
+const WAN_CACHE_TIME =  30 * 60e3; // 30 minutes
+const NORMAL_CACHE_TIME = 24 * 60 * 60e3; // 24 hours
 
 const cache: {
     lastFetch: number,
@@ -11,6 +12,8 @@ const cache: {
 
 export const GET = (async ({platform, url, locals}) => {
     // if(dev) return json({hasDone: true, dev})
+
+    const cache_time = isNearWan() ? WAN_CACHE_TIME : NORMAL_CACHE_TIME;
 
     if(Date.now() - cache.lastFetch < cache_time && cache.lastData) {
         return json({
