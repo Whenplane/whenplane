@@ -57,7 +57,7 @@ export const GET = (async ({platform, params, locals, fetch}) => {
             const fetched = cacheMatch.headers.get("x-fetched")
             if(fetched && Date.now() - new Date(fetched).getTime() < cache_time) {
                 locals.addTiming({id: "dcCache", duration: Date.now() - dcCacheStart});
-                return cacheMatch.clone();
+                return new Response(cacheMatch.body, {headers: {...cacheMatch.headers}});
             }
         }
     } else {
