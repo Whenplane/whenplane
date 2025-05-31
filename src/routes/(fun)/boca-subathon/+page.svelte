@@ -54,10 +54,10 @@
 <div class="limit mx-auto pt-8 p-2">
   <h1>{string}</h1>
   {#if distance > 0}
-    into the 168 hour marathon.
+    into the week hour marathon.
   {:else}
-    until the streaming marathon is supposed to start on {scheduledStart.toLocaleDateString(getDateFormatLocale(), {dateStyle: "full"})}<br>
-    <small class="opacity-60">Date may change as it gets closer</small>
+    until the week-long streaming marathon is supposed to start on {scheduledStart.toLocaleDateString(getDateFormatLocale(), {dateStyle: "full"})}<br>
+<!--    <small class="opacity-60">Date may change as it gets closer</small>-->
   {/if}
   <br>
   <br>
