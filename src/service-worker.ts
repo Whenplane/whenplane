@@ -82,7 +82,7 @@ sw.addEventListener('fetch', (event) => {
 
       // Assets should already be cached so this *shouldn't* happen, but we're here so why not
       if (response.status === 200) {
-        cache.put(event.request, response.clone()).then()
+        event.waitUntil(cache.put(event.request, response.clone()));
       }
 
       return response;
@@ -99,11 +99,7 @@ sw.addEventListener('fetch', (event) => {
     }
   }
 
-  if(ALL_ASSETS.includes(url.pathname)) {
-    event.respondWith(respond());
-  } else {
-    event.respondWith(fetch(event.request));
-  }
+  if(ALL_ASSETS.includes(url.pathname)) event.respondWith(respond());
 });
 
 sw.addEventListener('activate', (event) => {
