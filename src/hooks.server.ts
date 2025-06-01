@@ -163,12 +163,17 @@ export const handle: Handle = async ({ event, resolve }) => {
     }
 
 
+    const resolveStart = Date.now();
     const response = await resolve(
       event,
       {
           filterSerializedResponseHeaders: (name) => name.startsWith('x-') || name.toLowerCase() === "server-timing",
       }
     );
+    event.locals.addTiming({
+        id: "resolve",
+        duration: Date.now() - resolveStart
+    })
 
 
 
