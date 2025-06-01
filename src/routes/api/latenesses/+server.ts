@@ -7,7 +7,12 @@ import { createMFResponse } from "$lib/server/MfResponseConverter";
 
 const cacheURL = "https://whenplane/api/latenesses";
 
-export const GET = (async ({platform}) => {
+let cache: {
+  lastFetch: number,
+  lastData?: Latenesses
+} = {lastFetch: 0};
+
+export const GET = (async ({platform, url}) => {
 
   const meta = platform?.env?.META;
   if(!meta) throw error(503, "Missing meta KV!");
@@ -16,7 +21,12 @@ export const GET = (async ({platform}) => {
 
   const cfCache = await platform.caches.open("whenplane:latenesses");
 
-  const cache_time = isNearWan() ? 5 * 60e3 : 60 * 60e3;
+  const fast = url.searchParams.get("fast") === "true";
+  const cache_time = fast ? (5 * 60 * 60e3) : (isNearWan() ? 5 * 60e3 : 60 * 60e3);
+
+  if(Date.now() - cache.lastFetch < cache_time && cache.lastData) {
+    return respond(cache.lastData, cache_time);
+  }
 
   const cacheMatch = await cfCache.match(cacheURL) as Response | undefined;
   if(cacheMatch) {
@@ -36,6 +46,8 @@ export const GET = (async ({platform}) => {
     }
   }
 
+  cache.lastFetch = Date.now();
+
   const averageLateness = meta.get("averageLateness", {type: 'json'}) as Promise<number>;
   const latenessStandardDeviation = meta.get("latenessStandardDeviation", {type: 'json'}) as Promise<number>;
   const medianLateness = meta.get("medianLateness", {type: 'json'}) as Promise<number>;
@@ -46,19 +58,28 @@ export const GET = (async ({platform}) => {
     medianLateness: await medianLateness
   }
 
-  const maxAge = Math.ceil(cache_time / 1e3);
-  const jsonResponse = json(response, {
-    headers: {
-      "Cache-Control": `public max-age=${maxAge} s-maxage=${maxAge} must-revalidate`,
-      "x-response-generated": new Date().toISOString()
-    }
-  });
+  cache = {
+    lastFetch: Date.now(),
+    lastData: response
+  }
+
+  const jsonResponse = respond(response, cache_time);
 
   platform?.context?.waitUntil(cfCache.put(cacheURL, await createMFResponse(jsonResponse.clone()) as Response))
 
   return jsonResponse;
 
 }) satisfies RequestHandler;
+
+function respond(response: Latenesses, cache_time: number) {
+  const maxAge = Math.ceil(cache_time / 1e3);
+  return json(response, {
+    headers: {
+      "Cache-Control": `public max-age=${maxAge} s-maxage=${maxAge} must-revalidate`,
+      "x-response-generated": new Date().toISOString()
+    }
+  });
+}
 
 export type Latenesses = {
   averageLateness?: number,
