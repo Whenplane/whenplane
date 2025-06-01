@@ -70,7 +70,7 @@ export const GET = (async ({fetch, url, platform, locals}) => {
           const cacheTimeHeader = cacheMatch.headers.get("x-cache-time");
           if(!cacheTimeHeader) console.warn("Cached session data does not have cache time header!")
           const cachedTime = new Date(cacheTimeHeader ?? 0);
-          if(Date.now() - cachedTime.getDate() < realCacheTime) {
+          if(Date.now() - cachedTime.getTime() < realCacheTime) {
             const data = await cacheMatch.json().then(r => r.data);
             cache = {
               lastFetch: cachedTime.getTime(),
