@@ -31,7 +31,7 @@ export const handleFetch: HandleFetch = async ({ event, request, fetch }) => {
             } while(event.locals.hasTiming(id) && i <= urlHash.length)
 
             const dur = parts.find(p => p.startsWith("dur="))?.substring("dur=".length);
-            let description = parts.find(p => p.startsWith("desc="))?.substring("desc=".length);
+            let description = parts.find(p => p.startsWith("desc="))?.substring("desc=".length).trimEnd();
             if(description?.startsWith("\"")) description = JSON.parse(description);
 
             const duration = dur ? Number(dur) : -1
