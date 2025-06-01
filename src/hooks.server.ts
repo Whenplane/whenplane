@@ -31,7 +31,7 @@ export const handleFetch: HandleFetch = async ({ event, request, fetch }) => {
             } while(event.locals.hasTiming(id) && i <= urlHash.length)
 
             const dur = parts.find(p => p.startsWith("dur="))?.substring("dur=".length);
-            let description = parts.find(p => p.startsWith("desc="))?.substring("desc=".length).trimEnd();
+            const description = parts.find(p => p.startsWith("desc="))?.substring("desc=".length);
             if(description?.startsWith("\"")) description = JSON.parse(description);
 
             const duration = dur ? Number(dur) : -1
@@ -39,7 +39,10 @@ export const handleFetch: HandleFetch = async ({ event, request, fetch }) => {
             event.locals.addTiming({
                 id,
                 duration,
-                description: reqURL.pathname + " " + JSON.stringify(description ?? parts[0])
+                description: reqURL.pathname + " " + (description
+                    ?.replaceAll("\\", "\\\\")
+                    ?.replaceAll("\"", "\\\"")
+                  ?? parts[0])
             })
         }
     }
