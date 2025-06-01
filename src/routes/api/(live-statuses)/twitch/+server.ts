@@ -9,8 +9,6 @@ import type { TwitchToken } from "$lib/utils.ts";
 import { twitchTokenCache } from "$lib/stores.ts";
 import { log } from "$lib/server/server-utils.ts";
 
-const cacheTime = 5000; // maximum fetch from twitch api once every 5 seconds
-
 const makeAlwaysWAN = dev;
 
 let savedStartTime: boolean | undefined = undefined;
@@ -39,13 +37,15 @@ export const GET = (async ({platform, url}) => {
 
     const fast = url.searchParams.get("fast") === "true";
 
+    // With the fast flag (added for initial page load requests), always fetch cached data if its from within the past 5 hours
+    const cacheTime = fast ? (5 * 60 * 60e3) : (isNearWan() ? 4750 : 15e3); // Fetch from twitch no more than once every (just under) 5 seconds on wan days, 15 seconds otherwise
+
     // console.debug(1)
     const cachedIsLive = fastCache.lastFetchData?.data?.length != 0;
     const cachedTitle = fastCache.lastFetchData?.data?.[0]?.title;
     const cachedIsWAN = cachedIsLive && (cachedTitle?.includes("WAN") || makeAlwaysWAN);
 
-    // With the fast flag (added for initial page load requests), always fetch cached data if its from within the past 5 hours. It only uses cached data when live if it has a title
-    if((Date.now() - fastCache.lastFetch < cacheTime && (!fast || (fast && (!cachedIsLive || (cachedIsLive && cachedTitle))))) || (fast && Date.now() - fastCache.lastFetch < 5 * 60 * 60e3 && (!cachedIsLive || (cachedIsLive && cachedTitle)))) {
+    if(Date.now() - fastCache.lastFetch < cacheTime) {
         const isLive = cachedIsLive;
         const isWAN = cachedIsWAN;
         const title = cachedTitle;
@@ -72,14 +72,13 @@ export const GET = (async ({platform, url}) => {
         cCache = await caches.open("whenplane:twitch-fetch");
         const search = [];
         if(url.searchParams.has("short")) search.push("short");
-        if(url.searchParams.get("fast") === "true") search.push("fast=true");
         cacheRequest = new Request("https://cache/twitch?" + search.join("&"));
         const cacheMatch = await cCache.match(cacheRequest);
 
         if(cacheMatch) {
-            const expires = cacheMatch.headers.get("expires")
-            if(!expires || new Date(expires).getTime() > Date.now()) {
-                return cacheMatch.clone();
+            const fetched = cacheMatch.headers.get("x-fetched")
+            if(fetched && Date.now() - new Date(fetched).getTime() < cacheTime) {
+                return new Response(cacheMatch.body, {headers: {...cacheMatch.headers}});
             }
         }
     } else {
@@ -312,9 +311,7 @@ export const GET = (async ({platform, url}) => {
     }
     // console.debug(10)
 
-    const cacheExpires = new Date(Date.now() + cacheTime).toISOString();
-
-    if(cCache && cacheRequest) platform.context.waitUntil(cCache.put(cacheRequest, json(response, {headers: {"Expires": cacheExpires}})));
+    if(cCache && cacheRequest) platform.context.waitUntil(cCache.put(cacheRequest, json(response, {headers: {"x-fetched": new Date().toISOString()}})));
     return json(response);
 }) satisfies RequestHandler;
 
