@@ -17,7 +17,7 @@ export const handleFetch: HandleFetch = async ({ event, request, fetch }) => {
     const response = await fetch(request);
     const timings = response.headers.get("server-timing")?.split(",");
     if(timings) {
-        const reqURL = new URL(event.url);
+        const reqURL = new URL(request.url);
         const urlHash = await sha1(request.url);
         for (const timing of timings) {
             const parts = timing.split(";")
