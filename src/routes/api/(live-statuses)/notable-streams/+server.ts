@@ -46,15 +46,15 @@ export const GET = (async ({platform, url, request}) => {
   if(!env.TWITCH_CLIENT_ID) throw error(503, "Missing twitch client id!");
   if(!env.TWITCH_SECRET) throw error(503, "Missing twitch client secret!");
 
-  const fast = url.searchParams.get("fast") === "true";
-
   const now = new Date();
 
-  const cacheTime = isNearWan(now) ? 2.9 * 60e3 : 29e3; // update every 30 seconds when not around wan time. every 3 minutes when near wan
+  // With the fast flag (added for initial page load requests), always fetch cached data if its from within the past 5 hours
+  const fast = url.searchParams.get("fast") === "true";
+
+  const cacheTime = fast ? (5 * 60 * 60e3) : (isNearWan(now) ? 2.9 * 60e3 : 29e3); // update every 30 seconds when not around wan time. every 3 minutes when near wan
 
   const fetchDistance = Date.now() - fastCache.lastFetch;
-  // With the fast flag (added for initial page load requests), always fetch cached data if its from within the past 5 hours
-  if(fetchDistance < cacheTime || (fast && fetchDistance < 5 * 60 * 60e3)) {
+  if(fetchDistance < cacheTime) {
     const shortResponse = makeShortResponses(fastCache.lastFetchData, url);
     return json({
       ...shortResponse,
@@ -79,12 +79,13 @@ export const GET = (async ({platform, url, request}) => {
     const cacheMatch = await cCache.match(cacheRequest);
 
     if(cacheMatch) {
-      const expires = cacheMatch.headers.get("expires")
-      if(!expires || new Date(expires).getTime() > Date.now()) {
+      const fetched = cacheMatch.headers.get("x-fetched")
+      if(fetched && Date.now() - new Date(fetched).getTime() < cacheTime) {
         return new Response(cacheMatch.body, {
           // eslint-disable-next-line @typescript-eslint/ban-ts-comment
           // @ts-ignore
           headers: {
+            ...cacheMatch.headers,
             "Access-Control-Allow-Origin": accessControlAllowOrigin,
             "Vary": "Origin"
           }
@@ -287,7 +288,6 @@ export const GET = (async ({platform, url, request}) => {
       "Vary": "Origin"
     }
   });
-  const cacheExpires = new Date(Date.now() + cacheTime).toISOString();
 
   if(cCache && cacheRequest) platform.context.waitUntil(
     cCache.put(
@@ -298,7 +298,7 @@ export const GET = (async ({platform, url, request}) => {
           // eslint-disable-next-line @typescript-eslint/ban-ts-comment
           // @ts-ignore
           headers: {
-            "Expires": cacheExpires,
+            "x-fetched": new Date().toISOString(),
             "Access-Control-Allow-Origin": accessControlAllowOrigin,
             "Vary": "Origin"
           }
