@@ -23,7 +23,8 @@ let sentToWDB = false;
 
 export const GET = (async ({platform, locals, url, fetch}) => {
 
-    const cacheTime = isNearWan() ? 4750 : 60e3; // Fetch from fetcher no more than once every (just under) 5 seconds on wan days, 60 seconds otherwise
+    const fast = url.searchParams.get("fast") === "true";
+    const cacheTime = fast ? (5 * 60 * 60e3) : (isNearWan() ? 4750 : 60e3); // Fetch from fetcher no more than once every (just under) 5 seconds on wan days, 60 seconds otherwise
 
     // if(new Date().getSeconds() > 50) return json({forcedDev: true,"isLive":false,"isWAN":true,"videoId":"KtSabkVT8y4","forced":false,"upcoming":true})
     // if(dev) return json({forcedDev: true,"isLive":true,"isWAN":true,"videoId":"KtSabkVT8y4","forced":false,"upcoming":false/*,"started":"1/17/2024"*/})
@@ -33,14 +34,10 @@ export const GET = (async ({platform, locals, url, fetch}) => {
     if(!history) throw error(503, "History not available");
     if(!platform?.context) throw error(503, "Request context not available!");
 
-    const fast = url.searchParams.get("fast") === "true";
-
     const fetchDistance = Date.now() - cache.lastFetch;
     if(
         cache.value &&
-        (fetchDistance < cacheTime ||
-        // With the fast flag (added for initial page load requests), always fetch cached data if its from within the past 5 hours
-        (fast && cache.value && fetchDistance < 5 * 60 * 60e3))
+        fetchDistance < cacheTime
     ) {
         return json({...cache.value, cached: true, fetchDistance});
     }
@@ -53,8 +50,8 @@ export const GET = (async ({platform, locals, url, fetch}) => {
         const cacheMatch = await cCache.match(cacheRequest);
 
         if(cacheMatch) {
-            const expires = cacheMatch.headers.get("expires")
-            if(!expires || new Date(expires).getTime() > Date.now()) {
+            const fetched = cacheMatch.headers.get("x-fetched")
+            if(fetched && Date.now() - new Date(fetched).getTime() < cacheTime) {
                 return cacheMatch.clone();
             }
         }
@@ -169,10 +166,8 @@ export const GET = (async ({platform, locals, url, fetch}) => {
         );
     }
 
-    const cacheExpires = new Date(Date.now() + cacheTime).toISOString();
-
     cache.value = result;
-    if(cCache && cacheRequest) platform.context.waitUntil(cCache.put(cacheRequest, json(result, {headers: {"Expires": cacheExpires}})));
+    if(cCache && cacheRequest) platform.context.waitUntil(cCache.put(cacheRequest, json(result, {headers: {"x-fetched": new Date().toISOString()}})));
     return json(result);
 
 }) satisfies RequestHandler;
