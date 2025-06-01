@@ -19,10 +19,10 @@ export const GET = (async ({url, fetch, locals, platform}) => {
     const fast = url.searchParams.get("fast");
     const isNextFast = url.searchParams.get("isNextFast");
 
-    const isThereWan = fetch("/api/isThereWan").then(r => r.json())
+    const isThereWan = fetch("/api/isThereWan?fast="+fast).then(r => r.json())
       .catch(e => {throw new Error("Error while fetching isThereWan: " + e.message, { cause: e })});
     let hasDoneTimestamp;
-    const hasDone = fetch("/api/hasDone").then(r => r.json()).then(r => {
+    const hasDone = fetch("/api/hasDone?fast="+fast).then(r => r.json()).then(r => {
         hasDoneTimestamp = r.timestamp;
         return r.hasDone;
     }).catch(e => {throw new Error("Error while fetching hasDone: " + e.message, { cause: e })});

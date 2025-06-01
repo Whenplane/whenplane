@@ -13,7 +13,8 @@ const cache: {
 export const GET = (async ({platform, url, locals}) => {
     // if(dev) return json({hasDone: true, dev})
 
-    const cache_time = isNearWan() ? WAN_CACHE_TIME : NORMAL_CACHE_TIME;
+    const fast = url.searchParams.get("fast") === "true";
+    const cache_time = fast ? (5 * 60 * 60e3) : (isNearWan() ? WAN_CACHE_TIME : NORMAL_CACHE_TIME);
 
     if(Date.now() - cache.lastFetch < cache_time && cache.lastData) {
         return json({

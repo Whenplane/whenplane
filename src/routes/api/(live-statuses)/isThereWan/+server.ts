@@ -14,13 +14,14 @@ const cache: {
 
 const cacheURL = "https://whenplane/api/isThereWan";
 
-export const GET = (async ({platform, locals}) => {
+export const GET = (async ({platform, locals, url}) => {
   const meta: KVNamespace | undefined = platform?.env?.META;
   if(!meta) throw error(503, "meta not available");
 
   if(!platform?.caches) throw error(503, "Cache not available!");
 
-  const cache_time = isNearWan() ? 9750 : 5 * 60e3; // just under 10 seconds on wan days, 5 minutes on non-wan days
+  const fast = url.searchParams.get("fast") === "true";
+  const cache_time = fast ? (5 * 60 * 60e3) : (isNearWan() ? 9750 : 5 * 60e3); // just under 10 seconds on wan days, 5 minutes on non-wan days
 
   /*if(dev) {
     const response: IsThereWanResponse = {
