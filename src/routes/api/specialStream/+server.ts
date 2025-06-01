@@ -6,8 +6,6 @@ import type { FpEndpointResponse } from "../(live-statuses)/floatplane/+server.t
 export const GET = (async ({fetch}) => {
   // In the future this will be from a database, but this will be fine for now. (update a year later: heh)
 
-  const fpLive: FpEndpointResponse = await fetch("/api/floatplane?fast=true").then(r => r.json());
-
   const data: SpecialStream | false = Date.now() > 1742608091103 ? {
     title: "Derpy Dinos - Streams with Sarah FP Exclusive",
     thumbnail: "https://pbs.floatplane.com/stream_thumbnails/5c13f3c006f1be15e08e05c0/690027088370846_1743099965628.jpeg",
@@ -32,6 +30,8 @@ export const GET = (async ({fetch}) => {
     // hide an hour after the start time;
     const hideTime = new Date(data.start as string)
     hideTime.setHours(hideTime.getHours() + 1.5);
+
+    const fpLive: FpEndpointResponse = await fetch("/api/floatplane?fast=true").then(r => r.json());
 
     const timeUntil = getTimeUntil(hideTime);
     if(timeUntil.late && !(timeUntil.distance < (2 * 60 * 60e3) && fpLive.isLive)) {
