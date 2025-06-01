@@ -61,7 +61,7 @@ export async function getSession(platform?: App.Platform, sessionID?: string, in
       const cacheTimeHeader = cacheMatch.headers.get("x-cache-time");
       if(!cacheTimeHeader) console.warn("Cached session data does not have cache time header!")
       const cachedTime = new Date(cacheTimeHeader ?? 0);
-      if(Date.now() - cachedTime.getDate() < session_cache_time) {
+      if(Date.now() - cachedTime.getTime() < session_cache_time) {
         const data = await cacheMatch.json().then(r => r.data);
         memorySessionCache[sessionID] = {
           cachedTime: cachedTime.getTime(),
