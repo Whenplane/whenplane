@@ -54,6 +54,7 @@ sw.addEventListener('install', (event) => {
 });
 
 sw.addEventListener('fetch', (event) => {
+  return;
   // ignore POST requests etc
   if (event.request.method !== 'GET') return;
 
