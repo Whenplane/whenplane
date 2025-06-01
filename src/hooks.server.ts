@@ -25,9 +25,9 @@ export const handleFetch: HandleFetch = async ({ event, request, fetch }) => {
 
             let id: string;
 
-            let i = 2;
+            let i = 1;
             do {
-                id = "f-" + urlHash.substring(0, i++) + parts[0];
+                id = "f-" + urlHash.substring(0, i++) + "-" + parts[0];
             } while(event.locals.hasTiming(id) && i <= urlHash.length)
 
             const dur = parts.find(p => p.startsWith("dur="))?.substring("dur=".length);
