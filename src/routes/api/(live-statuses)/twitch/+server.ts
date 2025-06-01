@@ -5,7 +5,7 @@ import { dev, version } from "$app/environment";
 import { getClosestWan, getUTCDate, isNearWan } from "$lib/timeUtils";
 import type { DurableObjectNamespace } from "@cloudflare/workers-types";
 import type { GetStreamsResponse } from "ts-twitch-api";
-import type { TwitchToken } from "$lib/utils.ts";
+import { newResponse, type TwitchToken } from "$lib/utils.ts";
 import { twitchTokenCache } from "$lib/stores.ts";
 import { log } from "$lib/server/server-utils.ts";
 
@@ -78,7 +78,7 @@ export const GET = (async ({platform, url}) => {
         if(cacheMatch) {
             const fetched = cacheMatch.headers.get("x-fetched")
             if(fetched && Date.now() - new Date(fetched).getTime() < cacheTime) {
-                return new Response(cacheMatch.body, {headers: {...cacheMatch.headers}});
+                return newResponse(cacheMatch);
             }
         }
     } else {

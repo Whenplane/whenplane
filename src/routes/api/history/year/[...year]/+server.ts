@@ -1,6 +1,12 @@
 import type {RequestHandler} from "@sveltejs/kit";
 import {error, json} from "@sveltejs/kit";
-import { type HistoricalEntry, removeAfterLastDash, type OldShowMeta, type YoutubeSnippet } from "$lib/utils.ts";
+import {
+    type HistoricalEntry,
+    removeAfterLastDash,
+    type OldShowMeta,
+    type YoutubeSnippet,
+    newResponse
+} from "$lib/utils.ts";
 import {history as historicalShows} from "$lib/history/oldHistory";
 import type { KVNamespace, KVNamespaceListResult } from "@cloudflare/workers-types";
 import { dev } from "$app/environment";
@@ -57,7 +63,7 @@ export const GET = (async ({platform, params, locals, fetch}) => {
             const fetched = cacheMatch.headers.get("x-fetched")
             if(fetched && Date.now() - new Date(fetched).getTime() < cache_time) {
                 locals.addTiming({id: "dcCache", duration: Date.now() - dcCacheStart});
-                return new Response(cacheMatch.body, {headers: {...cacheMatch.headers}});
+                return newResponse(cacheMatch);
             }
         }
     } else {

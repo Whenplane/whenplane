@@ -3,7 +3,7 @@ import {error, json} from "@sveltejs/kit";
 import { getClosestWan, getUTCDate, isNearWan } from "$lib/timeUtils";
 import { dev, version } from "$app/environment";
 import type {KVNamespace, DurableObjectNamespace, DurableObjectStub} from "@cloudflare/workers-types";
-import type {OldShowMeta} from "$lib/utils";
+import { newResponse, type OldShowMeta } from "$lib/utils";
 import { env } from "$env/dynamic/private";
 import { log } from "$lib/server/server-utils";
 
@@ -52,7 +52,7 @@ export const GET = (async ({platform, locals, url, fetch}) => {
         if(cacheMatch) {
             const fetched = cacheMatch.headers.get("x-fetched")
             if(fetched && Date.now() - new Date(fetched).getTime() < cacheTime) {
-                return new Response(cacheMatch.body, {headers: {...cacheMatch.headers}});
+                return newResponse(cacheMatch);
             }
         }
     } else {

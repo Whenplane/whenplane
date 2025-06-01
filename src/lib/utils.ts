@@ -81,7 +81,7 @@ export function commas(x: number | undefined | null, decimals?: undefined | numb
     return parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ",") + (parts.length > 1 ? "." : "") + parts.slice(1).join(".");
 }
 
-export function newResponse(res: Response, headerFn: (existingHeaders: Headers) => Headers): Promise<Response> {
+export function newResponse(res: Response, headerFn?: (existingHeaders: Headers) => Headers): Promise<Response> {
 
     function cloneHeaders() {
         const headers = new Headers();
@@ -91,7 +91,7 @@ export function newResponse(res: Response, headerFn: (existingHeaders: Headers) 
         return headers;
     }
 
-    const headers = headerFn ? headerFn(cloneHeaders()) : res.headers;
+    const headers = headerFn ? headerFn(cloneHeaders()) : cloneHeaders();
 
     return new Promise((resolve) => {
         return res.clone().blob().then((blob) => {
