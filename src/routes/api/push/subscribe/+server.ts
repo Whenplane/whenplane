@@ -1,7 +1,7 @@
 import { error, json, type RequestHandler } from "@sveltejs/kit";
-import { sha256 } from "$lib/notifications/notificationUtils.ts";
 import { dev } from "$app/environment";
 import { createNotificationsTable } from "$lib/server/notifications/notification-server-tools.ts";
+import { sha256 } from "$lib/utils.ts";
 
 export const POST = (async ({platform, request, cookies}) => {
 

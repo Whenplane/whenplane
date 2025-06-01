@@ -1,11 +1,12 @@
 <script lang="ts">
   import { browser } from "$app/environment";
-  import { getPushSubscription, lang, sha256 } from "$lib/notifications/notificationUtils";
+  import { getPushSubscription, lang } from "$lib/notifications/notificationUtils";
   import type { NotificationRows } from "../../routes/api/push/settings/+server.js";
   import { SlideToggle } from "@skeletonlabs/skeleton";
   import { beforeNavigate } from "$app/navigation";
   import {ProgressRadial} from "@skeletonlabs/skeleton";
   import type { D1Result } from "@cloudflare/workers-types";
+  import { sha256 } from "$lib/utils.ts";
 
   // eslint-disable-next-line @typescript-eslint/no-empty-function
   let settingsFetch: Promise<NotificationRows> = browser ? fetchSettings() : new Promise(() => {});

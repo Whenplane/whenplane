@@ -1,6 +1,6 @@
-import { error, type Handle, type HandleServerError } from "@sveltejs/kit";
+import { error, type Handle, type HandleFetch, type HandleServerError } from "@sveltejs/kit";
 import { building, dev } from "$app/environment";
-import { random } from "$lib/utils.ts";
+import { random, sha1 } from "$lib/utils.ts";
 import type {
     AnalyticsEngineDataPoint, AnalyticsEngineDataset, KVNamespace,
     KVNamespaceGetOptions,
@@ -12,6 +12,38 @@ import { env } from "$env/dynamic/private";
 const reportedIds: {[key: string]: number} = {};
 
 let devBindings: App.Platform | undefined;
+
+export const handleFetch: HandleFetch = async ({ event, request, fetch }) => {
+    const response = await fetch(request);
+    const timings = response.headers.get("server-timing")?.split(",");
+    if(timings) {
+        const reqURL = new URL(event.url);
+        const urlHash = await sha1(request.url);
+        for (const timing of timings) {
+            const parts = timing.split(";")
+              .map(p => p.trim());
+
+            let id: string;
+
+            let i = 2;
+            do {
+                id = "f-" + urlHash.substring(0, i++) + parts[0];
+            } while(event.locals.hasTiming(id) && i <= urlHash.length)
+
+            const dur = parts.find(p => p.startsWith("dur="))?.substring("dur=".length);
+            const description = parts.find(p => p.startsWith("desc="))?.substring("desc=".length);
+
+            const duration = dur ? Number(dur) : -1
+
+            event.locals.addTiming({
+                id,
+                duration,
+                description: reqURL.pathname + " " + (description ?? parts[0])
+            })
+        }
+    }
+    return response;
+};
 
 export const handle: Handle = async ({ event, resolve }) => {
 
@@ -90,6 +122,9 @@ export const handle: Handle = async ({ event, resolve }) => {
 
     event.locals.addTiming = (...timing: TimingEntry[]) => {
         timings.push(...timing)
+    }
+    event.locals.hasTiming = (id: string) => {
+        return !!timings.find(t => t.id === id);
     }
 
     if(event.url.pathname === "/history") {

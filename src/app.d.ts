@@ -13,6 +13,7 @@ declare global {
     namespace App {
         interface Locals {
             addTiming: (...timing: TimingEntry[]) => void,
+            hasTiming: (id: string) => boolean,
             id: string
         }
         // interface PageData {}

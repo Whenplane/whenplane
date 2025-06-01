@@ -157,6 +157,37 @@ export function isIterable(obj: never) {
     return typeof obj[Symbol.iterator] === 'function';
 }
 
+export async function sha1(str: string, radix = 16) {
+    const buffer = new TextEncoder().encode(str);
+    const hash = await crypto.subtle.digest("SHA-1", buffer);
+    return hex(hash, radix);
+}
+
+export async function sha256(str: string, radix = 16) {
+    const buffer = new TextEncoder().encode(str);
+    const hash = await crypto.subtle.digest("SHA-256", buffer);
+    return hex(hash, radix);
+}
+
+export function hex(buffer: ArrayBuffer, radix = 16) {
+    let digest = ''
+    const view = new DataView(buffer)
+    for(let i = 0; i < view.byteLength; i += 4) {
+        // We use getUint32 to reduce the number of iterations (notice the `i += 4`)
+        const value = view.getUint32(i)
+        // toString(16) will transform the integer into the corresponding hex string
+        // but will remove any initial "0"
+        const stringValue = value.toString(radix)
+        // One Uint32 element is 4 bytes or 8 hex chars (it would also work with 4
+        // chars for Uint16 and 2 chars for Uint8)
+        const padding = '00000000'
+        const paddedValue = (padding + stringValue).slice(-padding.length)
+        digest += paddedValue
+    }
+
+    return digest
+}
+
 
 
 export type HistoricalEntry = {
