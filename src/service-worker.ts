@@ -82,7 +82,9 @@ sw.addEventListener('fetch', (event) => {
 
       // Assets should already be cached so this *shouldn't* happen, but we're here so why not
       if (response.status === 200) {
-        event.waitUntil(cache.put(event.request, response.clone()));
+        (async () => {
+          event.waitUntil(cache.put(event.request, response.clone()))
+        })().then()
       }
 
       return response;
