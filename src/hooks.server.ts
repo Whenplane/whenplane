@@ -50,8 +50,6 @@ export const handleFetch: HandleFetch = async ({ event, request, fetch }) => {
 };
 
 export const handle: Handle = async ({ event, resolve }) => {
-    const start = Date.now();
-
     const ua = event.request.headers.get("user-agent");
 
     if(event.platform?.env?.REQUESTS && event.request.headers.has("host")) {
@@ -163,11 +161,6 @@ export const handle: Handle = async ({ event, resolve }) => {
     } else if(!dev && !building) {
         console.warn("Missing platform or platform.cf!")
     }
-
-    event.locals.addTiming({
-        id: "preResolve",
-        duration: Date.now() - start
-    })
 
     const resolveStart = Date.now();
     const response = await resolve(
