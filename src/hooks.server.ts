@@ -38,7 +38,10 @@ export const handleFetch: HandleFetch = async ({ event, request, fetch }) => {
             event.locals.addTiming({
                 id,
                 duration,
-                description: reqURL.pathname + " " + (description?.replaceAll("\"", "\\\"") ?? parts[0])
+                description: reqURL.pathname + " " + (description
+                    ?.replaceAll("\\", "\\\\")
+                    ?.replaceAll("\"", "\\\"")
+                  ?? parts[0])
             })
         }
     }
