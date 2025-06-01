@@ -76,7 +76,7 @@ export const GET = (async ({fetch, url, platform, locals}) => {
               lastFetch: cachedTime.getTime(),
               lastData: data
             };
-            return data;
+            return json(data);
           }
         }
       } else {
