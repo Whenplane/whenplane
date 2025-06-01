@@ -6,7 +6,8 @@ import type { FpEndpointResponse } from "../(live-statuses)/floatplane/+server.t
 export const GET = (async ({fetch}) => {
   // In the future this will be from a database, but this will be fine for now. (update a year later: heh)
 
-  const data: SpecialStream | false = Date.now() > 1742608091103 ? {
+
+  const data: SpecialStream | false = /*Date.now() > 1742608091103 ? {
     title: "Derpy Dinos - Streams with Sarah FP Exclusive",
     thumbnail: "https://pbs.floatplane.com/stream_thumbnails/5c13f3c006f1be15e08e05c0/690027088370846_1743099965628.jpeg",
 
@@ -19,7 +20,7 @@ export const GET = (async ({fetch}) => {
     // twitchNotes: "first half",
 
     onYoutube: false
-  } : false //false;
+  } :*/ false as SpecialStream | false;
 
   if(!data) {
     return json(data);
