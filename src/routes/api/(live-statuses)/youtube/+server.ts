@@ -52,7 +52,7 @@ export const GET = (async ({platform, locals, url, fetch}) => {
         if(cacheMatch) {
             const fetched = cacheMatch.headers.get("x-fetched")
             if(fetched && Date.now() - new Date(fetched).getTime() < cacheTime) {
-                return cacheMatch.clone();
+                return new Response(cacheMatch.body, {headers: {...cacheMatch.headers}});
             }
         }
     } else {
