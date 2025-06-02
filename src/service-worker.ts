@@ -71,6 +71,8 @@ sw.addEventListener('fetch', (event) => {
       }
     }
 
+    console.log("Fetching from network: " + url.pathname);
+
     try {
       const response = await fetch(event.request, { signal: AbortSignal.timeout(5000) });
 
