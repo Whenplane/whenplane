@@ -54,7 +54,6 @@ sw.addEventListener('install', (event) => {
 });
 
 sw.addEventListener('fetch', (event) => {
-  return;
   // ignore POST requests etc
   if (event.request.method !== 'GET') return;
 
@@ -100,7 +99,10 @@ sw.addEventListener('fetch', (event) => {
     }
   }
 
-  if(ALL_ASSETS.includes(url.pathname)) event.respondWith(respond());
+  if(ALL_ASSETS.includes(url.pathname)) {
+    console.log("Serving from cache: " + url.pathname);
+    event.respondWith(respond());
+  }
 });
 
 sw.addEventListener('activate', (event) => {
