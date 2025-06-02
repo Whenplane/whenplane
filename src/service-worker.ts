@@ -64,15 +64,19 @@ sw.addEventListener('fetch', (event) => {
 
     const cacheStart = Date.now();
     // `build`/`files` can always be served from the cache
-    const browserCache: Promise<Response | undefined> = ASSETS.includes(url.pathname) ?
-      cache.then(c => c.match(event.request)) :
-      Promise.resolve(undefined);
+    const browserCache: Promise<Response> = ASSETS.includes(url.pathname) ?
+      cache.then(async c => {
+        const match = await c.match(event.request);
+        if(!match) throw new Error("No match");
+        return match;
+      }) :
+      Promise.reject();
 
     browserCache.then(() => {
       console.debug("Fetching", url.pathname, "from cache took", (Date.now() - cacheStart) + "ms.")
     })
 
-    try {
+    const doFetch = (async () => {
       const response = await fetch(event.request, { signal: AbortSignal.timeout(3000) });
 
       // if we're offline, fetch can return a value that is not a Response
@@ -88,18 +92,9 @@ sw.addEventListener('fetch', (event) => {
 
       console.debug("Not serving from cache", url.pathname);
       return response;
-    } catch(e) {
-      const cacheResult = await browserCache;
+    })()
 
-      if(cacheResult) {
-        console.debug("Serving from cache", url.pathname);
-        return cacheResult;
-      }
-
-      // if there's no cache, then just error out
-      // as there is nothing we can do to respond to this request
-      throw e;
-    }
+    return await Promise.any([browserCache, doFetch]) as Response;
   }
 
   if(ALL_ASSETS.includes(url.pathname)) event.respondWith(respond());
