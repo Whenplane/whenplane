@@ -60,6 +60,7 @@ sw.addEventListener('fetch', (event) => {
   const url = new URL(event.request.url);
 
   async function respond() {
+    const start = Date.now();
     const cache = await caches.open(CACHE);
 
     // `build`/`files` can always be served from the cache
@@ -67,6 +68,7 @@ sw.addEventListener('fetch', (event) => {
       const response = await cache.match(url.pathname);
 
       if (response) {
+        console.debug("Serving", url.pathname, "from cache took", (Date.now() - start) + "ms");
         return response;
       }
     }
@@ -74,9 +76,7 @@ sw.addEventListener('fetch', (event) => {
     console.log("Fetching from network: " + url.pathname);
 
     try {
-      let start = Date.now();
       const response = await fetch(event.request, { signal: AbortSignal.timeout(5000) });
-      console.debug("Fetch took", (Date.now() - start) + "ms", url.pathname)
 
       // if we're offline, fetch can return a value that is not a Response
       // instead of throwing - and we can't pass this non-Response to respondWith
@@ -86,10 +86,7 @@ sw.addEventListener('fetch', (event) => {
 
       // Assets should already be cached so this *shouldn't* happen, but we're here so why not
       if (response.status === 200) {
-        start = Date.now()
         // event.waitUntil(cache.put(event.request, response.clone()));
-        const distance = Date.now() - start;
-        if(distance > 0) console.log("Caching took", distance + "ms", url.pathname)
       }
 
       return response;
