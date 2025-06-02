@@ -62,15 +62,18 @@ sw.addEventListener('fetch', (event) => {
   async function respond() {
     const cache = await caches.open(CACHE);
 
+    const cacheStart = Date.now();
     // `build`/`files` can always be served from the cache
     const browserCache: Promise<Response | undefined> = ASSETS.includes(url.pathname) ?
       cache.match(event.request) :
       Promise.resolve(undefined);
 
-    console.log("Fetching from network: " + url.pathname);
+    browserCache.then(() => {
+      console.debug("Fetching", url.pathname, "from cache took", (Date.now() - cacheStart) + "ms.")
+    })
 
     try {
-      const response = await fetch(event.request, { signal: AbortSignal.timeout(5000) });
+      const response = await fetch(event.request, { signal: AbortSignal.timeout(3000) });
 
       // if we're offline, fetch can return a value that is not a Response
       // instead of throwing - and we can't pass this non-Response to respondWith
@@ -83,11 +86,13 @@ sw.addEventListener('fetch', (event) => {
         event.waitUntil(cache.put(event.request, response.clone()));
       }
 
+      console.debug("Not serving from cache", url.pathname);
       return response;
     } catch(e) {
       const cacheResult = await browserCache;
 
       if(cacheResult) {
+        console.debug("Serving from cache", url.pathname);
         return cacheResult;
       }
 
@@ -97,12 +102,7 @@ sw.addEventListener('fetch', (event) => {
     }
   }
 
-  if(ALL_ASSETS.includes(url.pathname)) {
-    console.log("Serving from cache: " + url.pathname);
-    event.respondWith(respond());
-  } else {
-    console.log("Not serving from cache: " + url.pathname);
-  }
+  if(ALL_ASSETS.includes(url.pathname)) event.respondWith(respond());
 });
 
 sw.addEventListener('activate', (event) => {
