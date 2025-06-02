@@ -87,7 +87,7 @@ sw.addEventListener('fetch', (event) => {
       // Assets should already be cached so this *shouldn't* happen, but we're here so why not
       if (response.status === 200) {
         start = Date.now()
-        event.waitUntil(cache.put(event.request, response.clone()));
+        // event.waitUntil(cache.put(event.request, response.clone()));
         const distance = Date.now() - start;
         if(distance > 0) console.log("Caching took", distance + "ms", url.pathname)
       }
