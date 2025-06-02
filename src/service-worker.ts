@@ -102,6 +102,8 @@ sw.addEventListener('fetch', (event) => {
   if(ALL_ASSETS.includes(url.pathname)) {
     console.log("Serving from cache: " + url.pathname);
     event.respondWith(respond());
+  } else {
+    console.log("Not serving from cache: " + url.pathname);
   }
 });
 
