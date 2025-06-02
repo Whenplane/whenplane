@@ -60,12 +60,12 @@ sw.addEventListener('fetch', (event) => {
   const url = new URL(event.request.url);
 
   async function respond() {
-    const cache = await caches.open(CACHE);
+    const cache = caches.open(CACHE);
 
     const cacheStart = Date.now();
     // `build`/`files` can always be served from the cache
     const browserCache: Promise<Response | undefined> = ASSETS.includes(url.pathname) ?
-      cache.match(event.request) :
+      cache.then(c => c.match(event.request)) :
       Promise.resolve(undefined);
 
     browserCache.then(() => {
@@ -83,7 +83,7 @@ sw.addEventListener('fetch', (event) => {
 
       // Assets should already be cached so this *shouldn't* happen, but we're here so why not
       if (response.status === 200) {
-        event.waitUntil(cache.put(event.request, response.clone()));
+        event.waitUntil(cache.then(c => c.put(event.request, response.clone())));
       }
 
       console.debug("Not serving from cache", url.pathname);
