@@ -1,7 +1,8 @@
 <script>
     export let fill = "currentColor";
+    export let height = "32";
 </script>
-<svg viewBox="120 120 240 240" class="inline-block" height="32" {fill}>
+<svg viewBox="120 120 240 240" class="inline-block" {height} {fill}>
     <path d="M295.3,314.9A91.89,91.89,0,0,1,165.8,185.4l-8.4-10.7A105.32,105.32,0,0,0,306.1,323.4Z"></path>
     <path d="M207.1,157.4a93,93,0,0,1,28.9-4.6,91.84,91.84,0,0,1,91.9,91.9,93,93,0,0,1-4.6,28.9L333.7,284a105.32,105.32,0,0,0-137-137Z"></path>
     <path d="M219.5,189.1,162.3,130l-8.9,13.9a3.62,3.62,0,0,0,.3,4.2l49.6,63.7Z"></path>

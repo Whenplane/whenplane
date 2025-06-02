@@ -180,7 +180,7 @@ export const handle: Handle = async ({ event, resolve }) => {
     if(timings.length > 0) {
         const timingStrings: string[] = [];
 
-        console.debug({ timings })
+        if(!dev) console.debug({ timings })
 
         for (const timing of timings) {
             if(timing.description) {

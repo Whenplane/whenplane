@@ -24,6 +24,7 @@
 	import CaretDownFill from "svelte-bootstrap-icons/lib/CaretDownFill.svelte";
 	import {popup} from "@skeletonlabs/skeleton";
 	import { getDateFormatLocale, getTimePreference } from "$lib/prefUtils.ts";
+	import MoreLinks from "$lib/MoreLinks.svelte";
 
 	export let data;
 
@@ -335,35 +336,8 @@
 					<span class="capitalize">More</span>
 					<span><CaretDownFill/></span>
 				</button>
-				<div class="card w-48 !shadow-2xl overflow-hidden z-20" data-popup="moreDropdown">
-					<a class="btn variant-filled-surface rounded-none w-full" href="/search">
-						WAN Show Search
-					</a>
-					<a class="btn variant-filled-surface rounded-none w-full" href="/notifications">
-						Push Notifications
-					</a>
-					<a class="btn variant-filled-surface rounded-none w-full" href="/merch-messages">
-						Merch Messages Index
-					</a>
-					<a class="btn variant-filled-surface rounded-none w-full" href="/extension">
-						Whenplane Extension
-					</a>
-					<a class="btn variant-filled-surface rounded-none w-full" href="/lttstore">
-						LTTStore Watcher
-					</a>
-					<a class="btn variant-filled-surface rounded-none w-full" href="/floatplane">
-						Floatplane Watcher
-					</a>
-					<a class="btn variant-filled-surface rounded-none w-full" href="/news">
-						Whenplane News
-					</a>
-					<a class="btn variant-filled-surface rounded-none w-full" href="/about">
-						About & Preferences
-					</a>
-					<a class="btn variant-filled-surface rounded-none w-full" href="/discord" data-sveltekit-reload>
-						Whenplane Discord
-					</a>
-
+				<div class="card w-58 !shadow-2xl overflow-hidden z-20 !bg-surface-500" data-popup="moreDropdown">
+					<MoreLinks/>
 
 					<div class="arrow bg-surface-400-500-token" />
 				</div>
