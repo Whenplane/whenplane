@@ -60,18 +60,12 @@ sw.addEventListener('fetch', (event) => {
   const url = new URL(event.request.url);
 
   async function respond() {
-    const start = Date.now();
     const cache = await caches.open(CACHE);
 
     // `build`/`files` can always be served from the cache
-    if (ASSETS.includes(url.pathname)) {
-      const response = await cache.match(url.pathname);
-
-      if (response) {
-        console.debug("Serving", url.pathname, "from cache took", (Date.now() - start) + "ms");
-        return response;
-      }
-    }
+    const browserCache: Promise<Response | undefined> = ASSETS.includes(url.pathname) ?
+      cache.match(event.request) :
+      Promise.resolve(undefined);
 
     console.log("Fetching from network: " + url.pathname);
 
@@ -86,15 +80,15 @@ sw.addEventListener('fetch', (event) => {
 
       // Assets should already be cached so this *shouldn't* happen, but we're here so why not
       if (response.status === 200) {
-        // event.waitUntil(cache.put(event.request, response.clone()));
+        event.waitUntil(cache.put(event.request, response.clone()));
       }
 
       return response;
     } catch(e) {
-      const response = await cache.match(event.request);
+      const cacheResult = await browserCache;
 
-      if (response) {
-        return response;
+      if(cacheResult) {
+        return cacheResult;
       }
 
       // if there's no cache, then just error out
