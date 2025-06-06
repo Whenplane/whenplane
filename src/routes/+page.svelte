@@ -260,7 +260,7 @@
 						</span>
 					{/if}
 				{:else if isLate}
-					It usually <i>actually</i> starts between 1 and 3 hours late.
+					It usually <i>actually</i> starts roughly 1 or 2 hours late.
 				{:else if (data.isMainShow && data.mainShowStarted) || data.isPreShow}
 					{#if data.isPreShow && data.liveStatus?.twitch.isLive}
 						Pre-show started
