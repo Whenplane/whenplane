@@ -38,7 +38,7 @@ export const GET = (async ({platform, url}) => {
     const fast = url.searchParams.get("fast") === "true";
 
     // With the fast flag (added for initial page load requests), always fetch cached data if its from within the past 5 hours
-    const cacheTime = fast ? (5 * 60 * 60e3) : (isNearWan() ? 4750 : 15e3); // Fetch from twitch no more than once every (just under) 5 seconds on wan days, 15 seconds otherwise
+    const cacheTime = fast ? (isNearWan() ? (60 * 60e3) : (5 * 60 * 60e3)) : (isNearWan() ? 4750 : 15e3); // Fetch from twitch no more than once every (just under) 5 seconds on wan days, 15 seconds otherwise
 
     // console.debug(1)
     const cachedIsLive = fastCache.lastFetchData?.data?.length != 0;
