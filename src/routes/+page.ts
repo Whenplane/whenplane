@@ -73,7 +73,7 @@ export const load = (async ({fetch, params, url}) => {
         liveStatus.youtube = {...liveStatus.youtube, ...overwriteData.data.youtube};
         liveStatus.twitch = {...liveStatus.twitch, ...overwriteData.data.twitch};
         liveStatus.specialStream = overwriteData.data.specialStream ?? liveStatus.specialStream;
-        liveStatus.floatplane = {...liveStatus.floatplane, ...overwriteData.data.floatplane};
+        liveStatus.floatplane = {...liveStatus.floatplane, ...(liveStatus.floatplane.isThumbnailNew ? {} : overwriteData.data.floatplane) };
         liveStatus.notablePeople = Object.values(liveStatus.notablePeople).some(n => n.isLive) ? liveStatus.notablePeople : overwriteData.data.notablePeople;
         liveStatus.hasDone = overwriteData.data.hasDone;
         liveStatus.isThereWan = overwriteData.data.isThereWan;
