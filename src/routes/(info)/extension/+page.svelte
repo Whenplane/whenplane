@@ -44,8 +44,8 @@
     </a>
     <br>
     or download zip for
-    <a href="https://downloads.whenplane.com/whenplane_widget-firefox-2.1.2.zip" download>firefox</a> /
-    <a href="https://downloads.whenplane.com/whenplane_widget-chrome-2.1.2.zip" download>chrome</a>
+    <a href="https://downloads.whenplane.com/whenplane_widget-firefox-2.1.3.zip" download>firefox</a> /
+    <a href="https://downloads.whenplane.com/whenplane_widget-chrome-2.1.3.zip" download>chrome</a>
     <br>
     <br>
     <a
