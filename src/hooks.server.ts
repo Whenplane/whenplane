@@ -138,6 +138,10 @@ export const handle: Handle = async ({ event, resolve }) => {
 
     event.params.__h__userAgent = event.request.headers.get("user-agent") ?? undefined
 
+    if(event.platform?.cf?.timezone) {
+        event.params.__timezone = event.platform?.cf?.timezone
+    }
+
     if(event.platform) {
         event.platform = {
             ...event.platform,

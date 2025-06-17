@@ -252,13 +252,8 @@
 
 				{#if !isAfterStartTime && !data.isMainShow}
 					Next WAN:
-					{#if mounted} <!-- dont SSR next wan date, as server timezone and locale is probably different than the users' -->
-						<span in:fade|global={{duration: 150}}>
-							<!--{getNextWAN().toLocaleString()}-->
-							{getNextWAN().toLocaleDateString(getDateFormatLocale())}
-							{getNextWAN().toLocaleTimeString(undefined, {hour12: getTimePreference()})}
-						</span>
-					{/if}
+					{getNextWAN().toLocaleDateString(getDateFormatLocale(), {timeZone: $page.params.timeZone})}
+					{getNextWAN().toLocaleTimeString(undefined, {hour12: getTimePreference(), timeZone: $page.params.timeZone})}
 				{:else if isLate}
 					It usually <i>actually</i> starts roughly 1 or 2 hours late.
 				{:else if (data.isMainShow && data.mainShowStarted) || data.isPreShow}
@@ -270,11 +265,7 @@
 						Started
 					{/if}
 					at
-					{#if mounted}
-						<span in:fade|global={{duration: 150}}>
-							{new Date(data.mainShowStarted ?? data.preShowStarted ?? data.liveStatus.floatplane.started).toLocaleTimeString(undefined, {hour12: getTimePreference()})}
-						</span>
-					{/if}
+					{new Date(data.mainShowStarted ?? data.preShowStarted ?? data.liveStatus.floatplane.started).toLocaleTimeString(undefined, {hour12: getTimePreference(), timeZone: $page.params.timeZone})}
 				{/if}
 			</div>
 		</div>
