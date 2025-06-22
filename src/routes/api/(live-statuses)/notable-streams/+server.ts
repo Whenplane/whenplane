@@ -27,6 +27,7 @@ const allowedHosts = [
 let recordedBocaStreamStart = false;
 let firstBoca = true;
 let bocaWasLive: string | false = false;
+let lastBocaBadEndCheck = 0;
 
 const lastNotifSends: {[channel: string]: number} = {};
 
@@ -227,6 +228,22 @@ export const GET = (async ({platform, url, request}) => {
             await db.prepare("insert into boca_streams (startedEpoch, started) values (?, ?) ON CONFLICT(startedEpoch, started) DO NOTHING")
               .bind(startedEpoch, started)
               .run();
+            if(Date.now() - lastBocaBadEndCheck > 10 * 60e3) {
+              lastBocaBadEndCheck = Date.now();
+              const existingEnded = await db.prepare("select ended from boca_streams where startedEpoch=?")
+                .bind(startedEpoch)
+                .first<{ended: string}>()
+                .then(r => r?.ended);
+              if(existingEnded) { // we recorded an end time even though the stream isn't over! remove it as long as it's been a few mins
+                const existingEndedDate = new Date(existingEnded);
+                if(Date.now() - existingEndedDate.getTime() > 10 * 60e3) { // we wait a few minutes in case its just twitch not syncing globally yet that the stream ended
+                  await db.prepare("update boca_streams set ended=? where startedEpoch=?")
+                    .bind(null, startedEpoch)
+                    .run();
+                  console.warn("Removed boca stream end time for " + started + " because boca is still live!");
+                }
+              }
+            }
           })());
           recordedBocaStreamStart = true;
           bocaWasLive = started;
