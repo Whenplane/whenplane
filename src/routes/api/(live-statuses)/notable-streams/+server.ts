@@ -223,6 +223,8 @@ export const GET = (async ({platform, url, request}) => {
               firstBoca = false;
               await db.prepare("create table if not exists boca_streams (startedEpoch integer, started text, ended text, UNIQUE(startedEpoch, started))")
                 .run();
+              await db.prepare("create index if not exists boca_streams_startedEpoch on boca_streams(startedEpoch)")
+                .run();
             }
 
             await db.prepare("insert into boca_streams (startedEpoch, started) values (?, ?) ON CONFLICT(startedEpoch, started) DO NOTHING")
