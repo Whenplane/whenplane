@@ -277,6 +277,19 @@ export function timeString(distance: number | undefined, long = false, showSecon
     return daysS + hoursS + minutesS + (showSeconds ? and + secondsS : minutes > 0 ? "" : "<1 minute");
 }
 
+export function colonTimeString(distance: number | undefined) {
+    if(distance == undefined) return undefined;
+    const hours = Math.floor((distance) / (60 * 60));
+    const minutes = Math.floor((distance % (60 * 60)) / 60);
+    const seconds = Math.floor((distance % 60));
+
+    const hoursS = hours > 0 ? addZero(hours)+":" : "";
+    const minutesS = addZero(minutes)+":";
+    const secondsS = addZero(seconds);
+
+    return hoursS + minutesS + secondsS
+}
+
 export function timeStringHours(distance: number | undefined, long = false) {
     if(distance == undefined) return undefined;
     const hours = Math.floor((distance) / (1000 * 60 * 60));

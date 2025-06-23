@@ -4,9 +4,13 @@
   import type { Timestamp } from "$lib/timestamps/types.ts";
 
   import { page } from "$app/stores";
+  import { colonTimeString } from "$lib/timeUtils.ts";
 
   export let subTopics: Timestamp[];
   export let youtubeId: string;
+
+  export let floatplane = false;
+  export let preShowLength: number | undefined;
 
   const firstFew = subTopics.filter((e, i) => i < 2)
   const rest = subTopics.filter((e, i) => i >= 2)
@@ -34,7 +38,11 @@
         target="_blank" rel="noopener"
       >
         <span class="opacity-70">
-          {topic.timeString}
+          {#if floatplane && preShowLength}
+            {colonTimeString(topic.time + preShowLength)}
+          {:else}
+            {topic.timeString}
+          {/if}
         </span>
         {topic.name}
       </a>
@@ -58,13 +66,17 @@
           rel="noopener"
         >
           <span class="opacity-70">
-            {topic.timeString}
+            {#if floatplane && preShowLength}
+              {colonTimeString(topic.time + preShowLength)}
+            {:else}
+              {topic.timeString}
+            {/if}
           </span>
           {topic.name}
         </a>
 
         {#if topic.subTimestamps && topic.subTimestamps.length > 0}
-          <svelte:self subTopics={topic.subTimestamps}/>
+          <svelte:self subTopics={topic.subTimestamps} {floatplane} {preShowLength}/>
         {/if}
       </li>
     {/each}

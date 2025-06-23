@@ -133,6 +133,7 @@ export const handle: Handle = async ({ event, resolve }) => {
     if(event.url.pathname === "/history") {
         event.params.__c__viewType = event.cookies.get("historyViewType")
     }
+    event.params.__c__timestampPlatform = event.cookies.get("timestampPlatform")
 
     event.params.__c__disableNotableStreams = event.cookies.get("disableNotableStreams")
 

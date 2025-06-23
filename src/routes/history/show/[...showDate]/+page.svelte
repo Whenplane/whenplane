@@ -1,10 +1,10 @@
 <script lang="ts">
     import HistoricalShow from "$lib/history/HistoricalShow.svelte";
-    import { getClosestWan, timeString } from "$lib/timeUtils";
+    import { colonTimeString, getClosestWan, timeString } from "$lib/timeUtils";
     import Floatplane from "$lib/svg/Floatplane.svelte";
     import Youtube from "$lib/svg/Youtube.svelte";
     import {getTimeUntil} from "$lib/timeUtils";
-    import { dev } from "$app/environment";
+    import { browser, dev } from "$app/environment";
     import { page } from "$app/stores";
     import type { WanDb_Topic } from "$lib/wdb_types.ts";
     import SubTopics from "$lib/subcomponents/SubTopics.svelte";
@@ -12,6 +12,8 @@
 
     import { getDateFormatLocale } from "$lib/prefUtils.ts";
     import { truncateText } from "$lib/utils.js";
+    import { getCookie, setCookie } from "$lib/cookieUtils.ts";
+    import { SlideToggle } from "@skeletonlabs/skeleton";
 
     export let data;
 
@@ -32,6 +34,23 @@
     const backHash =  `?to=${showDate.getUTCFullYear()}#` + data.name;
 
     let onTimeUntil = data.metadata.mainShowStart ? getTimeUntil(showDate, new Date(data.metadata.mainShowStart).getTime()) : null;
+
+    const preShowLength = preShowStart && mainShowStart ?
+      getTimeUntil(mainShowStart as Date, (preShowStart as Date).getTime()).distance/1e3 :
+      null;
+
+    let timestampPlatform: string | null;
+    timestampPlatform = (browser ? getCookie("timestampPlatform") : $page.params.__c__timestampPlatform) ?? "youtube"; // seperate so it doesnt try to react
+
+    function toggleTimestampPlatform() {
+        const before = getCookie("timestampPlatform");
+        if(before === "floatplane") {
+            timestampPlatform = "youtube";
+        } else {
+            timestampPlatform = "floatplane";
+        }
+        setCookie("timestampPlatform", timestampPlatform)
+    }
 
     let onTimeString: string;
     $: if(onTimeUntil) onTimeString = onTimeUntil.distance < 5 * 60e3 ? "on time!" : (onTimeUntil.late ? onTimeUntil.string + "late" : onTimeUntil.string + "early!");
@@ -146,7 +165,11 @@
             {#if timestamps && timestamps.length > 0}
                 <h2>Timestamps</h2>
                 Provided by <a href="/noki">NoKi</a>
-                <br>
+                <div class="flex justify-center items-center mt-2">
+                    <Youtube/>
+                    <SlideToggle checked={timestampPlatform === "floatplane"} on:change={toggleTimestampPlatform}/>
+                    <Floatplane/>
+                </div>
                 <div in:fade={{duration: 100}} class="text-left inline-block mx-auto">
                     <ol class="normal-list">
                         {#each timestamps as timestamp, i}
@@ -158,13 +181,17 @@
                                   rel="noopener"
                                 >
                                     <span class="opacity-70">
-                                      {timestamp.timeString}
+                                      {#if timestampPlatform === "floatplane" && preShowLength}
+                                          {colonTimeString(timestamp.time + preShowLength)}
+                                      {:else}
+                                          {timestamp.timeString}
+                                      {/if}
                                     </span>
                                     {timestamp.name}
                                 </a>
 
                                 {#if timestamp.subTimestamps && timestamp.subTimestamps.length > 0}
-                                    <SubTopics subTopics={timestamp.subTimestamps} {youtubeId}/>
+                                    <SubTopics subTopics={timestamp.subTimestamps} {youtubeId} {preShowLength} floatplane={timestampPlatform === "floatplane"}/>
                                 {/if}
 
                             </li>
