@@ -7,20 +7,20 @@ export const GET = (async ({fetch}) => {
   // In the future this will be from a database, but this will be fine for now. (update a year later: heh)
 
 
-  const data: SpecialStream | false = /*Date.now() > 1742608091103 ? {
-    title: "Derpy Dinos - Streams with Sarah FP Exclusive",
-    thumbnail: "https://pbs.floatplane.com/stream_thumbnails/5c13f3c006f1be15e08e05c0/690027088370846_1743099965628.jpeg",
+  const data: SpecialStream | false = /*Date.now() > 1742608091103 ?*/ {
+    title: "Building 5 PCs in the 5 BEST selling Cases",
+    thumbnail: "https://pbs.floatplane.com/stream_thumbnails/5c13f3c006f1be15e08e05c0/299559822037673_1750877104569.jpeg",
 
-    start: "2025-03-27T19:00:00Z",
-    startIsEstimated: false,
+    start: "2025-06-25T19:30:00Z",
+    startIsEstimated: true,
 
     onFloatplane: true,
 
-    onTwitch: false,
+    onTwitch: true,
     // twitchNotes: "first half",
 
-    onYoutube: false
-  } :*/ false as SpecialStream | false;
+    onYoutube: true
+  } //: false as SpecialStream | false;
 
   if(!data) {
     return json(data);
