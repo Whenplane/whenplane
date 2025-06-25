@@ -206,7 +206,7 @@
 				So the only way we know that a stream is happening is when they upload a title, description, and thumbnail.<br>
 				This usually happens a few hours before the stream starts, and a guess is made at the start time.<br>
 				It will be updated if there is any official word.<br>
-				If something was announced or you have info, please contact me. My contact details are on the about page.
+				If something was announced or you have info, please contact me. My contact details are on the about page. (click on the more dropdown, then go to "About & Preferences)
 			</div>
 			<br>
 			<div class="card p-4 inline-block countdown-box text-left">
