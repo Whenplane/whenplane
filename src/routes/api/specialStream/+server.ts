@@ -11,8 +11,8 @@ export const GET = (async ({fetch}) => {
     title: "Building 5 PCs in the 5 BEST selling Cases",
     thumbnail: "https://pbs.floatplane.com/stream_thumbnails/5c13f3c006f1be15e08e05c0/299559822037673_1750877104569.jpeg",
 
-    start: "2025-06-25T20:00:00Z",
-    startIsEstimated: true,
+    start: "2025-06-25T19:45:00Z",
+    startIsEstimated: false,
 
     onFloatplane: true,
 
