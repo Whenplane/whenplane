@@ -147,7 +147,7 @@ export const GET = (async ({url, fetch, locals, platform}) => {
                     },
                     method: "POST",
                     body: JSON.stringify({
-                        timestamp: Date.now(),
+                        timestamp: lowestTimestamp,
                         ...thisWsMessage
                     })
                 }))
