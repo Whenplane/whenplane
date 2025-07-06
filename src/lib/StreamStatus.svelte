@@ -5,6 +5,7 @@
     import {onMount} from "svelte";
     import { page } from "$app/stores";
     import {timeString} from "$lib/timeUtils";
+    import { getDateFormatLocale, getTimePreference } from "$lib/prefUtils.ts";
 
     export let data;
 
@@ -61,7 +62,7 @@
         </span>
         <span>
             Youtube<br>
-            <span class="status opacity-50" class:wan={data.liveStatus.youtube?.isWAN} class:upcoming={data.liveStatus.youtube?.upcoming}>
+            <span class="status opacity-50" class:wan={data.liveStatus.youtube?.isWAN && data.liveStatus.youtube?.isLive} class:upcoming={data.liveStatus.youtube?.upcoming}>
                 {#if data.liveStatus.youtube?.isLive}
                     {#if data.liveStatus.youtube.isWAN}
                         (live)
@@ -71,9 +72,10 @@
                 {:else}
                     {#if data.liveStatus.youtube?.upcoming}
                         {#if data.liveStatus.youtube.scheduledStart && new Date(data.liveStatus.youtube.scheduledStart).getTime() > nowish}
+                            {@const scheduled = new Date(data.liveStatus.youtube.scheduledStart)}
                             (scheduled:
-                            <span class="inline-block min-w-[65px]">
-                                {timeString(new Date(data.liveStatus.youtube.scheduledStart).getTime() - nowish).trim()})
+                            <span class="inline-block min-w-[65px]" title="Scheduled for {scheduled.toLocaleDateString(getDateFormatLocale(), {dateStyle: "medium"})}, {scheduled.toLocaleTimeString(undefined, {timeStyle: "short", hour12: getTimePreference()})}">
+                                {timeString(scheduled.getTime() - nowish)?.trim()})
                             </span>
                         {:else}
                             (upcoming)
