@@ -28,10 +28,26 @@
     if(browser && data.floatplane?.thumbnail) {
       if(lastUrl !== data.floatplane?.thumbnail) {
         lastUrl = data.floatplane?.thumbnail;
-        fetch("/cdn-cgi/image/format=png/" + data.floatplane?.thumbnail)
-          .then(r => r.blob())
-          .then(b => thumbnailBlob = b)
-          .catch(e => console.error("Failed to fetch thumbnail blob for copy:", e))
+
+        let img = new Image();
+
+        img.onload = () => {
+          let canvas = document.createElement("canvas");
+          canvas.width = img.width;
+          canvas.height = img.height;
+
+          let ctx = canvas.getContext('2d');
+          ctx?.drawImage(img, 0, 0);
+
+          // Convert the image to PNG format
+          canvas.toBlob(i => {
+            thumbnailBlob = i ?? undefined;
+          }, "image/png")
+
+        }
+
+        img.src = "/floatplane/thumbnail";
+
       }
     } else {
       thumbnailBlob = undefined;
@@ -66,19 +82,6 @@
       initial?.pop();
     }
     liveStatusChangeTime = initial?.join(" ") ?? "";
-  }
-
-  function copyDiscordTitle() {
-    if(!thumbnailBlob) {
-      console.warn("Thumbnail blob is falsy, not copying");
-      return;
-    }
-    navigator.clipboard.write([
-      new ClipboardItem({
-        [thumbnailBlob.type]: thumbnailBlob,
-        // 'text/plain': "```" + data.floatplane?.title + "```"
-      }),
-    ]);
   }
 </script>
 
@@ -193,9 +196,6 @@
 </div>
 
 <pre>{JSON.stringify(data.floatplane, undefined, '\t')}</pre>
-
-<button class="btn btn-sm variant-filled-surface m-2" on:click={copyDiscordTitle}>Copy title/thumbnail for discord</button>
-
 <div class="p-4">
   <span class="text-sm opacity-60">
     Whenplane and the Whenplane Floatplane Watcher is not affiliated with or endorsed by Linus Media Group.
