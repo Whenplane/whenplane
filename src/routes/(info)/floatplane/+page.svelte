@@ -22,39 +22,6 @@
 
   let lastInvalidate = 0;
 
-  let thumbnailBlob: Blob | undefined = undefined;
-  let lastUrl: string | undefined = undefined;
-  $: {
-    if(browser && data.floatplane?.thumbnail) {
-      if(lastUrl !== data.floatplane?.thumbnail) {
-        lastUrl = data.floatplane?.thumbnail;
-
-        let img = new Image();
-
-        img.onload = () => {
-          let canvas = document.createElement("canvas");
-          canvas.width = img.width;
-          canvas.height = img.height;
-
-          let ctx = canvas.getContext('2d');
-          ctx?.drawImage(img, 0, 0);
-
-          // Convert the image to PNG format
-          canvas.toBlob(i => {
-            thumbnailBlob = i ?? undefined;
-          }, "image/png")
-
-        }
-
-        img.src = "/floatplane/thumbnail";
-
-      }
-    } else {
-      thumbnailBlob = undefined;
-    }
-  }
-
-
   let liveStatusChangeTime = "";
 
   onMount(() => {
