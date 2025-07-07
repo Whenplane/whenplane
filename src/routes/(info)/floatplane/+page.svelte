@@ -1,4 +1,4 @@
-<script>
+<script lang="ts">
   import sanitizeHtml from "sanitize-html";
   import { newsSanitizeSettings } from "$lib/news/news";
   import { onMount } from "svelte";
@@ -21,6 +21,22 @@
   $: console.debug({data})
 
   let lastInvalidate = 0;
+
+  let thumbnailBlob: Blob | undefined = undefined;
+  let lastUrl: string | undefined = undefined;
+  $: {
+    if(browser && data.floatplane?.thumbnail) {
+      if(lastUrl !== data.floatplane?.thumbnail) {
+        lastUrl = data.floatplane?.thumbnail;
+        fetch("/cdn-cgi/image/format=png/" + data.floatplane?.thumbnail)
+          .then(r => r.blob())
+          .then(b => thumbnailBlob = b)
+          .catch(e => console.error("Failed to fetch thumbnail blob for copy:", e))
+      }
+    } else {
+      thumbnailBlob = undefined;
+    }
+  }
 
 
   let liveStatusChangeTime = "";
@@ -50,6 +66,19 @@
       initial?.pop();
     }
     liveStatusChangeTime = initial?.join(" ") ?? "";
+  }
+
+  function copyDiscordTitle() {
+    if(!thumbnailBlob) {
+      console.warn("Thumbnail blob is falsy, not copying");
+      return;
+    }
+    navigator.clipboard.write([
+      new ClipboardItem({
+        [thumbnailBlob.type]: thumbnailBlob,
+        // 'text/plain': "```" + data.floatplane?.title + "```"
+      }),
+    ]);
   }
 </script>
 
@@ -133,7 +162,7 @@
       </div>
     {:else}
       <span class="opacity-70">
-        No title
+        No Thumbnail
       </span>
     {/if}
   </div>
@@ -164,6 +193,8 @@
 </div>
 
 <pre>{JSON.stringify(data.floatplane, undefined, '\t')}</pre>
+
+<button class="btn btn-sm variant-filled-surface m-2" on:click={copyDiscordTitle}>Copy title/thumbnail for discord</button>
 
 <div class="p-4">
   <span class="text-sm opacity-60">
