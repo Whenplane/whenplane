@@ -8,6 +8,7 @@
   import {slide} from "svelte/transition";
   import { onMount } from "svelte";
   import { invalidateAll } from "$app/navigation";
+  import Incomplete from "$lib/merch-messages/Incomplete.svelte";
 
   export let data;
 
@@ -54,7 +55,7 @@
   <li class="crumb">{data.video.title}</li>
 </ol>
 
-<div class="limit mx-auto">
+<div class="limit mx-auto p-2">
   <svelte:element this={wanDate ? "a" : "span"} class="!text-white !no-underline" href={wanDate ? "/history/show/" + getUTCDate(wanDate) : undefined}>
     <h1>{titleParts.length === 1 ? data.video.title : titleParts[0]}</h1>
     {#if titleParts.length !== 1}
@@ -68,10 +69,7 @@
   {#if data.video.status === "inprogress"}
     <br>
     <br>
-    <span class="text-amber-300">
-      Merch messages for this episode are incomplete.
-    </span><br>
-    They may still be processing. You can view the ones we have so far, or come back later for the complete list.
+    <Incomplete/>
     <br>
     <br>
     {#if lastData}
@@ -135,10 +133,7 @@
     {#if data.video.status === "inprogress"}
       <br>
       <br>
-      <span class="text-amber-300">
-      Merch messages for this episode are incomplete.
-    </span><br>
-      They may still be processing. You can view the ones we have so far, or come back later for the complete list.
+      <Incomplete/>
     {/if}
   </div>
 </div>

@@ -14,6 +14,7 @@
     import { truncateText } from "$lib/utils.js";
     import { getCookie, setCookie } from "$lib/cookieUtils.ts";
     import { SlideToggle } from "@skeletonlabs/skeleton";
+    import Incomplete from "$lib/merch-messages/Incomplete.svelte";
 
     export let data;
 
@@ -147,10 +148,7 @@
 
                 {#if mm.status === "inprogress"}
                     <br>
-                    <span class="text-amber-300">
-                        Merch messages for this episode are incomplete.
-                    </span><br>
-                    They may still be processing. You can view the ones we have so far, or come back later for the complete list.
+                    <Incomplete/>
                 {/if}
 
                 <br>

@@ -9,6 +9,7 @@
   import {slide} from "svelte/transition";
   import { page } from "$app/stores";
   import Paginator from "$lib/util/Paginator.svelte";
+	import ClockHistory from "svelte-bootstrap-icons/lib/ClockHistory.svelte";
 
   export let data;
 
@@ -198,8 +199,8 @@
         {/if}
       </div>
       {#if video.status === "inprogress"}
-        <div class="absolute self-center right-2">
-          <ProgressRadial class="inline-block" width="w-6" stroke={250}/>
+        <div class="absolute self-center right-5 text-yellow-400">
+          <ClockHistory height="32" width="32"/>
         </div>
       {/if}
     </a>
