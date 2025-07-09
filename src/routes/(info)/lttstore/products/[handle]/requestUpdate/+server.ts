@@ -1,5 +1,6 @@
 import { error } from "@sveltejs/kit";
 import type {RequestHandler} from "./$types";
+import { newResponse } from "$lib/utils.ts";
 
 export const POST = (async ({platform, params, cookies}) => {
 
@@ -19,7 +20,7 @@ export const POST = (async ({platform, params, cookies}) => {
   searchParams.set("handle", params.handle);
   if(session) searchParams.set("session", session);
 
-  return await stub.fetch("https://UPD_REQ_DO/?" + searchParams)
-    .then(r => r as unknown as Response)
+  return newResponse(await stub.fetch("https://UPD_REQ_DO/?" + searchParams)
+    .then(r => r as unknown as Response))
 
 }) satisfies RequestHandler;
