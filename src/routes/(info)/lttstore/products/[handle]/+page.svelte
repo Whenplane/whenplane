@@ -566,7 +566,7 @@
         <h2>Stock History</h2>
         <div class="limit mx-auto p-2 m-2 card variant-ghost-warning">
           Due to a <a href="https://changelog.shopify.com/posts/new-add-to-cart-limit">Shopify change</a>,
-          we are not longer able to see stock of products if theyre above <span class="font-mono">40</span>.
+          we are not longer able to see stock of most products if theyre above <span class="font-mono">40</span>.
           <br>
           Please <a href="/support">let me know</a> if you find a new way to check the stock.
         </div>
