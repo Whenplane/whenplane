@@ -18,7 +18,7 @@ export const GET = (async ({platform}) => {
     .then(r => r.results);
 
   const collectionChanges = db.prepare("select * from collection_changes where field is not \"updated_at\" or timestamp > ?")
-    .bind(Date.now() - (24 * 60 * 60e3)) // only get updated_at entries from the past 24h
+    .bind(Date.now() - (6 * 60 * 60e3)) // only get updated_at entries from the past 6h
     .all()
     .then(r => r.results);
 
