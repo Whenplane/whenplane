@@ -22,9 +22,6 @@ export const GET = (async ({platform}) => {
     .all()
     .then(r => r.results);
 
-  await Promise.all([products, collections, collectionChanges]); // only run 3 at a time
-  console.log("first 3 done")
-
   const screwdriverStocks = db.prepare("select * from stock_history where id = 6649895092327")
     .all()
     .then(r => r.results);
