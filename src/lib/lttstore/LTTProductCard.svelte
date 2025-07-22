@@ -34,7 +34,7 @@
   </div>
   {#if product.price}
     <br>
-    {#if !product.compare_at_price}
+    {#if !product.compare_at_price || product.price === product.compare_at_price}
       <Price usd={product.price/100}/>
     {:else}
         <span class="old-price">

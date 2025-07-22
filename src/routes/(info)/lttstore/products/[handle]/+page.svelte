@@ -147,7 +147,7 @@
   {:else}
     No featured image
   {/if}-->
-  {#if !productInfo.compare_at_price && typeof productInfo.price === "number"}
+  {#if (!productInfo.compare_at_price || productInfo.price === productInfo.compare_at_price) && typeof productInfo.price === "number"}
     <Price usd={productInfo.price/100}/>
   {:else if typeof productInfo.price === "number" && productInfo.compare_at_price}
     <span class="old-price">
