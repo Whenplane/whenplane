@@ -21,19 +21,19 @@ export const GET = (async ({fetch, url, platform, locals}) => {
 
   /*if(dev) return json({
     "cached": true,
-    "lastFetch": 1715992785281,
-    "isLive": true,
-    "started": "2024-12-18T00:25:25.184Z",
-    "isThumbnailNew": false,
-    "title": "iPhones Are Undeleting Nudes?? - WAN Show May 17, 2024",
-    "titleFirstSeen": "2024-05-18T00:20:15.333Z",
-    "thumbnail": "https://pbs.floatplane.com/stream_thumbnails/5c13f3c006f1be15e08e05c0/658708756715044_1715388246628.jpeg",
-    "thumbnailFirstSeen": "2024-05-11T00:44:11.045Z",
-    "thumbnailAge": 604530807,
-    "thumbnailAgePretty": "6d 23h 55m 30s",
-    "description": "<p>Visit <a href=\"https://www.squarespace.com/WAN\" rel=\"noopener noreferrer\" target=\"_blank\">https://www.squarespace.com/WAN</a> and use offer code WAN for 10% off</p><p><br></p><p>Improve your website’s SEO performance FOR FREE with Ahref’s Webmaster Tools. Check it out at <a href=\"https://ahrefs.com/awt\" rel=\"noopener noreferrer\" target=\"_blank\">https://ahrefs.com/awt</a>&nbsp;</p><p><br></p><p>Download the free Magical extension and save some precious time during your day to day grind at <a href=\"https://getmagical.com/WANshow\" rel=\"noopener noreferrer\" target=\"_blank\">https://getmagical.com/WANshow</a>.</p><p><br></p><p>Podcast Download: TBD</p><p><br></p>",
-    "descriptionFirstSeen": "2024-05-17T23:27:05.516Z",
-    "fetched": 1715992781000,
+    "lastFetch": 1754079914988,
+    "isLive": false,
+    "lastLive": "2025-07-26T04:40:50.693Z",
+    "isThumbnailNew": new Date().getSeconds() > 30,
+    "title": "Slow Internet Is Good For Consumers Actually - WAN Show July 25, 2025",
+    "titleFirstSeen": "2025-07-26T00:45:53.992Z",
+    "thumbnail": "https://pbs.floatplane.com/stream_thumbnails/5c13f3c006f1be15e08e05c0/545167603027441_1753490748927.jpeg",
+    "thumbnailFirstSeen": "2025-07-26T00:45:53.992Z",
+    "thumbnailAge": 589160923,
+    "thumbnailAgePretty": "6d 19h 39m 20s",
+    "description": "<p>Step confidently into daily life with the ultra-light Vessi Pacific Sneaker. Vessi claims they are fully waterproof, and they come with a 1-year warranty with 30-days of worry-free returns. Get 15% off your first pair at <a href=\"https://vessi.com/wanshow\" rel=\"noopener noreferrer\" target=\"_blank\">https://vessi.com/wanshow</a> at checkout!</p><p><br></p><p>Visit <a href=\"https://www.squarespace.com/WAN\" rel=\"noopener noreferrer\" target=\"_blank\">https://www.squarespace.com/WAN</a> and use offer code WAN for 10% off</p><p><br></p><p>Check out Proton Mail for free at <a href=\"https://proton.me/wan\" rel=\"noopener noreferrer\" target=\"_blank\">https://proton.me/wan</a> or get up to 38% off their plans!</p><p><br></p><p>Buy something from dbrand so they have an excuse to keep messing with Linus. Visit <a href=\"http://dbrand.com/WAN\" rel=\"noopener noreferrer\" target=\"_blank\">http://dbrand.com/WAN</a></p><p><br></p><p>Check out Dell’s powerful business laptops at: <a href=\"https://lmg.gg/dellprowan\" rel=\"noopener noreferrer\" target=\"_blank\">https://lmg.gg/dellprowan</a></p><p><br></p><p>Pick up a Secretlab Titan Evo Ergonomic Gaming Chair today at: <a href=\"https://lmg.gg/secretlabwan\" rel=\"noopener noreferrer\" target=\"_blank\">https://lmg.gg/secretlabwan</a></p><p><br></p><p>Get a special deal on Private Internet Access VPN today at <a href=\"https://www.piavpn.com/LinusWan\" rel=\"noopener noreferrer\" target=\"_blank\">https://www.piavpn.com/LinusWan</a></p><p><br></p><p>Purchases made through some store links may provide some compensation to Linus Media Group.</p><p><br></p><p>Podcast Download: TBD</p>",
+    "descriptionFirstSeen": "2025-07-25T23:08:58.183Z",
+    "fetched": 1754079914000,
     "isWAN": true
   }) // */
 

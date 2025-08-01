@@ -25,6 +25,7 @@
 	import {popup} from "@skeletonlabs/skeleton";
 	import { getDateFormatLocale, getTimePreference } from "$lib/prefUtils.ts";
 	import MoreLinks from "$lib/MoreLinks.svelte";
+	import CurrentTitle from "$lib/CurrentTitle.svelte";
 
 	export let data;
 
@@ -268,10 +269,11 @@
 					{new Date(data.mainShowStarted ?? data.preShowStarted ?? data.liveStatus.floatplane.started).toLocaleTimeString(undefined, {hour12: getTimePreference(), timeZone: $page.params.__timezone})}
 				{/if}
 			</div>
+			<CurrentTitle liveStatus={data.liveStatus}/>
 		</div>
 
 
-		<div class="mx-4">
+		<div class="mx-4 !mt-2">
 			{#if data.liveStatus}
 				<StreamStatus {data}/>
 			{:else}

@@ -1,5 +1,5 @@
 import type {PageLoad, RouteParams} from "./$types";
-import { browser } from "$app/environment";
+import { browser, dev } from "$app/environment";
 import type { Latenesses } from "./api/latenesses/+server";
 import type { AggregateResponse } from "./api/(live-statuses)/aggregate/+server";
 import { nextFast, overwriteData } from "$lib/stores.ts";
@@ -107,7 +107,7 @@ export const load = (async ({fetch, params, url}) => {
         notablePeople: liveStatus?.notablePeople,
         specialStream: liveStatus?.specialStream,
         lastNewsPost,
-        useWebSocket: !url.searchParams.has("poll"),
+        useWebSocket: !url.searchParams.has("poll") && !dev,
         isBot: /bot|googlebot|crawler|spider|robot|crawling/i
           .test(browser ? navigator?.userAgent : (params as RouteParams & {__h__userAgent: string}).__h__userAgent),
     }

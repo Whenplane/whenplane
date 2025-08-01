@@ -4,6 +4,7 @@
   import { removeAfterLastDash } from "$lib/utils";
   import type { FpEndpointResponse } from "../routes/api/(live-statuses)/floatplane/+server.ts";
   import {timeString} from "$lib/timeUtils.ts";
+  import {slide} from "svelte/transition";
 
   export let floatplane: FpEndpointResponse | undefined;
   export let hasDone = false;
@@ -17,7 +18,7 @@
 </script>
 
 {#if floatplane && !floatplane?.isLive && floatplane?.isWAN && ((dayIsCloseEnough && (floatplane?.isThumbnailNew || floatplane?.thumbnailAge < ageCutoff)) && !hasDone /*|| dev*/)}
-  <div class="card border-2 p-2 !border-green-600 !bg-opacity-20 !bg-green-600 block relative pb-0 mobile-add-padding">
+  <div class="card border-2 p-2 !border-green-600 !bg-opacity-20 !bg-green-600 block relative pb-0 mobile-add-padding" transition:slide={{duration: 1.5e3}}>
     <a href={floatplane?.thumbnail} target="_blank" rel="noopener">
       <img src={floatplane?.thumbnail} class="inline-block h-32 rounded-lg mobile-full-width" alt="Dan">
     </a>
