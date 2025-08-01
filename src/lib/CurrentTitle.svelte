@@ -10,7 +10,7 @@
   let strippedTitle: string | undefined = undefined;
   $: {
     const splitPoint = " - WAN Show";
-    const parts = liveStatus?.floatplane?.title.split(splitPoint);
+    const parts = liveStatus?.floatplane?.title?.split(splitPoint);
     parts?.pop();
     strippedTitle = parts?.join(splitPoint);
   }
