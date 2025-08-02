@@ -197,10 +197,12 @@
 			<ImminentBox floatplane={data.liveStatus?.floatplane} hasDone={data.hasDone}/>
 		{/if}
 		<div class="text-center">
+			<CurrentTitle liveStatus={data.liveStatus}/>
 			{#if data.specialStream && !$page.data.isBot}
 				{#key data.specialStream}
 					<SpecialStream {data}/>
 				{/key}
+				<br>
 			{/if}
 			<div class="card p-4 whitespace-nowrap shadow-x1 z-10 font-normal" data-popup="estimated-special-stream-start" style="margin-top: 0;">
 				Often, LTT does not announce streams, they just go live.<br>
@@ -209,7 +211,6 @@
 				It will be updated if there is any official word.<br>
 				If something was announced or you have info, please contact me. My contact details are on the about page. (click on the more dropdown, then go to "About & Preferences)
 			</div>
-			<br>
 			<div class="card p-4 inline-block countdown-box text-left">
 				{#if isLate}
 					The WAN show is currently <span class="red"><Late/></span> by
@@ -269,7 +270,6 @@
 					{new Date(data.mainShowStarted ?? data.preShowStarted ?? data.liveStatus.floatplane.started).toLocaleTimeString(undefined, {hour12: getTimePreference(), timeZone: $page.params.__timezone})}
 				{/if}
 			</div>
-			<CurrentTitle liveStatus={data.liveStatus}/>
 		</div>
 
 
