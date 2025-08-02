@@ -20,7 +20,7 @@
 {#if isCurrent}
   <div transition:slide={{duration: 2e3}}>
     <div class="card py-1 px-3 mt-2 inline-block countdown-box text-left">
-      <div class="text-xs opacity-50 relative bottom-1/2" style="height: 0.7em">
+      <div class="text-xs opacity-50 relative" style="height: 0.7em; bottom: 0.15em;">
         Current Show Title
       </div>
       {strippedTitle}
