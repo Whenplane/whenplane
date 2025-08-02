@@ -205,7 +205,9 @@ function makeWsMessage(response: AggregateResponse) {
         floatplane: {
             isLive: response.floatplane?.isLive,
             isWAN: response.floatplane?.isWAN,
-            isThumbnailNew: response.floatplane?.isThumbnailNew
+            isThumbnailNew: response.floatplane?.isThumbnailNew,
+            thumbnail: response.floatplane?.thumbnail,
+            title: response.floatplane?.title,
         },
         notablePeople: Object.keys(response.notablePeople)
           .filter(key => Object.keys(notablePeople).includes(key))
