@@ -11,20 +11,19 @@
 	</head>
 	<body data-theme="crimson" data-sveltekit-preload-code="viewport" data-sveltekit-preload-data>
 		<div style="display: contents">%sveltekit.body%</div>
-		<!-- Cloudflare Web Analytics --><script defer src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "7449720ccc244298870ba34ef0901bf1"}'></script><!-- End Cloudflare Web Analytics -->
-
 		<script>
 
-			const url = new URL(location.href);
+			const sp = new URL(location.href).searchParams;
+			const pn = location.pathname;
 
-			if(location.pathname === "/ltt-time" && url.searchParams.has("frame")) {
+			if(pn === "/ltt-time" && sp.has("frame")) {
 				document.body.classList.add("background-none")
 			}
-			if(location.pathname.startsWith("/lttstore/products") && location.pathname.endsWith("/page")) {
+			if(pn.startsWith("/lttstore/products") && pn.endsWith("/page")) {
 				document.body.classList.add("background-none")
 			}
 
-			if(url.searchParams.has("boca")) {
+			if(sp.has("boca")) {
 				document.documentElement.classList.add("boca-theme");
 				console.log("I'm the boca, baby!");
 			}
