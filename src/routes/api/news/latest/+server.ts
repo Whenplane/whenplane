@@ -16,7 +16,7 @@ export const GET: RequestHandler = (async ({platform}) => {
         .bind(Date.now() + (60 * 60e3))
         .all<NewsPost>()
         .then(r => r.results[0] as unknown as NewsPost)
-        .then(n => {return {...n, body: truncateText(n.body, 500)}})
+        .then(n => {return {...n, body: undefined}})
     )
     if(cCache && cacheRequest) {
       const cachePromise = cCache.put(cacheRequest, json(response, {headers: {"x-fetched": new Date().toISOString()}}));
