@@ -45,7 +45,7 @@ export const GET = (async ({platform, url}) => {
     const cachedTitle = fastCache.lastFetchData?.data?.[0]?.title;
     const cachedIsWAN = cachedIsLive && (cachedTitle?.includes("WAN") || makeAlwaysWAN);
 
-    if(Date.now() - fastCache.lastFetch < cacheTime) {
+    if(fastCache.lastFetchData && Date.now() - fastCache.lastFetch < cacheTime) {
         const isLive = cachedIsLive;
         const isWAN = cachedIsWAN;
         const title = cachedTitle;
