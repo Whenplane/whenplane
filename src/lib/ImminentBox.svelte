@@ -27,12 +27,6 @@
         {#if floatplane?.isThumbnailNew}
           <h2 class="!mb-0">The show might start soon!</h2>
         {/if}
-        {#if floatplane?.title}
-          <span style="font-size: 1.25em;">
-            "{removeAfterLastDash(floatplane?.title)}"
-          </span>
-          <br>
-        {/if}
         The thumbnail was updated{floatplane?.isThumbnailNew ? "" : ","}
         {#if !floatplane?.isThumbnailNew}
           but they haven't gone live yet.<br>
