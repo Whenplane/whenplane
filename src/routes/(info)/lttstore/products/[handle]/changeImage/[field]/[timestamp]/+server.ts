@@ -18,7 +18,7 @@ export const GET = (async ({params, platform}) => {
 
   const cfCache = await platform.caches.open("whenplane:changeImages");
 
-  const cache_time = 14 * 24 * 60 * 60e3;
+  const cache_time = 30 * 24 * 60 * 60e3;
 
   const cacheMatch = await cfCache.match(cacheUrl) as Response | undefined;
   if(cacheMatch) {
