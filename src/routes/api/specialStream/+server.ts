@@ -8,18 +8,18 @@ export const GET = (async ({fetch}) => {
 
 
   const data: SpecialStream | false = /*Date.now() > 1742608091103 ?*/ {
-    title: "Building 5 PCs in the 5 BEST selling Cases",
-    thumbnail: "https://pbs.floatplane.com/stream_thumbnails/5c13f3c006f1be15e08e05c0/299559822037673_1750877104569.jpeg",
+    title: "Scrapyard Wars Director Commentary (with participants)",
+    thumbnail: "https://pbs.floatplane.com/video_thumbnails/9oVWx7tPrw/705700492596397_1757099520285_1200x675.jpeg",
 
-    start: "2025-06-25T19:45:00Z",
-    startIsEstimated: false,
+    start: "2025-09-09T19:00:00Z",
+    startIsEstimated: true,
 
     onFloatplane: true,
 
-    onTwitch: true,
+    onTwitch: false,
     // twitchNotes: "first half",
 
-    onYoutube: true
+    onYoutube: false
   } //: false as SpecialStream | false;
 
   if(!data) {
