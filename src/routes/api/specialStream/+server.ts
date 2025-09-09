@@ -9,7 +9,7 @@ export const GET = (async ({fetch}) => {
 
   const data: SpecialStream | false = /*Date.now() > 1742608091103 ?*/ {
     title: "Scrapyard Wars Director Commentary (with participants)",
-    thumbnail: "https://pbs.floatplane.com/video_thumbnails/9oVWx7tPrw/705700492596397_1757099520285_1200x675.jpeg",
+    thumbnail: "https://pbs.floatplane.com/stream_thumbnails/5c13f3c006f1be15e08e05c0/597734054596050_1757436155287.jpeg",
 
     start: "2025-09-09T19:00:00Z",
     startIsEstimated: true,
