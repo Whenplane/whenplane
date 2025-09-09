@@ -11,7 +11,7 @@ export const GET = (async ({fetch}) => {
     title: "Scrapyard Wars Director Commentary (with participants)",
     thumbnail: "https://pbs.floatplane.com/stream_thumbnails/5c13f3c006f1be15e08e05c0/597734054596050_1757436155287.jpeg",
 
-    start: "2025-09-09T19:00:00Z",
+    start: "2025-09-09T17:00:00Z",
     startIsEstimated: true,
 
     onFloatplane: true,
