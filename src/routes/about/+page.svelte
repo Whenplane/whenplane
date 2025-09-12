@@ -102,14 +102,15 @@
                 <br>
                 Also, here is a rant from dan about what time things are supposed to happen<br>
                 <small>(from <a href="https://www.floatplane.com/post/x5S8KYg9Uv">this FPX</a> @ 26:44)</small><br>
-                <div class="video inline-block overflow-hidden">
-                    <video controls width="1280" height="720" style="max-height: 10em; width: auto;">
+                <div class="video inline-block overflow-hidden aspect-[16/9]">
+                    <video controls width="1280" height="720" style="height: 10em; width: auto;">
                         <source src="https://files.ajg0702.us/dan-wan-time.mp4" type="video/mp4">
                     </video>
                 </div>
             </div>
             <br>
 
+            <br>
             <br>
             <div class="text-left w-full">
                 <h2 class="text-center">Contact</h2>
@@ -119,6 +120,14 @@
                 <br>
                 If you want to contact me about something other than this site, you can see my
                 <a href="https://about.ajg0702.us/contact">general contact information here</a>
+
+                <br>
+                <br>
+                <hr>
+                <br>
+
+                I (aj) also run <a href="https://wan.show/">wan.show</a> which includes a list of community projects around The WAN Show.
+                Feel free to spread some love to the other community projects!
             </div>
             <br>
 
