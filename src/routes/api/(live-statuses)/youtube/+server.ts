@@ -147,7 +147,7 @@ export const GET = (async ({platform, locals, url, fetch}) => {
         platform?.context?.waitUntil(stub.fetch("https://whenplane-notification-throttler/mainshow_live?" + params.toString()))
     }
 
-    if(!sentToWDB && isWAN && videoId) {
+    /*if(!sentToWDB && isWAN && videoId) {
         sentToWDB = true;
         platform?.context?.waitUntil(
           fetch(
@@ -164,7 +164,7 @@ export const GET = (async ({platform, locals, url, fetch}) => {
             }
           ).catch()
         );
-    }
+    }*/
 
     cache.value = result;
     if(cCache && cacheRequest) platform.context.waitUntil(cCache.put(cacheRequest, json(result, {headers: {"x-fetched": new Date().toISOString()}})));
