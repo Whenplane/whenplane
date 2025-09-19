@@ -2,15 +2,19 @@ import { error, json } from "@sveltejs/kit";
 import type { Timestamp, TimestampsDbRow } from "$lib/timestamps/types.ts";
 import { retryD1 } from "$lib/utils.ts";
 import type { RequestHandler } from "./$types";
+import { INTERNAL_TOKEN } from "$lib/server/server-utils.ts";
 
 
-export const GET = (async ({platform, params}) => {
+export const GET = (async ({platform, params, url}) => {
 
   const videoId = params.videoId;
   if(!videoId) throw error(400, "Missing video id!");
 
   const topics = platform?.env?.TOPICS.withSession();
   if (!topics) throw error(503, "Missing topics db!");
+
+  const token = url.searchParams.get("token");
+  if(token !== INTERNAL_TOKEN) throw error(401, "Invalid or missing token!")
 
   const timestamps = await retryD1(() =>
     topics.prepare("select * from timestamps where videoId = ? order by time asc")

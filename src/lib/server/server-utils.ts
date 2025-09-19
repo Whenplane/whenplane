@@ -1,3 +1,4 @@
+import { generateRandomBase32 } from "$lib/server/auth.ts";
 
 export function log(platform: App.Platform | undefined, message: string, extra?: string) {
   if(!platform?.env?.LOG_MESSAGES) {
@@ -14,3 +15,5 @@ export function log(platform: App.Platform | undefined, message: string, extra?:
     indexes: []
   })
 }
+
+export const INTERNAL_TOKEN = generateRandomBase32();
