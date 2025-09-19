@@ -328,6 +328,17 @@ export function isNearWan(now?: Date) {
     }
 }
 
+export function isLargeNearWan(now?: Date) {
+    const d = now ? now : new Date();
+    if(d.getUTCDay() === 5) {
+        return d.getUTCHours() >= 17;
+    } else if(d.getUTCDay() === 6) {
+        return d.getUTCHours() <= 14;
+    } else {
+        return false;
+    }
+}
+
 export const shortMonths = [
     "Jan",
     "Feb",
