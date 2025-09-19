@@ -69,7 +69,7 @@ How late do you think the show will be?
         };
       }}>
   {#each $page.data.liveStatus?.votes as option}
-    {@const passed = Math.abs($mainLate.distance ?? 0) > option.time}
+    {@const passed = $mainLate.late && Math.abs($mainLate.distance ?? 0) > option.time}
     <button class="block w-full text-left background relative" formaction="?/vote&for={encodeURIComponent(option.name)}&k={vd}" class:passed={passed}>
       <span class="block percent" style="width: {(option.votes / total) * 100}%">
         <span class="inline-block px-2">
