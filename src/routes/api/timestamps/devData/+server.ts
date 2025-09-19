@@ -4,6 +4,8 @@ import type { TimestampsDbRow } from "$lib/timestamps/types.ts";
 
 export const GET = (async ({platform}) => {
 
+  throw error(401);
+
 
   const topics = platform?.env?.TOPICS;
   if (!topics) throw error(503, "Missing topics db!");
