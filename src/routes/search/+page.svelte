@@ -296,9 +296,8 @@
     {/if}
   </div>
   <div class="limit mx-auto p-2 mb-16">
-    The WAN Show Search is still new.
-    If you have <b>any</b> suggestions, issues, or feedback, please <a href="/support">let me know</a>!
     I hope to make The WAN Show Search as usable as possible, and I need your feedback to do that.
+    If you have <b>any</b> suggestions, issues, or feedback, please <a href="/support">let me know</a>!
     <br>
     <br>
     <br>
