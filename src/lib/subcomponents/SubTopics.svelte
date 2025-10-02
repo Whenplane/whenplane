@@ -37,7 +37,7 @@
         class="hidden-link"
         href={
           floatplane && preShowLength ?
-          `https://www.floatplane.com/post/${floatplaneId}?a=B1zvYG5sJN&t=${topic.time + preShowLength}` :
+          `https://www.floatplane.com/post/${floatplaneId}?t=${topic.time + preShowLength}` :
           `https://youtube.com/watch?v=${youtubeId}&t=${topic.time}`
         }
         target="_blank" rel="noopener"
@@ -69,7 +69,7 @@
           class="hidden-link"
           href={
             floatplane && preShowLength ?
-            `https://www.floatplane.com/post/${floatplaneId}?a=B1zvYG5sJN&t=${topic.time + preShowLength}` :
+            `https://www.floatplane.com/post/${floatplaneId}?t=${topic.time + preShowLength}` :
             `https://youtube.com/watch?v=${youtubeId}&t=${topic.time}`
           }
           rel="noopener"

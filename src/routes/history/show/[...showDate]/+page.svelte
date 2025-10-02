@@ -178,7 +178,7 @@
                                   class="hidden-link"
                                   href={
                                   timestampPlatform === "floatplane" && preShowLength ?
-                                  `https://www.floatplane.com/post/${floatplaneId}?a=B1zvYG5sJN&t=${timestamp.time + preShowLength}` :
+                                  `https://www.floatplane.com/post/${floatplaneId}?t=${timestamp.time + preShowLength}` :
                                   `https://youtube.com/watch?v=${youtubeId}&t=${timestamp.time}`
                                   }
                                   rel="noopener"
