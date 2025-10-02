@@ -8,6 +8,7 @@
 
   export let subTopics: Timestamp[];
   export let youtubeId: string;
+  export let floatplaneId: string;
 
   export let floatplane = false;
   export let preShowLength: number | undefined;
@@ -34,7 +35,11 @@
     <li id="timestamp-{youtubeId}.{topic.time}" class:highlighted={$page.url.hash === "#timestamp-" + youtubeId + "." + topic.time}>
       <a
         class="hidden-link"
-        href="https://youtube.com/watch?v={youtubeId}&t={topic.time}"
+        href={
+          floatplane && preShowLength ?
+          `https://www.floatplane.com/post/${floatplaneId}?a=B1zvYG5sJN&t=${topic.time + preShowLength}` :
+          `https://youtube.com/watch?v=${youtubeId}&t=${topic.time}`
+        }
         target="_blank" rel="noopener"
       >
         <span class="opacity-70">
@@ -62,7 +67,11 @@
       <li in:slide|global={{easing: quintOut}} id="timestamp-{youtubeId}.{topic.time}" class:highlighted={$page.url.hash === "#timestamp-" + youtubeId + "." + topic.time}>
         <a
           class="hidden-link"
-          href="https://youtube.com/watch?v={youtubeId}&t={topic.time}"
+          href={
+            floatplane && preShowLength ?
+            `https://www.floatplane.com/post/${floatplaneId}?a=B1zvYG5sJN&t=${topic.time + preShowLength}` :
+            `https://youtube.com/watch?v=${youtubeId}&t=${topic.time}`
+          }
           rel="noopener"
         >
           <span class="opacity-70">

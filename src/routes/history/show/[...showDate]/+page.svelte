@@ -194,7 +194,7 @@
                                 </a>
 
                                 {#if timestamp.subTimestamps && timestamp.subTimestamps.length > 0}
-                                    <SubTopics subTopics={timestamp.subTimestamps} {youtubeId} {preShowLength} floatplane={timestampPlatform === "floatplane"}/>
+                                    <SubTopics subTopics={timestamp.subTimestamps} {youtubeId} {floatplaneId} {preShowLength} floatplane={timestampPlatform === "floatplane"}/>
                                 {/if}
 
                             </li>
