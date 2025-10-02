@@ -172,10 +172,15 @@
                     <ol class="normal-list">
                         {#each timestamps as timestamp, i}
                             {@const youtubeId = data.value?.vods?.youtube}
+                            {@const floatplaneId = data.value?.vods?.floatplane}
                             <li class="!mt-0 !mb-0 !p-0" id="timestamp-{youtubeId}.{timestamp.time}" class:highlighted={$page.url.hash === "#timestamp-" + youtubeId + "." + timestamp.time}>
                                 <a
                                   class="hidden-link"
-                                  href="https://youtube.com/watch?v={youtubeId}&t={timestamp.time}"
+                                  href={
+                                  timestampPlatform === "floatplane" && preShowLength ?
+                                  `https://www.floatplane.com/post/${floatplaneId}?a=B1zvYG5sJN&t=${timestamp.time + preShowLength}` :
+                                  `https://youtube.com/watch?v=${youtubeId}&t=${timestamp.time}`
+                                  }
                                   rel="noopener"
                                 >
                                     <span class="opacity-70">
