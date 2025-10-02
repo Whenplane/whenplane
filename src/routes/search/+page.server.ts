@@ -102,14 +102,15 @@ export const load = (async ({fetch, url, cookies, platform}) => {
   const result = await searchClient.collections<CombinedSearchResult>("whenplane-all").documents()
     .search({
       q,
-      query_by: "text",
+      query_by: url.searchParams.get("keyword") === "on" ? "text" : "text,embedding",
       sort_by: sort,
       filter_by: "type:[" + types.join(",") + "] " + (!before ? "" : "&& showDate:<" + before) + (!after ? "" : "&& showDate:>" + after),
       page,
       per_page: resultsPerPage,
-      exclude_fields: ["text"],
+      exclude_fields: ["text", "embedding"],
       highlight_fields: ["text"],
-      highlight_affix_num_tokens: 15
+      highlight_affix_num_tokens: 15,
+      prefix: false
     }, {cacheSearchResultsForSeconds: 60}) as SearchResponse<CombinedSearchResult>;
 
   const showHits = [...new Set(result.hits?.map(h => (h.document.videoId ?? (h.document as {showName?: string}).showName)))]

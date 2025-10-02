@@ -3,7 +3,6 @@
   import { resultsPerPage } from "./search.ts";
   import MiniShow from "$lib/history/MiniShow.svelte";
   import sanitizeHtml from "sanitize-html";
-  import Paginator from "$lib/util/Paginator.svelte";
   import LinkPaginator from "$lib/util/LinkPaginator.svelte";
   import { browser } from "$app/environment";
   import ToolTip from "$lib/ToolTip.svelte";
@@ -30,6 +29,7 @@
   let searchTopics = defaultTopics;
   let searchTranscripts = defaultTranscripts;
   let searchMerchMessages = defaultMerchMessages;
+  let keyword = false;
 
   $: updateDefaults(q);
   updateDefaults(q);
@@ -76,6 +76,7 @@
     searchTopics = (sp.get("topics")) === "on";
     searchTranscripts = (sp.get("transcripts")) === "on";
     searchMerchMessages = (sp.get("merch-messages")) === "on";
+    keyword = (sp.get("keyword")) === "on";
   }
 
   $: searchSort = sp.get("sort") ?? "default";
@@ -84,7 +85,7 @@
 
   $: console.debug({searchTitle, searchTopics, searchTranscripts, searchMerchMessages})
 
-  $: moreOptionsUsed = (!before ? 0 : 1) + (!after ? 0 : 1);
+  $: moreOptionsUsed = (!before ? 0 : 1) + (!after ? 0 : 1) + (keyword ? 1 : 0);
 
   $: highlightVisibility = data.settings?.highlightVisibility === "true";
 
@@ -191,6 +192,18 @@
           <label>
             <span>After</span>
             <input type="date" name="after" class="input" bind:value={after} on:change={() => searchForm.submit()}>
+          </label>
+          <br>
+          <label>
+            <input type="checkbox" class="checkbox" name="keyword" bind:checked={keyword} on:change={() => searchForm.submit()}>
+            <span>
+              Basic Key Word Search
+              <ToolTip id="keyword-search-info">
+                By default, Whenplane uses embeddings to search by both meaning and key words.
+                This helps find more results even if you dont remember the exact words used.
+                You can go back to basic keyword search by checking this box.
+              </ToolTip>
+            </span>
           </label>
         </svelte:fragment>
       </ToolTip>
