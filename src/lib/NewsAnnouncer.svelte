@@ -12,8 +12,8 @@
     return () => clearInterval(i);
   })
 
-  // Only show news if there is a post from the past 3 days
-  $: isRecent = (data.lastNewsPost?.timestamp ?? 0) > (Date.now() - (3 * 24 * 60 * 60e3)) && (data.lastNewsPost?.timestamp ?? 0 < minuteNow) /*|| dev*/
+  // Only show news if there is a post from the past 15 days
+  $: isRecent = (data.lastNewsPost?.timestamp ?? 0) > (Date.now() - (15 * 24 * 60 * 60e3)) && (data.lastNewsPost?.timestamp ?? 0 < minuteNow) /*|| dev*/
   $: href = isRecent ? "/news/" + data.lastNewsPost.url : "/news";
 </script>
 
