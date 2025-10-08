@@ -96,7 +96,7 @@
   The Whenplane Merch Message Index is a tool that has processed nearly every WAN show that includes merch messages, and put them in an organized and searchable index.<br>
   To do this, it runs OCR on the part of the screen that displays merch messages, then indexes them.<br>
   <br>
-  If you cannot find your merch message in this index, here are a few places to search:<br>
+  <b>If you cannot find your merch message</b> in this index, here are a few places to search:<br>
   <ul>
     <li>When they are screen sharing</li>
     <li>The outro</li>
