@@ -6,7 +6,7 @@ import type { GetChannelFollowersResponse } from "ts-twitch-api";
 import { retryD1, type TwitchToken } from "$lib/utils.ts";
 import { twitchTokenCache } from "$lib/stores.ts";
 
-const cacheTime = 15e3; // maximum fetch from twitch api once every 15 seconds
+const cacheTime = 10e3; // maximum fetch from twitch api once every 10 seconds
 
 const fastCache: {
   lastFetch: number,
