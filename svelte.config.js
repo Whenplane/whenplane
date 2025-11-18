@@ -36,7 +36,8 @@ const config = {
 					"/boca-time",
 					"/products/*",
 					"/history/show/*/*/merch-messages/*",
-					"/contact"
+					"/contact",
+          "/history/show"
 				]
 			}
 		}),
