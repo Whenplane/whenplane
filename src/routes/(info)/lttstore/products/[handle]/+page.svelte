@@ -221,7 +221,13 @@
             </tr>
               <tr>
                 <td>Last Stock Check</td>
-                <td><DateStamp epochSeconds={data.product.stockChecked / 1e3}/></td>
+                <td>
+                  {#if data.product.stockChecked}
+                    <DateStamp epochSeconds={data.product.stockChecked / 1e3}/>
+                  {:else}
+                    <span class="opacity-70">N/A</span>
+                  {/if}
+                </td>
               </tr>
               <tr>
                 <td>Last Restock Detected</td>
