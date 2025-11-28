@@ -10,6 +10,7 @@
   import { page } from "$app/stores";
   import Paginator from "$lib/util/Paginator.svelte";
 	import ClockHistory from "svelte-bootstrap-icons/lib/ClockHistory.svelte";
+  import { commas } from "$lib/utils.ts";
 
   export let data;
 
@@ -193,7 +194,7 @@
         </span><br>
         {lastTitlePart}<br>
         {#if video.messageCount}
-          {video.messageCount} messages
+          {commas(video.messageCount)} messages
         {:else}
           &nbsp;
         {/if}
