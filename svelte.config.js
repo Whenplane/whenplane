@@ -17,6 +17,8 @@ const config = {
 				exclude: [
 					"<all>",
 
+          "/.well-known/*", // these are always static, so dont waste worker requests on 404s
+
 					// Stuff that vulnerability crawlers like to spam
 					"/*/wp-includes",
 					"/*/wp-includes/*",
