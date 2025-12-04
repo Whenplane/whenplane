@@ -15,9 +15,8 @@ const config = {
 		adapter: adapter({
 			routes: {
 				exclude: [
-					"<all>",
-
           "/.well-known/*", // these are always static, so dont waste worker requests on 404s
+          "<all>",
 
 					// Stuff that vulnerability crawlers like to spam
 					"/*/wp-includes",
