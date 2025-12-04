@@ -15,7 +15,6 @@ const config = {
 		adapter: adapter({
 			routes: {
 				exclude: [
-          "/.well-known/*", // these are always static, so dont waste worker requests on 404s
           "<all>",
 
 					// Stuff that vulnerability crawlers like to spam
