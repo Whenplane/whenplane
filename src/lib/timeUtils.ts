@@ -60,6 +60,11 @@ export function getNextWANLuxon(now = new Date(), buffer = true, hasDone?: boole
         wanDate = wanDate.set({hour: 12, minute: 0})
     }
 
+  // 2025/12/26 is supposed to be at 9am for some reason
+  if(wanDate.year == 2025 && wanDate.month == 12 && wanDate.day == 26) {
+    wanDate = wanDate.set({hour: 9, minute: 0})
+  }
+
   // 2025/12/05 is supposed to be at 10am for some reason
   if(wanDate.year == 2025 && wanDate.month == 12 && wanDate.day == 5) {
     wanDate = wanDate.set({hour: 10, minute: 0})
@@ -122,6 +127,11 @@ export function getPreviousWANLuxon(now = new Date()): DateTime {
     // 2025/12/19 is supposed to be at 12pm for some reason
     if(wanDate.year == 2025 && wanDate.month == 12 && wanDate.day == 19) {
         wanDate = wanDate.set({hour: 12, minute: 0})
+    }
+
+    // 2025/12/26 is supposed to be at 9am for some reason
+    if(wanDate.year == 2025 && wanDate.month == 12 && wanDate.day == 26) {
+      wanDate = wanDate.set({hour: 9, minute: 0})
     }
 
     // 2025/12/05 is supposed to be at 10am for some reason
