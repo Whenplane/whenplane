@@ -117,13 +117,7 @@
         <td>{message.text}</td>
         <td><a href="https://youtu.be/{data.video.videoId}?t={(message.imageIndex*5)-5}">Timestamp</a></td>
         <td>
-          {#if i > 10}
-            <LargerLazyLoad>
-              <img src="https://merch-message-images.whenplane.com/{message.video}/images/img{message.imageIndex}.jpg" width="1000" height="200">
-            </LargerLazyLoad>
-          {:else}
-            <img src="https://merch-message-images.whenplane.com/{message.video}/images/img{message.imageIndex}.jpg" width="1000" height="200">
-          {/if}
+          <img src="https://merch-message-images.whenplane.com/{message.video}/images/img{message.imageIndex}.jpg" width="1000" height="200" loading="lazy">
         </td>
       </tr>
     {/each}
