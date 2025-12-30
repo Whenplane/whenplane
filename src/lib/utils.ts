@@ -46,7 +46,8 @@ export function shouldRetryD1(err: unknown, nextAttempt: number) {
     const isRetryableError =
       errMsg.includes("Network connection lost") ||
       errMsg.includes("storage caused object to be reset") ||
-      errMsg.includes("reset because its code was updated");
+      errMsg.includes("reset because its code was updated") ||
+      errMsg.includes("D1_ERROR: internal error;");
 
     return nextAttempt <= 7 && isRetryableError;
 }
