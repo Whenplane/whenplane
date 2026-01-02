@@ -4,7 +4,7 @@ import { retryD1 } from "$lib/utils.ts";
 
 export const load = (async ({fetch, platform}) => {
 
-  const db = platform?.env?.MERCHMESSAGES_DB;
+  const db = platform?.env?.MERCHMESSAGES_DB.withSession();
   if(!db) throw error(503, "DB unavailable!");
 
   const shows = await retryD1(() =>
