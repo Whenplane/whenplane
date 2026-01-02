@@ -11,7 +11,10 @@ export const GET = (async ({platform}) => {
 
   const latest5 = shows.slice(0, 5).map(v => v.showId);
 
-  const merchMessages = await db.prepare("select * from merch_messages_v2 where show = ? or show = ? or show = ? or show = ? or show = ?")
+  const showParams: string[] = [];
+  latest5.forEach(() => showParams.push("show = ?"));
+
+  const merchMessages = await db.prepare("select * from merch_messages_v2 where " + showParams.join(" or "))
     .bind(...latest5)
     .all()
     .then(r => r.results);
