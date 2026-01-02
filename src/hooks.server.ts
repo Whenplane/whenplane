@@ -243,11 +243,19 @@ export const handleError: HandleServerError = async ({ error: e, event, status, 
       eMessage.includes("reset because its code was updated")
     );
 
-    if(building) console.error(error)
+    if(building) console.error(error);
 
-    if(!building && error && status !== 404) {
-        console.debug("Reporting error!", error)
+    async function report() {
         if(env.ERROR_REPORTING_WEBHOOK) {
+
+            let url = env.ERROR_REPORTING_WEBHOOK;
+            const urlUrl = new URL(url);
+            if(urlUrl.searchParams.get("wait") !== "true") {
+                urlUrl.searchParams.set("wait", "true");
+                url = urlUrl.toString();
+            }
+
+            console.debug("Reporting error!", error)
 
             try {
                 const formData = new FormData();
@@ -271,21 +279,25 @@ export const handleError: HandleServerError = async ({ error: e, event, status, 
                   "items.json"
                 )
 
-                event.platform?.context?.waitUntil(
-                  fetch(
-                    env.ERROR_REPORTING_WEBHOOK as string,
-                    {
-                        method: "POST",
-                        body: formData
-                    }
-                  )
+                return await fetch(
+                  url,
+                  {
+                      method: "POST",
+                      body: formData
+                  }
                 )
+
+
             } catch(e) {
                 console.error("Error while trying to report another error!", e);
             }
-        } else {
+        } else if(!dev) {
             console.warn("Error reporting webhook is falsy!")
         }
+    }
+
+    if(!building && !isDbError && error && status !== 404) {
+        event.platform?.context?.waitUntil(report());
     }
 
     // apparently this is the default behaviour for sveltekit 1.27.6: https://web.archive.org/web/20231114155539/https://kit.svelte.dev/docs/hooks#shared-hooks-handleerror
@@ -294,9 +306,18 @@ export const handleError: HandleServerError = async ({ error: e, event, status, 
     } else {
         let m = "Internal Error";
         if(isDbError) {
-            m = "A Database error occurred.";
             if(isRetryableDbError) {
-                m += " Please try reloading, and report if this happens often.";
+                m = "A Database error occurred. Please try reloading, and report this to aj if this happens often.";
+            } else {
+                m = "A Database error occurred. Please report this to aj if this happens too often."
+            }
+            if(!building && error) {
+                const response = await report();
+                if(response) {
+                    const reportMessage = await response.json();
+                    // convert back using BigInt("0x" + reference)
+                    m += "\nReference: " + BigInt(reportMessage.id).toString(16)
+                }
             }
         }
         return {
