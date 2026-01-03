@@ -137,7 +137,7 @@
     {#each productInfo.media as image}
       {#if image.media_type === "image"}
         <a href={image.src} class="m-1 !no-underline">
-          <img src={image.src} class="product-image inline-block" alt={image.alt} title={image.alt} />
+          <img src={image.src} class="product-image inline-block" alt={image.alt} title={image.alt} width={image.width} height={image.height} />
         </a>
       {/if}
     {/each}
@@ -711,6 +711,7 @@
 <style>
   .product-image {
       height: 15em;
+      width: auto;
       max-width: 90vw;
       object-fit: contain;
       border-radius: 12px;
