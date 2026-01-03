@@ -79,21 +79,6 @@
           <progress value={lastData.downloadPercent ?? 0} max={1} style="width: calc(100% - 5em);"/>
           {((lastData.downloadPercent ?? 0) * 100).toFixed(2)}%
         </div>
-        <div class="py-1">
-          VOD pre-process<br>
-          <progress value={lastData.preProcessPercent ?? 0} max={1} style="width: calc(100% - 5em);"/>
-          {((lastData.preProcessPercent ?? 0) * 100).toFixed(2)}%
-        </div>
-        <div class="py-1">
-          Frame Extraction<br>
-          <progress value={lastData.frameExtractPercent ?? 0} max={1} style="width: calc(100% - 5em);"/>
-          {((lastData.frameExtractPercent ?? 0) * 100).toFixed(2)}%
-        </div>
-        <div class="py-1 sticky top-1">
-          Frame reading<br>
-          <progress value={lastData.progressAt ?? 0} max={lastData.progressTotal ?? 1} style="width: calc(100% - 5em);"/>
-          {(((lastData.progressAt ?? 0) / (lastData.progressTotal ?? 1)) * 100).toFixed(2)}%
-        </div>
       </div>
     {/if}
 
