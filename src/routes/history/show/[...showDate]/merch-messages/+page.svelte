@@ -77,7 +77,7 @@
   }} invalidate={false}/>
 {/if}
 
-<div class="limit mx-auto">
+<div class="limit mx-auto px-2">
   <h1>{data.mmShow.title}</h1>
   WAN Show {showDate.toLocaleDateString(undefined, {dateStyle: 'long'})}
   <br>
