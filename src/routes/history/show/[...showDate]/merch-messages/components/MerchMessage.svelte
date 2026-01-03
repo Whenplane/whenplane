@@ -5,7 +5,7 @@
   import ReplyFill from "svelte-bootstrap-icons/lib/ReplyFill.svelte";
 
   export let message: MMV2TableRow;
-  export let youtubeId: string;
+  export let youtubeId: string | undefined;
 
   const seconds = Math.floor(message.timestamp);
   const imageUrl = `https://merch-message-images.whenplane.com/${message.show}/images/${seconds}.jpg`
@@ -38,7 +38,7 @@
         </div>
       {/if}
     </div>
-    <div class="opacity-70 ml-4">
+    <div class="opacity-70 ml-4 pr-4">
       {message.text}
     </div>
   </div>
