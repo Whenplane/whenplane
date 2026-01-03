@@ -14,7 +14,7 @@
   const imageUrl = `https://merch-message-images.whenplane.com/${message.show}/images/${seconds}.jpg`
 </script>
 <div
-  class="block card card-hover relative p-4 my-3 mx-2 flex overflow-hidden text-left"
+  class="card card-hover relative p-4 my-3 mx-2 flex overflow-hidden text-left main-div"
   class:ml-6={message.type === "reply"}
   class:!bg-surface-900={message.type === "reply"}
   id={message.id}
@@ -68,13 +68,20 @@
       @apply w-10 bg-surface-500 rounded-full flex aspect-square text-surface-50 font-semibold justify-center items-center overflow-hidden isolate;
   }
 
+  .message-image {
+      @apply mt-2;
+  }
+  .main-div {
+    flex-direction: column;
+  }
   @media (width >= 48rem) {
       .message-image {
           width: 28rem;
+          margin: 0;
       }
-  }
-  .message-image {
-
+      .main-div {
+          flex-direction: row;
+      }
   }
 
   .hashHighlight {
