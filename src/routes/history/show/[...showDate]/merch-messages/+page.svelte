@@ -112,6 +112,14 @@
   {/each}
 </div>
 
+<div class="limit mx-auto">
+  {#if data.mmShow.status === "inprogress"}
+    <br>
+    <br>
+    <Incomplete/>
+  {/if}
+</div>
+
 <style>
     .thumbnail-backdrop {
         position: absolute;
