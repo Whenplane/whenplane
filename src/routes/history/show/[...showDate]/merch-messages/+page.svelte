@@ -108,7 +108,7 @@
 
 <br>
 
-<div class="limit-xl mx-auto text-right">
+<div class="limit-xl mx-auto text-right pb-64">
   {#each data.messages as message}
     <MerchMessage {message} youtubeId={data.metadata?.vods?.youtube}/>
   {/each}
