@@ -3,6 +3,7 @@
   import { Avatar } from "@skeletonlabs/skeleton";
   import PersonX from "svelte-bootstrap-icons/lib/PersonX.svelte";
   import ReplyFill from "svelte-bootstrap-icons/lib/ReplyFill.svelte";
+  import { page } from "\$app/stores";
 
   export let message: MMV2TableRow;
   export let youtubeId: string | undefined;
@@ -14,6 +15,8 @@
   class="block card card-hover relative p-4 my-3 mx-2 flex overflow-hidden text-left"
   class:ml-6={message.type === "reply"}
   class:!bg-surface-900={message.type === "reply"}
+  id={message.id}
+  class:hashHighlight={$page.url.hash === "#" + message.id}
 >
   <div class="flex-1 space-y-2">
     <div class="flex items-center">
@@ -62,5 +65,10 @@
   }
   .message-image {
 
+  }
+
+  .hashHighlight {
+      border: #d4163c 2px solid;
+      border-radius: 12px;
   }
 </style>
