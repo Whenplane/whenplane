@@ -14,7 +14,7 @@ html, body { @apply h-full; }
     max-width: 1000px;
 }
 .limit-xl {
-    max-width: 1200px;
+    max-width: 1300px;
 }
 
 h1:not(.no-header-margin), h2:not(.no-header-margin), h3:not(.no-header-margin) {
