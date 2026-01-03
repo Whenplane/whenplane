@@ -73,9 +73,7 @@
 {#if data.mmShow.status === "inprogress"}
   <Socket events={["mm_progress-" + data.mmShow.showId]} on:data={d => {
     lastData = d.detail.data.job;
-    if(typeof lastData.progressAt !== "undefined") {
-      invalidateAll();
-    }
+    invalidateAll().then();
   }} invalidate={false}/>
 {/if}
 
