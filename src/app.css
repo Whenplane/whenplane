@@ -13,6 +13,9 @@ html, body { @apply h-full; }
 .limit-large {
     max-width: 1000px;
 }
+.limit-xl {
+    max-width: 1200px;
+}
 
 h1:not(.no-header-margin), h2:not(.no-header-margin), h3:not(.no-header-margin) {
     margin-bottom: 0.25em;
