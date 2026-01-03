@@ -112,7 +112,7 @@
   {/each}
 </div>
 
-<div class="limit mx-auto">
+<div class="limit mx-auto pb-32">
   {#if data.mmShow.status === "inprogress"}
     <br>
     <br>
