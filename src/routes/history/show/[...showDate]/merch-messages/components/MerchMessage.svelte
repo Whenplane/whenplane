@@ -4,6 +4,8 @@
   import PersonX from "svelte-bootstrap-icons/lib/PersonX.svelte";
   import ReplyFill from "svelte-bootstrap-icons/lib/ReplyFill.svelte";
   import { page } from "\$app/stores";
+  import { colonTimeString } from "$lib/timeUtils.ts";
+  import Youtube from "$lib/svg/Youtube.svelte";
 
   export let message: MMV2TableRow;
   export let youtubeId: string | undefined;
@@ -19,27 +21,35 @@
   class:hashHighlight={$page.url.hash === "#" + message.id}
 >
   <div class="flex-1 space-y-2">
-    <div class="flex items-center">
-      {#if message.type === "message"}
-        {#if message.name === "Anonymous"}
-          <figure class="avatar">
-            <PersonX/>
-          </figure>
+    <div class="flex items-center justify-between">
+      <div class="flex items-center">
+        {#if message.type === "message"}
+          {#if message.name === "Anonymous"}
+            <figure class="avatar">
+              <PersonX/>
+            </figure>
+          {:else}
+            <Avatar width="w-10" initials={message.name.charAt(0)}/>
+          {/if}
+          &nbsp;
+          {message.name}
         {:else}
-          <Avatar width="w-10" initials={message.name.charAt(0)}/>
-        {/if}
-        &nbsp;
-        {message.name}
-      {:else}
-        <ReplyFill class="w-5 h-5 m-2"/>
-        &nbsp;
-        <div>
+          <ReplyFill class="w-5 h-5 m-2"/>
+          &nbsp;
+          <div>
           <span class="opacity-80">
             Reply to
           </span>
-          {message.name}
-        </div>
-      {/if}
+            {message.name}
+          </div>
+        {/if}
+      </div>
+      <div class="justify-self-end pr-4 text-sm">
+        <a href="https://youtube.com/watch?v={youtubeId}&t={seconds}" rel="noopener" class="btn btn-sm variant-ghost-surface py-0.5 px-1.5">
+          <Youtube height="1.75"/>
+          {colonTimeString(seconds)}
+        </a>
+      </div>
     </div>
     <div class="opacity-70 ml-4 pr-4">
       {message.text}
