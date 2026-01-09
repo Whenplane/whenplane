@@ -3,15 +3,20 @@
   import { Avatar } from "@skeletonlabs/skeleton";
   import PersonX from "svelte-bootstrap-icons/lib/PersonX.svelte";
   import ReplyFill from "svelte-bootstrap-icons/lib/ReplyFill.svelte";
-  import { page } from "\$app/stores";
+  import { page } from "$app/stores";
   import { colonTimeString } from "$lib/timeUtils.ts";
   import Youtube from "$lib/svg/Youtube.svelte";
 
   export let message: MMV2TableRow;
   export let youtubeId: string | undefined;
+  export let source: "youtube" | "floatplane";
+  export let preShowLength: number;
 
   const seconds = Math.floor(message.timestamp);
-  const imageUrl = `https://merch-message-images.whenplane.com/${message.show}/images/${seconds}.jpg`
+  const imageUrl = `https://merch-message-images.whenplane.com/${message.show}/images/${seconds}.jpg`;
+
+  const youtubeSeconds = source === "youtube" ? seconds : seconds - Math.floor(preShowLength/1e3);
+  const floatplaneSeconds = source === "floatplane" ? seconds : seconds + Math.floor(preShowLength/1e3);
 </script>
 <div
   class="card card-hover relative p-4 my-3 mx-2 flex overflow-hidden text-left main-div"
@@ -45,9 +50,9 @@
         {/if}
       </div>
       <div class="justify-self-end pr-4 text-sm">
-        <a href="https://youtube.com/watch?v={youtubeId}&t={seconds}" rel="noopener" class="btn btn-sm variant-ghost-surface py-0.5 px-1.5">
-          <Youtube height="1.75"/>
-          {colonTimeString(seconds)}
+        <a href="https://youtube.com/watch?v={youtubeId}&t={youtubeSeconds}" rel="noopener" class="btn btn-sm variant-ghost-surface py-0.5 px-1.5">
+          <Youtube height={1.75}/>
+          {colonTimeString(youtubeSeconds)}
         </a>
       </div>
     </div>

@@ -10,7 +10,7 @@
   export let invalidate = true;
   export let autoInvalidateAfterNoData = false;
 
-  const dispatch = createEventDispatcher<{data: {data: MMJobData}}>();
+  const dispatch = createEventDispatcher<{detail: {data: MMJobData}}>();
 
   if(!events || events.length < 1) {
     console.error("Missing required events parameter");

@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { getClosestWan } from "$lib/timeUtils.ts";
+  import { getClosestWan, getTimeUntil } from "$lib/timeUtils.ts";
   import { type MMJobData, truncateText } from "$lib/utils.ts";
   import { getDateFormatLocale } from "$lib/prefUtils.ts";
   import { page } from "$app/stores";
@@ -43,6 +43,10 @@
   const showEnd = data.metadata.showEnd ? new Date(data.metadata.showEnd) : data.metadata.showEnd;
 
   const showDate = getClosestWan(new Date(preShowStart ?? mainShowStart ?? showEnd ?? snippet?.publishedAt ?? data.name));
+
+  const preShowLength = preShowStart && mainShowStart ?
+    getTimeUntil(mainShowStart as Date, (preShowStart as Date).getTime()).distance :
+    null;
 </script>
 
 <svelte:head>
@@ -108,7 +112,7 @@
 
 <div class="limit-xl mx-auto text-right pb-64">
   {#each data.messages as message}
-    <MerchMessage {message} youtubeId={data.metadata?.vods?.youtube}/>
+    <MerchMessage {message} youtubeId={data.metadata?.vods?.youtube} source={data.mmShow.vodSource} preShowLength={preShowLength}/>
   {/each}
 </div>
 
