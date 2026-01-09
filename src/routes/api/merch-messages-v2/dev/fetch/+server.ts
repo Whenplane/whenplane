@@ -1,6 +1,6 @@
 import { error, json, type RequestHandler } from "@sveltejs/kit";
 import { dev } from "$app/environment";
-import type { MMShow, MMTableRow, MMV2TableRow } from "$lib/merch-messages/mm-types.ts";
+import type { MMShow, MMV2TableRow } from "$lib/merch-messages/mm-types.ts";
 import { wait } from "$lib/utils.ts";
 
 
@@ -29,14 +29,14 @@ export const GET = (async ({platform}) => {
 
   await db.prepare("create table if not exists merch_messages_v2(id text PRIMARY KEY, show text, timestamp integer, type text, `text` text, name text, position text, jobId text)")
     .run();
-  await db.prepare("create table if not exists shows(showId text PRIMARY KEY, status text, title text, releaseDate integer, messageCount integer, replyCount integer, youtubeId text)")
+  await db.prepare("create table if not exists shows(showId text PRIMARY KEY, status text, title text, releaseDate integer, messageCount integer, replyCount integer, vodId text, vodSource text)")
     .run();
 
 
   for (const show of data.shows) {
     console.log("Inserting " + show.showId);
-    await db.prepare("insert or replace into shows(showId, status, title, releaseDate, youtubeId) values (?, ?, ?, ?, ?)")
-      .bind(show.showId, show.status, show.title, show.releaseDate, show.youtubeId)
+    await db.prepare("insert or replace into shows(showId, status, title, releaseDate, vodId, vodSource) values (?, ?, ?, ?, ?, ?)")
+      .bind(show.showId, show.status, show.title, show.releaseDate, show.vodId, show.vodSource)
       .run();
   }
 

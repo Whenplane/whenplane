@@ -180,7 +180,7 @@
   {#each data.shows as show}
     {@const showDate = getClosestWan(new Date(show.releaseDate))}
     <a class="card flex hidden-link p-2 my-1 relative" href="/history/show/{show.showId}/merch-messages">
-      <img class="thumbnail" src="https://i.ytimg.com/vi/{show.youtubeId}/mqdefault.jpg" alt="Thumbnail" aria-hidden="true" loading="lazy">
+      <img class="thumbnail" src="https://i.ytimg.com/vi/{show.vodId}/mqdefault.jpg" alt="Thumbnail" aria-hidden="true" loading="lazy">
       <div class="self-center px-4">
         <span class="font-bold text-lg">
           {show.title}
