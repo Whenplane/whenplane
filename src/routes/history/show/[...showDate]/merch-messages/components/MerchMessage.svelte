@@ -51,7 +51,7 @@
           </div>
         {/if}
       </div>
-      <div class="justify-self-end pr-4 text-sm flex items-center gap-1">
+      <div class="justify-self-end md:pr-4 text-sm flex items-center gap-1">
         {#if floatplaneId}
           <a href="https://floatplane.com/post/{floatplaneId}?t={floatplaneSeconds}" rel="noopener" class="btn btn-sm variant-ghost-surface py-1 px-1.5">
             <div class="inline-block pr-0.5">
