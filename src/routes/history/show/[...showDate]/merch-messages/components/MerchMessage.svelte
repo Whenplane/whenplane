@@ -50,10 +50,12 @@
         {/if}
       </div>
       <div class="justify-self-end pr-4 text-sm">
-        <a href="https://youtube.com/watch?v={youtubeId}&t={youtubeSeconds}" rel="noopener" class="btn btn-sm variant-ghost-surface py-0.5 px-1.5">
-          <Youtube height={1.75}/>
-          {colonTimeString(youtubeSeconds)}
-        </a>
+        {#if youtubeSeconds >= 0}
+          <a href="https://youtube.com/watch?v={youtubeId}&t={youtubeSeconds}" rel="noopener" class="btn btn-sm variant-ghost-surface py-0.5 px-1.5">
+            <Youtube height={1.75}/>
+            {colonTimeString(youtubeSeconds)}
+          </a>
+        {/if}
       </div>
     </div>
     <div class="opacity-70 ml-4 pr-4">
