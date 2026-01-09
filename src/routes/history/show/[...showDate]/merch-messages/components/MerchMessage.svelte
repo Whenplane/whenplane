@@ -6,9 +6,11 @@
   import { page } from "$app/stores";
   import { colonTimeString } from "$lib/timeUtils.ts";
   import Youtube from "$lib/svg/Youtube.svelte";
+  import Floatplane from "$lib/svg/Floatplane.svelte";
 
   export let message: MMV2TableRow;
   export let youtubeId: string | undefined;
+  export let floatplaneId: string | undefined;
   export let source: "youtube" | "floatplane";
   export let preShowLength: number;
 
@@ -49,9 +51,17 @@
           </div>
         {/if}
       </div>
-      <div class="justify-self-end pr-4 text-sm">
+      <div class="justify-self-end pr-4 text-sm flex items-center gap-1">
+        {#if floatplaneId}
+          <a href="https://floatplane.com/post/{floatplaneId}?t={floatplaneSeconds}" rel="noopener" class="btn btn-sm variant-ghost-surface py-1 px-1.5">
+            <div class="inline-block pr-0.5">
+              <Floatplane height="1.6em"/>
+            </div>
+            {colonTimeString(floatplaneSeconds)}
+          </a>
+        {/if}
         {#if youtubeSeconds >= 0}
-          <a href="https://youtube.com/watch?v={youtubeId}&t={youtubeSeconds}" rel="noopener" class="btn btn-sm variant-ghost-surface py-0.5 px-1.5">
+          <a href="https://youtube.com/watch?v={youtubeId}&t={youtubeSeconds}" rel="noopener" class="btn btn-sm variant-ghost-surface py-1 px-1.5">
             <Youtube height={1.75}/>
             {colonTimeString(youtubeSeconds)}
           </a>

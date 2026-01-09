@@ -112,7 +112,7 @@
 
 <div class="limit-xl mx-auto text-right pb-64">
   {#each data.messages as message}
-    <MerchMessage {message} youtubeId={data.metadata?.vods?.youtube} source={data.mmShow.vodSource} preShowLength={preShowLength}/>
+    <MerchMessage {message} youtubeId={data.metadata?.vods?.youtube} floatplaneId={data.metadata?.vods?.floatplane} source={data.mmShow.vodSource} preShowLength={preShowLength}/>
   {/each}
 </div>
 
