@@ -12,13 +12,13 @@
   export let youtubeId: string | undefined;
   export let floatplaneId: string | undefined;
   export let source: "youtube" | "floatplane";
-  export let preShowLength: number;
+  export let preShowLength: number | null;
 
   const seconds = Math.floor(message.timestamp);
   const imageUrl = `https://merch-message-images.whenplane.com/${message.show}/images/${seconds}.jpg`;
 
-  const youtubeSeconds = source === "youtube" ? seconds : seconds - Math.floor(preShowLength/1e3);
-  const floatplaneSeconds = source === "floatplane" ? seconds : seconds + Math.floor(preShowLength/1e3);
+  const youtubeSeconds = source === "youtube" ? seconds : preShowLength !== null ? seconds - Math.floor(preShowLength/1e3) : null;
+  const floatplaneSeconds = source === "floatplane" ? seconds : preShowLength !== null ? seconds + Math.floor(preShowLength/1e3) : null;
 </script>
 <div
   class="card card-hover relative p-4 my-3 mx-2 flex overflow-hidden text-left main-div"
@@ -52,7 +52,7 @@
         {/if}
       </div>
       <div class="justify-self-end md:pr-4 text-sm flex items-center gap-1">
-        {#if floatplaneId}
+        {#if floatplaneSeconds != null && floatplaneId}
           <a href="https://floatplane.com/post/{floatplaneId}?t={floatplaneSeconds}" rel="noopener" class="btn btn-sm variant-ghost-surface py-1 px-1.5">
             <div class="inline-block pr-0.5">
               <Floatplane height="1.6em"/>
@@ -60,7 +60,7 @@
             {colonTimeString(floatplaneSeconds)}
           </a>
         {/if}
-        {#if youtubeSeconds >= 0}
+        {#if youtubeSeconds != null && youtubeSeconds >= 0}
           <a href="https://youtube.com/watch?v={youtubeId}&t={youtubeSeconds}" rel="noopener" class="btn btn-sm variant-ghost-surface py-1 px-1.5">
             <Youtube height={1.75}/>
             {colonTimeString(youtubeSeconds)}
