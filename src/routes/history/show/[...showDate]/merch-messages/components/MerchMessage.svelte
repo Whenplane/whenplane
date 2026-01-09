@@ -39,7 +39,7 @@
             <Avatar width="w-10" initials={message.name.charAt(0)}/>
           {/if}
           &nbsp;
-          {message.name}
+          <span>{message.name}</span>
         {:else}
           <ReplyFill class="w-5 h-5 m-2"/>
           &nbsp;
