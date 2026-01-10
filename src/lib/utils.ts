@@ -392,6 +392,7 @@ export type FpProxyResponse = {
         thumbnail: FloatplaneImage
     },
     isLive: boolean,
+    started?: number | "unknown"
     fetched: number
 }
 
