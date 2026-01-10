@@ -85,8 +85,8 @@ export const GET = (async ({platform, locals, url, fetch}) => {
         // Only record show start time if we are within 7 hours of the closest wan
         if(distance < 7 * 60 * 60 * 1000) {
             platform.context.waitUntil((async () => {
-                const kvId = await history.get(getUTCDate(closestWAN) + ":videoId");
-                if(!kvId) {
+                const kvMainShowStart = await history.get(getUTCDate(closestWAN) + ":mainShowStart");
+                if(!kvMainShowStart) {
                     // Expire these keys after 15 days to save space over time.
                     // It should be collapsed into a single object at the end of the stream, so no data should be lost.
                     // The collapsing is done in a scheduled worker
