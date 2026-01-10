@@ -67,7 +67,7 @@ export const GET = (async ({platform, params, url, locals}) => {
         const snippetFragment = history.get(showDate + ":snippet", {type: 'json'});
         const videoIdFragment = history.get(showDate + ":videoId");
 
-        if(await mainShowStartFragment || await showEndFragment || await snippetFragment || await videoIdFragment) {
+        if(url.searchParams.has("allowPreshowOnly") || await mainShowStartFragment || await showEndFragment || await snippetFragment || await videoIdFragment) {
             const preShowStart = preShowStartFragment;
             const mainShowStart = await mainShowStartFragment;
             const showEnd = await showEndFragment;

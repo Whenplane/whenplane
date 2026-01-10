@@ -16,10 +16,10 @@ const cache: {
 }
 
 let savedStartTime: boolean | undefined = undefined;
+let savedMeta: boolean | undefined = undefined;
 
 let lastNotifSend = 0;
 
-let sentToWDB = false;
 
 export const GET = (async ({platform, locals, url, fetch}) => {
 
@@ -79,14 +79,14 @@ export const GET = (async ({platform, locals, url, fetch}) => {
         .then(r => r.json()) as DOResponse;
     locals.addTiming({id: 'doFetch', duration: Date.now() - doStart})
 
-    if(!savedStartTime && isWAN && started) {
+    if(!savedStartTime && isWAN && (started || !savedMeta)) {
         const closestWAN = getClosestWan();
         const distance = Math.abs(Date.now() - closestWAN.getTime())
         // Only record show start time if we are within 7 hours of the closest wan
         if(distance < 7 * 60 * 60 * 1000) {
             platform.context.waitUntil((async () => {
-                const kvStartTime = await history.get(getUTCDate(closestWAN) + ":mainShowStart");
-                if(!kvStartTime) {
+                const kvId = await history.get(getUTCDate(closestWAN) + ":videoId");
+                if(!kvId) {
                     // Expire these keys after 15 days to save space over time.
                     // It should be collapsed into a single object at the end of the stream, so no data should be lost.
                     // The collapsing is done in a scheduled worker
@@ -94,7 +94,7 @@ export const GET = (async ({platform, locals, url, fetch}) => {
                     const date = getUTCDate(getClosestWan());
                     if(started) await history.put(date + ":mainShowStart", started, {expirationTtl});
                     if(videoId) await history.put(date + ":videoId", videoId, {expirationTtl});
-                    await history.put(date + ":snippet", JSON.stringify(snippet), {expirationTtl});
+                    if(snippet) await history.put(date + ":snippet", JSON.stringify(snippet), {expirationTtl});
                     await fetch("https://wheniswan-taskrunner.ajg.workers.dev/", {
                         method: "POST",
                         headers: {
@@ -106,7 +106,8 @@ export const GET = (async ({platform, locals, url, fetch}) => {
                     })
                 }
             })());
-            savedStartTime = true;
+            if(started) savedStartTime = true;
+            savedMeta = true;
         }
     }
 
