@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { getClosestWan, getTimeUntil } from "$lib/timeUtils.ts";
+  import { getClosestWan, getTimeUntil, timeString } from "$lib/timeUtils.ts";
   import { type MMJobData, truncateText } from "$lib/utils.ts";
   import { getDateFormatLocale } from "$lib/prefUtils.ts";
   import { page } from "$app/stores";
@@ -48,6 +48,11 @@
   const preShowLength = preShowStart && mainShowStart ?
     getTimeUntil(mainShowStart as Date, (preShowStart as Date).getTime()).distance :
     null;
+  const mainShowLength = mainShowStart && showEnd ?
+    getTimeUntil(showEnd as Date, (mainShowStart as Date).getTime()).distance :
+    null;
+
+  $: biggestTimestamp = data.messages.reduce((a, b) => Math.max(a, b.timestamp), 0);
 </script>
 
 <svelte:head>
@@ -97,6 +102,7 @@
     <br>
     <br>
     {#if lastData}
+      {@const percent = Math.max(lastData.downloadPercent ?? 0, preShowLength && mainShowLength ? ( (biggestTimestamp*1e3) / (preShowLength + mainShowLength)) : 0)}
       <div class="text-center mb-8" in:slide>
         <div class="py-1">
           Show Processing Completion
@@ -109,8 +115,8 @@
 
           </ToolTip>
           <br>
-          <progress value={lastData.downloadPercent ?? 0} max={1} style="width: calc(100% - 5em);"/>
-          {((lastData.downloadPercent ?? 0) * 100).toFixed(2)}%
+          <progress value={percent} max={1} style="width: calc(100% - 5em);"/>
+          {(percent * 100).toFixed(2)}%
         </div>
       </div>
     {/if}
