@@ -10,6 +10,7 @@
   import { onMount } from "svelte";
   import { dev } from "$app/environment";
   import { slide } from "svelte/transition";
+  import ToolTip from "$lib/ToolTip.svelte";
 
   export let data;
 
@@ -98,7 +99,16 @@
     {#if lastData}
       <div class="text-center mb-8" in:slide>
         <div class="py-1">
-          VOD Download<br>
+          Show Processing Completion
+          <ToolTip id="mm-progress-{data.name}">
+            If this show is currently live, this progress bar being near (or close to) 100% means the processing is caught up to the livestream.
+            If it is live and well under 100%, that means Whenplane is currently behind the livestream. This will usually be around 99%, as if Whenplane gets too far behind it might miss parts of the show.
+            <br>
+            If this show already happened, this bar is how far through the show the MM reader is.
+            50% means Whenplane is halfway through watching the show.
+
+          </ToolTip>
+          <br>
           <progress value={lastData.downloadPercent ?? 0} max={1} style="width: calc(100% - 5em);"/>
           {((lastData.downloadPercent ?? 0) * 100).toFixed(2)}%
         </div>

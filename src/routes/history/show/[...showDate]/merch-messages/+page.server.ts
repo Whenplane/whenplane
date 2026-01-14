@@ -16,7 +16,7 @@ export const load = (async ({platform, params, parent}) => {
   );
 
   if(show === null) {
-    throw error(404, "Video not found (or not processed yet)")
+    throw error(404, "Merch Messages not found (or not processed yet)")
   }
 
   const messages = await retryD1(() =>
