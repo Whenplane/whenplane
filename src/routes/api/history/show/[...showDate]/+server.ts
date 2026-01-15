@@ -14,6 +14,9 @@ export const GET = (async ({platform, params, url, locals}) => {
     if(showDate === "closest") {
         showDate = getUTCDate(getClosestWan());
     }
+    if(showDate === "previous") {
+        showDate = getUTCDate(getPreviousWAN());
+    }
 
     const youtubeToDate = platform?.env?.YOUTUBE_TO_DATE;
     if(showDate && !showDate.includes("/") && youtubeToDate) {
