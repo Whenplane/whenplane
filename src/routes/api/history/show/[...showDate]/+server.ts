@@ -2,7 +2,7 @@ import { type RequestHandler } from "@sveltejs/kit";
 import {error, json} from "@sveltejs/kit";
 import type {OldShowMeta} from "$lib/utils";
 import type {KVNamespace} from "@cloudflare/workers-types";
-import { dateToNumber, getPreviousWAN, getUTCDate } from "$lib/timeUtils.ts";
+import { dateToNumber, getClosestWan, getPreviousWAN, getUTCDate } from "$lib/timeUtils.ts";
 
 export const GET = (async ({platform, params, url, locals}) => {
 
@@ -11,6 +11,9 @@ export const GET = (async ({platform, params, url, locals}) => {
 
     let showDate = params.showDate;
     if(!showDate) throw error(400, "No show date!");
+    if(showDate === "closest") {
+        showDate = getUTCDate(getClosestWan());
+    }
 
     const youtubeToDate = platform?.env?.YOUTUBE_TO_DATE;
     if(showDate && !showDate.includes("/") && youtubeToDate) {
