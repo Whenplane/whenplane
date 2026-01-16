@@ -98,30 +98,28 @@
     Hint: Use CTRL + F to search messages in this show, or <a href="/merch-messages">go to the main merch messages page</a> to search merch messages in all shows.
   </span>
   {#if data.mmShow.status === "inprogress"}
+    {@const percent = Math.max(lastData?.downloadPercent ?? 0, preShowLength && mainShowLength ? ( (biggestTimestamp*1e3) / (preShowLength + mainShowLength)) : 0)}
     <br>
     <br>
     <Incomplete/>
     <br>
     <br>
-    {#if lastData}
-      {@const percent = Math.max(lastData.downloadPercent ?? 0, preShowLength && mainShowLength ? ( (biggestTimestamp*1e3) / (preShowLength + mainShowLength)) : 0)}
-      <div class="text-center mb-8" in:slide>
-        <div class="py-1">
-          Show Processing Completion
-          <ToolTip id="mm-progress-{data.name}">
-            If this show is currently live, this progress bar being near (or close to) 100% means the processing is caught up to the livestream.
-            If it is live and well under 100%, that means Whenplane is currently behind the livestream. This will usually be around 99%, as if Whenplane gets too far behind it might miss parts of the show.
-            <br>
-            If this show already happened, this bar is how far through the show the MM reader is.
-            50% means Whenplane is halfway through watching the show.
-
-          </ToolTip>
+    <div class="text-center mb-8" in:slide>
+      <div class="py-1">
+        Show Processing Completion
+        <ToolTip id="mm-progress-{data.name}">
+          If this show is currently live, this progress bar being near (or close to) 100% means the processing is caught up to the livestream.
+          If it is live and well under 100%, that means Whenplane is currently behind the livestream. This will usually be around 99%, as if Whenplane gets too far behind it might miss parts of the show.
           <br>
-          <progress value={percent} max={1} style="width: calc(100% - 5em);"/>
-          {(percent * 100).toFixed(2)}%
-        </div>
+          If this show already happened, this bar is how far through the show the MM reader is.
+          50% means Whenplane is halfway through watching the show.
+
+        </ToolTip>
+        <br>
+        <progress value={percent} max={1} style="width: calc(100% - 5em);"/>
+        {(percent * 100).toFixed(2)}%
       </div>
-    {/if}
+    </div>
 
   {/if}
 </div>
