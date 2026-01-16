@@ -55,16 +55,18 @@
       </div>
       <div class="justify-self-end md:pr-4 text-sm flex items-center gap-1">
         {#if floatplaneSeconds != null && floatplaneId}
-          <a href="https://floatplane.com/post/{floatplaneId}?t={floatplaneSeconds}" rel="noopener" class="btn btn-sm variant-ghost-surface py-1 px-1.5">
-            <div class="inline-block pr-0.5">
+          <a href="https://floatplane.com/post/{floatplaneId}?t={floatplaneSeconds}" rel="noopener" class="btn btn-sm variant-ghost-surface py-1 px-1.5" aria-label="Jump to message in Floatplane VOD">
+            <div class="inline-block pr-0.5" aria-hidden="true">
               <Floatplane height="1.6em"/>
             </div>
             {colonTimeString(floatplaneSeconds)}
           </a>
         {/if}
         {#if youtubeSeconds != null && youtubeSeconds >= 0}
-          <a href="https://youtube.com/watch?v={youtubeId}&t={youtubeSeconds}" rel="noopener" class="btn btn-sm variant-ghost-surface py-1 px-1.5">
-            <Youtube height={1.75}/>
+          <a href="https://youtube.com/watch?v={youtubeId}&t={youtubeSeconds}" rel="noopener" class="btn btn-sm variant-ghost-surface py-1 px-1.5" aria-label="Jump to message in YouTube VOD">
+            <span aria-hidden="true">
+              <Youtube height={1.75}/>
+            </span>
             {colonTimeString(youtubeSeconds)}
           </a>
         {/if}
