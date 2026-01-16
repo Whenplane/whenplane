@@ -87,11 +87,11 @@
     onMount(() => {
       let i = 0
       // we pick a random offset so hopefully there wont be a bunch of browsers requesting data at once
-      let randomOffset = 10e3 * Math.random();
+      let randomOffset = 15e3 * Math.random();
       let interval = setInterval(async () => {
         // shuffle offset every minute so its not always the same client
         if(i++ % 12 === 0) {
-          randomOffset = 10e3 * Math.random();
+          randomOffset = 15e3 * Math.random();
         }
 
         // minimum of 5 seconds when near wan time. Minimum of 30 when not near wan time
