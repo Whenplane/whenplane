@@ -57,7 +57,7 @@
 
 <svelte:head>
   <title>Merch Messages from {data.metadata.title ?? ""}{data.metadata.title ? " - " : ""}WAN Show {showDate.toLocaleDateString(undefined, {dateStyle: 'long'})} - Whenplane</title>
-  <meta name="description" content="Whenplane found {commas(data.mmShow.messageCount)} merch messages and {commas(data.mmShow.replyCount)} replies from this show">
+  <meta name="description" content="Whenplane found {commas(data.mmShow.messageCount)} merch messages and {commas(data.mmShow.replyCount)} replies from this show.">
   <link rel="canonical" href="https://whenplane.com{$page.url.pathname}"/>
   {#if thumbnail}
     <meta property="og:image" content={thumbnail.url}>
