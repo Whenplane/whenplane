@@ -62,14 +62,18 @@
       dispatch("data", { data });
       console.debug("[whenplane:ws] Received data:", data);
 
+      overwriteData.lastMessage = Date.now();
       if(typeof data === "string") {
-        overwriteData.data = JSON.parse(data);
+        const newData = JSON.parse(data);
+        // dont invalidate if the new data is exactly the same as the old data
+        if(JSON.stringify(newData) === JSON.stringify(overwriteData.data)) return;
+        overwriteData.data = newData;
       } else if(typeof data === "object") {
+        if(JSON.stringify(data) === JSON.stringify(overwriteData.data)) return;
         overwriteData.data = data;
       } else {
         console.error("Unknown data type", typeof data)
       }
-      overwriteData.lastMessage = Date.now();
 
       if(invalidate) {
         lastInvalidate = Date.now();
