@@ -1,6 +1,6 @@
 <script lang="ts">
   import { getClosestWan, getTimeUntil, timeString } from "$lib/timeUtils.ts";
-  import { type MMJobData, truncateText } from "$lib/utils.ts";
+  import { commas, type MMJobData, truncateText } from "$lib/utils.ts";
   import { getDateFormatLocale } from "$lib/prefUtils.ts";
   import { page } from "$app/stores";
   import MerchMessage from "./components/MerchMessage.svelte";
@@ -57,7 +57,7 @@
 
 <svelte:head>
   <title>Merch Messages from {data.metadata.title ?? ""}{data.metadata.title ? " - " : ""}WAN Show {showDate.toLocaleDateString(undefined, {dateStyle: 'long'})} - Whenplane</title>
-<!--  <meta name="description" content="{truncateText(textOnly, 500)}"> TODO-->
+  <meta name="description" content="Whenplane found {commas(data.mmShow.messageCount)} merch messages and {commas(data.mmShow.replyCount)} replies from this show">
   <link rel="canonical" href="https://whenplane.com{$page.url.pathname}"/>
   {#if thumbnail}
     <meta property="og:image" content={thumbnail.url}>
