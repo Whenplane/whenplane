@@ -18,7 +18,7 @@ export const GET = (async ({fetch, request}) => {
   // If this is you, please contact me: https://whenplane.com/contact
   // This starts randomly failing requests more and more over 2 weeks
   if(userAgent.toLowerCase().startsWith("luna-whenplane-poller") && Math.random() < (Date.now() - brownStart) / (2 * 7 * 24 * 60 * 60e3)) {
-    throw error(403, "Polling nextWan once a minute is unnecessary. Please contact me: https://whenplane.com/contact\nYour requests to this endpoint will fail more and more until 2 weeks, then every request will fail. Please contact me.");
+    throw error(403, "Polling nextWan once a minute is unnecessary. Please contact me: https://whenplane.com/contact\nYour requests to this endpoint will fail more and more until January 29th (2 weeks from start), then every request will fail. Please contact me.");
   }
 
   const ip = request.headers.get('cf-connecting-ip');
