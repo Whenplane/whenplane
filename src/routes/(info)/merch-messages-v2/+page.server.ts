@@ -1,9 +1,9 @@
 import { error } from "@sveltejs/kit";
-import { retryD1 } from "$lib/utils.ts";
+import { type HistoricalEntry, retryD1 } from "$lib/utils.ts";
 import type { MMShow } from "$lib/merch-messages/mm-types.ts";
 import type { PageServerLoad } from "./$types";
 
-export const load = (async ({platform}) => {
+export const load = (async ({platform, fetch}) => {
 
   const db = platform?.env?.MERCHMESSAGES_DB.withSession();
   if(!db) throw error(503, "DB unavailable!");
@@ -15,8 +15,13 @@ export const load = (async ({platform}) => {
       .then(r => r.results)
   );
 
+  const showPromises: Promise<HistoricalEntry>[] = [];
   const countingPromises: Promise<[string, number, number]>[] = [];
   for (const show of shows) {
+    showPromises.push(
+      fetch("/api/history/show/" + show.showId)
+        .then(r => r.json())
+    )
     if(show.messageCount !== null && show.replyCount !== null) continue;
     if(show.status !== "complete") continue;
     console.log("Adding message count for", show)
@@ -60,6 +65,6 @@ export const load = (async ({platform}) => {
     ]
   }))
 
-  return {shows, videoReleaseDates};
+  return {shows, videoReleaseDates, showMeta: await Promise.all(showPromises)};
 
 }) satisfies PageServerLoad;

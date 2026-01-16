@@ -14,7 +14,7 @@
   import type { MMShow, MMV2TableRow } from "$lib/merch-messages/mm-types.ts";
   import { getClosestWan } from "$lib/timeUtils.ts";
 
-  export let data: {shows: MMShow[], videoReleaseDates: { [p: string]: number }};
+  export let data;
 
   const searchClient = new SearchClient({
     'nodes': [{
@@ -179,8 +179,11 @@
 
   {#each data.shows as show}
     {@const showDate = getClosestWan(new Date(show.releaseDate))}
+    {@const showMeta = data.showMeta.find(s => s.name === show.showId)}
+    {@const thumbnails = showMeta?.value?.thumbnails ?? showMeta?.value?.snippet?.thumbnails}
+    {@const thumbnail = thumbnails?.maxres ?? thumbnails?.standard ?? thumbnails?.high ?? thumbnails?.medium ?? thumbnails?.default}
     <a class="card flex hidden-link p-2 my-1 relative" href="/history/show/{show.showId}/merch-messages">
-      <img class="thumbnail" src="https://i.ytimg.com/vi/{show.vodId}/mqdefault.jpg" alt="Thumbnail" aria-hidden="true" loading="lazy">
+      <img class="thumbnail" src={thumbnail?.url} alt="Thumbnail" aria-hidden="true" loading="lazy" width={thumbnail?.width} height={thumbnail?.height}>
       <div class="self-center px-4">
         <span class="font-bold text-lg">
           {show.title}
