@@ -27,53 +27,53 @@
   id={message.id}
   class:hashHighlight={$page.url.hash === "#" + message.id}
 >
-  <div class="flex-1 space-y-2">
-    <div class="flex items-center justify-between">
-      <div class="flex items-center">
-        {#if message.type === "message"}
-          <div aria-hidden="true">
-            {#if message.name === "Anonymous"}
-              <figure class="avatar">
-                <PersonX/>
-              </figure>
-            {:else}
-              <Avatar width="w-10" initials={message.name.charAt(0)}/>
-            {/if}
-          </div>
-          &nbsp;
-          <span>{message.name}</span>
-        {:else}
-          <ReplyFill class="w-5 h-5 m-2"/>
-          &nbsp;
-          <div>
+  <div class="flex-1 grid grid-cols-[1fr_auto] items-center gap-y-2">
+    <div class="flex items-center">
+      {#if message.type === "message"}
+        <div aria-hidden="true">
+          {#if message.name === "Anonymous"}
+            <figure class="avatar">
+              <PersonX/>
+            </figure>
+          {:else}
+            <Avatar width="w-10" initials={message.name.charAt(0)}/>
+          {/if}
+        </div>
+        &nbsp;
+        <span>{message.name}</span>
+      {:else}
+        <ReplyFill class="w-5 h-5 m-2"/>
+        &nbsp;
+        <div>
           <span class="opacity-80">
             Reply to
           </span>
-            {message.name}
-          </div>
-        {/if}
-      </div>
-      <div class="justify-self-end md:pr-4 text-sm flex items-center gap-1">
-        {#if floatplaneSeconds != null && floatplaneId}
-          <a href="https://floatplane.com/post/{floatplaneId}?t={floatplaneSeconds}" rel="noopener" class="btn btn-sm variant-ghost-surface py-1 px-1.5" aria-label="Jump to message in Floatplane VOD">
-            <div class="inline-block pr-0.5" aria-hidden="true">
-              <Floatplane height="1.6em"/>
-            </div>
-            {colonTimeString(floatplaneSeconds)}
-          </a>
-        {/if}
-        {#if youtubeSeconds != null && youtubeSeconds >= 0}
-          <a href="https://youtube.com/watch?v={youtubeId}&t={youtubeSeconds}" rel="noopener" class="btn btn-sm variant-ghost-surface py-1 px-1.5" aria-label="Jump to message in YouTube VOD">
-            <span aria-hidden="true">
-              <Youtube height={1.75}/>
-            </span>
-            {colonTimeString(youtubeSeconds)}
-          </a>
-        {/if}
-      </div>
+          {message.name}
+        </div>
+      {/if}
     </div>
-    <div class="opacity-70 ml-4 pr-4">
+
+    <div class="opacity-70 ml-4 pr-4 col-span-2">
       {message.text}
+    </div>
+
+    <div class="row-start-1 col-start-2 justify-self-end md:pr-4 text-sm flex items-center gap-1">
+      {#if floatplaneSeconds != null && floatplaneId}
+        <a href="https://floatplane.com/post/{floatplaneId}?t={floatplaneSeconds}" rel="noopener" class="btn btn-sm variant-ghost-surface py-1 px-1.5" aria-label="Jump to message in Floatplane VOD">
+          <div class="inline-block pr-0.5" aria-hidden="true">
+            <Floatplane height="1.6em"/>
+          </div>
+          {colonTimeString(floatplaneSeconds)}
+        </a>
+      {/if}
+      {#if youtubeSeconds != null && youtubeSeconds >= 0}
+        <a href="https://youtube.com/watch?v={youtubeId}&t={youtubeSeconds}" rel="noopener" class="btn btn-sm variant-ghost-surface py-1 px-1.5" aria-label="Jump to message in YouTube VOD">
+          <span aria-hidden="true">
+            <Youtube height={1.75}/>
+          </span>
+          {colonTimeString(youtubeSeconds)}
+        </a>
+      {/if}
     </div>
   </div>
   <div class="w-full message-image shrink-0 self-center">
