@@ -108,7 +108,7 @@ export const GET = (async ({url, fetch, locals, platform}) => {
         specialStream: await specialStream,
         floatplane: await floatplane,
         notablePeople: await notable,
-        reloadNumber: 63
+        reloadNumber: 64
         // showExtension: await showExtension
     }
 
@@ -204,7 +204,6 @@ function makeWsMessage(response: AggregateResponse) {
         specialStream: response.specialStream,
         floatplane: {
             isLive: response.floatplane?.isLive,
-            isWAN: response.floatplane?.isWAN,
             isThumbnailNew: response.floatplane?.isThumbnailNew,
             thumbnail: response.floatplane?.thumbnail,
             title: response.floatplane?.title,
