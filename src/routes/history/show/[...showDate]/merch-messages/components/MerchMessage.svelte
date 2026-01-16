@@ -31,13 +31,15 @@
     <div class="flex items-center justify-between">
       <div class="flex items-center">
         {#if message.type === "message"}
-          {#if message.name === "Anonymous"}
-            <figure class="avatar">
-              <PersonX/>
-            </figure>
-          {:else}
-            <Avatar width="w-10" initials={message.name.charAt(0)}/>
-          {/if}
+          <div aria-hidden="true">
+            {#if message.name === "Anonymous"}
+              <figure class="avatar">
+                <PersonX/>
+              </figure>
+            {:else}
+              <Avatar width="w-10" initials={message.name.charAt(0)}/>
+            {/if}
+          </div>
           &nbsp;
           <span>{message.name}</span>
         {:else}
@@ -73,8 +75,8 @@
     </div>
   </div>
   <div class="w-full message-image shrink-0 self-center">
-    <a href={imageUrl}>
-      <img class="w-full" src={imageUrl} width="1000" height="200" loading="lazy">
+    <a href={imageUrl} aria-label="View Message Screenshot">
+      <img class="w-full" src={imageUrl} width="1000" height="200" loading="lazy" aria-hidden="true">
     </a>
   </div>
 

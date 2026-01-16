@@ -94,7 +94,9 @@
   <br>
   <br>
   <h2>Merch Messages</h2>
-  Hint: Use CTRL + F to search messages in this show, or <a href="/merch-messages">go to the main merch messages page</a> to search merch messages in all shows.
+  <span>
+    Hint: Use CTRL + F to search messages in this show, or <a href="/merch-messages">go to the main merch messages page</a> to search merch messages in all shows.
+  </span>
   {#if data.mmShow.status === "inprogress"}
     <br>
     <br>
