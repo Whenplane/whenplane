@@ -7,6 +7,24 @@ const lastRequests: {[ip: string]: number} = {};
 
 const brownStart = 1768535204337;
 
+/*
+
+
+HELLO!
+
+If you are interested in using this endpoint, please don't send constant requests to it.
+People sometimes send constant requests to this endpoint. I will block you if you do this.
+
+Instead, please either cache it and only fetch it like once a day,
+or preferably re-implement the getNextWan function as it is mostly static.
+
+Also, make sure your user agent is googleable or has contact info for you.
+That way I can reach out if you're doing something I don't like, and we can work something out,
+instead of me just blocking you.
+
+
+ */
+
 export const GET = (async ({fetch, request}) => {
 
   const userAgent = request.headers.get("user-agent");
