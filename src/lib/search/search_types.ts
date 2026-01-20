@@ -8,6 +8,7 @@ export type CombinedSearchResult =
     text: string,
     name: string,
     parent: string | null,
+    parentText: string | null,
     showDate: number,
     sortWeight: number
   } |
