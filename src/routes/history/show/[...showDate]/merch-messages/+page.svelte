@@ -53,6 +53,7 @@
     null;
 
   $: biggestTimestamp = data.messages.reduce((a, b) => Math.max(a, b.timestamp), 0);
+  const latestJobId = data.messages.map(m => m.jobId).sort().reverse()[0];
 </script>
 
 <svelte:head>
@@ -128,7 +129,9 @@
 
 <div class="limit-xl mx-auto text-right pb-64">
   {#each data.messages as message}
-    <MerchMessage {message} youtubeId={data.metadata?.vods?.youtube} floatplaneId={data.metadata?.vods?.floatplane} source={data.mmShow.vodSource} preShowLength={preShowLength}/>
+    <div class:opacity-80={latestJobId !== message.jobId}>
+      <MerchMessage {message} youtubeId={data.metadata?.vods?.youtube} floatplaneId={data.metadata?.vods?.floatplane} source={data.mmShow.vodSource} preShowLength={preShowLength}/>
+    </div>
   {/each}
 </div>
 
