@@ -41,7 +41,7 @@ export const GET = (async ({fetch, request}) => {
 
   const lastRequest = lastRequests[ip ?? "dev"] ?? 0;
 
-  if(Date.now() - lastRequest < 30e3) {
+  if(Date.now() - lastRequest < 5 * 60e3) {
     throw error(429, "Rate limited! Please send less requests.");
   }
 
