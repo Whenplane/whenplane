@@ -278,7 +278,12 @@
             </span>
             {/if}
             <br>
-            <div class="pl-4 result-highlight opacity-80 max-w-full" class:result-visibility-highlight={highlightVisibility}>
+            {#if hit.document.type === "topic" && hit.document.parentText}
+                <span class="opacity-60">
+                  {hit.document.parentText}
+                </span>
+            {/if}
+            <div class="pl-4 result-highlight opacity-90 max-w-full" class:result-visibility-highlight={highlightVisibility} class:pl-8={hit.document.parentText}>
               {@html sanitizeHtml(hit.highlight?.text?.snippet ?? hit.document.text ?? hit.highlight?.name?.snippet ?? hit.document.name, {allowedTags: ["mark"]})}
             </div><br>
           </a><br>
