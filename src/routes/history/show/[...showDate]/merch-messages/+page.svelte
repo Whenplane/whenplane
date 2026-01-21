@@ -129,7 +129,7 @@
 
 <div class="limit-xl mx-auto text-right pb-64">
   {#each data.messages as message}
-    <div class:opacity-60={latestJobId !== message.jobId}>
+    <div class:opacity-40={latestJobId !== message.jobId}>
       <MerchMessage {message} youtubeId={data.metadata?.vods?.youtube} floatplaneId={data.metadata?.vods?.floatplane} source={data.mmShow.vodSource} preShowLength={preShowLength}/>
     </div>
   {/each}
