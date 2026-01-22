@@ -11,7 +11,7 @@ export const load = (async () => {
   return {
     oldShows: await oldShowsGet({url: new URL("https://prerender/api/oldShows?removeDescription")} as OldShowsRequestEvent)
       .then(r => r.json()) as HistoricalEntry[],
-    alternateStartTimes: await fetch("/api/alternateStartTimes?v=" + version)
+    alternateStartTimes: await fetch("https://whenplane.com/api/alternateStartTimes?v=" + version)
       .then(r => r.json() as Promise<AlternateTimeRow[]>)
   }
 
