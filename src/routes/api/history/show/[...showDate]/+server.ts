@@ -35,7 +35,12 @@ export const GET = (async ({platform, params, url, locals}) => {
     if(!platform) throw error(503, "No platform!");
 
     // If this show is from before the previous show, then use a large cacheTtl (90 days, even though it would probably be evicted before then most of the time)
-    const cacheTtl = dateToNumber(showDate) < dateToNumber(getUTCDate(getPreviousWAN())) ? 90 * 24 * 60 * 60 : undefined;
+    let cacheTtl = dateToNumber(showDate) < dateToNumber(getUTCDate(getPreviousWAN())) ? 90 * 24 * 60 * 60 : undefined;
+
+    // this show had the wrong fp id, and i didnt notice until months later. So doing this to bypass cache thats preventing it from updating
+    if(showDate === "2025/11/28") {
+        cacheTtl = 60;
+    }
 
     const start = Date.now();
 
