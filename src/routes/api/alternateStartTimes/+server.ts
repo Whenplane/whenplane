@@ -35,12 +35,16 @@ export const GET = (async ({platform}) => {
   const alternateTimes = await retryD1(() =>
     db.prepare("select * from alternate_times")
       .all<AlternateTimeRow>()
+      .then(r =>
+        r.results // sets days to undefined if null
+          .map(t => ({...t, days: t.days ?? undefined}))
+      )
   );
 
   localFetched = Date.now();
-  localCache = alternateTimes.results;
-  platform?.context?.waitUntil(cache?.put(cacheUrl, json(alternateTimes.results, {headers: {"x-cached": new Date().toISOString()}})));
-  return json(alternateTimes.results);
+  localCache = alternateTimes;
+  platform?.context?.waitUntil(cache?.put(cacheUrl, json(alternateTimes, {headers: {"x-cached": new Date().toISOString()}})));
+  return json(alternateTimes);
 
 }) satisfies RequestHandler;
 
@@ -55,9 +59,9 @@ export type AlternateTimeRow = {
   /** The date of the show (e.g., 2026/01/23) */
   date: string,
   /** The number of days to add to the show date (if it gets moved a day) e.g., 1 for 1 day later, -1 for 1 day earlier */
-  days: number | null,
+  days?: number | null,
   /** The hour of the show (24h format, in Vancouver time) */
-  hour: number,
+  hour: number | null,
   /** The minute of the show (in Vancouver time) */
-  minute: number
+  minute: number | null
 }
