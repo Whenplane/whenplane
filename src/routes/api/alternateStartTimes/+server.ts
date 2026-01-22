@@ -1,6 +1,7 @@
 import { error, json, type RequestHandler } from "@sveltejs/kit";
 import type { D1DatabaseSession } from "@cloudflare/workers-types";
 import { retryD1 } from "$lib/utils.ts";
+import { dev } from "$app/environment";
 
 const cacheUrl = new URL("http://alternate-start-times");
 
@@ -29,7 +30,7 @@ export const GET = (async ({platform}) => {
     }
   }
 
-  await createTables(db);
+  if(dev) await createTables(db);
 
   const alternateTimes = await retryD1(() =>
     db.prepare("select * from alternate_times")
