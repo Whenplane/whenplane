@@ -14,7 +14,11 @@ export const GET = (async ({platform}) => {
   if(!db) throw error(503, "DB unavailable!");
 
   if(Date.now() - localFetched < 5 * 60e3 && localCache !== undefined) {
-    return json(localCache);
+    return json(localCache, {
+      headers: {
+        "cache-control": "max-age=30, public",
+      }
+    });
   }
 
   const cache = await platform?.caches.open("alternate-start-times");
@@ -44,7 +48,11 @@ export const GET = (async ({platform}) => {
   localFetched = Date.now();
   localCache = alternateTimes;
   platform?.context?.waitUntil(cache?.put(cacheUrl, json(alternateTimes, {headers: {"x-cached": new Date().toISOString()}})));
-  return json(alternateTimes);
+  return json(alternateTimes, {
+    headers: {
+      "cache-control": "max-age=30, public",
+    }
+  });
 
 }) satisfies RequestHandler;
 
