@@ -45,11 +45,15 @@ export const GET = (async ({fetch, request}) => {
     throw error(429, "Rate limited! Please send less requests.");
   }
 
-  const hasDone = await fetch("/api/hasDone")
+  const alternateStartTimesP = fetch("/api/alternateStartTimes")
+    .then(r => r.json());
+  const hasDoneP = fetch("/api/hasDone")
     .then(r => r.json())
-    .then(r => r.hasDone)
+    .then(r => r.hasDone);
+
+  const [alternateStartTimes, hasDone] = await Promise.all([alternateStartTimesP, hasDoneP]);
 
   lastRequests[ip ?? "dev"] = Date.now();
 
-  return text(getNextWAN(undefined, undefined, hasDone).toISOString());
+  return text(getNextWAN(undefined, undefined, alternateStartTimes, hasDone).toISOString());
 }) satisfies RequestHandler;

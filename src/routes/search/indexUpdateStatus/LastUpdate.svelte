@@ -9,6 +9,7 @@
   import OutdatedNotice from "./OutdatedNotice.svelte";
   import CheckCircleFill from "svelte-bootstrap-icons/lib/CheckCircleFill.svelte";
   import UpToDate from "./UpToDate.svelte";
+  import { version } from "$app/environment";
 
   const searchClient = new SearchClient({
     'nodes': [{
@@ -41,14 +42,19 @@
     return Number(getUTCDate(d).replaceAll("/", ""));
   }
 
-  onMount(() => {
-    lastTitle = getLatest("title");
-    lastTopic = getLatest("topic");
-    lastTranscript = getLatest("transcript-chunk");
-    lastMerchMessage = getLatest("[message, reply]");
+  onMount(async () => {
+    const previousDateNumber = dateNumber(getPreviousWAN(
+      undefined,
+      await fetch("/api/alternateStartTimes?v=" + version)
+        .then(r => r.json())
+    ));
+    lastTitle = getLatest("title", previousDateNumber);
+    lastTopic = getLatest("topic", previousDateNumber);
+    lastTranscript = getLatest("transcript-chunk", previousDateNumber);
+    lastMerchMessage = getLatest("[message, reply]", previousDateNumber);
   })
 
-  function getLatest(type: string) {
+  function getLatest(type: string, previousDateNumber: number) {
     return searchClient.collections<CombinedSearchResult>("whenplane-all").documents().search({
       q: "*",
       query_by: "text",
@@ -64,7 +70,7 @@
       const latest = new Date(formatDate(latestDateNumber));
       return {
         dateString: latest.toLocaleDateString(getDateFormatLocale()),
-        isUpToDate: latestDateNumber >= dateNumber(getPreviousWAN())
+        isUpToDate: latestDateNumber >= previousDateNumber
         // isUpToDate: false
       } satisfies IndexUpdate;
     })

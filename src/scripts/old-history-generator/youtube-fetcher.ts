@@ -11,6 +11,7 @@ import {youtubeDataPath} from "./index.ts";
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-ignore
 import {fileExists} from "./utils.ts";
+import type { AlternateTimeRow } from "../../routes/api/alternateStartTimes/+server.ts";
 
 
 export async function fetchYoutubeShows() {
@@ -238,6 +239,9 @@ async function scanVideo(video: ListedYoutubeVideo, showVods: {[key: string]: Sp
 
     const specificData = await specificResponse.json() as YoutubeSpecificResponse;
 
+    const alternateStartTimes: AlternateTimeRow[] = await fetch("https://whenplane.com/api/alternateStartTimes")
+      .then(r => r.json())
+
     for (const video of specificData.items) {
 
         const publishedAt = video.snippet?.publishedAt;
@@ -254,7 +258,7 @@ async function scanVideo(video: ListedYoutubeVideo, showVods: {[key: string]: Sp
                 publishDate.setDate(publishDate.getDate() - 2);
             }
         }
-        const date = getPreviousWAN(publishDate) as Date;
+        const date = getPreviousWAN(publishDate, alternateStartTimes) as Date;
 
         const dateName = getUTCDate(date);
 

@@ -11,7 +11,7 @@
     import {getClosestWan, getNextWAN, getTimeUntil} from "./timeUtils";
     import {page} from "$app/stores";
 
-    let nextWan = getNextWAN(undefined, undefined, $page.data.hasDone);
+    let nextWan = getNextWAN(undefined, undefined, $page.data.alternateStartTimes, $page.data.hasDone);
 
     let showPlayed = false;
 
@@ -46,7 +46,7 @@
         } else {
             if(showPlayed) {
                 showPlayed = false;
-                nextWan = getNextWAN(undefined, undefined, $page.data.hasDone);
+                nextWan = getNextWAN(undefined, undefined, $page.data.alternateStartTimes, $page.data.hasDone);
             }
             const timeUntil = getTimeUntil(nextWan);
             countdownText = timeUntil.string

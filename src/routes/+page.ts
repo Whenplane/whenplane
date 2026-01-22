@@ -1,16 +1,18 @@
 import type {PageLoad, RouteParams} from "./$types";
-import { browser, dev } from "$app/environment";
+import { browser, dev, version } from "$app/environment";
 import type { Latenesses } from "./api/latenesses/+server";
 import type { AggregateResponse } from "./api/(live-statuses)/aggregate/+server";
 import { nextFast, overwriteData } from "$lib/stores.ts";
 import type { NewsPost } from "$lib/news/news.ts";
 import { getClosestWan } from "$lib/timeUtils.ts";
+import type { AlternateTimeRow } from "./api/alternateStartTimes/+server.ts";
 
 let cachedLatenesses: Latenesses;
 let cachedLatenessesTime = 0 ;
 
 
 let lastNewsPostCache: NewsPost;
+let alternateStartTimesCache: AlternateTimeRow[];
 
 export const load = (async ({fetch, params, url}) => {
     let fast = (!browser || (location && location.pathname !== "/"));
@@ -26,6 +28,7 @@ export const load = (async ({fetch, params, url}) => {
     let liveStatus: AggregateResponse | undefined;
     let latenesses: Latenesses | undefined;
     let lastNewsPost: NewsPost | undefined;
+    let alternateStartTimes: AlternateTimeRow[] | undefined;
 
     await Promise.all([
         (async () => {
@@ -63,6 +66,13 @@ export const load = (async ({fetch, params, url}) => {
             }
 
 
+        })(),
+        (async () => {
+            if(!alternateStartTimesCache) {
+                alternateStartTimesCache = await fetch("/api/alternateStartTimes?v=" + version)
+                  .then(r => r.json())
+            }
+            alternateStartTimes = alternateStartTimesCache;
         })()
     ]);
 
@@ -108,6 +118,7 @@ export const load = (async ({fetch, params, url}) => {
         specialStream: liveStatus?.specialStream,
         lastNewsPost,
         useWebSocket: !url.searchParams.has("poll") && !dev,
+        alternateStartTimes,
         isBot: /bot|googlebot|crawler|spider|robot|crawling/i
           .test(browser ? navigator?.userAgent : (params as RouteParams & {__h__userAgent: string}).__h__userAgent),
     }

@@ -4,8 +4,7 @@
     import {DateTime} from "luxon";
     import {getClosestWan} from "$lib/timeUtils";
 
-    const previousWAN: DateTime = getPreviousWANLuxon();
-    const previousWANUTC = previousWAN.toUTC();
+    const previousWANUTC = getPreviousWANLuxon().toUTC();
 
     let date = previousWANUTC.year + "-" + addZero(previousWANUTC.month) + "-" + addZero(previousWANUTC.day);
     $: dateDate = DateTime.fromJSDate(getClosestWan(new Date(date)));

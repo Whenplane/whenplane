@@ -1,11 +1,12 @@
 import {DateTime} from "luxon";
+import type { AlternateTimeRow } from "../routes/api/alternateStartTimes/+server.ts";
 
 // returns true if A is before B
 export function isBefore(a: Date, b: Date): boolean {
     return a.getTime() < b.getTime()
 }
 
-export function getNextWANLuxon(now = new Date(), buffer = true, hasDone?: boolean): DateTime {
+export function getNextWANLuxon(now = new Date(), buffer = true, alternateTimes?: AlternateTimeRow[], hasDone?: boolean): DateTime {
     const adjustedNow = now;
     // Adjust 'now' for loose wan for LTX
     if(adjustedNow.getFullYear() == 2023 && adjustedNow.getMonth() == 6 && adjustedNow.getDate() == 29) {
@@ -46,68 +47,18 @@ export function getNextWANLuxon(now = new Date(), buffer = true, hasDone?: boole
         wanDate = wanDate.plus({days: 7})
     }
 
-    // LTX wan is on saturday instead of friday
-    if(
-      (wanDate.year == 2023 && wanDate.month == 7 && wanDate.day == 28) ||
-      (wanDate.year == 2019 && wanDate.month == 7 && wanDate.day == 26)
-
-    ) {
-        wanDate = wanDate.plus({days: 1})
-    }
-
-    // 2026/1/16 is supposed to be at 10:30 am for some reason
-    if(wanDate.year == 2026 && wanDate.month == 1 && wanDate.day == 16) {
-        wanDate = wanDate.set({hour: 10, minute: 30})
-    }
-
-    // 2025/12/19 is supposed to be at 12pm for some reason
-    if(wanDate.year == 2025 && wanDate.month == 12 && wanDate.day == 19) {
-        wanDate = wanDate.set({hour: 12, minute: 0})
-    }
-
-  // 2025/12/26 is supposed to be at 9am for some reason
-  if(wanDate.year == 2025 && wanDate.month == 12 && wanDate.day == 26) {
-    wanDate = wanDate.set({hour: 9, minute: 0})
-  }
-
-  // 2025/12/05 is supposed to be at 10am for some reason
-  if(wanDate.year == 2025 && wanDate.month == 12 && wanDate.day == 5) {
-    wanDate = wanDate.set({hour: 10, minute: 0})
-  }
-
-  // 2025/11/28 is supposed to be at 10am for some reason
-  if(wanDate.year == 2025 && wanDate.month == 11 && wanDate.day == 28) {
-    wanDate = wanDate.set({hour: 10, minute: 0})
-  }
-
-    // 2025/10/31 wan is supposed to be at 2:30
-    if(wanDate.year == 2025 && wanDate.month == 10 && wanDate.day == 31) {
-      wanDate = wanDate.set({hour: 14, minute: 30})
-    }
-
-    // 2025/4/25 wan is supposed to be an hour early
-    if(wanDate.year == 2025 && wanDate.month == 4 && wanDate.day == 25) {
-        wanDate = wanDate.set({hour: 15, minute: 30})
-    }
-
-    // 2024/4/26 wan is at 1pm for some reason
-    if(wanDate.year == 2024 && wanDate.month == 4 && wanDate.day == 26) {
-        wanDate = wanDate.set({hour: 13, minute: 0})
-    }
-
-    // 2024/12/27 wan is at 1pm for some reason
-    if(wanDate.year == 2024 && wanDate.month == 12 && wanDate.day == 27) {
-        wanDate = wanDate.set({hour: 15, minute: 0})
-    }
-
-    // 2024/11/22 wan is at 8:30am for some reason
-    if(wanDate.year == 2024 && wanDate.month == 11 && wanDate.day == 22) {
-        wanDate = wanDate.set({hour: 8, minute: 30})
-    }
-
-    // 2024/6/21 has an "early start" due to linus going to a funeral later
-    if(wanDate.year == 2024 && wanDate.month == 6 && wanDate.day == 21) {
-        wanDate = wanDate.set({hour: 10, minute: 0})
+    if(alternateTimes) {
+        const dateString = `${wanDate.year}/${addZero(wanDate.month)}/${addZero(wanDate.day)}`;
+        const adjustment = alternateTimes.find(t => t.date === dateString);
+        if(adjustment) {
+            if(adjustment.days) {
+                wanDate = wanDate.plus({days: adjustment.days})
+            }
+            wanDate = wanDate.set({
+                hour: adjustment.hour ?? undefined,
+                minute: adjustment.minute ?? undefined
+            })
+        }
     }
 
     // 7/18/2023 skipped due to production shutdown (from GN callout)
@@ -118,108 +69,33 @@ export function getNextWANLuxon(now = new Date(), buffer = true, hasDone?: boole
     return wanDate;
 }
 
-export function getNextWAN(now = new Date(), buffer = true, hasDone?: boolean): Date {
-    return getNextWANLuxon(now, buffer, hasDone).toJSDate();
+export function getNextWAN(now = new Date(), buffer = true, alternateTimes?: AlternateTimeRow[], hasDone?: boolean): Date {
+    return getNextWANLuxon(now, buffer, alternateTimes, hasDone).toJSDate();
 }
 
-export function getPreviousWANLuxon(now = new Date()): DateTime {
+export function getPreviousWANLuxon(now = new Date(), alternateTimes?: AlternateTimeRow[]): DateTime {
     let wanDate = getLooseWAN(now);
 
     while(wanDate.weekday !== 5) {
         wanDate = wanDate.minus({days: 1});
-    }
-    
-    // 2026/1/16 is supposed to be at 10:30 am for some reason
-    if(wanDate.year == 2026 && wanDate.month == 1 && wanDate.day == 16) {
-        wanDate = wanDate.set({hour: 10, minute: 30})
-    }
-
-    // 2025/12/19 is supposed to be at 12pm for some reason
-    if(wanDate.year == 2025 && wanDate.month == 12 && wanDate.day == 19) {
-        wanDate = wanDate.set({hour: 12, minute: 0})
-    }
-
-    // 2025/12/26 is supposed to be at 9am for some reason
-    if(wanDate.year == 2025 && wanDate.month == 12 && wanDate.day == 26) {
-      wanDate = wanDate.set({hour: 9, minute: 0})
-    }
-
-    // 2025/12/05 is supposed to be at 10am for some reason
-    if(wanDate.year == 2025 && wanDate.month == 12 && wanDate.day == 5) {
-      wanDate = wanDate.set({hour: 10, minute: 0})
-    }
-
-    // 2025/11/28 is supposed to be at 10am for some reason
-    if(wanDate.year == 2025 && wanDate.month == 11 && wanDate.day == 28) {
-      wanDate = wanDate.set({hour: 10, minute: 0})
-    }
-
-    // 2025/10/31 wan is supposed to be at 2:30
-    if(wanDate.year == 2025 && wanDate.month == 10 && wanDate.day == 31) {
-      wanDate = wanDate.set({hour: 14, minute: 30})
-    }
-
-    // 2025/4/25 wan is supposed to be an hour early
-    if(wanDate.year == 2025 && wanDate.month == 4 && wanDate.day == 25) {
-        wanDate = wanDate.set({hour: 15, minute: 30})
-    }
-
-    // 2024/4/26 wan is at 1pm for some reason
-    if(wanDate.year == 2024 && wanDate.month == 4 && wanDate.day == 26) {
-        wanDate = wanDate.set({hour: 13, minute: 0})
-    }
-
-    // 2024/12/27 wan is at 1pm for some reason
-    if(wanDate.year == 2024 && wanDate.month == 12 && wanDate.day == 27) {
-        wanDate = wanDate.set({hour: 15, minute: 0})
-    }
-
-    // 2024/11/22 wan is at 8:30am for some reason
-    if(wanDate.year == 2024 && wanDate.month == 11 && wanDate.day == 22) {
-        wanDate = wanDate.set({hour: 8, minute: 30})
-    }
-
-    // 2024/6/21 has an "early start" due to linus going to a funeral later
-    if(wanDate.year == 2024 && wanDate.month == 6 && wanDate.day == 21) {
-        wanDate = wanDate.set({hour: 10, minute: 0})
     }
 
     if(isBefore(now, wanDate.toJSDate())) {
         wanDate = wanDate.minus({days: 7});
     }
 
-    // LTX wan is on saturday instead of friday
-    if(
-      (wanDate.year == 2023 && wanDate.month == 7 && wanDate.day == 28) ||
-      (wanDate.year == 2019 && wanDate.month == 7 && wanDate.day == 26)
-
-    ) {
-        wanDate = wanDate.plus({days: 1})
-    }
-
-    // 2025/4/25 wan is supposed to be an hour early
-    if(wanDate.year == 2025 && wanDate.month == 4 && wanDate.day == 25) {
-        wanDate = wanDate.set({hour: 15, minute: 30})
-    }
-
-    // 2024/4/26 wan is at 1pm for some reason
-    if(wanDate.year == 2024 && wanDate.month == 4 && wanDate.day == 26) {
-        wanDate = wanDate.set({hour: 13, minute: 0})
-    }
-
-    // 2024/12/27 wan is at 1pm for some reason
-    if(wanDate.year == 2024 && wanDate.month == 12 && wanDate.day == 27) {
-        wanDate = wanDate.set({hour: 15, minute: 0})
-    }
-
-    // 2024/11/22 wan is at 8:30am for some reason
-    if(wanDate.year == 2024 && wanDate.month == 11 && wanDate.day == 22) {
-        wanDate = wanDate.set({hour: 8, minute: 30})
-    }
-
-    // 2024/6/21 has an "early start" due to linus going to a funeral later
-    if(wanDate.year == 2024 && wanDate.month == 6 && wanDate.day == 21) {
-        wanDate = wanDate.set({hour: 10, minute: 0})
+    if(alternateTimes) {
+        const dateString = `${wanDate.year}/${addZero(wanDate.month)}/${addZero(wanDate.day)}`;
+        const adjustment = alternateTimes?.find(t => t.date === dateString);
+        if(adjustment) {
+            if(adjustment.days) {
+                wanDate = wanDate.plus({days: adjustment.days})
+            }
+            wanDate = wanDate.set({
+                hour: adjustment.hour ?? undefined,
+                minute: adjustment.minute ?? undefined
+            })
+        }
     }
 
     // 7/18/2023 skipped due to production shutdown (from GN callout)
@@ -229,8 +105,8 @@ export function getPreviousWANLuxon(now = new Date()): DateTime {
 
     return wanDate;
 }
-export function getPreviousWAN(now = new Date()): Date {
-    return getPreviousWANLuxon(now).toJSDate()
+export function getPreviousWAN(now = new Date(), alternateTimes?: AlternateTimeRow[]): Date {
+    return getPreviousWANLuxon(now, alternateTimes).toJSDate()
 }
 
 function getLooseWAN(now = new Date()) {
@@ -262,9 +138,9 @@ function getLooseWAN(now = new Date()) {
     );
 }
 
-export function getClosestWanLuxon(now = new Date()) {
-    const next = getNextWANLuxon(now, false);
-    const previous = getPreviousWANLuxon(now);
+export function getClosestWanLuxon(now = new Date(), alternateTimes?: AlternateTimeRow[]) {
+    const next = getNextWANLuxon(now, false, alternateTimes);
+    const previous = getPreviousWANLuxon(now, alternateTimes);
 
     const distanceToNext = Math.abs(next.toMillis() - now.getTime());
     const distanceToPrevious = Math.abs(previous.toMillis() - now.getTime());
@@ -275,8 +151,8 @@ export function getClosestWanLuxon(now = new Date()) {
         return next;
     }
 }
-export function getClosestWan(now = new Date()) {
-    return getClosestWanLuxon(now).toJSDate();
+export function getClosestWan(now = new Date(), alternateTimes?: AlternateTimeRow[]) {
+    return getClosestWanLuxon(now, alternateTimes).toJSDate();
 }
 
 export function getUTCDate(date = new Date()) {
