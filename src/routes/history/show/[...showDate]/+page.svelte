@@ -99,7 +99,7 @@
         <h2>{data.metadata.title}</h2>
     {/if}
 
-    <HistoricalShow onlyTimes={true} show={data} bind:onTimeUntil={onTimeUntil}/>
+    <HistoricalShow onlyTimes={true} show={data} bind:onTimeUntil={onTimeUntil} alternateStartTimes={data.alternateStartTimes}/>
     <br>
 
     {#if !data.value?.snippet}

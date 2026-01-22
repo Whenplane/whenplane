@@ -93,7 +93,7 @@
          class:thumbnailless-inline={view === 3}
     >
         {#each shows as show, i (show.name)}
-            <HistoricalShow {show} withThumbnail={view < 2} lazyLoadThumbnail={i > 10} lazyLoadGroup={Math.floor(i/6) + (1000 * pageIndex)}/>
+            <HistoricalShow {show} withThumbnail={view < 2} lazyLoadThumbnail={i > 10} lazyLoadGroup={Math.floor(i/6) + (1000 * pageIndex)} alternateStartTimes={data.alternateStartTimes}/>
             {#if i === 50}
                 <LinusFace/>
             {/if}

@@ -1,7 +1,8 @@
 import type {PageLoad} from "./$types";
 import {wait} from "$lib/utils";
-import { browser } from "$app/environment";
+import { browser, version } from "$app/environment";
 import { getCookie } from "$lib/cookieUtils";
+import type { AlternateTimeRow } from "../api/alternateStartTimes/+server.ts";
 
 export const load = (async ({fetch, params, url}) => {
     const now = new Date();
@@ -33,6 +34,9 @@ export const load = (async ({fetch, params, url}) => {
         }
     }
 
+    const alternateStartTimesP = fetch("/api/alternateStartTimes?v=" + version)
+      .then(r => r.json() as Promise<AlternateTimeRow[]>);
+
     const records = fetch("/api/history/records").then(r => r.json());
     const shows = await fetch("/api/history/year/" + years.join(",") + cacheBusting).then(r => r.json());
 
@@ -54,6 +58,7 @@ export const load = (async ({fetch, params, url}) => {
             records: recordsDone ? await records : records,
             viewType,
             lowestYear
-        }
+        },
+        alternateStartTimes: await alternateStartTimesP
     }
 }) satisfies PageLoad;

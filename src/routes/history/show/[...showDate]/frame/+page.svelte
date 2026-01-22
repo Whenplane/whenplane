@@ -5,7 +5,7 @@
 </script>
 
 <a href="https://whenplane.com/history/show/{data.name}" class="block text-center hidden-link" target="_parent">
-  <HistoricalShow onlyTimes={true} show={data}/>
+  <HistoricalShow onlyTimes={true} show={data} alternateStartTimes={data.alternateStartTimes}/>
 </a>
 
 <style>

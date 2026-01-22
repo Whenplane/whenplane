@@ -32,7 +32,7 @@
 
   {#each filtered as show}
     {#if !show.metadata.mainShowStart}
-      <HistoricalShow {show} withThumbnail={true}/>
+      <HistoricalShow {show} withThumbnail={true} alternateStartTimes={data.alternateStartTimes}/>
     {/if}
   {/each}
 </div>
