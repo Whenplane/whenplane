@@ -110,7 +110,7 @@ export const load = (async ({fetch, params, url}) => {
         preShowStarted,
         mainShowStarted,
         fast,
-        hasDone: liveStatus ? liveStatus.hasDone : getClosestWan().getTime() > Date.now(),
+        hasDone: liveStatus ? liveStatus.hasDone : getClosestWan(undefined, alternateStartTimes).getTime() > Date.now(),
         averageLateness: latenesses?.averageLateness,
         latenessStandardDeviation: latenesses?.latenessStandardDeviation,
         medianLateness: latenesses?.medianLateness,

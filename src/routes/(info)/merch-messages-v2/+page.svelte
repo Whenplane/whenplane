@@ -178,7 +178,7 @@
 
 
   {#each data.shows as show}
-    {@const showDate = getClosestWan(new Date(show.releaseDate))}
+    {@const showDate = getClosestWan(new Date(show.releaseDate), data.alternateStartTimes)}
     {@const showMeta = data.showMeta.find(s => s.name === show.showId)}
     {@const thumbnails = showMeta?.value?.thumbnails ?? showMeta?.value?.snippet?.thumbnails}
     {@const thumbnail = thumbnails?.maxres ?? thumbnails?.standard ?? thumbnails?.high ?? thumbnails?.medium ?? thumbnails?.default}

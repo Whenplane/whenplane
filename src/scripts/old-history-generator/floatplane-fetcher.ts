@@ -8,11 +8,15 @@ import fs from 'node:fs/promises';
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-ignore
 import {floatplaneDataPath} from "./index.ts";
+import type { AlternateTimeRow } from "../../routes/api/alternateStartTimes/+server.ts";
 
 
 export async function fetchFloatplaneShows() {
 
     const showVods: {[key: string]: FloatplanePost} = {};
+
+    const alternateStartTimes = await fetch("/api/alternateStartTimes")
+      .then(r => r.json() as Promise<AlternateTimeRow[]>);
 
     let after = 0;
     let lastDate = "2023/05/12";
@@ -50,7 +54,7 @@ export async function fetchFloatplaneShows() {
                 if(!lastNumbers) continue;
                 extractedDate = extractedDate.substring(0, extractedDate.lastIndexOf(lastNumbers) + 4);
 
-                const date = getClosestWan(new Date(extractedDate)) as Date;
+                const date = getClosestWan(new Date(extractedDate), alternateStartTimes) as Date;
 
                 // Only record videos that were posted before auto-recording started
                 if(date.getTime() > 1683934200000) continue;

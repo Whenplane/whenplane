@@ -3,6 +3,8 @@ import {error, json} from "@sveltejs/kit";
 import type {OldShowMeta} from "$lib/utils";
 import type {KVNamespace} from "@cloudflare/workers-types";
 import { dateToNumber, getClosestWan, getPreviousWAN, getUTCDate } from "$lib/timeUtils.ts";
+import { version } from "$app/environment";
+import type { AlternateTimeRow } from "../../../alternateStartTimes/+server.ts";
 
 export const GET = (async ({platform, params, url, locals}) => {
 
@@ -11,11 +13,15 @@ export const GET = (async ({platform, params, url, locals}) => {
 
     let showDate = params.showDate;
     if(!showDate) throw error(400, "No show date!");
-    if(showDate === "closest") {
-        showDate = getUTCDate(getClosestWan());
-    }
-    if(showDate === "previous") {
-        showDate = getUTCDate(getPreviousWAN());
+    if(showDate === "closest" || showDate === "previous") {
+        const alternateStartTimes = await fetch("/api/alternateStartTimes?v=" + version)
+          .then(r => r.json() as Promise<AlternateTimeRow[]>);
+        if(showDate === "closest") {
+            showDate = getUTCDate(getClosestWan(undefined, alternateStartTimes));
+        }
+        if(showDate === "previous") {
+            showDate = getUTCDate(getPreviousWAN(undefined, alternateStartTimes));
+        }
     }
 
     const youtubeToDate = platform?.env?.YOUTUBE_TO_DATE;

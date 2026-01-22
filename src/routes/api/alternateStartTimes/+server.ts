@@ -13,7 +13,7 @@ export const GET = (async ({platform}) => {
   const db = platform?.env?.DB.withSession();
   if(!db) throw error(503, "DB unavailable!");
 
-  if(Date.now() - localFetched < 5 * 60e3 && localCache !== undefined) {
+  if(Date.now() - localFetched < 2 * 60 * 60e3 && localCache !== undefined) {
     return json(localCache, {
       headers: {
         "cache-control": "max-age=30, public",

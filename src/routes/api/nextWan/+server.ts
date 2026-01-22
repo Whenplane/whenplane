@@ -1,7 +1,7 @@
 import { error, type RequestHandler } from "@sveltejs/kit";
 import { getNextWAN } from "$lib/timeUtils";
 import { text } from "@sveltejs/kit";
-import { dev } from "$app/environment";
+import { dev, version } from "$app/environment";
 
 const lastRequests: {[ip: string]: number} = {};
 
@@ -45,7 +45,7 @@ export const GET = (async ({fetch, request}) => {
     throw error(429, "Rate limited! Please send less requests.");
   }
 
-  const alternateStartTimesP = fetch("/api/alternateStartTimes")
+  const alternateStartTimesP = fetch("/api/alternateStartTimes?v="+version)
     .then(r => r.json());
   const hasDoneP = fetch("/api/hasDone")
     .then(r => r.json())

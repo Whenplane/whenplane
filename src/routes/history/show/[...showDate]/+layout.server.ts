@@ -1,6 +1,8 @@
 import type { LayoutServerLoad } from "./$types";
 import { error, redirect } from "@sveltejs/kit";
 import type { HistoricalEntry } from "$lib/utils.ts";
+import { version } from "$app/environment";
+import type { AlternateTimeRow } from "../../../api/alternateStartTimes/+server.ts";
 
 export const load: LayoutServerLoad = async ({platform, params, url, fetch}) => {
   const youtubeToDate = platform?.env?.YOUTUBE_TO_DATE;
@@ -31,5 +33,11 @@ export const load: LayoutServerLoad = async ({platform, params, url, fetch}) => 
     throw error(showResponse.status, data.message || showResponse.statusText);
   }
 
-  return data;
+  const alternateStartTimes = await fetch("/api/alternateStartTimes?v=" + version)
+    .then(r => r.json() as Promise<AlternateTimeRow[]>);
+
+  return {
+    ...data,
+    alternateStartTimes
+  };
 };

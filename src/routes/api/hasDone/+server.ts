@@ -1,6 +1,8 @@
 import type {RequestHandler} from "@sveltejs/kit";
 import {error, json} from "@sveltejs/kit";
 import { getClosestWan, getUTCDate, isNearWan } from "$lib/timeUtils";
+import { version } from "$app/environment";
+import type { AlternateTimeRow } from "../alternateStartTimes/+server.ts";
 
 const WAN_CACHE_TIME =  30 * 60e3; // 30 minutes
 const NORMAL_CACHE_TIME = 24 * 60 * 60e3; // 24 hours
@@ -10,7 +12,7 @@ const cache: {
     lastData?: HasDoneResponse
 } = {lastFetch: 0};
 
-export const GET = (async ({platform, url, locals}) => {
+export const GET = (async ({platform, url, locals, fetch}) => {
     // if(dev) return json({hasDone: true, dev})
 
     const fast = url.searchParams.get("fast") === "true";
@@ -30,9 +32,12 @@ export const GET = (async ({platform, url, locals}) => {
     const history = platform?.env?.HISTORY;
     if(!history) throw error(503, "History not available");
 
+    const alternateStartTimes = await fetch("/api/alternateStartTimes?v=" + version)
+      .then(r => r.json() as Promise<AlternateTimeRow[]>);
+
     let date = url.searchParams.get("date");
     if(!date) {
-        date = getUTCDate(getClosestWan())
+        date = getUTCDate(getClosestWan(undefined, alternateStartTimes))
     }
 
     let fullTime: number | undefined = undefined;

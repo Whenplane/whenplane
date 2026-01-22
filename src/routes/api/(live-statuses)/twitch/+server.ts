@@ -8,6 +8,7 @@ import type { GetStreamsResponse } from "ts-twitch-api";
 import { newResponse, type TwitchToken } from "$lib/utils.ts";
 import { twitchTokenCache } from "$lib/stores.ts";
 import { log } from "$lib/server/server-utils.ts";
+import type { AlternateTimeRow } from "../../alternateStartTimes/+server.ts";
 
 const makeAlwaysWAN = dev;
 
@@ -24,7 +25,7 @@ const fastCache: {
 
 let lastNotifSend = 0;
 
-export const GET = (async ({platform, url}) => {
+export const GET = (async ({platform, url, fetch}) => {
 
     const cache = platform?.env?.CACHE;
     const history = platform?.env?.HISTORY;
@@ -177,8 +178,11 @@ export const GET = (async ({platform, url}) => {
 
     // console.debug(5)
 
+    const alternateStartTimes = await fetch("/api/alternateStartTimes?v=" + version)
+      .then(r => r.json() as Promise<AlternateTimeRow[]>);
+
     if(!savedStartTime && started && isWAN) {
-        const closestWAN = getClosestWan();
+        const closestWAN = getClosestWan(undefined, alternateStartTimes);
         const distance = Math.abs(Date.now() - closestWAN.getTime())
         // Only record preshow start time if we are within 7 hours of the closest wan
         if(distance < 7 * 60 * 60 * 1000) {
@@ -209,7 +213,7 @@ export const GET = (async ({platform, url}) => {
     // console.debug(6)
 
     if(!savedEndTime && !isLive && fastCache.lastFetchData?.data?.length != 0) {
-        const closestWAN = getClosestWan();
+        const closestWAN = getClosestWan(undefined, alternateStartTimes);
         const distance = Date.now() - closestWAN.getTime()
         // Only record ending time if we are within 12 hours of the closest wan
         if(distance > 0 && distance < 12 * 60 * 60 * 1000) {
@@ -217,7 +221,7 @@ export const GET = (async ({platform, url}) => {
                 const kvEndTime = await history.get(getUTCDate(closestWAN) + ":showEnd");
                 const kvStartTime = await history.get(getUTCDate(closestWAN) + ":mainShowStart");
                 if(!kvEndTime && kvStartTime) {
-                    await history.put(getUTCDate(getClosestWan()) + ":showEnd", new Date().toISOString(), {
+                    await history.put(getUTCDate(getClosestWan(undefined, alternateStartTimes)) + ":showEnd", new Date().toISOString(), {
                         // Expire this key after 15 days to save space over time.
                         // It should be collapsed into a single object at the end of the stream, so no data should be lost.
                         // The collapsing is done in a scheduled worker

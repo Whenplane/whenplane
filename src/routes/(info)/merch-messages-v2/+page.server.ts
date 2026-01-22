@@ -2,11 +2,16 @@ import { error } from "@sveltejs/kit";
 import { type HistoricalEntry, retryD1 } from "$lib/utils.ts";
 import type { MMShow } from "$lib/merch-messages/mm-types.ts";
 import type { PageServerLoad } from "./$types";
+import type { AlternateTimeRow } from "../../api/alternateStartTimes/+server.ts";
+import { version } from "$app/environment";
 
 export const load = (async ({platform, fetch}) => {
 
   const db = platform?.env?.MERCHMESSAGES_DB.withSession();
   if(!db) throw error(503, "DB unavailable!");
+
+  const alternateStartTimesP = fetch("/api/alternateStartTimes?v="+version)
+    .then(r => r.json() as Promise<AlternateTimeRow[]>)
 
   const shows = await retryD1(() =>
     db.prepare("select * from shows order by releaseDate DESC")
@@ -65,6 +70,11 @@ export const load = (async ({platform, fetch}) => {
     ]
   }))
 
-  return {shows, videoReleaseDates, showMeta: await Promise.all(showPromises)};
+  return {
+    shows,
+    videoReleaseDates,
+    showMeta: await Promise.all(showPromises),
+    alternateStartTimes: await alternateStartTimesP
+  };
 
 }) satisfies PageServerLoad;

@@ -10,7 +10,6 @@
 <script lang="ts">
     import { getClosestWan, getTimeUntil, timeString } from "../timeUtils";
     import Late from "../Late.svelte";
-    import LazyLoad from "@dimfeld/svelte-lazyload";
     import Live from "$lib/history/Live.svelte";
     import { page } from "$app/stores";
     import BlurHash from "$lib/history/BlurHash.svelte";
@@ -19,12 +18,15 @@
     import { browser, dev } from "$app/environment";
     import { onMount } from "svelte";
     import { getDateFormatLocale, getTimePreference } from "$lib/prefUtils.ts";
+    import type { AlternateTimeRow } from "../../routes/api/alternateStartTimes/+server.ts";
 
     export let show;
     export let withThumbnail = false;
     export let lazyLoadThumbnail = false
 
     export let onlyTimes = false;
+
+    export let alternateStartTimes: AlternateTimeRow[];
 
     export let lazyLoadGroup = lazyLoadThumbnail ? Math.random() : -1;
 
@@ -53,7 +55,7 @@
     const mainShowStart = show.metadata.mainShowStart ? new Date(show.metadata.mainShowStart) : show.metadata.mainShowStart;
     const showEnd = show.metadata.showEnd ? new Date(show.metadata.showEnd) : show.metadata.showEnd;
 
-    const showDate = getClosestWan(new Date(preShowStart ?? mainShowStart ?? showEnd ?? snippet?.publishedAt));
+    const showDate = getClosestWan(new Date(preShowStart ?? mainShowStart ?? showEnd ?? snippet?.publishedAt), alternateStartTimes);
 
     const preShowLength = preShowStart && mainShowStart ?
       getTimeUntil(mainShowStart, preShowStart.getTime()).string :

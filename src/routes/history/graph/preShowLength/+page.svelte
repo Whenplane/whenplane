@@ -18,7 +18,7 @@
     const mainShowStart = show.metadata.mainShowStart ? new Date(show.metadata.mainShowStart) : show.metadata.mainShowStart;
     const showEnd = show.metadata.showEnd ? new Date(show.metadata.showEnd) : show.metadata.showEnd;
 
-    const showDate = getClosestWan(new Date(preShowStart ?? mainShowStart ?? showEnd ?? snippet?.publishedAt));
+    const showDate = getClosestWan(new Date(preShowStart ?? mainShowStart ?? showEnd ?? snippet?.publishedAt), data.alternateStartTimes);
 
     const preShowLength = preShowStart && mainShowStart ?
       getTimeUntil(mainShowStart, preShowStart.getTime()).distance :

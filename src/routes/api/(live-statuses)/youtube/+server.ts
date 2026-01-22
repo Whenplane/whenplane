@@ -6,6 +6,7 @@ import type {KVNamespace, DurableObjectNamespace, DurableObjectStub} from "@clou
 import { newResponse, type OldShowMeta } from "$lib/utils";
 import { env } from "$env/dynamic/private";
 import { log } from "$lib/server/server-utils";
+import type { AlternateTimeRow } from "../../alternateStartTimes/+server.ts";
 
 
 const cache: {
@@ -79,8 +80,11 @@ export const GET = (async ({platform, locals, url, fetch}) => {
         .then(r => r.json()) as DOResponse;
     locals.addTiming({id: 'doFetch', duration: Date.now() - doStart})
 
+    const alternateStartTimes = await fetch("/api/alternateStartTimes?v=" + version)
+      .then(r => r.json() as Promise<AlternateTimeRow[]>);
+
     if(!savedStartTime && isWAN && (started || !savedMeta)) {
-        const closestWAN = getClosestWan();
+        const closestWAN = getClosestWan(undefined, alternateStartTimes);
         const distance = Math.abs(Date.now() - closestWAN.getTime())
         // Only record show start time if we are within 7 hours of the closest wan
         if(distance < 7 * 60 * 60 * 1000) {
@@ -91,7 +95,7 @@ export const GET = (async ({platform, locals, url, fetch}) => {
                     // It should be collapsed into a single object at the end of the stream, so no data should be lost.
                     // The collapsing is done in a scheduled worker
                     const expirationTtl = 15 * 24 * 60 * 60
-                    const date = getUTCDate(getClosestWan());
+                    const date = getUTCDate(getClosestWan(undefined, alternateStartTimes));
                     if(started) await history.put(date + ":mainShowStart", started, {expirationTtl});
                     if(videoId) await history.put(date + ":videoId", videoId, {expirationTtl});
                     if(snippet) await history.put(date + ":snippet", JSON.stringify(snippet), {expirationTtl});

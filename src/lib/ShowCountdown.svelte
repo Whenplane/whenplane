@@ -30,7 +30,7 @@
     function updateCountdown() {
         if(data.isMainShow || data.isPreShow) {
             if(!data.isMainShow && data.isPreShow && data.liveStatus.twitch.isLive) {
-                const mainScheduledStart = getClosestWan()
+                const mainScheduledStart = getClosestWan(undefined, $page.data.alternateStartTimes)
 
                 mainLate.set({
                     isMainLate: true,
