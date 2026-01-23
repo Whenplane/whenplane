@@ -42,11 +42,13 @@ export const load = (async ({platform, fetch}) => {
       const messageCount = allMessages.filter(m => m.type === "message").length;
       const replyCount = allMessages.filter(m => m.type === "reply").length;
 
-      await retryD1(() =>
-        db.prepare("update shows set messageCount=?, replyCount=? where showId=?")
-          .bind(messageCount, replyCount, show.showId)
-          .run()
-      );
+      platform?.context?.waitUntil(
+        retryD1(() =>
+          db.prepare("update shows set messageCount=?, replyCount=? where showId=?")
+            .bind(messageCount, replyCount, show.showId)
+            .run()
+        )
+      )
 
       return [show.showId, messageCount, replyCount];
 
