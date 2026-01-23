@@ -47,6 +47,9 @@ export function shouldRetryD1(err: unknown, nextAttempt: number) {
       errMsg.includes("Network connection lost") ||
       errMsg.includes("storage caused object to be reset") ||
       errMsg.includes("reset because its code was updated") ||
+      errMsg.includes("which caused object to be reset") ||
+      (errMsg.includes("error code: 500") && errMsg.includes("is not valid JSON")) ||
+      errMsg === "D1_ERROR: Failed to parse body as JSON, got: error code: 500"
       errMsg.includes("D1_ERROR: internal error;");
 
     return nextAttempt <= 7 && isRetryableError;
