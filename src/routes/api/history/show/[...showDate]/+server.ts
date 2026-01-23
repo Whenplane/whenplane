@@ -6,7 +6,7 @@ import { dateToNumber, getClosestWan, getPreviousWAN, getUTCDate } from "$lib/ti
 import { version } from "$app/environment";
 import type { AlternateTimeRow } from "../../../alternateStartTimes/+server.ts";
 
-export const GET = (async ({platform, params, url, locals}) => {
+export const GET = (async ({platform, params, url, locals, fetch}) => {
 
     const history: KVNamespace | undefined = platform?.env?.HISTORY;
     if(!history) throw error(503, "History missing!");
