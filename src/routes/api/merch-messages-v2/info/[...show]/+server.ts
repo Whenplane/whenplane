@@ -9,7 +9,7 @@ export const GET = (async ({platform, params}) => {
 
   const show = await retryD1(() =>
     db.prepare("select * from shows where showId=?")
-      .bind(params.videoId)
+      .bind(params.show)
       .first<MMShow>()
   );
 
