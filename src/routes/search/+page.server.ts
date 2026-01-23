@@ -104,7 +104,7 @@ export const load = (async ({fetch, url, cookies, platform}) => {
       q,
       query_by: url.searchParams.get("keyword") === "on" ? "text" : "text,embedding",
       sort_by: sort,
-      filter_by: "type:[" + types.join(",") + "] " + (!before ? "" : "&& showDate:<" + before) + (!after ? "" : "&& showDate:>" + after),
+      filter_by: "type:[" + types.join(",") + "] " + (!before ? "" : "&& showDate:<" + before) + (!after ? "" : "&& showDate:>" + after) + " && id :!= merch-message-*",
       page,
       per_page: resultsPerPage,
       exclude_fields: ["text", "embedding"],
@@ -113,7 +113,7 @@ export const load = (async ({fetch, url, cookies, platform}) => {
       prefix: false
     }, {cacheSearchResultsForSeconds: 60}) as SearchResponse<CombinedSearchResult>;
 
-  const showHits = [...new Set(result.hits?.map(h => (h.document.videoId ?? (h.document as {showName?: string}).showName)))]
+  const showHits = [...new Set(result.hits?.map(h => (h.document.show ?? (h.document as {showName?: string}).showName)))]
 
   const shows: {[videoId: string]: HistoricalEntry} = Object.fromEntries(
     showHits.map(showId => {
