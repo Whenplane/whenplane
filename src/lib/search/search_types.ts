@@ -14,12 +14,13 @@ export type CombinedSearchResult =
   } |
   { // merch message
     id: string,
-    videoId: string,
-    imageIndex: number,
+    show: string,
+    timestamp: number,
     type: "message" | "reply",
     name: string,
     text: string,
     jobId: string,
+    position: "TOP" | "BOTTOM"
     showDate: number,
     sortWeight: number
   } | { // show titles
