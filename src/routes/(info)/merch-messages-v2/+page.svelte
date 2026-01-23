@@ -47,42 +47,14 @@
   }
 
 
-  const resultsPerPage = 50;
-
-  function search(text: string, page?: number) {
-    if(!text) {
-      searchPromise = undefined;
-      searchResults = undefined;
-      return;
-    }
-    searchPromise = searchClient.collections<MMV2TableRow>("merch_messages_v2").documents()
-      .search({
-        q: text,
-        query_by: "text",
-        page: page ?? 1,
-        per_page: resultsPerPage
-      }, {cacheSearchResultsForSeconds: 60})
-      .then(r => searchResults = r as SearchResponse<MMV2TableRow>)
-      .then(r => {
-        networkError = false;
-        return r;
-      })
-      .catch(e => {
-        console.error("Error while searching:", e);
-        searchResults = undefined;
-        networkError = true;
-        return undefined;
-      })
-  }
-
 </script>
 <svelte:head>
   <title>Whenplane Merch Messages</title>
-  <meta name="description" content="The Whenplane Merch Message Index is a tool that has processed nearly every WAN show with merch messages, and put them in a searchable index/archive."/>
+  <meta name="description" content="The Whenplane Merch Message Index is a tool that has processed every WAN show with merch messages, and put them in a searchable index/archive."/>
 </svelte:head>
 
 <span class="clear inline-block absolute pointer-events-none" style="z-index: -5;">
-  The Whenplane Merch Message Index is a tool that has processed nearly every WAN show that includes merch messages,
+  The Whenplane Merch Message Index is a tool that has processed every WAN show that includes merch messages,
   and organized them into an organized and searchable index/archive.<br>
   I hope that this WAN Show Merch Message Archive is helpful to you.
 </span>
@@ -96,80 +68,15 @@
 <div class="limit mx-auto p-2">
   <h1>Merch Message Index</h1>
   <br>
-  The Whenplane Merch Message Index is a tool that has processed nearly every WAN show that includes merch messages, and put them in an organized and searchable index.<br>
-  To do this, it runs OCR on the part of the screen that displays merch messages, then indexes them.<br>
+  The Whenplane Merch Message Index is a tool that has processed every WAN show that includes merch messages, and put them in an organized and searchable index.<br>
+  To do this, it runs OCR on the parts of the screen that displays merch messages, then indexes them.<br>
   <br>
   <b>If you cannot find your merch message</b> in this index, check the outro screen scroll, as this is the only part that Whenplane does not currently scan.
   <br>
   <br>
 
-  <label bind:this={searchLocation}>
-    Search
-    <input class="input w-64 py-1 px-2 inline-block" placeholder="Search Terms" bind:value={searchText}>
-    {#await searchPromise}
-      {#if !waiting}
-        <ProgressRadial class="inline-block" width="w-6" stroke={250}/>
-      {/if}
-    {/await}
-    {#if waiting}
-      <ProgressRadial class="inline-block" width="w-6" stroke={250}/>
-    {/if}
-    <br>
-    {#if searchResults && searchResults.hits}
-      <h3>Search Results ({searchResults.found})</h3>
-      <div class="text-right">
-        <Paginator
-          totalPages={Math.ceil(searchResults.found / resultsPerPage)}
-          currentPage={searchResults.page}
-          on:page={e => {
-            search(searchText, e.detail.page);
-          }}
-        />
-      </div>
-      <table class="table rounded-sm">
-        <thead>
-          <tr>
-            <td>Date</td>
-            <td>Type</td>
-            <td>Name</td>
-            <td>Message Fragment</td>
-            <td>Link</td>
-          </tr>
-        </thead>
-        <tbody>
-        {#each searchResults.hits as hit (hit.document.id)}
-          {@const releaseEpoch = data.videoReleaseDates[hit.document.video]}
-          <tr animate:flip={{ duration: 100 }} transition:slide|local class="bg-surface-900">
-            <td>{releaseEpoch ? new Date(releaseEpoch).toLocaleDateString(undefined, {dateStyle: "medium"}) : ""}</td>
-            <td>{hit.document.type}</td>
-            <td>{hit.document.name}</td>
-            <td>{@html sanitizeHtml((hit.highlight.text?.snippet ?? hit.highlight.name?.snippet)+"", newsSanitizeSettings)}</td>
-            <td><a href="merch-messages/{hit.document.video}#{hit.document.id}">Link</a></td>
-          </tr>
-        {/each}
-        </tbody>
-      </table>
-      <div class="text-right">
-        <Paginator
-          totalPages={Math.ceil(searchResults.found / resultsPerPage)}
-          currentPage={searchResults.page}
-          on:page={e => {
-            search(searchText, e.detail.page);
-            searchLocation.scrollIntoView({behavior: "smooth"})
-          }}
-        />
-      </div>
-    {/if}
-    {#if networkError}
-      <span class="text-error-500">
-        <br>
-        A network error occurred while trying to get the results for your search.<br>
-        Check your internet connection.<br>
-        If your network connection is fine, the search server might be down.
-        Try again in a few minutes, and <a href="/support">contact me</a> if it is still down.
-      </span>
-    {/if}
-  </label>
+  To search for a merch message, please use Whenplane's <a href="/search">WAN Show Search</a> tool.
+  Make sure that the "Merch Messages" box is checked when you search for something.
 
 
   <br>
