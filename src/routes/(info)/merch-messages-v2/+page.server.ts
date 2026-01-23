@@ -1,5 +1,5 @@
 import { error } from "@sveltejs/kit";
-import { type HistoricalEntry, retryD1 } from "$lib/utils.ts";
+import { type HistoricalEntry, retryD1, type YoutubeThumbnails } from "$lib/utils.ts";
 import type { MMShow } from "$lib/merch-messages/mm-types.ts";
 import type { PageServerLoad } from "./$types";
 import type { AlternateTimeRow } from "../../api/alternateStartTimes/+server.ts";
@@ -20,12 +20,13 @@ export const load = (async ({platform, fetch}) => {
       .then(r => r.results)
   );
 
-  const showPromises: Promise<HistoricalEntry>[] = [];
+  const thumbnailPromises: Promise<[string, YoutubeThumbnails]>[] = [];
   const countingPromises: Promise<[string, number, number]>[] = [];
   for (const show of shows) {
-    showPromises.push(
+    thumbnailPromises.push(
       fetch("/api/history/show/" + show.showId)
         .then(r => r.json())
+        .then(showMeta => [show.showId, showMeta?.value?.thumbnails ?? showMeta?.value?.snippet?.thumbnails])
     )
     if(show.messageCount !== null && show.replyCount !== null) continue;
     if(show.status !== "complete") continue;
@@ -75,7 +76,8 @@ export const load = (async ({platform, fetch}) => {
   return {
     shows,
     videoReleaseDates,
-    showMeta: await Promise.all(showPromises),
+    showThumbnails: await Promise.all(thumbnailPromises)
+      .then(r => Object.fromEntries(r)),
     alternateStartTimes: await alternateStartTimesP
   };
 

@@ -179,8 +179,7 @@
 
   {#each data.shows as show}
     {@const showDate = getClosestWan(new Date(show.releaseDate), data.alternateStartTimes)}
-    {@const showMeta = data.showMeta.find(s => s.name === show.showId)}
-    {@const thumbnails = showMeta?.value?.thumbnails ?? showMeta?.value?.snippet?.thumbnails}
+    {@const thumbnails = data.showThumbnails[show.showId]}
     {@const thumbnail = thumbnails?.maxres ?? thumbnails?.standard ?? thumbnails?.high ?? thumbnails?.medium ?? thumbnails?.default}
     <a class="card flex hidden-link p-2 my-1 relative" href="/history/show/{show.showId}/merch-messages">
       <img class="thumbnail" src={thumbnail?.url} alt="Thumbnail" aria-hidden="true" loading="lazy" width={thumbnail?.width} height={thumbnail?.height}>
