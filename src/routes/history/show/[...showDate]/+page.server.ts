@@ -10,7 +10,7 @@ export const load = (async ({fetch, parent}) => {
 
     const youtubeId = data.value?.vods?.youtube;
 
-    const mm = fetch("/api/merch-messages-v2/info/" + youtubeId)
+    const mm = fetch("/api/merch-messages-v2/info/" + data.name)
       .then(r => r.json())
       .then(j => j.show as MMShow | null);
 
