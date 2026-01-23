@@ -50,11 +50,11 @@ export const GET = (async ({platform, fetch, url}) => {
     )
 
     urls.push(
-      ...(await fetch("/api/merch-messages/allVideos")
+      ...(await fetch("/api/merch-messages-v2/allShows")
         .then(r => r.json())
         .then((r: string[]) =>
           r
-            .map(s => "/merch-messages/" + s)
+            .map(s => `/history/show/${s}/merch-messages`)
         ))
     )
 

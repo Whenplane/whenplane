@@ -142,9 +142,13 @@
             <div in:fade={{duration: 100}}>
                 <h2>Merch Messages</h2>
                 {#if mm.messageCount}
-                    Whenplane found {mm.messageCount} merch messages for this show.
+                    Whenplane found {mm.messageCount} merch messages
+                    {#if mm.replyCount}
+                        and {mm.replyCount} replies
+                    {/if}
+                    for this show.
                 {/if}<br>
-                <a href="/merch-messages/{mm.videoId}">View Merch Messages</a><br>
+                <a href="/history/show/{data.name}/merch-messages">View Merch Messages</a><br>
 
                 {#if mm.status === "inprogress"}
                     <br>
