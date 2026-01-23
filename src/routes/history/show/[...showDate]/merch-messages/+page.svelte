@@ -96,7 +96,8 @@
   <br>
   <h2>Merch Messages</h2>
   <span>
-    Hint: Use CTRL + F to search messages in this show, or <a href="/merch-messages">go to the main merch messages page</a> to search merch messages in all shows.
+    Hint: Use CTRL + F to search messages in this show, or use Whenplane's <a href="/search">WAN Show Search</a> tool to search for messages in all shows.
+    Make sure that the "Merch Messages" box is checked when you search for something.
   </span>
   {#if data.mmShow.status === "inprogress"}
     {@const percent = Math.max(lastData?.downloadPercent ?? 0, preShowLength && mainShowLength ? ( (biggestTimestamp*1e3) / (preShowLength + mainShowLength)) : 0)}
