@@ -35,7 +35,17 @@
   <br>
 
   To search for a merch message, please use Whenplane's <a href="/search">WAN Show Search</a> tool.
-  Make sure that the "Merch Messages" box is checked when you search for something.
+  Make sure that the "Merch Messages" box is checked when you search for something.<br>
+  <br>
+  <br>
+
+  As of January 23rd, 2026, Merch Messages are also read live. During the show,
+  come here (or go to the new show's history page) to get to the newly created page for the show,
+  and watch the merch messages show up live!<br>
+  Merch messages will generally show up on whenplane 10-15 seconds after being shown on the Floatplane stream.
+  They even usually show up on whenplane before theyre even displayed on Youtube.<br>
+  Live-read merch messages won't show up in search until a bit after the show.
+  Please use CTRL + F (or on mobile there is a "Find text on page" button) to search in the live or super recent show.
 
 
   <br>
