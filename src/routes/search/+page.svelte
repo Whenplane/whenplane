@@ -4,7 +4,7 @@
   import MiniShow from "$lib/history/MiniShow.svelte";
   import sanitizeHtml from "sanitize-html";
   import LinkPaginator from "$lib/util/LinkPaginator.svelte";
-  import { browser } from "$app/environment";
+  import { browser, dev } from "$app/environment";
   import ToolTip from "$lib/ToolTip.svelte";
   import { setCookie, strip } from "$lib/cookieUtils.ts";
   import LastUpdate from "./indexUpdateStatus/LastUpdate.svelte";
@@ -247,7 +247,7 @@
       </div>
       {#key data.result.hits}
         {#each data.result.hits as hit}
-          {@const show = data.shows?.[hit.document.videoId ?? hit.document.showName]}
+          {@const show = data.shows?.[hit.document.videoId ?? hit.document.showName ?? hit.document.show]}
           {@const cleanedId = hit.document.id.replaceAll("topic-", "")}
           {@const baseShowUrl = "/history/show/" + (show ? show.name : `${hit.document.videoId}` )}
           {@const strippedSnippet = hit.highlight?.text?.snippet?.replaceAll("<mark>", "").replaceAll("</mark>", "")}
@@ -300,6 +300,9 @@
       No results.
     {/if}
   </div>
+  {#if dev}
+    <pre>{JSON.stringify(data, undefined, '\t')}</pre>
+  {/if}
   <div class="limit mx-auto p-2 mb-16">
     I hope to make The WAN Show Search as usable as possible, and I need your feedback to do that.
     If you have <b>any</b> suggestions, issues, or feedback, please <a href="/support">let me know</a>!
