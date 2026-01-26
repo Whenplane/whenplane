@@ -11,14 +11,16 @@
   export let message: MMV2TableRow;
   export let youtubeId: string | undefined;
   export let floatplaneId: string | undefined;
-  export let source: "youtube" | "floatplane";
+  export let source: "youtube" | "floatplane" | "floatplane-live";
   export let preShowLength: number | null;
 
   const seconds = Math.floor(message.timestamp);
   const imageUrl = `https://merch-message-images.whenplane.com/${message.show}/images/${seconds}.jpg`;
 
-  const youtubeSeconds = source === "youtube" ? seconds : preShowLength !== null ? seconds - Math.floor(preShowLength/1e3) : null;
-  const floatplaneSeconds = source === "floatplane" ? seconds : preShowLength !== null ? seconds + Math.floor(preShowLength/1e3) : null;
+  const floatplaneSeconds = source.startsWith("floatplane") ?
+    (source === "floatplane-live" ? seconds + 50 : seconds) :
+    preShowLength !== null ? seconds + Math.floor(preShowLength/1e3) : null;
+  const youtubeSeconds = source === "youtube" ? seconds : preShowLength !== null ? (floatplaneSeconds ?? seconds) - Math.floor(preShowLength/1e3) : null;
 </script>
 <div
   class="card card-hover relative p-4 my-3 mx-2 flex overflow-hidden text-left main-div"
