@@ -28,7 +28,7 @@ export type MMShow = {
   messageCount: number | null,
   replyCount: number | null,
   vodId: string,
-  vodSource: "youtube" | "floatplane"
+  vodSource: "youtube" | "floatplane" | "floatplane-live"
 }
 
 export type MMVideo = {
