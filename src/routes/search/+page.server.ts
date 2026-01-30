@@ -1,6 +1,6 @@
 import { SearchClient } from "typesense";
 import type { SearchResponse } from "typesense/lib/Typesense/Documents";
-import { type HistoricalEntry, wait } from "$lib/utils.ts";
+import { type HistoricalEntry, retry, wait } from "$lib/utils.ts";
 import type { PageServerLoad } from "./$types";
 import { resultsPerPage } from "./search.ts";
 import type { CombinedSearchResult } from "$lib/search/search_types.ts";
@@ -99,19 +99,21 @@ export const load = (async ({fetch, url, cookies, platform}) => {
     }
   }
 
-  const result = await searchClient.collections<CombinedSearchResult>("whenplane-all").documents()
-    .search({
-      q,
-      query_by: url.searchParams.get("keyword") === "on" ? "text" : "text,embedding",
-      sort_by: sort,
-      filter_by: "type:[" + types.join(",") + "] " + (!before ? "" : "&& showDate:<" + before) + (!after ? "" : "&& showDate:>" + after) + " && id :!= merch-message-*",
-      page,
-      per_page: resultsPerPage,
-      exclude_fields: ["text", "embedding"],
-      highlight_fields: ["text"],
-      highlight_affix_num_tokens: 15,
-      prefix: false
-    }, {cacheSearchResultsForSeconds: 60}) as SearchResponse<CombinedSearchResult>;
+  const result = await retry(() =>
+    searchClient.collections<CombinedSearchResult>("whenplane-all").documents()
+      .search({
+        q,
+        query_by: url.searchParams.get("keyword") === "on" ? "text" : "text,embedding",
+        sort_by: sort,
+        filter_by: "type:[" + types.join(",") + "] " + (!before ? "" : "&& showDate:<" + before) + (!after ? "" : "&& showDate:>" + after) + " && id :!= merch-message-*",
+        page,
+        per_page: resultsPerPage,
+        exclude_fields: ["text", "embedding"],
+        highlight_fields: ["text"],
+        highlight_affix_num_tokens: 15,
+        prefix: false
+      }, {cacheSearchResultsForSeconds: 60}) as Promise<SearchResponse<CombinedSearchResult>>
+  );
 
   const showHits = [...new Set(result.hits?.map(h => (h.document.videoId ?? h.document.show ?? (h.document as {showName?: string}).showName)))]
 

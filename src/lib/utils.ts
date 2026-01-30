@@ -41,6 +41,10 @@ export async function retryD1<T>(run: () => Promise<T>, shouldRetry = shouldRetr
     throw err;
 }
 
+export async function retry<T>(run: () => Promise<T>, attempts = 5): Promise<T> {
+    return retryD1(run, (err: unknown, nextAttempt: number) => nextAttempt <= attempts)
+}
+
 export function shouldRetryD1(err: unknown, nextAttempt: number) {
     const errMsg = String(err);
     const isRetryableError =
