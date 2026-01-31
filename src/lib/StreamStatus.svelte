@@ -177,11 +177,7 @@
     }
 
     .logo-item {
-        padding-left: 2em;
-        padding-right: 2em;
-
-        padding-top: 1.5em;
-        padding-bottom: 1.5em;
+        padding: 1.5em 2em;
     }
 
     :global(.boca-theme) .logo-item {

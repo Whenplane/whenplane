@@ -111,14 +111,12 @@
         height: 85vh;
 
         text-align: left;
-        padding: 0.25em;
-
         position: relative;
         bottom: 0.25em;
         margin-left: 0.25rem;
 
         overflow-y: auto;
-        padding-bottom: 5em;
+        padding: 0.25em 0.25em 5em;
     }
 
     .copied {

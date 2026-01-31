@@ -5,8 +5,7 @@
   import Confetti from "svelte-confetti"
   import { dev } from "$app/environment";
   import { getDateFormatLocale } from "$lib/prefUtils.ts";
-  import { updated } from "$app/state";
-  import { page } from "$app/stores";
+  import { page, updated } from "$app/state";
 
   const totalTime = (168 * 60 * 60e3);
   // this is multiple lines, so I can easily comment/uncomment
@@ -17,18 +16,15 @@
   const scheduledStart = new Date("2025-06-11T17:20:21.245Z");
 
   let string: string | undefined = $state("");
-  let distance: number = $state();
+  let distance: number = $state(0);
 
   function update() {
     distance = Math.min(Date.now() - (startTime ?? scheduledStart.getTime()), totalTime);
     string = distance > 0 ? timeStringHours(distance) : timeString(Math.abs(distance));
     if(distance < 0) {
-      string = string?.replaceAll(/[0-9]+(s|m|h)/g, "").trim();
+      string = string?.replaceAll(/[0-9]+([smh])/g, "").trim();
     }
   }
-
-  // this is needed because for some weird reason I can't check for an update without subscribing to the $updated store
-  let updateAvailable = $derived(updated.current)
 
   update();
 
@@ -48,7 +44,7 @@
 <svelte:head>
   <title>Boca Subathon Progress</title>
   <meta name="description" content="Boca stream marathon progress % and time remaining">
-  <link rel="canonical" href="https://whenplane.com{$page.url.pathname}"/>
+  <link rel="canonical" href="https://whenplane.com{page.url.pathname}"/>
 </svelte:head>
 
 <div class="limit mx-auto pt-8 p-2">
@@ -86,8 +82,8 @@
 
   <div class="confetti-container">
     {#if distance >= totalTime}
-      <Confetti delay={[0, 2000]} cone x={[-1.5, 1.5]} y={[0.25, 1.5]} amount={50} fallDistance="100px" iterationCount=infinite/>
-      <Confetti delay={[0, 2000]} x={[-2.5, 2.5]} y={[0.75, 2.25]} amount={100} iterationCount=infinite/>
+      <Confetti delay={[0, 2000]} cone x={[-1.5, 1.5]} y={[0.25, 1.5]} amount={50} fallDistance="100px" iterationCount="infinite"/>
+      <Confetti delay={[0, 2000]} x={[-2.5, 2.5]} y={[0.75, 2.25]} amount={100} iterationCount="infinite"/>
     {/if}
   </div>
 </div>
