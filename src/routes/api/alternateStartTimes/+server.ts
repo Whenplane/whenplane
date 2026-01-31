@@ -1,9 +1,10 @@
 import { error, json, type RequestHandler } from "@sveltejs/kit";
-import type { D1DatabaseSession } from "@cloudflare/workers-types";
+import type { D1Database, D1DatabaseSession } from "@cloudflare/workers-types";
 import { retryD1 } from "$lib/utils.ts";
 import { dev } from "$app/environment";
+import { createMFResponse } from "$lib/server/MfResponseConverter.ts";
 
-const cacheUrl = new URL("http://alternate-start-times");
+const cacheUrl = new URL("http://alternate-start-times").toString();
 
 let localFetched = 0;
 let localCache: AlternateTimeRow[] | undefined = undefined;
@@ -21,11 +22,11 @@ export const GET = (async ({platform}) => {
     });
   }
 
-  const cache = await platform?.caches.open("alternate-start-times");
+  const cache = await platform?.caches?.open("alternate-start-times");
   const cachedTimesResponse = await cache?.match(cacheUrl);
 
   // short dc cache to limit updates from instances in the same dc
-  if(cachedTimesResponse) {
+  if(cache && cachedTimesResponse) {
     const cached = new Date(cachedTimesResponse.headers.get("x-cached") ?? 0).getTime()
     if(Date.now() - cached < 30e3) {
       localFetched =
@@ -34,7 +35,7 @@ export const GET = (async ({platform}) => {
     }
   }
 
-  if(dev) await createTables(db);
+  if(dev) await _createTables(db);
 
   const alternateTimes = await retryD1(() =>
     db.prepare("select * from alternate_times")
@@ -47,7 +48,8 @@ export const GET = (async ({platform}) => {
 
   localFetched = Date.now();
   localCache = alternateTimes;
-  platform?.context?.waitUntil(cache?.put(cacheUrl, json(alternateTimes, {headers: {"x-cached": new Date().toISOString()}})));
+  platform?.context?.waitUntil(cache?.put(cacheUrl, await createMFResponse(json(alternateTimes, {headers: {"x-cached": new Date().toISOString()}}))));
+
   return json(alternateTimes, {
     headers: {
       "cache-control": "max-age=30, public",
@@ -56,7 +58,7 @@ export const GET = (async ({platform}) => {
 
 }) satisfies RequestHandler;
 
-function createTables(db: D1DatabaseSession) {
+export function _createTables(db: D1DatabaseSession | D1Database) {
   return retryD1(() =>
     db.prepare("create table if not exists alternate_times (date text, days integer, hour integer, minute integer)")
       .run()
