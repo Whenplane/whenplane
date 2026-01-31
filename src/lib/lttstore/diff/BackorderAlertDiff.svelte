@@ -1,17 +1,23 @@
 <script lang="ts">
+  import { run } from 'svelte/legacy';
+
   import type { BackorderAlerts } from "$lib/lttstore/lttstore_types.ts";
   import TextDiff from "$lib/lttstore/diff/TextDiff.svelte";
 
-  export let before: string;
-  export let after: string;
 
-  export let displaying: "before" | "after";
+  interface Props {
+    before: string;
+    after: string;
+    displaying: "before" | "after";
+  }
 
-  $: parsedBefore = JSON.parse(before) as BackorderAlerts;
-  $: parsedAfter = JSON.parse(after) as BackorderAlerts;
+  let { before, after, displaying }: Props = $props();
 
-  let beforeBackorderNotices = new Set();
-  $: {
+  let parsedBefore = $derived(JSON.parse(before) as BackorderAlerts);
+  let parsedAfter = $derived(JSON.parse(after) as BackorderAlerts);
+
+  let beforeBackorderNotices = $state(new Set());
+  run(() => {
     beforeBackorderNotices.clear();
     if(parsedBefore) {
       Object.values(parsedBefore).forEach(alert => {
@@ -21,10 +27,10 @@
       });
       beforeBackorderNotices = beforeBackorderNotices;
     }
-  }
+  });
 
-  let afterBackorderNotices = new Set();
-  $: {
+  let afterBackorderNotices = $state(new Set());
+  run(() => {
     afterBackorderNotices.clear();
     if(parsedBefore) {
       Object.values(parsedAfter).forEach(alert => {
@@ -34,7 +40,7 @@
       });
       afterBackorderNotices = afterBackorderNotices;
     }
-  }
+  });
 
 </script>
 <TextDiff before={JSON.stringify([...beforeBackorderNotices].join("<br>"))} after={JSON.stringify([...afterBackorderNotices].join("<br>"))} {displaying} diffType="words"/>

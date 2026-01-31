@@ -1,4 +1,6 @@
 <script lang="ts">
+  import { run } from 'svelte/legacy';
+
 
   import LTTProductCard from "$lib/lttstore/LTTProductCard.svelte";
   import { page } from "$app/stores";
@@ -8,19 +10,19 @@
   import {ProgressRadial} from "@skeletonlabs/skeleton";
   import { dev } from "$app/environment";
 
-  export let data;
+  let { data } = $props();
 
-  let loading = false;
+  let loading = $state(false);
   async function reload() {
     loading = true;
     await invalidateAll()
     loading = false;
   }
 
-  let sortedBy = $page.url.searchParams.get("sort") ?? "metaUpdate";
+  let sortedBy = $state($page.url.searchParams.get("sort") ?? "metaUpdate");
   if(data.sortColumn === "stockChecked") sortedBy = "updated";
-  let first = true;
-  $: {
+  let first = $state(true);
+  run(() => {
     console.debug({sortedBy})
     if(first) {
       first = false;
@@ -33,7 +35,7 @@
       // first = true;
       reload()*/
     }
-  }
+  });
 
 </script>
 
@@ -46,7 +48,7 @@
   <li class="crumb-separator" aria-hidden="true">&rsaquo;</li>
   <li class="crumb"><a class="anchor hover-underline" href="/lttstore">LTT Store Watcher</a></li>
   <li class="crumb-separator" aria-hidden="true">&rsaquo;</li>
-  <li class="crumb" on:click={reload}>Products</li>
+  <li class="crumb" onclick={reload}>Products</li>
   {#if loading}
     <li class="crumb" transition:fade|global={{duration: 100}}>
       <ProgressRadial width="w-6" stroke={250} value={loading ? undefined : 100}/>

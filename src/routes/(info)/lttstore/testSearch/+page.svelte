@@ -12,6 +12,6 @@
   }
 </script>
 
-<button class="btn variant-ghost-primary" on:click={openSearch}>Open</button>
+<button class="btn variant-ghost-primary" onclick={openSearch}>Open</button>
 
 <ProductSearchModal/>

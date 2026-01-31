@@ -7,17 +7,17 @@
   import {page} from "$app/stores";
   import { goto } from "$app/navigation";
 
-  export let form;
+  let { form } = $props();
 
-  let firstPassword: string;
-  let secondPassword: string;
+  let firstPassword: string = $state();
+  let secondPassword: string = $state();
 
-  let turnstileCompleted = false;
-  let turnstileCounter = 0;
+  let turnstileCompleted = $state(false);
+  let turnstileCounter = $state(0);
 
-  let loading = false;
+  let loading = $state(false);
 
-  let timeTilExpiration = 0;
+  let timeTilExpiration = $state(0);
 
   onMount(() => {
     if($page.url.searchParams.has("expiration")){

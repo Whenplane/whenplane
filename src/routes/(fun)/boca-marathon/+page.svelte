@@ -1,4 +1,6 @@
 <script lang="ts">
+  import { run } from 'svelte/legacy';
+
 
   import NotablePersonLive from "$lib/NotablePersonLive.svelte";
   import { onMount } from "svelte";
@@ -13,15 +15,15 @@
   import { toastStore } from "@skeletonlabs/skeleton";
   import {clipboard} from "@skeletonlabs/skeleton";
 
-  export let data;
+  let { data } = $props();
 
   const initialReloadNumber = data.reloadNumber;
-  let nowish = Date.now();
+  let nowish = $state(Date.now());
 
   console.log(Object.keys(games).join(", "))
 
-  let modifiedEvents: {event_name: string, event_timestamp: number, length: number, ended?: number, current: boolean}[] = [];
-  $: {
+  let modifiedEvents: {event_name: string, event_timestamp: number, length: number, ended?: number, current: boolean}[] = $state([]);
+  run(() => {
     modifiedEvents = [];
     for (let i = 0; i < data.pastData.length; i++) {
       const thisEvent = data.pastData[i];
@@ -36,7 +38,7 @@
       })
 
     }
-  }
+  });
 
 
   onMount(() => {
@@ -67,13 +69,13 @@
     window.history.replaceState({}, document.title, newURL.pathname + (newURL.searchParams.size > 0 ? "?" + newURL.searchParams.toString() : ""));
   }
 
-  let holdingShift = false;
+  let holdingShift = $state(false);
 
   const updateHoldingShift = (e: KeyboardEvent | MouseEvent) => {
     holdingShift = e.shiftKey;
   }
 </script>
-<svelte:window on:keydown={updateHoldingShift} on:keyup={updateHoldingShift} on:mousemove={updateHoldingShift}/>
+<svelte:window onkeydown={updateHoldingShift} onkeyup={updateHoldingShift} onmousemove={updateHoldingShift}/>
 <svelte:head>
   <title>BocaBola/iitskasino Game Marathon</title>
   <meta name="description" content="BocaBola Game Marathon tracker" />
@@ -106,40 +108,44 @@
       {@const played = !!foundEvent}
       {@const currentlyPlaying = !!foundEvent?.current}
       <ToolTip id={game} placement="left-end">
-        <svelte:fragment slot="icon">
-          <div class="inline-block" class:opacity-10={played && !currentlyPlaying}>
-            {#if game === "Streamers vs Chatters"}
-              <div class="m-1 inline-block game-list-game">
-                <div class="fake-game-image inline-flex justify-center w-full align-middle" class:currently-playing={currentlyPlaying}>
-                  <span class="content-center relative bottom-1.5">
-                    ?
-                  </span>
+        {#snippet icon()}
+              
+            <div class="inline-block" class:opacity-10={played && !currentlyPlaying}>
+              {#if game === "Streamers vs Chatters"}
+                <div class="m-1 inline-block game-list-game">
+                  <div class="fake-game-image inline-flex justify-center w-full align-middle" class:currently-playing={currentlyPlaying}>
+                    <span class="content-center relative bottom-1.5">
+                      ?
+                    </span>
+                  </div>
                 </div>
-              </div>
-            {:else}
-              <div class="inline-block">
-                <img src="/games/{game.replaceAll(':', '')}.webp" class="inline-block m-1 game-list-game" width="264" height="352" alt={game} class:currently-playing={currentlyPlaying}>
-              </div>
+              {:else}
+                <div class="inline-block">
+                  <img src="/games/{game.replaceAll(':', '')}.webp" class="inline-block m-1 game-list-game" width="264" height="352" alt={game} class:currently-playing={currentlyPlaying}>
+                </div>
+              {/if}
+            </div>
+          
+              {/snippet}
+        {#snippet content()}
+              
+            <span class="text-lg">
+              {game}
+            </span>
+            {#if games[game]}
+              <br>
+              {games[game]}
             {/if}
-          </div>
-        </svelte:fragment>
-        <svelte:fragment slot="content">
-          <span class="text-lg">
-            {game}
-          </span>
-          {#if games[game]}
-            <br>
-            {games[game]}
-          {/if}
-          {#if played && !currentlyPlaying}
-            <br>
-            (this game has been played)
-          {/if}
-          {#if currentlyPlaying}
-            <br>
-            (this game is currently being played)
-          {/if}
-        </svelte:fragment>
+            {#if played && !currentlyPlaying}
+              <br>
+              (this game has been played)
+            {/if}
+            {#if currentlyPlaying}
+              <br>
+              (this game is currently being played)
+            {/if}
+          
+              {/snippet}
       </ToolTip>
     {/each}
   </div>
@@ -164,7 +170,7 @@
           <br>
           {event.current ? "Playing" : "Played"} for
           {#if holdingShift}
-            <button use:clipboard={Math.round(event.length/1e3)} on:click={() => {
+            <button use:clipboard={Math.round(event.length/1e3)} onclick={() => {
                     toastStore.trigger({
                         message: "Copied to Clipboard!"
                     })

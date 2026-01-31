@@ -3,7 +3,7 @@
   import { onMount } from "svelte";
   import { page } from "\$app/stores";
 
-  let d: HTMLDivElement;
+  let d: HTMLDivElement = $state();
 
   onMount(() => {
     const iframe = document.createElement("iframe");

@@ -1,19 +1,22 @@
 <script lang="ts">
+  import { run } from 'svelte/legacy';
+
   import {Accordion, AccordionItem, CodeBlock} from "@skeletonlabs/skeleton";
   import {onMount} from "svelte";
   import {enhance} from "$app/forms";
   import { timeString } from "$lib/timeUtils.ts";
   import { browser } from "$app/environment";
 
-  export let data;
-  export let form;
+  let { data, form } = $props();
 
-  $: expiration = (data?.expiration ?? 0) * 1000;
-  $: if(browser) console.log(data)
+  let expiration = $derived((data?.expiration ?? 0) * 1000);
+  run(() => {
+    if(browser) console.log(data)
+  });
 
-  let countdownString = "2m 0s";
+  let countdownString = $state("2m 0s");
 
-  let expired = false;
+  let expired = $state(false);
   onMount(() => {
     let interval = setInterval(() => {
       const timeTilExpiration = expiration - Date.now();
@@ -76,12 +79,16 @@
         {#if !expired}
           <Accordion class="inline-block">
             <AccordionItem>
-              <svelte:fragment slot="summary">View text version</svelte:fragment>
-              <svelte:fragment slot="content">
-                <div class="text-left">
-                  <CodeBlock language="TOTP" code={data.twoFactorURI}/>
-                </div>
-              </svelte:fragment>
+              {#snippet summary()}
+                            View text version
+                          {/snippet}
+              {#snippet content()}
+                          
+                  <div class="text-left">
+                    <CodeBlock language="TOTP" code={data.twoFactorURI}/>
+                  </div>
+                
+                          {/snippet}
             </AccordionItem>
           </Accordion>
         {/if}

@@ -3,7 +3,11 @@
   import sanitizeHtml from "sanitize-html";
   import { newsSanitizeSettings } from "$lib/news/news.ts";
   import { page } from "$app/stores";
-  export let data: PageData;
+  interface Props {
+    data: PageData;
+  }
+
+  let { data }: Props = $props();
 </script>
 
 <svelte:head>

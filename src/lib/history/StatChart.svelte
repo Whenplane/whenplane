@@ -5,11 +5,15 @@
   import { timeString } from "$lib/timeUtils.ts";
   import { getDateFormatLocale } from "$lib/prefUtils.ts";
 
-  export let shows: HistoricalEntry[];
-  export let transformFunction: DataTransformFunction;
-  export let yFormatter = timeString;
+  interface Props {
+    shows: HistoricalEntry[];
+    transformFunction: DataTransformFunction;
+    yFormatter?: any;
+  }
 
-  let chartDiv;
+  let { shows, transformFunction, yFormatter = timeString }: Props = $props();
+
+  let chartDiv = $state();
 
   const showNames = shows.map(value => value.name);
 

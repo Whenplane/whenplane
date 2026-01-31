@@ -1,16 +1,18 @@
 <script lang="ts">
+  import { run } from 'svelte/legacy';
+
 
   import {flip} from "svelte/animate";
   import { isIterable } from "$lib/utils";
 
-  export let data;
+  let { data } = $props();
 
-  let rankings: {[handle: string]: number} = {}
-  let sortedRankings;
+  let rankings: {[handle: string]: number} = $state({})
+  let sortedRankings = $state();
 
-  let i = 0;
+  let i = $state(0);
 
-  $: {
+  run(() => {
     i;
     if(isIterable(data.products as never)) {
       for (const product of data.products) {
@@ -23,12 +25,12 @@
     }
 
     sortedRankings = Object.entries(rankings).sort((a, b) => b[1] - a[1]);
-  }
+  });
 </script>
 
 Data from {data.fetched}
 
-<button class="btn btn-sm variant-filled-surface" on:click={() => {i++;}}>Refresh</button>
+<button class="btn btn-sm variant-filled-surface" onclick={() => {i++;}}>Refresh</button>
 <div class="limit mx-auto pt-6">
   {#each sortedRankings as [handle, ranking], i (handle)}
     <span class:opacity-50={i > 20} animate:flip={{ duration: 100 }}>

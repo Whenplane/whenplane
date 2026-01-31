@@ -1,6 +1,10 @@
-<script>
-    export let fill = "currentColor";
-    export let height = "32";
+<script lang="ts">
+    interface Props {
+        fill?: string;
+        height?: string;
+    }
+
+    let { fill = "currentColor", height = "32" }: Props = $props();
 </script>
 <svg viewBox="120 120 240 240" class="inline-block" {height} {fill}>
     <path d="M295.3,314.9A91.89,91.89,0,0,1,165.8,185.4l-8.4-10.7A105.32,105.32,0,0,0,306.1,323.4Z"></path>

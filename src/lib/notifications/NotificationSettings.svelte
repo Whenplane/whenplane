@@ -1,4 +1,6 @@
 <script lang="ts">
+  import { run } from 'svelte/legacy';
+
   import { browser } from "$app/environment";
   import { getPushSubscription, lang } from "$lib/notifications/notificationUtils";
   import type { NotificationRows } from "../../routes/api/push/settings/+server.js";
@@ -10,23 +12,23 @@
 
   // eslint-disable-next-line @typescript-eslint/no-empty-function
   let settingsFetch: Promise<NotificationRows> = browser ? fetchSettings() : new Promise(() => {});
-  let savingSettings: Promise<D1Result | undefined> = Promise.resolve(undefined);
+  let savingSettings: Promise<D1Result | undefined> = $state(Promise.resolve(undefined));
 
-  let knownSettings: NotificationRows;
-  let stagedSettings: NotificationRows;
+  let knownSettings: NotificationRows = $state();
+  let stagedSettings: NotificationRows = $state();
 
-  $: {
+  run(() => {
     console.log(JSON.stringify(knownSettings));
     console.log(JSON.stringify(stagedSettings));
     console.log(JSON.stringify(stagedSettings) === JSON.stringify(knownSettings))
-  }
+  });
 
   const disabled = [
     "other_streams_imminent",
     "dan_stream",
   ]
 
-  let hash: string;
+  let hash: string = $state();
   async function fetchSettings() {
     const sub = await getPushSubscription();
     if(!sub) {
@@ -77,7 +79,7 @@
 
 </script>
 
-<svelte:window on:beforeunload={(event) => {
+<svelte:window onbeforeunload={(event) => {
     if(JSON.stringify(stagedSettings) === JSON.stringify(knownSettings)) return;
     event.preventDefault();
     const message = "You have unsaved changes! Are you sure you want to exit?";
@@ -140,7 +142,7 @@
   <button
     class="btn variant-ghost-success"
     disabled={JSON.stringify(stagedSettings) === JSON.stringify(knownSettings)}
-    on:click={saveSettings}
+    onclick={saveSettings}
   >
     Save
   </button>

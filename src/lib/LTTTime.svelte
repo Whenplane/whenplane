@@ -1,17 +1,25 @@
-<script>
+<script lang="ts">
+  import { run } from 'svelte/legacy';
+
   import { onMount } from "svelte";
   import {popup} from "@skeletonlabs/skeleton";
   import { page } from "$app/stores";
 
   import { getTimePreference } from "$lib/prefUtils";
 
-  export let border = true;
-  export let tooltip = true;
-  export let boca = $page.url.searchParams.has("boca");
+  interface Props {
+    border?: boolean;
+    tooltip?: boolean;
+    boca?: any;
+  }
 
-  $: console.debug({border})
+  let { border = true, tooltip = true, boca = $page.url.searchParams.has("boca") }: Props = $props();
 
-  let timeString = "";
+  run(() => {
+    console.debug({border})
+  });
+
+  let timeString = $state("");
 
   onMount(() => {
     let interval = setInterval(updateTimeString, 5e3);

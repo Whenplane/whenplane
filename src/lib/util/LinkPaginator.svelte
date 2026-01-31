@@ -2,10 +2,14 @@
   import { countTo } from "$lib/utils.ts";
   import { page } from "$app/stores";
 
-  export let totalPages: number;
-  export let currentPage = 40036;
+  interface Props {
+    totalPages: number;
+    currentPage?: number;
+  }
 
-  $: distance = Math.abs(currentPage - totalPages);
+  let { totalPages, currentPage = 40036 }: Props = $props();
+
+  let distance = $derived(Math.abs(currentPage - totalPages));
 
   function getPageLink(pageNumber: number) {
     const params = new URLSearchParams($page.url.searchParams.toString());

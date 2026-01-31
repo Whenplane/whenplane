@@ -1,21 +1,27 @@
 <script lang="ts">
+  import { run } from 'svelte/legacy';
+
   import type { AggregateResponse } from "../routes/api/(live-statuses)/aggregate/+server.ts";
   import { getClosestWan, isLargeNearWan } from "$lib/timeUtils.ts";
   import {slide} from "svelte/transition";
   import {page} from "$app/stores";
 
-  export let liveStatus: AggregateResponse | undefined;
+  interface Props {
+    liveStatus: AggregateResponse | undefined;
+  }
 
-  $: isCurrent = isLargeNearWan() &&
+  let { liveStatus }: Props = $props();
+
+  let isCurrent = $derived(isLargeNearWan() &&
     liveStatus?.floatplane?.title?.includes(getClosestWan(undefined, $page.data.alternateStartTimes).toLocaleDateString(undefined, {dateStyle: "long"})) &&
-    !liveStatus.floatplane.title.includes("Hello Floatplane");
-  let strippedTitle: string | undefined = undefined;
-  $: {
+    !liveStatus.floatplane.title.includes("Hello Floatplane"));
+  let strippedTitle: string | undefined = $state(undefined);
+  run(() => {
     const splitPoint = " - WAN Show";
     const parts = liveStatus?.floatplane?.title?.split(splitPoint);
     parts?.pop();
     strippedTitle = parts?.join(splitPoint);
-  }
+  });
 
 </script>
 

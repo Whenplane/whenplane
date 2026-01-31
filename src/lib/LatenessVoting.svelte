@@ -15,13 +15,17 @@
   import { e } from "$lib/utils.ts";
   import { strip } from "$lib/cookieUtils.ts";
 
-  export let mainLate: Writable<MainLate>;
+  interface Props {
+    mainLate: Writable<MainLate>;
+  }
 
-  $: total = $page.data.liveStatus?.votes?.reduce((a, x) => a + x.votes, 0) || 1;
+  let { mainLate }: Props = $props();
 
-  let userVote = browser ? JSON.parse(localStorage.getItem("latenessVote") ?? "{\"lastVote\":0}") as UserVote : {lastVote:0}
+  let total = $derived($page.data.liveStatus?.votes?.reduce((a, x) => a + x.votes, 0) || 1);
 
-  let vd = "";
+  let userVote = $state(browser ? JSON.parse(localStorage.getItem("latenessVote") ?? "{\"lastVote\":0}") as UserVote : {lastVote:0})
+
+  let vd = $state("");
   onMount(() => {
     const i = setInterval(updateVd, 3e3);
     return () => clearInterval(i);

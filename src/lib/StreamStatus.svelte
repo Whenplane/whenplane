@@ -7,12 +7,12 @@
     import {timeString} from "$lib/timeUtils";
     import { getDateFormatLocale, getTimePreference } from "$lib/prefUtils.ts";
 
-    export let data;
+    let { data } = $props();
 
     // $: useTwitchFallback = (!data.isWdbResponseValid && (Date.now() - $wdbSocketState.lastReceive > 300e3));
     // $: if(useTwitchFallback) console.debug("Using twitch fallback:", data.isWdbResponseValid, $wdbSocketState.lastReceive);
 
-    let nowish = Date.now();
+    let nowish = $state(Date.now());
 
     let mounted = false;
     onMount(() => {

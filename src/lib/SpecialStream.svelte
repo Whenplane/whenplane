@@ -51,18 +51,20 @@
   </span><br>
 
     <table class="mx-auto my-1">
-      <tr>
-        <td>Floatplane:</td>
-        <td><SpecialStreamStatus service="floatplane" {specialStreamData}/></td>
-      </tr>
-      <tr>
-        <td>Twitch:</td>
-        <td><SpecialStreamStatus service="twitch" {specialStreamData}/></td>
-      </tr>
-      <tr>
-        <td>YouTube:</td>
-        <td><SpecialStreamStatus service="youtube" {specialStreamData}/></td>
-      </tr>
+      <tbody>
+        <tr>
+          <td>Floatplane:</td>
+          <td><SpecialStreamStatus service="floatplane" {specialStreamData}/></td>
+        </tr>
+        <tr>
+          <td>Twitch:</td>
+          <td><SpecialStreamStatus service="twitch" {specialStreamData}/></td>
+        </tr>
+        <tr>
+          <td>YouTube:</td>
+          <td><SpecialStreamStatus service="youtube" {specialStreamData}/></td>
+        </tr>
+      </tbody>
     </table>
     {#if countdownString || live}
       <h3 class="countdown" class:red={late && !live} class:green={live}>

@@ -1,4 +1,4 @@
-<script lang="ts" context="module">
+<script lang="ts" module>
 
     // lazy loaders are split into groups, because having too many individual groups causes slowdowns
 
@@ -20,27 +20,38 @@
     import { getDateFormatLocale, getTimePreference } from "$lib/prefUtils.ts";
     import type { AlternateTimeRow } from "../../routes/api/alternateStartTimes/+server.ts";
 
-    export let show;
-    export let withThumbnail = false;
-    export let lazyLoadThumbnail = false
 
-    export let onlyTimes = false;
 
-    export let alternateStartTimes: AlternateTimeRow[];
 
-    export let lazyLoadGroup = lazyLoadThumbnail ? Math.random() : -1;
+  interface Props {
+    show: any;
+    withThumbnail?: boolean;
+    lazyLoadThumbnail?: boolean;
+    onlyTimes?: boolean;
+    alternateStartTimes: AlternateTimeRow[];
+    lazyLoadGroup?: any;
+  }
 
-    let isLazyLoadTrigger = false;
+  let {
+    show,
+    withThumbnail = false,
+    lazyLoadThumbnail = false,
+    onlyTimes = false,
+    alternateStartTimes,
+    lazyLoadGroup = lazyLoadThumbnail ? Math.random() : -1
+  }: Props = $props();
+
+    let isLazyLoadTrigger = $state(false);
     if(lazyLoadThumbnail && !lazyLoadGroups[lazyLoadGroup]) {
         lazyLoadGroups[lazyLoadGroup] = writable({})
         isLazyLoadTrigger = true;
     }
     const groupStore = lazyLoadGroups[lazyLoadGroup];
 
-    let nonLazyLoadedImage: HTMLImageElement | undefined;
-    let thumbnailLoaded = nonLazyLoadedImage ? nonLazyLoadedImage.complete : false;
+    let nonLazyLoadedImage: HTMLImageElement | undefined = $state();
+    let thumbnailLoaded = $state(nonLazyLoadedImage ? nonLazyLoadedImage.complete : false);
 
-    $: href = onlyTimes ? undefined : "/history/show/" + show.name;
+    let href = $derived(onlyTimes ? undefined : "/history/show/" + show.name);
 
     const snippet = show.value?.snippet ?? show.metadata?.snippet;
 
@@ -92,7 +103,7 @@
                         {/if}
                         {#if $groupStore.thumbnailLoaded}
                             <div class="absolute top-0 left-0">
-                                <img src={thumbnail.url} aria-hidden="true" alt={thumbnail.text ?? ""} title={thumbnail.text ?? ""} on:load={() => thumbnailLoaded = true}>
+                                <img src={thumbnail.url} aria-hidden="true" alt={thumbnail.text ?? ""} title={thumbnail.text ?? ""} onload={() => thumbnailLoaded = true}>
                             </div>
                             {#if !thumbnailLoaded && browser && localStorage.getItem("disableBlurHash") !== "true"}
                                 <div class="absolute top-0 left-0 rounded" out:fade|global={{duration: 400}}>
@@ -104,7 +115,7 @@
                         {/if}
                     </div>
                 {:else}
-                    <img src={thumbnail.url} aria-hidden="true" alt={thumbnail.text ?? ""} on:load={() => thumbnailLoaded = true} bind:this={nonLazyLoadedImage}>
+                    <img src={thumbnail.url} aria-hidden="true" alt={thumbnail.text ?? ""} onload={() => thumbnailLoaded = true} bind:this={nonLazyLoadedImage}>
                     {#if !thumbnailLoaded}
                         <div class="absolute top-0 left-0 rounded" out:fade|global={{duration: 200}}>
                             <img class="blur-sm" fetchpriority="high" src={(dev ? "https://whenplane.com" : "") + "/cdn-cgi/image/height=260,quality=10,format=auto,blur=20/" + thumbnail.url} aria-hidden="true" alt={thumbnail.text ?? ""}>
@@ -193,7 +204,7 @@
     <hr>
     {#if onTime && onTimeDistance}
         <!-- Allow up to 5 minutes early/late to count as on-time -->
-        {#if onTimeDistance < 5 * 60e3 && onTimeDistance > -5 * 60e3 }
+        {#if onTimeDistance < 5 * 60e3 && onTimeDistance > -5 * 60e3}
             <span class="green">
                 On time!
             </span>

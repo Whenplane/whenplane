@@ -1,15 +1,15 @@
 <script lang="ts">
   import { browser } from "$app/environment";
-  import { page } from "$app/stores";
+  import { page } from "$app/state";
   import { ProgressRadial } from "@skeletonlabs/skeleton";
 
 
-  let promise: Promise<{message?: string, success?: true, allowBypass?: boolean}>;
-  let status = {done: true};
+  let promise: Promise<{message?: string, success?: true, allowBypass?: boolean}> = $state();
+  let status = $state({done: true});
 
   function request() {
     const thisStatus = {done: false}
-    promise = fetch(`/lttstore/products/${$page.params.handle}/requestUpdate`, {
+    promise = fetch(`/lttstore/products/${page.params.handle}/requestUpdate`, {
       method: "POST",
       headers: {
         "Accept": "application/json"
@@ -25,7 +25,7 @@
   }
 </script>
 
-<button disabled={!browser || !status.done} class="btn variant-filled-secondary" on:click={request}>
+<button disabled={!browser || !status.done} class="btn variant-filled-secondary" onclick={request}>
   Request Update
 </button>
 <br>

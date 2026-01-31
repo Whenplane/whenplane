@@ -1,4 +1,12 @@
-<slot/>
+<script lang="ts">
+  interface Props {
+    children?: import('svelte').Snippet;
+  }
+
+  let { children }: Props = $props();
+</script>
+
+{@render children?.()}
 <br>
 <div class="p-4">
   <span class="text-sm opacity-60">

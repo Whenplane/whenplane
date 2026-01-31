@@ -1,4 +1,6 @@
 <script lang="ts">
+  import { run } from 'svelte/legacy';
+
 
   import type { SearchResponse } from "typesense/lib/Typesense/Documents";
   import type { ProductSearchIndex } from "$lib/lttstore/lttstore_types.ts";
@@ -19,50 +21,31 @@
     'connectionTimeoutSeconds': 10
   });
 
-  let sortBy = "_text_match(buckets: 10):desc,purchasesPerDay:desc";
-  $: {
-    sortBy;
-    throttleSearch();
-  }
+  let sortBy = $state("_text_match(buckets: 10):desc,purchasesPerDay:desc");
 
-  let onlyShowAvailable = false;
-  let onlyShowInStock = false;
+  let onlyShowAvailable = $state(false);
+  let onlyShowInStock = $state(false);
 
   const minPrice = 0;
   const maxPrice = 59999 + 1
 
-  let filterMinPrice = minPrice;
-  let filterMaxPrice = maxPrice;
+  let filterMinPrice = $state(minPrice);
+  let filterMaxPrice = $state(maxPrice);
 
-  let filterMinPriceString = filterMinPrice + "";
-  $: filterMinPrice = Number(filterMinPriceString);
-  let filterMaxPriceString = filterMaxPrice + "";
-  $: filterMaxPrice = Number(filterMaxPriceString);
+  let filterMinPriceString = $state(filterMinPrice + "");
+  let filterMaxPriceString = $state(filterMaxPrice + "");
 
-  $: searchParams = {
-    filterMinPrice,
-    filterMaxPrice,
-    sortBy,
-    onlyShowAvailable,
-    onlyShowInStock
-  }
   const productTypeFilters = new Set();
 
 
-  let waiting = false;
-  let searchPromise: Promise<SearchResponse<ProductSearchIndex> | undefined> | undefined;
-  let searchResults: SearchResponse<ProductSearchIndex> | undefined;
+  let waiting = $state(false);
+  let searchPromise: Promise<SearchResponse<ProductSearchIndex> | undefined> | undefined = $state();
+  let searchResults: SearchResponse<ProductSearchIndex> | undefined = $state();
   let networkError = false;
 
-  let searchText = "";
-  $: {
-    searchParams;
-    searchText;
-    throttleSearch();
-  }
+  let searchText = $state("");
 
-  let productCategories: {count: number, highlighted: string, value: string}[] | undefined;
-  $: productCategories = productTypeFilters.size === 0 ? searchResults?.facet_counts?.[1].counts : productCategories;
+  let productCategories: {count: number, highlighted: string, value: string}[] | undefined = $state();
 
   function throttleSearch() {
     let tmpText = searchText+"";
@@ -80,7 +63,7 @@
 
   const resultsPerPage = 100;
 
-  let greyResults = false;
+  let greyResults = $state(false);
 
   function search(text: string, page?: number) {
     const thisSearchFilters = JSON.stringify(searchParams);
@@ -119,6 +102,31 @@
       })
   }
 
+  run(() => {
+    sortBy;
+    throttleSearch();
+  });
+  run(() => {
+    filterMinPrice = Number(filterMinPriceString);
+  });
+  run(() => {
+    filterMaxPrice = Number(filterMaxPriceString);
+  });
+  let searchParams = $derived({
+    filterMinPrice,
+    filterMaxPrice,
+    sortBy,
+    onlyShowAvailable,
+    onlyShowInStock
+  })
+  run(() => {
+    searchParams;
+    searchText;
+    throttleSearch();
+  });
+  run(() => {
+    productCategories = productTypeFilters.size === 0 ? searchResults?.facet_counts?.[1].counts : productCategories;
+  });
 </script>
 
 <svelte:head>
@@ -200,7 +208,7 @@
     {#if searchResults && productCategories}
       {#each productCategories as category (category.value)}
         <label>
-          <input class="input" type="checkbox" on:change={e => {
+          <input class="input" type="checkbox" onchange={e => {
             const checked = (e.target)?.checked;
 
             if(checked) {

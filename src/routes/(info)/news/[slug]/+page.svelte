@@ -1,11 +1,11 @@
-<script>
+<script lang="ts">
   import { page } from "$app/stores";
   import sanitizeHtml from "sanitize-html";
   import { newsSanitizeSettings } from "$lib/news/news";
   import { truncateText } from "$lib/utils";
   import { getTimePreference } from "$lib/prefUtils";
 
-  export let data;
+  let { data } = $props();
 
   const postDate = new Date(data.post.timestamp);
 </script>

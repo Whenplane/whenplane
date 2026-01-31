@@ -4,10 +4,25 @@
   import type { Placement } from "@floating-ui/dom";
   import Info from "$lib/svg/Info.svelte";
 
-  export let id = "default";
-  export let placement: Placement = 'top';
-  export let popupClasses = "";
-  export let event: "hover" | "click" | "hover-click" | "focus" | "focus-click" = "hover";
+  interface Props {
+    id?: string;
+    placement?: Placement;
+    popupClasses?: string;
+    event?: "hover" | "click" | "hover-click" | "focus" | "focus-click";
+    icon?: import('svelte').Snippet;
+    children?: import('svelte').Snippet;
+    content?: import('svelte').Snippet;
+  }
+
+  let {
+    id = "default",
+    placement = 'top',
+    popupClasses = "",
+    event = "hover",
+    icon,
+    children,
+    content
+  }: Props = $props();
 
   if(id == "default") {
     console.warn("Missing id on tooltip!");
@@ -23,14 +38,14 @@
   class="inline-block [&>*]:pointer-events-none"
   class:cursor-pointer={event !== "hover"}
 >
-  <slot name="icon">
+  {#if icon}{@render icon()}{:else}
     <Info classes="!inline-block"/>
-  </slot>
+  {/if}
 </div>
 
 <div class={"card p-4 shadow-x1 z-10 font-normal inline-block " + popupClasses} data-popup={id}>
-  <slot/>
-  <slot name="content"/>
+  {@render children?.()}
+  {@render content?.()}
 </div>
 
 <style>

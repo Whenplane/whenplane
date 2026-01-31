@@ -1,19 +1,20 @@
 <script lang="ts">
+  import { run } from 'svelte/legacy';
+
   import {onMount} from "svelte";
   import {shortMonths, isSameDay, yesterday} from "$lib/timeUtils";
 
   import { getTimePreference } from "$lib/prefUtils.ts";
 
-  export let epochSeconds: number;
-
-  $: date = new Date(epochSeconds * 1000);
-
-  $: {
-      epochSeconds;
-      updateSecondsAgo();
+  interface Props {
+    epochSeconds: number;
   }
 
-  let secondsAgo: number;
+  let { epochSeconds }: Props = $props();
+
+
+
+  let secondsAgo: number = $state();
   function updateSecondsAgo() {
     secondsAgo = (new Date().getTime() / 1000) - epochSeconds;
   }
@@ -32,6 +33,11 @@
     }
 
     return () => clearInterval(i);
+  });
+  let date = $derived(new Date(epochSeconds * 1000));
+  run(() => {
+      epochSeconds;
+      updateSecondsAgo();
   });
 </script>
 <span title="{shortMonths[date.getMonth()]} {date.getDate()}, {date.getFullYear()} at {date.toLocaleTimeString(undefined, {timeStyle: 'medium', hour12: getTimePreference()})}">

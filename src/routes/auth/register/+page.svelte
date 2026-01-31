@@ -3,15 +3,15 @@
   import Turnstile from "$lib/Turnstile.svelte";
   import { ProgressRadial } from "@skeletonlabs/skeleton";
   import { fade } from 'svelte/transition';
-  export let form;
+  let { form } = $props();
 
-  let firstPassword: string;
-  let secondPassword: string;
+  let firstPassword: string = $state();
+  let secondPassword: string = $state();
 
-  let turnstileCompleted = false;
-  let turnstileCounter = 0;
+  let turnstileCompleted = $state(false);
+  let turnstileCounter = $state(0);
 
-  let loading = false;
+  let loading = $state(false);
 </script>
 <div class="text-center">
   <h1>Register</h1>

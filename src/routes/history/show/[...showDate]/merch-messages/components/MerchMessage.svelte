@@ -8,11 +8,21 @@
   import Youtube from "$lib/svg/Youtube.svelte";
   import Floatplane from "$lib/svg/Floatplane.svelte";
 
-  export let message: MMV2TableRow;
-  export let youtubeId: string | undefined;
-  export let floatplaneId: string | undefined;
-  export let source: "youtube" | "floatplane" | "floatplane-live";
-  export let preShowLength: number | null;
+  interface Props {
+    message: MMV2TableRow;
+    youtubeId: string | undefined;
+    floatplaneId: string | undefined;
+    source: "youtube" | "floatplane" | "floatplane-live";
+    preShowLength: number | null;
+  }
+
+  let {
+    message,
+    youtubeId,
+    floatplaneId,
+    source,
+    preShowLength
+  }: Props = $props();
 
   const seconds = Math.floor(message.timestamp);
   const imageUrl = `https://merch-message-images.whenplane.com/${message.show}/images/${seconds}.jpg`;

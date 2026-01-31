@@ -5,12 +5,12 @@
   import { ProgressRadial } from "@skeletonlabs/skeleton";
   import { fade } from 'svelte/transition';
 
-  export let form;
+  let { form } = $props();
 
-  let turnstileCompleted = false;
+  let turnstileCompleted = $state(false);
 
-  let loading = false;
-  let turnstileCounter = 0;
+  let loading = $state(false);
+  let turnstileCounter = $state(0);
 </script>
 <div class="text-center">
   <h1>Log in</h1>

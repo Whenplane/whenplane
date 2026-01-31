@@ -1,4 +1,5 @@
 <script lang="ts">
+  import SubTopics from './SubTopics.svelte';
   import {slide} from "svelte/transition";
   import { quintOut } from "svelte/easing";
   import type { Timestamp } from "$lib/timestamps/types.ts";
@@ -6,12 +7,22 @@
   import { page } from "$app/stores";
   import { colonTimeString } from "$lib/timeUtils.ts";
 
-  export let subTopics: Timestamp[];
-  export let youtubeId: string;
-  export let floatplaneId: string;
 
-  export let floatplane = false;
-  export let preShowLength: number | undefined;
+  interface Props {
+    subTopics: Timestamp[];
+    youtubeId: string;
+    floatplaneId: string;
+    floatplane?: boolean;
+    preShowLength: number | undefined;
+  }
+
+  let {
+    subTopics,
+    youtubeId,
+    floatplaneId,
+    floatplane = false,
+    preShowLength
+  }: Props = $props();
 
   const firstFew = subTopics.filter((e, i) => i < 2)
   const rest = subTopics.filter((e, i) => i >= 2)
@@ -26,7 +37,7 @@
 
   const totalSub = rest.reduce(reduceFunc, 0)
 
-  let expanded = rest.length <= 1 || rest.map(t => "#timestamp-" + youtubeId + "." + t.time).includes($page.url.hash);
+  let expanded = $state(rest.length <= 1 || rest.map(t => "#timestamp-" + youtubeId + "." + t.time).includes($page.url.hash));
 </script>
 
 <ul class="normal-list ml-4">
@@ -57,7 +68,7 @@
 
   {#if !expanded && rest}
 
-    <button class="opacity-70 hover-underline" on:click={() => expanded = true}>
+    <button class="opacity-70 hover-underline" onclick={() => expanded = true}>
       ... And {totalSub} more
     </button>
 
@@ -85,7 +96,7 @@
         </a>
 
         {#if topic.subTimestamps && topic.subTimestamps.length > 0}
-          <svelte:self subTopics={topic.subTimestamps} {floatplane} {preShowLength}/>
+          <SubTopics subTopics={topic.subTimestamps} {floatplane} {preShowLength}/>
         {/if}
       </li>
     {/each}

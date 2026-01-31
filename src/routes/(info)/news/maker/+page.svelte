@@ -6,12 +6,12 @@
   import { truncateText } from "$lib/utils.ts";
   import {toastStore, clipboard} from "@skeletonlabs/skeleton";
 
-  let title = "";
-  $: url = truncateText(title.replace(/[^A-Za-z0-9- ]+/g, "").replace(/\s\s+/g, ' ').replaceAll(" ", "-").toLowerCase(), 50, false)
-  let content: string;
-  let timestamp: string;
+  let title = $state("");
+  let url = $derived(truncateText(title.replace(/[^A-Za-z0-9- ]+/g, "").replace(/\s\s+/g, ' ').replaceAll(" ", "-").toLowerCase(), 50, false))
+  let content: string = $state();
+  let timestamp: string = $state();
 
-  let timestampCopied: boolean;
+  let timestampCopied: boolean = $state();
   let timestampCopying = false;
 
   function updateTimestamp() {
@@ -57,7 +57,7 @@
 <div class="text-center">
   <input type="text" bind:value={title} placeholder="Title">
   <br>
-  <button class="timestamp" class:copied={timestampCopied} on:click={copyTimestamp}>
+  <button class="timestamp" class:copied={timestampCopied} onclick={copyTimestamp}>
     {timestamp}
   </button>
 </div>
@@ -74,7 +74,7 @@
 <br>
 
 
-<button use:clipboard={url} on:click={() => {
+<button use:clipboard={url} onclick={() => {
         toastStore.trigger({
             message: "Copied to Clipboard!"
         })

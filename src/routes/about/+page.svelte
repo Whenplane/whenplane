@@ -1,4 +1,6 @@
 <script>
+    import { run } from 'svelte/legacy';
+
     import {fade} from "svelte/transition";
     import {SlideToggle} from "@skeletonlabs/skeleton";
     import {browser} from "$app/environment";
@@ -7,36 +9,46 @@
     import { getSupportedLocales } from "$lib/utils";
     import ToolTip from "$lib/ToolTip.svelte";
 
-    let scrollY = 0;
+    let scrollY = $state(0);
 
-    let noSpecialLateText = browser ? localStorage.getItem("no-special-late-text") === "true" : false;
-    $: if(browser) localStorage.setItem("no-special-late-text", noSpecialLateText + "");
+    let noSpecialLateText = $state(browser ? localStorage.getItem("no-special-late-text") === "true" : false);
+    run(() => {
+        if(browser) localStorage.setItem("no-special-late-text", noSpecialLateText + "");
+    });
 
-    let disableBlurHash = browser ? !(localStorage.getItem("disableBlurHash") !== "true") : false
-    $: if(browser) localStorage.setItem("disableBlurHash", disableBlurHash + "");
+    let disableBlurHash = $state(browser ? !(localStorage.getItem("disableBlurHash") !== "true") : false)
+    run(() => {
+        if(browser) localStorage.setItem("disableBlurHash", disableBlurHash + "");
+    });
 
-    let disableNotableStreams = browser ? !(getCookie("disableNotableStreams") !== "true") : !($page.params.__c__disableNotableStreams !== "true")
-    $: if(browser) setCookie("disableNotableStreams", disableNotableStreams + "");
+    let disableNotableStreams = $state(browser ? !(getCookie("disableNotableStreams") !== "true") : !($page.params.__c__disableNotableStreams !== "true"))
+    run(() => {
+        if(browser) setCookie("disableNotableStreams", disableNotableStreams + "");
+    });
 
-    let timeFormat = browser ? localStorage.getItem("timeFormat") ?? "detect" : undefined;
-    $: if(browser) {
-        if(timeFormat && timeFormat !== "detect") {
-            localStorage.setItem("timeFormat", timeFormat);
-        } else {
-            console.debug("Removing timeFormat");
-            localStorage.removeItem("timeFormat");
+    let timeFormat = $state(browser ? localStorage.getItem("timeFormat") ?? "detect" : undefined);
+    run(() => {
+        if(browser) {
+            if(timeFormat && timeFormat !== "detect") {
+                localStorage.setItem("timeFormat", timeFormat);
+            } else {
+                console.debug("Removing timeFormat");
+                localStorage.removeItem("timeFormat");
+            }
         }
-    }
+    });
 
-    let dateFormat = browser ? localStorage.getItem("dateFormat") ?? "detect" : undefined;
-    $: if(browser) {
-        if(dateFormat && dateFormat !== "detect") {
-            localStorage.setItem("dateFormat", dateFormat);
-        } else {
-            console.debug("Removing dateFormat");
-            localStorage.removeItem("dateFormat");
+    let dateFormat = $state(browser ? localStorage.getItem("dateFormat") ?? "detect" : undefined);
+    run(() => {
+        if(browser) {
+            if(dateFormat && dateFormat !== "detect") {
+                localStorage.setItem("dateFormat", dateFormat);
+            } else {
+                console.debug("Removing dateFormat");
+                localStorage.removeItem("dateFormat");
+            }
         }
-    }
+    });
 
 
     const supportedLocales = browser ? getSupportedLocales() : [];

@@ -4,10 +4,14 @@
   import { commas } from "$lib/utils.ts";
   import { getTimePreference } from "$lib/prefUtils.ts";
 
-  export let subHistory: {
+  interface Props {
+    subHistory: {
     timestamp: number,
     [key: string]: number | null
   }[];
+  }
+
+  let { subHistory }: Props = $props();
 
   let chart;
 
@@ -90,7 +94,7 @@
     }
   }
 
-  let chartDiv: HTMLDivElement;
+  let chartDiv: HTMLDivElement = $state();
 
   let ApexCharts;
   onMount(async () => {

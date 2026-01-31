@@ -1,4 +1,6 @@
 <script lang="ts">
+  import { run } from 'svelte/legacy';
+
   import { browser } from "$app/environment";
   import { onMount } from "svelte";
   import { commas } from "$lib/utils.ts";
@@ -6,41 +8,26 @@
   import { getTimePreference } from "$lib/prefUtils.ts";
   import type { StockCounts } from "$lib/lttstore/lttstore_types.ts";
 
-  export let productName: string | undefined = undefined;
 
-  export let stockHistory: {
+
+  interface Props {
+    productName?: string | undefined;
+    stockHistory: {
     handle: string,
     id: number,
     timestamp: number,
     stock: string
   }[];
-
-  export let chartUpdateNumber = 1;
-
-  let chart;
-
-  $: someStock = Object.keys(stockHistory).length >= 1 ?
-    stockHistory.map(h => JSON.parse(h.stock ?? "{}") as StockCounts)
-      .reduce((p, c) => {
-        return {
-          ...c,
-          ...p
-        }
-      }, {})
-    : {};
-
-  let onlyTotalCheck = false;
-  // show only the total for items where the stock is just the default + the total
-  $: onlyTotal = Object.keys(someStock).length <= 2 || onlyTotalCheck;
-  $: console.debug({onlyTotal, length: Object.keys(someStock).length, someStock, stockHistory})
-
-  $: {
-    onlyTotal;
-    chartUpdateNumber;
-    options.series = getSeries()
-    // console.debug("Series:", options.series)
-    if(chart) chart.updateSeries(options.series)
+    chartUpdateNumber?: number;
   }
+
+  let { productName = undefined, stockHistory, chartUpdateNumber = 1 }: Props = $props();
+
+  let chart = $state();
+
+
+  let onlyTotalCheck = $state(false);
+
 
   function getSeries() {
     if(!onlyTotal) {
@@ -90,7 +77,7 @@
     }
   }
 
-  const options = {
+  const options = $state({
     chart: {
       type: 'area',
       stacked: false,
@@ -161,12 +148,12 @@
     grid: {
       borderColor: "#535A6C"
     }
-  }
+  })
 
-  let chartDiv: HTMLDivElement;
+  let chartDiv: HTMLDivElement = $state();
 
   let ApexCharts;
-  let mounted = false;
+  let mounted = $state(false);
   onMount(async () => {
     options.series = getSeries();
     mounted = true;
@@ -178,6 +165,27 @@
   })
 
   // let style = browser ?  : undefined;
+  let someStock = $derived(Object.keys(stockHistory).length >= 1 ?
+    stockHistory.map(h => JSON.parse(h.stock ?? "{}") as StockCounts)
+      .reduce((p, c) => {
+        return {
+          ...c,
+          ...p
+        }
+      }, {})
+    : {});
+  // show only the total for items where the stock is just the default + the total
+  let onlyTotal = $derived(Object.keys(someStock).length <= 2 || onlyTotalCheck);
+  run(() => {
+    console.debug({onlyTotal, length: Object.keys(someStock).length, someStock, stockHistory})
+  });
+  run(() => {
+    onlyTotal;
+    chartUpdateNumber;
+    options.series = getSeries()
+    // console.debug("Series:", options.series)
+    if(chart) chart.updateSeries(options.series)
+  });
 </script>
 
 <div style="min-height: 69vh">

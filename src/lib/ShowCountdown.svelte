@@ -1,4 +1,4 @@
-<script context="module" lang="ts">
+<script module lang="ts">
     import {writable} from "svelte/store";
     import type { MainLate } from "$lib/utils.ts";
 
@@ -6,7 +6,7 @@
 
 </script>
 
-<script>
+<script lang="ts">
     import {onMount} from "svelte";
     import {getClosestWan, getNextWAN, getTimeUntil} from "./timeUtils";
     import {page} from "$app/stores";
@@ -15,10 +15,14 @@
 
     let showPlayed = false;
 
-    export let isAfterStartTime = false;
-    export let data;
+    interface Props {
+        isAfterStartTime?: boolean;
+        data: any;
+    }
 
-    let countdownText = "";
+    let { isAfterStartTime = $bindable(false), data }: Props = $props();
+
+    let countdownText = $state("");
 
     onMount(() => {
         let updateInterval = setInterval(updateCountdown, 1e3);

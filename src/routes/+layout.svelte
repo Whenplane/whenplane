@@ -1,4 +1,6 @@
 <script lang='ts'>
+  import { run } from 'svelte/legacy';
+
 	// The ordering of these imports is critical to your app working properly
 	import '@skeletonlabs/skeleton/themes/theme-crimson.css';
 	// If you have source.organizeImports set to true in VSCode, then it will auto change this ordering
@@ -19,39 +21,46 @@
     import { Toast } from '@skeletonlabs/skeleton';
     import { Modal, modalStore } from '@skeletonlabs/skeleton';
     import type { ModalSettings, ModalComponent } from '@skeletonlabs/skeleton';
+  interface Props {
+    children?: import('svelte').Snippet;
+  }
+
+  let { children }: Props = $props();
 
     NProgress.configure({
         // Full list: https://github.com/rstacruz/nprogress#configuration
         minimum: 0.16,
     });
 
-    let progressTimeout;
+    let progressTimeout = $state();
 
-    $: if(browser) {
-        if ($navigating) {
-            if(progressTimeout) clearTimeout(progressTimeout);
-            const startBar = () => {
-                if ($navigating) {
-                    NProgress.start();
-                }
-            };
-            const toURL: URL = $navigating.to.url;
-            if(toURL.pathname == "/history" && toURL.searchParams.has("old")) {
-                startBar();
-            } else {
-                progressTimeout = setTimeout(startBar, 150);
-            }
-        }
-        if (!$navigating) {
-            if(progressTimeout) clearTimeout(progressTimeout);
-            NProgress.done();
-        }
-    }
+    run(() => {
+    if(browser) {
+          if ($navigating) {
+              if(progressTimeout) clearTimeout(progressTimeout);
+              const startBar = () => {
+                  if ($navigating) {
+                      NProgress.start();
+                  }
+              };
+              const toURL: URL = $navigating.to.url;
+              if(toURL.pathname == "/history" && toURL.searchParams.has("old")) {
+                  startBar();
+              } else {
+                  progressTimeout = setTimeout(startBar, 150);
+              }
+          }
+          if (!$navigating) {
+              if(progressTimeout) clearTimeout(progressTimeout);
+              NProgress.done();
+          }
+      }
+  });
 
 
     storePopup.set({ computePosition, autoUpdate, flip, shift, offset, arrow });
 
-    $: pathname = $page.url.pathname;
+    let pathname = $derived($page.url.pathname);
 
 
     onMount(async () => {
@@ -91,4 +100,4 @@
 <Modal />
 <Toast/>
 
-<slot />
+{@render children?.()}

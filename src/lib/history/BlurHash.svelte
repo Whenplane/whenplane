@@ -3,11 +3,15 @@
   import {decodeBlurHash as decode} from "fast-blurhash";
   import { onMount } from "svelte";
 
-  export let blurhash: BlurHash;
+  interface Props {
+    blurhash: BlurHash;
+  }
 
-  let needsCanvas = true;
-  let canvas: HTMLCanvasElement;
-  let imageURL: string;
+  let { blurhash }: Props = $props();
+
+  let needsCanvas = $state(true);
+  let canvas: HTMLCanvasElement = $state();
+  let imageURL: string = $state();
 
   const resolutionDecreaser = blurhash.w > 1000 ? 20 : 1;
 

@@ -4,7 +4,7 @@
   import { commas } from "$lib/utils.ts";
   import { getClosestWan } from "$lib/timeUtils.ts";
 
-  export let data;
+  let { data } = $props();
 
 </script>
 <svelte:head>

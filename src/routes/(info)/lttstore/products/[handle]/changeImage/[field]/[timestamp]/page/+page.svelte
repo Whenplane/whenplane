@@ -1,8 +1,10 @@
-<script>
+<script lang="ts">
   import { getFieldName } from "$lib/lttstore/field_names";
   import { getDiffComponent } from "$lib/lttstore/field_components";
 
-  export let data;
+  let { data } = $props();
+
+  const SvelteComponent = $derived(getDiffComponent(data.change.field));
 </script>
 
 <div class="table-container rounded-md" id="change">
@@ -17,8 +19,8 @@
     <tbody>
     <tr id="change">
       <td>{getFieldName(data.change.field)}</td>
-      <td><svelte:component this={getDiffComponent(data.change.field)} before={data.change.old} after={data.change.new} displaying="before"/></td>
-      <td><svelte:component this={getDiffComponent(data.change.field)} before={data.change.old} after={data.change.new} displaying="after"/></td>
+      <td><SvelteComponent before={data.change.old} after={data.change.new} displaying="before"/></td>
+      <td><SvelteComponent before={data.change.old} after={data.change.new} displaying="after"/></td>
     </tr>
     </tbody>
   </table>

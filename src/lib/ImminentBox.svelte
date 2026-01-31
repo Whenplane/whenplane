@@ -6,8 +6,12 @@
   import {timeString} from "$lib/timeUtils.ts";
   import {slide} from "svelte/transition";
 
-  export let floatplane: FpEndpointResponse | undefined;
-  export let hasDone = false;
+  interface Props {
+    floatplane: FpEndpointResponse | undefined;
+    hasDone?: boolean;
+  }
+
+  let { floatplane, hasDone = false }: Props = $props();
 
   // the thumbnail age cutoff where the thumbnail wont be shown at all. currently 3 hours
   const ageCutoff = 24 * 60 * 60e3;

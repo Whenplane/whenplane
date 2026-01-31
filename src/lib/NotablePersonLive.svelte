@@ -3,7 +3,11 @@
   import { onMount } from "svelte";
   import { timeString } from "$lib/timeUtils.ts";
 
-  export let shortResponse: NotablePeopleShortResponse;
+  interface Props {
+    shortResponse: NotablePeopleShortResponse;
+  }
+
+  let { shortResponse }: Props = $props();
 
   onMount(() => {
     const i = setInterval(updateDuration, 30e3);
@@ -11,7 +15,7 @@
     return () => clearInterval(i);
   })
 
-  let duration = "";
+  let duration = $state("");
 
   function updateDuration() {
     if(shortResponse.isLive && shortResponse.started) {

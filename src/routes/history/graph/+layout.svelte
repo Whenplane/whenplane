@@ -1,8 +1,8 @@
-<script>
+<script lang="ts">
   import Record from "$lib/history/Record.svelte";
   import { page } from "$app/stores";
 
-  export let data;
+  let { data, children } = $props();
 </script>
 
 <div class="flex h-screen w-screen">
@@ -47,7 +47,7 @@
   </div>
 
   <div class="w-full h-screen overflow-auto p-2">
-    <slot/>
+    {@render children?.()}
   </div>
 </div>
 <!--<pre>{JSON.stringify(data, undefined, '\t')}</pre>-->

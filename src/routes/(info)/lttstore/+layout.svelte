@@ -1,4 +1,6 @@
 <script lang="ts">
+  import { run } from 'svelte/legacy';
+
   import { setCookie } from "$lib/cookieUtils";
   import { invalidateAll } from "$app/navigation";
   import ExclamationTriangle from "svelte-bootstrap-icons/lib/ExclamationTriangle.svelte";
@@ -7,13 +9,15 @@
   import ProductSearchModal from "./ProductSearchModal.svelte";
   import DateStamp from "$lib/DateStamp.svelte";
 
-  export let data;
+  let { data, children } = $props();
 
-  let selectedCurrency = data.currency;
-  $: if(selectedCurrency != data.currency) {
-    setCookie("currency", selectedCurrency);
-    invalidateAll();
-  }
+  let selectedCurrency = $state(data.currency);
+  run(() => {
+    if(selectedCurrency != data.currency) {
+      setCookie("currency", selectedCurrency);
+      invalidateAll();
+    }
+  });
 
   function keypress(event: KeyboardEvent) {
     if(event.key === "P" && document.activeElement?.tagName !== "INPUT") {
@@ -27,7 +31,7 @@
   }
 
 </script>
-<svelte:window on:keyup={keypress}/>
+<svelte:window onkeyup={keypress}/>
 <div class="float-right pr-5 h-0">
   <div class="inline-block">
     {#if selectedCurrency !== "USD"}
@@ -46,7 +50,7 @@
     </select>
   </div>
 </div>
-<slot/>
+{@render children?.()}
 <br>
 <div class="p-4">
   Images and products from <a href="https://www.lttstore.com/?ref=whenplane.com" class="anchor">lttstore.com</a><br>
@@ -66,5 +70,5 @@
     <br>
     1 USD &asymp; {data.exchangeRates.rates[selectedCurrency]} {selectedCurrency}
   </p>
-  <div class="arrow variant-filled-surface" />
+  <div class="arrow variant-filled-surface"></div>
 </div>

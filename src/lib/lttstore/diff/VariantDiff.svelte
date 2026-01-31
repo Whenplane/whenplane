@@ -1,20 +1,26 @@
 <script lang="ts">
+  import { run } from 'svelte/legacy';
+
 
   import * as Diff from "diff"
   import { escapeHtml } from "$lib/utils.ts";
   import type { ProductVariant } from "$lib/lttstore/lttstore_types.ts";
   import { getVariantFieldName } from "$lib/lttstore/field_names.ts";
 
-  export let before: string;
-  export let after: string;
 
-  $: parsedBefore = JSON.parse(before) as ProductVariant[];
-  $: parsedAfter = JSON.parse(after) as ProductVariant[];
 
-  export let displaying: "before" | "after";
+  interface Props {
+    before: string;
+    after: string;
+    displaying: "before" | "after";
+  }
 
-  let html: string;
-  $: {
+  let { before, after, displaying }: Props = $props();
+
+  let html: string = $state();
+  let parsedBefore = $derived(JSON.parse(before) as ProductVariant[]);
+  let parsedAfter = $derived(JSON.parse(after) as ProductVariant[]);
+  run(() => {
     html = "";
     let removed: string[] = [];
     for (let i = 0; i < parsedBefore.length; i++) {
@@ -61,6 +67,6 @@
 
     html = html.replace(/\n/g, "<br>")
       .replace(/\t/g, "&emsp;");
-  }
+  });
 </script>
 {@html html}

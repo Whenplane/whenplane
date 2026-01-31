@@ -1,4 +1,6 @@
 <script lang="ts">
+  import { run } from 'svelte/legacy';
+
   import LTTProductCard from "$lib/lttstore/LTTProductCard.svelte";
   import { page } from "$app/stores";
   import { onMount } from "svelte";
@@ -15,7 +17,7 @@
   import sanitizeHtml from "sanitize-html";
   import { newsSanitizeSettings } from "$lib/news/news.ts";
 
-  export let data;
+  let { data } = $props();
 
   const searchClient = new SearchClient({
     'nodes': [{
@@ -28,22 +30,12 @@
     'connectionTimeoutSeconds': 10
   });
 
-  let waiting = false;
-  let searchPromise: Promise<SearchResponse<ProductSearchIndex> | undefined> | undefined;
-  let searchResults: SearchResponse<ProductSearchIndex> | undefined;
-  let networkError = false;
+  let waiting = $state(false);
+  let searchPromise: Promise<SearchResponse<ProductSearchIndex> | undefined> | undefined = $state();
+  let searchResults: SearchResponse<ProductSearchIndex> | undefined = $state();
+  let networkError = $state(false);
 
-  let searchText = "";
-  $: {
-    let tmpText = searchText+"";
-    waiting = true;
-    setTimeout(() => {
-      if(searchText === tmpText) {
-        waiting = false;
-        search(searchText);
-      }
-    }, 100)
-  }
+  let searchText = $state("");
 
   const resultsPerPage = 100;
 
@@ -80,16 +72,26 @@
       })
   }
 
-  let loading = false;
+  let loading = $state(false);
   async function reload() {
     loading = true;
     await invalidateAll()
     loading = false;
   }
 
-  let mounted = false;
+  let mounted = $state(false);
   onMount(() => {
     setTimeout(() => mounted = true, 0)
+  });
+  run(() => {
+    let tmpText = searchText+"";
+    waiting = true;
+    setTimeout(() => {
+      if(searchText === tmpText) {
+        waiting = false;
+        search(searchText);
+      }
+    }, 100)
   });
 </script>
 <svelte:head>
@@ -100,7 +102,7 @@
 <ol class="breadcrumb pt-2 pl-2">
   <li class="crumb"><a class="anchor hover-underline" href="/">{$page.url.hostname === "whenwan.show" ? "whenwan.show" : "Whenplane"}</a></li>
   <li class="crumb-separator" aria-hidden="true">&rsaquo;</li>
-  <li class="crumb" on:click={reload}>LTT Store Watcher</li>
+  <li class="crumb" onclick={reload}>LTT Store Watcher</li>
   {#if loading}
     <li class="crumb" transition:fade|global={{duration: 100}}>
       <ProgressRadial width="w-6" stroke={250} value={loading ? undefined : 100}/>
@@ -163,8 +165,7 @@
                   ) ??
                 productData.description,
               {allowedTags: ["mark"]}
-            )
-          }
+            )}
         </span>
         <br>
       </a>

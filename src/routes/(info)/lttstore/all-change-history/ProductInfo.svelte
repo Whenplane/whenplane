@@ -2,12 +2,16 @@
   import LazyLoad from "@dimfeld/svelte-lazyload";
   import { browser } from "$app/environment";
 
-  export let productId: number;
-  export let initiallyLoad = false;
+  interface Props {
+    productId: number;
+    initiallyLoad?: boolean;
+  }
+
+  let { productId, initiallyLoad = false }: Props = $props();
 
   // eslint-disable-next-line @typescript-eslint/no-empty-function
-  let promise = new Promise<Response>(() => {});
-  let jsonPromise = new Promise<{id: number, handle: string, title: string}>(() => {});
+  let promise = $state(new Promise<Response>(() => {}));
+  let jsonPromise = $state(new Promise<{id: number, handle: string, title: string}>(() => {}));
 
   function loadProduct() {
     promise = fetch("/api/lttstore/products/brief/" + productId, {headers: {"Accept": "application/json"}});

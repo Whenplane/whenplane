@@ -1,4 +1,6 @@
 <script lang="ts">
+    import { run } from 'svelte/legacy';
+
     import TimeInput from "$lib/TimeInput.svelte";
     import {getPreviousWANLuxon, addZero} from "$lib/timeUtils";
     import {DateTime} from "luxon";
@@ -6,15 +8,15 @@
 
     const previousWANUTC = getPreviousWANLuxon().toUTC();
 
-    let date = previousWANUTC.year + "-" + addZero(previousWANUTC.month) + "-" + addZero(previousWANUTC.day);
-    $: dateDate = DateTime.fromJSDate(getClosestWan(new Date(date)));
-    $: jsDateDate = dateDate.toJSDate();
+    let date = $state(previousWANUTC.year + "-" + addZero(previousWANUTC.month) + "-" + addZero(previousWANUTC.day));
+    let dateDate = $derived(DateTime.fromJSDate(getClosestWan(new Date(date))));
+    let jsDateDate = $derived(dateDate.toJSDate());
 
 
-    let timeStamp = 0;
-    let timeAtTimeStamp = "16:25";
-    let startsAt: DateTime | undefined;
-    $: {
+    let timeStamp = $state(0);
+    let timeAtTimeStamp = $state("16:25");
+    let startsAt: DateTime | undefined = $state();
+    run(() => {
         let timeParts = timeAtTimeStamp.split(":");
         startsAt = DateTime.fromObject({
             year: dateDate.year,
@@ -27,23 +29,23 @@
             zone: "America/Vancouver"
         })
         startsAt = startsAt.minus({seconds: timeStamp})
-    }
+    });
 
-    let showStartTimestamp = 5 * 60;
-    let preEndsAt: DateTime | undefined;
-    $: {
+    let showStartTimestamp = $state(5 * 60);
+    let preEndsAt: DateTime | undefined = $state();
+    run(() => {
         if(startsAt) {
             preEndsAt = startsAt.plus({seconds: showStartTimestamp})
         }
-    }
+    });
 
-    let totalLength = (4 * 60 * 60) + (5 * 60);
-    let endsAt: DateTime | undefined;
-    $: {
+    let totalLength = $state((4 * 60 * 60) + (5 * 60));
+    let endsAt: DateTime | undefined = $state();
+    run(() => {
         if(startsAt) {
             endsAt = startsAt.plus({seconds: totalLength})
         }
-    }
+    });
 </script>
 
 <div class="text-center limit mx-auto">

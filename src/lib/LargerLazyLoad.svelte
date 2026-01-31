@@ -1,15 +1,25 @@
-<script>
+<script lang="ts">
   import LazyLoad from "@dimfeld/svelte-lazyload";
   import { createEventDispatcher } from "svelte";
   const dispatch = createEventDispatcher();
 
-  export let shown = false;
 
-  export let before = false;
-  export let after = true;
+  interface Props {
+    shown?: boolean;
+    before?: boolean;
+    after?: boolean;
+    children?: import('svelte').Snippet;
+  }
+
+  let {
+    shown = $bindable(false),
+    before = false,
+    after = true,
+    children
+  }: Props = $props();
 </script>
 {#if shown && before}
-  <slot/>
+  {@render children?.()}
 {/if}
 <div class="relative no-pointer-events width-1">
   <div class="absolute">
@@ -19,7 +29,7 @@
   </div>
 </div>
 {#if shown && after}
-  <slot/>
+  {@render children?.()}
 {/if}
 <style>
   .bottom {

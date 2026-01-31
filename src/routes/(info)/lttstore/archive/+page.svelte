@@ -2,7 +2,7 @@
   import LTTProductCard from "$lib/lttstore/LTTProductCard.svelte";
   import { page } from "$app/stores";
 
-  export let data;
+  let { data } = $props();
 </script>
 <svelte:head>
   <title>LTTStore Product Archive - Whenplane</title>

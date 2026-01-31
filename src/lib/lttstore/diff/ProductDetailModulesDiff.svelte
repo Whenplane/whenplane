@@ -1,4 +1,6 @@
 <script lang="ts">
+  import { run } from 'svelte/legacy';
+
 
   import * as Diff from "diff"
   import { escapeHtml } from "$lib/utils.ts";
@@ -6,23 +8,31 @@
   import { getVariantFieldName } from "$lib/lttstore/field_names.ts";
   import TextDiff from "$lib/lttstore/diff/TextDiff.svelte";
 
-  export let before: string;
-  export let after: string;
 
-  $: parsedBefore = (JSON.parse(before) as ProductDetailModule[]).map(m => {
+
+
+  interface Props {
+    before: string;
+    after: string;
+    displaying: "before" | "after";
+  }
+
+  let { before, after, displaying }: Props = $props();
+
+  let changedModules: string[] = $state([]);
+  let parsedBefore = $derived((JSON.parse(before) as ProductDetailModule[]).map(m => {
     return {
       ...m,
       content: m.content.replaceAll("\n", "<br>\n"),
     }
-  });
-  $: parsedAfter = (JSON.parse(after) as ProductDetailModule[]).map(m => {
+  }));
+  let parsedAfter = $derived((JSON.parse(after) as ProductDetailModule[]).map(m => {
     return {
       ...m,
       content: m.content.replaceAll("\n", "<br>\n"),
     }
-  });
-
-  $: {
+  }));
+  run(() => {
     for (let detailModule of parsedAfter) {
       if(!parsedBefore.find(m => m.title === detailModule.title)) {
         parsedBefore.push({
@@ -31,12 +41,8 @@
         })
       }
     }
-  }
-
-  export let displaying: "before" | "after";
-
-  let changedModules: string[] = [];
-  $: {
+  });
+  run(() => {
     changedModules = [];
     for (let detailModule of parsedBefore) {
       const beforeContent = detailModule.content;
@@ -45,7 +51,7 @@
         changedModules.push(detailModule.title);
       }
     }
-  }
+  });
 </script>
 {#each parsedBefore.filter(m => changedModules.includes(m.title)) as module}
   <b>{module.title}</b><br>

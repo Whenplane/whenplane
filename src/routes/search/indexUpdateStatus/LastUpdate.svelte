@@ -28,10 +28,10 @@
     isUpToDate: boolean;
   }
 
-  let lastTitle: Promise<IndexUpdate | null> = new Promise(() => {});
-  let lastTopic: Promise<IndexUpdate | null> = new Promise(() => {});
-  let lastTranscript: Promise<IndexUpdate | null> = new Promise(() => {});
-  let lastMerchMessage: Promise<IndexUpdate | null> = new Promise(() => {});
+  let lastTitle: Promise<IndexUpdate | null> = $state(new Promise(() => {}));
+  let lastTopic: Promise<IndexUpdate | null> = $state(new Promise(() => {}));
+  let lastTranscript: Promise<IndexUpdate | null> = $state(new Promise(() => {}));
+  let lastMerchMessage: Promise<IndexUpdate | null> = $state(new Promise(() => {}));
 
   function formatDate(date: number) {
     const s = date+"";

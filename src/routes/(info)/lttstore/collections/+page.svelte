@@ -59,7 +59,11 @@
 
         <br>
       {:else}
-        none.
+        <tr>
+          <td>
+            None.
+          </td>
+        </tr>
       {/each}
     </tbody>
   </table>

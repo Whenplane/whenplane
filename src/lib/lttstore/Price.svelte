@@ -3,15 +3,19 @@
   import { Currencies } from "currencies-map";
   import type { LatestExchangeRate } from "../../routes/api/exchangeRates/exchangeRateAPITypes.ts";
 
-  export let usd: number;
+  interface Props {
+    usd: number;
+  }
 
-  let currency: string;
-  $: currency = $page.data.currency;
-  $: symbol = Currencies.symbols.get(currency);
+  let { usd }: Props = $props();
 
-  let exchangeRates: LatestExchangeRate;
-  $: exchangeRates = $page.data.exchangeRates;
+  let currency: string = $derived($page.data.currency);
+  
+  let symbol = $derived(Currencies.symbols.get(currency));
 
-  $: convertedPrice = usd * exchangeRates.rates[currency];
+  let exchangeRates: LatestExchangeRate = $derived($page.data.exchangeRates);
+  
+
+  let convertedPrice = $derived(usd * exchangeRates.rates[currency]);
 </script>
 {symbol}{(Math.round(convertedPrice * 100)/100).toLocaleString(undefined, {minimumFractionDigits: 2})}

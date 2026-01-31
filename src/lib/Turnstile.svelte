@@ -1,8 +1,12 @@
-<script>
+<script lang="ts">
   import {Turnstile} from "svelte-turnstile";
 
-  export let siteKey;
-  export let passed = false;
+  interface Props {
+    siteKey: any;
+    passed?: boolean;
+  }
+
+  let { siteKey, passed = $bindable(false) }: Props = $props();
 
   function unPass() {
     passed = false;

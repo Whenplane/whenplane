@@ -1,4 +1,6 @@
 <script lang="ts">
+    import { run } from 'svelte/legacy';
+
     import HistoricalShow from "$lib/history/HistoricalShow.svelte";
     import { colonTimeString, getClosestWan, timeString } from "$lib/timeUtils";
     import Floatplane from "$lib/svg/Floatplane.svelte";
@@ -16,7 +18,7 @@
     import { SlideToggle } from "@skeletonlabs/skeleton";
     import Incomplete from "$lib/merch-messages/Incomplete.svelte";
 
-    export let data;
+    let { data } = $props();
 
     const thumbnail = data.value?.snippet?.thumbnails?.maxres ??
         data.value?.snippet?.thumbnails?.standard ??
@@ -34,13 +36,13 @@
 
     const backHash =  `?to=${showDate.getUTCFullYear()}#` + data.name;
 
-    let onTimeUntil = data.metadata.mainShowStart ? getTimeUntil(showDate, new Date(data.metadata.mainShowStart).getTime()) : null;
+    let onTimeUntil = $state(data.metadata.mainShowStart ? getTimeUntil(showDate, new Date(data.metadata.mainShowStart).getTime()) : null);
 
     const preShowLength = preShowStart && mainShowStart ?
       getTimeUntil(mainShowStart as Date, (preShowStart as Date).getTime()).distance/1e3 :
       null;
 
-    let timestampPlatform: string | null;
+    let timestampPlatform: string | null = $state();
     timestampPlatform = (browser ? getCookie("timestampPlatform") : $page.params.__c__timestampPlatform) ?? "youtube"; // seperate so it doesnt try to react
 
     function toggleTimestampPlatform() {
@@ -53,14 +55,16 @@
         setCookie("timestampPlatform", timestampPlatform)
     }
 
-    let onTimeString: string;
-    $: if(onTimeUntil) onTimeString = onTimeUntil.distance < 5 * 60e3 ? "on time!" : (onTimeUntil.late ? onTimeUntil.string + "late" : onTimeUntil.string + "early!");
+    let onTimeString: string = $state();
+    run(() => {
+        if(onTimeUntil) onTimeString = onTimeUntil.distance < 5 * 60e3 ? "on time!" : (onTimeUntil.late ? onTimeUntil.string + "late" : onTimeUntil.string + "early!");
+    });
 
 
-    $: description = "WAN show from " + showDate.toLocaleDateString(undefined, {dateStyle: 'long'}) +
+    let description = $derived("WAN show from " + showDate.toLocaleDateString(undefined, {dateStyle: 'long'}) +
       (data.metadata.title ? " titled '" + truncateText(data.metadata.title.trim(), 65) + "'" : "") + ". " +
       (onTimeString ? 'It was ' + onTimeString.trim() : '') +
-      ((mainShowStart instanceof Date && showEnd instanceof Date) || data.metadata.mainShowLength ? (onTimeString ? ", and" : "It") + " was live for " + timeString(data.metadata.mainShowLength ?? (showEnd?.getTime() - mainShowStart?.getTime()))?.trim() + "." : ".");
+      ((mainShowStart instanceof Date && showEnd instanceof Date) || data.metadata.mainShowLength ? (onTimeString ? ", and" : "It") + " was live for " + timeString(data.metadata.mainShowLength ?? (showEnd?.getTime() - mainShowStart?.getTime()))?.trim() + "." : "."));
 </script>
 <svelte:head>
     <title>{data.metadata.title ?? ""}{data.metadata.title ? " - " : ""} {showDate.toLocaleDateString(undefined, {dateStyle: 'long'})}</title>

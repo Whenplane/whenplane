@@ -12,9 +12,9 @@
   import { slide } from "svelte/transition";
   import ToolTip from "$lib/ToolTip.svelte";
 
-  export let data;
+  let { data } = $props();
 
-  let lastData: MMJobData;
+  let lastData: MMJobData = $state();
 
   onMount(() => {
     if(dev && $page.params.videoId === "test") {
@@ -52,7 +52,7 @@
     getTimeUntil(showEnd as Date, (mainShowStart as Date).getTime()).distance :
     null;
 
-  $: biggestTimestamp = data.messages.reduce((a, b) => Math.max(a, b.timestamp), 0);
+  let biggestTimestamp = $derived(data.messages.reduce((a, b) => Math.max(a, b.timestamp), 0));
   const latestJobId = data.messages.map(m => m.jobId).sort().reverse()[0];
 </script>
 
@@ -118,7 +118,7 @@
 
         </ToolTip>
         <br>
-        <progress value={percent} max={1} style="width: calc(100% - 5em);"/>
+        <progress value={percent} max={1} style="width: calc(100% - 5em);"></progress>
         {(percent * 100).toFixed(2)}%
       </div>
     </div>

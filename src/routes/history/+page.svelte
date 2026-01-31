@@ -1,7 +1,9 @@
-<script lang="ts" context="module">
+<script lang="ts" module>
     let pageIndex = 0;
 </script>
 <script lang="ts">
+    import { run } from 'svelte/legacy';
+
     import HistoricalShow from "$lib/history/HistoricalShow.svelte";
     import { browser, dev } from "$app/environment";
     import HistoryRecords from "$lib/history/HistoryRecords.svelte";
@@ -19,24 +21,24 @@
     import LazyLoad from "@dimfeld/svelte-lazyload";
     import { page } from "$app/stores";
 
-    export let data;
+    let { data } = $props();
 
     console.debug({data})
 
-    let shows = data.history.shows;
+    let shows = $state(data.history.shows);
 
-    let nextYear = data.history.lowestYear - 1;
+    let nextYear = $state(data.history.lowestYear - 1);
 
-    let view = data.history.viewType ?? 0;
+    let view = $state(data.history.viewType ?? 0);
 
-    let first = true;
-    $: {
+    let first = $state(true);
+    run(() => {
         if(first) {
             first = false;
         } else if(browser) {
             setCookie("historyViewType", view+"");
         }
-    }
+    });
 
     let fetched: number[] = [];
 

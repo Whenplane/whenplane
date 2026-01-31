@@ -1,10 +1,12 @@
-<script>
+<script lang="ts">
+  import { run } from 'svelte/legacy';
+
   import { invalidateAll } from "$app/navigation";
   import { onDestroy } from "svelte";
   import HistoricalShow from "$lib/history/HistoricalShow.svelte";
   import {enhance} from "$app/forms";
 
-  export let data;
+  let { data } = $props();
 
   let invalidationInterval;
 
@@ -13,25 +15,12 @@
     "..",
     "..."
   ];
-  let doti = 0;
-  $: dot = dots[doti];
+  let doti = $state(0);
 
-  let images = [];
-  $: {
-    if(data.image?.length && data.show) {
-      images = [];
-      for (let i = 1; i <= data.image.length; i++) {
-        images.push(i);
-      }
-    } else {
-      images = [];
-    }
-  }
+  let images = $state([]);
 
-  let imageOutdated = false;
+  let imageOutdated = $state(false);
 
-  $: checkImage(data);
-  $: console.log({data})
   function checkImage() {
     clearInterval(invalidationInterval);
     if(!data.image || (data.image.verifyText && !data.image.text)) {
@@ -49,6 +38,23 @@
   onDestroy(() => {
     clearInterval(invalidationInterval);
   })
+  let dot = $derived(dots[doti]);
+  run(() => {
+    if(data.image?.length && data.show) {
+      images = [];
+      for (let i = 1; i <= data.image.length; i++) {
+        images.push(i);
+      }
+    } else {
+      images = [];
+    }
+  });
+  run(() => {
+    checkImage(data);
+  });
+  run(() => {
+    console.log({data})
+  });
 </script>
 <div class="limit mx-auto">
   {#if data.done}

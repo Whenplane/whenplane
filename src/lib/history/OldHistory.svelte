@@ -1,4 +1,4 @@
-<script>
+<script lang="ts">
     import HistoricalShow from "./HistoricalShow.svelte";
     import LazyLoad from '@dimfeld/svelte-lazyload';
     import {fade} from "svelte/transition";
@@ -7,10 +7,14 @@
     import { countTo } from "$lib/utils";
     import LoadingHistoricalShow from "$lib/history/LoadingHistoricalShow.svelte";
 
-    export let withThumbnail = false;
+    interface Props {
+        withThumbnail?: boolean;
+    }
+
+    let { withThumbnail = false }: Props = $props();
 
     let alreadyLoaded = false;
-    let fetchingHistory = (() => {
+    let fetchingHistory = $state((() => {
         if($page.data?.history?.oldHistory) {
             alreadyLoaded = true;
             return $page.data?.history?.oldHistory;
@@ -18,7 +22,7 @@
             // eslint-disable-next-line @typescript-eslint/no-empty-function
             return new Promise(() => {});
         }
-    })();
+    })());
 
 
     function loadHistory() {

@@ -1,8 +1,7 @@
 <script lang="ts">
   import {enhance} from "$app/forms";
 
-  export let data;
-  export let form;
+  let { data, form } = $props();
 </script>
 
 <div class="mx-auto card login-box p-4">

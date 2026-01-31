@@ -1,6 +1,10 @@
-<script>
-  export let withThumbnail = false;
-  export let onlyTimes = false;
+<script lang="ts">
+  interface Props {
+    withThumbnail?: boolean;
+    onlyTimes?: boolean;
+  }
+
+  let { withThumbnail = false, onlyTimes = false }: Props = $props();
 
 </script>
 

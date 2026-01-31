@@ -4,7 +4,7 @@
   import { browser } from "$app/environment";
   import { page } from "$app/stores";
 
-  export let data;
+  let { data } = $props();
 </script>
 <svelte:head>
   <title>WAN Lateness Graph - {$page.url.hostname === "whenwan.show" ? "whenwan.show" : "Whenplane"}</title>

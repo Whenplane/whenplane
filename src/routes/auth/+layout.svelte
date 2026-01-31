@@ -1,13 +1,20 @@
 <script lang="ts">
+  import { run } from 'svelte/legacy';
+
   import { page } from "$app/stores";
   import { routeNames } from "./routeNames.ts";
   import { capitalize } from "$lib/utils";
+  interface Props {
+    children?: import('svelte').Snippet;
+  }
 
-  let pathHierarchy: string[] = []
-  $: {
+  let { children }: Props = $props();
+
+  let pathHierarchy: string[] = $state([])
+  run(() => {
     pathHierarchy = $page.url.pathname.split("/");
     if(pathHierarchy[0] === "") pathHierarchy.shift();
-  }
+  });
 </script>
 
 <ol class="breadcrumb pt-2 pl-2">
@@ -22,4 +29,4 @@
     {/if}
   {/each}
 </ol>
-<slot/>
+{@render children?.()}

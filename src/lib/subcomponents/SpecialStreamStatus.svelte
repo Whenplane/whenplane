@@ -4,12 +4,16 @@
   import XCircle from "svelte-bootstrap-icons/lib/XCircle.svelte";
   import ExclamationCircle from "svelte-bootstrap-icons/lib/ExclamationCircle.svelte";
 
-  export let service: "floatplane" | "twitch" | "youtube";
-  export let specialStreamData: SpecialStream;
-  $: genericData = specialStreamData as {[key: string]: boolean | string}
+  interface Props {
+    service: "floatplane" | "twitch" | "youtube";
+    specialStreamData: SpecialStream;
+  }
 
-  $: isOn = specialStreamData["on" + capitalize(service)] ?? false;
-  $: note = specialStreamData[service + "Notes"];
+  let { service, specialStreamData }: Props = $props();
+  let genericData = $derived(specialStreamData as {[key: string]: boolean | string})
+
+  let isOn = $derived(specialStreamData["on" + capitalize(service)] ?? false);
+  let note = $derived(specialStreamData[service + "Notes"]);
 </script>
 
 {#if isOn && !note}

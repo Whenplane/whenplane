@@ -1,4 +1,4 @@
-<script context="module">
+<script module>
   import { writable } from "svelte/store";
   import { browser } from "$app/environment";
   import { random } from "$lib/utils";
@@ -22,7 +22,7 @@
   import X from "svelte-bootstrap-icons/lib/X.svelte";
   import { onMount } from "svelte";
 
-  let mounted = false;
+  let mounted = $state(false);
   onMount(() => {
     mounted = true;
   })
@@ -34,12 +34,12 @@
     I've made a browser extension that replaces the Floatplane/Twitch offline page with this site.<br>
     <a href="/extension">More info and download link</a>
 
-    <button class="inline-block absolute top-2 right-3 opacity-70 x" on:click={() => dismissed.set(true)}>
+    <button class="inline-block absolute top-2 right-3 opacity-70 x" onclick={() => dismissed.set(true)}>
       <span class="just-x"><X/></span>
       <span class="x-circle"><XCircleFill/></span>
     </button>
 
-    <button class="inline-block absolute bottom-2 right-3 permanent-dismiss opacity-50" on:click={() => {dismissed.set(true);localStorage.setItem("permanentExtensionDismiss", "true")}}>
+    <button class="inline-block absolute bottom-2 right-3 permanent-dismiss opacity-50" onclick={() => {dismissed.set(true);localStorage.setItem("permanentExtensionDismiss", "true")}}>
       Don't show again
     </button>
   </div>

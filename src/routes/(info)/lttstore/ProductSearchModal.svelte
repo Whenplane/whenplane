@@ -1,4 +1,6 @@
 <script lang="ts">
+  import { run } from 'svelte/legacy';
+
 
   import { SearchClient } from "typesense";
   import type { ProductSearchIndex } from "$lib/lttstore/lttstore_types.ts";
@@ -23,9 +25,9 @@
   });
 
   let waiting = false;
-  let searchPromise: Promise<SearchResponse<ProductSearchIndex> | undefined> | undefined;
-  let searchResults: SearchResponse<ProductSearchIndex> | undefined;
-  let networkError = false;
+  let searchPromise: Promise<SearchResponse<ProductSearchIndex> | undefined> | undefined = $state();
+  let searchResults: SearchResponse<ProductSearchIndex> | undefined = $state();
+  let networkError = $state(false);
 
   function keyPress(event: KeyboardEvent) {
     if(dev) console.debug(event.key)
@@ -46,11 +48,8 @@
     }
   }
 
-  let searchText = /*dev ? "screwdriver" :*/ "";
-  let cursor = 0;
-  $: {
-    search(searchText);
-  }
+  let searchText = /*dev ? "screwdriver" :*/ $state("");
+  let cursor = $state(0);
 
   function search(text: string) {
     if(!text) {
@@ -84,12 +83,17 @@
   }
 
 
-  $: if($navigating) modalStore.close(); // close search modal when we navigate
 
+  run(() => {
+    search(searchText);
+  });
+  run(() => {
+    if($navigating) modalStore.close();
+  }); // close search modal when we navigate
 </script>
 
 <div class="s-container p-4 absolute">
-  <input class="input px-2 pl-4 py-0.5" autofocus placeholder="Find a product" bind:value={searchText} on:keydown={keyPress}>
+  <input class="input px-2 pl-4 py-0.5" autofocus placeholder="Find a product" bind:value={searchText} onkeydown={keyPress}>
   <div class="inline-block absolute top-4 right-8">
     {#if waiting}
       <ProgressRadial class="inline-block" width="w-6" stroke={250}/>
@@ -130,8 +134,7 @@
                   ) ??
                 productData.description,
                 {allowedTags: ["mark"]}
-              )
-            }
+              )}
         </span>
           <br>
         </a>

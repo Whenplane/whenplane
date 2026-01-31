@@ -5,10 +5,10 @@
 
     const next = getNextWAN(undefined, false);
 
-    let value = 0;
-    let hasDone = false;
+    let value = $state(0);
+    let hasDone = $state(false);
 
-    $: computedNext = getNextWAN(DateTime.fromJSDate(next).plus({day: value}).toJSDate(), true, hasDone);
+    let computedNext = $derived(getNextWAN(DateTime.fromJSDate(next).plus({day: value}).toJSDate(), true, hasDone));
 
 </script>
 <div class="text-center limit mx-auto">

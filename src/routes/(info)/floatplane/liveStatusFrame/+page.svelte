@@ -5,18 +5,18 @@
   import { page } from "$app/stores";
   import { ProgressRadial } from "@skeletonlabs/skeleton";
 
-  export let data;
+  let { data } = $props();
 
-  $: liveStatusChangedDate = new Date(data.floatplane?.started ?? data.floatplane?.lastLive)
+  let liveStatusChangedDate = $derived(new Date(data.floatplane?.started ?? data.floatplane?.lastLive))
   let initialLiveStatusChangedDate = new Date(data.floatplane?.started ?? data.floatplane?.lastLive)
 
 
-  let liveStatusChangeTime = "";
+  let liveStatusChangeTime = $state("");
   let distance = 0;
   let lastInvalidate = Date.now();
   let tries = 0;
 
-  $: isDataOutdated = data.floatplane?.isLive !== ($page.url.searchParams.has("live") ? $page.url.searchParams.get("live") === "true" : data.floatplane?.isLive);
+  let isDataOutdated = $derived(data.floatplane?.isLive !== ($page.url.searchParams.has("live") ? $page.url.searchParams.get("live") === "true" : data.floatplane?.isLive));
 
   let intervalCounter = 0;
 

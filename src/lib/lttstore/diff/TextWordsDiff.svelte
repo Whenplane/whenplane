@@ -2,11 +2,20 @@
 <script lang="ts">
   import TextDiff from "$lib/lttstore/diff/TextDiff.svelte";
 
-  export let before: string;
-  export let after: string;
 
-  export let displaying: "before" | "after";
-  export let diffType: "chars" | "words" = "words";
+  interface Props {
+    before: string;
+    after: string;
+    displaying: "before" | "after";
+    diffType?: "chars" | "words";
+  }
+
+  let {
+    before,
+    after,
+    displaying,
+    diffType = "words"
+  }: Props = $props();
 </script>
 
 <TextDiff {before} {after} {displaying} {diffType}/>

@@ -4,10 +4,14 @@
   import { commas } from "$lib/utils.ts";
   import { getTimePreference } from "$lib/prefUtils.ts";
 
-  export let followerHistory: {
+  interface Props {
+    followerHistory: {
     timestamp: number,
     [key: string]: number | null
   }[];
+  }
+
+  let { followerHistory }: Props = $props();
 
   let chart;
 
@@ -93,7 +97,7 @@
     }
   }
 
-  let chartDiv: HTMLDivElement;
+  let chartDiv: HTMLDivElement = $state();
 
   let ApexCharts;
   onMount(async () => {

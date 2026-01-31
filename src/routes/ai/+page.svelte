@@ -7,17 +7,17 @@
   import LoadingHistoricalShow from "$lib/history/LoadingHistoricalShow.svelte";
   import HistoricalShow from "$lib/history/HistoricalShow.svelte";
 
-  let query = dev ? "How late was last week's show?" : "";
-  let lastQuery = undefined;
+  let query = $state(dev ? "How late was last week's show?" : "");
+  let lastQuery = $state(undefined);
 
-  let responseText = "";
+  let responseText = $state("");
   let eventSource: EventSource | undefined = undefined;
 
-  const showDatas: {[key: string]: Promise<HistoricalEntry>} = {}
+  const showDatas: {[key: string]: Promise<HistoricalEntry>} = $state({})
 
-  let mentionedShows = new Set<string>();
+  let mentionedShows = $state(new Set<string>());
 
-  let dots = "";
+  let dots = $state("");
   let doti = 0;
   const dotOptions = [
     ".",
@@ -118,7 +118,7 @@
 
 <div class="limit mx-auto mt-16">
   <h1 class="text-center">Whenplane AI <span class="chip variant-soft-primary">Experimental</span></h1>
-  <input class="input" type="text" placeholder="How late was last week's show?" bind:value={query} on:keyup={handleInputKeypress}>
+  <input class="input" type="text" placeholder="How late was last week's show?" bind:value={query} onkeyup={handleInputKeypress}>
   <br>
   <br>
   {#if typeof lastQuery != "undefined"}

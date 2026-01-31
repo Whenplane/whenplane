@@ -6,9 +6,13 @@
   import type { MMJobData } from "$lib/utils.ts";
   import { isNearWan } from "$lib/timeUtils.ts";
 
-  export let events: string[];
-  export let invalidate = true;
-  export let autoInvalidateAfterNoData = false;
+  interface Props {
+    events: string[];
+    invalidate?: boolean;
+    autoInvalidateAfterNoData?: boolean;
+  }
+
+  let { events, invalidate = true, autoInvalidateAfterNoData = false }: Props = $props();
 
   const dispatch = createEventDispatcher<{detail: {data: MMJobData}}>();
 

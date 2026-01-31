@@ -3,10 +3,10 @@
   import { getPreviousWAN, getUTCDate } from "$lib/timeUtils";
   import {DateTime} from "luxon";
 
-  let value = 0;
+  let value = $state(0);
 
-  $: testingDate = DateTime.now().plus({day: value}).toJSDate();
-  $: computedPrevious = getPreviousWAN(testingDate);
+  let testingDate = $derived(DateTime.now().plus({day: value}).toJSDate());
+  let computedPrevious = $derived(getPreviousWAN(testingDate));
 
 </script>
 <div class="text-center limit mx-auto">

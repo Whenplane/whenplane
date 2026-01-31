@@ -1,4 +1,6 @@
 <script lang="ts">
+	import { run } from 'svelte/legacy';
+
 	import { getNextWAN, isNearWan, timeString } from "$lib/timeUtils";
 	import ShowCountdown, {mainLate} from "$lib/ShowCountdown.svelte";
 	import StreamStatus from "$lib/StreamStatus.svelte";
@@ -27,14 +29,14 @@
 	import MoreLinks from "$lib/MoreLinks.svelte";
 	import CurrentTitle from "$lib/CurrentTitle.svelte";
 
-	export let data;
+	let { data } = $props();
 
-	let isAfterStartTime: boolean | undefined;
-	let isLate: boolean | undefined;
+	let isAfterStartTime: boolean | undefined = $state();
+	let isLate: boolean | undefined = $derived(isAfterStartTime && !data.isPreShow && !data.isMainShow);
 
-	$: isLate = isAfterStartTime && !data.isPreShow && !data.isMainShow;
+	
 
-	$: isFrame = $page.url.searchParams.has("frame");
+	let isFrame = $derived($page.url.searchParams.has("frame"));
 
 	const myDomains = [
 		"whenplane.com",
@@ -45,14 +47,14 @@
 	]
 
 	const reloadNumber = data.liveStatus?.reloadNumber;
-	$: {
+	run(() => {
 		if(data.liveStatus && data.liveStatus?.reloadNumber != reloadNumber) {
 			location.href = "";
 		}
-	}
+	});
 
-	let outerContainer: HTMLDivElement;
-	let mainContainer: HTMLDivElement;
+	let outerContainer: HTMLDivElement = $state();
+	let mainContainer: HTMLDivElement = $state();
 
 
 	let invalidationInterval: number | undefined;
@@ -85,7 +87,7 @@
 		nowish = new Date();
 	}
 
-	let nowish = new Date();
+	let nowish = $state(new Date());
 
 	// Periodically invalidate the data so that SvelteKit goes and fetches it again for us
 	function startInvalidationInterval() {
@@ -113,12 +115,14 @@
 	if(browser) checkHeight();
 
 
-	$: averageLateness = data.averageLateness ? timeString(Math.abs(data.averageLateness)) : undefined;
-	$: latenessStandardDeviation = data.latenessStandardDeviation ? timeString(Math.abs(data.latenessStandardDeviation)) : undefined;
-	$: medianLateness = data.medianLateness ? timeString(Math.abs(data.medianLateness)) : undefined;
+	let averageLateness = $derived(data.averageLateness ? timeString(Math.abs(data.averageLateness)) : undefined);
+	let latenessStandardDeviation = $derived(data.latenessStandardDeviation ? timeString(Math.abs(data.latenessStandardDeviation)) : undefined);
+	let medianLateness = $derived(data.medianLateness ? timeString(Math.abs(data.medianLateness)) : undefined);
 
 
-	$: if(dev) console.log({data});
+	run(() => {
+		if(dev) console.log({data});
+	});
 
 
 	// remove ?attempt after 500 error
@@ -128,7 +132,7 @@
 		window.history.replaceState({}, document.title, "/" + (newURL.searchParams.size > 0 ? "?" + newURL.searchParams.toString() : ""));
 	}
 
-	let addSpace = false;
+	let addSpace = $state(false);
 	function checkHeight() {
 		if(!browser || !mainContainer) return;
 		if(mainContainer.scrollHeight > window.innerHeight-50) {
@@ -156,8 +160,8 @@
 
 </script>
 <svelte:window
-		on:focus={onFocus}
-		on:visibilitychange={onFocus}
+		onfocus={onFocus}
+		onvisibilitychange={onFocus}
 />
 <svelte:head>
 	<title>When is the WAN Show?  {$page.url.hostname === "whenwan.show" ? "whenwan.show" : "Whenplane"}</title>
@@ -335,7 +339,7 @@
 				<div class="card w-58 !shadow-2xl overflow-hidden z-20 !bg-surface-500" data-popup="moreDropdown">
 					<MoreLinks/>
 
-					<div class="arrow bg-surface-400-500-token" />
+					<div class="arrow bg-surface-400-500-token"></div>
 				</div>
 				<br>
 				<br>
@@ -384,16 +388,20 @@
 			<div>
 				<Accordion padding="pb-2 px-4">
 					<AccordionItem open>
-						<svelte:fragment slot="summary">
-							<h3 class="inline">Lateness Voting</h3>
-						</svelte:fragment>
-						<svelte:fragment slot="content">
-							{#if data.liveStatus}
-								<LatenessVoting {mainLate}/>
-							{:else}
-								<span class="opacity-75">Lateness voting not available while offline.</span>
-							{/if}
-						</svelte:fragment>
+						{#snippet summary()}
+											
+								<h3 class="inline">Lateness Voting</h3>
+							
+											{/snippet}
+						{#snippet content()}
+											
+								{#if data.liveStatus}
+									<LatenessVoting {mainLate}/>
+								{:else}
+									<span class="opacity-75">Lateness voting not available while offline.</span>
+								{/if}
+							
+											{/snippet}
 					</AccordionItem>
 				</Accordion>
 			</div>

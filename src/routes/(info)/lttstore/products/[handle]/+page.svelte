@@ -1,4 +1,6 @@
 <script lang="ts">
+  import { run } from 'svelte/legacy';
+
   import type {
     BackorderAlerts,
     ProductDetailModule,
@@ -24,18 +26,18 @@
   import LTTProductCard from "$lib/lttstore/LTTProductCard.svelte";
   import ToolTip from "$lib/ToolTip.svelte";
 
-  export let data;
+  let { data } = $props();
 
-  let chartUpdateNumber = 1;
+  let chartUpdateNumber = $state(1);
 
-  $: productInfo = JSON.parse(data.product.product as string) as ShopifyProduct
-  $: currentStock = JSON.parse(data.product.stock as string) as StockCounts
-  $: productDetailModules = JSON.parse(data.product.productDetailModules) as ProductDetailModule[];
+  let productInfo = $derived(JSON.parse(data.product.product as string) as ShopifyProduct)
+  let currentStock = $derived(JSON.parse(data.product.stock as string) as StockCounts)
+  let productDetailModules = $derived(JSON.parse(data.product.productDetailModules) as ProductDetailModule[]);
 
-  $: nonZeroPurchasesPerHour = (data.product?.purchasesPerHour === 0 ? (data.product.purchasesPerDay / 24) : data.product.purchasesPerHour);
-  $: goneInHours = ((currentStock?.total ?? -1) / nonZeroPurchasesPerHour) - ((Date.now() - data.product.stockChecked) / (60 * 60e3));
+  let nonZeroPurchasesPerHour = ($derived(data.product?.purchasesPerHour === 0 ? (data.product.purchasesPerDay / 24) : data.product.purchasesPerHour));
+  let goneInHours = $derived(((currentStock?.total ?? -1) / nonZeroPurchasesPerHour) - ((Date.now() - data.product.stockChecked) / (60 * 60e3)));
 
-  $: variantsGoneIn = Object.keys(Object.keys(data.stockHistory).length >= 1 ? JSON.parse(data.stockHistory[0]?.stock ?? "{}") : {})
+  let variantsGoneIn = $derived(Object.keys(Object.keys(data.stockHistory).length >= 1 ? JSON.parse(data.stockHistory[0]?.stock ?? "{}") : {})
     .filter(n => n !== "total") // we already do total above, we dont need to do it again
     .map(k => {
       let previous = data.stockHistory[data.stockHistory.length - 2];
@@ -67,14 +69,14 @@
         goneIn,
         currentStock
       }
-  }).filter(v => typeof v !== "undefined");
+  }).filter(v => typeof v !== "undefined"));
 
-  $: strippedTitle = productInfo.title.replace(/\(.*\)/g, "").replace("Knife", "Knive").trim();
+  let strippedTitle = $derived(productInfo.title.replace(/\(.*\)/g, "").replace("Knife", "Knive").trim());
 
-  $: productDiscounts = JSON.parse(data.product.productDiscount ?? "[]");
+  let productDiscounts = $derived(JSON.parse(data.product.productDiscount ?? "[]"));
 
-  let backorderNotices = new Set();
-  $: {
+  let backorderNotices = $state(new Set());
+  run(() => {
     backorderNotices.clear();
     let backorderAlerts = JSON.parse(data.product?.backorderAlerts) as BackorderAlerts;
     if(backorderAlerts) {
@@ -85,12 +87,12 @@
       });
       backorderNotices = backorderNotices;
     }
-  }
+  });
 
 
-  let historyDays = data.historyDays+"";
-  let first = true;
-  $: {
+  let historyDays = $state(data.historyDays+"");
+  let first = $state(true);
+  run(() => {
     console.debug({historyDays})
     if(first) {
       first = false;
@@ -109,7 +111,7 @@
         chartUpdateNumber++;
       });*/
     }
-  }
+  });
 </script>
 
 <ol class="breadcrumb pt-2 pl-2">
@@ -178,12 +180,16 @@
     <div class="max-w-xl my-4">
       <Accordion class="mx-4" spacing="" regionPanel="">
         <AccordionItem>
-          <svelte:fragment slot="summary">Item Description</svelte:fragment>
-          <svelte:fragment slot="content">
-            <div class="item-description">
-              {@html sanitizeHtml(productInfo.description, newsSanitizeSettings)}
-            </div>
-          </svelte:fragment>
+          {#snippet summary()}
+                    Item Description
+                  {/snippet}
+          {#snippet content()}
+                  
+              <div class="item-description">
+                {@html sanitizeHtml(productInfo.description, newsSanitizeSettings)}
+              </div>
+            
+                  {/snippet}
         </AccordionItem>
       </Accordion>
     </div>
@@ -193,12 +199,16 @@
       <div class="max-w-xl my-4">
         <Accordion class="mx-4" spacing="" regionPanel="">
           <AccordionItem>
-            <svelte:fragment slot="summary">{detailModule.title}</svelte:fragment>
-            <svelte:fragment slot="content">
-              <div class="item-description">
-                {@html sanitizeHtml(detailModule.content, newsSanitizeSettings)}
-              </div>
-            </svelte:fragment>
+            {#snippet summary()}
+                        {detailModule.title}
+                      {/snippet}
+            {#snippet content()}
+                      
+                <div class="item-description">
+                  {@html sanitizeHtml(detailModule.content, newsSanitizeSettings)}
+                </div>
+              
+                      {/snippet}
           </AccordionItem>
         </Accordion>
       </div>
@@ -209,260 +219,264 @@
   <div class="max-w-3xl my-4">
     <Accordion class="mx-4" spacing="" regionPanel="">
       <AccordionItem>
-        <svelte:fragment slot="summary">Product Metadata</svelte:fragment>
-        <svelte:fragment slot="content">
-          <h2>Whenplane Metadata</h2>
-          <table class="padded-table">
-            <thead></thead>
-            <tbody>
-            <tr>
-              <td>Last Metadata update</td>
-              <td><DateStamp epochSeconds={(data.product.metadataUpdate && data.product.metadataUpdate > 0 ? data.product.metadataUpdate : data.product.stockChecked) / 1e3}/></td>
-            </tr>
+        {#snippet summary()}
+                Product Metadata
+              {/snippet}
+        {#snippet content()}
+              
+            <h2>Whenplane Metadata</h2>
+            <table class="padded-table">
+              <thead></thead>
+              <tbody>
               <tr>
-                <td>Last Stock Check</td>
-                <td>
-                  {#if data.product.stockChecked}
-                    <DateStamp epochSeconds={data.product.stockChecked / 1e3}/>
-                  {:else}
-                    <span class="opacity-70">N/A</span>
-                  {/if}
-                </td>
+                <td>Last Metadata update</td>
+                <td><DateStamp epochSeconds={(data.product.metadataUpdate && data.product.metadataUpdate > 0 ? data.product.metadataUpdate : data.product.stockChecked) / 1e3}/></td>
               </tr>
-              <tr>
-                <td>Last Restock Detected</td>
-                <td>
-                  {#if data.product.lastRestock > 0}
-                    <DateStamp epochSeconds={data.product.lastRestock / 1e3}/>
-                  {:else}
-                    <span class="opacity-70">[none]</span>
-                  {/if}
-                </td>
-              </tr>
-              <tr>
-                <td>Average Purchases Per Hour</td>
-                <td>
-                  {#if data.product.purchasesPerHour >= 0}
-                    {data.product.purchasesPerHour}
-                  {:else}
-                    <span class="opacity-70">N/A</span>
-                  {/if}
-                </td>
-              </tr>
-              <tr>
-                <td>Average Purchases Per Day</td>
-                <td>
-                  {#if data.product.purchasesPerDay >= 0}
-                    {data.product.purchasesPerDay}
-                  {:else}
-                    <span class="opacity-70">N/A</span>
-                  {/if}
-                </td>
-              </tr>
-              <tr>
-                <td>Regular Price</td>
-                <td><Price usd={data.product.regularPrice/100}/></td>
-              </tr>
-              <tr>
-                <td>Current Price</td>
-                <td><Price usd={data.product.currentPrice/100}/></td>
-              </tr>
-              <tr>
-                <td>First Seen</td>
-                <td><DateStamp epochSeconds={data.product.firstSeen / 1e3}/></td>
-              </tr>
-              <tr>
-                <td>On lttstore?</td>
-                <td>{data.product.available ? "yes" : "no"}</td>
-              </tr>
-            </tbody>
-          </table>
-          <br>
-          <h2>LTTStore Metadata</h2>
-          <table class="padded-table">
-            <thead></thead>
-            <tbody>
-              <tr>
-                <td>ID</td>
-                <td>{data.product.id}</td>
-              </tr>
-              <tr>
-                <td>Title</td>
-                <td>{data.product.title}</td>
-              </tr>
-              <tr>
-                <td>Handle</td>
-                <td>{data.product.handle}</td>
-              </tr>
-              <tr>
-                <td>Creation Date</td>
-                <td><DateStamp epochSeconds={new Date(productInfo.created_at).getTime() / 1e3}/></td>
-              </tr>
-              <tr>
-                <td class="pr-8">Publication Date</td>
-                <td><DateStamp epochSeconds={new Date(productInfo.published_at).getTime() / 1e3}/></td>
-              </tr>
-              <tr>
-                <td>Vendor</td>
-                <td>{productInfo.vendor}</td>
-              </tr>
-              <tr>
-                <td>Type</td>
-                <td>{productInfo.type}</td>
-              </tr>
-              <tr>
-                <td class="align-top">Tags</td>
-                <td>
-                  {#if productInfo.tags}
+                <tr>
+                  <td>Last Stock Check</td>
+                  <td>
+                    {#if data.product.stockChecked}
+                      <DateStamp epochSeconds={data.product.stockChecked / 1e3}/>
+                    {:else}
+                      <span class="opacity-70">N/A</span>
+                    {/if}
+                  </td>
+                </tr>
+                <tr>
+                  <td>Last Restock Detected</td>
+                  <td>
+                    {#if data.product.lastRestock > 0}
+                      <DateStamp epochSeconds={data.product.lastRestock / 1e3}/>
+                    {:else}
+                      <span class="opacity-70">[none]</span>
+                    {/if}
+                  </td>
+                </tr>
+                <tr>
+                  <td>Average Purchases Per Hour</td>
+                  <td>
+                    {#if data.product.purchasesPerHour >= 0}
+                      {data.product.purchasesPerHour}
+                    {:else}
+                      <span class="opacity-70">N/A</span>
+                    {/if}
+                  </td>
+                </tr>
+                <tr>
+                  <td>Average Purchases Per Day</td>
+                  <td>
+                    {#if data.product.purchasesPerDay >= 0}
+                      {data.product.purchasesPerDay}
+                    {:else}
+                      <span class="opacity-70">N/A</span>
+                    {/if}
+                  </td>
+                </tr>
+                <tr>
+                  <td>Regular Price</td>
+                  <td><Price usd={data.product.regularPrice/100}/></td>
+                </tr>
+                <tr>
+                  <td>Current Price</td>
+                  <td><Price usd={data.product.currentPrice/100}/></td>
+                </tr>
+                <tr>
+                  <td>First Seen</td>
+                  <td><DateStamp epochSeconds={data.product.firstSeen / 1e3}/></td>
+                </tr>
+                <tr>
+                  <td>On lttstore?</td>
+                  <td>{data.product.available ? "yes" : "no"}</td>
+                </tr>
+              </tbody>
+            </table>
+            <br>
+            <h2>LTTStore Metadata</h2>
+            <table class="padded-table">
+              <thead></thead>
+              <tbody>
+                <tr>
+                  <td>ID</td>
+                  <td>{data.product.id}</td>
+                </tr>
+                <tr>
+                  <td>Title</td>
+                  <td>{data.product.title}</td>
+                </tr>
+                <tr>
+                  <td>Handle</td>
+                  <td>{data.product.handle}</td>
+                </tr>
+                <tr>
+                  <td>Creation Date</td>
+                  <td><DateStamp epochSeconds={new Date(productInfo.created_at).getTime() / 1e3}/></td>
+                </tr>
+                <tr>
+                  <td class="pr-8">Publication Date</td>
+                  <td><DateStamp epochSeconds={new Date(productInfo.published_at).getTime() / 1e3}/></td>
+                </tr>
+                <tr>
+                  <td>Vendor</td>
+                  <td>{productInfo.vendor}</td>
+                </tr>
+                <tr>
+                  <td>Type</td>
+                  <td>{productInfo.type}</td>
+                </tr>
+                <tr>
+                  <td class="align-top">Tags</td>
+                  <td>
+                    {#if productInfo.tags}
+                      <ul>
+                        {#each productInfo.tags as tag}
+                          <li>{tag}</li>
+                        {:else}
+                          <span class="opacity-70">[none]</span>
+                        {/each}
+                      </ul>
+                    {:else}
+                      <span class="opacity-70">[none]</span>
+                    {/if}
+                  </td>
+                </tr>
+                <tr>
+                  <td>Price</td>
+                  <td><Price usd={productInfo.price/100}/></td>
+                </tr>
+                <tr>
+                  <td>Compare Price</td>
+                  <td>
+                    {#if productInfo.compare_at_price}
+                      <Price usd={productInfo.compare_at_price/100}/>
+                    {:else}
+                      <span class="opacity-70">[none]</span>
+                    {/if}
+                  </td>
+                </tr>
+                <tr>
+                  <td>In stock?</td>
+                  <td>{productInfo.available}</td>
+                </tr>
+                <tr>
+                  <td class="align-top">Options</td>
+                  <td>
                     <ul>
-                      {#each productInfo.tags as tag}
-                        <li>{tag}</li>
+                      {#each productInfo.options as option}
+                        <li>
+                          {option.name}
+                          <ul class="!list-[circle]">
+                            {#each option.values as value}
+                              <li>{value}</li>
+                            {/each}
+                          </ul>
+                        </li>
                       {:else}
                         <span class="opacity-70">[none]</span>
                       {/each}
                     </ul>
-                  {:else}
-                    <span class="opacity-70">[none]</span>
-                  {/if}
-                </td>
-              </tr>
-              <tr>
-                <td>Price</td>
-                <td><Price usd={productInfo.price/100}/></td>
-              </tr>
-              <tr>
-                <td>Compare Price</td>
-                <td>
-                  {#if productInfo.compare_at_price}
-                    <Price usd={productInfo.compare_at_price/100}/>
-                  {:else}
-                    <span class="opacity-70">[none]</span>
-                  {/if}
-                </td>
-              </tr>
-              <tr>
-                <td>In stock?</td>
-                <td>{productInfo.available}</td>
-              </tr>
-              <tr>
-                <td class="align-top">Options</td>
-                <td>
-                  <ul>
-                    {#each productInfo.options as option}
+                  </td>
+                </tr>
+                <tr>
+                  <td class="align-top">Variants</td>
+                  <td>
+                    {#each productInfo.variants as variant}
                       <li>
-                        {option.name}
-                        <ul class="!list-[circle]">
-                          {#each option.values as value}
-                            <li>{value}</li>
-                          {/each}
-                        </ul>
+                        {variant.title}
+                        <table class="ml-3 padded-table">
+                          <thead></thead>
+                          <tbody>
+                            <tr>
+                              <td>Title</td>
+                              <td>{variant.title}</td>
+                            </tr>
+                            <tr>
+                              <td>Name</td>
+                              <td>{variant.name}</td>
+                            </tr>
+                            <tr>
+                              <td>SKU</td>
+                              <td>{variant.sku}</td>
+                            </tr>
+                            <tr>
+                              <td>In stock?</td>
+                              <td>{variant.available}</td>
+                            </tr>
+                            <tr>
+                              <td class="align-top">Options</td>
+                              <td>
+                                <ul class="!list-[circle]">
+                                  {#each variant.options as value}
+                                    <li>{value}</li>
+                                  {/each}
+                                </ul>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>Price</td>
+                              <td><Price usd={variant.price/100}/></td>
+                            </tr>
+                            <tr>
+                              <td>Compare at price</td>
+                              <td>
+                                {#if variant.compare_at_price}
+                                  <Price usd={(variant.compare_at_price)/100}/>
+                                {:else}
+                                  <span class="opacity-70">[none]</span>
+                                {/if}
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>Requires Shipping?</td>
+                              <td>{variant.requires_shipping}</td>
+                            </tr>
+                            <tr>
+                              <td>Taxable?</td>
+                              <td>{variant.taxable}</td>
+                            </tr>
+                            <tr>
+                              <td>Weight (g)</td>
+                              <td>{variant.weight}</td>
+                            </tr>
+                            <tr>
+                              <td>Inventory Management</td>
+                              <td>{variant.inventory_management}</td>
+                            </tr>
+                            {#if variant.barcode}
+                              <tr>
+                                <td>Barcode</td>
+                                <td>{variant.barcode}</td>
+                              </tr>
+                            {/if}
+                            <tr>
+                              <td>Minimum Quantity</td>
+                              <td>{variant.quantity_rule.min}</td>
+                            </tr>
+                            <tr>
+                              <td>Maximum Quantity</td>
+                              <td>
+                                {#if variant.quantity_rule.max !== null}
+                                  {variant.quantity_rule.min}
+                                {:else}
+                                  <span class="opacity-70">[none]</span>
+                                {/if}
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>Quantity Increment</td>
+                              <td>{variant.quantity_rule.increment}</td>
+                            </tr>
+                          </tbody>
+                        </table>
                       </li>
                     {:else}
                       <span class="opacity-70">[none]</span>
                     {/each}
-                  </ul>
-                </td>
-              </tr>
-              <tr>
-                <td class="align-top">Variants</td>
-                <td>
-                  {#each productInfo.variants as variant}
-                    <li>
-                      {variant.title}
-                      <table class="ml-3 padded-table">
-                        <thead></thead>
-                        <tbody>
-                          <tr>
-                            <td>Title</td>
-                            <td>{variant.title}</td>
-                          </tr>
-                          <tr>
-                            <td>Name</td>
-                            <td>{variant.name}</td>
-                          </tr>
-                          <tr>
-                            <td>SKU</td>
-                            <td>{variant.sku}</td>
-                          </tr>
-                          <tr>
-                            <td>In stock?</td>
-                            <td>{variant.available}</td>
-                          </tr>
-                          <tr>
-                            <td class="align-top">Options</td>
-                            <td>
-                              <ul class="!list-[circle]">
-                                {#each variant.options as value}
-                                  <li>{value}</li>
-                                {/each}
-                              </ul>
-                            </td>
-                          </tr>
-                          <tr>
-                            <td>Price</td>
-                            <td><Price usd={variant.price/100}/></td>
-                          </tr>
-                          <tr>
-                            <td>Compare at price</td>
-                            <td>
-                              {#if variant.compare_at_price}
-                                <Price usd={(variant.compare_at_price)/100}/>
-                              {:else}
-                                <span class="opacity-70">[none]</span>
-                              {/if}
-                            </td>
-                          </tr>
-                          <tr>
-                            <td>Requires Shipping?</td>
-                            <td>{variant.requires_shipping}</td>
-                          </tr>
-                          <tr>
-                            <td>Taxable?</td>
-                            <td>{variant.taxable}</td>
-                          </tr>
-                          <tr>
-                            <td>Weight (g)</td>
-                            <td>{variant.weight}</td>
-                          </tr>
-                          <tr>
-                            <td>Inventory Management</td>
-                            <td>{variant.inventory_management}</td>
-                          </tr>
-                          {#if variant.barcode}
-                            <tr>
-                              <td>Barcode</td>
-                              <td>{variant.barcode}</td>
-                            </tr>
-                          {/if}
-                          <tr>
-                            <td>Minimum Quantity</td>
-                            <td>{variant.quantity_rule.min}</td>
-                          </tr>
-                          <tr>
-                            <td>Maximum Quantity</td>
-                            <td>
-                              {#if variant.quantity_rule.max !== null}
-                                {variant.quantity_rule.min}
-                              {:else}
-                                <span class="opacity-70">[none]</span>
-                              {/if}
-                            </td>
-                          </tr>
-                          <tr>
-                            <td>Quantity Increment</td>
-                            <td>{variant.quantity_rule.increment}</td>
-                          </tr>
-                        </tbody>
-                      </table>
-                    </li>
-                  {:else}
-                    <span class="opacity-70">[none]</span>
-                  {/each}
-                </td>
-              </tr>
-            </tbody>
-          </table>
-        </svelte:fragment>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          
+              {/snippet}
       </AccordionItem>
     </Accordion>
   </div>
@@ -471,35 +485,39 @@
   <div class="max-w-4xl my-4">
     <Accordion class="mx-4" spacing="" regionPanel="">
       <AccordionItem open>
-        <svelte:fragment slot="summary">
-          Similar Products
-          <ToolTip id="similar-products">
-            Whenplane uses an AI embedding model to determine products that are similar to each other.<br>
-            The product description is used for comparison, so products with similar descriptions will show as similar to each other.<br>
-            These similar products were last updated
-            {#await data.similarProducts}
-              <div class="inline-block w-32 placeholder animate-pulse align-bottom rounded-md"></div>
-            {:then similarProducts}
-              <DateStamp epochSeconds={similarProducts.timestamp/1e3}/>
-            {/await}
-            <br>
-            Similar products are updated roughly every 7 days.
-          </ToolTip>
-        </svelte:fragment>
-        <svelte:fragment slot="content">
-          {#key data}
-            <div class="min-h-[298px] overflow-y-visible overflow-x-auto pr-64 edge-fade" style="text-wrap: nowrap;">
+        {#snippet summary()}
+              
+            Similar Products
+            <ToolTip id="similar-products">
+              Whenplane uses an AI embedding model to determine products that are similar to each other.<br>
+              The product description is used for comparison, so products with similar descriptions will show as similar to each other.<br>
+              These similar products were last updated
               {#await data.similarProducts}
-                ...
+                <div class="inline-block w-32 placeholder animate-pulse align-bottom rounded-md"></div>
               {:then similarProducts}
-                {#each similarProducts?.similar as similar (similar.id)}
-                  {@const product = similar.metadata.product}
-                  <LTTProductCard {product} available={similar.metadata.available} />
-                {/each}
+                <DateStamp epochSeconds={similarProducts.timestamp/1e3}/>
               {/await}
-            </div>
-          {/key}
-        </svelte:fragment>
+              <br>
+              Similar products are updated roughly every 7 days.
+            </ToolTip>
+          
+              {/snippet}
+        {#snippet content()}
+              
+            {#key data}
+              <div class="min-h-[298px] overflow-y-visible overflow-x-auto pr-64 edge-fade" style="text-wrap: nowrap;">
+                {#await data.similarProducts}
+                  ...
+                {:then similarProducts}
+                  {#each similarProducts?.similar as similar (similar.id)}
+                    {@const product = similar.metadata.product}
+                    <LTTProductCard {product} available={similar.metadata.available} />
+                  {/each}
+                {/await}
+              </div>
+            {/key}
+          
+              {/snippet}
       </AccordionItem>
     </Accordion>
   </div>
@@ -567,75 +585,79 @@
 
   <Accordion>
     <AccordionItem open={dev}>
-      <svelte:fragment slot="summary">Stock History</svelte:fragment>
-      <svelte:fragment slot="content">
-        <h2>Stock History</h2>
-        <div class="limit mx-auto p-2 m-2 card variant-ghost-warning">
-          Due to a <a href="https://changelog.shopify.com/posts/new-add-to-cart-limit">Shopify change</a>,
-          we are not longer able to see stock of most products if theyre above <span class="font-mono">40</span>.
-          <br>
-          Please <a href="/support">let me know</a> if you find a new way to check the stock.
-        </div>
-        We check the stock of products occasionally. Here is the history of those stock numbers.
-        <!-- stock started being recorded on 1718147742676 -->
-        <select class="select inline-block w-48" bind:value={historyDays}>
-          <option value="1">24 hours</option>
-          <option value="7">7 days</option>
-          <option value="30">30 days</option>
-          {#if Date.now() > 1720739742676}
-            <option value="90">3 months (90 days)</option>
-          {/if}
-          {#if Date.now() > 1725923742676}
-            <option value="180">6 months (180 days)</option>
-          {/if}
-          {#if Date.now() > 1733699742676}
-            <option value="365">1 year (365 days)</option>
-          {/if}
-          <option value="all">all-time</option>
-        </select>
-        <ProductStockHistoryGraph stockHistory={data.stockHistory} productName={productInfo.title} {chartUpdateNumber}/>
-        <ProductMoveRateGraph stockHistory={data.stockHistory} productName={productInfo.title} {chartUpdateNumber}/>
-        <br>
-        {#if data.product.firstSeen < 1719248750000}
-          Note that stock started being recorded on June 11th, 2024, so data before that is not available.
-        {/if}
-        <br>
-        <br>
-        <br>
-        {#if goneInHours > 0 && (currentStock?.total ?? -1) > 0 && (currentStock?.total ?? -1) <= 500000 && typeof data.product?.purchasesPerHour === "number" && data.product?.purchasesPerHour >= 0 && !(data.product?.purchasesPerHour === 0 && (currentStock?.total ?? -1) < 0)}
-          <h2>Time remaining until out of stock</h2>
-          If this product keeps selling at {Math.round(nonZeroPurchasesPerHour * 100)/100} units per hour, it could be gone in
-          {#if goneInHours < 48}
-            {#if goneInHours <= 1}
-              less than an hour
-            {:else}
-              {goneInHours.toFixed(2)} hours
+      {#snippet summary()}
+            Stock History
+          {/snippet}
+      {#snippet content()}
+          
+          <h2>Stock History</h2>
+          <div class="limit mx-auto p-2 m-2 card variant-ghost-warning">
+            Due to a <a href="https://changelog.shopify.com/posts/new-add-to-cart-limit">Shopify change</a>,
+            we are not longer able to see stock of most products if theyre above <span class="font-mono">40</span>.
+            <br>
+            Please <a href="/support">let me know</a> if you find a new way to check the stock.
+          </div>
+          We check the stock of products occasionally. Here is the history of those stock numbers.
+          <!-- stock started being recorded on 1718147742676 -->
+          <select class="select inline-block w-48" bind:value={historyDays}>
+            <option value="1">24 hours</option>
+            <option value="7">7 days</option>
+            <option value="30">30 days</option>
+            {#if Date.now() > 1720739742676}
+              <option value="90">3 months (90 days)</option>
             {/if}
-          {:else}
-            {(goneInHours / 24).toFixed(2)} days
+            {#if Date.now() > 1725923742676}
+              <option value="180">6 months (180 days)</option>
+            {/if}
+            {#if Date.now() > 1733699742676}
+              <option value="365">1 year (365 days)</option>
+            {/if}
+            <option value="all">all-time</option>
+          </select>
+          <ProductStockHistoryGraph stockHistory={data.stockHistory} productName={productInfo.title} {chartUpdateNumber}/>
+          <ProductMoveRateGraph stockHistory={data.stockHistory} productName={productInfo.title} {chartUpdateNumber}/>
+          <br>
+          {#if data.product.firstSeen < 1719248750000}
+            Note that stock started being recorded on June 11th, 2024, so data before that is not available.
           {/if}
           <br>
           <br>
-          {#each variantsGoneIn as variantGoneIn}
-            {@const goneInHours = variantGoneIn.goneIn}
-            {#if typeof variantGoneIn.salesPerHour === "number" && variantGoneIn.salesPerHour >= 0 && variantGoneIn.currentStock > 0}
-              If <b>{variantGoneIn.name}</b> keeps selling at {Math.round(variantGoneIn.salesPerHour * 100)/100} units per hour,
-              it could be gone in
-              {#if goneInHours < 48}
-                {#if goneInHours <= 1}
-                  less than an hour
-                {:else}
-                  {goneInHours.toFixed(2)} hours
-                {/if}
+          <br>
+          {#if goneInHours > 0 && (currentStock?.total ?? -1) > 0 && (currentStock?.total ?? -1) <= 500000 && typeof data.product?.purchasesPerHour === "number" && data.product?.purchasesPerHour >= 0 && !(data.product?.purchasesPerHour === 0 && (currentStock?.total ?? -1) < 0)}
+            <h2>Time remaining until out of stock</h2>
+            If this product keeps selling at {Math.round(nonZeroPurchasesPerHour * 100)/100} units per hour, it could be gone in
+            {#if goneInHours < 48}
+              {#if goneInHours <= 1}
+                less than an hour
               {:else}
-                {(goneInHours / 24).toFixed(2)} days
+                {goneInHours.toFixed(2)} hours
               {/if}
-              <br>
+            {:else}
+              {(goneInHours / 24).toFixed(2)} days
             {/if}
-          {/each}
-          <br>
-        {/if}
-      </svelte:fragment>
+            <br>
+            <br>
+            {#each variantsGoneIn as variantGoneIn}
+              {@const goneInHours = variantGoneIn.goneIn}
+              {#if typeof variantGoneIn.salesPerHour === "number" && variantGoneIn.salesPerHour >= 0 && variantGoneIn.currentStock > 0}
+                If <b>{variantGoneIn.name}</b> keeps selling at {Math.round(variantGoneIn.salesPerHour * 100)/100} units per hour,
+                it could be gone in
+                {#if goneInHours < 48}
+                  {#if goneInHours <= 1}
+                    less than an hour
+                  {:else}
+                    {goneInHours.toFixed(2)} hours
+                  {/if}
+                {:else}
+                  {(goneInHours / 24).toFixed(2)} days
+                {/if}
+                <br>
+              {/if}
+            {/each}
+            <br>
+          {/if}
+        
+          {/snippet}
     </AccordionItem>
   </Accordion>
   <br>
@@ -657,11 +679,13 @@
         </thead>
         <tbody>
         {#each changeHistory as change}
+          {@const SvelteComponent = getDiffComponent(change.field)}
+          {@const SvelteComponent_1 = getDiffComponent(change.field)}
           <tr>
             <td>{getFieldName(change.field)}</td>
             <td><DateStamp epochSeconds={change.timestamp/1e3}/></td>
-            <td><svelte:component this={getDiffComponent(change.field)} before={change.old} after={change.new} displaying="before"/></td>
-            <td><svelte:component this={getDiffComponent(change.field)} before={change.old} after={change.new} displaying="after"/></td>
+            <td><SvelteComponent before={change.old} after={change.new} displaying="before"/></td>
+            <td><SvelteComponent_1 before={change.old} after={change.new} displaying="after"/></td>
           </tr>
         {/each}
         </tbody>

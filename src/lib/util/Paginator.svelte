@@ -2,10 +2,14 @@
   import { createEventDispatcher } from "svelte";
   import { countTo } from "$lib/utils.ts";
 
-  export let totalPages: number;
-  export let currentPage = 40036;
+  interface Props {
+    totalPages: number;
+    currentPage?: number;
+  }
 
-  $: distance = Math.abs(currentPage - totalPages);
+  let { totalPages, currentPage = 40036 }: Props = $props();
+
+  let distance = $derived(Math.abs(currentPage - totalPages));
 
 
   const dispatch = createEventDispatcher();
@@ -16,16 +20,16 @@
 </script>
 {#if currentPage > 1}
   {#if currentPage > 4}
-    <button class="link" on:click={() => page(1)}>{1}</button>
-    <button class="link" on:click={() => page(2)}>{2}</button>
-    <button class="link" on:click={() => page(3)}>{3}</button>
+    <button class="link" onclick={() => page(1)}>{1}</button>
+    <button class="link" onclick={() => page(2)}>{2}</button>
+    <button class="link" onclick={() => page(3)}>{3}</button>
     ..
-    <button class="link" on:click={() => page(currentPage-2)}>{currentPage-2}</button>
-    <button class="link" on:click={() => page(currentPage-1)}>{currentPage-1}</button>
+    <button class="link" onclick={() => page(currentPage-2)}>{currentPage-2}</button>
+    <button class="link" onclick={() => page(currentPage-1)}>{currentPage-1}</button>
   {:else}
     {#if currentPage > 0}
       {#each countTo(1, currentPage-1) as i}
-        <button class="link" on:click={() => page(i)}>{i}</button>
+        <button class="link" onclick={() => page(i)}>{i}</button>
         <span> </span> <!-- this has to be here, otherwise there is no space between the numbers -->
       {/each}
     {/if}
@@ -40,18 +44,18 @@
 
 {#if currentPage < totalPages}
   {#if distance > 4}
-    <button class="link" on:click={() => page(currentPage+1)}>{currentPage+1}</button>
-    <button class="link" on:click={() => page(currentPage+2)}>{currentPage+2}</button>
+    <button class="link" onclick={() => page(currentPage+1)}>{currentPage+1}</button>
+    <button class="link" onclick={() => page(currentPage+2)}>{currentPage+2}</button>
     ..
   {:else}
     {#if distance > 0}
       {#each countTo(currentPage+1, totalPages-1) as i}
-        <button class="link" on:click={() => page(i)}>{i}</button>
+        <button class="link" onclick={() => page(i)}>{i}</button>
         <span> </span> <!-- this has to be here, otherwise there is no space between the numbers -->
       {/each}
     {/if}
   {/if}
-  <button class="link" on:click={() => page(totalPages)}>{totalPages}</button>
+  <button class="link" onclick={() => page(totalPages)}>{totalPages}</button>
 {/if}
 
 

@@ -1,25 +1,38 @@
 <script lang="ts">
+  import { run } from 'svelte/legacy';
+
 
   import * as Diff from "diff"
   import { escapeHtml } from "$lib/utils.ts";
 
-  export let before: string;
-  export let after: string;
 
-  $: parsedBefore = JSON.parse(before);
-  $: parsedAfter = JSON.parse(after);
 
-  export let displaying: "before" | "after";
-  export let diffType: "chars" | "words" | "lines" = "chars";
-
-  $: if((parsedBefore === 1 && parsedAfter === 0) || (parsedBefore === 0 && parsedAfter === 1)) {
-    parsedBefore = parsedBefore === 1;
-    parsedAfter = parsedAfter === 1;
-    diffType = "words"
+  interface Props {
+    before: string;
+    after: string;
+    displaying: "before" | "after";
+    diffType?: "chars" | "words" | "lines";
   }
 
-  let html: string;
-  $: {
+  let {
+    before,
+    after,
+    displaying,
+    diffType = $bindable("chars")
+  }: Props = $props();
+
+
+  let html: string = $state();
+  let parsedBefore = $derived(JSON.parse(before));
+  let parsedAfter = $derived(JSON.parse(after));
+  run(() => {
+    if((parsedBefore === 1 && parsedAfter === 0) || (parsedBefore === 0 && parsedAfter === 1)) {
+      parsedBefore = parsedBefore === 1;
+      parsedAfter = parsedAfter === 1;
+      diffType = "words"
+    }
+  });
+  run(() => {
     html = "";
     let diff;
     switch(diffType) {
@@ -59,6 +72,6 @@
     }
 
     html = html.replaceAll("&lt;br&gt;", "<br>");
-  }
+  });
 </script>
 {@html html}

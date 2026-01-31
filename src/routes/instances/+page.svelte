@@ -7,9 +7,9 @@
 
   const airportData = browser ? import("airport-data-js") : new Promise(() => {})
 
-  export let data;
+  let { data } = $props();
 
-  let nowish = Date.now()
+  let nowish = $state(Date.now())
 
   onMount(() => {
     let i = setInterval(invalidate, 5e3)
@@ -25,7 +25,7 @@
     invalidateAll();
   }
 </script>
-<svelte:window on:focus={invalidate} on:visibilitychange={invalidate}/>
+<svelte:window onfocus={invalidate} onvisibilitychange={invalidate}/>
 <svelte:head>
   <title>Whenplane Instances</title>
 </svelte:head>

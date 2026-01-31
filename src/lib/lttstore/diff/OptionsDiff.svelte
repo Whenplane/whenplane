@@ -1,4 +1,6 @@
 <script lang="ts">
+  import { run } from 'svelte/legacy';
+
 
   import * as Diff from "diff"
   import { escapeHtml } from "$lib/utils.ts";
@@ -6,16 +8,20 @@
   import { getVariantFieldName } from "$lib/lttstore/field_names.ts";
   import TextDiff from "$lib/lttstore/diff/TextDiff.svelte";
 
-  export let before: string;
-  export let after: string;
 
-  $: parsedBefore = JSON.parse(before) as ProductOption[];
-  $: parsedAfter = JSON.parse(after) as ProductOption[];
 
-  export let displaying: "before" | "after";
+  interface Props {
+    before: string;
+    after: string;
+    displaying: "before" | "after";
+  }
 
-  let changedOptions: string[] = [];
-  $: {
+  let { before, after, displaying }: Props = $props();
+
+  let changedOptions: string[] = $state([]);
+  let parsedBefore = $derived(JSON.parse(before) as ProductOption[]);
+  let parsedAfter = $derived(JSON.parse(after) as ProductOption[]);
+  run(() => {
     changedOptions = [];
     for (let beforeOption of parsedBefore) {
       const afterOption = parsedAfter.find(m => m.name === beforeOption.name);
@@ -23,7 +29,7 @@
         changedOptions.push(beforeOption.name);
       }
     }
-  }
+  });
 </script>
 {#each parsedBefore.filter(m => changedOptions.includes(m.name)) as option}
   <b>{option.name}</b><br>

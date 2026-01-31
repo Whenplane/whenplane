@@ -1,4 +1,6 @@
 <script lang="ts">
+  import { run } from 'svelte/legacy';
+
   import sanitizeHtml from "sanitize-html";
   import { newsSanitizeSettings } from "$lib/news/news";
   import { onMount } from "svelte";
@@ -10,19 +12,21 @@
 
   import { getTimePreference } from "$lib/prefUtils";
 
-  export let data;
+  let { data } = $props();
 
-  $: titleParts = data.floatplane?.title?.split(" - ");
-  $: thumbnailChangedDate = new Date(data.floatplane?.thumbnailFirstSeen);
-  $: titleChangedDate = new Date(data.floatplane?.titleFirstSeen);
-  $: descriptionChangedDate = new Date(data.floatplane?.descriptionFirstSeen);
-  $: liveStatusChangedDate = new Date(data.floatplane?.started ?? data.floatplane?.lastLive)
+  let titleParts = $derived(data.floatplane?.title?.split(" - "));
+  let thumbnailChangedDate = $derived(new Date(data.floatplane?.thumbnailFirstSeen));
+  let titleChangedDate = $derived(new Date(data.floatplane?.titleFirstSeen));
+  let descriptionChangedDate = $derived(new Date(data.floatplane?.descriptionFirstSeen));
+  let liveStatusChangedDate = $derived(new Date(data.floatplane?.started ?? data.floatplane?.lastLive))
   let initialLiveStatusChangedDate = new Date(data.floatplane?.started ?? data.floatplane?.lastLive)
-  $: console.debug({data})
+  run(() => {
+    console.debug({data})
+  });
 
-  let lastInvalidate = 0;
+  let lastInvalidate = $state(0);
 
-  let liveStatusChangeTime = "";
+  let liveStatusChangeTime = $state("");
 
   onMount(() => {
     let i = setInterval(() => {
@@ -56,7 +60,7 @@
   <title>Floatplane Watcher</title>
 </svelte:head>
 
-<svelte:window on:focus={() => {
+<svelte:window onfocus={() => {
   if(Date.now() - lastInvalidate > 5e3) {
     invalidateAll();
     lastInvalidate = Date.now();

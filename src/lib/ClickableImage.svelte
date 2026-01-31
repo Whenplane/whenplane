@@ -1,9 +1,14 @@
-<script>
-  export let src;
-  export let margin = "m-1";
+<script lang="ts">
+  interface Props {
+    src: any;
+    margin?: string;
+    [key: string]: any
+  }
+
+  let { src, margin = "m-1", ...rest }: Props = $props();
 </script>
 <a href={src} class={margin} target="_blank" rel="noopener">
-  <img {src} {...$$restProps}>
+  <img {src} {...rest}>
 </a>
 
 <style>

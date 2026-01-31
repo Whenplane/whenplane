@@ -7,12 +7,12 @@
   import { getDateFormatLocale } from "$lib/prefUtils.ts";
   import { ProgressRadial } from "@skeletonlabs/skeleton";
 
-  export let data;
+  let { data } = $props();
 
-  let text = "";
-  let textOnly = "";
+  let text = $state("");
+  let textOnly = $state("");
   let matchIndex = -1;
-  let done = false;
+  let done = $state(false);
   function parseText() {
     text = "";
     textOnly = "";

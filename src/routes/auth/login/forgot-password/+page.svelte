@@ -1,4 +1,4 @@
-<script>
+<script lang="ts">
   import {enhance} from "$app/forms";
   import { fade } from "svelte/transition";
   import Turnstile from "$lib/Turnstile.svelte";
@@ -6,14 +6,14 @@
   import {page} from "$app/stores";
   import { dev } from "$app/environment";
 
-  export let form;
+  let { form } = $props();
 
-  let email = form?.email ?? "";
+  let email = $state(form?.email ?? "");
 
-  let turnstileCompleted = false;
-  let turnstileCounter = 0;
+  let turnstileCompleted = $state(false);
+  let turnstileCounter = $state(0);
 
-  let loading = false;
+  let loading = $state(false);
 
 </script>
 

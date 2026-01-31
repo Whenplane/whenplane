@@ -5,21 +5,37 @@
     import { getDateFormatLocale } from "$lib/prefUtils.ts";
     import type { BestShow } from "../../app";
 
-    export let record: BestShow | number;
-    export let asTime = true;
-    export let color = true;
-    export let late = false;
-    export let early = false;
 
-    export let selected = false;
 
-    export let loading = false;
+    interface Props {
+        record: BestShow | number;
+        asTime?: boolean;
+        color?: boolean;
+        late?: boolean;
+        early?: boolean;
+        selected?: boolean;
+        loading?: boolean;
+        children?: import('svelte').Snippet;
+        description?: import('svelte').Snippet;
+    }
+
+    let {
+        record,
+        asTime = true,
+        color = true,
+        late = false,
+        early = false,
+        selected = false,
+        loading = false,
+        children,
+        description
+    }: Props = $props();
 </script>
 
 <div class="box text-center" class:selected={selected}>
-    <h3><slot/></h3>
+    <h3>{@render children?.()}</h3>
     <div>
-        <slot name="description"></slot>
+        {@render description?.()}
     </div>
     {#if record}
         <span class:late={late && color} class:early={early && color}>

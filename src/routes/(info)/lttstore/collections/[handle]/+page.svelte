@@ -7,12 +7,12 @@
   import { getDiffComponent } from "$lib/lttstore/field_components.ts";
   import DateStamp from "$lib/DateStamp.svelte";
 
-  export let data;
+  let { data } = $props();
 
-  $: products = JSON.parse(data.collection.products);
-  $: image = data.collection.image ? JSON.parse(data.collection.image) : data.collection.image
+  let products = $derived(JSON.parse(data.collection.products));
+  let image = $derived(data.collection.image ? JSON.parse(data.collection.image) : data.collection.image)
 
-  let hideUpdated = true;
+  let hideUpdated = $state(true);
 </script>
 
 <svelte:head>
@@ -52,24 +52,28 @@
   <br>
   <Accordion>
     <AccordionItem>
-      <svelte:fragment slot="summary">Products</svelte:fragment>
-      <svelte:fragment slot="content">
-        <div class="accordion-outline p-2">
-          {#if data.collection.reportedCount !== products.length}
-            <small>
-              Note: These are only the products that are published.
-              We are not able to see the unpublished products in this collection,
-              we only know that there are {data.collection.reportedCount - products.length} of them.
-            </small>
-          {/if}
-          <div>
-            {#each products as product}
-              <a href="/lttstore/products/{product.handle}">{product.title}</a><br>
-            {/each}
+      {#snippet summary()}
+            Products
+          {/snippet}
+      {#snippet content()}
+          
+          <div class="accordion-outline p-2">
+            {#if data.collection.reportedCount !== products.length}
+              <small>
+                Note: These are only the products that are published.
+                We are not able to see the unpublished products in this collection,
+                we only know that there are {data.collection.reportedCount - products.length} of them.
+              </small>
+            {/if}
+            <div>
+              {#each products as product}
+                <a href="/lttstore/products/{product.handle}">{product.title}</a><br>
+              {/each}
+            </div>
           </div>
-        </div>
 
-      </svelte:fragment>
+        
+          {/snippet}
     </AccordionItem>
   </Accordion>
   <br>
@@ -127,11 +131,13 @@
         <tbody>
         {#each hideUpdated ? changeHistory.filter(c => c.field !== "updated_at") : changeHistory as change (change.timestamp+"."+change.field)}
           {@const field = "collection-" + change.field}
+          {@const SvelteComponent = getDiffComponent(field)}
+          {@const SvelteComponent_1 = getDiffComponent(field)}
           <tr>
             <td>{getFieldName(field)}</td>
             <td><DateStamp epochSeconds={change.timestamp/1e3}/></td>
-            <td><svelte:component this={getDiffComponent(field)} before={change.old} after={change.new} displaying="before"/></td>
-            <td><svelte:component this={getDiffComponent(field)} before={change.old} after={change.new} displaying="after"/></td>
+            <td><SvelteComponent before={change.old} after={change.new} displaying="before"/></td>
+            <td><SvelteComponent_1 before={change.old} after={change.new} displaying="after"/></td>
           </tr>
         {/each}
         </tbody>

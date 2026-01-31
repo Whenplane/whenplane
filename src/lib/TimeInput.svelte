@@ -1,14 +1,22 @@
-<script>
+<script lang="ts">
+    import { run } from 'svelte/legacy';
+
 
     import {addZero} from "./timeUtils";
 
-    export let value = 300;
+    interface Props {
+        value?: number;
+    }
 
-    let hours = addZero(Math.floor(value / (60 * 60)));
-    let minutes = addZero(Math.floor((value % (60 * 60)) / 60));
-    let seconds = addZero(Math.floor(value % (60)));
+    let { value = $bindable(300) }: Props = $props();
 
-    $: value = (Number(hours) * 60 * 60) + (Number(minutes) * 60) + Number(seconds)
+    let hours = $state(addZero(Math.floor(value / (60 * 60))));
+    let minutes = $state(addZero(Math.floor((value % (60 * 60)) / 60)));
+    let seconds = $state(addZero(Math.floor(value % (60))));
+
+    run(() => {
+        value = (Number(hours) * 60 * 60) + (Number(minutes) * 60) + Number(seconds)
+    });
 
 </script>
 <div class="inline-block">

@@ -4,17 +4,28 @@
   import LargerLazyLoad from "$lib/LargerLazyLoad.svelte";
   import { productRedirects } from "$lib/lttstore/product_redirects.ts";
 
-  export let product: ShopifyProduct;
-  export let stock: StockCounts | undefined = undefined;
-  export let purchasesPerHour: number | undefined = undefined;
-  export let goneIn = false;
-  export let available = true;
 
-  export let lazyLoadImage = false;
+  interface Props {
+    product: ShopifyProduct;
+    stock?: StockCounts | undefined;
+    purchasesPerHour?: number | undefined;
+    goneIn?: boolean;
+    available?: boolean;
+    lazyLoadImage?: boolean;
+  }
 
-  $: goneInHours = (stock?.total ?? -1) / (purchasesPerHour ?? -1);
+  let {
+    product,
+    stock = undefined,
+    purchasesPerHour = undefined,
+    goneIn = false,
+    available = true,
+    lazyLoadImage = false
+  }: Props = $props();
 
-  $: handle = productRedirects[product.handle] ?? product.handle;
+  let goneInHours = $derived((stock?.total ?? -1) / (purchasesPerHour ?? -1));
+
+  let handle = $derived(productRedirects[product.handle] ?? product.handle);
 </script>
 
 <a class="card inline-block p-2 m-1 w-48 align-top h-full" href="/lttstore/products/{handle}" class:opacity-50={!available}>

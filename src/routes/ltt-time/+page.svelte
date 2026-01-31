@@ -1,18 +1,22 @@
 <script lang="ts">
+  import { run } from 'svelte/legacy';
+
   import LTTTime from "$lib/LTTTime.svelte";
   import { browser } from "$app/environment";
   import { page } from "$app/stores";
   import { onMount } from "svelte";
   import {fade} from "svelte/transition";
 
-  $: isFrame = $page.url.searchParams.has("frame");
-  $: isBoca = $page.url.searchParams.has("boca")
+  let isFrame = $derived($page.url.searchParams.has("frame"));
+  let isBoca = $derived($page.url.searchParams.has("boca"))
 
-  $: if(browser && isFrame) {
-    document.body.classList.add("background-none")
-  }
+  run(() => {
+    if(browser && isFrame) {
+      document.body.classList.add("background-none")
+    }
+  });
 
-  let mounted = false;
+  let mounted = $state(false);
   onMount(() => {
     mounted = true;
     if(isBoca) {

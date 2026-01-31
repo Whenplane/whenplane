@@ -16,8 +16,8 @@
 
   const scheduledStart = new Date("2025-06-11T17:20:21.245Z");
 
-  let string: string | undefined = "";
-  let distance: number;
+  let string: string | undefined = $state("");
+  let distance: number = $state();
 
   function update() {
     distance = Math.min(Date.now() - (startTime ?? scheduledStart.getTime()), totalTime);
@@ -28,7 +28,7 @@
   }
 
   // this is needed because for some weird reason I can't check for an update without subscribing to the $updated store
-  $: updateAvailable = $updated
+  let updateAvailable = $derived($updated)
 
   update();
 
