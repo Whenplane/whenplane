@@ -7,7 +7,7 @@
 	import {invalidateAll} from "$app/navigation";
 	import {onMount} from "svelte";
 	import Late from "$lib/Late.svelte";
-	import {page} from "$app/stores";
+	import {page} from "$app/state";
 	import {fade} from "svelte/transition";
 	import { browser, dev } from "$app/environment";
 	import LatenessVoting from "$lib/LatenessVoting.svelte";
@@ -36,7 +36,7 @@
 
 	
 
-	let isFrame = $derived($page.url.searchParams.has("frame"));
+	let isFrame = $derived(page.url.searchParams.has("frame"));
 
 	const myDomains = [
 		"whenplane.com",
@@ -126,7 +126,7 @@
 
 
 	// remove ?attempt after 500 error
-	if(browser && $page.url.searchParams.has("attempt")) {
+	if(browser && page.url.searchParams.has("attempt")) {
 		const newURL = new URL(location.href);
 		newURL.searchParams.delete("attempt");
 		window.history.replaceState({}, document.title, "/" + (newURL.searchParams.size > 0 ? "?" + newURL.searchParams.toString() : ""));
@@ -154,7 +154,7 @@
 		}
 	}
 
-	const disableNotableStreams = browser ? !(getCookie("disableNotableStreams") !== "true") : !($page.params.__c__disableNotableStreams !== "true");
+	const disableNotableStreams = browser ? !(getCookie("disableNotableStreams") !== "true") : !(page.params.__c__disableNotableStreams !== "true");
 
 	const description = "Is The WAN Show late? Yes. How late is The WAN Show? Probably very! See a countdown to when WAN is supposed to start, as well as how late it's been before.";
 
@@ -164,7 +164,7 @@
 		onvisibilitychange={onFocus}
 />
 <svelte:head>
-	<title>When is the WAN Show?  {$page.url.hostname === "whenwan.show" ? "whenwan.show" : "Whenplane"}</title>
+	<title>When is the WAN Show?  {page.url.hostname === "whenwan.show" ? "whenwan.show" : "Whenplane"}</title>
 	<meta name="description" content={description}/>
 	<link rel="canonical" href="https://whenplane.com/"/>
 </svelte:head>
@@ -197,12 +197,12 @@
 
 <div class="container h-full mx-auto justify-center items-center" bind:this={outerContainer} class:alwaysFlex={isFrame}>
 	<div class="space-y-3 inner" bind:this={mainContainer}>
-		{#if !$page.data.isBot} <!-- so the imminent box stops showing up in search results -->
+		{#if !page.data.isBot} <!-- so the imminent box stops showing up in search results -->
 			<ImminentBox floatplane={data.liveStatus?.floatplane} hasDone={data.hasDone}/>
 		{/if}
 		<div class="text-center">
 			<CurrentTitle liveStatus={data.liveStatus}/>
-			{#if data.specialStream && !$page.data.isBot}
+			{#if data.specialStream && !page.data.isBot}
 				{#key data.specialStream}
 					<SpecialStream {data}/>
 				{/key}
@@ -259,10 +259,10 @@
 				{#if !isAfterStartTime && !data.isMainShow}
 					Next WAN:
 					{getNextWAN(undefined, undefined, data.alternateStartTimes)
-						.toLocaleDateString(getDateFormatLocale(), {timeZone: $page.params.__timezone, dateStyle: "long"})}
+						.toLocaleDateString(getDateFormatLocale(), {timeZone: page.params.__timezone, dateStyle: "long"})}
 					at
 					{getNextWAN(undefined, undefined, data.alternateStartTimes)
-						.toLocaleTimeString(undefined, {hour12: getTimePreference(), timeZone: $page.params.__timezone, timeStyle: "short"})}
+						.toLocaleTimeString(undefined, {hour12: getTimePreference(), timeZone: page.params.__timezone, timeStyle: "short"})}
 				{:else if isLate}
 					It usually <i>actually</i> starts roughly 1 or 2 hours late.
 				{:else if (data.isMainShow && data.mainShowStarted) || data.isPreShow}
@@ -274,7 +274,7 @@
 						Started
 					{/if}
 					at
-					{new Date(data.mainShowStarted ?? data.preShowStarted ?? data.liveStatus.floatplane.started).toLocaleTimeString(undefined, {hour12: getTimePreference(), timeZone: $page.params.__timezone})}
+					{new Date(data.mainShowStarted ?? data.preShowStarted ?? data.liveStatus.floatplane.started).toLocaleTimeString(undefined, {hour12: getTimePreference(), timeZone: page.params.__timezone})}
 				{/if}
 			</div>
 		</div>
@@ -384,7 +384,7 @@
 			started: "2024-02-08T22:45:02.407Z"
 		}}/>-->
 
-		{#if !$page.data.isBot && (nowish.getUTCDay() === 5 || nowish.getUTCDay() === 6 /*|| dev*/) && !data.hasDone && ($page.url.searchParams.has("showLatenessVoting") ? $page.url.searchParams.get("showLatenessVoting") === "true" : !isFrame)}
+		{#if !page.data.isBot && (nowish.getUTCDay() === 5 || nowish.getUTCDay() === 6 /*|| dev*/) && !data.hasDone && (page.url.searchParams.has("showLatenessVoting") ? page.url.searchParams.get("showLatenessVoting") === "true" : !isFrame)}
 			<div>
 				<Accordion padding="pb-2 px-4">
 					<AccordionItem open>
@@ -433,7 +433,7 @@
 {/if}
 
 
-{#if $page.url.hostname.includes("wheniswan.pages.dev")}
+{#if page.url.hostname.includes("wheniswan.pages.dev")}
 	<div class="fixed bottom-0 w-screen text-center">
 		<div class="card inline-block p-2 mt-2">
 			This site has a proper domain now!
@@ -446,7 +446,7 @@
 	</div>
 {/if}
 
-{#if !myDomains.includes($page.url.hostname.replaceAll("www.", "")) && !$page.url.hostname.endsWith("wheniswan.pages.dev")}
+{#if !myDomains.includes(page.url.hostname.replaceAll("www.", "")) && !page.url.hostname.endsWith("wheniswan.pages.dev")}
 	<div class="fixed top-0 w-screen text-center">
 		<div class="card inline-block p-2 mt-2 px-3" style="font-size: 0.75em; background-color: rgba(21, 23, 31, 0.3) !important;">
 			You are using an unofficial domain. Whenplane cannot guarantee that this domain doesnt modify the site in any way.

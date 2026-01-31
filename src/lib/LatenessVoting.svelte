@@ -1,6 +1,6 @@
 <script lang="ts">
 
-  import { page } from "$app/stores";
+  import { page } from "$app/state";
   import { browser, dev } from "$app/environment";
   import type { UserVote } from "$lib/voting";
   import { vote_valid_for } from "$lib/voting";
@@ -21,7 +21,7 @@
 
   let { mainLate }: Props = $props();
 
-  let total = $derived($page.data.liveStatus?.votes?.reduce((a, x) => a + x.votes, 0) || 1);
+  let total = $derived(page.data.liveStatus?.votes?.reduce((a, x) => a + x.votes, 0) || 1);
 
   let userVote = $state(browser ? JSON.parse(localStorage.getItem("latenessVote") ?? "{\"lastVote\":0}") as UserVote : {lastVote:0})
 
@@ -72,7 +72,7 @@ How late do you think the show will be?
           await update({ reset: false });
         };
       }}>
-  {#each $page.data.liveStatus?.votes as option}
+  {#each page.data.liveStatus?.votes as option}
     {@const passed = $mainLate.late && Math.abs($mainLate.distance ?? 0) > option.time}
     <button class="block w-full text-left background relative" formaction="?/vote&for={encodeURIComponent(option.name)}&k={vd}" class:passed={passed}>
       <span class="block percent" style="width: {(option.votes / total) * 100}%">

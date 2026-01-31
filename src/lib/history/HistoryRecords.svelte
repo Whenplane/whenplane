@@ -7,7 +7,7 @@
     import { Accordion, AccordionItem } from "@skeletonlabs/skeleton";
     import { onMount } from "svelte";
     import GraphUp from "svelte-bootstrap-icons/lib/GraphUp.svelte";
-    import { page } from "$app/stores";
+    import { page } from "$app/state";
 
 
     let { records = $bindable(), data } = $props();

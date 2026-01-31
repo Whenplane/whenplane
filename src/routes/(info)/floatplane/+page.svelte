@@ -5,7 +5,7 @@
   import { newsSanitizeSettings } from "$lib/news/news";
   import { onMount } from "svelte";
   import { invalidateAll } from "$app/navigation";
-  import { page } from "$app/stores";
+  import { page } from "$app/state";
   import {timeString} from "$lib/timeUtils";
   import DateStamp from "$lib/DateStamp.svelte";
   import { browser } from "$app/environment";
@@ -68,7 +68,7 @@
 }}/>
 
 <ol class="breadcrumb pt-2 pl-2">
-  <li class="crumb"><a class="anchor hover-underline" href="/">{$page.url.hostname === "whenwan.show" ? "whenwan.show" : "Whenplane"}</a></li>
+  <li class="crumb"><a class="anchor hover-underline" href="/">{page.url.hostname === "whenwan.show" ? "whenwan.show" : "Whenplane"}</a></li>
   <li class="crumb-separator" aria-hidden="true">&rsaquo;</li>
   <li class="crumb">Floatplane Watcher</li>
 </ol>

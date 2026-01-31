@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { page } from "$app/stores";
+  import { page } from "$app/state";
 	import ClockHistory from "svelte-bootstrap-icons/lib/ClockHistory.svelte";
   import { commas } from "$lib/utils.ts";
   import { getClosestWan } from "$lib/timeUtils.ts";
@@ -19,7 +19,7 @@
 </span>
 
 <ol class="breadcrumb pt-2 pl-2">
-  <li class="crumb"><a class="anchor hover-underline" href="/">{$page.url.hostname === "whenwan.show" ? "whenwan.show" : "Whenplane"}</a></li>
+  <li class="crumb"><a class="anchor hover-underline" href="/">{page.url.hostname === "whenwan.show" ? "whenwan.show" : "Whenplane"}</a></li>
   <li class="crumb-separator" aria-hidden="true">&rsaquo;</li>
   <li class="crumb">Merch Messages</li>
 </ol>

@@ -11,7 +11,7 @@
     import { getClosestWan, getTimeUntil, timeString } from "../timeUtils";
     import Late from "../Late.svelte";
     import Live from "$lib/history/Live.svelte";
-    import { page } from "$app/stores";
+    import { page } from "$app/state";
     import BlurHash from "$lib/history/BlurHash.svelte";
     import {fade} from "svelte/transition";
     import LargerLazyLoad from "$lib/LargerLazyLoad.svelte";
@@ -88,7 +88,7 @@
   class="inline-block limit p-3 m-2 hidden-link relative"
   {href}
   id={show.name}
-  class:highlight={!onlyTimes && $page.url.hash === "#" + show.name}
+  class:highlight={!onlyTimes && page.url.hash === "#" + show.name}
 >
     {#if !onlyTimes}
         {#if withThumbnail && thumbnail}

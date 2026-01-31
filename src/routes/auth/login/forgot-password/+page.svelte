@@ -3,7 +3,7 @@
   import { fade } from "svelte/transition";
   import Turnstile from "$lib/Turnstile.svelte";
   import { ProgressRadial } from "@skeletonlabs/skeleton";
-  import {page} from "$app/stores";
+  import {page} from "$app/state";
   import { dev } from "$app/environment";
 
   let { form } = $props();
@@ -19,7 +19,7 @@
 
 <div class="text-center">
   <h1>Password Reset</h1>
-  {#if $page.url.searchParams.has("expiredToken")}
+  {#if page.url.searchParams.has("expiredToken")}
     <span class="text-primary-500-400-token">
         That password reset link expired. Please request a new one below.
     </span>

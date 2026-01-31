@@ -4,7 +4,7 @@
   import { ProgressRadial } from "@skeletonlabs/skeleton";
   import { fade } from 'svelte/transition';
   import { onMount } from "svelte";
-  import {page} from "$app/stores";
+  import {page} from "$app/state";
   import { goto } from "$app/navigation";
 
   let { form } = $props();
@@ -20,8 +20,8 @@
   let timeTilExpiration = $state(0);
 
   onMount(() => {
-    if($page.url.searchParams.has("expiration")){
-      const expiration = Number($page.url.searchParams.get("expiration"));
+    if(page.url.searchParams.has("expiration")){
+      const expiration = Number(page.url.searchParams.get("expiration"));
       let i = setInterval(() => {
         timeTilExpiration = expiration - Date.now();
         if(timeTilExpiration <= 0) {

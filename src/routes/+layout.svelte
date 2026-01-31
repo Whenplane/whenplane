@@ -1,3 +1,4 @@
+<!-- @migration task: review uses of `navigating` -->
 <script lang='ts'>
   import { run } from 'svelte/legacy';
 
@@ -12,7 +13,7 @@
     import { storePopup } from '@skeletonlabs/skeleton';
 
     import 'nprogress/nprogress.css';
-    import {navigating, page} from '$app/stores';
+    import {navigating, page} from '$app/state';
     import NProgress from 'nprogress';
     import { browser, dev } from "$app/environment";
     import { setServiceWorker } from "$lib/stores.ts";
@@ -36,21 +37,21 @@
 
     run(() => {
     if(browser) {
-          if ($navigating) {
+          if (navigating) {
               if(progressTimeout) clearTimeout(progressTimeout);
               const startBar = () => {
-                  if ($navigating) {
+                  if (navigating) {
                       NProgress.start();
                   }
               };
-              const toURL: URL = $navigating.to.url;
+              const toURL: URL = navigating.to.url;
               if(toURL.pathname == "/history" && toURL.searchParams.has("old")) {
                   startBar();
               } else {
                   progressTimeout = setTimeout(startBar, 150);
               }
           }
-          if (!$navigating) {
+          if (!navigating) {
               if(progressTimeout) clearTimeout(progressTimeout);
               NProgress.done();
           }
@@ -60,7 +61,7 @@
 
     storePopup.set({ computePosition, autoUpdate, flip, shift, offset, arrow });
 
-    let pathname = $derived($page.url.pathname);
+    let pathname = $derived(page.url.pathname);
 
 
     onMount(async () => {
@@ -92,7 +93,7 @@
     {#if !pathname.startsWith("/history/show/") && !pathname.startsWith("/history/graph") && !pathname.startsWith("/news") && !pagesWithDescription.includes(pathname) && !pathname.startsWith("/lttstore") && !pathname.startsWith("/merch-messages")}
         <meta name="description" content="When is WAN? Who knows! At least you can look at when it started before.. (spoiler: it's late) and view a countdown until its supposed to start">
     {/if}
-    {#if $page.url.hostname !== "whenplane.com"}
+    {#if page.url.hostname !== "whenplane.com"}
         <link rel="canonical" href="https://whenplane.com{$page.url.pathname}">
     {/if}
 </svelte:head>

@@ -7,7 +7,7 @@
     import Youtube from "$lib/svg/Youtube.svelte";
     import {getTimeUntil} from "$lib/timeUtils";
     import { browser, dev } from "$app/environment";
-    import { page } from "$app/stores";
+    import { page } from "$app/state";
     import type { WanDb_Topic } from "$lib/wdb_types.ts";
     import SubTopics from "$lib/subcomponents/SubTopics.svelte";
     import { fade } from "svelte/transition";
@@ -43,7 +43,7 @@
       null;
 
     let timestampPlatform: string | null = $state();
-    timestampPlatform = (browser ? getCookie("timestampPlatform") : $page.params.__c__timestampPlatform) ?? "youtube"; // seperate so it doesnt try to react
+    timestampPlatform = (browser ? getCookie("timestampPlatform") : page.params.__c__timestampPlatform) ?? "youtube"; // seperate so it doesnt try to react
 
     function toggleTimestampPlatform() {
         const before = getCookie("timestampPlatform");
@@ -86,7 +86,7 @@
 
 
 <ol class="breadcrumb pt-2 pl-2">
-    <li class="crumb"><a class="anchor hover-underline" href="/">{$page.url.hostname === "whenwan.show" ? "whenwan.show" : "Whenplane"}</a></li>
+    <li class="crumb"><a class="anchor hover-underline" href="/">{page.url.hostname === "whenwan.show" ? "whenwan.show" : "Whenplane"}</a></li>
     <li class="crumb-separator" aria-hidden="true">&rsaquo;</li>
     <li class="crumb"><a class="anchor hover-underline" href="/history">History</a></li>
     <li class="crumb-separator" aria-hidden="true">&rsaquo;</li>
@@ -181,7 +181,7 @@
                         {#each timestamps as timestamp, i}
                             {@const youtubeId = data.value?.vods?.youtube}
                             {@const floatplaneId = data.value?.vods?.floatplane}
-                            <li class="!mt-0 !mb-0 !p-0" id="timestamp-{youtubeId}.{timestamp.time}" class:highlighted={$page.url.hash === "#timestamp-" + youtubeId + "." + timestamp.time}>
+                            <li class="!mt-0 !mb-0 !p-0" id="timestamp-{youtubeId}.{timestamp.time}" class:highlighted={page.url.hash === "#timestamp-" + youtubeId + "." + timestamp.time}>
                                 <a
                                   class="hidden-link"
                                   href={

@@ -2,7 +2,7 @@
   import type {PageData} from "../../../../.svelte-kit/types/src/routes"
   import sanitizeHtml from "sanitize-html";
   import { newsSanitizeSettings } from "$lib/news/news.ts";
-  import { page } from "$app/stores";
+  import { page } from "$app/state";
   interface Props {
     data: PageData;
   }
@@ -17,15 +17,15 @@
 
 
 <ol class="breadcrumb pt-2 pl-2">
-  <li class="crumb"><a class="anchor hover-underline" href="/">{$page.url.hostname === "whenwan.show" ? "whenwan.show" : "Whenplane"}</a></li>
+  <li class="crumb"><a class="anchor hover-underline" href="/">{page.url.hostname === "whenwan.show" ? "whenwan.show" : "Whenplane"}</a></li>
   <li class="crumb-separator" aria-hidden="true">&rsaquo;</li>
   <li class="crumb">News</li>
 </ol>
 <br>
 
 <div class="limit mx-auto px-2">
-  <h1>{$page.url.hostname === "whenwan.show" ? "whenwan.show" : "Whenplane"} News</h1>
-  I will occasionally post news and updates here related to {$page.url.hostname === "whenwan.show" ? "whenwan.show" : "Whenplane"} here.<br>
+  <h1>{page.url.hostname === "whenwan.show" ? "whenwan.show" : "Whenplane"} News</h1>
+  I will occasionally post news and updates here related to {page.url.hostname === "whenwan.show" ? "whenwan.show" : "Whenplane"} here.<br>
   <br>
   <hr>
   {#each data.results as post}

@@ -3,7 +3,7 @@
 
 
   import LTTProductCard from "$lib/lttstore/LTTProductCard.svelte";
-  import { page } from "$app/stores";
+  import { page } from "$app/state";
   import {flip} from "svelte/animate";
   import { fade } from "svelte/transition"
   import { goto, invalidateAll } from "$app/navigation";
@@ -19,7 +19,7 @@
     loading = false;
   }
 
-  let sortedBy = $state($page.url.searchParams.get("sort") ?? "metaUpdate");
+  let sortedBy = $state(page.url.searchParams.get("sort") ?? "metaUpdate");
   if(data.sortColumn === "stockChecked") sortedBy = "updated";
   let first = $state(true);
   run(() => {
@@ -44,7 +44,7 @@
 </svelte:head>
 
 <ol class="breadcrumb pt-2 pl-2">
-  <li class="crumb"><a class="anchor hover-underline" href="/">{$page.url.hostname === "whenwan.show" ? "whenwan.show" : "Whenplane"}</a></li>
+  <li class="crumb"><a class="anchor hover-underline" href="/">{page.url.hostname === "whenwan.show" ? "whenwan.show" : "Whenplane"}</a></li>
   <li class="crumb-separator" aria-hidden="true">&rsaquo;</li>
   <li class="crumb"><a class="anchor hover-underline" href="/lttstore">LTT Store Watcher</a></li>
   <li class="crumb-separator" aria-hidden="true">&rsaquo;</li>

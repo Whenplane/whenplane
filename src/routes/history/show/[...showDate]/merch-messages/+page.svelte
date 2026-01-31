@@ -2,7 +2,7 @@
   import { getClosestWan, getTimeUntil, timeString } from "$lib/timeUtils.ts";
   import { commas, type MMJobData, truncateText } from "$lib/utils.ts";
   import { getDateFormatLocale } from "$lib/prefUtils.ts";
-  import { page } from "$app/stores";
+  import { page } from "$app/state";
   import MerchMessage from "./components/MerchMessage.svelte";
   import Incomplete from "$lib/merch-messages/Incomplete.svelte";
   import { invalidateAll } from "$app/navigation";
@@ -17,7 +17,7 @@
   let lastData: MMJobData = $state();
 
   onMount(() => {
-    if(dev && $page.params.videoId === "test") {
+    if(dev && page.params.videoId === "test") {
       setTimeout(() => {
         lastData = {
           videoId: "7LGuglDdliw",
@@ -72,7 +72,7 @@
 {/if}
 
 <ol class="breadcrumb pt-2 pl-2">
-  <li class="crumb"><a class="anchor hover-underline" href="/">{$page.url.hostname === "whenwan.show" ? "whenwan.show" : "Whenplane"}</a></li>
+  <li class="crumb"><a class="anchor hover-underline" href="/">{page.url.hostname === "whenwan.show" ? "whenwan.show" : "Whenplane"}</a></li>
   <li class="crumb-separator" aria-hidden="true">&rsaquo;</li>
   <li class="crumb"><a class="anchor hover-underline" href="/history">History</a></li>
   <li class="crumb-separator" aria-hidden="true">&rsaquo;</li>

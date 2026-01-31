@@ -1,6 +1,6 @@
 <script lang="ts">
   import { enhance } from '$app/forms';
-  import {page} from "$app/stores";
+  import {page} from "$app/state";
   import Turnstile from "$lib/Turnstile.svelte";
   import { ProgressRadial } from "@skeletonlabs/skeleton";
   import { fade } from 'svelte/transition';
@@ -15,21 +15,21 @@
 <div class="text-center">
   <h1>Log in</h1>
   <br>
-  {#if $page.url.searchParams.has("reauth")}
+  {#if page.url.searchParams.has("reauth")}
     <span class="text-primary-500-400-token">
         Please log in again
     </span>
     <br>
     <br>
   {/if}
-  {#if $page.url.searchParams.has("email-verified")}
+  {#if page.url.searchParams.has("email-verified")}
     <span class="text-success-500-400-token">
         Thank you for verifying your email! You can now log in.
     </span>
     <br>
     <br>
   {/if}
-  {#if $page.url.searchParams.has("passwordResetSuccess")}
+  {#if page.url.searchParams.has("passwordResetSuccess")}
     <span class="text-success-500-400-token">
         Your password was successfully reset! You can now log in.
     </span>
@@ -49,7 +49,7 @@
       }}>
       <label class="label">
         <span>Username</span>
-        <input class="input px-3" name="username" type="text" value={form?.username ?? $page.url.searchParams.get("username") ?? ''} required/>
+        <input class="input px-3" name="username" type="text" value={form?.username ?? page.url.searchParams.get("username") ?? ''} required/>
       </label>
       <br>
       <label class="label">

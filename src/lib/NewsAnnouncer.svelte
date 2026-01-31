@@ -1,9 +1,9 @@
 <script lang="ts">
-  import { page } from "$app/stores";
+  import { page } from "$app/state";
   import { dev } from "$app/environment";
   import { onMount } from "svelte";
 
-  let data = $derived($page.data);
+  let data = $derived(page.data);
 
   let minuteNow = $state(Date.now());
 

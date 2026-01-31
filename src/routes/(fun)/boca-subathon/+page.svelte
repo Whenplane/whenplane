@@ -5,7 +5,7 @@
   import Confetti from "svelte-confetti"
   import { dev } from "$app/environment";
   import { getDateFormatLocale } from "$lib/prefUtils.ts";
-  import { updated } from "$app/stores";
+  import { updated } from "$app/state";
   import { page } from "$app/stores";
 
   const totalTime = (168 * 60 * 60e3);
@@ -28,7 +28,7 @@
   }
 
   // this is needed because for some weird reason I can't check for an update without subscribing to the $updated store
-  let updateAvailable = $derived($updated)
+  let updateAvailable = $derived(updated.current)
 
   update();
 

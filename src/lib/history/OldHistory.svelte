@@ -3,7 +3,7 @@
     import LazyLoad from '@dimfeld/svelte-lazyload';
     import {fade} from "svelte/transition";
     import { quadInOut } from "svelte/easing";
-    import { page } from "$app/stores";
+    import { page } from "$app/state";
     import { countTo } from "$lib/utils";
     import LoadingHistoricalShow from "$lib/history/LoadingHistoricalShow.svelte";
 
@@ -15,9 +15,9 @@
 
     let alreadyLoaded = false;
     let fetchingHistory = $state((() => {
-        if($page.data?.history?.oldHistory) {
+        if(page.data?.history?.oldHistory) {
             alreadyLoaded = true;
-            return $page.data?.history?.oldHistory;
+            return page.data?.history?.oldHistory;
         } else {
             // eslint-disable-next-line @typescript-eslint/no-empty-function
             return new Promise(() => {});

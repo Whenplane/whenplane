@@ -1,4 +1,6 @@
 <script lang="ts">
+  import { run } from 'svelte/legacy';
+
   import { page } from "$app/stores";
   import type { SpecialStream } from "$lib/utils.ts";
   import SpecialStreamStatus from "$lib/subcomponents/SpecialStreamStatus.svelte";
@@ -8,17 +10,21 @@
   import Info from "$lib/svg/Info.svelte";
   import {popup} from "@skeletonlabs/skeleton";
 
-  export let specialStreamData: SpecialStream = $page.data.specialStream as SpecialStream;
 
-  export let data;
+  interface Props {
+    specialStreamData?: SpecialStream;
+    data: any;
+  }
 
-  let countdownString: string | undefined;
-  let late = false;
-  $: startTime = specialStreamData.start ? new Date(specialStreamData.start) : undefined;
+  let { specialStreamData = $page.data.specialStream as SpecialStream, data }: Props = $props();
 
-  $: live = data.liveStatus.floatplane?.isLive && !data.liveStatus.floatplane?.isWAN;
+  let countdownString: string | undefined = $state();
+  let late = $state(false);
+  let startTime = $derived(specialStreamData.start ? new Date(specialStreamData.start) : undefined);
 
-  $: thumbnailStyle = specialStreamData.thumbnail ? `background: linear-gradient(rgba(21,23,31,.75), rgba(21,23,31,.75)), url(${JSON.stringify(specialStreamData.thumbnail)});` : "";
+  let live = $derived(data.liveStatus.floatplane?.isLive && !data.liveStatus.floatplane?.isWAN);
+
+  let thumbnailStyle = $derived(specialStreamData.thumbnail ? `background: linear-gradient(rgba(21,23,31,.75), rgba(21,23,31,.75)), url(${JSON.stringify(specialStreamData.thumbnail)});` : "");
 
   function updateCountdown() {
     if(!specialStreamData.start || !startTime) {
@@ -35,7 +41,9 @@
     late = timeUntil.late;
   }
 
-  $: updateCountdown(startTime)
+  run(() => {
+    updateCountdown(startTime)
+  });
 
   onMount(() => {
     let interval = setInterval(updateCountdown, 1e3);

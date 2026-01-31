@@ -1,7 +1,7 @@
 <script lang="ts">
   import { run } from 'svelte/legacy';
 
-  import { page } from "$app/stores";
+  import { page } from "$app/state";
   import { resultsPerPage } from "./search.ts";
   import MiniShow from "$lib/history/MiniShow.svelte";
   import sanitizeHtml from "sanitize-html";
@@ -12,7 +12,7 @@
   import LastUpdate from "./indexUpdateStatus/LastUpdate.svelte";
   import { truncateText } from "$lib/utils.ts";
 
-  let sp = $state($page.url.searchParams);
+  let sp = $state(page.url.searchParams);
 
   let q = $state(sp.get("q"));
 
@@ -86,7 +86,7 @@
   const description = "Find things that happened during The WAN Show. The WAN Show Search was made to make it much easier to find moments that happened during the WAN show. It includes useful features such as date filtering, multiple sorting options, and filtering based on result type. You can search through Topics/Timestamps (courtesy of Noki aka \"Timestamp Guy\"), transcripts, show titles, and optionally even Merch Messages.";
 
   run(() => {
-    sp = $page.url.searchParams
+    sp = page.url.searchParams
   });
   run(() => {
     q = sp.get("q")
@@ -136,7 +136,7 @@
 
 {#if !q}
   <ol class="breadcrumb pt-2 pl-2">
-    <li class="crumb"><a class="anchor hover-underline" href="/">{$page.url.hostname === "whenwan.show" ? "whenwan.show" : "Whenplane"}</a></li>
+    <li class="crumb"><a class="anchor hover-underline" href="/">{page.url.hostname === "whenwan.show" ? "whenwan.show" : "Whenplane"}</a></li>
     <li class="crumb-separator" aria-hidden="true">&rsaquo;</li>
     {#if q}
       <li class="crumb"><a class="anchor hover-underline" href="/search">Search</a></li>

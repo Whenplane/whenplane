@@ -2,7 +2,7 @@
   import { onMount } from "svelte";
   import { invalidateAll } from "$app/navigation";
   import { timeString } from "$lib/timeUtils.ts";
-  import { page } from "$app/stores";
+  import { page } from "$app/state";
   import { ProgressRadial } from "@skeletonlabs/skeleton";
 
   let { data } = $props();
@@ -16,7 +16,7 @@
   let lastInvalidate = Date.now();
   let tries = 0;
 
-  let isDataOutdated = $derived(data.floatplane?.isLive !== ($page.url.searchParams.has("live") ? $page.url.searchParams.get("live") === "true" : data.floatplane?.isLive));
+  let isDataOutdated = $derived(data.floatplane?.isLive !== (page.url.searchParams.has("live") ? page.url.searchParams.get("live") === "true" : data.floatplane?.isLive));
 
   let intervalCounter = 0;
 

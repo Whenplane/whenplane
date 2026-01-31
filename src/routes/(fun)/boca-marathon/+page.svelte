@@ -11,7 +11,7 @@
   import ToolTip from "$lib/ToolTip.svelte";
   import LTTTime from "$lib/LTTTime.svelte";
   import { browser } from "$app/environment";
-  import {page} from "$app/stores"
+  import {page} from "$app/state"
   import { toastStore } from "@skeletonlabs/skeleton";
   import {clipboard} from "@skeletonlabs/skeleton";
 
@@ -63,7 +63,7 @@
   })
 
   // remove ?attempt after 500 error
-  if(browser && $page.url.searchParams.has("attempt")) {
+  if(browser && page.url.searchParams.has("attempt")) {
     const newURL = new URL(location.href);
     newURL.searchParams.delete("attempt");
     window.history.replaceState({}, document.title, newURL.pathname + (newURL.searchParams.size > 0 ? "?" + newURL.searchParams.toString() : ""));

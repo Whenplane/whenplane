@@ -1,3 +1,4 @@
+<!-- @migration task: review uses of `navigating` -->
 <script lang="ts">
   import { run } from 'svelte/legacy';
 
@@ -10,7 +11,7 @@
   import {flip} from "svelte/animate";
   import {slide} from "svelte/transition";
   import { goto } from "$app/navigation";
-  import { navigating } from "$app/stores";
+  import { navigating } from "$app/state";
   import { dev } from "$app/environment";
 
   const searchClient = new SearchClient({
@@ -88,7 +89,7 @@
     search(searchText);
   });
   run(() => {
-    if($navigating) modalStore.close();
+    if(navigating) modalStore.close();
   }); // close search modal when we navigate
 </script>
 

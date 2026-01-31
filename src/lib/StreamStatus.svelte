@@ -3,7 +3,7 @@
     import Twitch from "./svg/Twitch.svelte";
     import Floatplane from "./svg/Floatplane.svelte";
     import {onMount} from "svelte";
-    import { page } from "$app/stores";
+    import { page } from "$app/state";
     import {timeString} from "$lib/timeUtils";
     import { getDateFormatLocale, getTimePreference } from "$lib/prefUtils.ts";
 
@@ -29,7 +29,7 @@
 <div class="logo-cloud grid-cols-1 md:!grid-cols-3 gap-1">
     <a class="logo-item" href="https://www.twitch.tv/linustech" target="_blank" rel="noopener">
         <span>
-            {#if $page.url.searchParams.has("boca")}
+            {#if page.url.searchParams.has("boca")}
                 <img class="absolute z-0 rounded-lg" style="margin-left: 1px; height: 26px; width: 30px;" src="/secret/boca-cropped.jpg"/>
             {/if}
             <span class="inline-block relative z-10">
@@ -53,7 +53,7 @@
     </a>
     <a class="logo-item" href="/youtube-redirect" target="_blank">
         <span>
-            {#if $page.url.searchParams.has("boca")}
+            {#if page.url.searchParams.has("boca")}
                 <img class="absolute z-10 rounded-md opacity-50" style="margin-left: 6px; margin-top: 7px; height: 26px; width: 37px;" src="/secret/boca-cropped.jpg"/>
             {/if}
             <span class="inline-block relative z-0">
@@ -89,7 +89,7 @@
     </a>
     <a class="logo-item" href="https://www.floatplane.com/channel/linustechtips/live" target="_blank" rel="noopener">
         <span>
-            {#if $page.url.searchParams.has("boca")}
+            {#if page.url.searchParams.has("boca")}
                 <img class="absolute z-0 rounded-full" style="margin-left: 2px; margin-top: 4px; height: 26px; width: 26px;" src="/secret/boca-cropped.jpg"/>
             {/if}
             <div class="inline-block relative z-10">

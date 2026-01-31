@@ -3,7 +3,7 @@
 
   import { onMount } from "svelte";
   import {popup} from "@skeletonlabs/skeleton";
-  import { page } from "$app/stores";
+  import { page } from "$app/state";
 
   import { getTimePreference } from "$lib/prefUtils";
 
@@ -13,7 +13,7 @@
     boca?: any;
   }
 
-  let { border = true, tooltip = true, boca = $page.url.searchParams.has("boca") }: Props = $props();
+  let { border = true, tooltip = true, boca = page.url.searchParams.has("boca") }: Props = $props();
 
   run(() => {
     console.debug({border})

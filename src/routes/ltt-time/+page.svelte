@@ -3,12 +3,12 @@
 
   import LTTTime from "$lib/LTTTime.svelte";
   import { browser } from "$app/environment";
-  import { page } from "$app/stores";
+  import { page } from "$app/state";
   import { onMount } from "svelte";
   import {fade} from "svelte/transition";
 
-  let isFrame = $derived($page.url.searchParams.has("frame"));
-  let isBoca = $derived($page.url.searchParams.has("boca"))
+  let isFrame = $derived(page.url.searchParams.has("frame"));
+  let isBoca = $derived(page.url.searchParams.has("boca"))
 
   run(() => {
     if(browser && isFrame) {

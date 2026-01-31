@@ -4,7 +4,7 @@
     import {fade} from "svelte/transition";
     import {SlideToggle} from "@skeletonlabs/skeleton";
     import {browser} from "$app/environment";
-    import { page } from "$app/stores";
+    import { page } from "$app/state";
     import { getCookie, setCookie } from "$lib/cookieUtils";
     import { getSupportedLocales } from "$lib/utils";
     import ToolTip from "$lib/ToolTip.svelte";
@@ -21,7 +21,7 @@
         if(browser) localStorage.setItem("disableBlurHash", disableBlurHash + "");
     });
 
-    let disableNotableStreams = $state(browser ? !(getCookie("disableNotableStreams") !== "true") : !($page.params.__c__disableNotableStreams !== "true"))
+    let disableNotableStreams = $state(browser ? !(getCookie("disableNotableStreams") !== "true") : !(page.params.__c__disableNotableStreams !== "true"))
     run(() => {
         if(browser) setCookie("disableNotableStreams", disableNotableStreams + "");
     });
@@ -53,15 +53,15 @@
 
     const supportedLocales = browser ? getSupportedLocales() : [];
 
-    console.log({disableNotableStreams, server: $page.params.__c__disableNotableStreams, client: browser ? getCookie("disableNotableStreams") : undefined})
+    console.log({disableNotableStreams, server: page.params.__c__disableNotableStreams, client: browser ? getCookie("disableNotableStreams") : undefined})
 
 </script>
 <svelte:window bind:scrollY/>
 <svelte:head>
-    <title>About {$page.url.hostname === "whenwan.show" ? "whenwan.show" : "Whenplane"}</title>
+    <title>About {page.url.hostname === "whenwan.show" ? "whenwan.show" : "Whenplane"}</title>
 </svelte:head>
 <ol class="breadcrumb pt-2 pl-2">
-    <li class="crumb"><a class="anchor hover-underline" href="/">{$page.url.hostname === "whenwan.show" ? "whenwan.show" : "Whenplane"}</a></li>
+    <li class="crumb"><a class="anchor hover-underline" href="/">{page.url.hostname === "whenwan.show" ? "whenwan.show" : "Whenplane"}</a></li>
     <li class="crumb-separator" aria-hidden="true">&rsaquo;</li>
     <li class="crumb">About & Preferences</li>
 </ol>

@@ -19,7 +19,7 @@
     import { countTo, type HistoricalEntry } from "$lib/utils";
     import LoadingHistoricalShow from "$lib/history/LoadingHistoricalShow.svelte";
     import LazyLoad from "@dimfeld/svelte-lazyload";
-    import { page } from "$app/stores";
+    import { page } from "$app/state";
 
     let { data } = $props();
 

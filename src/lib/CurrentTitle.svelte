@@ -4,7 +4,7 @@
   import type { AggregateResponse } from "../routes/api/(live-statuses)/aggregate/+server.ts";
   import { getClosestWan, isLargeNearWan } from "$lib/timeUtils.ts";
   import {slide} from "svelte/transition";
-  import {page} from "$app/stores";
+  import {page} from "$app/state";
 
   interface Props {
     liveStatus: AggregateResponse | undefined;
@@ -13,7 +13,7 @@
   let { liveStatus }: Props = $props();
 
   let isCurrent = $derived(isLargeNearWan() &&
-    liveStatus?.floatplane?.title?.includes(getClosestWan(undefined, $page.data.alternateStartTimes).toLocaleDateString(undefined, {dateStyle: "long"})) &&
+    liveStatus?.floatplane?.title?.includes(getClosestWan(undefined, page.data.alternateStartTimes).toLocaleDateString(undefined, {dateStyle: "long"})) &&
     !liveStatus.floatplane.title.includes("Hello Floatplane"));
   let strippedTitle: string | undefined = $state(undefined);
   run(() => {

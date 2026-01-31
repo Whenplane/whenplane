@@ -2,12 +2,12 @@
   import StatChart from "$lib/history/StatChart.svelte";
   import { getClosestWan, getTimeUntil, timeString } from "$lib/timeUtils";
   import { browser } from "$app/environment";
-  import { page } from "$app/stores";
+  import { page } from "$app/state";
 
   let { data } = $props();
 </script>
 <svelte:head>
-  <title>WAN Lateness Graph - {$page.url.hostname === "whenwan.show" ? "whenwan.show" : "Whenplane"}</title>
+  <title>WAN Lateness Graph - {page.url.hostname === "whenwan.show" ? "whenwan.show" : "Whenplane"}</title>
 </svelte:head>
 <h1>Lateness</h1>
 {#if browser}

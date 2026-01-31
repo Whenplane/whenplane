@@ -3,7 +3,7 @@
   import { Avatar } from "@skeletonlabs/skeleton";
   import PersonX from "svelte-bootstrap-icons/lib/PersonX.svelte";
   import ReplyFill from "svelte-bootstrap-icons/lib/ReplyFill.svelte";
-  import { page } from "$app/stores";
+  import { page } from "$app/state";
   import { colonTimeString } from "$lib/timeUtils.ts";
   import Youtube from "$lib/svg/Youtube.svelte";
   import Floatplane from "$lib/svg/Floatplane.svelte";
@@ -37,7 +37,7 @@
   class:ml-6={message.type === "reply"}
   class:!bg-surface-900={message.type === "reply"}
   id={message.id}
-  class:hashHighlight={$page.url.hash === "#" + message.id}
+  class:hashHighlight={page.url.hash === "#" + message.id}
 >
   <div class="flex-1 grid grid-cols-[1fr_auto] items-center gap-y-2">
     <div class="flex items-center">

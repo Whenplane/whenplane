@@ -1,7 +1,7 @@
 <script lang="ts">
   import { escapeHtml, truncateText } from "$lib/utils.ts";
   import { getClosestWan } from "$lib/timeUtils.ts";
-  import { page } from "$app/stores";
+  import { page } from "$app/state";
   import { browser } from "$app/environment";
   import { onMount } from "svelte";
   import { getDateFormatLocale } from "$lib/prefUtils.ts";
@@ -16,7 +16,7 @@
   function parseText() {
     text = "";
     textOnly = "";
-    const find = $page.url.searchParams.get("find")
+    const find = page.url.searchParams.get("find")
     const matchLength = find?.length ?? 0;
     let startedMatch = false;
     let endedMatch = true;
@@ -66,7 +66,7 @@
   if(!browser) parseText();
   onMount(() => {
     parseText();
-    if($page.url.searchParams.has("find") && matchIndex !== -1) parseText();
+    if(page.url.searchParams.has("find") && matchIndex !== -1) parseText();
   })
 
   const thumbnail = data.value?.snippet?.thumbnails?.maxres ??
@@ -100,7 +100,7 @@
 {/if}
 
 <ol class="breadcrumb pt-2 pl-2">
-  <li class="crumb"><a class="anchor hover-underline" href="/">{$page.url.hostname === "whenwan.show" ? "whenwan.show" : "Whenplane"}</a></li>
+  <li class="crumb"><a class="anchor hover-underline" href="/">{page.url.hostname === "whenwan.show" ? "whenwan.show" : "Whenplane"}</a></li>
   <li class="crumb-separator" aria-hidden="true">&rsaquo;</li>
   <li class="crumb"><a class="anchor hover-underline" href="/history">History</a></li>
   <li class="crumb-separator" aria-hidden="true">&rsaquo;</li>
@@ -126,7 +126,7 @@
     <div class="text-left">
       These transcripts are taken from YouTube's auto-generated subtitles,
       so they might not be perfectly accurate. They are accurate enough to be useful in most cases though.<br>
-      {#if $page.url.searchParams.has("find") && !done}
+      {#if page.url.searchParams.has("find") && !done}
         <br>
         <div class="bg-amber-600 rounded-md p-2">
           <ProgressRadial width="w-6" stroke={250} class="inline-block align-bottom"/>

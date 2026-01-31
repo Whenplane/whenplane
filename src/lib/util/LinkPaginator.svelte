@@ -1,6 +1,6 @@
 <script lang="ts">
   import { countTo } from "$lib/utils.ts";
-  import { page } from "$app/stores";
+  import { page } from "$app/state";
 
   interface Props {
     totalPages: number;
@@ -12,9 +12,9 @@
   let distance = $derived(Math.abs(currentPage - totalPages));
 
   function getPageLink(pageNumber: number) {
-    const params = new URLSearchParams($page.url.searchParams.toString());
+    const params = new URLSearchParams(page.url.searchParams.toString());
     params.set("page", pageNumber+"")
-    return $page.url.pathname + "?" + params.toString();
+    return page.url.pathname + "?" + params.toString();
   }
 </script>
 {#if currentPage > 1}

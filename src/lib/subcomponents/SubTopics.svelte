@@ -4,7 +4,7 @@
   import { quintOut } from "svelte/easing";
   import type { Timestamp } from "$lib/timestamps/types.ts";
 
-  import { page } from "$app/stores";
+  import { page } from "$app/state";
   import { colonTimeString } from "$lib/timeUtils.ts";
 
 
@@ -37,13 +37,13 @@
 
   const totalSub = rest.reduce(reduceFunc, 0)
 
-  let expanded = $state(rest.length <= 1 || rest.map(t => "#timestamp-" + youtubeId + "." + t.time).includes($page.url.hash));
+  let expanded = $state(rest.length <= 1 || rest.map(t => "#timestamp-" + youtubeId + "." + t.time).includes(page.url.hash));
 </script>
 
 <ul class="normal-list ml-4">
   {#each firstFew as topic}
 
-    <li id="timestamp-{youtubeId}.{topic.time}" class:highlighted={$page.url.hash === "#timestamp-" + youtubeId + "." + topic.time}>
+    <li id="timestamp-{youtubeId}.{topic.time}" class:highlighted={page.url.hash === "#timestamp-" + youtubeId + "." + topic.time}>
       <a
         class="hidden-link"
         href={
@@ -75,7 +75,7 @@
   {:else if expanded && rest}
 
     {#each rest as topic}
-      <li in:slide|global={{easing: quintOut}} id="timestamp-{youtubeId}.{topic.time}" class:highlighted={$page.url.hash === "#timestamp-" + youtubeId + "." + topic.time}>
+      <li in:slide|global={{easing: quintOut}} id="timestamp-{youtubeId}.{topic.time}" class:highlighted={page.url.hash === "#timestamp-" + youtubeId + "." + topic.time}>
         <a
           class="hidden-link"
           href={

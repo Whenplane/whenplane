@@ -9,9 +9,9 @@
 <script lang="ts">
     import {onMount} from "svelte";
     import {getClosestWan, getNextWAN, getTimeUntil} from "./timeUtils";
-    import {page} from "$app/stores";
+    import {page} from "$app/state";
 
-    let nextWan = getNextWAN(undefined, undefined, $page.data.alternateStartTimes, $page.data.hasDone);
+    let nextWan = getNextWAN(undefined, undefined, page.data.alternateStartTimes, page.data.hasDone);
 
     let showPlayed = false;
 
@@ -34,7 +34,7 @@
     function updateCountdown() {
         if(data.isMainShow || data.isPreShow) {
             if(!data.isMainShow && data.isPreShow && data.liveStatus.twitch.isLive) {
-                const mainScheduledStart = getClosestWan(undefined, $page.data.alternateStartTimes)
+                const mainScheduledStart = getClosestWan(undefined, page.data.alternateStartTimes)
 
                 mainLate.set({
                     isMainLate: true,
@@ -50,7 +50,7 @@
         } else {
             if(showPlayed) {
                 showPlayed = false;
-                nextWan = getNextWAN(undefined, undefined, $page.data.alternateStartTimes, $page.data.hasDone);
+                nextWan = getNextWAN(undefined, undefined, page.data.alternateStartTimes, page.data.hasDone);
             }
             const timeUntil = getTimeUntil(nextWan);
             countdownText = timeUntil.string
