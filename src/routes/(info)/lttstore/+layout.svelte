@@ -35,7 +35,7 @@
 <div class="float-right pr-5 h-0">
   <div class="inline-block">
     {#if selectedCurrency !== "USD"}
-      <span class="[&>*]:pointer-events-none" use:popup={{
+      <span class="*:pointer-events-none" use:popup={{
         event: "hover",
         target: "currency-warning",
         placement: 'bottom'

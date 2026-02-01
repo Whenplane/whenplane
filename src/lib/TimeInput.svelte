@@ -17,9 +17,9 @@
 <div class="inline-block">
 	<div class="input-group grid-cols-[auto_4px_auto_4px_auto] text-center px-1">
 		<input type="number" class="text-right" bind:value={hours} />
-		<div class="!p-0 mb-1">:</div>
+		<div class="p-0! mb-1">:</div>
 		<input type="number" class="text-center" bind:value={minutes} />
-		<div class="!p-0 mb-1">:</div>
+		<div class="p-0! mb-1">:</div>
 		<input type="number" class="text-left" bind:value={seconds} />
 	</div>
 </div>

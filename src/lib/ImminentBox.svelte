@@ -22,7 +22,7 @@
 
 {#if floatplane && !floatplane?.isLive && floatplane?.isWAN && dayIsCloseEnough && (floatplane?.isThumbnailNew || floatplane?.thumbnailAge < ageCutoff) && !hasDone /*|| dev*/}
 	<div
-		class="card border-2 p-2 !border-green-600 !bg-opacity-20 !bg-green-600 block relative pb-0 mobile-add-padding"
+		class="card border-2 p-2 border-green-600! !bg-opacity-20 bg-green-600! block relative pb-0 mobile-add-padding"
 		transition:slide={{ duration: 1.5e3 }}
 	>
 		<a href={floatplane?.thumbnail} target="_blank" rel="noopener">
@@ -35,7 +35,7 @@
 		<div class="inline-flex h-32 items-center justify-center ml-4 mobile-full-width">
 			<div>
 				{#if floatplane?.isThumbnailNew}
-					<h2 class="!mb-0">The show might start soon!</h2>
+					<h2 class="mb-0!">The show might start soon!</h2>
 				{/if}
 				The thumbnail was updated{floatplane?.isThumbnailNew ? '' : ','}
 				{#if !floatplane?.isThumbnailNew}
@@ -44,7 +44,7 @@
 				{/if}
 				{timeString(floatplane?.thumbnailAge, true, false)} ago
 				<div
-					class="text-surface inline-block info [&>*]:pointer-events-none"
+					class="text-surface inline-block info *:pointer-events-none"
 					use:popup={{
 						event: 'hover',
 						target: 'imminent-thumbnail',

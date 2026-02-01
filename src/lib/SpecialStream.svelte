@@ -89,7 +89,7 @@
 				<div class="text-center text-xs">
 					estimated
 					<div
-						class="text-surface inline-block info [&>*]:pointer-events-none"
+						class="text-surface inline-block info *:pointer-events-none"
 						use:popup={{
 							event: 'hover',
 							target: 'estimated-special-stream-start',

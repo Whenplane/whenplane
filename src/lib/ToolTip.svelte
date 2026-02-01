@@ -25,11 +25,11 @@
 		target: id,
 		placement: placement
 	}}
-	class="inline-block [&>*]:pointer-events-none"
+	class="inline-block *:pointer-events-none"
 	class:cursor-pointer={event !== 'hover'}
 >
 	{#if icon}{@render icon()}{:else}
-		<Info classes="!inline-block" />
+		<Info classes="inline-block!" />
 	{/if}
 </div>
 

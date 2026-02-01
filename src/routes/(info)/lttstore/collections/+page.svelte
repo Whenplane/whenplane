@@ -32,7 +32,7 @@
           <td style="width: 5em;">
             <a href="/lttstore/collections/{collection.handle}" class="hidden-link">
               {#if image}
-                <img src={image.src} alt={image.alt} style="width: 5em;" class="rounded-sm"/>
+                <img src={image.src} alt={image.alt} style="width: 5em;" class="rounded-xs"/>
               {/if}
             </a>
           </td>

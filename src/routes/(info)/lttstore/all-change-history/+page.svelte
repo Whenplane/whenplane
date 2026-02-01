@@ -33,7 +33,7 @@
     </tbody>
     <tfoot>
     <tr style="text-transform: initial !important;">
-      <td class="!p-2 opacity-70" colspan="3">Changes before <DateStamp epochSeconds={1727147700}/> are not available</td>
+      <td class="p-2! opacity-70" colspan="3">Changes before <DateStamp epochSeconds={1727147700}/> are not available</td>
     </tr>
     </tfoot>
   </table>

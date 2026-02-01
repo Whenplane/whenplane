@@ -41,7 +41,7 @@ How late do you think the show will be?
 
 <div class="inline-block relative">
 	<div
-		class="absolute bottom-0 text-surface pt-3 inline-block info [&>*]:pointer-events-none"
+		class="absolute bottom-0 text-surface pt-3 inline-block info *:pointer-events-none"
 		use:popup={{
 			event: 'hover',
 			target: 'latenessVotingInfo',

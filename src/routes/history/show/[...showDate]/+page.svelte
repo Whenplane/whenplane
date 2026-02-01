@@ -181,7 +181,7 @@
                         {#each timestamps as timestamp, i}
                             {@const youtubeId = data.value?.vods?.youtube}
                             {@const floatplaneId = data.value?.vods?.floatplane}
-                            <li class="!mt-0 !mb-0 !p-0" id="timestamp-{youtubeId}.{timestamp.time}" class:highlighted={page.url.hash === "#timestamp-" + youtubeId + "." + timestamp.time}>
+                            <li class="mt-0! mb-0! p-0!" id="timestamp-{youtubeId}.{timestamp.time}" class:highlighted={page.url.hash === "#timestamp-" + youtubeId + "." + timestamp.time}>
                                 <a
                                   class="hidden-link"
                                   href={

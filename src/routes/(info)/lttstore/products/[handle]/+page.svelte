@@ -138,7 +138,7 @@
   <div class=" overflow-y-visible overflow-x-auto pr-64 edge-fade" style="text-wrap: nowrap;">
     {#each productInfo.media as image}
       {#if image.media_type === "image"}
-        <a href={image.src} class="m-1 !no-underline">
+        <a href={image.src} class="m-1 no-underline!">
           <img src={image.src} class="product-image inline-block" alt={image.alt} title={image.alt} width={image.width} height={image.height} />
         </a>
       {/if}
@@ -364,7 +364,7 @@
                       {#each productInfo.options as option}
                         <li>
                           {option.name}
-                          <ul class="!list-[circle]">
+                          <ul class="list-[circle]!">
                             {#each option.values as value}
                               <li>{value}</li>
                             {/each}
@@ -404,7 +404,7 @@
                             <tr>
                               <td class="align-top">Options</td>
                               <td>
-                                <ul class="!list-[circle]">
+                                <ul class="list-[circle]!">
                                   {#each variant.options as value}
                                     <li>{value}</li>
                                   {/each}
@@ -692,7 +692,7 @@
         {#if data.product.firstSeen < 1727147700624}
           <tfoot>
           <tr style="text-transform: initial !important;">
-            <td class="!p-2 opacity-70" colspan="3">Changes before <DateStamp epochSeconds={1727147700}/> are not available</td>
+            <td class="p-2! opacity-70" colspan="3">Changes before <DateStamp epochSeconds={1727147700}/> are not available</td>
           </tr>
           </tfoot>
         {/if}

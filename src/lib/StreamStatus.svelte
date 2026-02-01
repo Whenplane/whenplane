@@ -27,7 +27,7 @@
 
 <!--<WdbListener/>-->
 
-<div class="logo-cloud grid-cols-1 md:!grid-cols-3 gap-1">
+<div class="logo-cloud grid-cols-1 md:grid-cols-3! gap-1">
 	<a class="logo-item" href="https://www.twitch.tv/linustech" target="_blank" rel="noopener">
 		<span>
 			{#if page.url.searchParams.has('boca')}
@@ -152,7 +152,7 @@
             Floatplane
             {#if mounted && useTwitchFallback} </!-- Don't SSR info button since it wont work without client-side JS --/>
                 <span
-                        class="text-surface inline-block fp-info [&>*]:pointer-events-none"
+                        class="text-surface inline-block fp-info *:pointer-events-none"
                         use:popup={{
                             event: 'hover',
                             target: 'floatplaneInfo',

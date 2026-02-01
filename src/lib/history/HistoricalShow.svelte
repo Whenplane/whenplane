@@ -119,7 +119,7 @@
 								/>
 							</div>
 							{#if !thumbnailLoaded && browser && localStorage.getItem('disableBlurHash') !== 'true'}
-								<div class="absolute top-0 left-0 rounded" out:fade|global={{ duration: 400 }}>
+								<div class="absolute top-0 left-0 rounded-sm" out:fade|global={{ duration: 400 }}>
 									{#if thumbnail.blurhash}
 										<BlurHash blurhash={thumbnail.blurhash} />
 									{/if}
@@ -136,9 +136,9 @@
 						bind:this={nonLazyLoadedImage}
 					/>
 					{#if !thumbnailLoaded}
-						<div class="absolute top-0 left-0 rounded" out:fade|global={{ duration: 200 }}>
+						<div class="absolute top-0 left-0 rounded-sm" out:fade|global={{ duration: 200 }}>
 							<img
-								class="blur-sm"
+								class="blur-xs"
 								fetchpriority="high"
 								src={(dev ? 'https://whenplane.com' : '') +
 									'/cdn-cgi/image/height=260,quality=10,format=auto,blur=20/' +

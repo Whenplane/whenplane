@@ -280,7 +280,7 @@
 		</div>
 
 
-		<div class="mx-4 !mt-2">
+		<div class="mx-4 mt-2!">
 			{#if data.liveStatus}
 				<StreamStatus {data}/>
 			{:else}
@@ -336,7 +336,7 @@
 					<span class="capitalize">More</span>
 					<span><CaretDownFill/></span>
 				</button>
-				<div class="card w-58 !shadow-2xl overflow-hidden z-20 !bg-surface-500" data-popup="moreDropdown">
+				<div class="card w-58 shadow-2xl! overflow-hidden z-20 !bg-surface-500" data-popup="moreDropdown">
 					<MoreLinks/>
 
 					<div class="arrow bg-surface-400-500-token"></div>
@@ -345,7 +345,7 @@
 				<br>
 			{/if}
 			<!--{#if nowish.getTime() < 1710572400000}
-				<a href="https://www.twitch.tv/bocabola" target="_blank" rel="noopener" class="!no-underline">
+				<a href="https://www.twitch.tv/bocabola" target="_blank" rel="noopener" class="no-underline!">
 					Elijah (BocaBola) will be streaming during After Dark and after WAN Show!
 				</a>
 			{/if}-->
@@ -353,7 +353,7 @@
 
 
 		{#if (data.isThereWan?.text || data.isThereWan?.image) && !data.isBot}
-			<div class="card border-2 p-2 !border-amber-600 !bg-opacity-20 !bg-amber-600 block text-center limit mx-auto">
+			<div class="card border-2 p-2 border-amber-600! !bg-opacity-20 bg-amber-600! block text-center limit mx-auto">
 				{#if data.isThereWan?.text}
 					{@html sanitizeHtml(data.isThereWan?.text, newsSanitizeSettings)}
 				{/if}

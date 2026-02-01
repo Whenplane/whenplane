@@ -19,8 +19,9 @@
 	import { onMount } from 'svelte';
 
 	import { Toast } from '@skeletonlabs/skeleton';
-	import { Modal, modalStore } from '@skeletonlabs/skeleton';
-	import type { ModalSettings, ModalComponent } from '@skeletonlabs/skeleton';
+
+	import { initializeStores } from '@skeletonlabs/skeleton';
+	initializeStores();
 
 	let { children = typed<import('svelte').Snippet>() } = $props();
 
