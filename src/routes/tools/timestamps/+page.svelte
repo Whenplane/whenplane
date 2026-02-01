@@ -72,14 +72,14 @@
     <br>
     <div class="card text-left mx-auto">
         <pre>
-            {
+            &#123;
                 name: "{dateDate.year}/{dateDate.month}/{dateDate.day}",
-                metadata: {
+                metadata: &#123;
                     preShowStart: "{startsAt?.toUTC().toISO()}",
                     mainShowStart: "{preEndsAt?.toUTC().toISO()}",
                     showEnd: "{endsAt?.toUTC().toISO()}"
-                }
-            }
+                &#125;
+            &#125;
         </pre>
     </div>
 </div>
