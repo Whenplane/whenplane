@@ -1,124 +1,142 @@
 <script lang="ts">
-  import type {MMV2TableRow} from "$lib/merch-messages/mm-types.ts";
-  import { Avatar } from "@skeletonlabs/skeleton";
-  import PersonX from "svelte-bootstrap-icons/lib/PersonX.svelte";
-  import ReplyFill from "svelte-bootstrap-icons/lib/ReplyFill.svelte";
-  import { page } from "$app/state";
-  import { colonTimeString } from "$lib/timeUtils.ts";
-  import Youtube from "$lib/svg/Youtube.svelte";
-  import Floatplane from "$lib/svg/Floatplane.svelte";
+	import type { MMV2TableRow } from '$lib/merch-messages/mm-types.ts';
+	import { Avatar } from '@skeletonlabs/skeleton';
+	import PersonX from 'svelte-bootstrap-icons/lib/PersonX.svelte';
+	import ReplyFill from 'svelte-bootstrap-icons/lib/ReplyFill.svelte';
+	import { page } from '$app/state';
+	import { colonTimeString } from '$lib/timeUtils.ts';
+	import Youtube from '$lib/svg/Youtube.svelte';
+	import Floatplane from '$lib/svg/Floatplane.svelte';
+	import { typed } from '$lib';
 
-  interface Props {
-    message: MMV2TableRow;
-    youtubeId: string | undefined;
-    floatplaneId: string | undefined;
-    source: "youtube" | "floatplane" | "floatplane-live";
-    preShowLength: number | null;
-  }
+	let {
+		message = typed<MMV2TableRow>(),
+		youtubeId = typed<string | undefined>(),
+		floatplaneId = typed<string | undefined>(),
+		source = typed<'youtube' | 'floatplane' | 'floatplane-live'>(),
+		preShowLength = typed<number | null>()
+	} = $props();
 
-  let {
-    message,
-    youtubeId,
-    floatplaneId,
-    source,
-    preShowLength
-  }: Props = $props();
+	const seconds = Math.floor(message.timestamp);
+	const imageUrl = `https://merch-message-images.whenplane.com/${message.show}/images/${seconds}.jpg`;
 
-  const seconds = Math.floor(message.timestamp);
-  const imageUrl = `https://merch-message-images.whenplane.com/${message.show}/images/${seconds}.jpg`;
-
-  const floatplaneSeconds = source.startsWith("floatplane") ?
-    (source === "floatplane-live" ? seconds + 50 : seconds) :
-    preShowLength !== null ? seconds + Math.floor(preShowLength/1e3) : null;
-  const youtubeSeconds = source === "youtube" ? seconds : preShowLength !== null ? (floatplaneSeconds ?? seconds) - Math.floor(preShowLength/1e3) : null;
+	const floatplaneSeconds = source.startsWith('floatplane')
+		? source === 'floatplane-live'
+			? seconds + 50
+			: seconds
+		: preShowLength !== null
+			? seconds + Math.floor(preShowLength / 1e3)
+			: null;
+	const youtubeSeconds =
+		source === 'youtube'
+			? seconds
+			: preShowLength !== null
+				? (floatplaneSeconds ?? seconds) - Math.floor(preShowLength / 1e3)
+				: null;
 </script>
+
 <div
-  class="card card-hover relative p-4 my-3 mx-2 flex overflow-hidden text-left main-div"
-  class:ml-6={message.type === "reply"}
-  class:!bg-surface-900={message.type === "reply"}
-  id={message.id}
-  class:hashHighlight={page.url.hash === "#" + message.id}
+	class="card card-hover relative p-4 my-3 mx-2 flex overflow-hidden text-left main-div"
+	class:ml-6={message.type === 'reply'}
+	class:!bg-surface-900={message.type === 'reply'}
+	id={message.id}
+	class:hashHighlight={page.url.hash === '#' + message.id}
 >
-  <div class="flex-1 grid grid-cols-[1fr_auto] items-center gap-y-2">
-    <div class="flex items-center">
-      {#if message.type === "message"}
-        <div aria-hidden="true">
-          {#if message.name === "Anonymous"}
-            <figure class="avatar">
-              <PersonX/>
-            </figure>
-          {:else}
-            <Avatar width="w-10" initials={message.name.charAt(0)}/>
-          {/if}
-        </div>
-        &nbsp;
-        <span>{message.name}</span>
-      {:else}
-        <ReplyFill class="w-5 h-5 m-2"/>
-        &nbsp;
-        <div>
-          <span class="opacity-80">
-            Reply to
-          </span>
-          {message.name}
-        </div>
-      {/if}
-    </div>
+	<div class="flex-1 grid grid-cols-[1fr_auto] items-center gap-y-2">
+		<div class="flex items-center">
+			{#if message.type === 'message'}
+				<div aria-hidden="true">
+					{#if message.name === 'Anonymous'}
+						<figure class="avatar">
+							<PersonX />
+						</figure>
+					{:else}
+						<Avatar width="w-10" initials={message.name.charAt(0)} />
+					{/if}
+				</div>
+				&nbsp;
+				<span>{message.name}</span>
+			{:else}
+				<ReplyFill class="w-5 h-5 m-2" />
+				&nbsp;
+				<div>
+					<span class="opacity-80">Reply to</span>
+					{message.name}
+				</div>
+			{/if}
+		</div>
 
-    <div class="opacity-70 ml-4 pr-4 col-span-2">
-      {message.text}
-    </div>
+		<div class="opacity-70 ml-4 pr-4 col-span-2">
+			{message.text}
+		</div>
 
-    <div class="row-start-1 col-start-2 justify-self-end md:pr-4 text-sm flex items-center gap-1">
-      {#if floatplaneSeconds != null && floatplaneId}
-        <a href="https://floatplane.com/post/{floatplaneId}?t={floatplaneSeconds}" rel="noopener" class="btn btn-sm variant-ghost-surface py-1 px-1.5" aria-label="Jump to message in Floatplane VOD">
-          <div class="inline-block pr-0.5" aria-hidden="true">
-            <Floatplane height="1.6em"/>
-          </div>
-          {colonTimeString(floatplaneSeconds)}
-        </a>
-      {/if}
-      {#if youtubeSeconds != null && youtubeSeconds >= 0}
-        <a href="https://youtube.com/watch?v={youtubeId}&t={youtubeSeconds}" rel="noopener" class="btn btn-sm variant-ghost-surface py-1 px-1.5" aria-label="Jump to message in YouTube VOD">
-          <span aria-hidden="true">
-            <Youtube height={1.75}/>
-          </span>
-          {colonTimeString(youtubeSeconds)}
-        </a>
-      {/if}
-    </div>
-  </div>
-  <div class="w-full message-image shrink-0 self-center">
-    <a href={imageUrl} aria-label="View Message Screenshot">
-      <img class="w-full" src={imageUrl} width="1000" height="200" loading="lazy" aria-hidden="true">
-    </a>
-  </div>
-
+		<div class="row-start-1 col-start-2 justify-self-end md:pr-4 text-sm flex items-center gap-1">
+			{#if floatplaneSeconds != null && floatplaneId}
+				<a
+					href="https://floatplane.com/post/{floatplaneId}?t={floatplaneSeconds}"
+					rel="noopener"
+					class="btn btn-sm variant-ghost-surface py-1 px-1.5"
+					aria-label="Jump to message in Floatplane VOD"
+				>
+					<div class="inline-block pr-0.5" aria-hidden="true">
+						<Floatplane height="1.6em" />
+					</div>
+					{colonTimeString(floatplaneSeconds)}
+				</a>
+			{/if}
+			{#if youtubeSeconds != null && youtubeSeconds >= 0}
+				<a
+					href="https://youtube.com/watch?v={youtubeId}&t={youtubeSeconds}"
+					rel="noopener"
+					class="btn btn-sm variant-ghost-surface py-1 px-1.5"
+					aria-label="Jump to message in YouTube VOD"
+				>
+					<span aria-hidden="true">
+						<Youtube height={1.75} />
+					</span>
+					{colonTimeString(youtubeSeconds)}
+				</a>
+			{/if}
+		</div>
+	</div>
+	<div class="w-full message-image shrink-0 self-center">
+		<a href={imageUrl} aria-label="View Message Screenshot">
+			<img
+				class="w-full"
+				src={imageUrl}
+				width="1000"
+				height="200"
+				loading="lazy"
+				alt=""
+				aria-hidden="true"
+			/>
+		</a>
+	</div>
 </div>
 
 <style>
-  figure.avatar {
-      @apply w-10 bg-surface-500 rounded-full flex aspect-square text-surface-50 font-semibold justify-center items-center overflow-hidden isolate;
-  }
+	figure.avatar {
+		@apply w-10 bg-surface-500 rounded-full flex aspect-square text-surface-50 font-semibold justify-center items-center overflow-hidden isolate;
+	}
 
-  .message-image {
-      @apply mt-2;
-  }
-  .main-div {
-    flex-direction: column;
-  }
-  @media (width >= 48rem) {
-      .message-image {
-          width: 28rem;
-          margin: 0;
-      }
-      .main-div {
-          flex-direction: row;
-      }
-  }
+	.message-image {
+		@apply mt-2;
+	}
+	.main-div {
+		flex-direction: column;
+	}
+	@media (width >= 48rem) {
+		.message-image {
+			width: 28rem;
+			margin: 0;
+		}
+		.main-div {
+			flex-direction: row;
+		}
+	}
 
-  .hashHighlight {
-      border: #d4163c 2px solid;
-      border-radius: 12px;
-  }
+	.hashHighlight {
+		border: #d4163c 2px solid;
+		border-radius: 12px;
+	}
 </style>

@@ -1,49 +1,52 @@
 <script lang="ts">
-  import LazyLoad from "@dimfeld/svelte-lazyload";
-  import { browser } from "$app/environment";
+	import LazyLoad from '@dimfeld/svelte-lazyload';
+	import { browser } from '$app/environment';
+	import { typed } from '$lib';
 
-  interface Props {
-    productId: number;
-    initiallyLoad?: boolean;
-  }
+	let {
+		productId = typed<number>(),
+		initiallyLoad = typed<boolean>(false)
+	} = $props();
 
-  let { productId, initiallyLoad = false }: Props = $props();
+	// eslint-disable-next-line @typescript-eslint/no-empty-function
+	let promise = $state(new Promise<Response>(() => {}));
+	let jsonPromise = $state(new Promise<{ id: number; handle: string; title: string }>(() => {}));
 
-  // eslint-disable-next-line @typescript-eslint/no-empty-function
-  let promise = $state(new Promise<Response>(() => {}));
-  let jsonPromise = $state(new Promise<{id: number, handle: string, title: string}>(() => {}));
+	function loadProduct() {
+		promise = fetch('/api/lttstore/products/brief/' + productId, {
+			headers: { Accept: 'application/json' }
+		});
+		jsonPromise = promise.then((r) => r.json());
+	}
 
-  function loadProduct() {
-    promise = fetch("/api/lttstore/products/brief/" + productId, {headers: {"Accept": "application/json"}});
-    jsonPromise = promise.then(r => r.json());
-  }
-
-  if(initiallyLoad && browser) loadProduct();
+	if (initiallyLoad && browser) loadProduct();
 </script>
+
 {#await promise}
-  <div class="inline-block placeholder animate-pulse text-clear">{productId}</div>
+	<div class="inline-block placeholder animate-pulse text-clear">{productId}</div>
 {:then response}
-  {#if response.ok}
-    {#await jsonPromise}
-      <div class="inline-block placeholder animate-pulse text-clear">{productId}</div>
-    {:then brief}
-      <a href="/lttstore/products/{brief.handle}">
-        {brief.title}
-      </a>
-    {/await}
-  {:else}
-    {productId} not ok!
-  {/if}
+	{#if response.ok}
+		{#await jsonPromise}
+			<div class="inline-block placeholder animate-pulse text-clear">{productId}</div>
+		{:then brief}
+			<a href="/lttstore/products/{brief.handle}">
+				{brief.title}
+			</a>
+		{/await}
+	{:else}
+		{productId} not ok!
+	{/if}
 {/await}
 {#if browser}
-  <div style="height: 0; display: inline-block;">
-    <div class="relative pointer-events-none" style="bottom: 50em">
-      <LazyLoad on:visible={loadProduct} height="50em"/>
-    </div>
-  </div>
+	<div style="height: 0; display: inline-block;">
+		<div class="relative pointer-events-none" style="bottom: 50em">
+			<LazyLoad on:visible={loadProduct} height="50em" />
+		</div>
+	</div>
 {/if}
+
 <style>
-  .text-clear {
-      color: rgba(0, 0, 0, 0);
-  }
+	.text-clear {
+		color: rgba(0, 0, 0, 0);
+	}
 </style>

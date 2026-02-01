@@ -1,15 +1,14 @@
 <script lang="ts">
-  interface Props {
-    children?: import('svelte').Snippet;
-  }
+	import { typed } from '$lib';
 
-  let { children }: Props = $props();
+	let { children = typed<import('svelte').Snippet>() } = $props();
 </script>
 
 {@render children?.()}
-<br>
+<br />
 <div class="p-4">
-  <span class="text-sm opacity-60">
-    Whenplane and the Whenplane Merch Messages Index is not affiliated with or endorsed by Linus Media Group.
-  </span>
+	<span class="text-sm opacity-60">
+		Whenplane and the Whenplane Merch Messages Index is not affiliated with or endorsed by Linus
+		Media Group.
+	</span>
 </div>

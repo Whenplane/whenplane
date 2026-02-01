@@ -1,21 +1,18 @@
 <script lang="ts">
-  import { page } from "$app/state";
-  import { Currencies } from "currencies-map";
-  import type { LatestExchangeRate } from "../../routes/api/exchangeRates/exchangeRateAPITypes.ts";
+	import { page } from '$app/state';
+	import { Currencies } from 'currencies-map';
+	import type { LatestExchangeRate } from '../../routes/api/exchangeRates/exchangeRateAPITypes.ts';
+	import { typed } from '$lib';
 
-  interface Props {
-    usd: number;
-  }
+	let { usd = typed<number>() } = $props();
 
-  let { usd }: Props = $props();
+	let currency: string = $derived(page.data.currency);
 
-  let currency: string = $derived(page.data.currency);
-  
-  let symbol = $derived(Currencies.symbols.get(currency));
+	let symbol = $derived(Currencies.symbols.get(currency));
 
-  let exchangeRates: LatestExchangeRate = $derived(page.data.exchangeRates);
-  
+	let exchangeRates: LatestExchangeRate = $derived(page.data.exchangeRates);
 
-  let convertedPrice = $derived(usd * exchangeRates.rates[currency]);
+	let convertedPrice = $derived(usd * exchangeRates.rates[currency]);
 </script>
-{symbol}{(Math.round(convertedPrice * 100)/100).toLocaleString(undefined, {minimumFractionDigits: 2})}
+
+{symbol}{(Math.round(convertedPrice * 100) / 100).toLocaleString(undefined, { minimumFractionDigits: 2 })}

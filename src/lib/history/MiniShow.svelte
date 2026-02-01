@@ -1,12 +1,11 @@
 <script lang="ts">
   import type { HistoricalEntry } from "$lib/utils.ts";
+  import { typed } from "$lib";
 
-  interface Props {
-    show: HistoricalEntry;
-    i?: number;
-  }
-
-  let { show, i = 0 }: Props = $props();
+  let {
+    show = typed<HistoricalEntry>(),
+    i = typed<number>(0)
+  } = $props();
 
   let thumbnails = $derived(show.metadata?.thumbnails ?? show.metadata?.snippet?.thumbnails ?? show.value?.snippet?.thumbnails);
   let thumbnail = $derived(thumbnails?.maxres ??

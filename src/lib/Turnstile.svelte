@@ -1,30 +1,35 @@
 <script lang="ts">
-  import {Turnstile} from "svelte-turnstile";
+	import { Turnstile } from 'svelte-turnstile';
+	import { typed } from '$lib';
 
-  interface Props {
-    siteKey: any;
-    passed?: boolean;
-  }
+	let {
+		siteKey = typed<string>(),
+		passed = $bindable<boolean>(false)
+	} = $props();
 
-  let { siteKey, passed = $bindable(false) }: Props = $props();
-
-  function unPass() {
-    passed = false;
-  }
-  function pass() {
-    passed = true
-  }
+	function unPass() {
+		passed = false;
+	}
+	function pass() {
+		passed = true;
+	}
 </script>
 
-<br>
+<br />
 <div class="turnstile inline-block mx-auto">
-  <Turnstile {siteKey} on:turnstile-error={unPass} on:turnstile-expired={unPass} on:turnstile-timeout={unPass} on:turnstile-callback={pass}/>
+	<Turnstile
+		{siteKey}
+		on:turnstile-error={unPass}
+		on:turnstile-expired={unPass}
+		on:turnstile-timeout={unPass}
+		on:turnstile-callback={pass}
+	/>
 </div>
-<br>
+<br />
 
 <style>
-    div {
-        height: 65px;
-        width: 300px;
-    }
+	div {
+		height: 65px;
+		width: 300px;
+	}
 </style>

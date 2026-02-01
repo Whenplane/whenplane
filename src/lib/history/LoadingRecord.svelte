@@ -1,12 +1,10 @@
 <script lang="ts">
-    import Record from "$lib/history/Record.svelte";
-    interface Props {
-        children?: import('svelte').Snippet;
-    }
+	import Record from '$lib/history/Record.svelte';
+	import { typed } from '$lib';
 
-    let { children }: Props = $props();
+	let { children = typed<import('svelte').Snippet>() } = $props();
 </script>
 
 <Record loading={true}>
-    {@render children?.()}
+	{@render children?.()}
 </Record>

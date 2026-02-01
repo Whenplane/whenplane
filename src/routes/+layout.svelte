@@ -1,6 +1,7 @@
 <!-- @migration task: review uses of `navigating` -->
-<script lang='ts'>
-  import { run } from 'svelte/legacy';
+<script lang="ts">
+	import { run } from 'svelte/legacy';
+	import { typed } from '$lib';
 
 	// The ordering of these imports is critical to your app working properly
 	import '@skeletonlabs/skeleton/themes/theme-crimson.css';
@@ -9,80 +10,75 @@
 	// Most of your app wide CSS should be put in this file
 	import '../app.css';
 
-    import { computePosition, autoUpdate, flip, shift, offset, arrow } from '@floating-ui/dom';
-    import { storePopup } from '@skeletonlabs/skeleton';
+	import { computePosition, autoUpdate, flip, shift, offset, arrow } from '@floating-ui/dom';
+	import { storePopup } from '@skeletonlabs/skeleton';
 
-    import 'nprogress/nprogress.css';
-    import {navigating, page} from '$app/state';
-    import NProgress from 'nprogress';
-    import { browser, dev } from "$app/environment";
-    import { setServiceWorker } from "$lib/stores.ts";
-    import { onMount } from "svelte";
+	import 'nprogress/nprogress.css';
+	import { navigating, page } from '$app/state';
+	import NProgress from 'nprogress';
+	import { browser, dev } from '$app/environment';
+	import { setServiceWorker } from '$lib/stores.ts';
+	import { onMount } from 'svelte';
 
-    import { Toast } from '@skeletonlabs/skeleton';
-    import { Modal, modalStore } from '@skeletonlabs/skeleton';
-    import type { ModalSettings, ModalComponent } from '@skeletonlabs/skeleton';
-  interface Props {
-    children?: import('svelte').Snippet;
-  }
+	import { Toast } from '@skeletonlabs/skeleton';
+	import { Modal, modalStore } from '@skeletonlabs/skeleton';
+	import type { ModalSettings, ModalComponent } from '@skeletonlabs/skeleton';
 
-  let { children }: Props = $props();
+	let { children = typed<import('svelte').Snippet>() } = $props();
 
-    NProgress.configure({
-        // Full list: https://github.com/rstacruz/nprogress#configuration
-        minimum: 0.16,
-    });
+	NProgress.configure({
+		// Full list: https://github.com/rstacruz/nprogress#configuration
+		minimum: 0.16
+	});
 
-    let progressTimeout = $state();
+	let progressTimeout = $state();
 
-    run(() => {
-    if(browser) {
-          if (navigating) {
-              if(progressTimeout) clearTimeout(progressTimeout);
-              const startBar = () => {
-                  if (navigating) {
-                      NProgress.start();
-                  }
-              };
-              const toURL: URL = navigating.to.url;
-              if(toURL.pathname == "/history" && toURL.searchParams.has("old")) {
-                  startBar();
-              } else {
-                  progressTimeout = setTimeout(startBar, 150);
-              }
-          }
-          if (!navigating) {
-              if(progressTimeout) clearTimeout(progressTimeout);
-              NProgress.done();
-          }
-      }
-  });
+	run(() => {
+		if (browser) {
+			if (navigating) {
+				if (progressTimeout) clearTimeout(progressTimeout);
+				const startBar = () => {
+					if (navigating) {
+						NProgress.start();
+					}
+				};
+				const toURL: URL = navigating.to.url;
+				if (toURL.pathname == '/history' && toURL.searchParams.has('old')) {
+					startBar();
+				} else {
+					progressTimeout = setTimeout(startBar, 150);
+				}
+			}
+			if (!navigating) {
+				if (progressTimeout) clearTimeout(progressTimeout);
+				NProgress.done();
+			}
+		}
+	});
 
+	storePopup.set({ computePosition, autoUpdate, flip, shift, offset, arrow });
 
-    storePopup.set({ computePosition, autoUpdate, flip, shift, offset, arrow });
+	let pathname = $derived(page.url.pathname);
 
-    let pathname = $derived(page.url.pathname);
+	onMount(async () => {
+		if ('serviceWorker' in navigator) {
+			const options: RegistrationOptions | undefined = dev ? { type: 'module' } : undefined;
+			navigator.serviceWorker.register('/service-worker.js', options).then(setServiceWorker);
+		}
+	});
 
-
-    onMount(async () => {
-        if('serviceWorker' in navigator) {
-            const options: RegistrationOptions | undefined = dev ? {type: 'module'} : undefined;
-            navigator.serviceWorker.register('/service-worker.js', options).then(setServiceWorker);
-        }
-    })
-
-      const pagesWithDescription = [
-          "/",
-          "/history",
-          "/extension",
-          "/ltt-time",
-          "/youtube-redirect",
-          "/about",
-          "/notifications",
-          "/boca-marathon",
-          "/merch-messages",
-          "/search"
-      ];
+	const pagesWithDescription = [
+		'/',
+		'/history',
+		'/extension',
+		'/ltt-time',
+		'/youtube-redirect',
+		'/about',
+		'/notifications',
+		'/boca-marathon',
+		'/merch-messages',
+		'/search'
+	];
 </script>
 
 <!--<svelte:window
@@ -90,15 +86,18 @@
 />-->
 
 <svelte:head>
-    {#if !pathname.startsWith("/history/show/") && !pathname.startsWith("/history/graph") && !pathname.startsWith("/news") && !pagesWithDescription.includes(pathname) && !pathname.startsWith("/lttstore") && !pathname.startsWith("/merch-messages")}
-        <meta name="description" content="When is WAN? Who knows! At least you can look at when it started before.. (spoiler: it's late) and view a countdown until its supposed to start">
-    {/if}
-    {#if page.url.hostname !== "whenplane.com"}
-        <link rel="canonical" href="https://whenplane.com{$page.url.pathname}">
-    {/if}
+	{#if !pathname.startsWith('/history/show/') && !pathname.startsWith('/history/graph') && !pathname.startsWith('/news') && !pagesWithDescription.includes(pathname) && !pathname.startsWith('/lttstore') && !pathname.startsWith('/merch-messages')}
+		<meta
+			name="description"
+			content="When is WAN? Who knows! At least you can look at when it started before.. (spoiler: it's late) and view a countdown until its supposed to start"
+		/>
+	{/if}
+	{#if page.url.hostname !== 'whenplane.com'}
+		<link rel="canonical" href="https://whenplane.com{$page.url.pathname}" />
+	{/if}
 </svelte:head>
 
 <Modal />
-<Toast/>
+<Toast />
 
 {@render children?.()}
