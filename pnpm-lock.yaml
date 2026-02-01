@@ -81,6 +81,12 @@ importers:
       '@playwright/test':
         specifier: ^1.28.1
         version: 1.28.1
+      '@skeletonlabs/skeleton':
+        specifier: ^2
+        version: 2.11.0(svelte@5.49.1)
+      '@skeletonlabs/tw-plugin':
+        specifier: ^0.4.1
+        version: 0.4.1(tailwindcss@3.3.2(ts-node@10.9.1(@types/node@20.4.5)(typescript@5.6.3)))
       '@sveltejs/adapter-auto':
         specifier: ^2.0.0
         version: 2.0.0(@sveltejs/kit@2.50.1(@sveltejs/vite-plugin-svelte@4.0.4(svelte@5.49.1)(vite@5.4.21(@types/node@20.4.5)))(svelte@5.49.1)(typescript@5.6.3)(vite@5.4.21(@types/node@20.4.5)))
@@ -1052,6 +1058,16 @@ packages:
   '@sinclair/typebox@0.27.8':
     resolution: {integrity: sha512-+Fj43pSMwJs4KRrH/938Uf+uAELIgVBmQzg/q1YG10djyfA3TnrU8N8XzqCh/okZdszqBQTZf96idMfE5lnwTA==}
 
+  '@skeletonlabs/skeleton@2.11.0':
+    resolution: {integrity: sha512-ORMZYACsIlfKyBx2ZIHBy7zE877t99fxU7LzcY1dveVmn2//+OeqnbQb5RryNILsMR62Tuu1VLnCu01/ByHlbQ==}
+    peerDependencies:
+      svelte: ^3.56.0 || ^4.0.0 || ^5.0.0
+
+  '@skeletonlabs/tw-plugin@0.4.1':
+    resolution: {integrity: sha512-crrC8BGKis0GNTp7V2HF6mk1ECLUvAxgTTV26LMgt/rV3U6Xd7N7dL5qIL8fE4MTHvpKa1SBsdqsnMbEvATeEg==}
+    peerDependencies:
+      tailwindcss: '>=3.0.0'
+
   '@socket.io/component-emitter@3.1.0':
     resolution: {integrity: sha512-+9jVqKhRSpsc591z5vX+X5Yyw+he/HCB4iQ/RYxw35CEPaY1gnsNE43nf9n9AaYjAQrTiI/mOwKUKdUs9vf7Xg==}
 
@@ -1674,6 +1690,9 @@ packages:
     resolution: {integrity: sha512-S27Di+EVyMxcHiwDrFzk8dJYAaD+/5SoWKxL1ri/71CRHsnJnRDPNt2Kzj24+MT9FDupf4aqqyqPrvI8MvQ4VQ==}
     engines: {node: ^12.22.0 || ^14.17.0 || >=16.0.0}
     hasBin: true
+
+  esm-env@1.0.0:
+    resolution: {integrity: sha512-Cf6VksWPsTuW01vU9Mk/3vRue91Zevka5SjyNf3nEpokFRuqt/KjUQoGAwq9qMmhpLTHmXzSIrFRw8zxWzmFBA==}
 
   esm-env@1.2.1:
     resolution: {integrity: sha512-U9JedYYjCnadUlXk7e1Kr+aENQhtUaoaV9+gZm1T8LC/YBAPJx3NSPIAurFOC0U5vrdSevnUJS2/wUVxGwPhng==}
@@ -3538,6 +3557,15 @@ snapshots:
 
   '@sinclair/typebox@0.27.8': {}
 
+  '@skeletonlabs/skeleton@2.11.0(svelte@5.49.1)':
+    dependencies:
+      esm-env: 1.0.0
+      svelte: 5.49.1
+
+  '@skeletonlabs/tw-plugin@0.4.1(tailwindcss@3.3.2(ts-node@10.9.1(@types/node@20.4.5)(typescript@5.6.3)))':
+    dependencies:
+      tailwindcss: 3.3.2(ts-node@10.9.1(@types/node@20.4.5)(typescript@5.6.3))
+
   '@socket.io/component-emitter@3.1.0': {}
 
   '@standard-schema/spec@1.1.0': {}
@@ -4256,6 +4284,8 @@ snapshots:
       text-table: 0.2.0
     transitivePeerDependencies:
       - supports-color
+
+  esm-env@1.0.0: {}
 
   esm-env@1.2.1: {}
 
