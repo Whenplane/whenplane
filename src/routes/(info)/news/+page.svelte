@@ -22,7 +22,7 @@
 			>{page.url.hostname === 'whenwan.show' ? 'whenwan.show' : 'Whenplane'}</a
 		>
 	</li>
-	<li class="crumb-separator" aria-hidden="true">&rsaquo;</li>
+	<li class="crumb-separator" aria-hidden="true">›</li>
 	<li class="crumb">News</li>
 </ol>
 <br />

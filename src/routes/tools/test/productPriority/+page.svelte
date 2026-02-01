@@ -30,7 +30,7 @@
 
 Data from {data.fetched}
 
-<button class="btn btn-sm variant-filled-surface" onclick={() => {i++;}}>Refresh</button>
+<button class="btn btn-sm preset-filled-surface-500" onclick={() => {i++;}}>Refresh</button>
 <div class="limit mx-auto pt-6">
   {#each sortedRankings as [handle, ranking], i (handle)}
     <span class:opacity-50={i > 20} animate:flip={{ duration: 100 }}>

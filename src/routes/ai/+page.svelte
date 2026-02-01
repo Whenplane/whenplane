@@ -117,7 +117,7 @@
 </script>
 
 <div class="limit mx-auto mt-16">
-  <h1 class="text-center">Whenplane AI <span class="chip variant-soft-primary">Experimental</span></h1>
+  <h1 class="text-center">Whenplane AI <span class="chip preset-tonal-primary">Experimental</span></h1>
   <input class="input" type="text" placeholder="How late was last week's show?" bind:value={query} onkeyup={handleInputKeypress}>
   <br>
   <br>

@@ -1,7 +1,7 @@
 <script lang="ts">
   import { run } from 'svelte/legacy';
 
-  import {Accordion, AccordionItem, CodeBlock} from "@skeletonlabs/skeleton";
+  import {Accordion} from "@skeletonlabs/skeleton-svelte";
   import {onMount} from "svelte";
   import {enhance} from "$app/forms";
   import { timeString } from "$lib/timeUtils.ts";
@@ -60,7 +60,7 @@
       Please confirm <b>removing</b> two-factor authentication by entering your two-factor code<br>
       <form method="POST" action="?/unenroll" class="mt-2" use:enhance>
         <input name="confirmation-code" class="input px-2 inline-block width-initial" placeholder="Two-factor Code">
-        <button class="btn btn-sm variant-ghost-warning">Remove two-factor authentication</button>
+        <button class="btn btn-sm preset-tonal-warning border border-warning-500">Remove two-factor authentication</button>
       </form>
       <br>
       If you have lost your two-factor authentication method, please <a href="mailto:support@whenplane.com">contact support</a>
@@ -78,7 +78,7 @@
       <div class="text-center advanced">
         {#if !expired}
           <Accordion class="inline-block">
-            <AccordionItem>
+            <Accordion.Item>
               {#snippet summary()}
                             View text version
                           {/snippet}
@@ -89,7 +89,7 @@
                   </div>
                 
                           {/snippet}
-            </AccordionItem>
+            </Accordion.Item>
           </Accordion>
         {/if}
       </div>
@@ -110,7 +110,7 @@
       <form method="POST" action="?/enroll" class="mt-2" use:enhance>
         <input class="hidden" name="id" value={data.id}>
         <input name="confirmation-code" class="input px-2 inline-block width-initial" placeholder="Two-factor Code">
-        <button class="btn btn-sm variant-ghost-success" disabled={expired}>Enable two-factor authentication</button>
+        <button class="btn btn-sm preset-tonal-success border border-success-500" disabled={expired}>Enable two-factor authentication</button>
       </form>
     {/if}
   </div>

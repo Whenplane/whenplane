@@ -2,7 +2,7 @@
   import { enhance } from '$app/forms';
   import {page} from "$app/state";
   import Turnstile from "$lib/Turnstile.svelte";
-  import { ProgressRadial } from "@skeletonlabs/skeleton";
+  import { ProgressRing } from "@skeletonlabs/skeleton-svelte";
   import { fade } from 'svelte/transition';
 
   let { form } = $props();
@@ -16,21 +16,21 @@
   <h1>Log in</h1>
   <br>
   {#if page.url.searchParams.has("reauth")}
-    <span class="text-primary-500-400-token">
+    <span class="text-primary-600-400">
         Please log in again
     </span>
     <br>
     <br>
   {/if}
   {#if page.url.searchParams.has("email-verified")}
-    <span class="text-success-500-400-token">
+    <span class="text-success-600-400">
         Thank you for verifying your email! You can now log in.
     </span>
     <br>
     <br>
   {/if}
   {#if page.url.searchParams.has("passwordResetSuccess")}
-    <span class="text-success-500-400-token">
+    <span class="text-success-600-400">
         Your password was successfully reset! You can now log in.
     </span>
     <br>
@@ -67,35 +67,35 @@
 
 
       {#if form?.missing}
-            <span class="text-primary-500-400-token">
+            <span class="text-primary-600-400">
                 Please fill in all fields
             </span>
         <br>
       {/if}
       {#if form?.incorrect}
-            <span class="text-primary-500-400-token">
+            <span class="text-primary-600-400">
                 Incorrect username or password
             </span>
         <br>
       {/if}
       {#if form?.message}
-            <span class="text-primary-500-400-token">
+            <span class="text-primary-600-400">
                 {form.message}
             </span>
         <br>
       {/if}
       {#if form?.ratelimited}
-            <span class="text-primary-500-400-token">
+            <span class="text-primary-600-400">
                 You are trying to log in too fast. Wait a minute and try again.
             </span>
         <br>
       {/if}
       {#if form?.emailVerificationNeeded}
-            <span class="text-primary-500-400-token">
+            <span class="text-primary-600-400">
                 You must verify your email before you can log in.<br>
               {#if form?.resendToken}
                 <button
-                  class="btn variant-glass-primary btn-sm"
+                  class="btn preset-tonal-primary btn-sm"
                   formnovalidate
                   formaction="?/resendVerification&resendToken={encodeURIComponent(form.resendToken)}"
                 >
@@ -109,17 +109,17 @@
         <br>
       {/if}
       {#if form?.emailResent}
-        <span class="text-success-500-400-token">
+        <span class="text-success-600-400">
           A new verification email has been sent. Don't forget to check your spam folder if you don't see it in your main inbox!
         </span>
       {/if}
 
 
       <br>
-      <button class="btn variant-glass-primary">Log In</button>
+      <button class="btn preset-tonal-primary">Log In</button>
       {#if loading}
         <li class="crumb" transition:fade|global={{duration: 100}}>
-          <ProgressRadial width="w-6" stroke={250} value={loading ? undefined : 100}/>
+          <ProgressRing width="w-6" stroke={250} value={loading ? undefined : 100}/>
         </li>
       {/if}
     </form>

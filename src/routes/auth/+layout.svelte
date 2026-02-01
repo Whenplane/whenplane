@@ -23,7 +23,7 @@
 	</li>
 	{#each pathHierarchy as path, i}
 		{@const fullPath = '/' + pathHierarchy.slice(0, i + 1).join('/')}
-		<li class="crumb-separator" aria-hidden="true">&rsaquo;</li>
+		<li class="crumb-separator" aria-hidden="true">›</li>
 		{#if i >= pathHierarchy.length - 1}
 			<li class="crumb">{routeNames[fullPath] ?? capitalize(path)}</li>
 		{:else}

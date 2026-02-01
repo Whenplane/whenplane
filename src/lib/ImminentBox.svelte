@@ -1,6 +1,5 @@
 <script lang="ts">
-	import { popup } from '@skeletonlabs/skeleton';
-	import Info from '$lib/svg/Info.svelte';
+		import Info from '$lib/svg/Info.svelte';
 	import { removeAfterLastDash } from '$lib/utils';
 	import type { FpEndpointResponse } from '../routes/api/(live-statuses)/floatplane/+server.ts';
 	import { timeString } from '$lib/timeUtils.ts';

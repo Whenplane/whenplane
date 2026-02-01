@@ -1,7 +1,7 @@
 <script lang="ts">
   import { onMount } from "svelte";
   import {timeStringHours, timeString} from "$lib/timeUtils";
-  import {ProgressBar} from "@skeletonlabs/skeleton";
+  import { Progress } from "@skeletonlabs/skeleton-svelte";
   import Confetti from "svelte-confetti"
   import { dev } from "$app/environment";
   import { getDateFormatLocale } from "$lib/prefUtils.ts";
@@ -64,7 +64,7 @@
   <br>
   {#if distance > 0}
     The subathon is currently {((distance / totalTime) * 100).toFixed(3)}% complete.<br>
-    <ProgressBar value={distance} max={totalTime} />
+    <Progress value={distance} max={totalTime} />
     <br>
     <br>
     There are

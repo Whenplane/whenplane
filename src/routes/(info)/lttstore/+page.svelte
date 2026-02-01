@@ -7,7 +7,7 @@
   import MiniSearch from "minisearch";
   import {flip} from "svelte/animate";
   import {slide, fade} from "svelte/transition";
-  import {ProgressRadial} from "@skeletonlabs/skeleton";
+  import { ProgressRing } from "@skeletonlabs/skeleton-svelte";
   import { invalidateAll } from "$app/navigation";
   import { SearchClient } from "typesense";
   import type { SearchResponse } from "typesense/lib/Typesense/Documents";
@@ -101,11 +101,11 @@
 
 <ol class="breadcrumb pt-2 pl-2">
   <li class="crumb"><a class="anchor hover-underline" href="/">{$page.url.hostname === "whenwan.show" ? "whenwan.show" : "Whenplane"}</a></li>
-  <li class="crumb-separator" aria-hidden="true">&rsaquo;</li>
+  <li class="crumb-separator" aria-hidden="true">›</li>
   <li class="crumb" onclick={reload}>LTT Store Watcher</li>
   {#if loading}
     <li class="crumb" transition:fade|global={{duration: 100}}>
-      <ProgressRadial width="w-6" stroke={250} value={loading ? undefined : 100}/>
+      <ProgressRing width="w-6" stroke={250} value={loading ? undefined : 100}/>
     </li>
   {/if}
 </ol>
@@ -116,9 +116,9 @@
   <h1 class="text-center mb-2">LTTStore Watcher</h1>
 
   <div class="flex justify-between link-header mx-auto">
-    <a href="/lttstore/products" class="btn variant-glass-primary">All Products</a>
-    <a href="/lttstore/archive" class="btn variant-glass-primary">Product Archive</a>
-    <a href="/lttstore/collections" class="btn variant-glass-primary">Collections</a>
+    <a href="/lttstore/products" class="btn preset-tonal-primary">All Products</a>
+    <a href="/lttstore/archive" class="btn preset-tonal-primary">Product Archive</a>
+    <a href="/lttstore/collections" class="btn preset-tonal-primary">Collections</a>
   </div>
   <br>
   <br>
@@ -127,11 +127,11 @@
   <div class="inline-block w-12">
     {#await searchPromise}
       {#if !waiting}
-        <ProgressRadial class="inline-block" width="w-6" stroke={250}/>
+        <ProgressRing class="inline-block" width="w-6" stroke={250}/>
       {/if}
     {/await}
     {#if waiting}
-      <ProgressRadial class="inline-block" width="w-6" stroke={250}/>
+      <ProgressRing class="inline-block" width="w-6" stroke={250}/>
     {/if}
   </div>
   <a href="/lttstore/advanced-search">Advanced Search</a>
@@ -147,7 +147,7 @@
         <span class="result-highlight" class:line-through={!(result.document.available ?? true)}>
           {@html sanitizeHtml(result.highlight?.title?.snippet ?? result.document.title, {allowedTags: ["mark"]})}
         </span>
-        &nbsp;
+         
         <span class="opacity-70 max-w-full truncate result-highlight">
           <!--{descriptionSnippet}-->
           {@html
@@ -272,7 +272,7 @@
 
   <br>
   <br>
-  <a href="/lttstore/products" class="btn variant-filled-secondary">All products</a><br>
+  <a href="/lttstore/products" class="btn preset-filled-secondary-500">All products</a><br>
   <br>
   <br>
   Join the <a data-sveltekit-reload href="/discord">discord</a> where there is a channel that can alert you to useful info! (e.g. new products, sales, restocks)

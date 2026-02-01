@@ -7,7 +7,7 @@
     {@const meta = JSON.parse(product.product)}
     <a href="/lttstore/products/{product.handle}">{product.title}</a> -
     {#each meta.variants as variant}
-      {variant.sku}&nbsp;
+      {variant.sku} 
     {/each}
     <br>
   {/each}

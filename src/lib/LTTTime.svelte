@@ -2,7 +2,6 @@
 	import { run } from 'svelte/legacy';
 
 	import { onMount } from 'svelte';
-	import { popup } from '@skeletonlabs/skeleton';
 	import { page } from '$app/state';
 
 	import { getTimePreference } from '$lib/prefUtils';

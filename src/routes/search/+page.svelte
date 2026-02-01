@@ -137,10 +137,10 @@
 {#if !q}
   <ol class="breadcrumb pt-2 pl-2">
     <li class="crumb"><a class="anchor hover-underline" href="/">{page.url.hostname === "whenwan.show" ? "whenwan.show" : "Whenplane"}</a></li>
-    <li class="crumb-separator" aria-hidden="true">&rsaquo;</li>
+    <li class="crumb-separator" aria-hidden="true">›</li>
     {#if q}
       <li class="crumb"><a class="anchor hover-underline" href="/search">Search</a></li>
-      <li class="crumb-separator" aria-hidden="true">&rsaquo;</li>
+      <li class="crumb-separator" aria-hidden="true">›</li>
       <li class="crumb">{q}</li>
     {:else}
       <li class="crumb">WAN Show Search</li>
@@ -189,10 +189,10 @@
       <ToolTip placement="bottom" event="click" id="more-search-params">
         {#snippet icon()}
               
-              <span class="btn variant-filled-surface cursor-pointer">
+              <span class="btn preset-filled-surface-500 cursor-pointer">
                 More
                 {#if moreOptionsUsed > 0}
-                  <span class="badge-icon variant-filled-warning ml-2">
+                  <span class="badge-icon preset-filled-warning-500 ml-2">
                     {moreOptionsUsed}
                   </span>
                 {/if}
@@ -238,7 +238,7 @@
         <ToolTip placement="bottom" event="click" id="search-settings">
           {#snippet icon()}
                   
-              <span class="btn variant-filled-surface cursor-pointer">
+              <span class="btn preset-filled-surface-500 cursor-pointer">
                 Settings
               </span>
             
@@ -378,7 +378,7 @@
       <ToolTip placement="bottom" event="click" id="last-update-info">
         {#snippet icon()}
               
-              <span class="btn btn-sm variant-filled-surface cursor-pointer">
+              <span class="btn btn-sm preset-filled-surface-500 cursor-pointer">
                 Last Update Info
               </span>
           

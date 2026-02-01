@@ -4,7 +4,7 @@
     import {dev} from "$app/environment";
     import Record from "$lib/history/Record.svelte";
     import LoadingRecord from "$lib/history/LoadingRecord.svelte";
-    import { Accordion, AccordionItem } from "@skeletonlabs/skeleton";
+    import { Accordion } from "@skeletonlabs/skeleton-svelte";
     import { onMount } from "svelte";
     import GraphUp from "svelte-bootstrap-icons/lib/GraphUp.svelte";
     import { page } from "$app/state";
@@ -44,14 +44,14 @@
                 Most late show
             </LoadingRecord>
             <Accordion>
-                <AccordionItem>
+                <Accordion.Item>
                     {#snippet summary()}
                                         More records/stats
                                     {/snippet}
                     {#snippet content()}
                                         Loading...
                                     {/snippet}
-                </AccordionItem>
+                </Accordion.Item>
             </Accordion>
         {:then rec}
             {#if dev && (!rec.earliest || !rec.longestPreShow || !rec.longestShow || !rec.mostLate)}
@@ -83,7 +83,7 @@
             {/await}
             <br>
             <Accordion class="mx-4" spacing="" regionPanel="">
-                <AccordionItem on:toggle={fetchLatenesses}>
+                <Accordion.Item on:toggle={fetchLatenesses}>
                     {#snippet summary()}
                                         More records/stats
                                     {/snippet}
@@ -200,7 +200,7 @@
                             </div>
                         
                                     {/snippet}
-                </AccordionItem>
+                </Accordion.Item>
             </Accordion>
         {/await}
     </div>

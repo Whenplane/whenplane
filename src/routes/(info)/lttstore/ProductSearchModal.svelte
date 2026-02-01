@@ -6,7 +6,7 @@
   import { SearchClient } from "typesense";
   import type { ProductSearchIndex } from "$lib/lttstore/lttstore_types.ts";
   import type { SearchResponse } from "typesense/lib/Typesense/Documents";
-  import { modalStore, ProgressRadial } from "@skeletonlabs/skeleton";
+  import { modalStore, ProgressRing } from "@skeletonlabs/skeleton-svelte";
   import sanitizeHtml from "sanitize-html";
   import {flip} from "svelte/animate";
   import {slide} from "svelte/transition";
@@ -97,11 +97,11 @@
   <input class="input px-2 pl-4 py-0.5" autofocus placeholder="Find a product" bind:value={searchText} onkeydown={keyPress}>
   <div class="inline-block absolute top-4 right-8">
     {#if waiting}
-      <ProgressRadial class="inline-block" width="w-6" stroke={250}/>
+      <ProgressRing class="inline-block" width="w-6" stroke={250}/>
     {/if}
     {#await searchPromise}
       {#if !waiting}
-        <ProgressRadial class="inline-block" width="w-6" stroke={250}/>
+        <ProgressRing class="inline-block" width="w-6" stroke={250}/>
       {/if}
     {/await}
   </div>
@@ -117,7 +117,7 @@
           <span class="result-highlight" class:line-through={!(result.document.available ?? true)}>
           {@html sanitizeHtml(result.highlight?.title?.snippet ?? result.document.title, {allowedTags: ["mark"]})}
         </span>
-          &nbsp;
+           
           <span class="opacity-70 max-w-full truncate result-highlight">
           <!--{descriptionSnippet}-->
             {@html

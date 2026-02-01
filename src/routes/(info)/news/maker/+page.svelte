@@ -4,7 +4,7 @@
   import { onMount } from "svelte";
   import { newsSanitizeSettings } from "$lib/news/news.ts";
   import { truncateText } from "$lib/utils.ts";
-  import {toastStore, clipboard} from "@skeletonlabs/skeleton";
+  import {toastStore} from "@skeletonlabs/skeleton-svelte";
 
   let title = $state("");
   let url = $derived(truncateText(title.replace(/[^A-Za-z0-9- ]+/g, "").replace(/\s\s+/g, ' ').replaceAll(" ", "-").toLowerCase(), 50, false))
@@ -46,9 +46,9 @@
 
 <ol class="breadcrumb pt-2 pl-2">
   <li class="crumb"><a class="anchor hover-underline" href="/">{page.url.hostname === "whenwan.show" ? "whenwan.show" : "Whenplane"}</a></li>
-  <li class="crumb-separator" aria-hidden="true">&rsaquo;</li>
+  <li class="crumb-separator" aria-hidden="true">›</li>
   <li class="crumb"><a class="anchor hover-underline" href="/news">News</a></li>
-  <li class="crumb-separator" aria-hidden="true">&rsaquo;</li>
+  <li class="crumb-separator" aria-hidden="true">›</li>
   <li class="crumb">Maker</li>
 </ol>
 <br>
@@ -66,8 +66,8 @@
 <div class="wrapper">
   <textarea bind:value={content} placeholder="Content goes here"></textarea>
   <div class="preview">
-    <h2>{title}&ZeroWidthSpace;</h2>
-    &ZeroWidthSpace;
+    <h2>{title}​</h2>
+    ​
     {@html sanitizeHtml(content, newsSanitizeSettings)}
   </div>
 </div>

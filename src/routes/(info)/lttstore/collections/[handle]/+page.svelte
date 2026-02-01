@@ -2,7 +2,7 @@
   import sanitizeHtml from "sanitize-html";
   import { page } from "$app/state";
   import { countTo, truncateText } from "$lib/utils.ts";
-  import { Accordion, AccordionItem } from "@skeletonlabs/skeleton";
+  import { Accordion } from "@skeletonlabs/skeleton-svelte";
   import { getFieldName } from "$lib/lttstore/field_names.ts";
   import { getDiffComponent } from "$lib/lttstore/field_components.ts";
   import DateStamp from "$lib/DateStamp.svelte";
@@ -24,11 +24,11 @@
 
 <ol class="breadcrumb pt-2 pl-2">
   <li class="crumb"><a class="anchor hover-underline" href="/">{page.url.hostname === "whenwan.show" ? "whenwan.show" : "Whenplane"}</a></li>
-  <li class="crumb-separator" aria-hidden="true">&rsaquo;</li>
+  <li class="crumb-separator" aria-hidden="true">›</li>
   <li class="crumb"><a class="anchor hover-underline" href="/lttstore">LTT Store Watcher</a></li>
-  <li class="crumb-separator" aria-hidden="true">&rsaquo;</li>
+  <li class="crumb-separator" aria-hidden="true">›</li>
   <li class="crumb"><a class="anchor hover-underline" href="/lttstore/collections">Collections</a></li>
-  <li class="crumb-separator" aria-hidden="true">&rsaquo;</li>
+  <li class="crumb-separator" aria-hidden="true">›</li>
   <li class="crumb">{data.collection.title}</li>
 </ol>
 
@@ -51,7 +51,7 @@
   <br>
   <br>
   <Accordion>
-    <AccordionItem>
+    <Accordion.Item>
       {#snippet summary()}
             Products
           {/snippet}
@@ -74,7 +74,7 @@
 
         
           {/snippet}
-    </AccordionItem>
+    </Accordion.Item>
   </Accordion>
   <br>
   <br>
@@ -89,7 +89,7 @@
 <div class="p-2">
   {#await data.changes}
     <div class="table-container rounded-md">
-      <table class="table table-hover rounded-md">
+      <table class="table  rounded-md">
         <thead>
         <tr>
           <th>What changed</th>
@@ -119,7 +119,7 @@
     </div>
   {:then changeHistory}
     <div class="table-container rounded-md">
-      <table class="table table-hover rounded-md">
+      <table class="table  rounded-md">
         <thead>
         <tr>
           <th>What changed</th>

@@ -7,7 +7,7 @@
   import {flip} from "svelte/animate";
   import { fade } from "svelte/transition"
   import { goto, invalidateAll } from "$app/navigation";
-  import {ProgressRadial} from "@skeletonlabs/skeleton";
+  import { ProgressRing } from "@skeletonlabs/skeleton-svelte";
   import { dev } from "$app/environment";
 
   let { data } = $props();
@@ -45,13 +45,13 @@
 
 <ol class="breadcrumb pt-2 pl-2">
   <li class="crumb"><a class="anchor hover-underline" href="/">{page.url.hostname === "whenwan.show" ? "whenwan.show" : "Whenplane"}</a></li>
-  <li class="crumb-separator" aria-hidden="true">&rsaquo;</li>
+  <li class="crumb-separator" aria-hidden="true">›</li>
   <li class="crumb"><a class="anchor hover-underline" href="/lttstore">LTT Store Watcher</a></li>
-  <li class="crumb-separator" aria-hidden="true">&rsaquo;</li>
+  <li class="crumb-separator" aria-hidden="true">›</li>
   <li class="crumb" onclick={reload}>Products</li>
   {#if loading}
     <li class="crumb" transition:fade|global={{duration: 100}}>
-      <ProgressRadial width="w-6" stroke={250} value={loading ? undefined : 100}/>
+      <ProgressRing width="w-6" stroke={250} value={loading ? undefined : 100}/>
     </li>
   {/if}
 </ol>

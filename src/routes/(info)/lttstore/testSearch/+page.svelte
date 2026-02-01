@@ -1,6 +1,6 @@
 <script>
   import ProductSearchModal from "../ProductSearchModal.svelte";
-  import { modalStore } from "@skeletonlabs/skeleton";
+  import { modalStore } from "@skeletonlabs/skeleton-svelte";
 
   function openSearch() {
     modalStore.trigger({
@@ -12,6 +12,6 @@
   }
 </script>
 
-<button class="btn variant-ghost-primary" onclick={openSearch}>Open</button>
+<button class="btn preset-tonal-primary border border-primary-500" onclick={openSearch}>Open</button>
 
 <ProductSearchModal/>

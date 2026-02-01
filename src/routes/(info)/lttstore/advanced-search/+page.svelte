@@ -6,7 +6,7 @@
   import type { ProductSearchIndex } from "$lib/lttstore/lttstore_types.ts";
   import { SearchClient } from "typesense";
   import LTTProductCard from "$lib/lttstore/LTTProductCard.svelte";
-  import { ProgressRadial } from "@skeletonlabs/skeleton";
+  import { ProgressRing } from "@skeletonlabs/skeleton-svelte";
   import { page } from "$app/stores";
   import ToolTip from "$lib/ToolTip.svelte";
 
@@ -135,9 +135,9 @@
 
 <ol class="breadcrumb pt-2 pl-2">
   <li class="crumb"><a class="anchor hover-underline" href="/">{$page.url.hostname === "whenwan.show" ? "whenwan.show" : "Whenplane"}</a></li>
-  <li class="crumb-separator" aria-hidden="true">&rsaquo;</li>
+  <li class="crumb-separator" aria-hidden="true">›</li>
   <li class="crumb"><a class="anchor hover-underline" href="/lttstore">LTT Store Watcher</a></li>
-  <li class="crumb-separator" aria-hidden="true">&rsaquo;</li>
+  <li class="crumb-separator" aria-hidden="true">›</li>
   <li class="crumb">Advanced Search</li>
 </ol>
 
@@ -145,11 +145,11 @@
   <input placeholder="Search for products" bind:value={searchText} class="input w-64 p-2 pl-4">
   {#await searchPromise}
     {#if !waiting}
-      <ProgressRadial class="inline-block" width="w-6" stroke={250}/>
+      <ProgressRing class="inline-block" width="w-6" stroke={250}/>
     {/if}
   {/await}
   {#if waiting}
-    <ProgressRadial class="inline-block" width="w-6" stroke={250}/>
+    <ProgressRing class="inline-block" width="w-6" stroke={250}/>
   {/if}
   <div class="inline-flex min-[650px]:absolute right-0 pr-2 pt-2">
     <select class="input inline-block" bind:value={sortBy}>
@@ -220,7 +220,7 @@
 
           }}>
           <span>
-            {category.value} <span class="chip variant-ghost-primary py-0.5 px-1.5 rounded-lg">{category.count}</span>
+            {category.value} <span class="chip preset-tonal-primary border border-primary-500 py-0.5 px-1.5 rounded-lg">{category.count}</span>
           </span>
         </label>
       {/each}

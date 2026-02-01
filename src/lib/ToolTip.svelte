@@ -1,6 +1,5 @@
 <script lang="ts">
-	import { popup } from '@skeletonlabs/skeleton';
-	import type { Placement } from '@floating-ui/dom';
+		import type { Placement } from '@floating-ui/dom';
 	import Info from '$lib/svg/Info.svelte';
 	import { typed } from '$lib';
 

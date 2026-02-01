@@ -5,7 +5,7 @@
   import { browser } from "$app/environment";
   import { onMount } from "svelte";
   import { getDateFormatLocale } from "$lib/prefUtils.ts";
-  import { ProgressRadial } from "@skeletonlabs/skeleton";
+  import { ProgressRing } from "@skeletonlabs/skeleton-svelte";
 
   let { data } = $props();
 
@@ -101,11 +101,11 @@
 
 <ol class="breadcrumb pt-2 pl-2">
   <li class="crumb"><a class="anchor hover-underline" href="/">{page.url.hostname === "whenwan.show" ? "whenwan.show" : "Whenplane"}</a></li>
-  <li class="crumb-separator" aria-hidden="true">&rsaquo;</li>
+  <li class="crumb-separator" aria-hidden="true">›</li>
   <li class="crumb"><a class="anchor hover-underline" href="/history">History</a></li>
-  <li class="crumb-separator" aria-hidden="true">&rsaquo;</li>
+  <li class="crumb-separator" aria-hidden="true">›</li>
   <li class="crumb"><a class="anchor hover-underline" href="/history/show/{data.name}">{showDate.toLocaleDateString(getDateFormatLocale())}</a></li>
-  <li class="crumb-separator" aria-hidden="true">&rsaquo;</li>
+  <li class="crumb-separator" aria-hidden="true">›</li>
   <li class="crumb">Transcript</li>
 </ol>
 
@@ -129,7 +129,7 @@
       {#if page.url.searchParams.has("find") && !done}
         <br>
         <div class="bg-amber-600 rounded-md p-2">
-          <ProgressRadial width="w-6" stroke={250} class="inline-block align-bottom"/>
+          <ProgressRing width="w-6" stroke={250} class="inline-block align-bottom"/>
           Finding the text you clicked on. This might take a second...
         </div>
 

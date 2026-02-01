@@ -11,7 +11,7 @@
   import ProductStockHistoryGraph from "$lib/lttstore/product/ProductStockHistoryGraph.svelte";
   import DateStamp from "$lib/DateStamp.svelte";
   import { commas, truncateText } from "$lib/utils.ts";
-  import { Accordion, AccordionItem } from "@skeletonlabs/skeleton";
+  import { Accordion } from "@skeletonlabs/skeleton-svelte";
   import sanitizeHtml from "sanitize-html";
   import { newsSanitizeSettings } from "$lib/news/news";
   import { goto } from "$app/navigation";
@@ -116,11 +116,11 @@
 
 <ol class="breadcrumb pt-2 pl-2">
   <li class="crumb"><a class="anchor hover-underline" href="/">{page.url.hostname === "whenwan.show" ? "whenwan.show" : "Whenplane"}</a></li>
-  <li class="crumb-separator" aria-hidden="true">&rsaquo;</li>
+  <li class="crumb-separator" aria-hidden="true">›</li>
   <li class="crumb"><a class="anchor hover-underline" href="/lttstore">LTT Store Watcher</a></li>
-  <li class="crumb-separator" aria-hidden="true">&rsaquo;</li>
+  <li class="crumb-separator" aria-hidden="true">›</li>
   <li class="crumb"><a class="anchor hover-underline" href="/lttstore/products">Products</a></li>
-  <li class="crumb-separator" aria-hidden="true">&rsaquo;</li>
+  <li class="crumb-separator" aria-hidden="true">›</li>
   <li class="crumb">{productInfo.title}</li>
 </ol>
 
@@ -179,7 +179,7 @@
   {#if productInfo.description}
     <div class="max-w-xl my-4">
       <Accordion class="mx-4" spacing="" regionPanel="">
-        <AccordionItem>
+        <Accordion.Item>
           {#snippet summary()}
                     Item Description
                   {/snippet}
@@ -190,7 +190,7 @@
               </div>
             
                   {/snippet}
-        </AccordionItem>
+        </Accordion.Item>
       </Accordion>
     </div>
   {/if}
@@ -198,7 +198,7 @@
     {#each productDetailModules as detailModule}
       <div class="max-w-xl my-4">
         <Accordion class="mx-4" spacing="" regionPanel="">
-          <AccordionItem>
+          <Accordion.Item>
             {#snippet summary()}
                         {detailModule.title}
                       {/snippet}
@@ -209,7 +209,7 @@
                 </div>
               
                       {/snippet}
-          </AccordionItem>
+          </Accordion.Item>
         </Accordion>
       </div>
     {/each}
@@ -218,7 +218,7 @@
   <br>
   <div class="max-w-3xl my-4">
     <Accordion class="mx-4" spacing="" regionPanel="">
-      <AccordionItem>
+      <Accordion.Item>
         {#snippet summary()}
                 Product Metadata
               {/snippet}
@@ -477,14 +477,14 @@
             </table>
           
               {/snippet}
-      </AccordionItem>
+      </Accordion.Item>
     </Accordion>
   </div>
   <br>
 
   <div class="max-w-4xl my-4">
     <Accordion class="mx-4" spacing="" regionPanel="">
-      <AccordionItem open>
+      <Accordion.Item open>
         {#snippet summary()}
               
             Similar Products
@@ -518,7 +518,7 @@
             {/key}
           
               {/snippet}
-      </AccordionItem>
+      </Accordion.Item>
     </Accordion>
   </div>
   <br>
@@ -553,7 +553,7 @@
   {#if productDiscounts.length > 0}
     <h2>Product Discount</h2>
     {#each productDiscounts as productDiscount}
-      <aside class="alert variant-ghost">
+      <aside class="alert preset-tonal border border-surface-500">
         <!-- Icon -->
         <div><Tags width="2em" height="2em"/></div>
         <!-- Message -->
@@ -571,7 +571,7 @@
   {#if backorderNotices.size > 0}
     <h2>Backorder Notice</h2>
     {#each backorderNotices as backorderNotice}
-      <aside class="alert variant-ghost">
+      <aside class="alert preset-tonal border border-surface-500">
         <div><ExclamationTriangle width="2em" height="2em"/></div>
         <div class="alert-message">
           <p>{backorderNotice}</p>
@@ -584,14 +584,14 @@
   {/if}
 
   <Accordion>
-    <AccordionItem open={dev}>
+    <Accordion.Item open={dev}>
       {#snippet summary()}
             Stock History
           {/snippet}
       {#snippet content()}
           
           <h2>Stock History</h2>
-          <div class="limit mx-auto p-2 m-2 card variant-ghost-warning">
+          <div class="limit mx-auto p-2 m-2 card preset-tonal-warning border border-warning-500">
             Due to a <a href="https://changelog.shopify.com/posts/new-add-to-cart-limit">Shopify change</a>,
             we are not longer able to see stock of most products if theyre above <span class="font-mono">40</span>.
             <br>
@@ -658,7 +658,7 @@
           {/if}
         
           {/snippet}
-    </AccordionItem>
+    </Accordion.Item>
   </Accordion>
   <br>
   <br>
@@ -668,7 +668,7 @@
 
   {:then changeHistory}
     <div class="table-container rounded-md">
-      <table class="table table-hover rounded-md">
+      <table class="table  rounded-md">
         <thead>
         <tr>
           <th>What changed</th>

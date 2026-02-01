@@ -3,7 +3,7 @@
   import { invalidateAll } from "$app/navigation";
   import { timeString } from "$lib/timeUtils.ts";
   import { page } from "$app/state";
-  import { ProgressRadial } from "@skeletonlabs/skeleton";
+  import { ProgressRing } from "@skeletonlabs/skeleton-svelte";
 
   let { data } = $props();
 
@@ -82,7 +82,7 @@
     </span>
       {#if isDataOutdated}
         <div class="absolute top-0.5 left-6">
-          <ProgressRadial class="inline-block" width="w-5" stroke={250}/>
+          <ProgressRing class="inline-block" width="w-5" stroke={250}/>
         </div>
       {/if}
     </div>

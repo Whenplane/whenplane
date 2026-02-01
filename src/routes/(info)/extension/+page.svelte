@@ -12,7 +12,7 @@
 
 <ol class="breadcrumb pt-2 pl-2">
   <li class="crumb"><a class="anchor hover-underline" href="/">{page.url.hostname === "whenwan.show" ? "whenwan.show" : "Whenplane"}</a></li>
-  <li class="crumb-separator" aria-hidden="true">&rsaquo;</li>
+  <li class="crumb-separator" aria-hidden="true">›</li>
   <li class="crumb">Extension</li>
 </ol>
 
@@ -25,7 +25,7 @@
 
   <div class="text-center">
     <a
-      class="btn variant-filled-primary my-1"
+      class="btn preset-filled-primary-500 my-1"
       href="https://addons.mozilla.org/en-US/firefox/addon/whenplane-widget/"
       target="_blank"
       rel="noopener"
@@ -34,7 +34,7 @@
       Download for Firefox
     </a>
     <a
-      class="btn variant-filled-secondary my-1"
+      class="btn preset-filled-secondary-500 my-1"
       href="https://chromewebstore.google.com/detail/whenplane-floatplane-widget/jiijhgibeiaaacbohdjihncoingomjjm"
       target="_blank"
       rel="noopener"
@@ -49,7 +49,7 @@
     <br>
     <br>
     <a
-      class="btn variant-filled-surface my-1"
+      class="btn preset-filled-surface-500 my-1"
       href="https://github.com/Whenplane/extension"
       target="_blank"
       rel="noopener"

@@ -20,7 +20,7 @@
 
 <ol class="breadcrumb pt-2 pl-2">
   <li class="crumb"><a class="anchor hover-underline" href="/">{page.url.hostname === "whenwan.show" ? "whenwan.show" : "Whenplane"}</a></li>
-  <li class="crumb-separator" aria-hidden="true">&rsaquo;</li>
+  <li class="crumb-separator" aria-hidden="true">›</li>
   <li class="crumb">Merch Messages</li>
 </ol>
 
@@ -68,13 +68,13 @@
           {#if show.messageCount}
             {commas(show.messageCount)} messages
           {:else}
-            &nbsp;
+             
           {/if}
           <br>
           {#if show.replyCount}
             {commas(show.replyCount)} replies
           {:else}
-            &nbsp;
+             
           {/if}
         </span>
       </div>

@@ -116,7 +116,7 @@
 
 <ol class="breadcrumb pt-2 pl-2">
   <li class="crumb"><a class="anchor hover-underline" href="/">{page.url.hostname === "whenwan.show" ? "whenwan.show" : "Whenplane"}</a></li>
-  <li class="crumb-separator" aria-hidden="true">&rsaquo;</li>
+  <li class="crumb-separator" aria-hidden="true">›</li>
   <li class="crumb">Push Notification Settings</li>
 </ol>
 
@@ -132,7 +132,7 @@
   <br>
   {#if iOS}
     <div class="ios-alert mt-5">
-      <aside class="alert variant-ghost-warning">
+      <aside class="alert preset-tonal-warning border border-warning-500">
         <div><ExclamationTriangleFill/></div>
         <div class="alert-message">
           <h3 class="h3">Extra steps are required!</h3>
@@ -146,7 +146,7 @@
   {/if}
   {#if brave}
     <div class="mt-5">
-      <aside class="alert variant-ghost-warning">
+      <aside class="alert preset-tonal-warning border border-warning-500">
         <div><ExclamationTriangleFill/></div>
         <div class="alert-message">
           <h3 class="h3">Extra steps are required!</h3>
@@ -193,7 +193,7 @@
       <br>
       <br>
       <br>
-      <button class="btn variant-ghost-error" onclick={unsubscribe}>
+      <button class="btn preset-tonal-error border border-error-500" onclick={unsubscribe}>
         Unsubscribe from all
       </button>
     {:else}
@@ -213,7 +213,7 @@
           Your browser does not appear to support notifications.
         </span>
       {/if}
-      <button class="btn variant-ghost-success" onclick={subscribe}>
+      <button class="btn preset-tonal-success border border-success-500" onclick={subscribe}>
         Subscribe
       </button>
     {/if}

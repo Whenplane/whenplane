@@ -7,7 +7,6 @@
 	import { getTimeUntil } from '$lib/timeUtils.ts';
 	import Late from '$lib/Late.svelte';
 	import Info from '$lib/svg/Info.svelte';
-	import { popup } from '@skeletonlabs/skeleton';
 	import { typed } from '$lib';
 
 	let {

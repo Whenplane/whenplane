@@ -15,29 +15,29 @@
 
 
     {#if form?.missing}
-            <span class="text-primary-500-400-token">
+            <span class="text-primary-600-400">
                 Please fill in all fields
             </span>
     {/if}
     {#if form?.incorrect}
-            <span class="text-primary-500-400-token">
+            <span class="text-primary-600-400">
                 Invalid two-factor token. Please try again
             </span>
     {/if}
     {#if form?.message}
-            <span class="text-primary-500-400-token">
+            <span class="text-primary-600-400">
                 {form.message}
             </span>
     {/if}
     {#if form?.ratelimited}
-            <span class="text-primary-500-400-token">
+            <span class="text-primary-600-400">
                 You are trying to sign in too fast. Wait a minute and try again.
             </span>
     {/if}
 
 
     <br>
-    <button class="btn variant-glass-primary">Sign In</button>
+    <button class="btn preset-tonal-primary">Sign In</button>
   </form>
 </div>
 

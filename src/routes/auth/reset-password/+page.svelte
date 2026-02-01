@@ -1,7 +1,7 @@
 <script lang="ts">
   import { enhance } from '$app/forms';
   import Turnstile from "$lib/Turnstile.svelte";
-  import { ProgressRadial } from "@skeletonlabs/skeleton";
+  import { ProgressRing } from "@skeletonlabs/skeleton-svelte";
   import { fade } from 'svelte/transition';
   import { onMount } from "svelte";
   import {page} from "$app/state";
@@ -47,7 +47,7 @@
         };
       }}>
       {#if timeTilExpiration > 0 && timeTilExpiration < 61e3}
-        <span class="text-primary-500-400-token">
+        <span class="text-primary-600-400">
           Hurry up! This password reset token expires in {Math.floor(timeTilExpiration/1e3)} seconds!
         </span>
         <br>
@@ -70,51 +70,51 @@
       <br>
 
       {#if form?.passwordsDontMatch || firstPassword !== secondPassword}
-        <span class="text-primary-500-400-token">
+        <span class="text-primary-600-400">
           Please make sure that both password fields match.
         </span>
         <br>
       {/if}
       {#if form?.missing}
-        <span class="text-primary-500-400-token">
+        <span class="text-primary-600-400">
           Please fill in all fields
         </span>
         <br>
       {/if}
       {#if form?.usernameLength}
-        <span class="text-primary-500-400-token">
+        <span class="text-primary-600-400">
           Please make sure that your username is between 3 and 16 characters long.
         </span>
         <br>
       {/if}
       {#if form?.passwordLength}
-        <span class="text-primary-500-400-token">
+        <span class="text-primary-600-400">
           Please make sure that your password is <i>at least</i> 10 characters long.
         </span>
         <br>
       {/if}
       {#if form?.message}
-        <span class="text-primary-500-400-token">
+        <span class="text-primary-600-400">
           {form.message}
         </span>
       {/if}
       {#if form?.ratelimited}
-        <span class="text-primary-500-400-token">
+        <span class="text-primary-600-400">
           You are trying to do that too fast. Wait a minute and try again.
         </span>
       {/if}
       {#if form?.invalidToken}
-        <span class="text-primary-500-400-token">
+        <span class="text-primary-600-400">
           Your reset token is invalid or expired. Please <a href="/auth/login/forgot-password">request a new one</a>
         </span>
       {/if}
 
 
       <br>
-      <button class="btn variant-glass-primary" disabled={firstPassword !== secondPassword || !turnstileCompleted}>Reset Password</button>
+      <button class="btn preset-tonal-primary" disabled={firstPassword !== secondPassword || !turnstileCompleted}>Reset Password</button>
       {#if loading}
         <li class="crumb" transition:fade|global={{duration: 100}}>
-          <ProgressRadial width="w-6" stroke={250} value={loading ? undefined : 100}/>
+          <ProgressRing width="w-6" stroke={250} value={loading ? undefined : 100}/>
         </li>
       {/if}
     </form>

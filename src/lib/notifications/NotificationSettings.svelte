@@ -4,9 +4,9 @@
   import { browser } from "$app/environment";
   import { getPushSubscription, lang } from "$lib/notifications/notificationUtils";
   import type { NotificationRows } from "../../routes/api/push/settings/+server.js";
-  import { SlideToggle } from "@skeletonlabs/skeleton";
+  import { Switch, ProgressRing } from "@skeletonlabs/skeleton-svelte";
   import { beforeNavigate } from "$app/navigation";
-  import {ProgressRadial} from "@skeletonlabs/skeleton";
+  import {} from "@skeletonlabs/skeleton-svelte";
   import type { D1Result } from "@cloudflare/workers-types";
   import { sha256 } from "$lib/utils.ts";
 
@@ -100,7 +100,7 @@
         {#if i !== 0}
           <br>
         {/if}
-        <SlideToggle
+        <Switch
           name={settingName}
           active="bg-primary-500"
           size="sm"
@@ -112,7 +112,7 @@
         >
           <b>{display.name}</b><br>
           {display.description}
-        </SlideToggle>
+        </Switch>
 
         <br>
       {/if}
@@ -140,7 +140,7 @@
   <br>
   <br>
   <button
-    class="btn variant-ghost-success"
+    class="btn preset-tonal-success border border-success-500"
     disabled={JSON.stringify(stagedSettings) === JSON.stringify(knownSettings)}
     onclick={saveSettings}
   >
@@ -149,7 +149,7 @@
 
   {#await savingSettings}
     <span class="relative inline-block h-0">
-      <ProgressRadial width="w-10 inline-block absolute top-3 left-2" fill="fill-on-primary-token"/>
+      <ProgressRing width="w-10 inline-block absolute top-3 left-2" fill="fill-on-primary-token"/>
     </span>
   {/await}
 {/await}

@@ -10,7 +10,6 @@
 	import type { Writable } from 'svelte/store';
 	import { nextFast } from '$lib/stores.ts';
 	import Info from '$lib/svg/Info.svelte';
-	import { popup } from '@skeletonlabs/skeleton';
 	import { onMount } from 'svelte';
 	import { n } from '$lib/timeUtils.ts';
 	import { e } from '$lib/utils.ts';
@@ -86,7 +85,7 @@ How late do you think the show will be?
 						{option.name}
 					</span>
 					{#if userVote && userVote.lastVoteFor === option.name && Date.now() - userVote.lastVote < vote_valid_for}
-						&nbsp;
+						 
 						<span class="opacity-75">(your vote)</span>
 					{/if}
 				</span>

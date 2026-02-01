@@ -12,9 +12,7 @@
   import LTTTime from "$lib/LTTTime.svelte";
   import { browser } from "$app/environment";
   import {page} from "$app/state"
-  import { toastStore } from "@skeletonlabs/skeleton";
-  import {clipboard} from "@skeletonlabs/skeleton";
-
+  import { toastStore } from "@skeletonlabs/skeleton-svelte";
   let { data } = $props();
 
   const initialReloadNumber = data.reloadNumber;

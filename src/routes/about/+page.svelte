@@ -2,7 +2,7 @@
     import { run } from 'svelte/legacy';
 
     import {fade} from "svelte/transition";
-    import {SlideToggle} from "@skeletonlabs/skeleton";
+    import { Switch } from "@skeletonlabs/skeleton-svelte";
     import {browser} from "$app/environment";
     import { page } from "$app/state";
     import { getCookie, setCookie } from "$lib/cookieUtils";
@@ -62,7 +62,7 @@
 </svelte:head>
 <ol class="breadcrumb pt-2 pl-2">
     <li class="crumb"><a class="anchor hover-underline" href="/">{page.url.hostname === "whenwan.show" ? "whenwan.show" : "Whenplane"}</a></li>
-    <li class="crumb-separator" aria-hidden="true">&rsaquo;</li>
+    <li class="crumb-separator" aria-hidden="true">›</li>
     <li class="crumb">About & Preferences</li>
 </ol>
 <div class="container mx-auto items-center limit mt-16">
@@ -144,10 +144,10 @@
             <br>
 
             <div class="flex">
-                <a class="btn variant-ghost-secondary" href="https://discord.gg/PmN9AJh6KR">
+                <a class="btn preset-tonal-secondary border border-secondary-500" href="https://discord.gg/PmN9AJh6KR">
                     <img src="/discord-logo-white.svg" style="height: 1.5em;">
                 </a>
-                <a class="inline-block btn variant-ghost-primary ml-auto" href="https://about.ajg0702.us" target="_blank" rel="noopener">
+                <a class="inline-block btn preset-tonal-primary border border-primary-500 ml-auto" href="https://about.ajg0702.us" target="_blank" rel="noopener">
                     Made by aj
                 </a>
             </div>
@@ -168,23 +168,23 @@
                     (scroll)
                 </span>
             {:else}
-                &#8203;
+                ​
             {/if}
         </div>
 
-        <SlideToggle active="bg-primary-500" size="sm" bind:checked={noSpecialLateText} name="noSpecialLateText">
+        <Switch active="bg-primary-500" size="sm" bind:checked={noSpecialLateText} name="noSpecialLateText">
             Disable special "late" text
-        </SlideToggle>
+        </Switch>
         <br>
 
-        <SlideToggle active="bg-primary-500" size="sm" bind:checked={disableBlurHash} name="disableBlurHash">
+        <Switch active="bg-primary-500" size="sm" bind:checked={disableBlurHash} name="disableBlurHash">
             Disable "blur-sm" on loading images
-        </SlideToggle>
+        </Switch>
         <br>
 
-        <SlideToggle active="bg-primary-500" size="sm" bind:checked={disableNotableStreams} name="disableNotableStreams">
+        <Switch active="bg-primary-500" size="sm" bind:checked={disableNotableStreams} name="disableNotableStreams">
             Disable "notable" stream (e.g. Elijah, Dan, Luke) boxes
-        </SlideToggle>
+        </Switch>
         <br>
         <br>
         <label class="py-1">

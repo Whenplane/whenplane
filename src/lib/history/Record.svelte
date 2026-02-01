@@ -59,7 +59,7 @@
 
 <style>
 	.box {
-		@apply inline-block border-token border-surface-400-500-token p-2 m-1 mb-2 rounded-md;
+		@apply inline-block border border-surface-500 p-2 m-1 mb-2 rounded-md;
 		width: 300px;
 	}
 	.small {

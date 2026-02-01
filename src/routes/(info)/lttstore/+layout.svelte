@@ -4,7 +4,7 @@
   import { setCookie } from "$lib/cookieUtils";
   import { invalidateAll } from "$app/navigation";
   import ExclamationTriangle from "svelte-bootstrap-icons/lib/ExclamationTriangle.svelte";
-  import { modalStore, popup } from "@skeletonlabs/skeleton";
+  import { modalStore } from "@skeletonlabs/skeleton-svelte";
   import {fade} from "svelte/transition"
   import ProductSearchModal from "./ProductSearchModal.svelte";
   import DateStamp from "$lib/DateStamp.svelte";
@@ -68,7 +68,7 @@
     <br>
     The Whenplane LTTStore watcher gathers data from the US store, which charges only in USD. Prices on the global store <br>
     <br>
-    1 USD &asymp; {data.exchangeRates.rates[selectedCurrency]} {selectedCurrency}
+    1 USD ≈ {data.exchangeRates.rates[selectedCurrency]} {selectedCurrency}
   </p>
-  <div class="arrow variant-filled-surface"></div>
+  <div class="arrow preset-filled-surface-500"></div>
 </div>

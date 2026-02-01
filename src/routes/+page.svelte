@@ -11,7 +11,7 @@
 	import {fade} from "svelte/transition";
 	import { browser, dev } from "$app/environment";
 	import LatenessVoting from "$lib/LatenessVoting.svelte";
-	import { Accordion, AccordionItem } from "@skeletonlabs/skeleton";
+	import { Accordion } from "@skeletonlabs/skeleton-svelte";
 	import ImminentBox from "$lib/ImminentBox.svelte";
 	import LTTTime from "$lib/LTTTime.svelte";
 	import SpecialStream from "$lib/SpecialStream.svelte";
@@ -24,7 +24,6 @@
 	import { getCookie } from "$lib/cookieUtils.ts";
 	import Socket from "$lib/Socket.svelte";
 	import CaretDownFill from "svelte-bootstrap-icons/lib/CaretDownFill.svelte";
-	import {popup} from "@skeletonlabs/skeleton";
 	import { getDateFormatLocale, getTimePreference } from "$lib/prefUtils.ts";
 	import MoreLinks from "$lib/MoreLinks.svelte";
 	import CurrentTitle from "$lib/CurrentTitle.svelte";
@@ -301,7 +300,7 @@
 					{#if latenessStandardDeviation}
 						<br>
 						<span class="smaller">
-							&plusmn; {latenessStandardDeviation}
+							± {latenessStandardDeviation}
 						</span>
 						<ToolTip id="stdDev">
 							Think of standard deviation as a measure that tells you how much individual values in a set typically differ from the average of that set. If the standard deviation is small, it means most values are close to the average. If it's large, it means values are more spread out from the average, indicating greater variability in the data. Essentially, standard deviation gives you an idea of how consistent or varied the values are in relation to the average.
@@ -318,17 +317,17 @@
 					{#if latenessStandardDeviation}
 						<br>
 						<span class="smaller">
-							&nbsp;
+							 
 						</span>
 					{/if}
 				</span>
 			{/if}
 			<br>
 			{#if !isFrame}
-				<a href="/history" class="btn variant-ghost-surface">
+				<a href="/history" class="btn preset-tonal-surface border border-surface-500">
 					History
 				</a>
-				<button class="btn variant-ghost-surface" use:popup={{
+				<button class="btn preset-tonal-surface border border-surface-500" use:popup={{
 					event: 'click',
 					target: 'moreDropdown',
 					placement: 'bottom'
@@ -339,7 +338,7 @@
 				<div class="card w-58 shadow-2xl! overflow-hidden z-20 !bg-surface-500" data-popup="moreDropdown">
 					<MoreLinks/>
 
-					<div class="arrow bg-surface-400-500-token"></div>
+					<div class="arrow bg-surface-500"></div>
 				</div>
 				<br>
 				<br>
@@ -387,7 +386,7 @@
 		{#if !page.data.isBot && (nowish.getUTCDay() === 5 || nowish.getUTCDay() === 6 /*|| dev*/) && !data.hasDone && (page.url.searchParams.has("showLatenessVoting") ? page.url.searchParams.get("showLatenessVoting") === "true" : !isFrame)}
 			<div>
 				<Accordion padding="pb-2 px-4">
-					<AccordionItem open>
+					<Accordion.Item open>
 						{#snippet summary()}
 											
 								<h3 class="inline">Lateness Voting</h3>
@@ -402,7 +401,7 @@
 								{/if}
 							
 											{/snippet}
-					</AccordionItem>
+					</Accordion.Item>
 				</Accordion>
 			</div>
 		{/if}

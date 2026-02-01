@@ -9,8 +9,6 @@
 	import '../app.css';
 
 	import { computePosition, autoUpdate, flip, shift, offset, arrow } from '@floating-ui/dom';
-	import { storePopup } from '@skeletonlabs/skeleton';
-
 	import 'nprogress/nprogress.css';
 	import { navigating, page } from '$app/state';
 	import NProgress from 'nprogress';
@@ -18,9 +16,7 @@
 	import { setServiceWorker } from '$lib/stores.ts';
 	import { onMount } from 'svelte';
 
-	import { Toast } from '@skeletonlabs/skeleton';
-
-	import { initializeStores } from '@skeletonlabs/skeleton';
+	import { ToastProvider } from '@skeletonlabs/skeleton-svelte';
 	initializeStores();
 
 	let { children = typed<import('svelte').Snippet>() } = $props();
@@ -97,6 +93,6 @@
 </svelte:head>
 
 <Modal />
-<Toast />
+<ToastProvider />
 
 {@render children?.()}

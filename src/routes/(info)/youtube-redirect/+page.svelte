@@ -5,7 +5,7 @@
   import { onMount } from "svelte";
   import { invalidateAll } from "$app/navigation";
   import { browser } from "$app/environment";
-  import { SlideToggle } from "@skeletonlabs/skeleton";
+  import { Switch } from "@skeletonlabs/skeleton-svelte";
   import { page } from "$app/state";
 
   import { getTimePreference } from "$lib/prefUtils.ts";
@@ -67,7 +67,7 @@
 
 <ol class="breadcrumb pt-2 pl-2">
   <li class="crumb"><a class="anchor hover-underline" href="/">{page.url.hostname === "whenwan.show" ? "whenwan.show" : "Whenplane"}</a></li>
-  <li class="crumb-separator" aria-hidden="true">&rsaquo;</li>
+  <li class="crumb-separator" aria-hidden="true">›</li>
   <li class="crumb">Automatic Youtube Redirector</li>
 </ol>
 <br>
@@ -96,7 +96,7 @@
       </span>
     {/if}
     <br>
-    <SlideToggle name="ytrNotifToggle" bind:checked={sendNotificationToggle} on:change={toggleNotifications}/>
+    <Switch name="ytrNotifToggle" bind:checked={sendNotificationToggle} on:change={toggleNotifications}/>
   {/if}
   <br>
 <!--  <pre>{JSON.stringify(data, undefined, '\t')}</pre>-->

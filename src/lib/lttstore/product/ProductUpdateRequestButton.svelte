@@ -1,7 +1,7 @@
 <script lang="ts">
   import { browser } from "$app/environment";
   import { page } from "$app/state";
-  import { ProgressRadial } from "@skeletonlabs/skeleton";
+  import { ProgressRing } from "@skeletonlabs/skeleton-svelte";
 
 
   let promise: Promise<{message?: string, success?: true, allowBypass?: boolean}> = $state();
@@ -25,12 +25,12 @@
   }
 </script>
 
-<button disabled={!browser || !status.done} class="btn variant-filled-secondary" onclick={request}>
+<button disabled={!browser || !status.done} class="btn preset-filled-secondary-500" onclick={request}>
   Request Update
 </button>
 <br>
 {#await promise}
-  <ProgressRadial width="w-6" stroke={250}/>
+  <ProgressRing width="w-6" stroke={250}/>
 {:then data}
   {#if data?.message}
     <span class="text-red-500">

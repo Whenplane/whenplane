@@ -15,7 +15,7 @@
     import { getDateFormatLocale } from "$lib/prefUtils.ts";
     import { truncateText } from "$lib/utils.js";
     import { getCookie, setCookie } from "$lib/cookieUtils.ts";
-    import { SlideToggle } from "@skeletonlabs/skeleton";
+    import { Switch } from "@skeletonlabs/skeleton-svelte";
     import Incomplete from "$lib/merch-messages/Incomplete.svelte";
 
     let { data } = $props();
@@ -87,9 +87,9 @@
 
 <ol class="breadcrumb pt-2 pl-2">
     <li class="crumb"><a class="anchor hover-underline" href="/">{page.url.hostname === "whenwan.show" ? "whenwan.show" : "Whenplane"}</a></li>
-    <li class="crumb-separator" aria-hidden="true">&rsaquo;</li>
+    <li class="crumb-separator" aria-hidden="true">›</li>
     <li class="crumb"><a class="anchor hover-underline" href="/history">History</a></li>
-    <li class="crumb-separator" aria-hidden="true">&rsaquo;</li>
+    <li class="crumb-separator" aria-hidden="true">›</li>
     <li class="crumb"><a class="anchor hover-underline" href="/history{backHash}">{showDate.toLocaleDateString(getDateFormatLocale())}</a></li>
 </ol>
 
@@ -173,7 +173,7 @@
                 Provided by <a href="/noki">NoKi</a>
                 <div class="flex justify-center items-center mt-2">
                     <Youtube/>
-                    <SlideToggle checked={timestampPlatform === "floatplane"} on:change={toggleTimestampPlatform}/>
+                    <Switch checked={timestampPlatform === "floatplane"} on:change={toggleTimestampPlatform}/>
                     <Floatplane/>
                 </div>
                 <div in:fade={{duration: 100}} class="text-left inline-block mx-auto">

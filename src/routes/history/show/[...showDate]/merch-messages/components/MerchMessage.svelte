@@ -1,6 +1,6 @@
 <script lang="ts">
 	import type { MMV2TableRow } from '$lib/merch-messages/mm-types.ts';
-	import { Avatar } from '@skeletonlabs/skeleton';
+	import { Avatar } from '@skeletonlabs/skeleton-svelte';
 	import PersonX from 'svelte-bootstrap-icons/lib/PersonX.svelte';
 	import ReplyFill from 'svelte-bootstrap-icons/lib/ReplyFill.svelte';
 	import { page } from '$app/state';
@@ -54,11 +54,11 @@
 						<Avatar width="w-10" initials={message.name.charAt(0)} />
 					{/if}
 				</div>
-				&nbsp;
+				 
 				<span>{message.name}</span>
 			{:else}
 				<ReplyFill class="w-5 h-5 m-2" />
-				&nbsp;
+				 
 				<div>
 					<span class="opacity-80">Reply to</span>
 					{message.name}
@@ -75,7 +75,7 @@
 				<a
 					href="https://floatplane.com/post/{floatplaneId}?t={floatplaneSeconds}"
 					rel="noopener"
-					class="btn btn-sm variant-ghost-surface py-1 px-1.5"
+					class="btn btn-sm preset-tonal-surface border border-surface-500 py-1 px-1.5"
 					aria-label="Jump to message in Floatplane VOD"
 				>
 					<div class="inline-block pr-0.5" aria-hidden="true">
@@ -88,7 +88,7 @@
 				<a
 					href="https://youtube.com/watch?v={youtubeId}&t={youtubeSeconds}"
 					rel="noopener"
-					class="btn btn-sm variant-ghost-surface py-1 px-1.5"
+					class="btn btn-sm preset-tonal-surface border border-surface-500 py-1 px-1.5"
 					aria-label="Jump to message in YouTube VOD"
 				>
 					<span aria-hidden="true">

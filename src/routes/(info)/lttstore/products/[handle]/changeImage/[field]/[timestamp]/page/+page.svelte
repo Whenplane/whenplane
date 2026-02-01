@@ -8,7 +8,7 @@
 </script>
 
 <div class="table-container rounded-md" id="change">
-  <table class="table table-hover rounded-md">
+  <table class="table  rounded-md">
     <thead>
     <tr>
       <th>What changed</th>

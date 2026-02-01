@@ -8,7 +8,7 @@
     import { browser, dev } from "$app/environment";
     import HistoryRecords from "$lib/history/HistoryRecords.svelte";
     import LinusFace from "$lib/history/LinusFace.svelte";
-    import { RadioGroup, RadioItem } from "@skeletonlabs/skeleton";
+    import { Segment } from "@skeletonlabs/skeleton-svelte";
     import { setCookie } from "$lib/cookieUtils";
 
     import ViewStacked from "svelte-bootstrap-icons/lib/ViewStacked.svelte"
@@ -76,19 +76,19 @@
 
     <br>
 
-    <a href="/search" class="btn variant-ghost-primary">
+    <a href="/search" class="btn preset-tonal-primary border border-primary-500">
         <Search/>
-        &nbsp;
+         
         Search for Shows
     </a><br>
 
     <br>
-    <RadioGroup>
-        <RadioItem bind:group={view} name="justify" value={0}><Images/></RadioItem>
-        <RadioItem bind:group={view} name="justify" value={1}><CardImage/></RadioItem>
-        <RadioItem bind:group={view} name="justify" value={2}><ViewStacked/></RadioItem>
-        <RadioItem bind:group={view} name="justify" value={3}><Grid/></RadioItem>
-    </RadioGroup>
+    <Segment>
+        <Segment.Item bind:group={view} name="justify" value={0}><Images/></Segment.Item>
+        <Segment.Item bind:group={view} name="justify" value={1}><CardImage/></Segment.Item>
+        <Segment.Item bind:group={view} name="justify" value={2}><ViewStacked/></Segment.Item>
+        <Segment.Item bind:group={view} name="justify" value={3}><Grid/></Segment.Item>
+    </Segment>
     <br>
 
     <div class="inline-block"
