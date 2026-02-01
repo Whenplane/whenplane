@@ -1,6 +1,5 @@
 @import 'tailwindcss';
 @import "@skeletonlabs/skeleton";
-@import "@skeletonlabs/skeleton/optional/presets";
 @import "@skeletonlabs/skeleton/themes/crimson";
 
 /*@source '../node_modules/.pnpm/@skeletonlabs+skeleton@2.11.0_svelte@5.49.1/node_modules/@skeletonlabs/skeleton/dist!**!*.{html,js,svelte,ts}';*/

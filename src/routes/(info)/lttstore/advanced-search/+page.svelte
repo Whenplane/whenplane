@@ -6,7 +6,7 @@
   import type { ProductSearchIndex } from "$lib/lttstore/lttstore_types.ts";
   import { SearchClient } from "typesense";
   import LTTProductCard from "$lib/lttstore/LTTProductCard.svelte";
-  import { ProgressRing } from "@skeletonlabs/skeleton-svelte";
+  import { Progress } from "@skeletonlabs/skeleton-svelte";
   import { page } from "$app/stores";
   import ToolTip from "$lib/ToolTip.svelte";
 
@@ -145,11 +145,11 @@
   <input placeholder="Search for products" bind:value={searchText} class="input w-64 p-2 pl-4">
   {#await searchPromise}
     {#if !waiting}
-      <ProgressRing class="inline-block" width="w-6" stroke={250}/>
+      <Progress class="inline-block" width="w-6" stroke={250}/>
     {/if}
   {/await}
   {#if waiting}
-    <ProgressRing class="inline-block" width="w-6" stroke={250}/>
+    <Progress class="inline-block" width="w-6" stroke={250}/>
   {/if}
   <div class="inline-flex min-[650px]:absolute right-0 pr-2 pt-2">
     <select class="input inline-block" bind:value={sortBy}>

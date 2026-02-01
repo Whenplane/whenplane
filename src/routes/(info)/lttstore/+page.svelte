@@ -7,7 +7,7 @@
   import MiniSearch from "minisearch";
   import {flip} from "svelte/animate";
   import {slide, fade} from "svelte/transition";
-  import { ProgressRing } from "@skeletonlabs/skeleton-svelte";
+  import { Progress } from "@skeletonlabs/skeleton-svelte";
   import { invalidateAll } from "$app/navigation";
   import { SearchClient } from "typesense";
   import type { SearchResponse } from "typesense/lib/Typesense/Documents";
@@ -105,7 +105,7 @@
   <li class="crumb" onclick={reload}>LTT Store Watcher</li>
   {#if loading}
     <li class="crumb" transition:fade|global={{duration: 100}}>
-      <ProgressRing width="w-6" stroke={250} value={loading ? undefined : 100}/>
+      <Progress width="w-6" stroke={250} value={loading ? undefined : 100}/>
     </li>
   {/if}
 </ol>
@@ -127,11 +127,11 @@
   <div class="inline-block w-12">
     {#await searchPromise}
       {#if !waiting}
-        <ProgressRing class="inline-block" width="w-6" stroke={250}/>
+        <Progress class="inline-block" width="w-6" stroke={250}/>
       {/if}
     {/await}
     {#if waiting}
-      <ProgressRing class="inline-block" width="w-6" stroke={250}/>
+      <Progress class="inline-block" width="w-6" stroke={250}/>
     {/if}
   </div>
   <a href="/lttstore/advanced-search">Advanced Search</a>

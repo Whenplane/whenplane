@@ -8,7 +8,7 @@
     import { browser, dev } from "$app/environment";
     import HistoryRecords from "$lib/history/HistoryRecords.svelte";
     import LinusFace from "$lib/history/LinusFace.svelte";
-    import { Segment } from "@skeletonlabs/skeleton-svelte";
+    import { SegmentedControl } from "@skeletonlabs/skeleton-svelte";
     import { setCookie } from "$lib/cookieUtils";
 
     import ViewStacked from "svelte-bootstrap-icons/lib/ViewStacked.svelte"
@@ -83,12 +83,12 @@
     </a><br>
 
     <br>
-    <Segment>
+    <SegmentedControl>
         <Segment.Item bind:group={view} name="justify" value={0}><Images/></Segment.Item>
         <Segment.Item bind:group={view} name="justify" value={1}><CardImage/></Segment.Item>
         <Segment.Item bind:group={view} name="justify" value={2}><ViewStacked/></Segment.Item>
         <Segment.Item bind:group={view} name="justify" value={3}><Grid/></Segment.Item>
-    </Segment>
+    </SegmentedControl>
     <br>
 
     <div class="inline-block"

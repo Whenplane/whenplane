@@ -5,7 +5,7 @@
   import { browser } from "$app/environment";
   import { onMount } from "svelte";
   import { getDateFormatLocale } from "$lib/prefUtils.ts";
-  import { ProgressRing } from "@skeletonlabs/skeleton-svelte";
+  import { Progress } from "@skeletonlabs/skeleton-svelte";
 
   let { data } = $props();
 
@@ -129,7 +129,7 @@
       {#if page.url.searchParams.has("find") && !done}
         <br>
         <div class="bg-amber-600 rounded-md p-2">
-          <ProgressRing width="w-6" stroke={250} class="inline-block align-bottom"/>
+          <Progress width="w-6" stroke={250} class="inline-block align-bottom"/>
           Finding the text you clicked on. This might take a second...
         </div>
 

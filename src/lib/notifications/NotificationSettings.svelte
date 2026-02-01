@@ -4,7 +4,7 @@
   import { browser } from "$app/environment";
   import { getPushSubscription, lang } from "$lib/notifications/notificationUtils";
   import type { NotificationRows } from "../../routes/api/push/settings/+server.js";
-  import { Switch, ProgressRing } from "@skeletonlabs/skeleton-svelte";
+  import { Switch, Progress } from "@skeletonlabs/skeleton-svelte";
   import { beforeNavigate } from "$app/navigation";
   import {} from "@skeletonlabs/skeleton-svelte";
   import type { D1Result } from "@cloudflare/workers-types";
@@ -149,7 +149,7 @@
 
   {#await savingSettings}
     <span class="relative inline-block h-0">
-      <ProgressRing width="w-10 inline-block absolute top-3 left-2" fill="fill-on-primary-token"/>
+      <Progress width="w-10 inline-block absolute top-3 left-2" fill="fill-on-primary-token"/>
     </span>
   {/await}
 {/await}

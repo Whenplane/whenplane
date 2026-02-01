@@ -1,7 +1,7 @@
 <script lang="ts">
   import { SearchClient } from "typesense";
   import { onMount } from "svelte";
-  import { ProgressRing } from "@skeletonlabs/skeleton-svelte";
+  import { Progress } from "@skeletonlabs/skeleton-svelte";
   import type { CombinedSearchResult } from "$lib/search/search_types.ts";
   import type { SearchResponse } from "typesense/lib/Typesense/Documents";
   import { getDateFormatLocale } from "$lib/prefUtils.ts";
@@ -81,7 +81,7 @@ These dates show the latest data that the search index has.<br>
 
 Last title indexed:
 {#await lastTitle}
-  <ProgressRing class="inline-block" width="w-6" stroke={250}/>
+  <Progress class="inline-block" width="w-6" stroke={250}/>
 {:then d}
   {#if !d}
     <OutdatedNotice/> <span class="opacity-60">none?</span>
@@ -99,7 +99,7 @@ Last title indexed:
 
 Last topic indexed:
 {#await lastTopic}
-  <ProgressRing class="inline-block" width="w-6" stroke={250}/>
+  <Progress class="inline-block" width="w-6" stroke={250}/>
 {:then d}
   {#if !d}
     <OutdatedNotice/> <span class="opacity-60">none?</span>
@@ -117,7 +117,7 @@ Last topic indexed:
 
 Last transcript indexed:
 {#await lastTranscript}
-  <ProgressRing class="inline-block" width="w-6" stroke={250}/>
+  <Progress class="inline-block" width="w-6" stroke={250}/>
 {:then d}
   {#if !d}
     <OutdatedNotice/> <span class="opacity-60">none?</span>
@@ -135,7 +135,7 @@ Last transcript indexed:
 
 Last merch message indexed:
 {#await lastMerchMessage}
-  <ProgressRing class="inline-block" width="w-6" stroke={250}/>
+  <Progress class="inline-block" width="w-6" stroke={250}/>
 {:then d}
   {#if !d}
     <OutdatedNotice/> <span class="opacity-60">none?</span>

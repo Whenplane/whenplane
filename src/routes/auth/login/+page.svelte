@@ -2,7 +2,7 @@
   import { enhance } from '$app/forms';
   import {page} from "$app/state";
   import Turnstile from "$lib/Turnstile.svelte";
-  import { ProgressRing } from "@skeletonlabs/skeleton-svelte";
+  import { Progress } from "@skeletonlabs/skeleton-svelte";
   import { fade } from 'svelte/transition';
 
   let { form } = $props();
@@ -119,7 +119,7 @@
       <button class="btn preset-tonal-primary">Log In</button>
       {#if loading}
         <li class="crumb" transition:fade|global={{duration: 100}}>
-          <ProgressRing width="w-6" stroke={250} value={loading ? undefined : 100}/>
+          <Progress width="w-6" stroke={250} value={loading ? undefined : 100}/>
         </li>
       {/if}
     </form>

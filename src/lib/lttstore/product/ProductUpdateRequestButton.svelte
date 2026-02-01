@@ -1,7 +1,7 @@
 <script lang="ts">
   import { browser } from "$app/environment";
   import { page } from "$app/state";
-  import { ProgressRing } from "@skeletonlabs/skeleton-svelte";
+  import { Progress } from "@skeletonlabs/skeleton-svelte";
 
 
   let promise: Promise<{message?: string, success?: true, allowBypass?: boolean}> = $state();
@@ -30,7 +30,7 @@
 </button>
 <br>
 {#await promise}
-  <ProgressRing width="w-6" stroke={250}/>
+  <Progress width="w-6" stroke={250}/>
 {:then data}
   {#if data?.message}
     <span class="text-red-500">

@@ -7,7 +7,7 @@
   import {flip} from "svelte/animate";
   import { fade } from "svelte/transition"
   import { goto, invalidateAll } from "$app/navigation";
-  import { ProgressRing } from "@skeletonlabs/skeleton-svelte";
+  import { Progress } from "@skeletonlabs/skeleton-svelte";
   import { dev } from "$app/environment";
 
   let { data } = $props();
@@ -51,7 +51,7 @@
   <li class="crumb" onclick={reload}>Products</li>
   {#if loading}
     <li class="crumb" transition:fade|global={{duration: 100}}>
-      <ProgressRing width="w-6" stroke={250} value={loading ? undefined : 100}/>
+      <Progress width="w-6" stroke={250} value={loading ? undefined : 100}/>
     </li>
   {/if}
 </ol>
