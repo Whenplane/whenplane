@@ -81,9 +81,6 @@ importers:
       '@playwright/test':
         specifier: ^1.28.1
         version: 1.28.1
-      '@skeletonlabs/skeleton':
-        specifier: ^1.2.5
-        version: 1.2.5
       '@sveltejs/adapter-auto':
         specifier: ^2.0.0
         version: 2.0.0(@sveltejs/kit@2.50.1(@sveltejs/vite-plugin-svelte@4.0.4(svelte@5.49.1)(vite@5.4.21(@types/node@20.4.5)))(svelte@5.49.1)(typescript@5.6.3)(vite@5.4.21(@types/node@20.4.5)))
@@ -1054,9 +1051,6 @@ packages:
 
   '@sinclair/typebox@0.27.8':
     resolution: {integrity: sha512-+Fj43pSMwJs4KRrH/938Uf+uAELIgVBmQzg/q1YG10djyfA3TnrU8N8XzqCh/okZdszqBQTZf96idMfE5lnwTA==}
-
-  '@skeletonlabs/skeleton@1.2.5':
-    resolution: {integrity: sha512-umysPs4+jPPD4xfbTwp7rznd5rT0Jz80kxM/6DTr9QdKR85gH6TBBCoKCiPiQywZtnj5WUcJfO7F6Qir3LNu2Q==}
 
   '@socket.io/component-emitter@3.1.0':
     resolution: {integrity: sha512-+9jVqKhRSpsc591z5vX+X5Yyw+he/HCB4iQ/RYxw35CEPaY1gnsNE43nf9n9AaYjAQrTiI/mOwKUKdUs9vf7Xg==}
@@ -2598,10 +2592,6 @@ packages:
     peerDependencies:
       svelte: ^3.58.0 || ^4.0.0
 
-  svelte@3.58.0:
-    resolution: {integrity: sha512-brIBNNB76mXFmU/Kerm4wFnkskBbluBDCjx/8TcpYRb298Yh2dztS2kQ6bhtjMcvUhd5ynClfwpz5h2gnzdQ1A==}
-    engines: {node: '>= 8'}
-
   svelte@5.49.1:
     resolution: {integrity: sha512-jj95WnbKbXsXXngYj28a4zx8jeZx50CN/J4r0CEeax2pbfdsETv/J1K8V9Hbu3DCXnpHz5qAikICuxEooi7eNQ==}
     engines: {node: '>=18'}
@@ -3547,10 +3537,6 @@ snapshots:
     optional: true
 
   '@sinclair/typebox@0.27.8': {}
-
-  '@skeletonlabs/skeleton@1.2.5':
-    dependencies:
-      svelte: 3.58.0
 
   '@socket.io/component-emitter@3.1.0': {}
 
@@ -5147,8 +5133,6 @@ snapshots:
     dependencies:
       svelte: 5.49.1
       turnstile-types: 1.2.3
-
-  svelte@3.58.0: {}
 
   svelte@5.49.1:
     dependencies:
