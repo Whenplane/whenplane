@@ -28,7 +28,6 @@
 		"@sveltejs/kit": "^2.50.1",
 		"@sveltejs/vite-plugin-svelte": "^4.0.0",
 		"@tailwindcss/forms": "^0.5.3",
-		"@tailwindcss/postcss": "^4.1.18",
 		"@tailwindcss/typography": "^0.5.9",
 		"@types/bcryptjs": "^2.4.6",
 		"@types/diff": "^5.2.2",
@@ -43,7 +42,6 @@
 		"eslint-config-prettier": "^8.5.0",
 		"eslint-plugin-svelte3": "^4.0.0",
 		"miniflare": "^4.20250408.0",
-		"postcss": "^8.4.23",
 		"prettier": "^3.1.0",
 		"prettier-plugin-svelte": "^3.2.6",
 		"sharp": "^0.32.6",
@@ -63,6 +61,7 @@
 	"dependencies": {
 		"@dimfeld/svelte-lazyload": "^0.0.4",
 		"@floating-ui/dom": "^1.2.7",
+		"@tailwindcss/vite": "^4.1.18",
 		"airport-data-js": "^1.0.6",
 		"apexcharts": "^3.42.0",
 		"bcryptjs": "^2.4.3",
