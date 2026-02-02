@@ -123,6 +123,9 @@ importers:
       '@types/node':
         specifier: ^20.4.5
         version: 20.4.5
+      '@types/nprogress':
+        specifier: ^0.2.3
+        version: 0.2.3
       '@types/qrcode':
         specifier: ^1.5.5
         version: 1.5.5
@@ -1267,6 +1270,9 @@ packages:
 
   '@types/node@20.4.5':
     resolution: {integrity: sha512-rt40Nk13II9JwQBdeYqmbn2Q6IVTA5uPhvSO+JVqdXw/6/4glI6oR9ezty/A9Hg5u7JH4OmYmuQ+XvjKm0Datg==}
+
+  '@types/nprogress@0.2.3':
+    resolution: {integrity: sha512-k7kRA033QNtC+gLc4VPlfnue58CM1iQLgn1IMAU8VPHGOj7oIHPp9UlhedEnD/Gl8evoCjwkZjlBORtZ3JByUA==}
 
   '@types/qrcode@1.5.5':
     resolution: {integrity: sha512-CdfBi/e3Qk+3Z/fXYShipBT13OJ2fDO2Q2w5CIP5anLTLIndQG9z6P1cnm+8zCWSpm5dnxMFd/uREtb0EXuQzg==}
@@ -3921,6 +3927,8 @@ snapshots:
   '@types/luxon@3.3.0': {}
 
   '@types/node@20.4.5': {}
+
+  '@types/nprogress@0.2.3': {}
 
   '@types/qrcode@1.5.5':
     dependencies:

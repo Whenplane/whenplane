@@ -1,23 +1,16 @@
 <!-- @migration task: review uses of `navigating` -->
 <script lang="ts">
-	import { run } from 'svelte/legacy';
 	import { typed } from '$lib';
-
-
 
 	// Most of your app wide CSS should be put in this file
 	import '../app.css';
 
-	import { computePosition, autoUpdate, flip, shift, offset, arrow } from '@floating-ui/dom';
 	import 'nprogress/nprogress.css';
 	import { navigating, page } from '$app/state';
 	import NProgress from 'nprogress';
 	import { browser, dev } from '$app/environment';
 	import { setServiceWorker } from '$lib/stores.ts';
 	import { onMount } from 'svelte';
-
-	import { ToastProvider } from '@skeletonlabs/skeleton-svelte';
-	initializeStores();
 
 	let { children = typed<import('svelte').Snippet>() } = $props();
 
@@ -26,9 +19,9 @@
 		minimum: 0.16
 	});
 
-	let progressTimeout = $state();
+	let progressTimeout: number;
 
-	run(() => {
+	$effect(() => {
 		if (browser) {
 			if (navigating) {
 				if (progressTimeout) clearTimeout(progressTimeout);
@@ -37,11 +30,11 @@
 						NProgress.start();
 					}
 				};
-				const toURL: URL = navigating.to.url;
-				if (toURL.pathname == '/history' && toURL.searchParams.has('old')) {
+				const toURL = navigating.to?.url;
+				if (toURL?.pathname == '/history' && toURL.searchParams.has('old')) {
 					startBar();
 				} else {
-					progressTimeout = setTimeout(startBar, 150);
+					progressTimeout = setTimeout(startBar, 150) as unknown as number;
 				}
 			}
 			if (!navigating) {
@@ -49,9 +42,7 @@
 				NProgress.done();
 			}
 		}
-	});
-
-	storePopup.set({ computePosition, autoUpdate, flip, shift, offset, arrow });
+	})
 
 	let pathname = $derived(page.url.pathname);
 
@@ -88,11 +79,9 @@
 		/>
 	{/if}
 	{#if page.url.hostname !== 'whenplane.com'}
-		<link rel="canonical" href="https://whenplane.com{$page.url.pathname}" />
+		<link rel="canonical" href="https://whenplane.com{page.url.pathname}" />
 	{/if}
 </svelte:head>
 
-<Modal />
-<ToastProvider />
 
 {@render children?.()}
