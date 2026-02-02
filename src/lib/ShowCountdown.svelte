@@ -15,7 +15,10 @@
 
 	let showPlayed = false;
 
-	let { isAfterStartTime = $bindable<boolean>(false), data = typed<any>() } = $props();
+	let {
+		isAfterStartTime = $bindable<boolean>(),
+		data = typed<any>()
+	} = $props();
 
 	let countdownText = $state('');
 
