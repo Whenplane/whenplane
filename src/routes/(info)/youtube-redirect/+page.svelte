@@ -62,7 +62,7 @@
 <svelte:head>
   <title>🔴 Youtube Auto-redirector</title>
   <meta name="description" content="This page will automatically redirect you to the youtube live page for the WAN show as soon as it is available.">
-  <link rel="canonical" href="https://whenplane.com{$page.url.pathname}"/>
+  <link rel="canonical" href="https://whenplane.com{page.url.pathname}"/>
 </svelte:head>
 
 <ol class="breadcrumb pt-2 pl-2">

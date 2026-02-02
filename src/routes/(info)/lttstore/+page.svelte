@@ -2,20 +2,16 @@
   import { run } from 'svelte/legacy';
 
   import LTTProductCard from "$lib/lttstore/LTTProductCard.svelte";
-  import { page } from "$app/stores";
+  import { page } from "$app/state";
   import { onMount } from "svelte";
-  import MiniSearch from "minisearch";
   import {flip} from "svelte/animate";
   import {slide, fade} from "svelte/transition";
   import { Progress } from "@skeletonlabs/skeleton-svelte";
   import { invalidateAll } from "$app/navigation";
   import { SearchClient } from "typesense";
   import type { SearchResponse } from "typesense/lib/Typesense/Documents";
-  import type { MMTableRow } from "$lib/merch-messages/mm-types.ts";
   import type { ProductSearchIndex } from "$lib/lttstore/lttstore_types.ts";
-  import { escapeHtml } from "$lib/utils.ts";
   import sanitizeHtml from "sanitize-html";
-  import { newsSanitizeSettings } from "$lib/news/news.ts";
 
   let { data } = $props();
 
@@ -100,7 +96,7 @@
 </svelte:head>
 
 <ol class="breadcrumb pt-2 pl-2">
-  <li class="crumb"><a class="anchor hover-underline" href="/">{$page.url.hostname === "whenwan.show" ? "whenwan.show" : "Whenplane"}</a></li>
+  <li class="crumb"><a class="anchor hover-underline" href="/">{page.url.hostname === "whenwan.show" ? "whenwan.show" : "Whenplane"}</a></li>
   <li class="crumb-separator" aria-hidden="true">›</li>
   <li class="crumb" onclick={reload}>LTT Store Watcher</li>
   {#if loading}

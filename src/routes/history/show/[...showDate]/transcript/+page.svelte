@@ -87,7 +87,7 @@
 <svelte:head>
   <title>Transcript of {data.metadata.title ?? ""}{data.metadata.title ? " - " : ""}WAN Show {showDate.toLocaleDateString(undefined, {dateStyle: 'long'})}</title>
   <meta name="description" content="{truncateText(textOnly, 500)}">
-  <link rel="canonical" href="https://whenplane.com{$page.url.pathname}"/>
+  <link rel="canonical" href="https://whenplane.com{page.url.pathname}"/>
   {#if thumbnail}
     <meta property="og:image" content={thumbnail.url}>
   {/if}
