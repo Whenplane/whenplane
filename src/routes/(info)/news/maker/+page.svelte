@@ -4,14 +4,17 @@
   import { onMount } from "svelte";
   import { newsSanitizeSettings } from "$lib/news/news.ts";
   import { truncateText } from "$lib/utils.ts";
-  import {toastStore} from "@skeletonlabs/skeleton-svelte";
+  import {Toast, createToaster} from "@skeletonlabs/skeleton-svelte";
+  import {clipboard} from "$lib/replacements/clipboard.ts";
+
+  const toaster = createToaster();
 
   let title = $state("");
   let url = $derived(truncateText(title.replace(/[^A-Za-z0-9- ]+/g, "").replace(/\s\s+/g, ' ').replaceAll(" ", "-").toLowerCase(), 50, false))
-  let content: string = $state();
-  let timestamp: string = $state();
+  let content: string = $state("");
+  let timestamp: string = $state(Date.now()+"");
 
-  let timestampCopied: boolean = $state();
+  let timestampCopied: boolean = $state(false);
   let timestampCopying = false;
 
   function updateTimestamp() {
@@ -75,13 +78,26 @@
 
 
 <button use:clipboard={url} onclick={() => {
-        toastStore.trigger({
-            message: "Copied to Clipboard!"
+        toaster.info({
+          description: "Copied to clipboard!"
         })
     }}>
   {url}
 </button>
 <br>
+
+
+<Toast.Group {toaster}>
+  {#snippet children(toast)}
+    <Toast {toast}>
+      <Toast.Message>
+        <Toast.Title>{toast.title}</Toast.Title>
+        <Toast.Description>{toast.description}</Toast.Description>
+      </Toast.Message>
+      <Toast.CloseTrigger />
+    </Toast>
+  {/snippet}
+</Toast.Group>
 
 
 <style>
