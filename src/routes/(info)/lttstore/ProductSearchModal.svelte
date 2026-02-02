@@ -1,18 +1,14 @@
-<!-- @migration task: review uses of `navigating` -->
 <script lang="ts">
-  import { run } from 'svelte/legacy';
-
-
   import { SearchClient } from "typesense";
   import type { ProductSearchIndex } from "$lib/lttstore/lttstore_types.ts";
   import type { SearchResponse } from "typesense/lib/Typesense/Documents";
-  import { modalStore, Progress } from "@skeletonlabs/skeleton-svelte";
   import sanitizeHtml from "sanitize-html";
   import {flip} from "svelte/animate";
   import {slide} from "svelte/transition";
   import { goto } from "$app/navigation";
   import { navigating } from "$app/state";
   import { dev } from "$app/environment";
+  import CircleProgress from "$lib/replacements/CircleProgress.svelte";
 
   const searchClient = new SearchClient({
     'nodes': [{
@@ -85,23 +81,20 @@
 
 
 
-  run(() => {
+  $effect(() => {
     search(searchText);
   });
-  run(() => {
-    if(navigating) modalStore.close();
-  }); // close search modal when we navigate
 </script>
 
 <div class="s-container p-4 absolute">
   <input class="input px-2 pl-4 py-0.5" autofocus placeholder="Find a product" bind:value={searchText} onkeydown={keyPress}>
   <div class="inline-block absolute top-4 right-8">
     {#if waiting}
-      <Progress class="inline-block" width="w-6" stroke={250}/>
+      <CircleProgress class="inline-block" width="w-6"/>
     {/if}
     {#await searchPromise}
       {#if !waiting}
-        <Progress class="inline-block" width="w-6" stroke={250}/>
+        <CircleProgress class="inline-block" width="w-6"/>
       {/if}
     {/await}
   </div>

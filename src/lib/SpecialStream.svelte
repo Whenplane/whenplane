@@ -8,6 +8,7 @@
 	import Late from '$lib/Late.svelte';
 	import Info from '$lib/svg/Info.svelte';
 	import { typed } from '$lib';
+	import { popup } from './replacements/popup';
 
 	let {
 		specialStreamData = typed<SpecialStream>(),
@@ -40,9 +41,7 @@
 		late = timeUntil.late;
 	}
 
-	run(() => {
-		updateCountdown(startTime);
-	});
+	$effect(updateCountdown)
 
 	onMount(() => {
 		let interval = setInterval(updateCountdown, 1e3);

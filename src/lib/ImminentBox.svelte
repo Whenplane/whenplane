@@ -1,12 +1,12 @@
 <script lang="ts">
 		import Info from '$lib/svg/Info.svelte';
-	import { removeAfterLastDash } from '$lib/utils';
 	import type { FpEndpointResponse } from '../routes/api/(live-statuses)/floatplane/+server.ts';
 	import { timeString } from '$lib/timeUtils.ts';
 	import { slide } from 'svelte/transition';
 	import { typed } from '$lib';
+	import {popup} from "$lib/replacements/popup.ts";
 
-	let {
+		let {
 		floatplane = typed<FpEndpointResponse | undefined>(),
 		hasDone = typed<boolean>(false)
 	} = $props();
@@ -21,7 +21,7 @@
 
 {#if floatplane && !floatplane?.isLive && floatplane?.isWAN && dayIsCloseEnough && (floatplane?.isThumbnailNew || floatplane?.thumbnailAge < ageCutoff) && !hasDone /*|| dev*/}
 	<div
-		class="card border-2 p-2 border-green-600! !bg-opacity-20 bg-green-600! block relative pb-0 mobile-add-padding"
+		class="card border-2 p-2 border-green-600! bg-opacity-20! bg-green-600! block relative pb-0 mobile-add-padding"
 		transition:slide={{ duration: 1.5e3 }}
 	>
 		<a href={floatplane?.thumbnail} target="_blank" rel="noopener">

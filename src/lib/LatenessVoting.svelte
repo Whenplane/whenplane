@@ -14,6 +14,7 @@
 	import { n } from '$lib/timeUtils.ts';
 	import { e } from '$lib/utils.ts';
 	import { strip } from '$lib/cookieUtils.ts';
+	import {popup} from "$lib/replacements/popup.ts";
 
 	let { mainLate = typed<Writable<MainLate>>() } = $props();
 

@@ -1,11 +1,9 @@
 <script lang="ts">
-	import { run } from 'svelte/legacy';
-
 	import { onMount } from 'svelte';
 	import { page } from '$app/state';
-
 	import { getTimePreference } from '$lib/prefUtils';
 	import { typed } from '$lib';
+	import {popup} from "$lib/replacements/popup.ts";
 
 	let {
 		border = typed<boolean>(true),
@@ -13,9 +11,9 @@
 		boca = typed<boolean>(page.url.searchParams.has('boca'))
 	} = $props();
 
-	run(() => {
+	$effect(() => {
 		console.debug({ border });
-	});
+	})
 
 	let timeString = $state('');
 

@@ -1,14 +1,11 @@
 <script lang="ts">
-	import { run } from 'svelte/legacy';
-
-	import { getNextWAN, isNearWan, timeString } from "$lib/timeUtils";
+	import { getNextWAN, timeString } from "$lib/timeUtils";
 	import ShowCountdown, {mainLate} from "$lib/ShowCountdown.svelte";
 	import StreamStatus from "$lib/StreamStatus.svelte";
 	import {invalidateAll} from "$app/navigation";
 	import {onMount} from "svelte";
 	import Late from "$lib/Late.svelte";
 	import {page} from "$app/state";
-	import {fade} from "svelte/transition";
 	import { browser, dev } from "$app/environment";
 	import LatenessVoting from "$lib/LatenessVoting.svelte";
 	import { Accordion } from "@skeletonlabs/skeleton-svelte";
@@ -27,6 +24,8 @@
 	import { getDateFormatLocale, getTimePreference } from "$lib/prefUtils.ts";
 	import MoreLinks from "$lib/MoreLinks.svelte";
 	import CurrentTitle from "$lib/CurrentTitle.svelte";
+	import {popup} from "$lib/replacements/popup.ts";
+	import ChevronDown from "svelte-bootstrap-icons/lib/ChevronDown.svelte";
 
 	let { data } = $props();
 
@@ -46,14 +45,14 @@
 	]
 
 	const reloadNumber = data.liveStatus?.reloadNumber;
-	run(() => {
+	$effect(() => {
 		if(data.liveStatus && data.liveStatus?.reloadNumber != reloadNumber) {
 			location.href = "";
 		}
-	});
+	})
 
-	let outerContainer: HTMLDivElement = $state();
-	let mainContainer: HTMLDivElement = $state();
+	let outerContainer: HTMLDivElement;
+	let mainContainer: HTMLDivElement;
 
 
 	let invalidationInterval: number | undefined;
@@ -119,9 +118,11 @@
 	let medianLateness = $derived(data.medianLateness ? timeString(Math.abs(data.medianLateness)) : undefined);
 
 
-	run(() => {
-		if(dev) console.log({data});
-	});
+	if(dev) {
+		$effect(() => {
+			console.log({data});
+		})
+	}
 
 
 	// remove ?attempt after 500 error
@@ -384,23 +385,22 @@
 		}}/>-->
 
 		{#if !page.data.isBot && (nowish.getUTCDay() === 5 || nowish.getUTCDay() === 6 /*|| dev*/) && !data.hasDone && (page.url.searchParams.has("showLatenessVoting") ? page.url.searchParams.get("showLatenessVoting") === "true" : !isFrame)}
-			<div>
-				<Accordion padding="pb-2 px-4">
-					<Accordion.Item open>
-						{#snippet summary()}
-											
-								<h3 class="inline">Lateness Voting</h3>
-							
-											{/snippet}
-						{#snippet content()}
-											
-								{#if data.liveStatus}
-									<LatenessVoting {mainLate}/>
-								{:else}
-									<span class="opacity-75">Lateness voting not available while offline.</span>
-								{/if}
-							
-											{/snippet}
+			<div class="pb-2 px-4">
+				<Accordion collapsible value={['1']}>
+					<Accordion.Item value="1">
+						<Accordion.ItemTrigger class="font-bold flex items-center justify-between gap-2">
+							<h3 class="inline">Lateness Voting</h3>
+							<Accordion.ItemIndicator class="group">
+								<ChevronDown class="h-5 w-5 transition group-data-[state=open]:rotate-180" />
+							</Accordion.ItemIndicator>
+						</Accordion.ItemTrigger>
+						<Accordion.ItemContent>
+							{#if data.liveStatus}
+								<LatenessVoting {mainLate}/>
+							{:else}
+								<span class="opacity-75">Lateness voting not available while offline.</span>
+							{/if}
+						</Accordion.ItemContent>
 					</Accordion.Item>
 				</Accordion>
 			</div>

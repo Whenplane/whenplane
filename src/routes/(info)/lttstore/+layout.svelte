@@ -1,37 +1,47 @@
 <script lang="ts">
-  import { run } from 'svelte/legacy';
 
   import { setCookie } from "$lib/cookieUtils";
   import { invalidateAll } from "$app/navigation";
   import ExclamationTriangle from "svelte-bootstrap-icons/lib/ExclamationTriangle.svelte";
-  import { modalStore } from "@skeletonlabs/skeleton-svelte";
   import {fade} from "svelte/transition"
   import ProductSearchModal from "./ProductSearchModal.svelte";
-  import DateStamp from "$lib/DateStamp.svelte";
+  import { navigating } from "$app/state";
+  import {popup} from "$lib/replacements/popup.ts";
 
   let { data, children } = $props();
 
   let selectedCurrency = $state(data.currency);
-  run(() => {
+  $effect(() => {
     if(selectedCurrency != data.currency) {
       setCookie("currency", selectedCurrency);
       invalidateAll();
     }
   });
+  $effect(() => {
+    if(navigating && searchOpen) {
+      searchOpen = false;
+    }
+  })
+
+  let searchOpen = $state(false);
 
   function keypress(event: KeyboardEvent) {
     if(event.key === "P" && document.activeElement?.tagName !== "INPUT") {
-      modalStore.trigger({
-        type: 'component',
-        component: {
-          ref: ProductSearchModal
-        }
-      })
+      searchOpen = true;
     }
   }
 
 </script>
 <svelte:window onkeyup={keypress}/>
+
+{#if searchOpen}
+  <div class="search-backdrop fixed top-0 left-0 right-0 bottom-0 z-999">
+    <div class="w-full h-full flex justify-center items-center">
+      <ProductSearchModal/>
+    </div>
+  </div>
+{/if}
+
 <div class="float-right pr-5 h-0">
   <div class="inline-block">
     {#if selectedCurrency !== "USD"}
@@ -72,3 +82,9 @@
   </p>
   <div class="arrow preset-filled-surface-500"></div>
 </div>
+
+<style>
+  .search-backdrop {
+      background-color: rgb(var(--color-surface-900) / .7)
+  }
+</style>
