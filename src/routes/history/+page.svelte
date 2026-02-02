@@ -29,7 +29,7 @@
 
     let nextYear = $state(data.history.lowestYear - 1);
 
-    let view = $state(data.history.viewType ?? 0);
+    let view = $state((data.history.viewType ?? 0)+"");
 
     let first = $state(true);
     run(() => {
@@ -83,22 +83,47 @@
     </a><br>
 
     <br>
-    <SegmentedControl>
-        <Segment.Item bind:group={view} name="justify" value={0}><Images/></Segment.Item>
-        <Segment.Item bind:group={view} name="justify" value={1}><CardImage/></Segment.Item>
-        <Segment.Item bind:group={view} name="justify" value={2}><ViewStacked/></Segment.Item>
-        <Segment.Item bind:group={view} name="justify" value={3}><Grid/></Segment.Item>
-    </SegmentedControl>
+    <div class="flex flex-col items-center gap-4">
+        <SegmentedControl value={view} onValueChange={(details) => (view = details.value)} name="justify">
+            <SegmentedControl.Control>
+                <SegmentedControl.Indicator />
+                <SegmentedControl.Item value="0">
+                    <SegmentedControl.ItemText class="inline-block">
+                        <Images/>
+                    </SegmentedControl.ItemText>
+                    <SegmentedControl.ItemHiddenInput />
+                </SegmentedControl.Item>
+                <SegmentedControl.Item value="1">
+                    <SegmentedControl.ItemText class="inline-block">
+                        <CardImage/>
+                    </SegmentedControl.ItemText>
+                    <SegmentedControl.ItemHiddenInput />
+                </SegmentedControl.Item>
+                <SegmentedControl.Item value="2">
+                    <SegmentedControl.ItemText class="inline-block">
+                        <ViewStacked/>
+                    </SegmentedControl.ItemText>
+                    <SegmentedControl.ItemHiddenInput />
+                </SegmentedControl.Item>
+                <SegmentedControl.Item value="3">
+                    <SegmentedControl.ItemText class="inline-block">
+                        <Grid/>
+                    </SegmentedControl.ItemText>
+                    <SegmentedControl.ItemHiddenInput />
+                </SegmentedControl.Item>
+            </SegmentedControl.Control>
+        </SegmentedControl>
+    </div>
     <br>
 
     <div class="inline-block"
-         class:thumbnail-inline={view === 0}
-         class:thumbnail-list={view === 1}
-         class:old-layout={view === 2}
-         class:thumbnailless-inline={view === 3}
+         class:thumbnail-inline={view === "0"}
+         class:thumbnail-list={view === "1"}
+         class:old-layout={view === "2"}
+         class:thumbnailless-inline={view === "3"}
     >
         {#each shows as show, i (show.name)}
-            <HistoricalShow {show} withThumbnail={view < 2} lazyLoadThumbnail={i > 10} lazyLoadGroup={Math.floor(i/6) + (1000 * pageIndex)} alternateStartTimes={data.alternateStartTimes}/>
+            <HistoricalShow {show} withThumbnail={Number(view) < 2} lazyLoadThumbnail={i > 10} lazyLoadGroup={Math.floor(i/6) + (1000 * pageIndex)} alternateStartTimes={data.alternateStartTimes}/>
             {#if i === 50}
                 <LinusFace/>
             {/if}
