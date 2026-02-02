@@ -220,6 +220,8 @@
 {/if}
 
 <style>
+    @reference "#app.css";
+
     .big-wrapper {
         margin-top: 2em;
     }

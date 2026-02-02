@@ -87,6 +87,8 @@
 </span>
 
 <style>
+  @reference "#app.css";
+
   .browser-icon {
       width: 2em;
       height: 2em;

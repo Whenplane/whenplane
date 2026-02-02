@@ -53,8 +53,10 @@
 <!--<pre>{JSON.stringify(data, undefined, '\t')}</pre>-->
 
 <style>
-  .nav {
-      @apply inline;
-      border-right: solid 1px rgba(255, 255, 255, 0.2);
-  }
+    @reference "#app.css";
+
+    .nav {
+        @apply inline;
+        border-right: solid 1px rgba(255, 255, 255, 0.2);
+    }
 </style>

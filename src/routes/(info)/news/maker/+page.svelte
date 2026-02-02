@@ -85,6 +85,8 @@
 
 
 <style>
+    @reference "#app.css";
+
     textarea, input {
         background-color: rgba(0, 0, 0, 0.1);
     }

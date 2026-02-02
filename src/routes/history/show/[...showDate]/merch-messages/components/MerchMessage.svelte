@@ -115,6 +115,8 @@
 </div>
 
 <style>
+	@reference "#app.css";
+
 	figure.avatar {
 		@apply w-10 bg-surface-500 rounded-full flex aspect-square text-surface-50 font-semibold justify-center items-center overflow-hidden isolate;
 	}

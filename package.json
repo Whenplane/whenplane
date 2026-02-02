@@ -80,5 +80,8 @@
 		"svelte-confetti": "^2.3.2",
 		"svelte-turnstile": "^0.8.0",
 		"typesense": "^1.8.2"
+	},
+	"imports": {
+		"#app.css": "./src/app.css"
 	}
 }

@@ -58,6 +58,8 @@
 </div>
 
 <style>
+	@reference "#app.css";
+
 	.box {
 		@apply inline-block border border-surface-500 p-2 m-1 mb-2 rounded-md;
 		width: 300px;

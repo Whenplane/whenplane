@@ -394,48 +394,50 @@
 {/if}
 
 <style>
-  .h-almost-full {
-      height: 90vh;
-  }
-  .search-logo {
-      max-height: 15em;
-      width: auto;
-      @apply p-2;
-  }
-  .search-logo-small {
-      max-height: 5em;
-      width: auto;
-  }
+    @reference "#app.css";
+
+    .h-almost-full {
+        height: 90vh;
+    }
+    .search-logo {
+        max-height: 15em;
+        width: auto;
+        @apply p-2;
+    }
+    .search-logo-small {
+        max-height: 5em;
+        width: auto;
+    }
 
 
-  .search-box {
-      width: min(550px, 90vw);
-  }
-  .search-box-top-bar {
-      width: calc(95vw - 800px - 13em);
-  }
-  @media (max-width: 1400px) {
-      .search-box-top-bar {
-          width: 90vw;
-      }
-      .logo-container {
-          @apply block text-center;
-      }
-  }
+    .search-box {
+        width: min(550px, 90vw);
+    }
+    .search-box-top-bar {
+        width: calc(95vw - 800px - 13em);
+    }
+    @media (max-width: 1400px) {
+        .search-box-top-bar {
+            width: 90vw;
+        }
+        .logo-container {
+            @apply block text-center;
+        }
+    }
 
-  .result-title {
-      font-size: 1.5em;
-      /*font-weight: bold;*/
-  }
+    .result-title {
+        font-size: 1.5em;
+        /*font-weight: bold;*/
+    }
 
-  .result-highlight > :global(mark) {
-      /*background-color: rgb(var(--color-primary-500) / 0.4);*/
-      background-color: inherit;
-      color: inherit;
-      font-weight: bold;
-      @apply brightness-200;
-  }
-  .result-highlight.result-visibility-highlight > :global(mark) {
-      color: rgb(var(--color-primary-500))
-  }
+    .result-highlight > :global(mark) {
+        /*background-color: rgb(var(--color-primary-500) / 0.4);*/
+        background-color: inherit;
+        color: inherit;
+        font-weight: bold;
+        @apply brightness-200;
+    }
+    .result-highlight.result-visibility-highlight > :global(mark) {
+        color: rgb(var(--color-primary-500))
+    }
 </style>

@@ -6,13 +6,15 @@
 </div>
 
 <style>
-  div {
-      @apply px-1;
-      display: inline-block;
-      color: white;
-      background-color: red;
-      border-radius: 2px;
-      font-weight: bold;
-      font-size: 0.8em;
-  }
+    @reference "#app.css";
+
+    div {
+        @apply px-1;
+        display: inline-block;
+        color: white;
+        background-color: red;
+        border-radius: 2px;
+        font-weight: bold;
+        font-size: 0.8em;
+    }
 </style>

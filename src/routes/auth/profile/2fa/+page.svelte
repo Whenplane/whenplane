@@ -117,19 +117,17 @@
 </div>
 
 <style>
+    @reference "#app.css";
+
     .width-initial {
         width: initial !important;
-    }
-
-    img {
-        @apply qr-box;
     }
 
     .advanced {
         min-height: 2.66em;
     }
 
-    .qr-box {
+    .qr-box, img {
         height: min(45vh, 80vw);
         color: red;
     }

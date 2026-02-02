@@ -150,6 +150,8 @@
 </div>
 
 <style>
+    @reference "#app.css";
+
     .thumbnail {
         height: min(15em, 50vw);
         @apply mx-auto;

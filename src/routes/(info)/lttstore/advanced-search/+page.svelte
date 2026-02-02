@@ -244,6 +244,8 @@
 
 
 <style>
+    @reference "#app.css";
+
     .container {
         @apply p-2 pt-8 w-screen mx-auto;
     }

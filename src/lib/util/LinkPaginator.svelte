@@ -56,6 +56,8 @@
 {/if}
 
 <style>
+	@reference "#app.css";
+
 	a {
 		@apply px-2;
 	}

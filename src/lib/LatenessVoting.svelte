@@ -102,6 +102,8 @@ How late do you think the show will be?
 </form>
 
 <style>
+	@reference "#app.css";
+
 	.percent {
 		background-color: rgba(100, 100, 255, 0.25);
 		border-radius: 4px;

@@ -54,6 +54,8 @@
 {/if}
 
 <style>
+	@reference "#app.css";
+
 	button {
 		--tw-text-opacity: 1;
 		color: rgb(var(--color-primary-500) / var(--tw-text-opacity));

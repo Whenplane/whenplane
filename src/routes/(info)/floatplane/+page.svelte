@@ -174,22 +174,24 @@
 </div>
 
 <style>
-  .out {
-      border-radius: 5px;
-      border: solid 1px rgba(255, 255, 255, 0.1);
-  }
+    @reference "#app.css";
 
-  img {
-      border-radius: 5px;
-  }
+    .out {
+        border-radius: 5px;
+        border: solid 1px rgba(255, 255, 255, 0.1);
+    }
 
-  .green {
-      color: lawngreen;
-  }
+    img {
+        border-radius: 5px;
+    }
 
-  .card-title {
-      @apply px-2 py-1;
-      display: block;
-      border-bottom: solid 1px rgba(255, 255, 255, 0.1);
-  }
+    .green {
+        color: lawngreen;
+    }
+
+    .card-title {
+        @apply px-2 py-1;
+        display: block;
+        border-bottom: solid 1px rgba(255, 255, 255, 0.1);
+    }
 </style>

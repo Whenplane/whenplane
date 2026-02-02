@@ -196,35 +196,37 @@
 <!--<pre>{JSON.stringify(data, undefined, '\t')}</pre>-->
 
 <style>
-  .game-image {
-      width: auto;
-      max-width: 10em;
-      border-radius: 7px;
-  }
-  .just-chatting {
-      object-fit: cover;
-      aspect-ratio: 2/1;
-  }
+    @reference "#app.css";
 
-  .game-list-game {
-      width: min(30vw, 10em);
-      border-radius: 7px;
-  }
+    .game-image {
+        width: auto;
+        max-width: 10em;
+        border-radius: 7px;
+    }
+    .just-chatting {
+        object-fit: cover;
+        aspect-ratio: 2/1;
+    }
 
-  .fake-game-image {
-      background-color: rgb(50, 50, 50);
-      aspect-ratio: 3/4;
-      border-radius: 4px;
-      font-size: 5rem;
-      overflow: hidden;
-  }
+    .game-list-game {
+        width: min(30vw, 10em);
+        border-radius: 7px;
+    }
 
-  .game-list-container {
-    @apply mx-auto;
-    max-width: calc(min(30vw, 10em) * 6)
-  }
+    .fake-game-image {
+        background-color: rgb(50, 50, 50);
+        aspect-ratio: 3/4;
+        border-radius: 4px;
+        font-size: 5rem;
+        overflow: hidden;
+    }
 
-  .currently-playing {
-      border: 2px solid red;
-  }
+    .game-list-container {
+      @apply mx-auto;
+      max-width: calc(min(30vw, 10em) * 6)
+    }
+
+    .currently-playing {
+        border: 2px solid red;
+    }
 </style>
