@@ -23,7 +23,7 @@
 
 	$effect(() => {
 		if (browser) {
-			if (navigating) {
+			if (navigating.to) {
 				if (progressTimeout) clearTimeout(progressTimeout);
 				const startBar = () => {
 					if (navigating) {
@@ -37,7 +37,7 @@
 					progressTimeout = setTimeout(startBar, 150) as unknown as number;
 				}
 			}
-			if (!navigating) {
+			if (!navigating.to) {
 				if (progressTimeout) clearTimeout(progressTimeout);
 				NProgress.done();
 			}

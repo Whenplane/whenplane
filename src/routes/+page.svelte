@@ -208,7 +208,7 @@
 				{/key}
 				<br>
 			{/if}
-			<div class="card p-4 whitespace-nowrap shadow-x1 z-10 font-normal" data-popup="estimated-special-stream-start" style="margin-top: 0;">
+			<div class="card p-4 whitespace-nowrap shadow-x1 z-10 font-normal absolute" data-popup="estimated-special-stream-start" style="margin-top: 0; opacity: 0;">
 				Often, LTT does not announce streams, they just go live.<br>
 				So the only way we know that a stream is happening is when they upload a title, description, and thumbnail.<br>
 				This usually happens a few hours before the stream starts, and a guess is made at the start time.<br>
