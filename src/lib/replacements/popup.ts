@@ -36,7 +36,7 @@ export function popup(triggerNode: HTMLElement, args: PopupSettings) {
     // https://floating-ui.com/docs/size
     if (size) optionalMiddleware.push(size(args.middleware?.size));
     // https://floating-ui.com/docs/autoPlacement
-    if (autoPlacement) optionalMiddleware.push(autoPlacement(args.middleware?.autoPlacement));
+    // if (autoPlacement) optionalMiddleware.push(autoPlacement(args.middleware?.autoPlacement));
     // https://floating-ui.com/docs/hide
     if (hide) optionalMiddleware.push(hide(args.middleware?.hide));
     // https://floating-ui.com/docs/inline
