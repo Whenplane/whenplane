@@ -39,7 +39,7 @@
       <span class="x-circle"><XCircleFill/></span>
     </button>
 
-    <button class="inline-block absolute bottom-2 right-3 permanent-dismiss opacity-50" onclick={() => {dismissed.set(true);localStorage.setItem("permanentPushAdDismiss", "true")}}>
+    <button class="inline-block absolute bottom-2 right-3 permanent-dismiss opacity-50" onclick={() => {dismissed.set(true);localStorage.setItem("permanentSearchAdDismiss", "true")}}>
       Don't show again
     </button>
   </div>
