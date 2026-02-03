@@ -51,7 +51,7 @@ h3 {
     @apply h3;
 }
 
-a {
+a:not(.btn) {
     @apply anchor;
 }
 
