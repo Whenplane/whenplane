@@ -51,6 +51,10 @@ h3 {
     @apply h3;
 }
 
+a {
+    @apply anchor;
+}
+
 .limit {
     max-width: 800px;
 }
@@ -145,4 +149,22 @@ ol.normal-list {
     --tw-ring-color: rgb(250 250 250 / .05);
     /*background-color: rgb(var(--color-surface-800));*/
     /*border-radius: var(--theme-rounded-container);*/
+}
+
+.breadcrumb {
+    overflow-x: auto;
+    scrollbar-width: none;
+    display: flex;
+    width: 100%;
+    align-items: center;
+}
+.breadcrumb li {
+    display: block;
+}
+
+.dark .crumb-separator {
+    @apply text-surface-300;
+}
+.breadcrumb > :not([hidden]) {
+    @apply mr-3;
 }
