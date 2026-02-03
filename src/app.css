@@ -50,6 +50,9 @@ h2 {
 h3 {
     @apply h3;
 }
+h4 {
+    @apply h5;
+}
 
 a:not(.btn) {
     @apply anchor;

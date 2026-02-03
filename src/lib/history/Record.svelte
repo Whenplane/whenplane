@@ -20,7 +20,7 @@
 </script>
 
 <div class="box text-center" class:selected>
-	<h3>{@render children?.()}</h3>
+	<h4>{@render children?.()}</h4>
 	<div>
 		{@render description?.()}
 	</div>
