@@ -45,8 +45,8 @@ export async function retry<T>(run: () => Promise<T>, attempts = 5): Promise<T> 
     return retryD1(run, (err: unknown, nextAttempt: number) => nextAttempt <= attempts)
 }
 
-export function shouldRetryD1(err: unknown, nextAttempt: number) {
-    const errMsg = String(err);
+export function shouldRetryD1(err: Error, nextAttempt: number) {
+    const errMsg = err?.message ?? String(err);
     const isRetryableError =
       errMsg.includes("Network connection lost") ||
       errMsg.includes("storage caused object to be reset") ||
