@@ -123,6 +123,8 @@
         formatter: (n: number) => {
           if(n > 500000) {
             return ">500,000"
+          } else if(n >= 40) {
+            return ">40"
           } else {
             return commas(n)
           }

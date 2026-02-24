@@ -146,6 +146,8 @@
         formatter: (n: number) => {
           if(n > 500000) {
             return ">500,000 sph"
+          } else if(n >= 40) {
+            return ">40 sph"
           } else {
             return commas(n, 2) + " sph"
           }
