@@ -23,6 +23,7 @@
   import ProductMoveRateGraph from "$lib/lttstore/product/ProductMoveRateGraph.svelte";
   import LTTProductCard from "$lib/lttstore/LTTProductCard.svelte";
   import ToolTip from "$lib/ToolTip.svelte";
+  import { sum } from "$lib/lttstore";
 
   export let data;
 
@@ -515,7 +516,11 @@
       Before this product was removed, there was
     {/if}
     {#if (currentStock.total ?? -1) <= 500000}
-      a total of {commas(currentStock?.total)}
+      {#if (currentStock.total ?? -1) === -1}
+        more than {commas(sum(currentStock))}
+      {:else}
+        a total of {commas(currentStock?.total)}
+      {/if}
     {:else}
       more than 500,000
     {/if}
