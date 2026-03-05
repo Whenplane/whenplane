@@ -571,16 +571,16 @@
   {/if}
 
   <Accordion>
-    <AccordionItem open={dev}>
+    <AccordionItem open>
       <svelte:fragment slot="summary">Stock History</svelte:fragment>
       <svelte:fragment slot="content">
         <h2>Stock History</h2>
-        <div class="limit mx-auto p-2 m-2 card variant-ghost-warning">
+        <!--<div class="limit mx-auto p-2 m-2 card variant-ghost-warning">
           Due to a <a href="https://changelog.shopify.com/posts/new-add-to-cart-limit">Shopify change</a>,
           we are not longer able to see stock of most products if theyre above <span class="font-mono">40</span>.
           <br>
           Please <a href="/support">let me know</a> if you find a new way to check the stock.
-        </div>
+        </div>-->
         We check the stock of products occasionally. Here is the history of those stock numbers.
         <!-- stock started being recorded on 1718147742676 -->
         <select class="select inline-block w-48" bind:value={historyDays}>
