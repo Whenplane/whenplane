@@ -608,7 +608,7 @@
         {/if}
         <br>
         {#if data.product.firstSeen < 1772671914842}
-          Note that stock was unavailable between April 3rd, 2025 and March 5th, 2026, because we were not able to check the stock during that time.
+          Note that stock data between April 3rd, 2025 and March 5th, 2026 is not available, because we were not able to check the stock during that time.
         {/if}
         <br>
         <br>
