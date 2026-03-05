@@ -598,8 +598,10 @@
           {/if}
           <option value="all">all-time</option>
         </select>
-        <ProductStockHistoryGraph stockHistory={data.stockHistory} productName={productInfo.title} {chartUpdateNumber}/>
-        <ProductMoveRateGraph stockHistory={data.stockHistory} productName={productInfo.title} {chartUpdateNumber}/>
+        {#key data}
+          <ProductStockHistoryGraph stockHistory={data.stockHistory} productName={productInfo.title} {chartUpdateNumber}/>
+          <ProductMoveRateGraph stockHistory={data.stockHistory} productName={productInfo.title} {chartUpdateNumber}/>
+        {/key}
         <br>
         {#if data.product.firstSeen < 1719248750000}
           Note that stock started being recorded on June 11th, 2024, so data before that is not available.
