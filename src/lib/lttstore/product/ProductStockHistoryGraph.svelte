@@ -175,7 +175,7 @@
   </label>
 {/if}
 {#if productOptions.length > 1}
-  <select bind:value={filter} class="select">
+  <select bind:value={filter} class="select w-56">
     <option value={undefined}>All</option>
     {#each productOptions.sort((a, b) => a.position - b.position) as option}
       <optgroup label={option.name}>
