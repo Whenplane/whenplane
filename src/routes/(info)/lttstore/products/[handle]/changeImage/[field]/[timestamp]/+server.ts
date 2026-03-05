@@ -1,7 +1,7 @@
 import { error, json } from "@sveltejs/kit";
 import type { RequestHandler } from "./$types";
 import { isNearWan } from "$lib/timeUtils.ts";
-import { newResponse } from "$lib/utils.ts";
+import { newResponse, retry } from "$lib/utils.ts";
 
 export const GET = (async ({params, platform}) => {
 
@@ -52,10 +52,12 @@ export const GET = (async ({params, platform}) => {
   const object = platform?.env?.LTTSTORE_CHANGE_SCREENSHOT;
   if(!object) throw error(503, "Screenshot object not available");
 
-  const id = object.idFromName("yuh");
-  const stub = object.get(id, {locationHint: "wnam"});
+  const response = await retry(async () => {
+    const id = object.idFromName("yuh");
+    const stub = object.get(id, {locationHint: "wnam"});
 
-  const response = await stub.fetch(`http://screenshot/?productId=${productId}&timestamp=${timestamp}&field=${field}`);
+    return await stub.fetch(`http://screenshot/?productId=${productId}&timestamp=${timestamp}&field=${field}`);
+  })
 
   if(!response.ok) {
     return json(await response.json(), {
