@@ -605,6 +605,9 @@
           Note that stock started being recorded on June 11th, 2024, so data before that is not available.
         {/if}
         <br>
+        {#if data.product.firstSeen < 1772671914842}
+          Note that stock was unavailable between April 3rd, 2025 and March 5th, 2026, because we were not able to check the stock during that time.
+        {/if}
         <br>
         <br>
         {#if goneInHours > 0 && (currentStock?.total ?? -1) > 0 && (currentStock?.total ?? -1) <= 500000 && typeof data.product?.purchasesPerHour === "number" && data.product?.purchasesPerHour >= 0 && !(data.product?.purchasesPerHour === 0 && (currentStock?.total ?? -1) < 0)}
