@@ -169,12 +169,15 @@
   {/if}
 </div>
 {#if Object.keys(someStock).length > 2}
-  <label>
+  <label class="inline-block">
     <input type="checkbox" bind:checked={onlyTotalCheck}>
     Only show total in graph?
   </label>
 {/if}
 {#if productOptions.length > 1}
+  {#if Object.keys(someStock).length > 2}
+    &nbsp;
+  {/if}
   <select bind:value={filter} class="select w-56">
     <option value={undefined}>All</option>
     {#each productOptions.sort((a, b) => a.position - b.position) as option}
