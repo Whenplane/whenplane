@@ -59,8 +59,8 @@
   <div class="opacity-80 pl-2">
     Sorted by
     <select bind:value={sortedBy} class="select w-56 py-1">
-<!--      <option value="purchasesPerDay">average sales per day</option>-->
-<!--      <option value="purchasesPerHour">average sales per hour</option>-->
+      <option value="purchasesPerDay">average sales per day</option>
+      <option value="purchasesPerHour">average sales per hour</option>
       <option value="metaUpdate">metadata updated</option>
       <option value="stockUpdate">stock updated</option>
       <option value="restocked">recently restocked</option>
