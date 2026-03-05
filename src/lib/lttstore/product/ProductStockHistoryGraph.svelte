@@ -4,9 +4,12 @@
   import { commas } from "$lib/utils.ts";
   import { fade } from "svelte/transition";
   import { getTimePreference } from "$lib/prefUtils.ts";
-  import type { StockCounts } from "$lib/lttstore/lttstore_types.ts";
+  import type { ProductOption, StockCounts } from "$lib/lttstore/lttstore_types.ts";
 
   export let productName: string | undefined = undefined;
+
+  export let productOptions: ProductOption[];
+  let filter: string | undefined = undefined;
 
   export let stockHistory: {
     handle: string,
@@ -37,6 +40,7 @@
   $: {
     onlyTotal;
     chartUpdateNumber;
+    filter;
     options.series = getSeries()
     // console.debug("Series:", options.series)
     if(chart) chart.updateSeries(options.series)
@@ -44,17 +48,19 @@
 
   function getSeries() {
     if(!onlyTotal) {
-      return Object.keys(someStock).map(k => {
-        return {
-          name: k,
-          data: stockHistory.map(h => {
-            return {
-              x: h.timestamp,
-              y: JSON.parse(h.stock)[k]
-            }
-          }).filter(d => d.y)
-        }
-      })
+      return Object.keys(someStock)
+        .filter(k => filter ? k.includes(filter) : true)
+        .map(k => {
+          return {
+            name: k,
+            data: stockHistory.map(h => {
+              return {
+                x: h.timestamp,
+                y: JSON.parse(h.stock)[k]
+              }
+            }).filter(d => d.y)
+          }
+        })
     } else {
       return [{
         name: "total",
@@ -167,6 +173,18 @@
     <input type="checkbox" bind:checked={onlyTotalCheck}>
     Only show total in graph?
   </label>
+{/if}
+{#if productOptions.length > 1}
+  <select bind:value={filter} class="select">
+    <option value={undefined}>All</option>
+    {#each productOptions.sort((a, b) => a.position - b.position) as option}
+      <optgroup label={option.name}>
+        {#each option.values as value}
+          <option {value}>{value}</option>
+        {/each}
+      </optgroup>
+    {/each}
+  </select>
 {/if}
 <!--{JSON.stringify(stockHistory)}-->
 
