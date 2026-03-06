@@ -365,7 +365,7 @@
                 </td>
               </tr>
               <tr>
-                <td class="align-top">Variants</td>
+                <td class="align-top">Variants ({productInfo.variants.length})</td>
                 <td>
                   {#each productInfo.variants as variant}
                     <li>
