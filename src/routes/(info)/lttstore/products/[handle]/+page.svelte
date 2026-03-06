@@ -607,7 +607,7 @@
           Note that stock started being recorded on June 11th, 2024, so data before that is not available.
         {/if}
         <br>
-        {#if data.product.firstSeen < 1772671914842}
+        {#if data.product.stockChecked > 1743807304846}
           Note that stock data between April 3rd, 2025 and March 5th, 2026 is not available, because we were not able to check the stock during that time.
         {/if}
         <br>
