@@ -17,7 +17,7 @@
     loading = false;
   }
 
-  let sortedBy = $page.url.searchParams.get("sort") ?? "metaUpdate";
+  let sortedBy = $page.url.searchParams.get("sort") ?? "purchasesPerDay";
   if(data.sortColumn === "stockChecked") sortedBy = "updated";
   let first = true;
   $: {

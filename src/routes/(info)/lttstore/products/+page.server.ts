@@ -3,14 +3,12 @@ import type { PageServerLoad } from "./$types";
 import type { ProductsTableRow } from "$lib/lttstore/lttstore_types.ts";
 import { retryD1 } from "$lib/utils.ts";
 
-const stockStartedWorking = 1723950660000;
-
 
 export const load = (async ({platform, url}) => {
   const db = platform?.env?.LTTSTORE_DB.withSession();
   if(!db) throw error(503, "DB unavailable!");
 
-  let sortColumn = Date.now() - stockStartedWorking > 5 * 24 * 60 * 60e3 ? "purchasesPerDay" : "stockChecked";
+  let sortColumn = "purchasesPerDay";
   if(url.searchParams.has("sort")) {
     switch (url.searchParams.get("sort")) {
       case "purchasesPerHour":
