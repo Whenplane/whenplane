@@ -68,7 +68,7 @@
       })
     } else {
       return [{
-        name: "average",
+        name: "total",
         data: stockHistory.map((h, i, a) => {
           if(i > 0) {
             const previous = a[i-1];
