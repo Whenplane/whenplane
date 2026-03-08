@@ -76,14 +76,14 @@ export const load = (async ({platform, params, url}) => {
   if((url.searchParams.get("historyDays") ?? defaultHistoryDays) === "all") {
     historyDays = "all";
     stockHistory = retryD1(() =>
-      db.prepare("select * from stock_history where handle = ? order by timestamp")
+      db.prepare("select timestamp,stock from stock_history where handle = ? order by timestamp")
         .bind(handle)
         .all<StockHistoryTableRow>()
         .then(r => r.results)
     );
   } else {
     stockHistory = retryD1(() =>
-      db.prepare("select * from stock_history where id = ? and timestamp > ? order by timestamp")
+      db.prepare("select timestamp,stock from stock_history where id = ? and timestamp > ? order by timestamp")
         .bind(
           product.id,
           Date.now() - ((historyDays as number) * 24 * 60 * 60e3)

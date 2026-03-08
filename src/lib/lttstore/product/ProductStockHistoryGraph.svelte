@@ -12,8 +12,6 @@
   let filter: string | undefined = undefined;
 
   export let stockHistory: {
-    handle: string,
-    id: number,
     timestamp: number,
     stock: string
   }[];
