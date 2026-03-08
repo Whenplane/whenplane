@@ -243,7 +243,7 @@ export const handleError: HandleServerError = async ({ error: e, event, status, 
       eMessage.includes("reset because its code was updated")
     );
 
-    if(building) console.error(error);
+    if(building || dev) console.error(error);
 
     async function report() {
         if(env.ERROR_REPORTING_WEBHOOK) {
