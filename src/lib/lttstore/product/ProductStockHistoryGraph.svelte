@@ -16,6 +16,8 @@
     stock: string
   }[];
 
+  $: console.debug("Stock history:", stockHistory)
+
   export let chartUpdateNumber = 1;
 
   let chart;
