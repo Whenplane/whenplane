@@ -1,6 +1,6 @@
 <script lang="ts">
     import TimeInput from "$lib/TimeInput.svelte";
-    import {getPreviousWANLuxon, addZero} from "$lib/timeUtils";
+    import { getPreviousWANLuxon, addZero, fixOffset } from "$lib/timeUtils";
     import {DateTime} from "luxon";
     import {getClosestWan} from "$lib/timeUtils";
 
@@ -16,7 +16,7 @@
     let startsAt: DateTime | undefined;
     $: {
         let timeParts = timeAtTimeStamp.split(":");
-        startsAt = DateTime.fromObject({
+        startsAt = fixOffset(DateTime.fromObject({
             year: dateDate.year,
             month: dateDate.month,
             day: dateDate.day,
@@ -25,7 +25,7 @@
             second: Number(timeParts[2]) || 0
         }, {
             zone: "America/Vancouver"
-        })
+        }));
         startsAt = startsAt.minus({seconds: timeStamp})
     }
 

@@ -19,7 +19,7 @@
   })
 
   function updateTimeString() {
-    timeString = new Date().toLocaleTimeString(undefined, { timeZone: "America/Vancouver", timeStyle: "short", hour12: getTimePreference() })
+    timeString = new Date().toLocaleTimeString(undefined, { timeZone: "Etc/GMT+7", timeStyle: "short", hour12: getTimePreference() })
   }
   updateTimeString();
 </script>
