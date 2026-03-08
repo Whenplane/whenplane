@@ -63,12 +63,10 @@
       return [{
         name: "total",
         data: stockHistory.map(h => {
-          const d = {
+          return {
             x: h.timestamp,
             y: JSON.parse(h.stock)["total"]
           };
-          console.debug(d);
-          return d;
         }).filter(d => d.y)
       }]
     }
