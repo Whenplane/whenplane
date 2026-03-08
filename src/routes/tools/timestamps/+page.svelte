@@ -52,7 +52,7 @@
     <br>
     <br>
     <input type="date" class="input w-48" bind:value={date}><br>
-    WAN of {dateDate.toLocaleString()}
+    WAN of {dateDate.toLocaleString()} @ {jsDateDate.toLocaleTimeString(undefined, {timeStyle: "short"})}
     <br>
     <br>
     At timestamp <TimeInput bind:value={timeStamp}/>, the time is
