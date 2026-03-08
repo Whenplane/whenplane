@@ -125,17 +125,40 @@ function getLooseWAN(now = new Date()) {
         day = daysInMonth(now.getFullYear(), month);
     }
 
-    return DateTime.fromObject(
-        {
-            year,
-            month,
-            day,
-            hour: 16,
-            minute: 30
-        }, {
-            zone: "America/Vancouver"
-        }
+    return fixOffset(
+      DateTime.fromObject(
+          {
+              year,
+              month,
+              day,
+              hour: 16,
+              minute: 30
+          }, {
+              zone: "America/Vancouver"
+          }
+        )
     );
+}
+
+export function fixOffset(date: DateTime) {
+    // On March 8th, 2026, BC went to permanent DST, but it might take a while for all devices to update. This just makes sure its correct.
+    if(isWrongOffset(date)) {
+        console.warn("Fixing incorrect DST offset!", date.offset, date);
+        return date.setZone("UTC-7", {keepLocalTime: true});
+    }
+    return date;
+}
+
+export function isWrongOffset(date: DateTime) {
+    return date.offset !== 420 && (
+      date.year > 2026 || (
+        date.year === 2026 && (
+          date.month > 3 || (
+            date.month === 3 && date.day >= 8
+          )
+        )
+      )
+    )
 }
 
 export function getClosestWanLuxon(now = new Date(), alternateTimes?: AlternateTimeRow[]) {
