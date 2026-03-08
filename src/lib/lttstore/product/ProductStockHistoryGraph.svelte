@@ -52,12 +52,10 @@
           return {
             name: k,
             data: stockHistory.map(h => {
-              const d = {
+              return {
                 x: h.timestamp,
                 y: JSON.parse(h.stock)[k]
-              }
-              console.debug(d);
-              return d;
+              };
             }).filter(d => d.y)
           }
         })
@@ -65,10 +63,12 @@
       return [{
         name: "total",
         data: stockHistory.map(h => {
-          return {
+          const d = {
             x: h.timestamp,
             y: JSON.parse(h.stock)["total"]
-          }
+          };
+          console.debug(d);
+          return d;
         }).filter(d => d.y)
       }]
     }
