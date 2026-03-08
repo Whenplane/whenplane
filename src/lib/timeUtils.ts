@@ -150,7 +150,7 @@ export function fixOffset(date: DateTime) {
 }
 
 export function isWrongOffset(date: DateTime) {
-    return date.offset !== 420 && (
+    return date.offset !== -420 && (
       date.year > 2026 || (
         date.year === 2026 && (
           date.month > 3 || (
