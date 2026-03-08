@@ -16,8 +16,6 @@
     stock: string
   }[];
 
-  $: console.debug("Stock history:", stockHistory)
-
   export let chartUpdateNumber = 1;
 
   let chart;
@@ -54,10 +52,12 @@
           return {
             name: k,
             data: stockHistory.map(h => {
-              return {
+              const d = {
                 x: h.timestamp,
                 y: JSON.parse(h.stock)[k]
               }
+              console.debug(d);
+              return d;
             }).filter(d => d.y)
           }
         })
