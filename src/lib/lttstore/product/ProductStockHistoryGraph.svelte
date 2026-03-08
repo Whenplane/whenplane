@@ -56,7 +56,7 @@
                 x: h.timestamp,
                 y: JSON.parse(h.stock)[k]
               };
-            }).filter(d => d.y)
+            }).filter(d => typeof d.y === "number")
           }
         })
     } else {
@@ -67,7 +67,7 @@
             x: h.timestamp,
             y: JSON.parse(h.stock)["total"]
           };
-        }).filter(d => d.y)
+        }).filter(d => typeof d.y === "number")
       }]
     }
   }
