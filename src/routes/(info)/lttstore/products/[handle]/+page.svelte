@@ -619,7 +619,7 @@
             {/if}
             <option value="all">all-time</option>
           </select>{#key data}
-          <ProductStockHistoryGraph stockHistory={data.stockHistory} productName={productInfo.title} productOptions={productInfo.options}{chartUpdateNumber}/>
+          <ProductStockHistoryGraph stockHistory={data.stockHistory} productName={productInfo.title} productOptions={productInfo.options} {chartUpdateNumber}/>
           <ProductMoveRateGraph stockHistory={data.stockHistory} productName={productInfo.title} {chartUpdateNumber}/>
           {/key}<br>
           {#if data.product.firstSeen < 1719248750000}
