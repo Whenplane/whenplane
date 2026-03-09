@@ -41,6 +41,10 @@ html, body {
     background-size: 100vw 100vh;
 }
 
+hr:not(.divider) {
+    border-color: var(--color-surface-600);
+}
+
 h1 {
     @apply h1;
 }
