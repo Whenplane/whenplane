@@ -1,12 +1,10 @@
 <script lang="ts">
-	import { run } from 'svelte/legacy';
-
-	import { browser } from '$app/environment';
+  import { browser } from '$app/environment';
 	import { onMount } from 'svelte';
 	import { commas } from '$lib/utils.ts';
 	import { fade } from 'svelte/transition';
 	import { getTimePreference } from '$lib/prefUtils.ts';
-	import type { StockCounts } from '$lib/lttstore/lttstore_types.ts';
+  import type { ProductOption, StockCounts } from "$lib/lttstore/lttstore_types.ts";
 	import { typed } from '$lib';
 
 	let {
@@ -23,33 +21,41 @@
 		chartUpdateNumber = typed<number>(1)
 	} = $props();
 
-	let chart = $state();
+	let chart: ApexCharts | undefined = $state();
   let filter: string | undefined = $state(undefined);
 
 	let onlyTotalCheck = $state(false);
-  $: someStock = Object.keys(stockHistory).length >= 1 ?
-    stockHistory.map(h => JSON.parse(h.stock ?? "{}") as StockCounts)
-      .reduce((p, c) => {
-        return {
-          ...c,
-          ...p
-        }
-      }, {})
-    : {};
 
-  let onlyTotalCheck = false;
+  let someStock = $derived(
+    Object.keys(stockHistory).length >= 1
+      ? stockHistory
+        .map((h) => JSON.parse(h.stock ?? '{}') as StockCounts)
+        .reduce((p, c) => {
+          return {
+            ...c,
+            ...p
+          };
+        }, {})
+      : {}
+  );
   // show only the total for items where the stock is just the default + the total
-  $: onlyTotal = Object.keys(someStock).length <= 2 || onlyTotalCheck;
-  $: console.debug({onlyTotal, length: Object.keys(someStock).length, someStock, stockHistory})
-
-  $: {
+  let onlyTotal = $derived.by(() => {
+    const keys = [...Object.keys(someStock)];
+    const totalIndex = keys.indexOf("total");
+    if (totalIndex !== -1) {
+      keys.splice(totalIndex, 1);
+    }
+    // if only 1 after removing total, then its probably the default one
+    return (keys.length == 1) || onlyTotalCheck;
+  });
+  $effect(() => console.debug({ onlyTotal, length: Object.keys(someStock).length, someStock, stockHistory }));
+  $effect.pre(() => {
     onlyTotal;
     chartUpdateNumber;
-    filter;
-    options.series = getSeries()
+    options.series = getSeries();
     // console.debug("Series:", options.series)
-    if(chart) chart.updateSeries(options.series)
-  }
+    if (chart) chart.updateSeries(options.series);
+  })
 
   function getSeries() {
     if(!onlyTotal) {
@@ -155,7 +161,7 @@
 		}
 	});
 
-	let chartDiv: HTMLDivElement = $state();
+	let chartDiv: HTMLDivElement | undefined = $state();
 
 	let ApexCharts;
 	let mounted = $state(false);
@@ -170,30 +176,6 @@
 	});
 
 	// let style = browser ?  : undefined;
-	let someStock = $derived(
-		Object.keys(stockHistory).length >= 1
-			? stockHistory
-					.map((h) => JSON.parse(h.stock ?? '{}') as StockCounts)
-					.reduce((p, c) => {
-						return {
-							...c,
-							...p
-						};
-					}, {})
-			: {}
-	);
-	// show only the total for items where the stock is just the default + the total
-	let onlyTotal = $derived(Object.keys(someStock).length <= 2 || onlyTotalCheck);
-	run(() => {
-		console.debug({ onlyTotal, length: Object.keys(someStock).length, someStock, stockHistory });
-	});
-	run(() => {
-		onlyTotal;
-		chartUpdateNumber;
-		options.series = getSeries();
-		// console.debug("Series:", options.series)
-		if (chart) chart.updateSeries(options.series);
-	});
 </script>
 
 <div style="min-height: 69vh">
