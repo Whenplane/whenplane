@@ -145,8 +145,8 @@ importers:
         specifier: ^8.28.0
         version: 8.28.0
       eslint-config-prettier:
-        specifier: ^8.5.0
-        version: 8.5.0(eslint@8.28.0)
+        specifier: ^8.10.2
+        version: 8.10.2(eslint@8.28.0)
       eslint-plugin-svelte3:
         specifier: ^4.0.0
         version: 4.0.0(eslint@8.28.0)(svelte@5.49.1)
@@ -154,11 +154,11 @@ importers:
         specifier: ^4.20250408.0
         version: 4.20250409.0
       prettier:
-        specifier: ^3.1.0
+        specifier: ^3.8.1
         version: 3.8.1
       prettier-plugin-svelte:
-        specifier: ^3.2.6
-        version: 3.4.1(prettier@3.8.1)(svelte@5.49.1)
+        specifier: ^3.5.1
+        version: 3.5.1(prettier@3.8.1)(svelte@5.49.1)
       sharp:
         specifier: ^0.32.6
         version: 0.32.6
@@ -2012,8 +2012,8 @@ packages:
     resolution: {integrity: sha512-TtpcNJ3XAzx3Gq8sWRzJaVajRs0uVxA2YAkdb1jm2YkPz4G6egUFAyA3n5vtEIZefPk5Wa4UXbKuS5fKkJWdgA==}
     engines: {node: '>=10'}
 
-  eslint-config-prettier@8.5.0:
-    resolution: {integrity: sha512-obmWKLUNCnhtQRKc+tmnYuQl0pFU1ibYJQ5BGhTVB08bHe9wC8qUeG7c08dj9XX+AuPj1YSGSQIHl1pnDHZR0Q==}
+  eslint-config-prettier@8.10.2:
+    resolution: {integrity: sha512-/IGJ6+Dka158JnP5n5YFMOszjDWrXggGz1LaK/guZq9vZTmniaKlHcsscvkAhn9y4U+BU3JuUdYvtAMcv30y4A==}
     hasBin: true
     peerDependencies:
       eslint: '>=7.0.0'
@@ -2681,8 +2681,8 @@ packages:
     resolution: {integrity: sha512-vkcDPrRZo1QZLbn5RLGPpg/WmIQ65qoWWhcGKf/b5eplkkarX0m9z8ppCat4mlOqUsWpyNuYgO3VRyrYHSzX5g==}
     engines: {node: '>= 0.8.0'}
 
-  prettier-plugin-svelte@3.4.1:
-    resolution: {integrity: sha512-xL49LCloMoZRvSwa6IEdN2GV6cq2IqpYGstYtMT+5wmml1/dClEoI0MZR78MiVPpu6BdQFfN0/y73yO6+br5Pg==}
+  prettier-plugin-svelte@3.5.1:
+    resolution: {integrity: sha512-65+fr5+cgIKWKiqM1Doum4uX6bY8iFCdztvvp2RcF+AJoieaw9kJOFMNcJo/bkmKYsxFaM9OsVZK/gWauG/5mg==}
     peerDependencies:
       prettier: ^3.0.0
       svelte: ^3.2.0 || ^4.0.0-next.0 || ^5.0.0-next.0
@@ -5028,7 +5028,7 @@ snapshots:
 
   escape-string-regexp@4.0.0: {}
 
-  eslint-config-prettier@8.5.0(eslint@8.28.0):
+  eslint-config-prettier@8.10.2(eslint@8.28.0):
     dependencies:
       eslint: 8.28.0
 
@@ -5635,7 +5635,7 @@ snapshots:
 
   prelude-ls@1.2.1: {}
 
-  prettier-plugin-svelte@3.4.1(prettier@3.8.1)(svelte@5.49.1):
+  prettier-plugin-svelte@3.5.1(prettier@3.8.1)(svelte@5.49.1):
     dependencies:
       prettier: 3.8.1
       svelte: 5.49.1
