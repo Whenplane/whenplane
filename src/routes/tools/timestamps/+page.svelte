@@ -2,7 +2,7 @@
     import { run } from 'svelte/legacy';
 
     import TimeInput from "$lib/TimeInput.svelte";
-    import {getPreviousWANLuxon, addZero} from "$lib/timeUtils";
+    import { getPreviousWANLuxon, addZero, fixOffset } from "$lib/timeUtils";
     import {DateTime} from "luxon";
     import {getClosestWan} from "$lib/timeUtils";
 
@@ -18,7 +18,7 @@
     let startsAt: DateTime | undefined = $state();
     run(() => {
         let timeParts = timeAtTimeStamp.split(":");
-        startsAt = DateTime.fromObject({
+        startsAt = fixOffset(DateTime.fromObject({
             year: dateDate.year,
             month: dateDate.month,
             day: dateDate.day,
@@ -27,7 +27,7 @@
             second: Number(timeParts[2]) || 0
         }, {
             zone: "America/Vancouver"
-        })
+        }));
         startsAt = startsAt.minus({seconds: timeStamp})
     });
 
@@ -54,7 +54,7 @@
     <br>
     <br>
     <input type="date" class="input w-48" bind:value={date}><br>
-    WAN of {dateDate.toLocaleString()}
+    WAN of {dateDate.toLocaleString()} @ {jsDateDate.toLocaleTimeString(undefined, {timeStyle: "short"})}
     <br>
     <br>
     At timestamp <TimeInput bind:value={timeStamp}/>, the time is

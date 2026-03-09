@@ -7,6 +7,7 @@ import { env } from "$env/dynamic/private";
 import { DateTime } from "luxon";
 import type { TimeOverride, TimeOverrides } from "$lib/history/oldHistory.ts";
 import { dev } from "$app/environment";
+import { fixOffset } from "$lib/timeUtils.ts";
 
 let nextIndex = 0;
 let currentShow: HistoricalEntry | undefined = undefined;
@@ -188,7 +189,7 @@ export const actions = {
     if(!data.show) return fail(500, {message: "Unable to find show!"});
 
     const showDateParts = data.show.name.split("/");
-    const timeInImage = DateTime.fromObject(
+    const timeInImage = fixOffset(DateTime.fromObject(
       {
         year: Number(showDateParts[0]),
         month: Number(showDateParts[1]),
@@ -198,7 +199,7 @@ export const actions = {
       }, {
         zone: "America/Vancouver"
       }
-    );
+    ));
 
     const timeAtStart = timeInImage.minus({minute: imageIndex});
     const timeAtEnd = timeAtStart.plus({millisecond: data.show.metadata.mainShowLength ?? undefined});
@@ -234,7 +235,7 @@ export const actions = {
     if(!data.show) return fail(500, {message: "Unable to find show!"});
 
     const showDateParts = data.show.name.split("/");
-    const timeInImage = DateTime.fromObject(
+    const timeInImage = fixOffset(DateTime.fromObject(
       {
         year: Number(showDateParts[0]),
         month: Number(showDateParts[1]),
@@ -244,7 +245,7 @@ export const actions = {
       }, {
         zone: "America/Vancouver"
       }
-    );
+    ));
 
     const timeAtStart = timeInImage.minus({minute: imageIndex/2});
     const timeAtEnd = timeAtStart.plus({millisecond: data.show.metadata.mainShowLength ?? undefined});

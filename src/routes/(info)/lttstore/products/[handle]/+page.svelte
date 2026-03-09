@@ -25,6 +25,7 @@
   import ProductMoveRateGraph from "$lib/lttstore/product/ProductMoveRateGraph.svelte";
   import LTTProductCard from "$lib/lttstore/LTTProductCard.svelte";
   import ToolTip from "$lib/ToolTip.svelte";
+  import { sum } from "$lib/lttstore";
 
   let { data } = $props();
 
@@ -184,11 +185,11 @@
                     Item Description
                   {/snippet}
           {#snippet content()}
-                  
+
               <div class="item-description">
                 {@html sanitizeHtml(productInfo.description, newsSanitizeSettings)}
               </div>
-            
+
                   {/snippet}
         </Accordion.Item>
       </Accordion>
@@ -203,11 +204,11 @@
                         {detailModule.title}
                       {/snippet}
             {#snippet content()}
-                      
+
                 <div class="item-description">
                   {@html sanitizeHtml(detailModule.content, newsSanitizeSettings)}
                 </div>
-              
+
                       {/snippet}
           </Accordion.Item>
         </Accordion>
@@ -223,7 +224,7 @@
                 Product Metadata
               {/snippet}
         {#snippet content()}
-              
+
             <h2>Whenplane Metadata</h2>
             <table class="padded-table">
               <thead></thead>
@@ -377,7 +378,7 @@
                   </td>
                 </tr>
                 <tr>
-                  <td class="align-top">Variants</td>
+                  <td class="align-top">Variants ({productInfo.variants.length})</td>
                   <td>
                     {#each productInfo.variants as variant}
                       <li>
@@ -475,7 +476,7 @@
                 </tr>
               </tbody>
             </table>
-          
+
               {/snippet}
       </Accordion.Item>
     </Accordion>
@@ -486,7 +487,7 @@
     <Accordion class="mx-4" spacing="" regionPanel="">
       <Accordion.Item open>
         {#snippet summary()}
-              
+
             Similar Products
             <ToolTip id="similar-products">
               Whenplane uses an AI embedding model to determine products that are similar to each other.<br>
@@ -500,10 +501,10 @@
               <br>
               Similar products are updated roughly every 7 days.
             </ToolTip>
-          
+
               {/snippet}
         {#snippet content()}
-              
+
             {#key data}
               <div class="min-h-[298px] overflow-y-visible overflow-x-auto pr-64 edge-fade" style="text-wrap: nowrap;">
                 {#await data.similarProducts}
@@ -516,7 +517,7 @@
                 {/await}
               </div>
             {/key}
-          
+
               {/snippet}
       </Accordion.Item>
     </Accordion>
@@ -533,7 +534,11 @@
       Before this product was removed, there was
     {/if}
     {#if (currentStock.total ?? -1) <= 500000}
-      a total of {commas(currentStock?.total)}
+      {#if (currentStock.total ?? -1) === -1}
+        more than {commas(sum(currentStock))}
+      {:else}
+        a total of {commas(currentStock?.total)}
+      {/if}
     {:else}
       more than 500,000
     {/if}
@@ -584,19 +589,19 @@
   {/if}
 
   <Accordion>
-    <Accordion.Item open={dev}>
+    <Accordion.Item open>
       {#snippet summary()}
             Stock History
           {/snippet}
       {#snippet content()}
-          
+
           <h2>Stock History</h2>
-          <div class="limit mx-auto p-2 m-2 card preset-tonal-warning border border-warning-500">
+          <!--<div class="limit mx-auto p-2 m-2 card preset-tonal-warning border border-warning-500">
             Due to a <a href="https://changelog.shopify.com/posts/new-add-to-cart-limit">Shopify change</a>,
             we are not longer able to see stock of most products if theyre above <span class="font-mono">40</span>.
             <br>
             Please <a href="/support">let me know</a> if you find a new way to check the stock.
-          </div>
+          </div>-->
           We check the stock of products occasionally. Here is the history of those stock numbers.
           <!-- stock started being recorded on 1718147742676 -->
           <select class="select inline-block w-48" bind:value={historyDays}>
@@ -613,14 +618,16 @@
               <option value="365">1 year (365 days)</option>
             {/if}
             <option value="all">all-time</option>
-          </select>
-          <ProductStockHistoryGraph stockHistory={data.stockHistory} productName={productInfo.title} {chartUpdateNumber}/>
+          </select>{#key data}
+          <ProductStockHistoryGraph stockHistory={data.stockHistory} productName={productInfo.title} productOptions={productInfo.options}{chartUpdateNumber}/>
           <ProductMoveRateGraph stockHistory={data.stockHistory} productName={productInfo.title} {chartUpdateNumber}/>
-          <br>
+          {/key}<br>
           {#if data.product.firstSeen < 1719248750000}
             Note that stock started being recorded on June 11th, 2024, so data before that is not available.
           {/if}
-          <br>
+          <br>{#if data.product.stockChecked > 1743807304846}
+          Note that stock data between April 3rd, 2025 and March 5th, 2026 is not available, because we were not able to check the stock during that time.
+        {/if}
           <br>
           <br>
           {#if goneInHours > 0 && (currentStock?.total ?? -1) > 0 && (currentStock?.total ?? -1) <= 500000 && typeof data.product?.purchasesPerHour === "number" && data.product?.purchasesPerHour >= 0 && !(data.product?.purchasesPerHour === 0 && (currentStock?.total ?? -1) < 0)}
@@ -656,7 +663,7 @@
             {/each}
             <br>
           {/if}
-        
+
           {/snippet}
     </Accordion.Item>
   </Accordion>
@@ -679,13 +686,13 @@
         </thead>
         <tbody>
         {#each changeHistory as change}
-          {@const SvelteComponent = getDiffComponent(change.field)}
-          {@const SvelteComponent_1 = getDiffComponent(change.field)}
+          {@const BeforeComponent = getDiffComponent(change.field)}
+          {@const AfterComponent = getDiffComponent(change.field)}
           <tr>
             <td>{getFieldName(change.field)}</td>
             <td><DateStamp epochSeconds={change.timestamp/1e3}/></td>
-            <td><SvelteComponent before={change.old} after={change.new} displaying="before"/></td>
-            <td><SvelteComponent_1 before={change.old} after={change.new} displaying="after"/></td>
+            <td><BeforeComponent before={change.old} after={change.new} displaying="before"/></td>
+            <td><AfterComponent before={change.old} after={change.new} displaying="after"/></td>
           </tr>
         {/each}
         </tbody>

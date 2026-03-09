@@ -26,59 +26,53 @@
 
 	let onlyTotalCheck = $state(false);
 
-	function getSeries() {
-		if (!onlyTotal) {
-			return Object.keys(someStock).map((k) => {
-				return {
-					name: k,
-					data: stockHistory
-						.map((h, i, a) => {
-							if (i > 0) {
-								const previous = a[i - 1];
-								const previousStock = JSON.parse(previous.stock)[k];
-								const timeDiff = h.timestamp - previous.timestamp;
-								const stockDiff = previousStock - JSON.parse(h.stock)[k];
-								return {
-									x: h.timestamp,
-									y: stockDiff / (timeDiff / (60 * 60e3))
-								};
-							} else {
-								return {
-									x: h.timestamp,
-									y: -1
-								};
-							}
-						})
-						.filter((h) => h.y >= 0)
-				};
-			});
-		} else {
-			return [
-				{
-					name: 'average',
-					data: stockHistory
-						.map((h, i, a) => {
-							if (i > 0) {
-								const previous = a[i - 1];
-								const previousStock = JSON.parse(previous.stock)['total'];
-								const timeDiff = h.timestamp - previous.timestamp;
-								const stockDiff = previousStock - JSON.parse(h.stock)['total'];
-								return {
-									x: h.timestamp,
-									y: stockDiff / (timeDiff / (60 * 60e3))
-								};
-							} else {
-								return {
-									x: h.timestamp,
-									y: -1
-								};
-							}
-						})
-						.filter((h) => h.y >= 0)
-				}
-			];
-		}
-	}
+  function getSeries() {
+    if(!onlyTotal) {
+      return Object.keys(someStock).map(k => {
+        return {
+          name: k,
+          data: stockHistory.map((h, i, a) => {
+            if(i > 0) {
+              const previous = a[i-1];
+              const previousStock = JSON.parse(previous.stock)[k]
+              const timeDiff = h.timestamp - previous.timestamp;
+              const stockDiff = previousStock - JSON.parse(h.stock)[k]
+              return {
+                x: h.timestamp,
+                y: stockDiff / (timeDiff / (60 * 60e3))
+              }
+            } else {
+              return {
+                x: h.timestamp,
+                y: -1
+              }
+            }
+          }).filter(h => h.y >= 0)
+        }
+      })
+    } else {
+      return [{
+        name: "total",
+        data: stockHistory.map((h, i, a) => {
+          if(i > 0) {
+            const previous = a[i-1];
+            const previousStock = JSON.parse(previous.stock)["total"]
+            const timeDiff = h.timestamp - previous.timestamp;
+            const stockDiff = previousStock - JSON.parse(h.stock)["total"]
+            return {
+              x: h.timestamp,
+              y: stockDiff / (timeDiff / (60 * 60e3))
+            }
+          } else {
+            return {
+              x: h.timestamp,
+              y: -1
+            }
+          }
+        }).filter(h => h.y >= 0)
+      }]
+    }
+  }
 
 	const options = $state({
 		chart: {
@@ -209,5 +203,8 @@
 		Only show total in graph?
 	</label>
 {/if}
-<small class="opacity-70"> sph = sales per hour </small>
+<small class="opacity-70">
+  sph = sales per hour
+</small>
 <!--{JSON.stringify(stockHistory)}-->
+

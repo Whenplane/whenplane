@@ -19,40 +19,65 @@
 				stock: string;
 			}[]
 		>(),
+    productOptions = typed<ProductOption[]>(),
 		chartUpdateNumber = typed<number>(1)
 	} = $props();
 
 	let chart = $state();
+  let filter: string | undefined = $state(undefined);
 
 	let onlyTotalCheck = $state(false);
+  $: someStock = Object.keys(stockHistory).length >= 1 ?
+    stockHistory.map(h => JSON.parse(h.stock ?? "{}") as StockCounts)
+      .reduce((p, c) => {
+        return {
+          ...c,
+          ...p
+        }
+      }, {})
+    : {};
 
-	function getSeries() {
-		if (!onlyTotal) {
-			return Object.keys(someStock).map((k) => {
-				return {
-					name: k,
-					data: stockHistory.map((h) => {
-						return {
-							x: h.timestamp,
-							y: JSON.parse(h.stock)[k]
-						};
-					})
-				};
-			});
-		} else {
-			return [
-				{
-					name: 'total',
-					data: stockHistory.map((h) => {
-						return {
-							x: h.timestamp,
-							y: JSON.parse(h.stock)['total']
-						};
-					})
-				}
-			];
-		}
-	}
+  let onlyTotalCheck = false;
+  // show only the total for items where the stock is just the default + the total
+  $: onlyTotal = Object.keys(someStock).length <= 2 || onlyTotalCheck;
+  $: console.debug({onlyTotal, length: Object.keys(someStock).length, someStock, stockHistory})
+
+  $: {
+    onlyTotal;
+    chartUpdateNumber;
+    filter;
+    options.series = getSeries()
+    // console.debug("Series:", options.series)
+    if(chart) chart.updateSeries(options.series)
+  }
+
+  function getSeries() {
+    if(!onlyTotal) {
+      return Object.keys(someStock)
+        .filter(k => filter ? k.includes(filter) : true)
+        .map(k => {
+          return {
+            name: k,
+            data: stockHistory.map(h => {
+              return {
+                x: h.timestamp,
+                y: JSON.parse(h.stock)[k]
+              };
+            }).filter(d => typeof d.y === "number")
+          }
+        })
+    } else {
+      return [{
+        name: "total",
+        data: stockHistory.map(h => {
+          return {
+            x: h.timestamp,
+            y: JSON.parse(h.stock)["total"]
+          };
+        }).filter(d => typeof d.y === "number")
+      }]
+    }
+  }
 
 	const options = $state({
 		chart: {
@@ -177,9 +202,25 @@
 	{/if}
 </div>
 {#if Object.keys(someStock).length > 2}
-	<label>
+	<label class="inline-block">
 		<input type="checkbox" bind:checked={onlyTotalCheck} />
 		Only show total in graph?
 	</label>
 {/if}
+{#if productOptions.length > 1}
+  {#if Object.keys(someStock).length > 2}
+    &nbsp;
+  {/if}
+  <select bind:value={filter} class="select w-56">
+    <option value={undefined}>All</option>
+    {#each productOptions.sort((a, b) => a.position - b.position) as option}
+      <optgroup label={option.name}>
+        {#each option.values as value}
+          <option {value}>{value}</option>
+        {/each}
+      </optgroup>
+    {/each}
+  </select>
+{/if}
 <!--{JSON.stringify(stockHistory)}-->
+

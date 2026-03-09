@@ -1,6 +1,5 @@
 /discord https://discord.gg/PmN9AJh6KR 301
 /boca-time /ltt-time?boca 301
 /products/:handle /lttstore/products/:handle 301
-/history/show/:year/:month/merch-messages/:id /merch-messages/:id 301
 /contact /support 301
 /history/show /history 301

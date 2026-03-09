@@ -19,7 +19,7 @@
     loading = false;
   }
 
-  let sortedBy = $state(page.url.searchParams.get("sort") ?? "metaUpdate");
+  let sortedBy = $state(page.url.searchParams.get("sort") ?? "purchasesPerDay");
   if(data.sortColumn === "stockChecked") sortedBy = "updated";
   let first = $state(true);
   run(() => {
@@ -61,8 +61,8 @@
   <div class="opacity-80 pl-2">
     Sorted by
     <select bind:value={sortedBy} class="select w-56 py-1">
-<!--      <option value="purchasesPerDay">average sales per day</option>-->
-<!--      <option value="purchasesPerHour">average sales per hour</option>-->
+      <option value="purchasesPerDay">average sales per day</option>
+      <option value="purchasesPerHour">average sales per hour</option>
       <option value="metaUpdate">metadata updated</option>
       <option value="stockUpdate">stock updated</option>
       <option value="restocked">recently restocked</option>

@@ -24,8 +24,8 @@
 
 	function updateTimeString() {
 		timeString = new Date().toLocaleTimeString(undefined, {
-			timeZone: 'America/Vancouver',
-			timeStyle: 'short',
+			timeZone: "Etc/GMT+7",
+			timeStyle: "short",
 			hour12: getTimePreference()
 		});
 	}
