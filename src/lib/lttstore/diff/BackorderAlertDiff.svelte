@@ -42,4 +42,5 @@
 	after={JSON.stringify([...afterBackorderNotices].join('<br>'))}
 	{displaying}
 	diffType="words"
+	card={false}
 />

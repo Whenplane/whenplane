@@ -7,7 +7,8 @@
 		before = typed<string>(),
 		after = typed<string>(),
 		displaying = typed<'before' | 'after'>(),
-		diffType = $bindable<'chars' | 'words' | 'lines'>('chars')
+		diffType = $bindable<'chars' | 'words' | 'lines'>('chars'),
+    card = typed<boolean>(true)
 	} = $props();
 
 	let parsedBefore = $derived.by(() => {
@@ -74,10 +75,15 @@
       );
     }
 
-    html = html.replaceAll('&lt;br&gt;', '<br>');
+    html = html
+      .replaceAll('&lt;br&gt;', "&lt;br&gt;\n")
+      .replaceAll("\n", '<br>')
+    ;
     return html;
   })
 
 </script>
 
-{@html html}
+<div class={card ? "card p-2 overflow-x-auto max-w-full" : ""}>
+  {@html html}
+</div>
