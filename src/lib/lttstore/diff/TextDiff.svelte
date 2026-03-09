@@ -1,7 +1,5 @@
 <script lang="ts">
-	import { run } from 'svelte/legacy';
-
-	import * as Diff from 'diff';
+  import * as Diff from 'diff';
 	import { escapeHtml } from '$lib/utils.ts';
 	import { typed } from '$lib';
 
@@ -12,66 +10,69 @@
 		diffType = $bindable<'chars' | 'words' | 'lines'>('chars')
 	} = $props();
 
-	let html: string = $state('');
-	let parsedBefore = $derived(JSON.parse(before));
-	let parsedAfter = $derived(JSON.parse(after));
-	run(() => {
-		if ((parsedBefore === 1 && parsedAfter === 0) || (parsedBefore === 0 && parsedAfter === 1)) {
-			parsedBefore = parsedBefore === 1;
-			parsedAfter = parsedAfter === 1;
-			diffType = 'words';
-		}
-	});
-	run(() => {
-		html = '';
-		let diff;
-		switch (diffType) {
-			case 'lines':
-				diff = Diff.diffLines(parsedBefore + '', parsedAfter + '');
-				break;
-			case 'words':
-				diff = Diff.diffWords(parsedBefore + '', parsedAfter + '', { ignoreWhitespace: true });
-				break;
-			case 'chars':
-			default:
-				diff = Diff.diffChars(parsedBefore + '', parsedAfter + '');
-		}
-		diff.forEach((part) => {
-			const color = part.added ? 'green' : part.removed ? 'red' : false;
+	let parsedBefore = $derived.by(() => {
+    const b = JSON.parse(before);
+    if(b === 0 || b === 1) return b === 1;
+    return b;
+  });
+	let parsedAfter = $derived.by(() => {
+    const a = JSON.parse(after);
+    if(a === 0 || a === 1) return a === 1;
+    return a;
+  });
 
-			const text = escapeHtml(part.value);
+  let html: string = $derived.by(() => {
+    let html = '';
+    let diff;
+    switch (diffType) {
+      case 'lines':
+        diff = Diff.diffLines(parsedBefore + '', parsedAfter + '');
+        break;
+      case 'words':
+        diff = Diff.diffWords(parsedBefore + '', parsedAfter + '', { ignoreWhitespace: true });
+        break;
+      case 'chars':
+      default:
+        diff = Diff.diffChars(parsedBefore + '', parsedAfter + '');
+    }
+    diff.forEach((part) => {
+      const color = part.added ? 'green' : part.removed ? 'red' : false;
 
-			if (!color) {
-				html += text;
-			} else {
-				if (
-					(color === 'green' && displaying === 'after') ||
-					(color === 'red' && displaying === 'before')
-				) {
-					html += "<span style='color:" + color + "'>" + text + '</span>';
-				} else {
-					html += "<span style='background-color:" + color + "' class='opacity-40 pl-1'></span>";
-				}
-			}
-		});
+      const text = escapeHtml(part.value);
 
-		if (diff.length === 0) {
-			// if diff checking fails, just display the text
-			console.debug('Diff did not return anything! Falling back to displaying text');
-			html = escapeHtml(
-				'' +
-					(displaying === 'after'
-						? typeof parsedAfter === 'string'
-							? parsedAfter
-							: JSON.stringify(parsedAfter)
-						: typeof parsedBefore === 'string'
-							? parsedBefore
-							: JSON.stringify(parsedBefore))
-			);
-		}
+      if (!color) {
+        html += text;
+      } else {
+        if (
+          (color === 'green' && displaying === 'after') ||
+          (color === 'red' && displaying === 'before')
+        ) {
+          html += "<span style='color:" + color + "'>" + text + '</span>';
+        } else {
+          html += "<span style='background-color:" + color + "' class='opacity-40 pl-1'></span>";
+        }
+      }
+    });
 
-		html = html.replaceAll('&lt;br&gt;', '<br>');
-	});
+    if (diff.length === 0) {
+      // if diff checking fails, just display the text
+      console.debug('Diff did not return anything! Falling back to displaying text');
+      html = escapeHtml(
+        '' +
+        (displaying === 'after'
+          ? typeof parsedAfter === 'string'
+            ? parsedAfter
+            : JSON.stringify(parsedAfter)
+          : typeof parsedBefore === 'string'
+            ? parsedBefore
+            : JSON.stringify(parsedBefore))
+      );
+    }
+
+    html = html.replaceAll('&lt;br&gt;', '<br>');
+    return html;
+  })
+
 </script>
 
 {@html html}

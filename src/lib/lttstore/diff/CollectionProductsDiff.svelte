@@ -1,6 +1,4 @@
 <script lang="ts">
-	import { run } from 'svelte/legacy';
-
 	import { getVariantFieldName } from '$lib/lttstore/field_names.ts';
 	import { typed } from '$lib';
 
@@ -10,15 +8,15 @@
 		displaying = typed<'before' | 'after'>()
 	} = $props();
 
-	let html: string = $state('');
 	let parsedBefore = $derived(
 		JSON.parse(JSON.parse(before)) as { id: string; title: string; handle: string; image: string }[]
 	);
 	let parsedAfter = $derived(
 		JSON.parse(JSON.parse(after)) as { id: string; title: string; handle: string; image: string }[]
 	);
-	run(() => {
-		html = '';
+
+	let html: string = $derived.by(() => {
+		let html = '';
 		const beforeTitles = parsedBefore.map((p) => p.title);
 		let removed: string[] = [];
 		const added = parsedAfter.filter((p) => !beforeTitles.includes(p.title));
@@ -105,6 +103,7 @@
 		}
 
 		html = html.replace(/\n/g, '<br>').replace(/\t/g, '&emsp;');
+		return html;
 	});
 </script>
 

@@ -1,7 +1,4 @@
 <script lang="ts">
-	import { run } from 'svelte/legacy';
-
-
 	import type { ProductDetailModule } from '$lib/lttstore/lttstore_types.ts';
 	import TextDiff from '$lib/lttstore/diff/TextDiff.svelte';
 	import { typed } from '$lib';
@@ -12,7 +9,6 @@
 		displaying = typed<'before' | 'after'>()
 	} = $props();
 
-	let changedModules: string[] = $state([]);
 	let parsedBefore = $derived(
 		(JSON.parse(before) as ProductDetailModule[]).map((m) => {
 			return {
@@ -29,29 +25,35 @@
 			};
 		})
 	);
-	run(() => {
+
+	// Add missing modules to parsedBefore for display
+	let filledParsedBefore = $derived.by(() => {
+		const result = [...parsedBefore];
 		for (let detailModule of parsedAfter) {
-			if (!parsedBefore.find((m) => m.title === detailModule.title)) {
-				parsedBefore.push({
+			if (!result.find((m) => m.title === detailModule.title)) {
+				result.push({
 					title: detailModule.title,
 					content: ''
 				});
 			}
 		}
+		return result;
 	});
-	run(() => {
-		changedModules = [];
-		for (let detailModule of parsedBefore) {
+
+	let changedModules: string[] = $derived.by(() => {
+		const changed: string[] = [];
+		for (let detailModule of filledParsedBefore) {
 			const beforeContent = detailModule.content;
 			const afterContent = parsedAfter.find((m) => m.title === detailModule.title)?.content ?? '';
 			if (beforeContent != afterContent) {
-				changedModules.push(detailModule.title);
+				changed.push(detailModule.title);
 			}
 		}
+		return changed;
 	});
 </script>
 
-{#each parsedBefore.filter((m) => changedModules.includes(m.title)) as module}
+{#each filledParsedBefore.filter((m) => changedModules.includes(m.title)) as module}
 	<b>{module.title}</b><br />
 	<div class="card p-2">
 		<TextDiff

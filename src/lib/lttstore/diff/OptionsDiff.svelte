@@ -1,7 +1,4 @@
 <script lang="ts">
-	import { run } from 'svelte/legacy';
-
-
 	import type { ProductOption } from '$lib/lttstore/lttstore_types.ts';
 	import TextDiff from '$lib/lttstore/diff/TextDiff.svelte';
 	import { typed } from '$lib';
@@ -12,17 +9,18 @@
 		displaying = typed<'before' | 'after'>()
 	} = $props();
 
-	let changedOptions: string[] = $state([]);
 	let parsedBefore = $derived(JSON.parse(before) as ProductOption[]);
 	let parsedAfter = $derived(JSON.parse(after) as ProductOption[]);
-	run(() => {
-		changedOptions = [];
+
+	let changedOptions: string[] = $derived.by(() => {
+		const changed: string[] = [];
 		for (let beforeOption of parsedBefore) {
 			const afterOption = parsedAfter.find((m) => m.name === beforeOption.name);
 			if (JSON.stringify(beforeOption) != JSON.stringify(afterOption)) {
-				changedOptions.push(beforeOption.name);
+				changed.push(beforeOption.name);
 			}
 		}
+		return changed;
 	});
 </script>
 

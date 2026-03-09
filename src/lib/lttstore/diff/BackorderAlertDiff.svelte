@@ -1,6 +1,4 @@
 <script lang="ts">
-	import { run } from 'svelte/legacy';
-
 	import type { BackorderAlerts } from '$lib/lttstore/lttstore_types.ts';
 	import TextDiff from '$lib/lttstore/diff/TextDiff.svelte';
 	import { typed } from '$lib';
@@ -14,30 +12,28 @@
 	let parsedBefore = $derived(JSON.parse(before) as BackorderAlerts);
 	let parsedAfter = $derived(JSON.parse(after) as BackorderAlerts);
 
-	let beforeBackorderNotices = $state(new Set());
-	run(() => {
-		beforeBackorderNotices.clear();
+	let beforeBackorderNotices = $derived.by(() => {
+		const notices = new Set<string>();
 		if (parsedBefore) {
 			Object.values(parsedBefore).forEach((alert) => {
 				if (alert && alert.trim()) {
-					beforeBackorderNotices.add(alert);
+					notices.add(alert);
 				}
 			});
-			beforeBackorderNotices = beforeBackorderNotices;
 		}
+		return notices;
 	});
 
-	let afterBackorderNotices = $state(new Set());
-	run(() => {
-		afterBackorderNotices.clear();
+	let afterBackorderNotices = $derived.by(() => {
+		const notices = new Set<string>();
 		if (parsedBefore) {
 			Object.values(parsedAfter).forEach((alert) => {
 				if (alert && alert.trim()) {
-					afterBackorderNotices.add(alert);
+					notices.add(alert);
 				}
 			});
-			afterBackorderNotices = afterBackorderNotices;
 		}
+		return notices;
 	});
 </script>
 
