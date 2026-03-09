@@ -491,21 +491,24 @@
     <Accordion class="mx-4" collapsible defaultValue={["similar"]}>
       <Accordion.Item value="similar">
         <Accordion.ItemTrigger class="font-bold flex items-center justify-between gap-2">
-          Similar Products
-          <ToolTip id="similar-products">
-            Whenplane uses an AI embedding model to determine products that are similar to each other.<br>
-            The product description is used for comparison, so products with similar descriptions will show as similar to each other.<br>
-            These similar products were last updated
-            {#await data.similarProducts}
-              <div class="inline-block w-32 placeholder animate-pulse align-bottom rounded-md"></div>
-            {:then similarProducts}
-              {#if similarProducts}
-                <DateStamp epochSeconds={similarProducts.timestamp/1e3}/>
-              {/if}
-            {/await}
-            <br>
-            Similar products are updated roughly every 7 days.
-          </ToolTip>
+          <span>
+            Similar Products
+            &nbsp;
+            <ToolTip id="similar-products">
+              Whenplane uses an AI embedding model to determine products that are similar to each other.<br>
+              The product description is used for comparison, so products with similar descriptions will show as similar to each other.<br>
+              These similar products were last updated
+              {#await data.similarProducts}
+                <div class="inline-block w-32 placeholder animate-pulse align-bottom rounded-md"></div>
+              {:then similarProducts}
+                {#if similarProducts}
+                  <DateStamp epochSeconds={similarProducts.timestamp/1e3}/>
+                {/if}
+              {/await}
+              <br>
+              Similar products are updated roughly every 7 days.
+            </ToolTip>
+          </span>
           <Accordion.ItemIndicator class="group">
             <ChevronDown class="h-5 w-5 transition group-data-[state=open]:rotate-180" />
           </Accordion.ItemIndicator>
