@@ -27,7 +27,7 @@
 
 <!--<WdbListener/>-->
 
-<div class="logo-cloud grid-cols-1 md:grid-cols-3! gap-1">
+<div class="logo-cloud grid-cols-1 md:grid-cols-3! gap-1" style="display: grid;">
 	<a class="logo-item" href="https://www.twitch.tv/linustech" target="_blank" rel="noopener">
 		<span>
 			{#if page.url.searchParams.has('boca')}
