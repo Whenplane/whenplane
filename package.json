@@ -47,7 +47,7 @@
 		"prettier-plugin-svelte": "^3.5.1",
 		"sharp": "^0.32.6",
 		"svelte": "^5.0.0",
-		"svelte-bootstrap-icons": "^3.0.0",
+		"svelte-bootstrap-icons": "^3.3.0",
 		"svelte-check": "^4.0.0",
 		"tailwindcss": "^4.1.18",
 		"tesseract.js": "^4.1.2",

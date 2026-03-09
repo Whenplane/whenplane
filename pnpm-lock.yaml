@@ -166,8 +166,8 @@ importers:
         specifier: ^5.0.0
         version: 5.49.1
       svelte-bootstrap-icons:
-        specifier: ^3.0.0
-        version: 3.0.0
+        specifier: ^3.3.0
+        version: 3.3.0
       svelte-check:
         specifier: ^4.0.0
         version: 4.3.6(picomatch@4.0.2)(svelte@5.49.1)(typescript@5.6.3)
@@ -2920,8 +2920,8 @@ packages:
     resolution: {integrity: sha512-qpCAvRl9stuOHveKsn7HncJRvv501qIacKzQlO/+Lwxc9+0q2wLyv4Dfvt80/DPn2pqOBsJdDiogXGR9+OvwRw==}
     engines: {node: '>=8'}
 
-  svelte-bootstrap-icons@3.0.0:
-    resolution: {integrity: sha512-KW4CHGy8kuSSYcmPhmR0DPpCDNHbUOoU7zdC3h4xQQZ46EZTZNW07ZzLDFKTwvTDb6ZJ21euS4pVOvgogxMimQ==}
+  svelte-bootstrap-icons@3.3.0:
+    resolution: {integrity: sha512-45aETbpKqrogpxuj2FAJ3vgIn47DZqqsyMtp7S+iRtX99W7zmFB7rgLrCa2ZtlhJavWOUR/gesRSiJeaVg4vVw==}
 
   svelte-check@4.3.6:
     resolution: {integrity: sha512-uBkz96ElE3G4pt9E1Tw0xvBfIUQkeH794kDQZdAUk795UVMr+NJZpuFSS62vcmO/DuSalK83LyOwhgWq8YGU1Q==}
@@ -5913,7 +5913,7 @@ snapshots:
     dependencies:
       has-flag: 4.0.0
 
-  svelte-bootstrap-icons@3.0.0: {}
+  svelte-bootstrap-icons@3.3.0: {}
 
   svelte-check@4.3.6(picomatch@4.0.2)(svelte@5.49.1)(typescript@5.6.3):
     dependencies:
