@@ -488,7 +488,7 @@
   <br>
 
   <div class="max-w-4xl my-4">
-    <Accordion class="mx-4" collapsible>
+    <Accordion class="mx-4" collapsible defaultValue={["similar"]}>
       <Accordion.Item value="similar">
         <Accordion.ItemTrigger class="font-bold flex items-center justify-between gap-2">
           Similar Products
@@ -593,7 +593,7 @@
     <br>
   {/if}
 
-  <Accordion collapsible>
+  <Accordion collapsible defaultValue={["stock-history"]}>
     <Accordion.Item value="stock-history">
       <Accordion.ItemTrigger class="font-bold flex items-center justify-between gap-2">
         Stock History
