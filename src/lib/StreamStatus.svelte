@@ -209,6 +209,9 @@
 
 	.logo-item {
 		padding: 1.5em 2em;
+		background-color: rgb(26, 28, 38);
+		color: rgb(255, 255, 255);
+		border-radius: 0.5rem;
 	}
 
 	:global(.boca-theme) .logo-item {
