@@ -35,7 +35,7 @@
 	{/if}
 </div>
 
-<div class={'card p-4 shadow-x1 z-10 absolute font-normal inline-block ' + popupClasses} data-popup={id} style="opacity: 0;">
+<div class={'card p-4 shadow-x1 z-10 absolute font-normal inline-block ' + popupClasses} data-popup={id} style="opacity: 0; pointer-events: none;">
 	{@render children?.()}
 	{@render content?.()}
 </div>

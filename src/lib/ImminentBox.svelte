@@ -60,7 +60,7 @@
 <div
 	class="card p-4 whitespace-nowrap shadow-x1 z-10 font-normal absolute"
 	data-popup="imminent-thumbnail"
-	style="margin-top: 0; opacity: 0;"
+	style="margin-top: 0; opacity: 0; pointer-events: none;"
 >
 	Generally when a thumbnail is uploaded, all hosts are in their seats ready to start the show.
 	<br/>

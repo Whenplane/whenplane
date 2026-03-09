@@ -49,7 +49,7 @@
 	{timeString}
 </div>
 
-<div data-popup="ltttime-info" class="popup absolute" style="opacity: 0;">
+<div data-popup="ltttime-info" class="popup absolute" style="opacity: 0; pointer-events: none;">
 	{#if tooltip}
 		<div class="card p-3 py-2 whitespace-nowrap shadow-x1 z-15 font-normal text-right">
 			The current time in {boca ? 'Boca' : 'LTT'} land<br />
