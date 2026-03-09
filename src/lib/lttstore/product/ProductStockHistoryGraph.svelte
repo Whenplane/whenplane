@@ -49,13 +49,6 @@
     return (keys.length == 1) || onlyTotalCheck;
   });
   $effect(() => console.debug({ onlyTotal, length: Object.keys(someStock).length, someStock, stockHistory }));
-  $effect.pre(() => {
-    onlyTotal;
-    chartUpdateNumber;
-    options.series = getSeries();
-    // console.debug("Series:", options.series)
-    if (chart) chart.updateSeries(options.series);
-  })
 
   function getSeries() {
     if(!onlyTotal) {
@@ -85,7 +78,7 @@
     }
   }
 
-	const options = $state({
+	const options = {
 		chart: {
 			type: 'area',
 			stacked: false,
@@ -159,7 +152,16 @@
 		grid: {
 			borderColor: '#535A6C'
 		}
-	});
+	};
+
+
+  $effect.pre(() => {
+    onlyTotal;
+    chartUpdateNumber;
+    options.series = getSeries();
+    // console.debug("Series:", options.series)
+    if (chart) chart.updateSeries(options.series);
+  })
 
 	let chartDiv: HTMLDivElement | undefined = $state();
 
