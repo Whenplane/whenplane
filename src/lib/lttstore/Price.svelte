@@ -1,6 +1,7 @@
 <script lang="ts">
 	import { page } from '$app/state';
-	import { Currencies } from 'currencies-map';
+	import currenciesMap from 'currencies-map';
+  const {Currencies} = currenciesMap;
 	import type { LatestExchangeRate } from '../../routes/api/exchangeRates/exchangeRateAPITypes.ts';
 	import { typed } from '$lib';
 
