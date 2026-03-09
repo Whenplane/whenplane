@@ -688,7 +688,7 @@
         {#each changeHistory as change}
           {@const BeforeComponent = getDiffComponent(change.field)}
           {@const AfterComponent = getDiffComponent(change.field)}
-          <tr>
+          <tr class="align-top">
             <td>{getFieldName(change.field)}</td>
             <td><DateStamp epochSeconds={change.timestamp/1e3}/></td>
             <td><BeforeComponent before={change.old} after={change.new} displaying="before"/></td>
