@@ -82,5 +82,10 @@
 
 	a {
 		text-wrap: initial;
+		color: inherit;
+	}
+	a:hover {
+		text-decoration: none;
+		filter: brightness(1.125);
 	}
 </style>
