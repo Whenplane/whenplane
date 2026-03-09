@@ -12,19 +12,24 @@
 
 	let parsedBefore = $derived.by(() => {
     const b = JSON.parse(before);
-    if(b === 0 || b === 1) return b === 1;
+    if(b === 0 || b === 1 || typeof b === "boolean") return b == 1;
     return b;
   });
 	let parsedAfter = $derived.by(() => {
     const a = JSON.parse(after);
-    if(a === 0 || a === 1) return a === 1;
+    if(a === 0 || a === 1 || typeof a === "boolean") return a == 1;
     return a;
+  });
+
+  let forcedDiffType: 'chars' | 'words' | 'lines' | undefined = $derived.by(() => {
+    if(typeof parsedBefore === "boolean" && typeof parsedAfter === "boolean") return "words";
+    return undefined;
   });
 
   let html: string = $derived.by(() => {
     let html = '';
     let diff;
-    switch (diffType) {
+    switch (forcedDiffType ?? diffType) {
       case 'lines':
         diff = Diff.diffLines(parsedBefore + '', parsedAfter + '');
         break;
