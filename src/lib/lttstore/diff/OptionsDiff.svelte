@@ -26,18 +26,16 @@
 
 {#each parsedBefore.filter((m) => changedOptions.includes(m.name)) as option}
 	<b>{option.name}</b><br />
-	<div class="card p-2">
-		<TextDiff
-			before={JSON.stringify(option.values.join('\n'))}
-			after={JSON.stringify(
+	<TextDiff
+		before={JSON.stringify(option.values.join('\n'))}
+		after={JSON.stringify(
 				parsedAfter
 					.find((m) => m.name === option.name)
 					?.values
 					.join('\n')
 			)}
-			{displaying}
-			diffType="lines"
-		/>
-	</div>
+		{displaying}
+		diffType="lines"
+	/>
 	<br />
 {/each}
