@@ -55,6 +55,7 @@ export const POST = (async ({platform, params, request, url}) => {
 
   const pushMessages: NotificationMessage[] = subs.filter(sub => sub.subscription).map(sub => {
     return {
+      subHash: sub.endpoint_hash,
       type: name,
       subscription: JSON.parse(<string>sub.subscription) as PushSubscription,
       sendTime: Date.now(),
@@ -171,6 +172,7 @@ const messages: {[key: string]: PushMessage} = {
 }
 
 export type NotificationMessage = {
+  subHash: string,
   id?: number,
   type: string,
   subscription: PushSubscription,
