@@ -615,7 +615,7 @@
         </div>-->
         We check the stock of products occasionally. Here is the history of those stock numbers.
         <!-- stock started being recorded on 1718147742676 -->
-        <select class="select inline-block w-48" bind:value={historyDays}>
+        <select class="select inline-block w-48 px-2 bg-surface-900" bind:value={historyDays}>
           <option value="1">24 hours</option>
           <option value="7">7 days</option>
           <option value="30">30 days</option>

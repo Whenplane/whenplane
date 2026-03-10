@@ -195,7 +195,7 @@
   {#if Object.keys(someStock).length > 2}
     &nbsp;
   {/if}
-  <select bind:value={filter} class="select w-56 inline-block px-2">
+  <select bind:value={filter} class="select w-56 inline-block px-2 bg-surface-900">
     <option value={undefined}>All</option>
     {#each productOptions.sort((a, b) => a.position - b.position) as option}
       <optgroup label={option.name}>
