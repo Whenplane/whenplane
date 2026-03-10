@@ -31,6 +31,7 @@
 					src={product.featured_image}
 					class="product-image rounded-xl h-47"
 					alt={product.title}
+					decoding="async"
 				/>
 			</LargerLazyLoad>
 		{:else}
@@ -39,6 +40,7 @@
 				class="product-image rounded-xl h-47"
 				alt={product.title}
 				loading="lazy"
+				decoding="async"
 			/>
 		{/if}
 	{:else}
