@@ -7,6 +7,7 @@ import {
     type IncomingRequestCfProperties,
     type KVNamespace
 } from "@cloudflare/workers-types";
+import type { PushMessage } from "@block65/webcrypto-web-push";
 
 
 declare global {
@@ -35,7 +36,8 @@ declare global {
                 LTTSTORE_CHANGE_SCREENSHOT: DurableObjectNamespace;
 
                 NOTIFICATION_THROTTLER: DurableObjectNamespace;
-                NOTIFICATION_QUEUE: Queue<NotificationMessage>
+                NOTIFICATION_QUEUE: Queue<NotificationMessage>;
+                NOTIFICATION_SENDER: {send(notifications: NotificationMessage[]): Promise<void>};
 
                 TWITCH_ANALYTICS?: AnalyticsEngineDataset;
                 LOG_MESSAGES?: AnalyticsEngineDataset;
@@ -86,10 +88,12 @@ type TimingEntry = {
 }
 
 type NotificationMessage = {
-    id: number,
+    subHash: string,
+    id?: number,
     type: string,
     subscription: PushSubscription,
     message: PushMessage,
+    sendTime: number,
     isDummy?: boolean
 }
 

@@ -2,11 +2,11 @@ import { error, type RequestHandler } from "@sveltejs/kit";
 
 import { PUSH_KEY } from "$env/static/private"
 import type { NotificationRows } from "../../settings/+server.ts";
-import type { Queue } from "@cloudflare/workers-types";
 import { getClosestWan, getUTCDate } from "$lib/timeUtils.ts";
 
 import type {PushMessage} from '@block65/webcrypto-web-push';
 import { log } from "$lib/server/server-utils.ts";
+import type { NotificationMessage } from "../../../../../app";
 
 export const POST = (async ({platform, params, request, url}) => {
 
@@ -21,6 +21,9 @@ export const POST = (async ({platform, params, request, url}) => {
 
   const db = platform?.env?.DB;
   if(!db) throw error(503, "Database missing");
+
+  const sender = platform?.env?.NOTIFICATION_SENDER;
+  if(!sender) throw error(503, "Sender missing");
 
   const message = JSON.parse(JSON.stringify(messages[name]));
   if(!message) throw error(400);
@@ -63,25 +66,7 @@ export const POST = (async ({platform, params, request, url}) => {
     }
   });
 
-  const queue: Queue<NotificationMessage> = platform?.env?.NOTIFICATION_QUEUE;
-
-  let batch: NotificationMessage[] = [];
-  for (const pushMessage of pushMessages) {
-    batch.push(pushMessage);
-
-    if(batch.length >= 99) {
-      await queue.sendBatch(batch.map(body => {
-        return { body };
-      }));
-      batch = [];
-    }
-  }
-
-  if(batch.length > 0) {
-    await queue.sendBatch(batch.map(body => {
-      return { body };
-    }));
-  }
+  await sender.send(pushMessages);
 
   return new Response("", {
     status: 204,
@@ -171,12 +156,3 @@ const messages: {[key: string]: PushMessage} = {
   }
 }
 
-export type NotificationMessage = {
-  subHash: string,
-  id?: number,
-  type: string,
-  subscription: PushSubscription,
-  message: PushMessage,
-  sendTime: number,
-  isDummy?: boolean
-}
