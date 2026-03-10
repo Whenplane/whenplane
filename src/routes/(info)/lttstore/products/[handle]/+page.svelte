@@ -139,10 +139,20 @@
 
   <h1 class:line-through={!data.product.available}>{productInfo.title}</h1>
   <div class=" overflow-y-visible overflow-x-auto pr-64 edge-fade" style="text-wrap: nowrap;">
-    {#each productInfo.media as image}
+    {#each productInfo.media as image, i (image.id ?? (image.src))}
       {#if image.media_type === "image"}
         <a href={image.src} class="m-1 no-underline!">
-          <img src={image.src} class="product-image inline-block" alt={image.alt} title={image.alt} width={image.width} height={image.height} />
+          <img
+            src={image.src}
+            class="product-image inline-block"
+            alt={image.alt}
+            title={image.alt}
+            width={image.width}
+            height={image.height}
+            loading={i === 0 ? "eager" : "lazy"}
+            fetchpriority={i === 0 ? "high" : "low"}
+            decoding={i === 0 ? "sync" : "async"}
+          />
         </a>
       {/if}
     {/each}
