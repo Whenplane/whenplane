@@ -14,11 +14,13 @@
 	let parsedBefore = $derived.by(() => {
     const b = JSON.parse(before);
     if(b === 0 || b === 1 || typeof b === "boolean") return b == 1;
+    if(b+"" === "[object Object]") return before;
     return b;
   });
 	let parsedAfter = $derived.by(() => {
     const a = JSON.parse(after);
     if(a === 0 || a === 1 || typeof a === "boolean") return a == 1;
+    if(a+"" === "[object Object]") return after;
     return a;
   });
 
