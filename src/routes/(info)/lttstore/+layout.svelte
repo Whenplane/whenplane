@@ -6,7 +6,6 @@
   import {fade} from "svelte/transition"
   import ProductSearchModal from "./ProductSearchModal.svelte";
   import {popup} from "$lib/replacements/popup.ts";
-  import { dev } from "$app/environment";
   import type { MouseEventHandler } from "svelte/elements";
 
   let { data, children } = $props();
@@ -23,7 +22,7 @@
   })
   $effect(() => console.debug({searchOpen}))
 
-  let searchOpen = $state(dev);
+  let searchOpen = $state(false);
 
   function keypress(event: KeyboardEvent) {
     if(event.key === "P" && document.activeElement?.tagName !== "INPUT") {

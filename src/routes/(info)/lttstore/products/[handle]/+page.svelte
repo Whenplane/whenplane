@@ -27,6 +27,7 @@
   import LTTProductCard from "$lib/lttstore/LTTProductCard.svelte";
   import ToolTip from "$lib/ToolTip.svelte";
   import { sum } from "$lib/lttstore";
+  import ProductChangeHistory from "./ProductChangeHistory.svelte";
 
   let { data } = $props();
 
@@ -683,42 +684,12 @@
   {#await data.changeHistory}
 
   {:then changeHistory}
-    <div class="table-container rounded-md">
-      <table class="table rounded-md w-full table-fixed">
-        <thead>
-        <tr>
-          <th>What changed</th>
-          <td>Change seen</td>
-          <th class="w-[42%]">Before</th>
-          <th class="w-[42%]">After</th>
-        </tr>
-        </thead>
-        <tbody>
-        {#each changeHistory as change}
-          {@const BeforeComponent = getDiffComponent(change.field)}
-          {@const AfterComponent = getDiffComponent(change.field)}
-          <tr class="align-top">
-            <td>{getFieldName(change.field)}</td>
-            <td><DateStamp epochSeconds={change.timestamp/1e3}/></td>
-            <td><BeforeComponent before={change.old} after={change.new} displaying="before"/></td>
-            <td><AfterComponent before={change.old} after={change.new} displaying="after"/></td>
-          </tr>
-        {/each}
-        </tbody>
-        {#if data.product.firstSeen < 1727147700624}
-          <tfoot>
-          <tr class="text-center">
-            <td class="p-2! opacity-70" colspan="4">Changes before <DateStamp epochSeconds={1727147700}/> are not available</td>
-          </tr>
-          </tfoot>
-        {/if}
-      </table>
-    </div>
+    <ProductChangeHistory {changeHistory} product={data.product}/>
   {/await}
   <br>
   <br>
   <br>
-  <h2>Request update</h2>
+  <h2 id="request-update">Request update</h2>
   If you want more up-to-date data for this product, you can request an update below.<br>
   To prevent abuse, you can only request updates once an hour per product, and 30 minutes between a request for any product.<br>
   <br>
