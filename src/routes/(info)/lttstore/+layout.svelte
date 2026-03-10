@@ -1,12 +1,13 @@
 <script lang="ts">
 
   import { setCookie } from "$lib/cookieUtils";
-  import { invalidateAll } from "$app/navigation";
+  import { invalidateAll, onNavigate } from "$app/navigation";
   import ExclamationTriangle from "svelte-bootstrap-icons/lib/ExclamationTriangle.svelte";
   import {fade} from "svelte/transition"
   import ProductSearchModal from "./ProductSearchModal.svelte";
-  import { navigating } from "$app/state";
   import {popup} from "$lib/replacements/popup.ts";
+  import { dev } from "$app/environment";
+  import type { MouseEventHandler } from "svelte/elements";
 
   let { data, children } = $props();
 
@@ -17,26 +18,34 @@
       invalidateAll();
     }
   });
-  $effect(() => {
-    if(navigating && searchOpen) {
-      searchOpen = false;
-    }
+  onNavigate(() => {
+    if(searchOpen) searchOpen = false;
   })
+  $effect(() => console.debug({searchOpen}))
 
-  let searchOpen = $state(false);
+  let searchOpen = $state(dev);
 
   function keypress(event: KeyboardEvent) {
     if(event.key === "P" && document.activeElement?.tagName !== "INPUT") {
       searchOpen = true;
     }
+    if(searchOpen && event.key === "Escape") {
+      searchOpen = false;
+    }
+  }
+
+  let quickSearchSpanner: HTMLDivElement | undefined = $state();
+  const bgClick: MouseEventHandler<HTMLDivElement> = e => {
+    console.log(e.target, e.currentTarget);
+    if(e.target === e.currentTarget || e.target === quickSearchSpanner) searchOpen = false;
   }
 
 </script>
 <svelte:window onkeyup={keypress}/>
 
 {#if searchOpen}
-  <div class="search-backdrop fixed top-0 left-0 right-0 bottom-0 z-999">
-    <div class="w-full h-full flex justify-center items-center">
+  <div class="bg-surface-900/80 fixed top-0 left-0 right-0 bottom-0 z-999" onclick={bgClick}>
+    <div class="w-full h-full flex justify-center items-center" bind:this={quickSearchSpanner}>
       <ProductSearchModal/>
     </div>
   </div>
@@ -82,9 +91,3 @@
   </p>
   <div class="arrow preset-filled-surface-500"></div>
 </div>
-
-<style>
-  .search-backdrop {
-      background-color: rgb(var(--color-surface-900) / .7)
-  }
-</style>

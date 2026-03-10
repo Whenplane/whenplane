@@ -9,6 +9,7 @@
   import { navigating } from "$app/state";
   import { dev } from "$app/environment";
   import CircleProgress from "$lib/replacements/CircleProgress.svelte";
+  import type { MouseEventHandler } from "svelte/elements";
 
   const searchClient = new SearchClient({
     'nodes': [{
@@ -81,13 +82,14 @@
 
 
 
+
   $effect(() => {
     search(searchText);
   });
 </script>
 
 <div class="s-container p-4 absolute">
-  <input class="input px-2 pl-4 py-0.5" autofocus placeholder="Find a product" bind:value={searchText} onkeydown={keyPress}>
+  <input class="input block px-2 pl-4 py-0.5 bg-surface-800/85 rounded-2xl border border-surface-500" autofocus placeholder="Find a product" bind:value={searchText} onkeydown={keyPress}>
   <div class="inline-block absolute top-4 right-8">
     {#if waiting}
       <CircleProgress class="inline-block" width="w-6"/>
@@ -108,8 +110,8 @@
         <a class="block card p-2 m-1 truncate rounded-xl" class:selected={cursor === i} href="/lttstore/products/{result.document.handle}" animate:flip={{ duration: 50 }} transition:slide>
           <img src={productData.featured_image ?? productData.images[0]} class="inline-block h-8 w-8 rounded-md">
           <span class="result-highlight" class:line-through={!(result.document.available ?? true)}>
-          {@html sanitizeHtml(result.highlight?.title?.snippet ?? result.document.title, {allowedTags: ["mark"]})}
-        </span>
+            {@html sanitizeHtml(result.highlight?.title?.snippet ?? result.document.title, {allowedTags: ["mark"]})}
+          </span>
            
           <span class="opacity-70 max-w-full truncate result-highlight">
           <!--{descriptionSnippet}-->
@@ -150,8 +152,17 @@
 
 <style>
   input {
-      max-width: 100%;
+      width: 100%;
+      font-size: 100%;
+  }
 
+  a {
+      color: inherit;
+  }
+
+  a:hover {
+      text-decoration: none !important;
+      filter: brightness(1.15);
   }
 
   .results {
@@ -161,8 +172,10 @@
   .s-container {
       overflow: hidden;
       overflow-y: auto;
-      max-width: 60vw;
-      max-height: 90vh;
+      width: 100%;
+      max-width: 1000px;
+      max-height: 95vh;
+
       font-size: 2.5rem;
   }
 
