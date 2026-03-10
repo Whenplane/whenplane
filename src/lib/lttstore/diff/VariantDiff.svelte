@@ -1,82 +1,102 @@
 <script lang="ts">
-  import type { ProductVariant } from '$lib/lttstore/lttstore_types.ts';
-  import { getVariantFieldName } from '$lib/lttstore/field_names.ts';
-  import { typed } from '$lib';
+	import type { ProductVariant } from '$lib/lttstore/lttstore_types.ts';
+	import { getVariantFieldName } from '$lib/lttstore/field_names.ts';
+	import { typed } from '$lib';
+	import TextDiff from './TextDiff.svelte';
 
-  let {
-    before = typed<string>(),
-    after = typed<string>(),
-    displaying = typed<'before' | 'after'>()
-  } = $props();
+	let {
+		before = typed<string>(),
+		after = typed<string>(),
+		displaying = typed<'before' | 'after'>()
+	} = $props();
 
-  let parsedBefore = $derived(JSON.parse(before) as ProductVariant[]);
-  let parsedAfter = $derived(JSON.parse(after) as ProductVariant[]);
+	let parsedBefore = $derived(JSON.parse(before) as ProductVariant[]);
+	let parsedAfter = $derived(JSON.parse(after) as ProductVariant[]);
 
-  let html: string = $derived.by(() => {
-    let html = '';
-    let removed: string[] = [];
-    for (let i = 0; i < parsedBefore.length; i++) {
-      const beforeVariant = parsedBefore[i];
-      const afterVariant = parsedAfter.find((v) => v.title === beforeVariant.title);
-      for (let beforeEntry of Object.entries(beforeVariant)) {
-        const key = beforeEntry[0];
-        const beforeValue = beforeEntry[1];
-        const afterValue = (afterVariant as { [key: string]: any })?.[key];
-        if (['null', 'undefined'].includes(typeof afterValue)) {
-          if (!removed.includes(beforeVariant.title)) {
-            if (displaying === 'after') {
-              html +=
-                "<span style='background-color: rgba(255, 0, 0, 0.2)'>" +
-                'Removed ' +
-                beforeVariant.title +
-                '</span><br>';
-            } else {
-              html +=
-                "<span style='background-color: rgba(255, 0, 0, 0.2)' class='opacity-40 pl-1'></span><br>";
-            }
-            removed.push(beforeVariant.title);
-          }
-        } else {
-          if (JSON.stringify(beforeValue) !== JSON.stringify(afterValue)) {
-            if (typeof beforeValue === 'object' || typeof afterValue === 'object') {
-              for (let beforeValueEntry of Object.entries(beforeValue ?? {})) {
-                const subKey = beforeValueEntry[0];
-                const beforeSubValue = beforeValueEntry[1];
-                const afterSubValue = (afterValue as { [key: string]: any })?.[subKey];
-                if (JSON.stringify(beforeSubValue) === JSON.stringify(afterSubValue)) continue;
-                html +=
-                  beforeVariant.title +
-                  ': ' +
-                  getVariantFieldName(key) +
-                  ': ' +
-                  getVariantFieldName(subKey) +
-                  ' ' +
-                  "<span style='background-color: rgba(" +
-                  (displaying == 'before' ? '255, 0, 0' : '0, 255, 0') +
-                  ", 0.2)'>" +
-                  (displaying == 'before' ? beforeSubValue : afterSubValue) +
-                  '</span><br>';
-              }
-            } else {
-              html +=
-                beforeVariant.title +
-                ': ' +
-                getVariantFieldName(key) +
-                ': ' +
-                "<span style='background-color: rgba(" +
-                (displaying == 'before' ? '255, 0, 0' : '0, 255, 0') +
-                ", 0.2)'>" +
-                (displaying == 'before' ? beforeValue : afterValue) +
-                '</span><br>';
-            }
-          }
-        }
-      }
-    }
+	type FieldDiff = {
+		variantTitle: string;
+		fieldName: string;
+		subFieldName?: string;
+		before: string;
+		after: string;
+	};
 
-    html = html.replace(/\n/g, '<br>').replace(/\t/g, '&emsp;');
-    return html;
-  });
+	let diffs = $derived.by((): FieldDiff[] => {
+		const result: FieldDiff[] = [];
+		const removed: string[] = [];
+
+		for (let i = 0; i < parsedBefore.length; i++) {
+			const beforeVariant = parsedBefore[i];
+			const afterVariant = parsedAfter.find((v) => v.title === beforeVariant.title);
+
+			for (let [key, beforeValue] of Object.entries(beforeVariant)) {
+				const afterValue = (afterVariant as { [key: string]: any })?.[key];
+
+				if (['null', 'undefined'].includes(typeof afterValue)) {
+					if (!removed.includes(beforeVariant.title)) {
+						result.push({
+							variantTitle: beforeVariant.title,
+							fieldName: 'removed',
+							before: JSON.stringify(beforeVariant.title),
+							after: JSON.stringify("")
+						});
+						removed.push(beforeVariant.title);
+					}
+				} else {
+					if (JSON.stringify(beforeValue) !== JSON.stringify(afterValue)) {
+						if (typeof beforeValue === 'object' || typeof afterValue === 'object') {
+							for (let [subKey, beforeSubValue] of Object.entries(beforeValue ?? {})) {
+								const afterSubValue = (afterValue as { [key: string]: any })?.[subKey];
+								if (JSON.stringify(beforeSubValue) === JSON.stringify(afterSubValue)) continue;
+
+							result.push({
+								variantTitle: beforeVariant.title,
+								fieldName: getVariantFieldName(key),
+								subFieldName: getVariantFieldName(subKey),
+								before: JSON.stringify(beforeSubValue),
+								after: afterSubValue === undefined ? JSON.stringify("") : JSON.stringify(afterSubValue)
+							});
+							}
+						} else {
+							result.push({
+								variantTitle: beforeVariant.title,
+								fieldName: getVariantFieldName(key),
+								before: JSON.stringify(beforeValue),
+								after: JSON.stringify(afterValue)
+							});
+						}
+					}
+				}
+			}
+		}
+
+		return result;
+	});
 </script>
 
-{@html html}
+<div class="flex flex-col gap-2">
+	{#each diffs as diff}
+		{#if diff.fieldName === 'removed'}
+			<div class="card p-2">
+				{#if displaying === 'after'}
+					<span class="text-red-500">Removed {diff.variantTitle}</span>
+				{:else}
+					<span class="opacity-40 pl-1"></span>
+				{/if}
+			</div>
+		{:else}
+			<div>
+				<div class="mb-1 text-sm">
+					{diff.variantTitle}: {diff.fieldName}{diff.subFieldName ? ": " + diff.subFieldName : ""}
+				</div>
+				{@debug diff}
+				<TextDiff
+					before={diff.before}
+					after={diff.after}
+					diffType="words"
+					{displaying}
+				/>
+			</div>
+		{/if}
+	{/each}
+</div>
