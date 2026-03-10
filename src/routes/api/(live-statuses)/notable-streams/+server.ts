@@ -210,7 +210,7 @@ export const GET = (async ({platform, url, request}) => {
       if(channel === "bocabola" && twitchJSON.data && twitchJSON.data.length > 0 && !dev) {
 
         if(!recordedBocaStreamStart) {
-          const db = platform?.env?.BOCA_DB.withSession();
+          const db = platform?.env?.BOCA_DB?.withSession();
           if(!db) {
             log(platform, "Unable to insert boca stream due to missing db!");
             return;
@@ -266,7 +266,7 @@ export const GET = (async ({platform, url, request}) => {
         if(bocaWasLive) {
           const time = new Date().toISOString()
           platform?.context?.waitUntil((async () => {
-            const db = platform?.env?.BOCA_DB.withSession();
+            const db = platform?.env?.BOCA_DB?.withSession();
             if(!db) {
               log(platform, "Unable to insert boca stream due to missing db!");
               return;
