@@ -68,7 +68,7 @@ export const POST = (async ({platform, params, request, url}) => {
 
   await sender.send(pushMessages);
 
-  return new Response("", {
+  return new Response(null, {
     status: 204,
     headers: {
       "x-messages-queued": pushMessages.length+""
