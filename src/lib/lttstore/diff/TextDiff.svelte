@@ -12,16 +12,26 @@
 	} = $props();
 
 	let parsedBefore = $derived.by(() => {
-    const b = JSON.parse(before);
-    if(b === 0 || b === 1 || typeof b === "boolean") return b == 1;
-    if(b+"" === "[object Object]") return before;
-    return b;
+    try {
+      const b = JSON.parse(before);
+      if(b === 0 || b === 1 || typeof b === "boolean") return b == 1;
+      if(b+"" === "[object Object]") return before;
+      return b;
+    } catch(e) {
+      console.debug("Throw in before: ", {before, after});
+      throw e;
+    }
   });
 	let parsedAfter = $derived.by(() => {
-    const a = JSON.parse(after);
-    if(a === 0 || a === 1 || typeof a === "boolean") return a == 1;
-    if(a+"" === "[object Object]") return after;
-    return a;
+    try {
+      const a = JSON.parse(after);
+      if(a === 0 || a === 1 || typeof a === "boolean") return a == 1;
+      if(a+"" === "[object Object]") return after;
+      return a;
+    } catch(e) {
+      console.debug("Throw in after: ", {after, before});
+      throw e;
+    }
   });
 
   let forcedDiffType: 'chars' | 'words' | 'lines' | undefined = $derived.by(() => {
