@@ -95,7 +95,6 @@
 						{diff.subFieldName}
 					{/if}
 				</div>
-				{@debug diff}
 				<TextDiff
 					before={diff.before}
 					after={diff.after}
