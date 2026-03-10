@@ -25,17 +25,23 @@
 </script>
 
 {#each parsedBefore.filter((m) => changedOptions.includes(m.name)) as option}
-	<b>{option.name}</b><br />
-	<TextDiff
-		before={JSON.stringify(option.values.join('\n'))}
-		after={JSON.stringify(
-				parsedAfter
-					.find((m) => m.name === option.name)
-					?.values
-					.join('\n')
-			)}
-		{displaying}
-		diffType="lines"
-	/>
+	{@const before = option.values.join('\n')}
+	{@const after = parsedAfter
+		.find((m) => m.name === option.name)
+		?.values
+		.join('\n')}
+	<b>{option.name}</b>
+	{#if after === undefined}
+		<span class="opacity-30">&mdash;</span>
+		<span class="text-red-500">Removed</span>
+	{:else}
+		<br />
+		<TextDiff
+			before={JSON.stringify(before)}
+			after={JSON.stringify(after)}
+			{displaying}
+			diffType="lines"
+		/>
+	{/if}
 	<br />
 {/each}
