@@ -38,8 +38,8 @@
 </script>
 
 <TextDiff
-	before={JSON.stringify([...beforeBackorderNotices].join('<br>'))}
-	after={JSON.stringify([...afterBackorderNotices].join('<br>'))}
+	before={JSON.stringify([...beforeBackorderNotices].join('\n'))}
+	after={JSON.stringify([...afterBackorderNotices].join('\n'))}
 	{displaying}
 	diffType="words"
 	card={false}
