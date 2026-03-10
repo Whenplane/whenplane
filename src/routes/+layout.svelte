@@ -8,9 +8,10 @@
 	import 'nprogress/nprogress.css';
 	import { navigating, page } from '$app/state';
 	import NProgress from 'nprogress';
-	import { browser, dev } from '$app/environment';
+	import { dev } from '$app/environment';
 	import { setServiceWorker } from '$lib/stores.ts';
 	import { onMount } from 'svelte';
+	import { afterNavigate, beforeNavigate } from "$app/navigation";
 
 	let { children = typed<import('svelte').Snippet>() } = $props();
 
@@ -21,27 +22,24 @@
 
 	let progressTimeout: number;
 
-	$effect(() => {
-		if (browser) {
-			if (navigating.to) {
-				if (progressTimeout) clearTimeout(progressTimeout);
-				const startBar = () => {
-					if (navigating) {
-						NProgress.start();
-					}
-				};
-				const toURL = navigating.to?.url;
-				if (toURL?.pathname == '/history' && toURL.searchParams.has('old')) {
-					startBar();
-				} else {
-					progressTimeout = setTimeout(startBar, 150) as unknown as number;
-				}
+	beforeNavigate(n => {
+		if (progressTimeout) clearTimeout(progressTimeout);
+		const startBar = () => {
+			if (navigating.type) {
+				NProgress.start();
 			}
-			if (!navigating.to) {
-				if (progressTimeout) clearTimeout(progressTimeout);
-				NProgress.done();
-			}
+		};
+		const toURL = n.to?.url;
+		if (toURL?.pathname == '/history' && toURL.searchParams.has('old')) {
+			startBar();
+		} else {
+			progressTimeout = setTimeout(startBar, 150) as unknown as number;
 		}
+	})
+
+	afterNavigate(() => {
+		if (progressTimeout) clearTimeout(progressTimeout);
+		NProgress.done();
 	})
 
 	let pathname = $derived(page.url.pathname);
