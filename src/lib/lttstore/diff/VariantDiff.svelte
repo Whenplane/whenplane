@@ -21,9 +21,11 @@
 		after: string;
 	};
 
+	let removed: string[] = [];
+
 	let diffs = $derived.by((): FieldDiff[] => {
 		const result: FieldDiff[] = [];
-		const removed: string[] = [];
+		removed = []
 
 		for (let i = 0; i < parsedBefore.length; i++) {
 			const beforeVariant = parsedBefore[i];
@@ -49,13 +51,13 @@
 								const afterSubValue = (afterValue as { [key: string]: any })?.[subKey];
 								if (JSON.stringify(beforeSubValue) === JSON.stringify(afterSubValue)) continue;
 
-							result.push({
-								variantTitle: beforeVariant.title,
-								fieldName: getVariantFieldName(key),
-								subFieldName: getVariantFieldName(subKey),
-								before: JSON.stringify(beforeSubValue),
-								after: afterSubValue === undefined ? JSON.stringify("") : JSON.stringify(afterSubValue)
-							});
+								result.push({
+									variantTitle: beforeVariant.title,
+									fieldName: getVariantFieldName(key),
+									subFieldName: getVariantFieldName(subKey),
+									before: JSON.stringify(beforeSubValue),
+									after: afterSubValue === undefined ? JSON.stringify("") : JSON.stringify(afterSubValue)
+								});
 							}
 						} else {
 							result.push({
@@ -77,17 +79,21 @@
 <div class="flex flex-col gap-2">
 	{#each diffs as diff}
 		{#if diff.fieldName === 'removed'}
-			<div class="card p-2">
-				{#if displaying === 'after'}
-					<span class="text-red-500">Removed {diff.variantTitle}</span>
-				{:else}
-					<span class="opacity-40 pl-1"></span>
-				{/if}
-			</div>
-		{:else}
+			{#if displaying === 'after'}
+				<span class="text-red-500">Removed {diff.variantTitle}</span>
+			{:else}
+				<span class="opacity-40 pl-1"></span>
+			{/if}
+		{:else if !removed.includes(diff.variantTitle)}
 			<div>
 				<div class="mb-1 text-sm">
-					{diff.variantTitle}: {diff.fieldName}{diff.subFieldName ? ": " + diff.subFieldName : ""}
+					{diff.variantTitle}
+					<span class="opacity-30">&mdash;</span>
+					{diff.fieldName}
+					{#if diff.subFieldName}
+						<span class="opacity-30">&mdash;</span>
+						{diff.subFieldName}
+					{/if}
 				</div>
 				{@debug diff}
 				<TextDiff
