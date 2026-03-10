@@ -31,14 +31,14 @@
 		?.values
 		.join('\n')}
 	<b>{option.name}</b>
-	{#if after === undefined}
+	{#if after === undefined && displaying === 'after'}
 		<span class="opacity-30">&mdash;</span>
 		<span class="text-red-500">Removed</span>
 	{:else}
 		<br />
 		<TextDiff
 			before={JSON.stringify(before)}
-			after={JSON.stringify(after)}
+			after={JSON.stringify(after ?? "")}
 			{displaying}
 			diffType="lines"
 		/>
