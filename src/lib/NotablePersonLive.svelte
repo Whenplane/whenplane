@@ -29,7 +29,7 @@
 </script>
 
 <a
-	class="card border-2 p-2 border-amber-600! !bg-opacity-20 bg-amber-600! block relative"
+	class="card border-2 p-2 border-amber-600! bg-amber-600/21! block relative"
 	href="https://twitch.tv/{shortResponse.channel}"
 	target="_blank"
 	rel="noopener"
@@ -54,3 +54,9 @@
 		</div>
 	</div>
 </a>
+
+<style>
+	a {
+		color: inherit;
+	}
+</style>
