@@ -26,7 +26,7 @@
 		"@sveltejs/adapter-cloudflare": "^2.3.4",
 		"@sveltejs/enhanced-img": "^0.3.10",
 		"@sveltejs/kit": "^2.55.0",
-		"@sveltejs/vite-plugin-svelte": "^4.0.0",
+		"@sveltejs/vite-plugin-svelte": "^4.0.4",
 		"@tailwindcss/forms": "^0.5.3",
 		"@tailwindcss/typography": "^0.5.9",
 		"@types/bcryptjs": "^2.4.6",
