@@ -25,6 +25,7 @@
 	let shuttingDown = false;
 	let first = true;
 	let lastInvalidate = 0;
+  let reconnectTimeout: NodeJS.Timeout | undefined;
 	function createWebSocket() {
 		webSocket = new WebSocket(
 			'wss://sockets.whenplane.com/socket?events=' + encodeURIComponent(events.join(','))
@@ -49,7 +50,7 @@
 			if (delay > 2)
 				console.debug('[whenplane:ws] WebSocket closed, reconnecting in', delay, 'seconds');
 
-			setTimeout(() => {
+			reconnectTimeout = setTimeout(() => {
 				console.debug('[whenplane:ws] Reconnecting websocket due to disconnection: ', e.code, e.reason);
 				createWebSocket();
 			}, delay * 1e3);
@@ -119,6 +120,7 @@
 
 	onDestroy(() => {
 		shuttingDown = true;
+    if(reconnectTimeout) clearTimeout(reconnectTimeout);
 		if (webSocket && webSocket.readyState == WebSocket.OPEN) {
 			webSocket.close();
 		}
