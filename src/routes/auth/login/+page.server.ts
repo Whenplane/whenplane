@@ -123,7 +123,13 @@ export const actions = {
       .bind(newSessionID + (user["2fa"] ? ":verifying" : ""), user.username, expires.getTime()).run();
 
     const secure = dev ? false : undefined;
-    cookies.set("session", newSessionID, {path: '/', expires: expires, secure});
+    cookies.set("session", newSessionID, {
+      path: '/',
+      expires: expires,
+      secure,
+      httpOnly: true,
+      sameSite: "lax"
+    });
 
     throw redirect(302, (user["2fa"] ? "/auth/login/2fa" : "/auth"));
   }),
