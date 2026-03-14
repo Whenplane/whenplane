@@ -11,6 +11,12 @@ const config = {
 		exclude: "**/time-overrides.json"
 	},
 
+	compilerOptions: {
+		experimental: {
+			async: true
+		}
+	},
+
 	kit: {
 		adapter: adapter({
 			routes: {

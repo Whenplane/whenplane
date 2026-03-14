@@ -4,6 +4,8 @@
 	import LargerLazyLoad from '$lib/LargerLazyLoad.svelte';
 	import { productRedirects } from '$lib/lttstore/product_redirects.ts';
 	import { typed } from '$lib';
+	import { dev } from "$app/environment";
+	import { sha256 } from "$lib/utils.ts";
 
 	let {
 		product = typed<ShopifyProduct>(),
@@ -17,6 +19,10 @@
 	let goneInHours = $derived((stock?.total ?? -1) / (purchasesPerHour ?? -1));
 
 	let handle = $derived(productRedirects[product.handle] ?? product.handle);
+	let imageSrc = $derived((dev ? 'https://whenplane.com' : '') +
+			'/cdn-cgi/image/anim=false,fit=scale-down,width=528,metadata=copyright,q=60,sqc=50,format=auto/' +
+			`https://img-proxy.whenplane.com/img/${product.handle}-${await sha256(product.featured_image).then(r => r.substring(0, 5))}`
+		);
 </script>
 
 <a
@@ -28,7 +34,7 @@
 		{#if lazyLoadImage}
 			<LargerLazyLoad>
 				<img
-					src={product.featured_image}
+					src={imageSrc}
 					class="product-image rounded-xl h-47"
 					alt={product.title}
 					decoding="async"
@@ -36,7 +42,7 @@
 			</LargerLazyLoad>
 		{:else}
 			<img
-				src={product.featured_image}
+				src={imageSrc}
 				class="product-image rounded-xl h-47"
 				alt={product.title}
 				loading="lazy"
