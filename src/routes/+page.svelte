@@ -485,7 +485,7 @@
 	}
 
 	@media (max-height: 790px) {
-		.inner:not(>.alwaysFlex) {
+		.inner > :not(.alwaysFlex) {
 			padding-bottom: 5em;
 		}
 	}
