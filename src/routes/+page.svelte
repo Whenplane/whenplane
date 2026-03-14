@@ -41,6 +41,7 @@
 		"whenwan.show",
 		"whenplane.pages.dev",
 		"when.show",
+		"svelte-5.whenplane.com",
 		"localhost"
 	]
 
