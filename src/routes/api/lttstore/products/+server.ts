@@ -6,14 +6,14 @@ export const GET = (async ({platform, url}) => {
 
   const db = platform?.env?.LTTSTORE_DB.withSession();
   if(!db) throw error(503, "DB unavailable!");
-  const withVariants = url.searchParams.has("withVariants");
+  const withMedia = url.searchParams.has("withMedia");
 
   const allProducts = await retryD1(() =>
     db.prepare(
       "select handle,id,available," +
-      (withVariants ?
-         "json_remove(json_remove(json_remove(product, '$.media'), '$.images'), '$.description')" :
-         "json_remove(json_remove(json_remove(json_remove(product, '$.media'), '$.images'), '$.description'), '$.variants')"
+      (withMedia ?
+         "json_remove(json_remove(json_remove(product, '$.variants'), '$.images'), '$.description')" :
+         "json_remove(json_remove(json_remove(json_remove(product, '$.variants'), '$.images'), '$.description'), '$.media')"
       ) +
       " as product from products"
     )
