@@ -10,7 +10,7 @@
   import { page } from "$app/state";
   import ProductStockHistoryGraph from "$lib/lttstore/product/ProductStockHistoryGraph.svelte";
   import DateStamp from "$lib/DateStamp.svelte";
-  import { commas, truncateText } from "$lib/utils.ts";
+  import { commas, sha256, truncateText } from "$lib/utils.ts";
   import { Accordion } from "@skeletonlabs/skeleton-svelte";
   import sanitizeHtml from "sanitize-html";
   import { newsSanitizeSettings } from "$lib/news/news";
@@ -141,9 +141,12 @@
   <div class=" overflow-y-visible overflow-x-auto pr-64 edge-fade" style="text-wrap: nowrap;">
     {#each productInfo.media as image, i (image.id ?? (image.src))}
       {#if image.media_type === "image"}
+        {@const preview = (dev ? 'https://whenplane.com' : '') +
+          '/cdn-cgi/image/fit=scale-down,height=960,metadata=copyright,q=80,sqc=65,format=auto/' +
+          `https://img-proxy.whenplane.com/d-img/${productInfo.handle}-${image.id}-${await sha256(image.src).then(r => r.substring(0, 5))}`}
         <a href={image.src} class="m-1 no-underline!">
           <img
-            src={image.src}
+            src={preview}
             class="product-image inline-block"
             alt={image.alt}
             title={image.alt}
