@@ -3,3 +3,4 @@
 /products/:handle /lttstore/products/:handle 301
 /contact /support 301
 /history/show /history 301
+/favicon.ico /wan.webp 301
