@@ -23,7 +23,17 @@ const config = {
 				exclude: [
           "<all>",
 
-					// Stuff that vulnerability crawlers like to spam
+					"/apple-touch-icon.png",
+					"/apple-touch-icon-precomposed.png",
+
+					"/discord",
+					"/boca-time",
+					"/products/*",
+					// "/history/show/*/*/merch-messages/*",
+					"/contact",
+          "/history/show",
+
+					// Stuff that vulnerability crawlers like to spam (these should be blocked in cloudflare but include them here just in case)
 					"/*/wp-includes",
 					"/*/wp-includes/*",
 					"/wp-includes",
@@ -37,13 +47,6 @@ const config = {
 					"/libraries/*",
 					"/.env",
 					"/.git/*",
-
-					"/discord",
-					"/boca-time",
-					"/products/*",
-					// "/history/show/*/*/merch-messages/*",
-					"/contact",
-          "/history/show"
 				]
 			}
 		}),
