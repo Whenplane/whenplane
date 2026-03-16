@@ -4,7 +4,8 @@
 
 	let {
 		siteKey = typed<string>(),
-		passed = $bindable<boolean>(false)
+		passed = $bindable<boolean>(false),
+		appearance = typed<"always" | "execute" | "interaction-only">("always")
 	} = $props();
 
 	function unPass() {
@@ -19,6 +20,7 @@
 <div class="turnstile inline-block mx-auto">
 	<Turnstile
 		{siteKey}
+		{appearance}
 		on:turnstile-error={unPass}
 		on:turnstile-expired={unPass}
 		on:turnstile-timeout={unPass}

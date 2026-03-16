@@ -11,6 +11,7 @@
   import { setCookie, strip } from "$lib/cookieUtils.ts";
   import LastUpdate from "./indexUpdateStatus/LastUpdate.svelte";
   import { truncateText } from "$lib/utils.ts";
+  import Turnstile from "$lib/Turnstile.svelte";
 
   let sp = $state(page.url.searchParams);
 
@@ -368,6 +369,8 @@
             <span>Merch Messages</span>
           </label>
         </div>
+
+        <Turnstile siteKey="0x4AAAAAAAxkT_jDLpLOTZfP" appearance="interaction-only"/>
 
       </form>
 
