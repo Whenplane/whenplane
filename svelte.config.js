@@ -32,6 +32,7 @@ const config = {
 					// "/history/show/*/*/merch-messages/*",
 					"/contact",
           "/history/show",
+					"/.well-known/*",
 
 					// Stuff that vulnerability crawlers like to spam (these should be blocked in cloudflare but include them here just in case)
 					"/*/wp-includes",
