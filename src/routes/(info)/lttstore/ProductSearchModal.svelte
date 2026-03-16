@@ -10,6 +10,7 @@
   import { dev } from "$app/environment";
   import CircleProgress from "$lib/replacements/CircleProgress.svelte";
   import type { MouseEventHandler } from "svelte/elements";
+  import { sha256 } from "$lib/utils.ts";
 
   const searchClient = new SearchClient({
     'nodes': [{
@@ -107,8 +108,11 @@
         {@const descriptionSnippet = result.highlight?.description?.snippet?.replaceAll("</p>", "\n")}
         {@const openingIndex = descriptionSnippet?.indexOf("<")}
         {@const closingIndex = descriptionSnippet?.indexOf(">")}
+        {@const imgPreview = (dev ? 'https://whenplane.com' : '') +
+          '/cdn-cgi/image/fit=scale-down,height=96,metadata=copyright,q=60,sqc=50,format=auto/' +
+          `https://img-proxy.whenplane.com/img/${productData.handle}-${await sha256(productData.featured_image).then(r => r.substring(0, 5))}`}
         <a class="block card p-2 m-1 truncate rounded-xl" class:selected={cursor === i} href="/lttstore/products/{result.document.handle}" animate:flip={{ duration: 50 }} transition:slide>
-          <img src={productData.featured_image ?? productData.images[0]} class="inline-block h-8 w-8 rounded-md">
+          <img src={imgPreview} class="inline-block h-8 w-8 rounded-md" loading="lazy">
           <span class="result-highlight" class:line-through={!(result.document.available ?? true)}>
             {@html sanitizeHtml(result.highlight?.title?.snippet ?? result.document.title, {allowedTags: ["mark"]})}
           </span>

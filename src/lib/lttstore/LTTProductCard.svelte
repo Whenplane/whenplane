@@ -19,7 +19,8 @@
 	let goneInHours = $derived((stock?.total ?? -1) / (purchasesPerHour ?? -1));
 
 	let handle = $derived(productRedirects[product.handle] ?? product.handle);
-	let imageSrc = $derived((dev ? 'https://whenplane.com' : '') +
+	let imageSrc = $derived(
+			(dev ? 'https://whenplane.com' : '') +
 			'/cdn-cgi/image/anim=false,fit=scale-down,width=528,metadata=copyright,q=60,sqc=50,format=auto/' +
 			`https://img-proxy.whenplane.com/img/${product.handle}-${await sha256(product.featured_image).then(r => r.substring(0, 5))}`
 		);
