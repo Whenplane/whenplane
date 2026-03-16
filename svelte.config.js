@@ -32,7 +32,7 @@ const config = {
 					// "/history/show/*/*/merch-messages/*",
 					"/contact",
           "/history/show",
-					"/.well-known/*",
+					// "/.well-known/*",
 					"/favicon.ico",
 					"/wan.png",
 
