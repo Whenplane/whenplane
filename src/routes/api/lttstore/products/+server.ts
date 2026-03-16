@@ -7,7 +7,7 @@ export const GET = (async ({platform}) => {
   const db = platform?.env?.LTTSTORE_DB.withSession();
   if(!db) throw error(503, "DB unavailable!");
 
-  const allProducts = retryD1(() =>
+  const allProducts = await retryD1(() =>
     db.prepare("select handle,id,available,json_remove(json_remove(json_remove(json_remove(product, '$.media'), '$.images'), '$.variants'), '$.description') as product from products")
       .all<ProductsTableRow>()
       .then(r => r.results)
