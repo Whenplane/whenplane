@@ -4,8 +4,9 @@
   import { typed } from "$lib";
   import DateStamp from "$lib/DateStamp.svelte";
   import type { ProductsTableRow } from "$lib/lttstore/lttstore_types.ts";
-  import { onMount } from "svelte";
+  import { onDestroy, onMount } from "svelte";
   import { dev } from "$app/environment";
+  import LazyLoad from "@dimfeld/svelte-lazyload";
 
   let {
     changeHistory = typed<{
@@ -16,7 +17,6 @@
       new: string
     }[]>(),
     product = typed<ProductsTableRow>(),
-    loaded = true
   } = $props();
 
   let loadTo = $state(0);
@@ -35,28 +35,31 @@
       }
     })
   }
+  let loadInterval: NodeJS.Timer | undefined;
 
   // limits the number of changes loaded at once to reduce cpu usage spike
-  onMount(() => {
-    let i: NodeJS.Timer | undefined;
-    if(loaded) {
-      i = setInterval(() => {
-        if(loadTo < changeHistory.length - 1) {
-          loadTo++;
-        } else {
-          clearInterval(i);
-          i = undefined;
-        }
-      }, 50);
-    }
-    return () => {
-      if(i) clearInterval(i);
-    }
-  });
+  function startLoading() {
+    if(loadInterval) return;
+    console.debug("Starting loading of diffs");
+    loadTo++;
+    loadInterval = setInterval(() => {
+      if(loadTo < changeHistory.length - 1) {
+        loadTo++;
+      } else {
+        clearInterval(loadInterval);
+        loadInterval = undefined;
+      }
+    }, 75);
+  }
+
+  onDestroy(() => {
+    if(loadInterval) clearInterval(loadInterval);
+  })
 
 
 </script>
 
+<LazyLoad on:visible={startLoading}/>
 <div class="table-container rounded-md">
   <table class="table rounded-md w-full table-fixed">
     <thead>
