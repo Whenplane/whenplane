@@ -695,7 +695,6 @@
   <br>
   <h2 id="change-history">Change history</h2>
   {#await data.changeHistory}
-
   {:then changeHistory}
     <ProductChangeHistory {changeHistory} product={data.product}/>
   {/await}
