@@ -28,6 +28,7 @@
   import ToolTip from "$lib/ToolTip.svelte";
   import { sum } from "$lib/lttstore";
   import ProductChangeHistory from "./ProductChangeHistory.svelte";
+  import LazyLoad from "@dimfeld/svelte-lazyload";
 
   let { data } = $props();
 
@@ -644,7 +645,9 @@
           <option value="all">all-time</option>
         </select>{#key data}
         <ProductStockHistoryGraph stockHistory={data.stockHistory} productName={productInfo.title} productOptions={productInfo.options} {chartUpdateNumber}/>
-        <ProductMoveRateGraph stockHistory={data.stockHistory} productName={productInfo.title} {chartUpdateNumber}/>
+        <LazyLoad>
+          <ProductMoveRateGraph stockHistory={data.stockHistory} productName={productInfo.title} {chartUpdateNumber}/>
+        </LazyLoad>
         {/key}<br>
         {#if data.product.firstSeen < 1719248750000}
           Note that stock started being recorded on June 11th, 2024, so data before that is not available.
