@@ -60,7 +60,7 @@ h4 {
 
 @utility /* this has to have @utility so that it can be used in @apply */
 cool-border {
-    border: 1px solid rgba(255, 255, 255, 0.3);
+    border: 1px solid rgba(255, 255, 255, 0.14);
 }
 
 .bordered-accordion-content {
