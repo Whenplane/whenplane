@@ -515,7 +515,7 @@
   </div>
   <br>
 
-  <div class="max-w-4xl my-4">
+  <div class="my-4">
     <Accordion class="mx-4" collapsible defaultValue={["similar"]}>
       <Accordion.Item value="similar">
         <Accordion.ItemTrigger class="font-bold flex items-center justify-between gap-2 cool-border">
