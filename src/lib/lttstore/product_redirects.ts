@@ -6,5 +6,6 @@ export const productRedirects: {[k: string]: string} = {
   "2022-sticker-pack": "2022-sticker-pack-1",
   "tall-blank-shirt": "blank-t-shirt-short-sleeve",
   "pen": "scribedriver-bolt-action-pen",
-  "the-jerryrig-razor-knife-1": "the-jerryrig-razor-knife"
+  "the-jerryrig-razor-knife-1": "the-jerryrig-razor-knife",
+  "mcm-x-large-arch-1-pack": "magnetic-cable-management-x-large-arch-1-pack"
 }
