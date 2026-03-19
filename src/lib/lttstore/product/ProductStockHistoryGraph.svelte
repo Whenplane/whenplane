@@ -90,7 +90,13 @@
 			},
 			toolbar: {
 				autoSelected: 'zoom'
-			}
+			},
+      animations: {
+        enabled: false,
+        dynamicAnimation: {
+          enabled: true
+        }
+      }
 		},
 		series: {},
 		dataLabels: {
