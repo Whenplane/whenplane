@@ -726,11 +726,29 @@
   <br>
   <br>
   <br>
-  <h2 id="change-history">Change history</h2>
-  {#await data.changeHistory}
-  {:then changeHistory}
-    <ProductChangeHistory {changeHistory} product={data.product}/>
-  {/await}
+  <Accordion collapsible defaultValue={["change-history"]}>
+    <Accordion.Item value="change-history">
+      <Accordion.ItemTrigger class="font-bold flex items-center justify-between gap-2 cool-border">
+        Change History
+        <Accordion.ItemIndicator class="group">
+          <ChevronDown class="h-5 w-5 transition group-data-[state=open]:rotate-180" />
+        </Accordion.ItemIndicator>
+      </Accordion.ItemTrigger>
+      <Accordion.ItemContent>
+        {#snippet element(attributes)}
+          {#if !attributes.hidden}
+            <div transition:slide class="bordered-accordion-content px-2">
+              <h2 id="change-history">Change history</h2>
+              {#await data.changeHistory}
+              {:then changeHistory}
+                <ProductChangeHistory {changeHistory} product={data.product}/>
+              {/await}
+            </div>
+          {/if}
+        {/snippet}
+      </Accordion.ItemContent>
+    </Accordion.Item>
+  </Accordion>
   <br>
   <br>
   <br>
@@ -745,22 +763,104 @@
 
   {#if dev}
     <br>
-    <br>
-    <pre>{JSON.stringify({
-      ...data,
-      product: "shown below"
-    }, undefined, '\t')}</pre>
-    <pre>{JSON.stringify({
-      ...data.product,
-      product: "shown below"
-    }, undefined, '\t')}</pre>
-    <pre>{JSON.stringify(productInfo, undefined, '\t')}</pre>
-    similar:
-    {#await data.similarProducts}
-      ...
-    {:then similar}
-      <pre>{JSON.stringify(similar, undefined, '\t')}</pre>
-    {/await}
+    <Accordion collapsible>
+      <Accordion.Item value="debug-page-data">
+        <Accordion.ItemTrigger class="font-bold flex items-center justify-between gap-2 cool-border">
+          Debug: Page Data
+          <Accordion.ItemIndicator class="group">
+            <ChevronDown class="h-5 w-5 transition group-data-[state=open]:rotate-180" />
+          </Accordion.ItemIndicator>
+        </Accordion.ItemTrigger>
+        <Accordion.ItemContent>
+          {#snippet element(attributes)}
+            {#if !attributes.hidden}
+              <div transition:slide class="bordered-accordion-content px-2">
+                <pre>{JSON.stringify({
+                  ...data,
+                  product: "shown below",
+                  stockHistory: "shown below"
+                }, undefined, '\t')}</pre>
+              </div>
+            {/if}
+          {/snippet}
+        </Accordion.ItemContent>
+      </Accordion.Item>
+      <Accordion.Item value="debug-stock-history">
+        <Accordion.ItemTrigger class="font-bold flex items-center justify-between gap-2 cool-border">
+          Debug: Stock History
+          <Accordion.ItemIndicator class="group">
+            <ChevronDown class="h-5 w-5 transition group-data-[state=open]:rotate-180" />
+          </Accordion.ItemIndicator>
+        </Accordion.ItemTrigger>
+        <Accordion.ItemContent>
+          {#snippet element(attributes)}
+            {#if !attributes.hidden}
+              <div transition:slide class="bordered-accordion-content px-2">
+                <pre>{JSON.stringify(data.stockHistory, undefined, '\t')}</pre>
+              </div>
+            {/if}
+          {/snippet}
+        </Accordion.ItemContent>
+      </Accordion.Item>
+      <Accordion.Item value="debug-product-data">
+        <Accordion.ItemTrigger class="font-bold flex items-center justify-between gap-2 cool-border">
+          Debug: Product Data
+          <Accordion.ItemIndicator class="group">
+            <ChevronDown class="h-5 w-5 transition group-data-[state=open]:rotate-180" />
+          </Accordion.ItemIndicator>
+        </Accordion.ItemTrigger>
+        <Accordion.ItemContent>
+          {#snippet element(attributes)}
+            {#if !attributes.hidden}
+              <div transition:slide class="bordered-accordion-content px-2">
+                <pre>{JSON.stringify({
+                  ...data.product,
+                  product: "shown below"
+                }, undefined, '\t')}</pre>
+              </div>
+            {/if}
+          {/snippet}
+        </Accordion.ItemContent>
+      </Accordion.Item>
+      <Accordion.Item value="debug-product-info">
+        <Accordion.ItemTrigger class="font-bold flex items-center justify-between gap-2 cool-border">
+          Debug: Product Info
+          <Accordion.ItemIndicator class="group">
+            <ChevronDown class="h-5 w-5 transition group-data-[state=open]:rotate-180" />
+          </Accordion.ItemIndicator>
+        </Accordion.ItemTrigger>
+        <Accordion.ItemContent>
+          {#snippet element(attributes)}
+            {#if !attributes.hidden}
+              <div transition:slide class="bordered-accordion-content px-2">
+                <pre>{JSON.stringify(productInfo, undefined, '\t')}</pre>
+              </div>
+            {/if}
+          {/snippet}
+        </Accordion.ItemContent>
+      </Accordion.Item>
+      <Accordion.Item value="debug-similar-products">
+        <Accordion.ItemTrigger class="font-bold flex items-center justify-between gap-2 cool-border">
+          Debug: Similar Products
+          <Accordion.ItemIndicator class="group">
+            <ChevronDown class="h-5 w-5 transition group-data-[state=open]:rotate-180" />
+          </Accordion.ItemIndicator>
+        </Accordion.ItemTrigger>
+        <Accordion.ItemContent>
+          {#snippet element(attributes)}
+            {#if !attributes.hidden}
+              <div transition:slide class="bordered-accordion-content px-2">
+                {#await data.similarProducts}
+                  ...
+                {:then similar}
+                  <pre>{JSON.stringify(similar, undefined, '\t')}</pre>
+                {/await}
+              </div>
+            {/if}
+          {/snippet}
+        </Accordion.ItemContent>
+      </Accordion.Item>
+    </Accordion>
   {/if}
 </div>
 
