@@ -22,7 +22,7 @@
 
   let loadTo = $state(0);
 
-  if(dev) {
+  if(dev && changeHistory !== null) {
     $effect.pre(() => {
       let occurrences: {[key: string]: number} = {};
       for(let change of changeHistory) {
