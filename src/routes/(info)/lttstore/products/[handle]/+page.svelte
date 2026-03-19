@@ -245,264 +245,270 @@
   <div class="max-w-3xl my-4">
     <Accordion class="mx-4" collapsible>
       <Accordion.Item value="metadata">
-        <Accordion.ItemTrigger class="font-bold flex items-center justify-between gap-2">
+        <Accordion.ItemTrigger class="font-bold flex items-center justify-between gap-2 cool-border">
           Product Metadata
           <Accordion.ItemIndicator class="group">
             <ChevronDown class="h-5 w-5 transition group-data-[state=open]:rotate-180" />
           </Accordion.ItemIndicator>
         </Accordion.ItemTrigger>
         <Accordion.ItemContent>
-          <h2>Whenplane Metadata</h2>
-          <table class="padded-table">
-            <thead></thead>
-            <tbody>
-            <tr>
-              <td>Last Metadata update</td>
-              <td><DateStamp epochSeconds={(data.product.metadataUpdate && data.product.metadataUpdate > 0 ? data.product.metadataUpdate : data.product.stockChecked) / 1e3}/></td>
-            </tr>
-              <tr>
-                <td>Last Stock Check</td>
-                <td>
-                  {#if data.product.stockChecked}
-                    <DateStamp epochSeconds={data.product.stockChecked / 1e3}/>
-                  {:else}
-                    <span class="opacity-70">N/A</span>
-                  {/if}
-                </td>
-              </tr>
-              <tr>
-                <td>Last Restock Detected</td>
-                <td>
-                  {#if data.product.lastRestock > 0}
-                    <DateStamp epochSeconds={data.product.lastRestock / 1e3}/>
-                  {:else}
-                    <span class="opacity-70">[none]</span>
-                  {/if}
-                </td>
-              </tr>
-              <tr>
-                <td>Average Purchases Per Hour</td>
-                <td>
-                  {#if data.product.purchasesPerHour >= 0}
-                    {data.product.purchasesPerHour}
-                  {:else}
-                    <span class="opacity-70">N/A</span>
-                  {/if}
-                </td>
-              </tr>
-              <tr>
-                <td>Average Purchases Per Day</td>
-                <td>
-                  {#if data.product.purchasesPerDay >= 0}
-                    {data.product.purchasesPerDay}
-                  {:else}
-                    <span class="opacity-70">N/A</span>
-                  {/if}
-                </td>
-              </tr>
-              <tr>
-                <td>Regular Price</td>
-                <td><Price usd={data.product.regularPrice/100}/></td>
-              </tr>
-              <tr>
-                <td>Current Price</td>
-                <td><Price usd={data.product.currentPrice/100}/></td>
-              </tr>
-              <tr>
-                <td>First Seen</td>
-                <td><DateStamp epochSeconds={data.product.firstSeen / 1e3}/></td>
-              </tr>
-              <tr>
-                <td>On lttstore?</td>
-                <td>{data.product.available ? "yes" : "no"}</td>
-              </tr>
-            </tbody>
-          </table>
-          <br>
-          <h2>LTTStore Metadata</h2>
-          <table class="padded-table">
-            <thead></thead>
-            <tbody>
-              <tr>
-                <td>ID</td>
-                <td>{data.product.id}</td>
-              </tr>
-              <tr>
-                <td>Title</td>
-                <td>{data.product.title}</td>
-              </tr>
-              <tr>
-                <td>Handle</td>
-                <td>{data.product.handle}</td>
-              </tr>
-              <tr>
-                <td>Creation Date</td>
-                <td><DateStamp epochSeconds={new Date(productInfo.created_at).getTime() / 1e3}/></td>
-              </tr>
-              <tr>
-                <td class="pr-8">Publication Date</td>
-                <td><DateStamp epochSeconds={new Date(productInfo.published_at).getTime() / 1e3}/></td>
-              </tr>
-              <tr>
-                <td>Vendor</td>
-                <td>{productInfo.vendor}</td>
-              </tr>
-              <tr>
-                <td>Type</td>
-                <td>{productInfo.type}</td>
-              </tr>
-              <tr>
-                <td class="align-top">Tags</td>
-                <td>
-                  {#if productInfo.tags}
-                    <ul>
-                      {#each productInfo.tags as tag}
-                        <li>{tag}</li>
-                      {:else}
-                        <span class="opacity-70">[none]</span>
-                      {/each}
-                    </ul>
-                  {:else}
-                    <span class="opacity-70">[none]</span>
-                  {/if}
-                </td>
-              </tr>
-              <tr>
-                <td>Price</td>
-                <td><Price usd={productInfo.price/100}/></td>
-              </tr>
-              <tr>
-                <td>Compare Price</td>
-                <td>
-                  {#if productInfo.compare_at_price}
-                    <Price usd={productInfo.compare_at_price/100}/>
-                  {:else}
-                    <span class="opacity-70">[none]</span>
-                  {/if}
-                </td>
-              </tr>
-              <tr>
-                <td>In stock?</td>
-                <td>{productInfo.available}</td>
-              </tr>
-              <tr>
-                <td class="align-top">Options</td>
-                <td>
-                  <ul>
-                    {#each productInfo.options as option}
-                      <li>
-                        {option.name}
-                        <ul class="list-[circle]!">
-                          {#each option.values as value}
-                            <li>{value}</li>
-                          {/each}
-                        </ul>
-                      </li>
-                    {:else}
-                      <span class="opacity-70">[none]</span>
-                    {/each}
-                  </ul>
-                </td>
-              </tr>
-              <tr>
-                <td class="align-top">Variants ({productInfo.variants.length})</td>
-                <td>
-                  {#each productInfo.variants as variant}
-                    <li>
-                      {variant.title}
-                      <table class="ml-3 padded-table">
-                        <thead></thead>
-                        <tbody>
-                          <tr>
-                            <td>Title</td>
-                            <td>{variant.title}</td>
-                          </tr>
-                          <tr>
-                            <td>Name</td>
-                            <td>{variant.name}</td>
-                          </tr>
-                          <tr>
-                            <td>SKU</td>
-                            <td>{variant.sku}</td>
-                          </tr>
-                          <tr>
-                            <td>In stock?</td>
-                            <td>{variant.available}</td>
-                          </tr>
-                          <tr>
-                            <td class="align-top">Options</td>
-                            <td>
+          {#snippet element(attributes)}
+            {#if !attributes.hidden}
+              <div class="bordered-accordion-content px-2" transition:slide>
+                <h2>Whenplane Metadata</h2>
+                <table class="padded-table">
+                  <thead></thead>
+                  <tbody>
+                  <tr>
+                    <td>Last Metadata update</td>
+                    <td><DateStamp epochSeconds={(data.product.metadataUpdate && data.product.metadataUpdate > 0 ? data.product.metadataUpdate : data.product.stockChecked) / 1e3}/></td>
+                  </tr>
+                    <tr>
+                      <td>Last Stock Check</td>
+                      <td>
+                        {#if data.product.stockChecked}
+                          <DateStamp epochSeconds={data.product.stockChecked / 1e3}/>
+                        {:else}
+                          <span class="opacity-70">N/A</span>
+                        {/if}
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>Last Restock Detected</td>
+                      <td>
+                        {#if data.product.lastRestock > 0}
+                          <DateStamp epochSeconds={data.product.lastRestock / 1e3}/>
+                        {:else}
+                          <span class="opacity-70">[none]</span>
+                        {/if}
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>Average Purchases Per Hour</td>
+                      <td>
+                        {#if data.product.purchasesPerHour >= 0}
+                          {data.product.purchasesPerHour}
+                        {:else}
+                          <span class="opacity-70">N/A</span>
+                        {/if}
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>Average Purchases Per Day</td>
+                      <td>
+                        {#if data.product.purchasesPerDay >= 0}
+                          {data.product.purchasesPerDay}
+                        {:else}
+                          <span class="opacity-70">N/A</span>
+                        {/if}
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>Regular Price</td>
+                      <td><Price usd={data.product.regularPrice/100}/></td>
+                    </tr>
+                    <tr>
+                      <td>Current Price</td>
+                      <td><Price usd={data.product.currentPrice/100}/></td>
+                    </tr>
+                    <tr>
+                      <td>First Seen</td>
+                      <td><DateStamp epochSeconds={data.product.firstSeen / 1e3}/></td>
+                    </tr>
+                    <tr>
+                      <td>On lttstore?</td>
+                      <td>{data.product.available ? "yes" : "no"}</td>
+                    </tr>
+                  </tbody>
+                </table>
+                <br>
+                <h2>LTTStore Metadata</h2>
+                <table class="padded-table">
+                  <thead></thead>
+                  <tbody>
+                    <tr>
+                      <td>ID</td>
+                      <td>{data.product.id}</td>
+                    </tr>
+                    <tr>
+                      <td>Title</td>
+                      <td>{data.product.title}</td>
+                    </tr>
+                    <tr>
+                      <td>Handle</td>
+                      <td>{data.product.handle}</td>
+                    </tr>
+                    <tr>
+                      <td>Creation Date</td>
+                      <td><DateStamp epochSeconds={new Date(productInfo.created_at).getTime() / 1e3}/></td>
+                    </tr>
+                    <tr>
+                      <td class="pr-8">Publication Date</td>
+                      <td><DateStamp epochSeconds={new Date(productInfo.published_at).getTime() / 1e3}/></td>
+                    </tr>
+                    <tr>
+                      <td>Vendor</td>
+                      <td>{productInfo.vendor}</td>
+                    </tr>
+                    <tr>
+                      <td>Type</td>
+                      <td>{productInfo.type}</td>
+                    </tr>
+                    <tr>
+                      <td class="align-top">Tags</td>
+                      <td>
+                        {#if productInfo.tags}
+                          <ul>
+                            {#each productInfo.tags as tag}
+                              <li>{tag}</li>
+                            {:else}
+                              <span class="opacity-70">[none]</span>
+                            {/each}
+                          </ul>
+                        {:else}
+                          <span class="opacity-70">[none]</span>
+                        {/if}
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>Price</td>
+                      <td><Price usd={productInfo.price/100}/></td>
+                    </tr>
+                    <tr>
+                      <td>Compare Price</td>
+                      <td>
+                        {#if productInfo.compare_at_price}
+                          <Price usd={productInfo.compare_at_price/100}/>
+                        {:else}
+                          <span class="opacity-70">[none]</span>
+                        {/if}
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>In stock?</td>
+                      <td>{productInfo.available}</td>
+                    </tr>
+                    <tr>
+                      <td class="align-top">Options</td>
+                      <td>
+                        <ul>
+                          {#each productInfo.options as option}
+                            <li>
+                              {option.name}
                               <ul class="list-[circle]!">
-                                {#each variant.options as value}
+                                {#each option.values as value}
                                   <li>{value}</li>
                                 {/each}
                               </ul>
-                            </td>
-                          </tr>
-                          <tr>
-                            <td>Price</td>
-                            <td><Price usd={variant.price/100}/></td>
-                          </tr>
-                          <tr>
-                            <td>Compare at price</td>
-                            <td>
-                              {#if variant.compare_at_price}
-                                <Price usd={(variant.compare_at_price)/100}/>
-                              {:else}
-                                <span class="opacity-70">[none]</span>
-                              {/if}
-                            </td>
-                          </tr>
-                          <tr>
-                            <td>Requires Shipping?</td>
-                            <td>{variant.requires_shipping}</td>
-                          </tr>
-                          <tr>
-                            <td>Taxable?</td>
-                            <td>{variant.taxable}</td>
-                          </tr>
-                          <tr>
-                            <td>Weight (g)</td>
-                            <td>{variant.weight}</td>
-                          </tr>
-                          <tr>
-                            <td>Inventory Management</td>
-                            <td>{variant.inventory_management}</td>
-                          </tr>
-                          {#if variant.barcode}
-                            <tr>
-                              <td>Barcode</td>
-                              <td>{variant.barcode}</td>
-                            </tr>
-                          {/if}
-                          <tr>
-                            <td>Minimum Quantity</td>
-                            <td>{variant.quantity_rule.min}</td>
-                          </tr>
-                          <tr>
-                            <td>Maximum Quantity</td>
-                            <td>
-                              {#if variant.quantity_rule.max !== null}
-                                {variant.quantity_rule.min}
-                              {:else}
-                                <span class="opacity-70">[none]</span>
-                              {/if}
-                            </td>
-                          </tr>
-                          <tr>
-                            <td>Quantity Increment</td>
-                            <td>{variant.quantity_rule.increment}</td>
-                          </tr>
-                        </tbody>
-                      </table>
-                    </li>
-                  {:else}
-                    <span class="opacity-70">[none]</span>
-                  {/each}
-                </td>
-              </tr>
-            </tbody>
-          </table>
+                            </li>
+                          {:else}
+                            <span class="opacity-70">[none]</span>
+                          {/each}
+                        </ul>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td class="align-top">Variants ({productInfo.variants.length})</td>
+                      <td>
+                        {#each productInfo.variants as variant}
+                          <li>
+                            {variant.title}
+                            <table class="ml-3 padded-table">
+                              <thead></thead>
+                              <tbody>
+                                <tr>
+                                  <td>Title</td>
+                                  <td>{variant.title}</td>
+                                </tr>
+                                <tr>
+                                  <td>Name</td>
+                                  <td>{variant.name}</td>
+                                </tr>
+                                <tr>
+                                  <td>SKU</td>
+                                  <td>{variant.sku}</td>
+                                </tr>
+                                <tr>
+                                  <td>In stock?</td>
+                                  <td>{variant.available}</td>
+                                </tr>
+                                <tr>
+                                  <td class="align-top">Options</td>
+                                  <td>
+                                    <ul class="list-[circle]!">
+                                      {#each variant.options as value}
+                                        <li>{value}</li>
+                                      {/each}
+                                    </ul>
+                                  </td>
+                                </tr>
+                                <tr>
+                                  <td>Price</td>
+                                  <td><Price usd={variant.price/100}/></td>
+                                </tr>
+                                <tr>
+                                  <td>Compare at price</td>
+                                  <td>
+                                    {#if variant.compare_at_price}
+                                      <Price usd={(variant.compare_at_price)/100}/>
+                                    {:else}
+                                      <span class="opacity-70">[none]</span>
+                                    {/if}
+                                  </td>
+                                </tr>
+                                <tr>
+                                  <td>Requires Shipping?</td>
+                                  <td>{variant.requires_shipping}</td>
+                                </tr>
+                                <tr>
+                                  <td>Taxable?</td>
+                                  <td>{variant.taxable}</td>
+                                </tr>
+                                <tr>
+                                  <td>Weight (g)</td>
+                                  <td>{variant.weight}</td>
+                                </tr>
+                                <tr>
+                                  <td>Inventory Management</td>
+                                  <td>{variant.inventory_management}</td>
+                                </tr>
+                                {#if variant.barcode}
+                                  <tr>
+                                    <td>Barcode</td>
+                                    <td>{variant.barcode}</td>
+                                  </tr>
+                                {/if}
+                                <tr>
+                                  <td>Minimum Quantity</td>
+                                  <td>{variant.quantity_rule.min}</td>
+                                </tr>
+                                <tr>
+                                  <td>Maximum Quantity</td>
+                                  <td>
+                                    {#if variant.quantity_rule.max !== null}
+                                      {variant.quantity_rule.min}
+                                    {:else}
+                                      <span class="opacity-70">[none]</span>
+                                    {/if}
+                                  </td>
+                                </tr>
+                                <tr>
+                                  <td>Quantity Increment</td>
+                                  <td>{variant.quantity_rule.increment}</td>
+                                </tr>
+                              </tbody>
+                            </table>
+                          </li>
+                        {:else}
+                          <span class="opacity-70">[none]</span>
+                        {/each}
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            {/if}
+          {/snippet}
         </Accordion.ItemContent>
       </Accordion.Item>
     </Accordion>
@@ -512,7 +518,7 @@
   <div class="max-w-4xl my-4">
     <Accordion class="mx-4" collapsible defaultValue={["similar"]}>
       <Accordion.Item value="similar">
-        <Accordion.ItemTrigger class="font-bold flex items-center justify-between gap-2">
+        <Accordion.ItemTrigger class="font-bold flex items-center justify-between gap-2 cool-border">
           <span>
             Similar Products
             &nbsp;
@@ -536,18 +542,24 @@
           </Accordion.ItemIndicator>
         </Accordion.ItemTrigger>
         <Accordion.ItemContent>
-          {#key data}
-            <div class="min-h-[298px] overflow-y-visible overflow-x-auto pr-64 edge-fade" style="text-wrap: nowrap;">
-              {#await data.similarProducts}
-                ...
-              {:then similarProducts}
-                {#each similarProducts?.similar as similar (similar.id)}
-                  {@const product = similar.metadata.product}
-                  <LTTProductCard {product} available={similar.metadata.available} />
-                {/each}
-              {/await}
-            </div>
-          {/key}
+          {#snippet element(attributes)}
+            {#if !attributes.hidden}
+              <div class="bordered-accordion-content px-2" transition:slide>
+                {#key data}
+                  <div class="min-h-[298px] overflow-y-visible overflow-x-auto pr-64 edge-fade" style="text-wrap: nowrap;">
+                    {#await data.similarProducts}
+                      ...
+                    {:then similarProducts}
+                      {#each similarProducts?.similar as similar (similar.id)}
+                        {@const product = similar.metadata.product}
+                        <LTTProductCard {product} available={similar.metadata.available} />
+                      {/each}
+                    {/await}
+                  </div>
+                {/key}
+              </div>
+            {/if}
+          {/snippet}
         </Accordion.ItemContent>
       </Accordion.Item>
     </Accordion>
