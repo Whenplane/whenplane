@@ -740,6 +740,7 @@
             <div transition:slide class="bordered-accordion-content px-2">
               <h2 id="change-history">Change history</h2>
               {#await data.changeHistory}
+                <ProductChangeHistory changeHistory={null} product={data.product}/>
               {:then changeHistory}
                 <ProductChangeHistory {changeHistory} product={data.product}/>
               {/await}

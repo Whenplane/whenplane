@@ -7,6 +7,7 @@
   import { onDestroy, onMount } from "svelte";
   import { dev } from "$app/environment";
   import LazyLoad from "@dimfeld/svelte-lazyload";
+  import { countTo } from "$lib/utils.ts";
 
   let {
     changeHistory = typed<{
@@ -48,16 +49,18 @@
   // limits the number of changes loaded at once to reduce cpu usage spike
   function startLoading() {
     if(loadInterval) return;
-    console.debug("Starting loading of diffs");
-    loadTo++;
-    loadInterval = setInterval(() => {
-      if(loadTo < changeHistory.length - 1) {
-        loadTo++;
-      } else {
-        clearInterval(loadInterval);
-        loadInterval = undefined;
-      }
-    }, 75);
+    if(changeHistory !== null) {
+      console.debug("Starting loading of diffs");
+      loadTo++;
+      loadInterval = setInterval(() => {
+        if(loadTo < changeHistory.length - 1) {
+          loadTo++;
+        } else {
+          clearInterval(loadInterval);
+          loadInterval = undefined;
+        }
+      }, 75);
+    }
   }
 
   onDestroy(() => {
@@ -79,21 +82,33 @@
     </tr>
     </thead>
     <tbody>
-    {#each changeHistory as change, i (change.timestamp + change.field)}
-      {@const BeforeComponent = getDiffComponent(change.field)}
-      {@const AfterComponent = getDiffComponent(change.field)}
-      <tr class="align-top">
-        <td>{getFieldName(change.field)}</td>
-        <td><DateStamp epochSeconds={change.timestamp/1e3}/></td>
-        {#if i <= loadTo}
-          <td><BeforeComponent before={change.old} after={change.new} displaying="before"/></td>
-          <td><AfterComponent before={change.old} after={change.new} displaying="after"/></td>
-        {:else}
-          <td><div class="placeholder animate-pulse"></div></td>
-          <td><div class="placeholder animate-pulse"></div></td>
-        {/if}
-      </tr>
-    {/each}
+      {#if changeHistory !== null}
+        {#each changeHistory as change, i (change.timestamp + change.field)}
+          {@const BeforeComponent = getDiffComponent(change.field)}
+          {@const AfterComponent = getDiffComponent(change.field)}
+          <tr class="align-top">
+            <td>{getFieldName(change.field)}</td>
+            <td><DateStamp epochSeconds={change.timestamp/1e3}/></td>
+            {#if i <= loadTo}
+              <td><BeforeComponent before={change.old} after={change.new} displaying="before"/></td>
+              <td><AfterComponent before={change.old} after={change.new} displaying="after"/></td>
+            {:else}
+              <td><div class="placeholder animate-pulse"></div></td>
+              <td><div class="placeholder animate-pulse"></div></td>
+            {/if}
+          </tr>
+        {/each}
+      {:else}
+        {#each countTo(10) as _}
+          <tr class="align-top">
+            {#each ["field", "timestamp", "old", "new"] as field}
+              <td>
+                <div class="placeholder animate-pulse"></div>
+              </td>
+            {/each}
+          </tr>
+        {/each}
+      {/if}
     </tbody>
     {#if product.firstSeen < 1727147700624}
       <tfoot>
