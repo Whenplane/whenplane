@@ -88,10 +88,7 @@
 				autoSelected: 'zoom'
 			},
 			animations: {
-				enabled: false,
-				dynamicAnimation: {
-					enabled: true
-				}
+				enabled: false
 			}
 		},
 		series: {},
