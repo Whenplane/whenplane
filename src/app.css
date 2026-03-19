@@ -58,6 +58,17 @@ h4 {
     @apply h5;
 }
 
+@utility /* this has to have @utility so that it can be used in @apply */
+cool-border {
+    border: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+.bordered-accordion-content {
+    @apply cool-border mx-1.5 -mt-2 py-2;
+    border-top: none;
+    border-radius: 0 0 10px 10px;
+}
+
 a:not(.btn) {
     @apply anchor;
 }

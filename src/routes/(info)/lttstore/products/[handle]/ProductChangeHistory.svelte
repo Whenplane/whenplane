@@ -30,7 +30,15 @@
       }
       for (let [id, occ] of Object.entries(occurrences)) {
         if(occ > 1) {
-          console.warn(`${id} occurred ${occ} times!`)
+          console.warn(`${id} occurred ${occ} times!`);
+          const last = changeHistory.findLast(c => c.timestamp + c.field === id);
+          if(last) {
+            const lastIndex = changeHistory.lastIndexOf(last);
+            changeHistory = changeHistory.filter((c, i) => {
+              if(c.timestamp + c.field !== id) return true;
+              return i !== lastIndex;
+            });
+          }
         }
       }
     })

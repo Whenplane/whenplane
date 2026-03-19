@@ -20,8 +20,6 @@
   import ProductUpdateRequestButton from "$lib/lttstore/product/ProductUpdateRequestButton.svelte";
   import ExclamationTriangle from "svelte-bootstrap-icons/lib/ExclamationTriangle.svelte";
   import Tags from "svelte-bootstrap-icons/lib/Tags.svelte";
-  import { getFieldName } from "$lib/lttstore/field_names.ts";
-  import { getDiffComponent } from "$lib/lttstore/field_components.ts";
   import ChevronDown from "svelte-bootstrap-icons/lib/ChevronDown.svelte";
   import ProductMoveRateGraph from "$lib/lttstore/product/ProductMoveRateGraph.svelte";
   import LTTProductCard from "$lib/lttstore/LTTProductCard.svelte";
@@ -29,6 +27,7 @@
   import { sum } from "$lib/lttstore";
   import ProductChangeHistory from "./ProductChangeHistory.svelte";
   import LazyLoad from "@dimfeld/svelte-lazyload";
+  import {slide} from "svelte/transition";
 
   let { data } = $props();
 
@@ -194,19 +193,23 @@
   {/if}
 
   {#if productInfo.description}
-    <div class="max-w-xl my-4">
+    <div class="max-w-xl mt-4 mb-2.5">
       <Accordion class="mx-4" collapsible>
         <Accordion.Item value="description">
-          <Accordion.ItemTrigger class="font-bold flex items-center justify-between gap-2">
+          <Accordion.ItemTrigger class="font-bold flex items-center justify-between gap-2 cool-border">
             Item Description
             <Accordion.ItemIndicator class="group">
               <ChevronDown class="h-5 w-5 transition group-data-[state=open]:rotate-180" />
             </Accordion.ItemIndicator>
           </Accordion.ItemTrigger>
           <Accordion.ItemContent>
-            <div class="item-description">
-              {@html sanitizeHtml(productInfo.description, newsSanitizeSettings)}
-            </div>
+            {#snippet element(attributes)}
+              {#if !attributes.hidden}
+                <div class="bordered-accordion-content px-2 item-description" transition:slide>
+                  {@html sanitizeHtml(productInfo.description, newsSanitizeSettings)}
+                </div>
+              {/if}
+            {/snippet}
           </Accordion.ItemContent>
         </Accordion.Item>
       </Accordion>
@@ -214,19 +217,23 @@
   {/if}
   {#if data.product.productDetailModules}
     {#each productDetailModules as detailModule, i}
-      <div class="max-w-xl my-4">
+      <div class="max-w-xl my-2.5">
         <Accordion class="mx-4" collapsible>
           <Accordion.Item value="detail-{i}">
-            <Accordion.ItemTrigger class="font-bold flex items-center justify-between gap-2">
+            <Accordion.ItemTrigger class="font-bold flex items-center justify-between gap-2 cool-border">
               {detailModule.title}
               <Accordion.ItemIndicator class="group">
                 <ChevronDown class="h-5 w-5 transition group-data-[state=open]:rotate-180" />
               </Accordion.ItemIndicator>
             </Accordion.ItemTrigger>
             <Accordion.ItemContent>
-              <div class="item-description">
-                {@html sanitizeHtml(detailModule.content, newsSanitizeSettings)}
-              </div>
+              {#snippet element(attributes)}
+                {#if !attributes.hidden}
+                  <div class="bordered-accordion-content px-2 item-description" transition:slide>
+                    {@html sanitizeHtml(detailModule.content, newsSanitizeSettings)}
+                  </div>
+                {/if}
+              {/snippet}
             </Accordion.ItemContent>
           </Accordion.Item>
         </Accordion>
@@ -613,85 +620,94 @@
 
   <Accordion collapsible defaultValue={["stock-history"]}>
     <Accordion.Item value="stock-history">
-      <Accordion.ItemTrigger class="font-bold flex items-center justify-between gap-2">
+      <Accordion.ItemTrigger class="font-bold flex items-center justify-between gap-2 cool-border">
         Stock History
         <Accordion.ItemIndicator class="group">
           <ChevronDown class="h-5 w-5 transition group-data-[state=open]:rotate-180" />
         </Accordion.ItemIndicator>
       </Accordion.ItemTrigger>
       <Accordion.ItemContent>
-        <h2>Stock History</h2>
-        <!--<div class="limit mx-auto p-2 m-2 card preset-tonal-warning border border-warning-500">
-          Due to a <a href="https://changelog.shopify.com/posts/new-add-to-cart-limit">Shopify change</a>,
-          we are not longer able to see stock of most products if theyre above <span class="font-mono">40</span>.
-          <br>
-          Please <a href="/support">let me know</a> if you find a new way to check the stock.
-        </div>-->
-        We check the stock of products occasionally. Here is the history of those stock numbers.
-        <!-- stock started being recorded on 1718147742676 -->
-        <select class="select inline-block w-48 px-2 bg-surface-900" bind:value={historyDays}>
-          <option value="1">24 hours</option>
-          <option value="7">7 days</option>
-          <option value="30">30 days</option>
-          {#if Date.now() > 1720739742676}
-            <option value="90">3 months (90 days)</option>
-          {/if}
-          {#if Date.now() > 1725923742676}
-            <option value="180">6 months (180 days)</option>
-          {/if}
-          {#if Date.now() > 1733699742676}
-            <option value="365">1 year (365 days)</option>
-          {/if}
-          <option value="all">all-time</option>
-        </select>{#key data}
-        <ProductStockHistoryGraph stockHistory={data.stockHistory} productName={productInfo.title} productOptions={productInfo.options} {chartUpdateNumber}/>
-        <div class="min-h-[710px]">
-          <LazyLoad>
-            <ProductMoveRateGraph stockHistory={data.stockHistory} productName={productInfo.title} {chartUpdateNumber}/>
-          </LazyLoad>
-        </div>
-        {/key}<br>
-        {#if data.product.firstSeen < 1719248750000}
-          Note that stock started being recorded on June 11th, 2024, so data before that is not available.
-        {/if}
-        <br>{#if data.product.stockChecked > 1743807304846}
-        Note that stock data between April 3rd, 2025 and March 5th, 2026 is not available, because we were not able to check the stock during that time.
-      {/if}
-        <br>
-        <br>
-        {#if goneInHours > 0 && (currentStock?.total ?? -1) > 0 && (currentStock?.total ?? -1) <= 500000 && typeof data.product?.purchasesPerHour === "number" && data.product?.purchasesPerHour >= 0 && !(data.product?.purchasesPerHour === 0 && (currentStock?.total ?? -1) < 0)}
-          <h2>Time remaining until out of stock</h2>
-          If this product keeps selling at {Math.round(nonZeroPurchasesPerHour * 100)/100} units per hour, it could be gone in
-          {#if goneInHours < 48}
-            {#if goneInHours <= 1}
-              less than an hour
-            {:else}
-              {goneInHours.toFixed(2)} hours
-            {/if}
-          {:else}
-            {(goneInHours / 24).toFixed(2)} days
-          {/if}
-          <br>
-          <br>
-          {#each variantsGoneIn as variantGoneIn}
-            {@const goneInHours = variantGoneIn.goneIn}
-            {#if typeof variantGoneIn.salesPerHour === "number" && variantGoneIn.salesPerHour >= 0 && variantGoneIn.currentStock > 0}
-              If <b>{variantGoneIn.name}</b> keeps selling at {Math.round(variantGoneIn.salesPerHour * 100)/100} units per hour,
-              it could be gone in
-              {#if goneInHours < 48}
-                {#if goneInHours <= 1}
-                  less than an hour
-                {:else}
-                  {goneInHours.toFixed(2)} hours
+        {#snippet element(attributes)}
+          {#if !attributes.hidden}
+            <div transition:slide={{duration: 1e3}} class="bordered-accordion-content px-2">
+              <h2>Stock History</h2>
+              <!--<div class="limit mx-auto p-2 m-2 card preset-tonal-warning border border-warning-500">
+                Due to a <a href="https://changelog.shopify.com/posts/new-add-to-cart-limit">Shopify change</a>,
+                we are not longer able to see stock of most products if theyre above <span class="font-mono">40</span>.
+                <br>
+                Please <a href="/support">let me know</a> if you find a new way to check the stock.
+              </div>-->
+              We check the stock of products occasionally. Here is the history of those stock numbers.
+              <!-- stock started being recorded on 1718147742676 -->
+              <select class="select inline-block w-48 px-2 bg-surface-900" bind:value={historyDays}>
+                <option value="1">24 hours</option>
+                <option value="7">7 days</option>
+                <option value="30">30 days</option>
+                {#if Date.now() > 1720739742676}
+                  <option value="90">3 months (90 days)</option>
                 {/if}
-              {:else}
-                {(goneInHours / 24).toFixed(2)} days
+                {#if Date.now() > 1725923742676}
+                  <option value="180">6 months (180 days)</option>
+                {/if}
+                {#if Date.now() > 1733699742676}
+                  <option value="365">1 year (365 days)</option>
+                {/if}
+                <option value="all">all-time</option>
+              </select>
+              {#key data}
+                <ProductStockHistoryGraph stockHistory={data.stockHistory} productName={productInfo.title} productOptions={productInfo.options} {chartUpdateNumber}/>
+                <div class="min-h-[710px]">
+                  <LazyLoad>
+                    <ProductMoveRateGraph stockHistory={data.stockHistory} productName={productInfo.title} {chartUpdateNumber}/>
+                  </LazyLoad>
+                </div>
+              {/key}
+              <br>
+              {#if data.product.firstSeen < 1719248750000}
+                Note that stock started being recorded on June 11th, 2024, so data before that is not available.
               {/if}
               <br>
-            {/if}
-          {/each}
-          <br>
-        {/if}
+              {#if data.product.stockChecked > 1743807304846}
+                Note that stock data between April 3rd, 2025 and March 5th, 2026 is not available, because we were not able to check the stock during that time.
+              {/if}
+              <br>
+              <br>
+              {#if goneInHours > 0 && (currentStock?.total ?? -1) > 0 && (currentStock?.total ?? -1) <= 500000 && typeof data.product?.purchasesPerHour === "number" && data.product?.purchasesPerHour >= 0 && !(data.product?.purchasesPerHour === 0 && (currentStock?.total ?? -1) < 0)}
+                <h2>Time remaining until out of stock</h2>
+                If this product keeps selling at {Math.round(nonZeroPurchasesPerHour * 100)/100} units per hour, it could be gone in
+                {#if goneInHours < 48}
+                  {#if goneInHours <= 1}
+                    less than an hour
+                  {:else}
+                    {goneInHours.toFixed(2)} hours
+                  {/if}
+                {:else}
+                  {(goneInHours / 24).toFixed(2)} days
+                {/if}
+                <br>
+                <br>
+                {#each variantsGoneIn as variantGoneIn}
+                  {@const goneInHours = variantGoneIn.goneIn}
+                  {#if typeof variantGoneIn.salesPerHour === "number" && variantGoneIn.salesPerHour >= 0 && variantGoneIn.currentStock > 0}
+                    If <b>{variantGoneIn.name}</b> keeps selling at {Math.round(variantGoneIn.salesPerHour * 100)/100} units per hour,
+                    it could be gone in
+                    {#if goneInHours < 48}
+                      {#if goneInHours <= 1}
+                        less than an hour
+                      {:else}
+                        {goneInHours.toFixed(2)} hours
+                      {/if}
+                    {:else}
+                      {(goneInHours / 24).toFixed(2)} days
+                    {/if}
+                    <br>
+                  {/if}
+                {/each}
+                <br>
+              {/if}
+            </div>
+          {/if}
+        {/snippet}
       </Accordion.ItemContent>
     </Accordion.Item>
   </Accordion>
