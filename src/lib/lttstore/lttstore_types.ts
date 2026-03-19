@@ -170,8 +170,17 @@ export type ProductOptionCombination = {
 }
 
 export type StockCounts = {
-  [name: string]: number
+  [name: string]: number | null
 } & {total?: number}
+
+export type CollectionInventory = {
+  totalPages: number,
+  variants: CollectionInventoryVariant[]
+}
+export type CollectionInventoryVariant = {
+  id: string,
+  qty: number | any
+}
 
 export type CartAddErrorResponse = {
   status: number,
@@ -197,7 +206,8 @@ export type ProductsTableRow = {
   available: boolean,
   backorderAlerts: string,
   productDetailModules: string,
-  productDiscount: string
+  productDiscount: string,
+  differences: number
 }
 export type ParsedProductsTableRow = {
   handle: string,

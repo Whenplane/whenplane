@@ -99,9 +99,9 @@
           </tr>
         {/each}
       {:else}
-        {#each countTo(10) as _}
+        {#each countTo(product.differences ?? 10) as _}
           <tr class="align-top">
-            {#each ["field", "timestamp", "old", "new"] as field}
+            {#each ["field", "timestamp", "old", "new"] as _}
               <td>
                 <div class="placeholder animate-pulse"></div>
               </td>
