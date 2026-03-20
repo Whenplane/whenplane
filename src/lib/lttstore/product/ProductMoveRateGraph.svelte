@@ -65,6 +65,7 @@
 				}))
 		]
 	});
+	$effect(() => console.log(data))
 
 	let width = $derived(wrapperDiv?.clientWidth ?? 1490);
 	let height = $derived(width / 2);
@@ -90,16 +91,17 @@
 				label: "Time",
 				value: timeFormat,
 			},
-			...Object.keys(someStock).map((k, i) => ({
-				show: true,
-				gaps: stockGaps,
-				label: k,
-				value: (_, rawValue: number | null) => rawValue === null ? "" : commas(Math.round(rawValue))! + " sph",
-				stroke: stockColors[i % stockColors.length],
-				points: {
-					show: false
-				}
-			}) satisfies uPlot.Series)
+			...(onlyTotal ? ["total"] : Object.keys(someStock))
+				.map((k, i) => ({
+					show: true,
+					gaps: stockGaps,
+					label: k,
+					value: (_, rawValue: number | null) => rawValue === null ? "" : commas(Math.round(rawValue))! + " sph",
+					stroke: stockColors[i % stockColors.length],
+					points: {
+						show: false
+					}
+				}) satisfies uPlot.Series)
 		],
 		axes: [
 			{
