@@ -16,6 +16,8 @@
 		chartUpdateNumber = typed<number>(1)
 	} = $props();
 
+	let wrapperDiv = $state<HTMLDivElement>();
+
 	let stockHistory: ParsedStockHistoryTableRow[] = $derived((stockHistoryRaw as StockHistoryTableRow[])
 		.map(h => ({
 			...h,
@@ -64,12 +66,14 @@
 		]
 	});
 
-
+	const width = $derived(wrapperDiv?.clientWidth ?? 1490)
+	const height = $derived(width / 2)
 	const options: uPlot.Options = $derived({
 		title: productName ? 'Move Rate History - ' + productName : 'Move Rate History',
 		id: productName + "-move-rate-" + chartUpdateNumber,
-		height: browser ? document.documentElement.clientHeight / 1.5 : 740,
-		width: browser ? document.documentElement.clientWidth / 1.3 : 1490,
+		width,
+		height,
+		class: "max-w-full",
 		series: [
 			{
 				label: "Time",
@@ -178,7 +182,7 @@
 	});
 </script>
 
-<div style="min-height: 69vh">
+<div style="min-height: 69vh w-full" bind:this={wrapperDiv}>
 	{#if mounted}
 		<div in:fade>
 			<UplotSvelte {data} {options} onCreate={() => {}} onDelete={() => {}}/>
