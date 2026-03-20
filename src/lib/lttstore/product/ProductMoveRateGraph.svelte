@@ -66,8 +66,19 @@
 		]
 	});
 
-	const width = $derived(wrapperDiv?.clientWidth ?? 1490)
-	const height = $derived(width / 2)
+	let width = $derived(wrapperDiv?.clientWidth ?? 1490);
+	let height = $derived(width / 2);
+
+	const resizeObserver = new ResizeObserver(() => {
+		const newWidth = wrapperDiv?.clientWidth ?? 1490;
+		setTimeout(() => {
+			if(newWidth === (wrapperDiv?.clientWidth ?? 1490)) {
+				width = newWidth;
+			}
+		}, 100);
+	});
+	$effect(() => wrapperDiv && resizeObserver.observe(wrapperDiv));
+
 	const options: uPlot.Options = $derived({
 		title: productName ? 'Move Rate History - ' + productName : 'Move Rate History',
 		id: productName + "-move-rate-" + chartUpdateNumber,
@@ -182,7 +193,7 @@
 	});
 </script>
 
-<div style="min-height: 69vh w-full" bind:this={wrapperDiv}>
+<div style="min-height: 69vh w-full max-w-full" bind:this={wrapperDiv}>
 	{#if mounted}
 		<div in:fade>
 			<UplotSvelte {data} {options} onCreate={() => {}} onDelete={() => {}}/>
