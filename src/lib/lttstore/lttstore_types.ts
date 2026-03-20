@@ -242,6 +242,12 @@ export type StockHistoryTableRow = {
   timestamp: number,
   stock: string
 }
+export type ParsedStockHistoryTableRow = {
+  handle: string,
+  id: number,
+  timestamp: number,
+  stock: StockCounts
+}
 
 export type BackorderAlerts = {
   /** The key is the variant id, the value is the message */

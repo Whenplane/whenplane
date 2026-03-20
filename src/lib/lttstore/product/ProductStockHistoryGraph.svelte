@@ -31,7 +31,7 @@
 
   export const timeFormat: uPlot.Series.Value = ((_, val: number | null) =>  {
     if(val === null) return "";
-    const date = new Date(val);
+    const date = new Date(val*1e3);
     return (
       date.toLocaleDateString(undefined, { dateStyle: 'medium' }) +
       ' ' +

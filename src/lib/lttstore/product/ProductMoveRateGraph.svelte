@@ -3,8 +3,7 @@
 	import { onMount } from 'svelte';
 	import { commas } from '$lib/utils.ts';
 	import { fade } from 'svelte/transition';
-	import { getTimePreference } from '$lib/prefUtils.ts';
-	import type { StockCounts } from '$lib/lttstore/lttstore_types.ts';
+	import type { ParsedStockHistoryTableRow, StockCounts, StockHistoryTableRow } from "$lib/lttstore/lttstore_types.ts";
 	import { typed } from '$lib';
 	import UplotSvelte from 'uplot-svelte';
 	import uPlot from "uplot";
@@ -13,23 +12,11 @@
 
 	let {
 		productName = typed<string | undefined>(),
-		stockHistory: stockHistoryRaw = typed<
-			{
-				handle: string;
-				id: number;
-				timestamp: number;
-				stock: string;
-			}[]
-		>(),
+		stockHistory: stockHistoryRaw = typed<StockHistoryTableRow[]>(),
 		chartUpdateNumber = typed<number>(1)
 	} = $props();
 
-	let stockHistory: {
-		handle: string;
-		id: number;
-		timestamp: number;
-		stock: StockCounts;
-	}[] = $derived(stockHistoryRaw
+	let stockHistory: ParsedStockHistoryTableRow[] = $derived((stockHistoryRaw as StockHistoryTableRow[])
 		.map(h => ({
 			...h,
 			stock: JSON.parse(h.stock)
@@ -86,7 +73,7 @@
 		series: [
 			{
 				label: "Time",
-				// value: timeFormat,
+				value: timeFormat,
 			},
 			...Object.keys(someStock).map((k, i) => ({
 				show: true,
