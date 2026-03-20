@@ -68,6 +68,12 @@ importers:
       typesense:
         specifier: ^1.8.2
         version: 1.8.2(@babel/runtime@7.25.9)
+      uplot:
+        specifier: ^1.6.32
+        version: 1.6.32
+      uplot-svelte:
+        specifier: ^1.2.4
+        version: 1.2.4(svelte@5.53.11)(uplot@1.6.32)
     devDependencies:
       '@block65/webcrypto-web-push':
         specifier: ^0.3.2
@@ -2901,6 +2907,15 @@ packages:
     resolution: {integrity: sha512-raqeBD6NQK4SkWhQzeYKd1KmIG6dllBOTt55Rmkt4HtI9mwdWtJljnrXjAFUBLTSN67HWrOIZ3EPF4kjUw80Bg==}
     engines: {node: '>=14.0'}
 
+  uplot-svelte@1.2.4:
+    resolution: {integrity: sha512-Xd3ftybBbcWA/koZqIV8cE30DhkjYLyVH+M8qKecB0nB+oG+edrb8s2iBSWgGzYzS1/Zi1ZEvPgIIBbkPgk7FA==}
+    peerDependencies:
+      svelte: ^4.0.0
+      uplot: ^1.6.32
+
+  uplot@1.6.32:
+    resolution: {integrity: sha512-KIMVnG68zvu5XXUbC4LQEPnhwOxBuLyW1AHtpm6IKTXImkbLgkMy+jabjLgSLMasNuGGzQm/ep3tOkyTxpiQIw==}
+
   uri-js@4.4.1:
     resolution: {integrity: sha512-7rKUyy33Q1yc98pQ1DAmLtwX109F7TIfWlW1Ydo8Wl1ii1SeHieeh0HHfPeL2fMXK6z0s8ecKs9frCuLJvndBg==}
 
@@ -5702,6 +5717,13 @@ snapshots:
   undici@5.29.0:
     dependencies:
       '@fastify/busboy': 2.1.0
+
+  uplot-svelte@1.2.4(svelte@5.53.11)(uplot@1.6.32):
+    dependencies:
+      svelte: 5.53.11
+      uplot: 1.6.32
+
+  uplot@1.6.32: {}
 
   uri-js@4.4.1:
     dependencies:

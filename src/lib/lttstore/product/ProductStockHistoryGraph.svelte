@@ -1,3 +1,52 @@
+<script module lang="ts">
+  import uPlot from "uplot";
+  const isNum = Number.isFinite;
+  export const stockGaps: uPlot.Series.GapsRefiner = (u: uPlot, sidx: number, idx0: number, idx1: number, nullGaps: uPlot.Series.Gaps) => {
+    let xData = u.data[0];
+    let yData = u.data[sidx];
+
+    let addGaps: uPlot.Series.Gaps = [];
+
+    for (let i = idx0 + 1; i <= idx1; i++) {
+      const now = yData[i];
+      const previous = yData[i - 1];
+
+      if (typeof now === "number" && typeof previous === "number" && isNum(now) && isNum(previous)) {
+        // adds a gap if the gap is more than 7 days
+        if (now - previous > 7 * 24 * 60 * 60e3) {
+          uPlot.addGap(
+            addGaps,
+            Math.round(u.valToPos(xData[i - 1], 'x', true)),
+            Math.round(u.valToPos(xData[i],     'x', true)),
+          );
+        }
+      }
+    }
+
+    nullGaps.push(...addGaps);
+    nullGaps.sort((a, b) => a[0] - b[0]);
+
+    return nullGaps;
+  };
+
+  export const timeFormat: uPlot.Series.Value = ((_, val: number | null) =>  {
+    if(val === null) return "";
+    const date = new Date(val);
+    return (
+      date.toLocaleDateString(undefined, { dateStyle: 'medium' }) +
+      ' ' +
+      date.toLocaleTimeString(undefined, { timeStyle: 'short', hour12: getTimePreference() })
+    )
+  });
+
+  export const stockColors = [
+    "#008FFB",
+    "#00E396",
+    "orange",
+    "#FF4560",
+    "#775DD0"
+  ]
+</script>
 <script lang="ts">
   import { browser } from '$app/environment';
 	import { onMount } from 'svelte';

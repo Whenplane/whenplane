@@ -1,6 +1,4 @@
 <script lang="ts">
-	import { run } from 'svelte/legacy';
-
 	import { browser } from '$app/environment';
 	import { onMount } from 'svelte';
 	import { commas } from '$lib/utils.ts';
@@ -8,10 +6,14 @@
 	import { getTimePreference } from '$lib/prefUtils.ts';
 	import type { StockCounts } from '$lib/lttstore/lttstore_types.ts';
 	import { typed } from '$lib';
+	import UplotSvelte from 'uplot-svelte';
+	import uPlot from "uplot";
+	import 'uplot/dist/uPlot.min.css';
+	import { stockGaps, timeFormat, stockColors } from './ProductStockHistoryGraph.svelte';
 
 	let {
 		productName = typed<string | undefined>(),
-		stockHistory = typed<
+		stockHistory: stockHistoryRaw = typed<
 			{
 				handle: string;
 				id: number;
@@ -22,60 +24,94 @@
 		chartUpdateNumber = typed<number>(1)
 	} = $props();
 
-	let chart = $state();
+	let stockHistory: {
+		handle: string;
+		id: number;
+		timestamp: number;
+		stock: StockCounts;
+	}[] = $derived(stockHistoryRaw
+		.map(h => ({
+			...h,
+			stock: JSON.parse(h.stock)
+		}))
+		.toSorted((a, b) => a.timestamp - b.timestamp)
+	);
+
+	let someStock = $derived(
+		Object.keys(stockHistory).length >= 1
+			? stockHistory
+				.map((h) => h.stock)
+				.reduce((p, c) => {
+					return {
+						...c,
+						...p
+					};
+				}, {})
+			: {}
+	);
 
 	let onlyTotalCheck = $state(false);
+	// show only the total for items where the stock is just the default + the total
+	let onlyTotal = $derived(Object.keys(someStock).length <= 2 || onlyTotalCheck);
 
-  function getSeries() {
-    if(!onlyTotal) {
-      return Object.keys(someStock).map(k => {
-        return {
-          name: k,
-          data: stockHistory.map((h, i, a) => {
-            if(i > 0) {
-              const previous = a[i-1];
-              const previousStock = JSON.parse(previous.stock)[k]
-              const timeDiff = h.timestamp - previous.timestamp;
-              const stockDiff = previousStock - JSON.parse(h.stock)[k]
-              return {
-                x: h.timestamp,
-                y: stockDiff / (timeDiff / (60 * 60e3))
-              }
-            } else {
-              return {
-                x: h.timestamp,
-                y: -1
-              }
-            }
-          }).filter(h => h.y >= 0)
-        }
-      })
-    } else {
-      return [{
-        name: "total",
-        data: stockHistory.map((h, i, a) => {
-          if(i > 0) {
-            const previous = a[i-1];
-            const previousStock = JSON.parse(previous.stock)["total"]
-            const timeDiff = h.timestamp - previous.timestamp;
-            const stockDiff = previousStock - JSON.parse(h.stock)["total"]
-            return {
-              x: h.timestamp,
-              y: stockDiff / (timeDiff / (60 * 60e3))
-            }
-          } else {
-            return {
-              x: h.timestamp,
-              y: -1
-            }
-          }
-        }).filter(h => h.y >= 0)
-      }]
-    }
-  }
+  let data = $derived.by(() => {
+		const allTimestamps = new Set<number>(stockHistory.map(h => h.timestamp));
+		return [
+			[...allTimestamps].map(t => Math.round(t/1e3)), // uPlot expects epoch in seconds
+			...(onlyTotal ? ["total"] : Object.keys(someStock))
+				.map(k => stockHistory.map((h, i, a) => {
+					if(i > 0) {
+						const previous = a[i-1];
+						const previousStock = previous.stock[k]
+						const currentStock = h.stock[k];
+						if(previousStock === null || currentStock === null) return null;
+						const timeDiff = h.timestamp - previous.timestamp;
+						const stockDiff = previousStock - currentStock;
+						const rate = stockDiff / (timeDiff / (60 * 60e3));
+						if(rate < 0) return null;
+						return rate;
+					} else {
+						return null;
+					}
+				}))
+		]
+	});
 
-	const options = $state({
-		chart: {
+
+	const options: uPlot.Options = $derived({
+		title: productName ? 'Move Rate History - ' + productName : 'Move Rate History',
+		id: productName + "-move-rate-" + chartUpdateNumber,
+		height: browser ? document.documentElement.clientHeight / 1.5 : 740,
+		width: browser ? document.documentElement.clientWidth / 1.3 : 1490,
+		series: [
+			{
+				label: "Time",
+				// value: timeFormat,
+			},
+			...Object.keys(someStock).map((k, i) => ({
+				show: true,
+				gaps: stockGaps,
+				label: k,
+				value: (_, rawValue: number | null) => rawValue === null ? "" : commas(Math.round(rawValue))!,
+				stroke: stockColors[i % stockColors.length],
+				points: {
+					show: false
+				}
+			}) satisfies uPlot.Series)
+		],
+		axes: [
+			{
+				stroke: "rgba(255, 255, 255, 0.5)",
+				grid: {stroke: "rgba(255, 255, 255, 0.025)"},
+				// values: ((self, splits) => splits.map(s => new Date(s))) satisfies uPlot.Axis.Values
+
+			},
+			{
+				stroke: "rgba(255, 255, 255, 0.5)",
+				grid: {stroke: "rgba(255, 255, 255, 0.025)"},
+			}
+		]
+		/*chart: {
 			type: 'area',
 			stacked: false,
 			height: browser ? document.documentElement.clientHeight / 1.5 : undefined,
@@ -91,16 +127,11 @@
 				enabled: false
 			}
 		},
-		series: {},
 		dataLabels: {
 			enabled: false
 		},
 		markers: {
 			size: 0
-		},
-		title: {
-			text: productName ? 'Move Rate History - ' + productName : 'Move Rate History',
-			align: 'left'
 		},
 		fill: {
 			type: 'gradient',
@@ -151,53 +182,20 @@
 		},
 		grid: {
 			borderColor: '#535A6C'
-		}
+		}*/
 	});
 
-	let chartDiv: HTMLDivElement = $state();
-
-	let ApexCharts;
 	let mounted = $state(false);
 	onMount(async () => {
-		options.series = getSeries();
-		mounted = true;
-		ApexCharts = (await import('apexcharts')).default;
-		chart = new ApexCharts(chartDiv, options);
-		chart.render();
-
-		// console.log({options})
-	});
-
-	// let style = browser ?  : undefined;
-	let someStock = $derived(
-		Object.keys(stockHistory).length >= 1
-			? stockHistory
-					.map((h) => JSON.parse(h.stock ?? '{}') as StockCounts)
-					.reduce((p, c) => {
-						return {
-							...c,
-							...p
-						};
-					}, {})
-			: {}
-	);
-	// show only the total for items where the stock is just the default + the total
-	let onlyTotal = $derived(Object.keys(someStock).length <= 2 || onlyTotalCheck);
-	run(() => {
-		console.debug({ onlyTotal, length: Object.keys(someStock).length, someStock, stockHistory });
-	});
-	run(() => {
-		onlyTotal;
-		chartUpdateNumber;
-		options.series = getSeries();
-		// console.debug("Series:", options.series)
-		if (chart) chart.updateSeries(options.series);
+		setTimeout(() => mounted = true, 1);
 	});
 </script>
 
 <div style="min-height: 69vh">
 	{#if mounted}
-		<div bind:this={chartDiv} in:fade></div>
+		<div in:fade>
+			<UplotSvelte {data} {options} onCreate={() => {}} onDelete={() => {}}/>
+		</div>
 	{/if}
 </div>
 {#if Object.keys(someStock).length > 2}

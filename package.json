@@ -79,7 +79,9 @@
 		"sanitize-html": "^2.12.1",
 		"svelte-confetti": "^2.3.2",
 		"svelte-turnstile": "^0.8.0",
-		"typesense": "^1.8.2"
+		"typesense": "^1.8.2",
+		"uplot": "^1.6.32",
+		"uplot-svelte": "^1.2.4"
 	},
 	"imports": {
 		"#app.css": "./src/app.css"
