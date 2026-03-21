@@ -29,7 +29,7 @@ export const load = (async ({platform}) => {
   );
 
   const onSale = retryD1(() =>
-    db.prepare("select * from products where currentPrice < regularPrice and json_extract(product, '$.available') = 1 and handle not like '%bundle%' and title not like '%bundle%' and available=1 order by currentPrice ASC limit 50")
+    db.prepare("select * from products where currentPrice < regularPrice and json_extract(product, '$.available') = 1 and handle not like '%bundle%' and handle not like '%-solution' and title not like '%bundle%' and available=1 order by currentPrice ASC limit 50")
       .all<ProductsTableRow>()
       .then(r => r.results)
   );
