@@ -95,7 +95,7 @@
 					show: true,
 					gaps: stockGaps,
 					label: k,
-					value: (_, rawValue: number | null) => rawValue === null ? "" : commas(Math.round(rawValue))! + " sph",
+					value: (_, rawValue: number | null) => rawValue === null ? "" : commas(rawValue)! + " sph",
 					stroke: stockColors[i % stockColors.length],
 					points: {
 						show: false
