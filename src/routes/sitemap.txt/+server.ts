@@ -32,6 +32,15 @@ export const GET = (async ({platform, fetch, url}) => {
     )
 
     urls.push(
+      ...(await fetch("/api/merch-messages-v2/allShows")
+        .then(r => r.json())
+        .then((r: string[]) =>
+          r
+            .map(s => `/history/show/${s}/merch-messages`)
+        ))
+    )
+
+    urls.push(
       ...(await fetch("/api/lttstore/allHandles")
         .then(r => r.json())
         .then((r: string[]) =>
@@ -48,16 +57,6 @@ export const GET = (async ({platform, fetch, url}) => {
             .map(s => "/news/" + s)
         ))
     )
-
-    urls.push(
-      ...(await fetch("/api/merch-messages-v2/allShows")
-        .then(r => r.json())
-        .then((r: string[]) =>
-          r
-            .map(s => `/history/show/${s}/merch-messages`)
-        ))
-    )
-
 
     // these are at the bottom because they aren't important (and don't have SEO rn anyway)
     urls.push(...[
