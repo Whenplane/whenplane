@@ -193,6 +193,7 @@ export type ProductsTableRow = {
   handle: string,
   id: number,
   title: string,
+  shortTitle: string | null,
   product: string,
   stock: string,
   stockChecked: number,
@@ -213,6 +214,7 @@ export type ParsedProductsTableRow = {
   handle: string,
   id: number,
   title: string,
+  shortTitle: string | null,
   product: ShopifyProduct,
   stock?: StockCounts,
   stockChecked?: number,
@@ -241,12 +243,6 @@ export type StockHistoryTableRow = {
   id: number,
   timestamp: number,
   stock: string
-}
-export type ParsedStockHistoryTableRow = {
-  handle: string,
-  id: number,
-  timestamp: number,
-  stock: StockCounts
 }
 
 export type BackorderAlerts = {

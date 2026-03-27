@@ -70,7 +70,7 @@
   </div>
   {#each data.allProducts as product, i (product.id)}
     <div class="inline-block" animate:flip={{ duration: 200 }}>
-      <LTTProductCard product={JSON.parse(product.product)} available={product.available} lazyLoadImage={i > 30}/>
+      <LTTProductCard product={JSON.parse(product.product)} shortTitle={product.shortTitle} available={product.available} lazyLoadImage={i > 30}/>
     </div>
   {:else}
     No products are being tracked yet!

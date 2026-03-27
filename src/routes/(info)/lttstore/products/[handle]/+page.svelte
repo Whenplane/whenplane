@@ -124,11 +124,11 @@
   <li class="crumb-separator" aria-hidden="true">›</li>
   <li class="crumb"><a class="anchor hover-underline" href="/lttstore/products">Products</a></li>
   <li class="crumb-separator" aria-hidden="true">›</li>
-  <li class="crumb">{productInfo.title}</li>
+  <li class="crumb">{data.product.shortTitle ?? data.product.title}</li>
 </ol>
 
 <svelte:head>
-  <title>{data.product.title} - Whenplane LTTStore Watcher</title>
+  <title>{data.product.shortTitle ?? data.product.title} - Whenplane LTTStore Watcher</title>
   <meta name="description" content={truncateText(sanitizeHtml(productInfo.description ?? productDetailModules?.[0]?.content ?? "", {allowedTags: []}), 159)}>
   {#if productInfo.featured_image}
     <meta property="og:image" content={productInfo.featured_image}>
@@ -318,6 +318,22 @@
                     <tr>
                       <td>On lttstore?</td>
                       <td>{data.product.available ? "yes" : "no"}</td>
+                    </tr>
+                    <tr>
+                      <td>
+                        Short Title
+                        <ToolTip id="short-title">
+                          If a product title is very long, Whenplane might generate a shortened version.
+                          This shortened title is used where title space may be limited, such as the browser tab and product cards.
+                        </ToolTip>
+                      </td>
+                      <td>
+                        {#if data.product.shortTitle}
+                          {data.product.shortTitle}
+                        {:else}
+                          <span class="opacity-70">[none]</span>
+                        {/if}
+                      </td>
                     </tr>
                   </tbody>
                 </table>
@@ -552,7 +568,7 @@
                     {:then similarProducts}
                       {#each similarProducts?.similar as similar (similar.id)}
                         {@const product = similar.metadata.product}
-                        <LTTProductCard {product} available={similar.metadata.available} />
+                        <LTTProductCard {product} shortTitle={product.shortTitle} available={similar.metadata.available} />
                       {/each}
                     {/await}
                   </div>

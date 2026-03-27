@@ -190,7 +190,7 @@
       These products are new.
     </div>
     {#each data.newProducts as product}
-      <LTTProductCard product={JSON.parse(product.product)} goneIn={true} stock={JSON.parse(product.stock)} purchasesPerHour={product.purchasesPerHour} available={product.available}/>
+      <LTTProductCard product={JSON.parse(product.product)} shortTitle={product.shortTitle} goneIn={true} stock={JSON.parse(product.stock)} purchasesPerHour={product.purchasesPerHour} available={product.available}/>
     {/each}
     <br>
     <br>
@@ -203,7 +203,7 @@
     </div>
     {#each data.popularProducts as product (product.id)}
       <div class="inline-block" animate:flip={{ duration: 200 }}>
-        <LTTProductCard product={JSON.parse(product.product)}/>
+        <LTTProductCard product={JSON.parse(product.product)} shortTitle={product.shortTitle}/>
       </div>
     {:else}
       No products are being tracked yet!
@@ -222,7 +222,7 @@
           These products are currently on sale. (excludes items that are out of stock)
         </div>
         {#each onSale as product}
-          <LTTProductCard product={JSON.parse(product.product)} goneIn={true} stock={JSON.parse(product.stock)} purchasesPerHour={product.purchasesPerHour} available={product.available}/>
+          <LTTProductCard product={JSON.parse(product.product)} shortTitle={product.shortTitle} goneIn={true} stock={JSON.parse(product.stock)} purchasesPerHour={product.purchasesPerHour} available={product.available}/>
         {/each}
         <br>
         <br>
@@ -240,7 +240,7 @@
           These items are low in stock and selling fast enough to possibly run out of stock soon.
         </div>
         {#each lowStock as product}
-          <LTTProductCard product={JSON.parse(product.product)} goneIn={true} stock={JSON.parse(product.stock)} purchasesPerHour={product.purchasesPerHour} available={product.available}/>
+          <LTTProductCard product={JSON.parse(product.product)} shortTitle={product.shortTitle} goneIn={true} stock={JSON.parse(product.stock)} purchasesPerHour={product.purchasesPerHour} available={product.available}/>
         {/each}
         <br>
         <br>
@@ -258,7 +258,7 @@
           These items have been restocked in the past 6 days.
         </div>
         {#each recentRestocks as product}
-          <LTTProductCard product={JSON.parse(product.product)} purchasesPerHour={product.purchasesPerHour} available={product.available}/>
+          <LTTProductCard product={JSON.parse(product.product)} shortTitle={product.shortTitle} purchasesPerHour={product.purchasesPerHour} available={product.available}/>
         {/each}
         <br>
         <br>

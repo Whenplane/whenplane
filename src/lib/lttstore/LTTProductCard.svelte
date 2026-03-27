@@ -9,6 +9,7 @@
 
 	let {
 		product = typed<ShopifyProduct>(),
+		shortTitle = typed<string | null>(),
 		stock = typed<StockCounts | undefined>(),
 		purchasesPerHour = typed<number | undefined>(),
 		goneIn = typed<boolean>(false),
@@ -24,6 +25,8 @@
 			'/cdn-cgi/image/anim=false,fit=scale-down,width=528,metadata=copyright,q=60,sqc=50,format=auto/' +
 			`https://img-proxy.whenplane.com/img/${product.handle}-${await sha256(product.featured_image).then(r => r.substring(0, 5))}`
 		);
+
+	const title = $derived(shortTitle ?? product.title);
 </script>
 
 <a
@@ -37,7 +40,7 @@
 				<img
 					src={imageSrc}
 					class="product-image rounded-xl h-47"
-					alt={product.title}
+					alt={title}
 					decoding="async"
 				/>
 			</LargerLazyLoad>
@@ -45,7 +48,7 @@
 			<img
 				src={imageSrc}
 				class="product-image rounded-xl h-47"
-				alt={product.title}
+				alt={title}
 				loading="lazy"
 				decoding="async"
 			/>
@@ -54,7 +57,7 @@
 		No featured image
 	{/if}
 	<div class="inline-block title" class:line-through={!available}>
-		{product.title}
+		{title}
 	</div>
 	{#if product.price}
 		<br />

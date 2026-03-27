@@ -231,7 +231,7 @@
       {#each searchResults.hits as hit (hit.document.id)}
         {@const product = JSON.parse(hit.document.product)}
         <div class="inline-block">
-          <LTTProductCard product={product} available={hit.document.available}/>
+          <LTTProductCard product={product} shortTitle={product.shortTitle} available={hit.document.available}/>
         </div>
       {/each}
       <br>
