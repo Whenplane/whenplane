@@ -324,7 +324,8 @@
                         Short Title
                         <ToolTip id="short-title">
                           If a product title is very long, Whenplane might generate a shortened version.
-                          This shortened title is used where title space may be limited, such as the browser tab and product cards.
+                          This shortened title is used where title space may be limited, such as the browser tab and product cards.<br>
+                          The main header on the product page will always use the full/original title.
                         </ToolTip>
                       </td>
                       <td>
