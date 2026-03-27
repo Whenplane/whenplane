@@ -10,7 +10,7 @@ export const GET = (async ({platform, url}) => {
 
   const allProducts = await retryD1(() =>
     db.prepare(
-      "select handle,id,available," +
+      "select handle,shortTitle,id,available," +
       (withMedia ?
          "json_remove(json_remove(json_remove(product, '$.variants'), '$.images'), '$.description')" :
          "json_remove(json_remove(json_remove(json_remove(product, '$.variants'), '$.images'), '$.description'), '$.media')"
