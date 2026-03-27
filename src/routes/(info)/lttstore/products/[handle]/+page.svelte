@@ -142,7 +142,7 @@
     {#each productInfo.media as image, i (image.id ?? (image.src))}
       {#if image.media_type === "image"}
         {@const preview = (dev ? 'https://whenplane.com' : '') +
-          '/cdn-cgi/image/fit=scale-down,height=960,metadata=copyright,q=80,sqc=65,format=auto/' +
+          '/cdn-cgi/image/fit=scale-down,height=960,metadata=copyright,q=80,sqc=65,format=auto,onerror=redirect/' +
           `https://img-proxy.whenplane.com/d-img/${productInfo.handle}-${image.id}-${await sha256(image.src).then(r => r.substring(0, 5))}`}
         <a href={image.src} class="m-1 no-underline!">
           <img
