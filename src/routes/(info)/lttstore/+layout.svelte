@@ -84,7 +84,7 @@
     used to charge you if you were to purchase.<br>
     (although it will probably be close)<br>
     <br>
-    The Whenplane LTTStore watcher gathers data from the US store, which charges only in USD. Prices on the global store <br>
+    The Whenplane LTTStore watcher gathers data from the US store, which charges only in USD. Prices on the global store are not currently taken into account.<br>
     <br>
     1 USD ≈ {data.exchangeRates.rates[selectedCurrency]} {selectedCurrency}
   </p>
