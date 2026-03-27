@@ -16,7 +16,7 @@
 </script>
 
 <svelte:head>
-  <title>{data.collection.title} - Whenplane</title>
+  <title>{data.collection.title} Collection - Whenplane LTTStore Watcher</title>
   {#if data.collection.description}
     <meta name="description" content={truncateText(sanitizeHtml(data.collection.description, {allowedTags: []}), 200)}/>
   {/if}
