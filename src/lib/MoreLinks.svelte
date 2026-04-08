@@ -58,6 +58,7 @@
   ]
 </script>
 <table class="w-58">
+  <tbody>
   {#each links as link}
     <tr>
       <td>
@@ -72,6 +73,7 @@
       </td>
     </tr>
   {/each}
+  </tbody>
 </table>
 
 <style>
