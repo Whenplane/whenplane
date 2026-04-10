@@ -18,7 +18,7 @@
   <li class="crumb-separator" aria-hidden="true">›</li>
   <li class="crumb"><a class="anchor hover-underline" href="/lttstore">LTT Store Watcher</a></li>
   <li class="crumb-separator" aria-hidden="true">›</li>
-  <li class="crumb"><a class="anchor hover-underline" href="/lttstore/products">Temp Global Store Stock Checker</a></li>
+  <li class="crumb">Temp Global Store Stock Checker</li>
   <li class="crumb-separator" aria-hidden="true">›</li>
   <li class="crumb">{page.params.handle}</li>
 </ol>
