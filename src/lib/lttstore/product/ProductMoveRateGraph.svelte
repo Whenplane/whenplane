@@ -1,5 +1,4 @@
 <script lang="ts">
-	import { browser } from '$app/environment';
 	import { onMount } from 'svelte';
 	import { commas } from '$lib/utils.ts';
 	import { fade } from 'svelte/transition';
@@ -44,9 +43,11 @@
 	let onlyTotal = $derived(Object.keys(someStock).length <= 2 || onlyTotalCheck);
 
   let data = $derived.by(() => {
-		const allTimestamps = new Set<number>(stockHistory.map(h => h.timestamp));
 		return [
-			[...allTimestamps].map(t => Math.round(t/1e3)), // uPlot expects epoch in seconds
+			stockHistory.map((h, i) => i === 0 
+				? Math.round(h.timestamp / 1e3)
+				: Math.round((stockHistory[i-1].timestamp + h.timestamp) / 2 / 1e3)
+			),
 			...(onlyTotal ? ["total"] : Object.keys(someStock))
 				.map(k => stockHistory.map((h, i, a) => {
 					if(i > 0) {
