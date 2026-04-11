@@ -48,6 +48,7 @@
 				? Math.round(h.timestamp / 1e3)
 				: Math.round((stockHistory[i-1].timestamp + h.timestamp) / 2 / 1e3)
 			),
+			...(stockHistory.length > 1 ? [stockHistory[stockHistory.length-1].timestamp] : []),
 			...(onlyTotal ? ["total"] : Object.keys(someStock))
 				.map(k => stockHistory.map((h, i, a) => {
 					if(i > 0) {

@@ -122,9 +122,9 @@ export type ProductVariant = {
    * If this is not null, then this is the "original" price and the regular price property is the discount price
    */
   compare_at_price?: number | null,
-  inventory_management: "shopify",
+  inventory_management?: "shopify",
   barcode: string,
-  quantity_rule: {
+  quantity_rule?: {
     min: number,
     max: number | null,
     increment: number
@@ -135,9 +135,9 @@ export type ProductVariant = {
     position: number,
     preview_image: ProductImage
   }
-  quantity_price_breaks: unknown[],
-  requires_selling_plan: boolean,
-  selling_plan_allocations: unknown[]
+  quantity_price_breaks?: unknown[],
+  requires_selling_plan?: boolean,
+  selling_plan_allocations?: unknown[]
 }
 
 export type LegacyProductVariant = {
@@ -240,9 +240,22 @@ export type SimilarProductsTableRow = {
 
 export type StockHistoryTableRow = {
   handle: string,
+  store: number,
   id: number,
   timestamp: number,
   stock: string
+}
+export type ParsedStockHistoryTableRow = {
+  handle: string,
+  store: number,
+  id: number,
+  timestamp: number,
+  stock: StockCounts
+}
+
+export const Store = {
+  US: 0,
+  GLOBAL: 1
 }
 
 export type BackorderAlerts = {
