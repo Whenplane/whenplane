@@ -85,7 +85,6 @@
 
 	const options: uPlot.Options = $derived({
 		title: productName ? 'Move Rate History - ' + productName : 'Move Rate History',
-		lineInterpolation: uPlot.paths.spline?.(),
 		id: productName + "-move-rate-" + chartUpdateNumber,
 		width,
 		height,
@@ -99,6 +98,7 @@
 				.map((k, i) => ({
 					show: true,
 					gaps: stockGaps,
+					paths: uPlot.paths.spline?.(),
 					label: k,
 					value: (_, rawValue: number | null) => rawValue === null ? "" : commas(Math.round(rawValue * 100) / 100)! + " sph",
 					stroke: stockColors[i % stockColors.length],
