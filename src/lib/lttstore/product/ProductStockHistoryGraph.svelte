@@ -1,60 +1,61 @@
 <script module lang="ts">
-  import uPlot from "uplot";
-  const isNum = Number.isFinite;
-  export const stockGaps: uPlot.Series.GapsRefiner = (u: uPlot, sidx: number, idx0: number, idx1: number, nullGaps: uPlot.Series.Gaps) => {
-    let xData = u.data[0];
-    let yData = u.data[sidx];
+	import uPlot from "uplot";
+	import { getTimePreference } from '$lib/prefUtils.ts';
+	const isNum = Number.isFinite;
+	export const stockGaps: uPlot.Series.GapsRefiner = (u: uPlot, sidx: number, idx0: number, idx1: number, nullGaps: uPlot.Series.Gaps) => {
+		let xData = u.data[0];
+		let yData = u.data[sidx];
 
-    let addGaps: uPlot.Series.Gaps = [];
+		let addGaps: uPlot.Series.Gaps = [];
 
-    for (let i = idx0 + 1; i <= idx1; i++) {
-      const now = yData[i];
-      const previous = yData[i - 1];
+		for (let i = idx0 + 1; i <= idx1; i++) {
+			const now = yData[i];
+			const previous = yData[i - 1];
 
-      if (typeof now === "number" && typeof previous === "number" && isNum(now) && isNum(previous)) {
-        // adds a gap if the gap is more than 7 days
-        if (now - previous > 7 * 24 * 60 * 60e3) {
-          uPlot.addGap(
-            addGaps,
-            Math.round(u.valToPos(xData[i - 1], 'x', true)),
-            Math.round(u.valToPos(xData[i],     'x', true)),
-          );
-        }
-      }
-    }
+			if (typeof now === "number" && typeof previous === "number" && isNum(now) && isNum(previous)) {
+				if (now - previous > 7 * 24 * 60 * 60e3) {
+					uPlot.addGap(
+						addGaps,
+						Math.round(u.valToPos(xData[i - 1], 'x', true)),
+						Math.round(u.valToPos(xData[i], 'x', true)),
+					);
+				}
+			}
+		}
 
-    nullGaps.push(...addGaps);
-    nullGaps.sort((a, b) => a[0] - b[0]);
+		nullGaps.push(...addGaps);
+		nullGaps.sort((a, b) => a[0] - b[0]);
 
-    return nullGaps;
-  };
+		return nullGaps;
+	};
 
-  export const timeFormat: uPlot.Series.Value = ((_, val: number | null) =>  {
-    if(val === null) return "";
-    const date = new Date(val*1e3);
-    return (
-      date.toLocaleDateString(undefined, { dateStyle: 'medium' }) +
-      ' ' +
-      date.toLocaleTimeString(undefined, { timeStyle: 'short', hour12: getTimePreference() })
-    )
-  });
+	export const stockColors = [
+		"#008FFB",
+		"#00E396",
+		"orange",
+		"#FF4560",
+		"#775DD0"
+	]
 
-  export const stockColors = [
-    "#008FFB",
-    "#00E396",
-    "orange",
-    "#FF4560",
-    "#775DD0"
-  ]
+	export const timeFormat: uPlot.Series.Value = ((_, val: number | null) => {
+		if (val === null) return "";
+		const date = new Date(val * 1e3);
+		return (
+			date.toLocaleDateString(undefined, { dateStyle: 'medium' }) +
+			' ' +
+			date.toLocaleTimeString(undefined, { timeStyle: 'short', hour12: getTimePreference() })
+		)
+	});
 </script>
 <script lang="ts">
-  import { browser } from '$app/environment';
 	import { onMount } from 'svelte';
 	import { commas } from '$lib/utils.ts';
 	import { fade } from 'svelte/transition';
-	import { getTimePreference } from '$lib/prefUtils.ts';
-  import type { ProductOption, StockCounts } from "$lib/lttstore/lttstore_types.ts";
+	import type { ProductOption, StockCounts } from "$lib/lttstore/lttstore_types.ts";
 	import { typed } from '$lib';
+	import UplotSvelte from 'uplot-svelte';
+	import 'uplot/dist/uPlot.min.css';
+	import { browser } from "$app/environment";
 
 	let {
 		productName = typed<string | undefined>(),
@@ -66,175 +67,118 @@
 				stock: string;
 			}[]
 		>(),
-    productOptions = typed<ProductOption[]>(),
+		productOptions = typed<ProductOption[]>(),
 		chartUpdateNumber = typed<number>(1)
 	} = $props();
 
-	let chart: ApexCharts | undefined = $state();
-  let filter: string | undefined = $state(undefined);
+	let wrapperDiv = $state<HTMLDivElement>();
 
 	let onlyTotalCheck = $state(false);
+	let filter: string | undefined = $state(undefined);
 
-  let someStock = $derived(
-    Object.keys(stockHistory).length >= 1
-      ? stockHistory
-        .map((h) => JSON.parse(h.stock ?? '{}') as StockCounts)
-        .reduce((p, c) => {
-          return {
-            ...c,
-            ...p
-          };
-        }, {})
-      : {}
-  );
-  // show only the total for items where the stock is just the default + the total
-  let onlyTotal = $derived.by(() => {
-    const keys = [...Object.keys(someStock)];
-    const totalIndex = keys.indexOf("total");
-    if (totalIndex !== -1) {
-      keys.splice(totalIndex, 1);
-    }
-    // if only 1 after removing total, then its probably the default one
-    return (keys.length == 1) || onlyTotalCheck;
-  });
-  $effect(() => console.debug({ onlyTotal, length: Object.keys(someStock).length, someStock, stockHistory }));
-
-  function getSeries() {
-    if(!onlyTotal) {
-      return Object.keys(someStock)
-        .filter(k => filter ? k.includes(filter) : true)
-        .map(k => {
-          return {
-            name: k,
-            data: stockHistory.map(h => {
-              return {
-                x: h.timestamp,
-                y: JSON.parse(h.stock)[k]
-              };
-            }).filter(d => typeof d.y === "number")
-          }
-        })
-    } else {
-      return [{
-        name: "total",
-        data: stockHistory.map(h => {
-          return {
-            x: h.timestamp,
-            y: JSON.parse(h.stock)["total"]
-          };
-        }).filter(d => typeof d.y === "number")
-      }]
-    }
-  }
-
-	const options = {
-		chart: {
-			type: 'area',
-			stacked: false,
-			height: browser ? document.documentElement.clientHeight / 1.5 : undefined,
-			zoom: {
-				type: 'x',
-				enabled: true,
-				autoScaleYaxis: true
-			},
-			toolbar: {
-				autoSelected: 'zoom'
-			},
-      animations: {
-        enabled: false
-      }
-		},
-		series: {},
-		dataLabels: {
-			enabled: false
-		},
-		markers: {
-			size: 0
-		},
-		title: {
-			text: productName ? 'Stock History - ' + productName : 'Stock History',
-			align: 'left'
-		},
-		fill: {
-			type: 'gradient',
-			gradient: {
-				shadeIntensity: 1,
-				inverseColors: false,
-				opacityFrom: 0.5,
-				opacityTo: 0,
-				stops: [0, 90, 100]
-			}
-		},
-		yaxis: {
-			labels: {
-				formatter: (n: number) => {
-					return commas(Math.round(n));
-				}
-			},
-			title: {
-				text: 'Stock'
-			}
-		},
-		xaxis: {
-			type: 'datetime'
-		},
-		tooltip: {
-			theme: 'dark',
-			shared: true,
-			y: {
-				formatter: (n: number) => {
-					if (n > 500000) {
-						return '>500,000';
-					} else {
-						return commas(n);
-					}
-				}
-			},
-			x: {
-				formatter: function (val: number) {
-					const date = new Date(val);
-					return (
-						date.toLocaleDateString(undefined, { dateStyle: 'medium' }) +
-						' ' +
-						date.toLocaleTimeString(undefined, { timeStyle: 'short', hour12: getTimePreference() })
-					);
-				}
-			}
-		},
-		grid: {
-			borderColor: '#535A6C'
+	let someStock = $derived(
+		Object.keys(stockHistory).length >= 1
+			? stockHistory
+				.map((h: { stock: string }) => JSON.parse(h.stock ?? '{}') as StockCounts)
+				.reduce((p: StockCounts, c: StockCounts) => {
+					return {
+						...c,
+						...p
+					};
+				}, {})
+			: {}
+	);
+	let onlyTotal = $derived.by(() => {
+		const keys = [...Object.keys(someStock)];
+		const totalIndex = keys.indexOf("total");
+		if (totalIndex !== -1) {
+			keys.splice(totalIndex, 1);
 		}
-	};
+		return (keys.length == 1) || onlyTotalCheck;
+	});
+	$effect(() => console.debug({ onlyTotal, length: Object.keys(someStock).length, someStock, stockHistory }));
 
-
-  $effect.pre(() => {
-    onlyTotal;
-    chartUpdateNumber;
-    options.series = getSeries();
-    // console.debug("Series:", options.series)
-    if (chart) chart.updateSeries(options.series);
-  })
-
-	let chartDiv: HTMLDivElement | undefined = $state();
-
-	let ApexCharts;
-	let mounted = $state(false);
-	onMount(async () => {
-		options.series = getSeries();
-		mounted = true;
-		ApexCharts = (await import('apexcharts')).default;
-		chart = new ApexCharts(chartDiv, options);
-		chart.render();
-
-		// console.log({options})
+	let data = $derived.by(() => {
+		const filteredKeys = filter ? Object.keys(someStock).filter(k => k.includes(filter!)) : Object.keys(someStock);
+		return [
+			[
+				...stockHistory.map((h: { timestamp: number }, i: number) => i === 0
+					? Math.round(h.timestamp / 1e3)
+					: Math.round((stockHistory[i - 1].timestamp + h.timestamp) / 2 / 1e3)
+				),
+				...(stockHistory.length > 1 ? [Math.round(stockHistory[stockHistory.length - 1].timestamp / 1e3)] : []),
+			],
+			...(onlyTotal ? ["total"] : filteredKeys)
+				.map((k: string) => stockHistory.map((h: { stock: string }) => {
+					const stock = JSON.parse(h.stock)[k];
+					return typeof stock === "number" ? stock : null;
+				}))
+		]
 	});
 
-	// let style = browser ?  : undefined;
+	let width = $derived(wrapperDiv?.clientWidth ?? 1490);
+	let height = $derived(width / 1.5);
+
+	if(browser) {
+		const resizeObserver = new ResizeObserver(() => {
+			const newWidth = wrapperDiv?.clientWidth ?? 1490;
+			setTimeout(() => {
+				if (newWidth === (wrapperDiv?.clientWidth ?? 1490)) {
+					width = newWidth;
+				}
+			}, 100);
+		});
+		$effect(() => wrapperDiv && resizeObserver.observe(wrapperDiv));
+	}
+
+	const options: uPlot.Options = $derived({
+		title: productName ? 'Stock History - ' + productName : 'Stock History',
+		id: productName + "-stock-history-" + chartUpdateNumber,
+		width,
+		height,
+		class: "max-w-full",
+		series: [
+			{
+				label: "Time",
+				value: timeFormat,
+			},
+			...(onlyTotal ? ["total"] : (filter ? Object.keys(someStock).filter(k => k.includes(filter!)) : Object.keys(someStock)))
+				.map((k: string, i: number) => ({
+					show: true,
+					gaps: stockGaps,
+					paths: uPlot.paths.spline?.(),
+					label: k,
+					value: (_, rawValue: number | null) => rawValue === null ? "" : commas(Math.round(rawValue))!,
+					stroke: stockColors[i % stockColors.length],
+					fill: `${stockColors[i % stockColors.length]}20`,
+					points: {
+						size: 3
+					}
+				}) satisfies uPlot.Series)
+		],
+		axes: [
+			{
+				stroke: "rgba(255, 255, 255, 0.5)",
+				grid: { stroke: "rgba(255, 255, 255, 0.025)" },
+			},
+			{
+				stroke: "rgba(255, 255, 255, 0.5)",
+				grid: { stroke: "rgba(255, 255, 255, 0.025)" },
+			}
+		]
+	});
+
+	let mounted = $state(false);
+	onMount(async () => {
+		setTimeout(() => mounted = true, 1);
+	});
 </script>
 
-<div style="min-height: 69vh">
+<div style="min-height: 69vh w-full max-w-full" bind:this={wrapperDiv}>
 	{#if mounted}
-		<div bind:this={chartDiv} in:fade></div>
+		<div in:fade>
+			<UplotSvelte {data} {options} onCreate={() => {}} onDelete={() => {}} />
+		</div>
 	{/if}
 </div>
 {#if Object.keys(someStock).length > 2}
@@ -244,19 +188,18 @@
 	</label>
 {/if}
 {#if productOptions.length > 1}
-  {#if Object.keys(someStock).length > 2}
-    &nbsp;
-  {/if}
-  <select bind:value={filter} class="select w-56 inline-block px-2 bg-surface-900">
-    <option value={undefined}>All</option>
-    {#each productOptions.sort((a, b) => a.position - b.position) as option}
-      <optgroup label={option.name}>
-        {#each option.values as value}
-          <option {value}>{value}</option>
-        {/each}
-      </optgroup>
-    {/each}
-  </select>
+	{#if Object.keys(someStock).length > 2}
+		&nbsp;
+	{/if}
+	<select bind:value={filter} class="select w-56 inline-block px-2 bg-surface-900">
+		<option value={undefined}>All</option>
+		{#each productOptions.sort((a, b) => a.position - b.position) as option}
+			<optgroup label={option.name}>
+				{#each option.values as value}
+					<option {value}>{value}</option>
+				{/each}
+			</optgroup>
+		{/each}
+	</select>
 {/if}
 <!--{JSON.stringify(stockHistory)}-->
-
