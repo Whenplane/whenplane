@@ -32,7 +32,7 @@
 	export const stockColors = [
 		"#008FFB",
 		"#00E396",
-		"orange",
+		"#FFA500",
 		"#FF4560",
 		"#775DD0"
 	]
