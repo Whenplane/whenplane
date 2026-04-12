@@ -86,8 +86,8 @@
           set.add(alert)
         }
       });
-      return set;
     }
+    return set;
   })
 
 
