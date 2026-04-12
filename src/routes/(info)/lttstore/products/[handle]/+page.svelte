@@ -101,16 +101,17 @@
       const newUrl = new URL(location.href);
       newUrl.searchParams.set("historyDays", historyDays+"")
 
-      // goto(newUrl.toString(), { noScroll: true } ).then(() => {
-      //   chartUpdateNumber++;
-      // })
-
-      history.pushState({}, document.title, newUrl.toString());
-      NProgress.start();
-      invalidateAll().then(() => {
-        NProgress.done();
+      goto(newUrl.toString(), { noScroll: true } ).then(() => {
         chartUpdateNumber++;
-      });
+      })
+
+      // For some reason the charts refuse to update when doing this
+      // history.pushState({}, document.title, newUrl.toString());
+      // NProgress.start();
+      // invalidateAll().then(() => {
+      //   NProgress.done();
+      //   chartUpdateNumber++;
+      // });
     }
   });
 </script>
