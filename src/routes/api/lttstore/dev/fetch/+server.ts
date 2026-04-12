@@ -92,12 +92,13 @@ export const GET = (async ({platform}) => {
   for (const stock of data.screwdriverStocks) {
     i++;
     if(i % 10 === 0) console.log("Inserting " + i + "/" + data.screwdriverStocks.length + " screwdriver stock history");
-    await db.prepare("insert or replace into stock_history(handle, id, timestamp, stock) values (?, ?, ?, ?)")
+    await db.prepare("insert or replace into stock_history(handle, id, timestamp, stock, store) values (?, ?, ?, ?, ?)")
       .bind(
         stock.handle,
         stock.id,
         stock.timestamp,
-        stock.stock
+        stock.stock,
+        stock.store
       )
       .run();
   }
