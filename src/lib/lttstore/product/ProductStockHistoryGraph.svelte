@@ -137,7 +137,7 @@
 					label: k,
 					value: (_, rawValue: number | null) => rawValue === null ? "" : commas(Math.round(rawValue))!,
 					stroke: stockColors[i % stockColors.length],
-					fill: `${stockColors[i % stockColors.length]}`,
+					fill: `${stockColors[i % stockColors.length]}20`,
 					points: {
 						size: 3
 					}
