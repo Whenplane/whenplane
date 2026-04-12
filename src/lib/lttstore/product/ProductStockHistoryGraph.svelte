@@ -51,7 +51,7 @@
 	import { onMount } from 'svelte';
 	import { commas } from '$lib/utils.ts';
 	import { fade } from 'svelte/transition';
-	import type { ProductOption, StockCounts } from "$lib/lttstore/lttstore_types.ts";
+	import type { ProductOption, StockCounts, StockHistoryTableRow } from "$lib/lttstore/lttstore_types.ts";
 	import { typed } from '$lib';
 	import UplotSvelte from 'uplot-svelte';
 	import 'uplot/dist/uPlot.min.css';
@@ -59,14 +59,7 @@
 
 	let {
 		productName = typed<string | undefined>(),
-		stockHistory = typed<
-			{
-				handle: string;
-				id: number;
-				timestamp: number;
-				stock: string;
-			}[]
-		>(),
+		stockHistory = typed<StockHistoryTableRow[]>(),
 		productOptions = typed<ProductOption[]>(),
 		chartUpdateNumber = typed<number>(1)
 	} = $props();
@@ -101,13 +94,7 @@
 	let data = $derived.by(() => {
 		const filteredKeys = filter ? Object.keys(someStock).filter(k => k.includes(filter!)) : Object.keys(someStock);
 		return [
-			[
-				...stockHistory.map((h: { timestamp: number }, i: number) => i === 0
-					? Math.round(h.timestamp / 1e3)
-					: Math.round((stockHistory[i - 1].timestamp + h.timestamp) / 2 / 1e3)
-				),
-				...(stockHistory.length > 1 ? [Math.round(stockHistory[stockHistory.length - 1].timestamp / 1e3)] : []),
-			],
+			stockHistory.map((h: StockHistoryTableRow) => Math.round(h.timestamp / 1e3)),
 			...(onlyTotal ? ["total"] : filteredKeys)
 				.map((k: string) => stockHistory.map((h: { stock: string }) => {
 					const stock = JSON.parse(h.stock)[k];
