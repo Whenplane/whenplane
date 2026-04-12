@@ -111,6 +111,7 @@ export const load = (async ({platform, params, url}) => {
   return {
     product,
     historyDays,
+    defaultHistoryDays,
     stockHistory: await stockHistory,
     changeHistory,
     similarProducts,

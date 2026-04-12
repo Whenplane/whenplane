@@ -1,6 +1,4 @@
 <script lang="ts">
-  import { run } from 'svelte/legacy';
-
   import type {
     BackorderAlerts,
     ProductDetailModule,
@@ -14,9 +12,9 @@
   import { Accordion } from "@skeletonlabs/skeleton-svelte";
   import sanitizeHtml from "sanitize-html";
   import { newsSanitizeSettings } from "$lib/news/news";
-  import { goto } from "$app/navigation";
+  import { goto, invalidateAll } from "$app/navigation";
   import Price from "$lib/lttstore/Price.svelte";
-  import { browser, dev } from "$app/environment";
+  import { dev } from "$app/environment";
   import ProductUpdateRequestButton from "$lib/lttstore/product/ProductUpdateRequestButton.svelte";
   import ExclamationTriangle from "svelte-bootstrap-icons/lib/ExclamationTriangle.svelte";
   import Tags from "svelte-bootstrap-icons/lib/Tags.svelte";
@@ -28,6 +26,7 @@
   import ProductChangeHistory from "./ProductChangeHistory.svelte";
   import LazyLoad from "@dimfeld/svelte-lazyload";
   import {slide} from "svelte/transition";
+  import NProgress from "nprogress";
 
   let { data } = $props();
 
@@ -78,41 +77,40 @@
 
   let productDiscounts = $derived(JSON.parse(data.product.productDiscount ?? "[]"));
 
-  let backorderNotices = $state(new Set());
-  run(() => {
-    backorderNotices.clear();
+  let backorderNotices = $derived.by(() => {
+    const set = new Set<string>();
     let backorderAlerts = JSON.parse(data.product?.backorderAlerts) as BackorderAlerts;
     if(backorderAlerts) {
       Object.values(backorderAlerts).forEach(alert => {
         if(alert && alert.trim()) {
-          backorderNotices.add(alert)
+          set.add(alert)
         }
       });
-      backorderNotices = backorderNotices;
+      return set;
     }
-  });
+  })
 
 
   let historyDays = $state(data.historyDays+"");
-  let first = $state(true);
-  run(() => {
-    console.debug({historyDays})
+  let first = !page.url.searchParams.has("historyDays");
+  $effect(() => {
+    historyDays;
     if(first) {
       first = false;
     } else {
       const newUrl = new URL(location.href);
       newUrl.searchParams.set("historyDays", historyDays+"")
 
-      first = true;
-      goto(newUrl.toString(), { noScroll: true } ).then(() => {
-        chartUpdateNumber++;
-      })
+      // goto(newUrl.toString(), { noScroll: true } ).then(() => {
+      //   chartUpdateNumber++;
+      // })
 
-      /*history.pushState({}, document.title, newUrl.toString());
-      first = true;
+      history.pushState({}, document.title, newUrl.toString());
+      NProgress.start();
       invalidateAll().then(() => {
+        NProgress.done();
         chartUpdateNumber++;
-      });*/
+      });
     }
   });
 </script>
@@ -495,24 +493,31 @@
                                     <td>{variant.barcode}</td>
                                   </tr>
                                 {/if}
-                                <tr>
-                                  <td>Minimum Quantity</td>
-                                  <td>{variant.quantity_rule.min}</td>
-                                </tr>
-                                <tr>
-                                  <td>Maximum Quantity</td>
-                                  <td>
-                                    {#if variant.quantity_rule.max !== null}
-                                      {variant.quantity_rule.min}
-                                    {:else}
-                                      <span class="opacity-70">[none]</span>
-                                    {/if}
-                                  </td>
-                                </tr>
-                                <tr>
-                                  <td>Quantity Increment</td>
-                                  <td>{variant.quantity_rule.increment}</td>
-                                </tr>
+                                {#if variant.quantity_rule}
+                                  <tr>
+                                    <td>Minimum Quantity</td>
+                                    <td>{variant.quantity_rule.min}</td>
+                                  </tr>
+                                  <tr>
+                                    <td>Maximum Quantity</td>
+                                    <td>
+                                      {#if variant.quantity_rule.max !== null}
+                                        {variant.quantity_rule.min}
+                                      {:else}
+                                        <span class="opacity-70">[none]</span>
+                                      {/if}
+                                    </td>
+                                  </tr>
+                                  <tr>
+                                    <td>Quantity Increment</td>
+                                    <td>{variant.quantity_rule.increment}</td>
+                                  </tr>
+                                {:else}
+                                  <tr>
+                                    <td>Quantity Rule</td>
+                                    <td><span class="opacity-70">N/A</span></td>
+                                  </tr>
+                                {/if}
                               </tbody>
                             </table>
                           </li>
