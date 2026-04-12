@@ -2,7 +2,7 @@
 	import { onMount } from 'svelte';
 	import { commas } from '$lib/utils.ts';
 	import { fade } from 'svelte/transition';
-	import type { ParsedStockHistoryTableRow, StockCounts, StockHistoryTableRow } from "$lib/lttstore/lttstore_types.ts";
+	import type { ParsedStockHistoryTableRow, StockHistoryTableRow } from "$lib/lttstore/lttstore_types.ts";
 	import { typed } from '$lib';
 	import UplotSvelte from 'uplot-svelte';
 	import uPlot from "uplot";
@@ -85,6 +85,7 @@
 
 	const options: uPlot.Options = $derived({
 		title: productName ? 'Move Rate History - ' + productName : 'Move Rate History',
+		lineInterpolation: uPlot.paths.spline?.(),
 		id: productName + "-move-rate-" + chartUpdateNumber,
 		width,
 		height,
