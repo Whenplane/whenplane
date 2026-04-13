@@ -104,7 +104,7 @@
 	});
 
 	let width = $derived(wrapperDiv?.clientWidth ?? 1490);
-	let height = $derived(width / 1.5);
+	let height = $derived(width / 2);
 
 	if(browser) {
 		const resizeObserver = new ResizeObserver(() => {
