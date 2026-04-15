@@ -145,62 +145,8 @@
 			</span>
 		</span>
 	</a>
-	<!-- Old WanDB floatplane live detection
-    <a class="logo-item" href="https://www.floatplane.com/channel/linustechtips/live" target="_blank" rel="noopener">
-        <span><Floatplane/></span>
-        <span>
-            Floatplane
-            {#if mounted && useTwitchFallback} </!-- Don't SSR info button since it wont work without client-side JS --/>
-                <span
-                        class="text-surface inline-block fp-info *:pointer-events-none"
-                        use:popup={{
-                            event: 'hover',
-                            target: 'floatplaneInfo',
-                            placement: 'top'
-                        }}
-                        in:fade|global={{duration: 150}}
-                >
-                    <Info/>
-                </span>
-            {/if}
-            <br>
-            {#if !useTwitchFallback}
-                <span class="status opacity-50" class:wan={$floatplaneState?.live && $floatplaneState?.isWAN}>
-                    {#if $floatplaneState?.live}
-                        {#if $floatplaneState?.isWAN}
-                            (live)
-                        {:else}
-                            (live non-WAN)
-                        {/if}
-                    {:else}
-                        (offline)
-                    {/if}
-                </span>
-            {:else}
-                <span class="status opacity-50" class:wan={data.liveStatus.twitch.isWAN}>
-                    {#if data.liveStatus.twitch.isLive}
-                        {#if data.liveStatus.twitch.isWAN}
-                            (probably live)
-                        {:else}
-                            (probably live non-WAN)
-                        {/if}
-                    {:else}
-                        (probably offline)
-                    {/if}
-                </span>
-            {/if}
-        </span>
-    </a>-->
 </div>
 
-<!--<div class="card p-4 whitespace-nowrap shadow-x1 z-10 font-normal" data-popup="floatplaneInfo">
-    Floatplane does not have a (public) way to tell if LTT is streaming live.<br>
-    So, instead we guess based on if twitch is live or not.<br>
-    <br>
-    Normally we would use TheWanDb's reverse-engineering,<br>
-    but TheWanDb appears to be having issues right now,<br>
-    so we are falling back to twitch
-</div>-->
 <style>
 	.status {
 		font-weight: normal;
