@@ -136,12 +136,9 @@
 	let addSpace = $state(false);
 	function checkHeight() {
 		if(!browser || !mainContainer) return;
-		// Use hysteresis to prevent oscillation when window.innerHeight fluctuates
-		// due to mobile browser chrome showing/hiding. The spacer is outside
-		// mainContainer so it doesn't affect scrollHeight, but we still need
-		// different thresholds to avoid toggling on small viewport changes.
-		const threshold = addSpace ? 100 : 50;
-		if(mainContainer.scrollHeight > window.innerHeight - threshold) {
+		const spacerHeight = addSpace ? 64 : 0;
+		const threshold = addSpace ? 80 : 50;
+		if(mainContainer.scrollHeight - spacerHeight > window.innerHeight - threshold) {
 			outerContainer.classList.remove("items-center")
 			outerContainer.classList.add("too-short")
 			addSpace = true
@@ -411,10 +408,10 @@
 				</Accordion>
 			</div>
 		{/if}
+		{#if addSpace}
+			<div class="h-16"></div>
+		{/if}
 	</div>
-	{#if addSpace}
-		<div class="h-16"></div>
-	{/if}
 </div>
 
 {#if isFrame}
@@ -489,7 +486,7 @@
 	}
 
 	@media (max-height: 790px) {
-		.inner > :not(.alwaysFlex) {
+		.container:not(.alwaysFlex) .inner {
 			padding-bottom: 5em;
 		}
 	}
