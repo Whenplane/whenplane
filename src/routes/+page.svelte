@@ -423,7 +423,7 @@
 		</span>
 	</div>
 {:else}
-	<div class="absolute bottom-0 right-0 p-2">
+	<div class="absolute bottom-0 right-0 p-2 max-md:hidden">
 		<a href="/about">About</a>
 	</div>
 {/if}
