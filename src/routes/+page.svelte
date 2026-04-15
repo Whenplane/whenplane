@@ -136,10 +136,15 @@
 	let addSpace = $state(false);
 	function checkHeight() {
 		if(!browser || !mainContainer) return;
-		if(mainContainer.scrollHeight > window.innerHeight-50) {
+		// Use hysteresis to prevent oscillation when window.innerHeight fluctuates
+		// due to mobile browser chrome showing/hiding. The spacer is outside
+		// mainContainer so it doesn't affect scrollHeight, but we still need
+		// different thresholds to avoid toggling on small viewport changes.
+		const threshold = addSpace ? 100 : 50;
+		if(mainContainer.scrollHeight > window.innerHeight - threshold) {
 			outerContainer.classList.remove("items-center")
 			outerContainer.classList.add("too-short")
-			addSpace = true // So that there is some space at the bottom when scrolling. for some stupid reason padding doesnt work here
+			addSpace = true
 			if(dev) console.debug("too short")
 		} else {
 			outerContainer.classList.add("items-center")
@@ -406,10 +411,10 @@
 				</Accordion>
 			</div>
 		{/if}
-		{#if addSpace}
-			<div class="h-16"></div>
-		{/if}
 	</div>
+	{#if addSpace}
+		<div class="h-16"></div>
+	{/if}
 </div>
 
 {#if isFrame}
@@ -477,7 +482,6 @@
 
 	.container {
 		padding: 5em 1em 1em;
-		transition: padding 0.4s;
 	}
 
 	.lateness-stats {
