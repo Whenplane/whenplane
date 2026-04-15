@@ -148,6 +148,7 @@
 </div>
 
 <style>
+	@reference "#app.css";
 	.status {
 		font-weight: normal;
 		font-size: 0.9em;
@@ -166,6 +167,10 @@
 		width: 100%;
 		max-width: 300px;
 		text-align: center;
+	}
+	.logo-item:hover {
+		text-decoration: inherit;
+		@apply brightness-125;
 	}
 
 	:global(.boca-theme) .logo-item {
