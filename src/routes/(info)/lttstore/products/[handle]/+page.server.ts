@@ -71,6 +71,7 @@ export const load = (async ({platform, params, url}) => {
   }
 
   let historyDays: number | string = Number(url.searchParams.get("historyDays") ?? defaultHistoryDays);
+  const stockAsOf = Date.now();
 
   let stockHistory: Promise<StockHistoryTableRow[]>;
   if((url.searchParams.get("historyDays") ?? defaultHistoryDays) === "all") {
@@ -115,5 +116,6 @@ export const load = (async ({platform, params, url}) => {
     stockHistory: await stockHistory,
     changeHistory,
     similarProducts,
+    stockAsOf
   }
 }) satisfies PageServerLoad

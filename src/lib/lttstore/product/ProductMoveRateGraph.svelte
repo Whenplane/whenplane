@@ -12,7 +12,9 @@
 	let {
 		productName = typed<string | undefined>(),
 		stockHistory: stockHistoryRaw = typed<StockHistoryTableRow[]>(),
-		chartUpdateNumber = typed<number>(1)
+		chartUpdateNumber = typed<number>(1),
+		historyDays = typed<number | "all">("all"),
+		stockAsOf = typed<number>(Date.now())
 	} = $props();
 
 	let wrapperDiv = $state<HTMLDivElement>();
@@ -45,28 +47,33 @@
   let data = $derived.by(() => {
 		return [
 			[
+				...(historyDays === "all" ? [] : [Math.round((Date.now() - (historyDays * 24 * 60 * 60e3)) / 1e3)]),
 				...stockHistory.map((h, i) => i === 0
 					? Math.round(h.timestamp / 1e3)
 					: Math.round((stockHistory[i-1].timestamp + h.timestamp) / 2 / 1e3)
 				),
-				...(stockHistory.length > 1 ? [Math.round(stockHistory[stockHistory.length-1].timestamp / 1e3)] : []),
+				Math.round(stockAsOf / 1e3)
 			],
 			...(onlyTotal ? ["total"] : Object.keys(someStock))
-				.map(k => stockHistory.map((h, i, a) => {
-					if(i > 0) {
-						const previous = a[i-1];
-						const previousStock = previous.stock[k]
-						const currentStock = h.stock[k];
-						if(previousStock === null || currentStock === null) return null;
-						const timeDiff = h.timestamp - previous.timestamp;
-						const stockDiff = previousStock - currentStock;
-						const rate = stockDiff / (timeDiff / (60 * 60e3));
-						if(rate < 0) return null;
-						return rate;
-					} else {
-						return null;
-					}
-				}))
+				.map(k => [
+					...(historyDays === "all" ? [] : [null]),
+					...stockHistory.map((h, i, a) => {
+						if(i > 0) {
+							const previous = a[i-1];
+							const previousStock = previous.stock[k]
+							const currentStock = h.stock[k];
+							if(previousStock === null || currentStock === null) return null;
+							const timeDiff = h.timestamp - previous.timestamp;
+							const stockDiff = previousStock - currentStock;
+							const rate = stockDiff / (timeDiff / (60 * 60e3));
+							if(rate < 0) return null;
+							return rate;
+						} else {
+							return null;
+						}
+					}),
+					null
+				])
 		]
 	});
 

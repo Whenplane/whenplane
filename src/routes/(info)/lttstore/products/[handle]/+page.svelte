@@ -692,10 +692,10 @@
                 <option value="all">all-time</option>
               </select>
               {#key data}
-                <ProductStockHistoryGraph stockHistory={data.stockHistory} productName={productInfo.title} productOptions={productInfo.options} {chartUpdateNumber}/>
+                <ProductStockHistoryGraph stockHistory={data.stockHistory} productName={productInfo.title} productOptions={productInfo.options} historyDays={data.historyDays} stockAsOf={data.stockAsOf} {chartUpdateNumber}/>
                 <div class="min-h-[710px]">
                   <LazyLoad>
-                    <ProductMoveRateGraph stockHistory={data.stockHistory} productName={productInfo.title} {chartUpdateNumber}/>
+                    <ProductMoveRateGraph stockHistory={data.stockHistory} productName={productInfo.title} historyDays={data.historyDays} stockAsOf={data.stockAsOf} {chartUpdateNumber}/>
                   </LazyLoad>
                 </div>
               {/key}

@@ -61,7 +61,9 @@
 		productName = typed<string | undefined>(),
 		stockHistory = typed<StockHistoryTableRow[]>(),
 		productOptions = typed<ProductOption[]>(),
-		chartUpdateNumber = typed<number>(1)
+		chartUpdateNumber = typed<number>(1),
+		historyDays = typed<number | "all">("all"),
+		stockAsOf = typed<number>(Date.now())
 	} = $props();
 
 	let wrapperDiv = $state<HTMLDivElement>();
@@ -93,14 +95,24 @@
 
 	let data = $derived.by(() => {
 		const filteredKeys = filter ? Object.keys(someStock).filter(k => k.includes(filter!)) : Object.keys(someStock);
-		return [
-			stockHistory.map((h: StockHistoryTableRow) => Math.round(h.timestamp / 1e3)),
+		const d = [
+			[
+				...(historyDays === "all" ? [] : [Math.round((Date.now() - (historyDays * 24 * 60 * 60e3)) / 1e3)]),
+				...stockHistory.map((h: StockHistoryTableRow) => Math.round(h.timestamp / 1e3)),
+				Math.round(stockAsOf / 1e3)
+			],
 			...(onlyTotal ? ["total"] : filteredKeys)
-				.map((k: string) => stockHistory.map((h: { stock: string }) => {
-					const stock = JSON.parse(h.stock)[k];
-					return typeof stock === "number" ? stock : null;
-				}))
-		]
+				.map((k: string) => [
+					...(historyDays === "all" ? [] : [null]),
+					...stockHistory.map((h: { stock: string }) => {
+						const stock = JSON.parse(h.stock)[k];
+						return typeof stock === "number" ? stock : null;
+					}),
+					null
+				])
+		];
+		console.debug({d})
+		return d;
 	});
 
 	let width = $derived(wrapperDiv?.clientWidth ?? 1490);
