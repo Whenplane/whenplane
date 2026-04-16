@@ -17,6 +17,7 @@ export const load = (async ({platform, url}) => {
       case "purchasesPerDay":
         sortColumn = "purchasesPerDay";
         break;
+      case "stockChecked":
       case "updated":
       case "stockUpdate":
         sortColumn = "stockChecked";

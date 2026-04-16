@@ -20,10 +20,9 @@
   }
 
   let sortedBy = $state(page.url.searchParams.get("sort") ?? "purchasesPerDay");
-  if(data.sortColumn === "stockChecked") sortedBy = "updated";
-  let first = $state(true);
-  run(() => {
-    console.debug({sortedBy})
+  let first = !page.url.searchParams.has("sort");
+  $effect(() => {
+    sortedBy;
     if(first) {
       first = false;
     } else {
@@ -35,7 +34,7 @@
       // first = true;
       reload()*/
     }
-  });
+  })
 
 </script>
 
