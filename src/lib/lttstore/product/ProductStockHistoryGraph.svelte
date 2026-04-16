@@ -66,7 +66,7 @@
 
 	let wrapperDiv = $state<HTMLDivElement>();
 
-	let onlyTotalCheck = $state(false);
+	let onlyTotal = $state(false);
 	let filter: string | undefined = $state(undefined);
 
 	let someStock = $derived(
@@ -81,15 +81,15 @@
 				}, {})
 			: {}
 	);
-	let onlyTotal = $derived.by(() => {
+	$effect(() => console.debug({ onlyTotal, length: Object.keys(someStock).length, someStock, stockHistory }));
+	let hideTotal = $derived.by(() => {
 		const keys = [...Object.keys(someStock)];
 		const totalIndex = keys.indexOf("total");
 		if (totalIndex !== -1) {
 			keys.splice(totalIndex, 1);
 		}
-		return (keys.length == 1) || onlyTotalCheck;
+		return keys.length == 1;
 	});
-	$effect(() => console.debug({ onlyTotal, length: Object.keys(someStock).length, someStock, stockHistory }));
 
 	let data = $derived.by(() => {
 		const filteredKeys = filter ? Object.keys(someStock).filter(k => k.includes(filter!)) : Object.keys(someStock);
@@ -129,7 +129,10 @@
 				label: "Time",
 				value: timeFormat,
 			},
-			...(onlyTotal ? ["total"] : (filter ? Object.keys(someStock).filter(k => k.includes(filter!)) : Object.keys(someStock)))
+			...(onlyTotal ? ["total"] : (
+				filter ? Object.keys(someStock).filter(k => k.includes(filter!)) :
+					hideTotal ? Object.keys(someStock).filter(k => k !== "total") : Object.keys(someStock)
+			))
 				.map((k: string, i: number) => ({
 					show: true,
 					gaps: stockGaps,
@@ -170,7 +173,7 @@
 </div>
 {#if Object.keys(someStock).length > 2}
 	<label class="inline-block">
-		<input type="checkbox" bind:checked={onlyTotalCheck} />
+		<input type="checkbox" bind:checked={onlyTotal} />
 		Only show total in graph?
 	</label>
 {/if}
