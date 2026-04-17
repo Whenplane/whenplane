@@ -70,6 +70,12 @@ export const load = (async ({platform, params, url}) => {
     }
   }
 
+  const firstSeenDistance = Date.now() - product.firstSeen;
+  if(firstSeenDistance < 2 * DAY) {
+    defaultHistoryDays = 1;
+  }
+
+
   let historyDays: number | string = Number(url.searchParams.get("historyDays") ?? defaultHistoryDays);
   const stockAsOf = Date.now();
 
