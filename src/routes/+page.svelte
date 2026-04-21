@@ -356,7 +356,7 @@
 
 
 		{#if (data.isThereWan?.text || data.isThereWan?.image) && !data.isBot}
-			<div class="card border-2 p-2 border-amber-600! !bg-opacity-20 bg-amber-600! block text-center limit mx-auto">
+			<div class="card border-2 p-2 border-amber-600! bg-amber-600/21! block text-center limit mx-auto">
 				{#if data.isThereWan?.text}
 					{@html sanitizeHtml(data.isThereWan?.text, newsSanitizeSettings)}
 				{/if}
