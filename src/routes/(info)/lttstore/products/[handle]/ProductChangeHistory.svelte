@@ -8,6 +8,7 @@
   import { dev } from "$app/environment";
   import LazyLoad from "@dimfeld/svelte-lazyload";
   import { countTo } from "$lib/utils.ts";
+  import { page } from "$app/state";
 
   let {
     changeHistory = typed<{
@@ -63,6 +64,22 @@
     }
   }
 
+  let table: HTMLTableElement | undefined = $state();
+
+  onMount(() => {
+    // for some reason page.url doesnt have the hash on initial load
+    if(location.href.includes("#change-") && changeHistory !== null) {
+      startLoading();
+      const hash = new URL(location.href).hash;
+      const match = document.getElementById(hash.substring(1));
+      console.log({match, hash});
+      match?.scrollIntoView?.({behavior: "smooth", block: "center"});
+      setTimeout(() => {
+        match?.scrollIntoView?.({block: "center"});
+      }, 1e3)
+    }
+  })
+
   onDestroy(() => {
     if(loadInterval) clearInterval(loadInterval);
   })
@@ -72,7 +89,7 @@
 
 <LazyLoad on:visible={startLoading}/>
 <div class="table-container rounded-md">
-  <table class="table rounded-md w-full table-fixed">
+  <table class="table rounded-md w-full table-fixed" bind:this={table}>
     <thead>
     <tr>
       <th>What changed</th>
@@ -86,9 +103,13 @@
         {#each changeHistory as change, i (change.timestamp + change.field)}
           {@const BeforeComponent = getDiffComponent(change.field)}
           {@const AfterComponent = getDiffComponent(change.field)}
-          <tr class="align-top">
+          <tr class="align-top" id="change-{change.field}-{change.timestamp}" class:hashHighlight={page.url.hash === `#change-${change.field}-${change.timestamp}`}>
             <td>{getFieldName(change.field)}</td>
-            <td><DateStamp epochSeconds={change.timestamp/1e3}/></td>
+            <td>
+              <a class="hidden-link" href="#change-{change.field}-{change.timestamp}">
+                <DateStamp epochSeconds={change.timestamp/1e3}/>
+              </a>
+            </td>
             {#if i <= loadTo}
               <td><BeforeComponent before={change.old} after={change.new} displaying="before"/></td>
               <td><AfterComponent before={change.old} after={change.new} displaying="after"/></td>
@@ -119,3 +140,10 @@
     {/if}
   </table>
 </div>
+
+<style>
+    .hashHighlight {
+        border: #d4163c 2px solid;
+        border-radius: 12px;
+    }
+</style>
