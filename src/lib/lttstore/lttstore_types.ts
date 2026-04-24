@@ -325,3 +325,9 @@ export type CollectionDbRow = {
   products: string,
   available: boolean
 }
+
+export type StockTotalsRow = {
+  timestamp: number,
+  store: number,
+  total: number
+}
