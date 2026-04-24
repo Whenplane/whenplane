@@ -8,6 +8,7 @@
   import uPlot from "uplot";
   import 'uplot/dist/uPlot.min.css';
   import { stockGaps, timeFormat, stockColors } from '$lib/lttstore/product/ProductStockHistoryGraph.svelte';
+  import { browser } from "$app/environment";
 
   let {
     stockHistory,
@@ -74,15 +75,17 @@
   let width = $derived(wrapperDiv?.clientWidth ?? 1490);
   let height = $derived(width / 2);
 
-  const resizeObserver = new ResizeObserver(() => {
-    const newWidth = wrapperDiv?.clientWidth ?? 1490;
-    setTimeout(() => {
-      if(newWidth === (wrapperDiv?.clientWidth ?? 1490)) {
-        width = newWidth;
-      }
-    }, 100);
-  });
-  $effect(() => wrapperDiv && resizeObserver.observe(wrapperDiv));
+  if(browser) {
+    const resizeObserver = new ResizeObserver(() => {
+      const newWidth = wrapperDiv?.clientWidth ?? 1490;
+      setTimeout(() => {
+        if(newWidth === (wrapperDiv?.clientWidth ?? 1490)) {
+          width = newWidth;
+        }
+      }, 100);
+    });
+    $effect(() => wrapperDiv && resizeObserver.observe(wrapperDiv));
+  }
 
   const options: uPlot.Options = $derived({
     title: 'Move Rate History - All Products',
