@@ -39,9 +39,10 @@
         ...(historyDays === "all" ? [] : [Math.round((Date.now() - (historyDays * 24 * 60 * 60e3)) / 1e3)]),
         ...Object.keys(perStoreTotals).map((s, si) => perStoreTotals[s]
           .map((h, i) => {
+            const previous = perStoreTotals[s]?.[i-1];
             return i === 0 && si === 0
               ? Math.round(h.timestamp / 1e3)
-              : Math.round((perStoreTotals[s][i-1].timestamp + h.timestamp) / 2 / 1e3)
+              : Math.round((previous.timestamp + h.timestamp) / 2 / 1e3)
           })
         ).flat().sort((a, b) => a - b),
         Math.round(stockAsOf / 1e3)
