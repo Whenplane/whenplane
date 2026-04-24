@@ -41,7 +41,7 @@
           .map((h, i) => {
             const previous = perStoreTotals[s]?.[i-1];
             if(!previous) console.debug({previous, h, i})
-            return i === 0 && si === 0
+            return i === 0
               ? Math.round(h.timestamp / 1e3)
               : Math.round((previous.timestamp + h.timestamp) / 2 / 1e3)
           })
