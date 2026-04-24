@@ -31,5 +31,8 @@ export const load: PageServerLoad = async ({ url, platform }) => {
     );
   }
 
-  return {totalsHistory: await stockHistory};
+  return {
+    totalsHistory: await stockHistory,
+    historyDays
+  };
 };
