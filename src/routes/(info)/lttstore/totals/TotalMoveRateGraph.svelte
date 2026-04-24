@@ -43,7 +43,7 @@
               ? Math.round(h.timestamp / 1e3)
               : Math.round((perStoreTotals[s][i-1].timestamp + h.timestamp) / 2 / 1e3)
           })
-        ).flat().sort((a, b) => b - a),
+        ).flat().sort((a, b) => a - b),
         Math.round(stockAsOf / 1e3)
       ],
       ...(Object.keys(perStoreTotals))
