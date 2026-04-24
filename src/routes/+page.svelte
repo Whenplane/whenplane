@@ -412,10 +412,6 @@
 			</a>
 		</span>
 	</div>
-{:else}
-	<div class="absolute bottom-0 right-0 p-2">
-		<a href="/about">About</a>
-	</div>
 {/if}
 
 {#if !isFrame}
