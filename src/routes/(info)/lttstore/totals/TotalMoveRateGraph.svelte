@@ -55,7 +55,7 @@
             if(h.store+"" !== s+"") return null;
             if(i > 0) {
               const indexInStore = perStoreTotals[s].findIndex(h2 => h2.timestamp === h.timestamp);
-              if(indexInStore === -1) return null;
+              if(indexInStore <= 0) return null;
               const previous = perStoreTotals[s][indexInStore-1];
               const previousStock = previous.total;
               const currentStock = h.total;
