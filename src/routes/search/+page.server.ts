@@ -111,6 +111,7 @@ export const load = (async ({fetch, url, cookies, platform}) => {
         exclude_fields: ["text", "embedding"],
         highlight_fields: ["text"],
         highlight_affix_num_tokens: 15,
+        vector_query: "embedding:([], distance_threshold: 0.10)",
         prefix: false
       }, {cacheSearchResultsForSeconds: 60}) as Promise<SearchResponse<CombinedSearchResult>>
   );
