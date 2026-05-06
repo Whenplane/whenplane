@@ -591,37 +591,6 @@
   <br>
   <br>
 
-  {#if (!data.product.available || Date.now() - data.product.stockChecked < (7 * 24 * 60 * 60e3))}
-    <h2>Stock</h2>
-    {#if (currentStock?.total ?? -1) >= 0}
-      {#if data.product.available}
-        Currently there is
-      {:else}
-        Before this product was removed, there was
-      {/if}
-      {#if (currentStock.total ?? -1) <= 500000}
-        {#if (currentStock.total ?? -1) === -1}
-          more than {commas(sum(currentStock))}
-        {:else}
-          a total of {commas(currentStock?.total)}
-        {/if}
-      {:else}
-        more than 500,000
-      {/if}
-
-      {strippedTitle}{currentStock.total === 1 || strippedTitle.endsWith("s") ? "" : "s"}
-      in stock.
-      <br>
-    {/if}
-    {#if data.product.stockChecked !== -1}
-      <small class="opacity-80">
-        Last checked <DateStamp epochSeconds={data.product.stockChecked / 1e3}/>
-      </small>
-    {/if}
-  {/if}
-  <br>
-  <br>
-
   {#if productDiscounts.length > 0}
     <h2>Product Discount</h2>
     {#each productDiscounts as productDiscount}
@@ -654,6 +623,37 @@
     <br>
     <br>
   {/if}
+
+  {#if (!data.product.available || Date.now() - data.product.stockChecked < (7 * 24 * 60 * 60e3))}
+    <h2>Stock</h2>
+    {#if (currentStock?.total ?? -1) >= 0}
+      {#if data.product.available}
+        Currently there is
+      {:else}
+        Before this product was removed, there was
+      {/if}
+      {#if (currentStock.total ?? -1) <= 500000}
+        {#if (currentStock.total ?? -1) === -1}
+          more than {commas(sum(currentStock))}
+        {:else}
+          a total of {commas(currentStock?.total)}
+        {/if}
+      {:else}
+        more than 500,000
+      {/if}
+
+      {strippedTitle}{currentStock.total === 1 || strippedTitle.endsWith("s") ? "" : "s"}
+      in stock.
+      <br>
+    {/if}
+    {#if data.product.stockChecked !== -1}
+      <small class="opacity-80">
+        Last checked <DateStamp epochSeconds={data.product.stockChecked / 1e3}/>
+      </small>
+    {/if}
+  {/if}
+  <br>
+  <br>
 
   <Accordion collapsible defaultValue={["stock-history"]}>
     <Accordion.Item value="stock-history">
