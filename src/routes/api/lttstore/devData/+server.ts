@@ -23,7 +23,7 @@ export const GET = (async ({platform}) => {
     .then(r => r.results);
 
   const screwdriverStocks = db.prepare("select * from stock_history where id = 6649895092327 and timestamp > ?")
-    .bind(Date.now() - (365 * 24 * 60 * 60e3))
+    .bind(Date.now() - (6 * 30 * 24 * 60 * 60e3))
     .all()
     .then(r => r.results);
 
