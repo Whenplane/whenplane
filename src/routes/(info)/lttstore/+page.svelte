@@ -187,7 +187,7 @@
   {#if data.newProducts.length > 0}
     <h2>New products</h2>
     <div class="opacity-80 pl-2">
-      These products are new.
+      These products are new or returning.
     </div>
     {#each data.newProducts as product}
       <LTTProductCard product={JSON.parse(product.product)} shortTitle={product.shortTitle} goneIn={true} stock={JSON.parse(product.stock)} purchasesPerHour={product.purchasesPerHour} available={product.available}/>
