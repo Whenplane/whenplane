@@ -32,11 +32,13 @@ export const GET = (async ({platform}) => {
     .finally(() => console.log("screwdriverStocks query finished"))
 
   // const waterBottleChanges = db.prepare("select * from change_history where id = 7117650296935")
-  const changeHistory = db.prepare("select * from change_history where id = 6649895092327 or timestamp > ? limit 1500")
+  const changeHistory = db.prepare("select * from change_history where id = 6649895092327 or timestamp > ? limit 1200")
     .bind(Date.now() - (14 * 24 * 60 * 60e3)) // only get non-screwdriver changes from the past 14 days
     .all()
-    .then(r => r.results)
-    .finally(() => console.log("changeHistory query finished"))
+    .then(r => {
+      console.log("changeHistory query finished with", r.results.length, "results")
+      return r.results
+    })
 
   const similarProducts = db.prepare("select * from similar_products")
     .all()
