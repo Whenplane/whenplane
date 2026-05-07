@@ -594,11 +594,11 @@
   {#if productDiscounts.length > 0}
     <h2>Product Discount</h2>
     {#each productDiscounts as productDiscount}
-      <aside class="alert preset-tonal border border-surface-500">
+      <aside class="rounded-xl flex p-2 alert preset-tonal border border-surface-500">
         <!-- Icon -->
         <div><Tags width="2em" height="2em"/></div>
         <!-- Message -->
-        <div class="alert-message">
+        <div class="alert-message self-center pl-2">
           <!--          <h4 class="h4">(title)</h4>-->
           <p class="product-discount-text">
             {@html sanitizeHtml(productDiscount, newsSanitizeSettings)}
@@ -612,9 +612,9 @@
   {#if backorderNotices.size > 0}
     <h2>Backorder Notice</h2>
     {#each backorderNotices as backorderNotice}
-      <aside class="alert preset-tonal border border-surface-500">
+      <aside class="rounded-xl flex p-2 alert preset-tonal border border-surface-500">
         <div><ExclamationTriangle width="2em" height="2em"/></div>
-        <div class="alert-message">
+        <div class="alert-message self-center pl-2">
           <p>{backorderNotice}</p>
         </div>
       </aside>
