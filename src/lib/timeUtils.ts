@@ -7,9 +7,9 @@ export function isBefore(a: Date, b: Date): boolean {
 }
 
 export function getNextWANLuxon(now = new Date(), buffer = true, alternateTimes?: AlternateTimeRow[], hasDone?: boolean): DateTime {
-    const adjustedNow = now;
+    const adjustedNow = new Date(now);
     // Adjust 'now' for loose wan for LTX
-    if(adjustedNow.getFullYear() == 2023 && adjustedNow.getMonth() == 6 && adjustedNow.getDate() == 29) {
+    if(adjustedNow.getFullYear() === 2023 && adjustedNow.getMonth() === 6 && adjustedNow.getDate() === 29) {
         adjustedNow.setDate(adjustedNow.getDate() - 1);
     }
     let wanDate = getLooseWAN(adjustedNow);
