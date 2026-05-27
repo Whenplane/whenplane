@@ -20,20 +20,19 @@
 	const seconds = Math.floor(message.timestamp);
 	const imageUrl = `https://merch-message-images.whenplane.com/${message.show}/images/${seconds}.jpg`;
 
-	const floatplaneSeconds = $derived(
-		source.startsWith('floatplane')
-			? seconds
-			: preShowLength !== null
-				? seconds + Math.floor(preShowLength / 1e3)
-				: null
-	);
-	const youtubeSeconds = $derived(
+	const floatplaneSeconds = source.startsWith('floatplane')
+		? source === 'floatplane-live'
+			? seconds + 50
+			: seconds
+		: preShowLength !== null
+			? seconds + Math.floor(preShowLength / 1e3)
+			: null;
+	const youtubeSeconds =
 		source === 'youtube'
 			? seconds
 			: preShowLength !== null
 				? (floatplaneSeconds ?? seconds) - Math.floor(preShowLength / 1e3)
-				: null
-	);
+				: null;
 </script>
 
 <div
