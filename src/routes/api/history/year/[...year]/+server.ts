@@ -197,7 +197,9 @@ export const GET = (async ({platform, params, locals, fetch}) => {
 
     locals.addTiming({id: "afterLoop", duration: Date.now() - afterLoopStart});
 
-    keys = keys.sort((a, b) => new Date(b.name).getTime() - new Date(a.name).getTime());
+    keys = keys
+      .sort((a, b) => new Date(b.name).getTime() - new Date(a.name).getTime())
+      .filter(k => k.value?.preShowStart || k.value?.mainShowStart);
 
     locals.addTiming({id: "total", duration: Date.now() - start});
 
@@ -217,7 +219,6 @@ export const GET = (async ({platform, params, locals, fetch}) => {
     }
 
     if(cCache && cacheRequest) platform?.context?.waitUntil(cCache.put(cacheRequest, json(keys, {headers: {"x-fetched": new Date().toISOString(), "x-cached": "true", "x-cache": "dc"}})));
-
 
     return json(keys, {
         headers: {
