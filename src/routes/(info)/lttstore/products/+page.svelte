@@ -77,9 +77,19 @@
         {#snippet detail()}
           <div class="opacity-80 text-xs">
             {#if data.sortColumn === "purchasesPerDay"}
-              {product.purchasesPerDay?.toFixed(2) ?? "??"} spd
+              {#if product.purchasesPerDay !== -1}
+                {product.purchasesPerDay?.toFixed(2) ?? "??"}
+              {:else}
+                ??
+              {/if}
+              spd
             {:else if data.sortColumn === "purchasesPerHour"}
-              {product.purchasesPerHour?.toFixed(2) ?? "??"} sph
+              {#if product.purchasesPerHour !== -1}
+                {product.purchasesPerHour?.toFixed(2) ?? "??"}
+              {:else}
+                ??
+              {/if}
+              sph
             {:else if data.sortColumn === "metadataUpdate"}
               Meta updated
               {#if product.metadataUpdate && product.metadataUpdate > 0}
