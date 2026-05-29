@@ -199,7 +199,7 @@ export const GET = (async ({platform, params, locals, fetch}) => {
 
     keys = keys
       .sort((a, b) => new Date(b.name).getTime() - new Date(a.name).getTime())
-      .filter(k => k.value?.preShowStart || k.value?.mainShowStart);
+      .filter(k => k.value?.preShowStart || k.value?.mainShowStart || k.metadata?.preShowStart || k.metadata?.mainShowStart);
 
     locals.addTiming({id: "total", duration: Date.now() - start});
 
