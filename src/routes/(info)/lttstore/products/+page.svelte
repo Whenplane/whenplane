@@ -1,7 +1,4 @@
 <script lang="ts">
-  import { run } from 'svelte/legacy';
-
-
   import LTTProductCard from "$lib/lttstore/LTTProductCard.svelte";
   import { page } from "$app/state";
   import {flip} from "svelte/animate";
@@ -9,8 +6,10 @@
   import { goto, invalidateAll } from "$app/navigation";
   import { Progress } from "@skeletonlabs/skeleton-svelte";
   import { dev } from "$app/environment";
+  import type { PageProps } from "./$types";
+  import DateStamp from "$lib/DateStamp.svelte";
 
-  let { data } = $props();
+  let { data }: PageProps = $props();
 
   let loading = $state(false);
   async function reload() {
@@ -69,7 +68,43 @@
   </div>
   {#each data.allProducts as product, i (product.id)}
     <div class="inline-block" animate:flip={{ duration: 200 }}>
-      <LTTProductCard product={JSON.parse(product.product)} shortTitle={product.shortTitle} available={product.available} lazyLoadImage={i > 30}/>
+      <LTTProductCard
+        product={JSON.parse(product.product)}
+        shortTitle={product.shortTitle}
+        available={product.available}
+        lazyLoadImage={i > 30}
+      >
+        {#snippet detail()}
+          <div class="opacity-80 text-xs">
+            {#if data.sortColumn === "purchasesPerDay"}
+              {product.purchasesPerDay?.toFixed(2) ?? "??"} spd
+            {:else if data.sortColumn === "purchasesPerHour"}
+              {product.purchasesPerHour?.toFixed(2) ?? "??"} sph
+            {:else if data.sortColumn === "metadataUpdate"}
+              Meta updated
+              {#if product.metadataUpdate && product.metadataUpdate > 0}
+                <DateStamp epochSeconds={product.metadataUpdate / 1e3} />
+              {:else}
+                N/A
+              {/if}
+            {:else if data.sortColumn === "stockChecked"}
+              Stock checked
+              {#if product.stockChecked && product.stockChecked > 0}
+                <DateStamp epochSeconds={product.stockChecked / 1e3} />
+              {:else}
+                N/A
+              {/if}
+            {:else if data.sortColumn === "lastRestock"}
+              Restocked
+              {#if product.lastRestock && product.lastRestock > 0}
+                <DateStamp epochSeconds={product.lastRestock / 1e3} />
+              {:else}
+                N/A
+              {/if}
+            {/if}
+          </div>
+        {/snippet}
+      </LTTProductCard>
     </div>
   {:else}
     No products are being tracked yet!

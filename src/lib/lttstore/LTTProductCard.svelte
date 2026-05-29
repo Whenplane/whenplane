@@ -6,6 +6,7 @@
 	import { typed } from '$lib';
 	import { dev } from "$app/environment";
 	import { sha256 } from "$lib/utils.ts";
+	import type { Snippet } from "svelte";
 
 	let {
 		product = typed<ShopifyProduct>(),
@@ -14,7 +15,8 @@
 		purchasesPerHour = typed<number | undefined>(),
 		goneIn = typed<boolean>(false),
 		available = typed<boolean>(true),
-		lazyLoadImage = typed<boolean>(false)
+		lazyLoadImage = typed<boolean>(false),
+		detail = typed<Snippet | undefined>()
 	} = $props();
 
 	let goneInHours = $derived((stock?.total ?? -1) / (purchasesPerHour ?? -1));
@@ -75,6 +77,7 @@
 			Could be gone in {Math.round(goneInHours)}h
 		</div>
 	{/if}
+	{@render detail?.()}
 </a>
 
 <style>
