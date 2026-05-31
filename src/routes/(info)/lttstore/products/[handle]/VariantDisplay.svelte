@@ -33,7 +33,7 @@
         <div class={[
         "card px-2 py-1 inline-flex m-1 flex-col",
         (option.values.length > 1 || product.options.length > 1) && (
-          !noImages.includes(option.name) ? "w-35" : "max-w-35"
+          !noImages.includes(option.name) ? "w-35" : "max-w-full"
         )
       ]}>
           {#if !noImages.includes(option.name)}
