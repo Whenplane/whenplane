@@ -63,13 +63,13 @@
               {/if}
             {/if}
           {/if}
-          <a href="https://www.lttstore.com/products/{product.handle}?variant={variant?.id}" class="hidden-link block w-full mt-auto" class:opacity-80={!inStock}>
+          <a href="https://www.lttstore.com/products/{product.handle}?variant={variant?.id}" class="hidden-link block w-full mt-auto" class:opacity-60={!inStock}>
             {#if value === "Default Title"}
               {meta.shortTitle ?? product.title}
             {:else}
               {value}
             {/if}
-            <div class="text-xs opacity-80">
+            <div class="text-xs opacity-70">
               {#if !inStock}
                 Out of stock
               {:else}
