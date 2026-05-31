@@ -1,14 +1,14 @@
 <script lang="ts">
-  import { run } from 'svelte/legacy';
-
-
   import type { SearchResponse } from "typesense/lib/Typesense/Documents";
   import type { ProductSearchIndex } from "$lib/lttstore/lttstore_types.ts";
   import { SearchClient } from "typesense";
   import LTTProductCard from "$lib/lttstore/LTTProductCard.svelte";
-  import { Progress } from "@skeletonlabs/skeleton-svelte";
   import { page } from "$app/state";
   import ToolTip from "$lib/ToolTip.svelte";
+  import CircleProgress from "$lib/replacements/CircleProgress.svelte";
+  import { dev } from "$app/environment";
+  import { onMount } from "svelte";
+  import { goto } from "$app/navigation";
 
   const searchClient = new SearchClient({
     'nodes': [{
@@ -29,11 +29,11 @@
   const minPrice = 0;
   const maxPrice = 59999 + 1
 
-  let filterMinPrice = $state(minPrice);
-  let filterMaxPrice = $state(maxPrice);
+  let filterMinPriceString = $state(minPrice + "");
+  let filterMaxPriceString = $state(maxPrice + "");
 
-  let filterMinPriceString = $state(filterMinPrice + "");
-  let filterMaxPriceString = $state(filterMaxPrice + "");
+  let filterMinPrice = $derived(Number(filterMinPriceString));
+  let filterMaxPrice = $derived(Number(filterMaxPriceString));
 
   const productTypeFilters = new Set();
 
@@ -43,23 +43,9 @@
   let searchResults: SearchResponse<ProductSearchIndex> | undefined = $state();
   let networkError = false;
 
-  let searchText = $state("");
+  let searchText = $state(page.url.searchParams.get("q") || "");
 
   let productCategories: {count: number, highlighted: string, value: string}[] | undefined = $state();
-
-  function throttleSearch() {
-    let tmpText = searchText+"";
-    waiting = true;
-    const thisSearchFilters = JSON.stringify(searchParams)
-    const thisProductTypeFilters = JSON.stringify([...productTypeFilters]);
-    greyResults = true;
-    setTimeout(() => {
-      if(searchText === tmpText && thisSearchFilters === JSON.stringify(searchParams) && thisProductTypeFilters === JSON.stringify([...productTypeFilters])) {
-        waiting = false;
-        search(searchText);
-      }
-    }, 50)
-  }
 
   const resultsPerPage = 100;
 
@@ -102,31 +88,68 @@
       })
   }
 
-  run(() => {
-    sortBy;
-    throttleSearch();
-  });
-  run(() => {
-    filterMinPrice = Number(filterMinPriceString);
-  });
-  run(() => {
-    filterMaxPrice = Number(filterMaxPriceString);
-  });
   let searchParams = $derived({
     filterMinPrice,
     filterMaxPrice,
     sortBy,
     onlyShowAvailable,
     onlyShowInStock
-  })
-  run(() => {
+  });
+
+  $effect(() => {
+    sortBy;
+    throttleSearch();
+  });
+  $effect(() => {
     searchParams;
     searchText;
     throttleSearch();
   });
-  run(() => {
-    productCategories = productTypeFilters.size === 0 ? searchResults?.facet_counts?.[1].counts : productCategories;
+  $effect(() => {
+    if(productTypeFilters.size === 0) {
+      productCategories = searchResults?.facet_counts?.[1].counts;
+    }
   });
+  $effect(() => {
+    if(searchText === "") throttleSearch();
+  })
+
+  let currentTimeout: number | undefined = undefined;
+  let urlTimeout: number | undefined = undefined;
+  function throttleSearch() {
+    const tmpText = searchText+"";
+    waiting = true;
+    const thisSearchFilters = JSON.stringify(searchParams)
+    const thisProductTypeFilters = JSON.stringify([...productTypeFilters]);
+    greyResults = true;
+    if(currentTimeout) clearTimeout(currentTimeout);
+    currentTimeout = setTimeout(() => {
+      if(searchText === tmpText && thisSearchFilters === JSON.stringify(searchParams) && thisProductTypeFilters === JSON.stringify([...productTypeFilters])) {
+        waiting = false;
+        search(searchText);
+        if(urlTimeout) clearTimeout(urlTimeout);
+        urlTimeout = setTimeout(() => {
+          if(searchText === tmpText && thisSearchFilters === JSON.stringify(searchParams) && thisProductTypeFilters === JSON.stringify([...productTypeFilters])) {
+            const url = new URL(window.location.href);
+            if(searchText) {
+              url.searchParams.set("q", searchText);
+            } else {
+              url.searchParams.delete("q");
+            }
+            if(url.toString() !== window.location.href) {
+              // window.history.replaceState({}, "", url.toString());
+              goto(url.toString(), { noScroll: true, replaceState: false, keepFocus: true } )
+            }
+          }
+        }, 500) as unknown as number;
+      }
+    }, 50) as unknown as number
+  }
+
+  let mounted = $state(false);
+  onMount(() => {
+    mounted = true;
+  })
 </script>
 
 <svelte:head>
@@ -142,15 +165,20 @@
 </ol>
 
 <div class="relative limit mx-auto p-2 pt-16">
-  <input placeholder="Search for products" bind:value={searchText} class="input w-64 p-2 pl-4">
-  {#await searchPromise}
-    {#if !waiting}
-      <Progress class="inline-block" width="w-6" stroke={250}/>
+  <input placeholder="Search for products" bind:value={searchText} class="input w-64 p-1 pl-4 inline-block">
+  <div class="inline-block relative pl-1">
+    {#await searchPromise}
+      {#if !waiting && mounted}
+        <CircleProgress class="inline-block absolute" size="6"/>
+      {/if}
+    {/await}
+    {#if waiting || !mounted}
+      <CircleProgress class="inline-block absolute" size={6}/>
     {/if}
-  {/await}
-  {#if waiting}
-    <Progress class="inline-block" width="w-6" stroke={250}/>
-  {/if}
+    <span class="opacity-0">
+      .
+    </span>
+  </div>
   <div class="inline-flex min-[650px]:absolute right-0 pr-2 pt-2">
     <select class="input inline-block" bind:value={sortBy}>
       <option value="_text_match(buckets: 10):desc,purchasesPerDay:desc">Purchases Per Day (descending)</option>
@@ -176,12 +204,12 @@
   <div class="search-params pr-4 text-left">
     <b class="text-xl">Filters</b><br>
     <br>
-    <label>
-      <input class="input" type="checkbox" bind:checked={onlyShowAvailable}>
+    <label class="block">
+      <input class="input inline-block" type="checkbox" bind:checked={onlyShowAvailable}>
       <span>Only show available products</span>
     </label>
-    <label class="pt-2">
-      <input class="input" type="checkbox" bind:checked={onlyShowInStock}>
+    <label class="pt-2 block">
+      <input class="input inline-block" type="checkbox" bind:checked={onlyShowInStock}>
       <span>Only show in-stock products</span>
     </label>
     <br>
@@ -189,16 +217,23 @@
     <br>
     <b>Price</b><br>
     <br>
-    <label>
+    <label class="block">
       <span>Min</span><br>
-      <input class="inline-block input w-full" type="range" min={minPrice} max={filterMaxPrice-1} bind:value={filterMinPriceString} step="100"/><br>
-      {filterMinPrice/100}
+      <input class="inline-block input w-full" type="range" min={minPrice} max={filterMaxPrice-1} bind:value={filterMinPriceString} step="100"/>
+      ${filterMinPrice/100}
     </label>
     <br>
-    <label>
+    <label class="block">
       <span>Max</span><br>
-      <input class="inline-block input w-full" type="range" min={(Math.round((filterMinPrice / 100) * 100) + 100)} max={maxPrice} bind:value={filterMaxPriceString} step="100"/><br>
-      {filterMaxPrice/100}
+      <input
+        class="inline-block input w-full"
+        type="range"
+        min={(Math.round((filterMinPrice / 100) * 100) + 100)}
+        max={maxPrice}
+        bind:value={filterMaxPriceString}
+        step="100"
+      />
+      ${filterMaxPrice/100}
     </label>
     <br>
     <hr>
@@ -207,9 +242,9 @@
     <br>
     {#if searchResults && productCategories}
       {#each productCategories as category (category.value)}
-        <label>
-          <input class="input" type="checkbox" onchange={e => {
-            const checked = (e.target)?.checked;
+        <label class="block">
+          <input class="input inline-block" type="checkbox" onchange={e => {
+            const checked = (e.target as HTMLInputElement)?.checked;
 
             if(checked) {
               productTypeFilters.add(category.value)
@@ -220,7 +255,10 @@
 
           }}>
           <span>
-            {category.value} <span class="chip preset-tonal-primary border border-primary-500 py-0.5 px-1.5 rounded-lg">{category.count}</span>
+            {category.value}
+            <span class="chip preset-tonal-primary border border-primary-500 py-0.5 px-1.5 rounded-lg text-white">
+              {category.count}
+            </span>
           </span>
         </label>
       {/each}

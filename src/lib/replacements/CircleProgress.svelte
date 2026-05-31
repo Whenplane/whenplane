@@ -5,12 +5,13 @@
   let {
     value = typed<number | null>(null),
     width = typed<string>("w-fit"),
-    class: classes = typed<string>("")
+    class: classes = typed<string>(""),
+    size = typed<number>(16),
   } = $props();
 </script>
 
 <Progress class="items-center {width} {classes}" {value}>
-  <Progress.Circle>
+  <Progress.Circle style="--size: calc(var(--spacing) * {size});;">
     <Progress.CircleTrack />
     <Progress.CircleRange />
   </Progress.Circle>
