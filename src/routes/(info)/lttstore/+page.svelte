@@ -12,6 +12,8 @@
   import type { SearchResponse } from "typesense/lib/Typesense/Documents";
   import type { ProductSearchIndex } from "$lib/lttstore/lttstore_types.ts";
   import sanitizeHtml from "sanitize-html";
+  import DateStamp from "$lib/DateStamp.svelte";
+  import RelativeDate from "$lib/RelativeDate.svelte";
 
   let { data } = $props();
 
@@ -190,7 +192,27 @@
       These products are new or returning.
     </div>
     {#each data.newProducts as product}
-      <LTTProductCard product={JSON.parse(product.product)} shortTitle={product.shortTitle} goneIn={true} stock={JSON.parse(product.stock)} purchasesPerHour={product.purchasesPerHour} available={product.available}/>
+      {@const productData = JSON.parse(product.product)}
+      <LTTProductCard
+        product={productData}
+        shortTitle={product.shortTitle}
+        goneIn={true}
+        stock={JSON.parse(product.stock)}
+        purchasesPerHour={product.purchasesPerHour}
+        available={product.available}
+      >
+        {#snippet detail()}
+          {@const publishedTime = new Date(productData.published_at).getTime()}
+          <div class="opacity-80 text-xs">
+            {#if product.firstSeen < publishedTime}
+              Re-Published
+            {:else}
+              Published
+            {/if}
+            <RelativeDate epochSeconds={publishedTime / 1e3} />
+          </div>
+        {/snippet}
+      </LTTProductCard>
     {/each}
     <br>
     <br>
@@ -203,7 +225,18 @@
     </div>
     {#each data.popularProducts as product (product.id)}
       <div class="inline-block" animate:flip={{ duration: 200 }}>
-        <LTTProductCard product={JSON.parse(product.product)} shortTitle={product.shortTitle}/>
+        <LTTProductCard
+          product={JSON.parse(product.product)}
+          shortTitle={product.shortTitle}
+        >
+          {#snippet detail()}
+            <div class="opacity-80 text-xs">
+              {#if product.purchasesPerHour && product.purchasesPerHour > 0}
+                {product.purchasesPerHour.toFixed(2)} sph
+              {/if}
+            </div>
+          {/snippet}
+        </LTTProductCard>
       </div>
     {:else}
       No products are being tracked yet!
@@ -258,7 +291,18 @@
           These items have been restocked in the past 6 days.
         </div>
         {#each recentRestocks as product}
-          <LTTProductCard product={JSON.parse(product.product)} shortTitle={product.shortTitle} purchasesPerHour={product.purchasesPerHour} available={product.available}/>
+          <LTTProductCard
+            product={JSON.parse(product.product)}
+            shortTitle={product.shortTitle}
+            purchasesPerHour={product.purchasesPerHour}
+            available={product.available}
+          >
+            {#snippet detail()}
+              <div class="opacity-80 text-xs">
+                Restocked <RelativeDate epochSeconds={product.lastRestock / 1e3} />
+              </div>
+            {/snippet}
+          </LTTProductCard>
         {/each}
         <br>
         <br>
