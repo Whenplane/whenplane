@@ -58,7 +58,7 @@
   <h1>All Products</h1>
   <div class="opacity-80 pl-2">
     Sorted by
-    <select bind:value={sortedBy} class="select w-56 py-1">
+    <select bind:value={sortedBy} class="select w-56 py-1 inline-block px-2 bg-surface-900">
       <option value="purchasesPerDay">average sales per day</option>
       <option value="purchasesPerHour">average sales per hour</option>
       <option value="metaUpdate">metadata updated</option>
@@ -72,7 +72,7 @@
         product={JSON.parse(product.product)}
         shortTitle={product.shortTitle}
         available={product.available}
-        lazyLoadImage={i > 30}
+        lazyLoadImage={i > 10}
       >
         {#snippet detail()}
           <div class="opacity-80 text-xs">
