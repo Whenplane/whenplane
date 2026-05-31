@@ -55,9 +55,12 @@
                 />
               </a>
             {:else}
-              <div class="flex justify-center items-center h-full w-full opacity-40 text-xs">
-                No Image
-              </div>
+              {@const otherOptionVariants = product.variants.filter(v => !v.options.includes(value) && v.featured_media)}
+              {#if otherOptionVariants.length > 0}
+                <div class="flex justify-center items-center h-full w-full opacity-40 text-xs">
+                  No Image
+                </div>
+              {/if}
             {/if}
           {/if}
           <a href="https://www.lttstore.com/products/{product.handle}?variant={variant?.id}" class="hidden-link block w-full mt-auto" class:opacity-80={!inStock}>
