@@ -7,6 +7,7 @@
   import ProductSearchModal from "./ProductSearchModal.svelte";
   import {popup} from "$lib/replacements/popup.ts";
   import type { MouseEventHandler } from "svelte/elements";
+  import { setContext } from "svelte";
 
   let { data, children } = $props();
 
@@ -23,6 +24,8 @@
   $effect(() => console.debug({searchOpen}))
 
   let searchOpen = $state(false);
+
+  setContext("lttstore-search-modal", () => searchOpen = true)
 
   function keypress(event: KeyboardEvent) {
     if(event.key === "P" && document.activeElement?.tagName !== "INPUT") {

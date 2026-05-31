@@ -11,6 +11,7 @@
   import CircleProgress from "$lib/replacements/CircleProgress.svelte";
   import type { MouseEventHandler } from "svelte/elements";
   import { sha256 } from "$lib/utils.ts";
+  import { onMount } from "svelte";
 
   const searchClient = new SearchClient({
     'nodes': [{
@@ -87,10 +88,22 @@
   $effect(() => {
     search(searchText);
   });
+
+  let input = $state<HTMLInputElement>();
+  onMount(() => {
+    input?.focus()
+  })
 </script>
 
 <div class="s-container p-4 absolute">
-  <input class="input block px-2 pl-4 py-0.5 bg-surface-800/85 rounded-2xl border border-surface-500" autofocus placeholder="Find a product" bind:value={searchText} onkeydown={keyPress}>
+  <input
+    class="input block px-2 pl-4 py-0.5 bg-surface-800/85 rounded-2xl border border-surface-500"
+    autofocus
+    placeholder="Find a product"
+    bind:value={searchText}
+    onkeydown={keyPress}
+    bind:this={input}
+  >
   <div class="inline-block absolute top-4 right-8">
     {#if waiting}
       <CircleProgress class="inline-block" width="w-6"/>
