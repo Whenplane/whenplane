@@ -20,7 +20,7 @@
   <div class="overflow-x-auto pr-64 edge-fade">
     <div class="flex w-fit">
       {#each option.values as value}
-        {@const variants = product.variants.filter(v => v.options.includes(value))}
+        {@const variants = product.variants.filter(v => v.options[option.position-1] === value)}
         {@const variant = variants.find(v => v.featured_media) ?? variants[0]}
         {@const inStock = !!variants.find(v => v.available)}
         {@const tag = `#${option.name.toLowerCase()}_${value.toLowerCase()}`}
@@ -55,7 +55,7 @@
                 />
               </a>
             {:else}
-              {@const otherOptionVariants = product.variants.filter(v => !v.options.includes(value) && v.featured_media)}
+              {@const otherOptionVariants = product.variants.filter(v => v.options[option.position-1] !== value && v.featured_media)}
               {#if otherOptionVariants.length > 0}
                 <div class="flex justify-center items-center h-full w-full opacity-40 text-xs">
                   No Image
