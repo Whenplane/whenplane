@@ -26,7 +26,7 @@
   import ProductChangeHistory from "./ProductChangeHistory.svelte";
   import LazyLoad from "@dimfeld/svelte-lazyload";
   import {slide} from "svelte/transition";
-  import NProgress from "nprogress";
+  import VariantDisplay from "./VariantDisplay.svelte";
 
   let { data } = $props();
 
@@ -239,6 +239,9 @@
       </div>
     {/each}
   {/if}
+  <br>
+  <br>
+  <VariantDisplay meta={data.product} product={productInfo} stock={currentStock}/>
   <br>
   <br>
   <div class="max-w-3xl my-4">
@@ -928,14 +931,5 @@
 
   .product-discount-text > :global(hr) {
       margin: 1rem;
-  }
-
-  .edge-fade {
-      --mask: linear-gradient(to right,
-          rgba(0,0,0, 1) 0,   rgba(0,0,0, 1) 90%,
-          rgba(0,0,0, 0) 100%, rgba(0,0,0, 0) 0
-        ) 100% 50% / 100% 100% repeat-x;
-      -webkit-mask: var(--mask);
-      mask: var(--mask);
   }
 </style>
