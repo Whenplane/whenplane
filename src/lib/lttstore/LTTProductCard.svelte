@@ -37,24 +37,13 @@
 	class:opacity-50={!available}
 >
 	{#if product.featured_image}
-		{#if lazyLoadImage}
-			<LargerLazyLoad>
-				<img
-					src={imageSrc}
-					class="product-image rounded-xl h-47"
-					alt={title}
-					decoding="async"
-				/>
-			</LargerLazyLoad>
-		{:else}
-			<img
-				src={imageSrc}
-				class="product-image rounded-xl h-47"
-				alt={title}
-				loading="lazy"
-				decoding="async"
-			/>
-		{/if}
+		<img
+			src={imageSrc}
+			class="product-image rounded-xl h-47"
+			alt={title}
+			loading={lazyLoadImage ? 'lazy' : undefined}
+			decoding="async"
+		/>
 	{:else}
 		No featured image
 	{/if}
