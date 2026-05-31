@@ -3,7 +3,7 @@
   import { dev } from "$app/environment";
   import { commas, sha256 } from "$lib/utils.ts";
 
-  const noImages = ["Size", "Inseam", "Waist size", "Length"];
+  const noImages = ["Size", "Inseam", "Waist size", "Length", "Title"];
 
   let {product, stock, meta}: {
     product: ShopifyProduct,
