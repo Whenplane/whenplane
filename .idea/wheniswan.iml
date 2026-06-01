@@ -8,6 +8,7 @@
       <excludeFolder url="file://$MODULE_DIR$/.svelte-kit" />
       <excludeFolder url="file://$MODULE_DIR$/kv-data" />
       <excludeFolder url="file://$MODULE_DIR$/.vscode" />
+      <excludeFolder url="file://$MODULE_DIR$/.playwright-mcp" />
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />

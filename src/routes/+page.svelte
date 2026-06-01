@@ -328,10 +328,10 @@
 			{/if}
 			<br>
 			{#if !isFrame}
-				<a href="/history" class="btn preset-tonal-surface border border-surface-500">
+				<a href="/history" class="btn preset-tonal-surface border border-surface-500 rounded-xl">
 					History
 				</a>
-				<button class="btn preset-tonal-surface border border-surface-500" use:popup={{
+				<button class="btn preset-tonal-surface border border-surface-500 rounded-xl" use:popup={{
 					event: 'click',
 					target: 'moreDropdown',
 					placement: 'bottom'
