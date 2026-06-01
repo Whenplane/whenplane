@@ -28,7 +28,8 @@
           (
             variant.featured_media &&
             product.media.find(m => m.id === variant.featured_media!.id)!
-          )
+          ) ??
+          (option.name.toLowerCase().includes("color") && option.values.length === 1 && product.media[0]) // If only one color option and it wasnt marked, just use the first image
         }
         <div class={[
         "card px-2 py-1 inline-flex m-1 flex-col",
