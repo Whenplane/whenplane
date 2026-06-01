@@ -91,7 +91,7 @@
                 Out of stock
               {:else}
                 {@const variantTitles = variants.map(v => v.title)}
-                {@const total = Object.entries(stock).reduce((acc, [k, v]) => variantTitles.includes(k) ? acc + v : acc, 0)}
+                {@const total = Object.entries(stock).reduce((acc, [k, v]) => variantTitles.includes(k) ? acc + (v ?? 0) : acc, 0)}
                 {commas(total)} in stock
               {/if}
             </div>
