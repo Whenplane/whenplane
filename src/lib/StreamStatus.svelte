@@ -28,7 +28,7 @@
 <!--<WdbListener/>-->
 
 <div class="logo-cloud grid-cols-1 md:grid-cols-3! gap-1" style="display: grid;">
-	<a class="logo-item" href="https://www.twitch.tv/linustech" target="_blank" rel="noopener">
+	<a class="logo-item rounded-s-2xl" href="https://www.twitch.tv/linustech" target="_blank" rel="noopener">
 		<span>
 			{#if page.url.searchParams.has('boca')}
 				<img
@@ -107,7 +107,7 @@
 		</span>
 	</a>
 	<a
-		class="logo-item"
+		class="logo-item rounded-e-2xl"
 		href="https://www.floatplane.com/channel/linustechtips/live"
 		target="_blank"
 		rel="noopener"
@@ -161,9 +161,8 @@
 
 	.logo-item {
 		padding: 1.5em 2em;
-		background-color: rgb(26, 28, 38);
+		background-color: rgba(26, 28, 38, 70%);
 		color: rgb(255, 255, 255);
-		border-radius: 0.5rem;
 		width: 100%;
 		max-width: 300px;
 		text-align: center;
