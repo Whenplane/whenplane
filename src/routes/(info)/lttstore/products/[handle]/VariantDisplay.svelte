@@ -31,7 +31,7 @@
             product.media.find(m => m.id === variant.featured_media!.id)!
           ) ??
           // If only one (or first) color/design option and it wasnt featured, just use the first image
-          (lowerOptionName.includes("color") || lowerOptionName.includes("design") && vi === 0 && product.media[0])
+          ((lowerOptionName.includes("color") || lowerOptionName.includes("design")) && vi === 0 && product.media[0])
         }
         <div class={[
         "card px-2 py-1 inline-flex m-1 flex-col",
