@@ -189,13 +189,13 @@
 {#if !isFrame}
 	<NewsAnnouncer/>
 
-	<span class="clear inline-block absolute pointer-events-none" style="z-index: -5;">
+	<div class="clear inline-block absolute pointer-events-none max-w-dvw overflow-hidden" style="z-index: -5;">
 		{description}
 		When is wan? Who is wan? Why is wan? Who knows!
 		When is WAN show? The WAN show is <i>supposed</i> to start at 4:30 PM PT.
 		Despite the scheduled start time, the show is almost always between 1 and 3 hours late.
 		This time is also known as "Linus Standard Time". Thanks, LTT.
-	</span>
+	</div>
 {/if}
 
 <div class="container h-full mx-auto justify-center items-center" bind:this={outerContainer} class:alwaysFlex={isFrame}>
