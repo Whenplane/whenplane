@@ -26,7 +26,7 @@
         {@const tag = `#${option.name.toLowerCase()}_${value.toLowerCase()}`}
         {@const image = product.media.find(m => m.alt?.includes(tag)) ??
           (
-            variant.featured_media &&
+            variant?.featured_media &&
             product.media.find(m => m.id === variant.featured_media!.id)!
           ) ??
           (option.name.toLowerCase().includes("color") && vi === 0 && product.media[0]) // If only one (or first) color option and it wasnt featured, just use the first image
