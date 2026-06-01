@@ -339,7 +339,7 @@
 					<span class="capitalize">More</span>
 					<span><CaretDownFill/></span>
 				</button>
-				<div class="card w-58 shadow-2xl! overflow-hidden z-20 !bg-surface-500 absolute" data-popup="moreDropdown" style="opacity: 0; pointer-events: none; display: none;">
+				<div class="card w-58 shadow-2xl! overflow-hidden z-20 bg-surface-700/90! absolute backdrop-blur-[5px]" data-popup="moreDropdown" style="opacity: 0; pointer-events: none; display: none;">
 					<MoreLinks/>
 
 					<div class="arrow bg-surface-500"></div>

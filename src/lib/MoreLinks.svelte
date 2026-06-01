@@ -62,12 +62,12 @@
   {#each links as link}
     <tr>
       <td>
-        <a class="unstyled hidden-link bg-surface-500" href={link.href}>
+        <a class="unstyled hidden-link" href={link.href}>
           <link.icon width="20" height="20"/>
         </a>
       </td>
       <td>
-        <a class="unstyled hidden-link bg-surface-500" href={link.href}>
+        <a class="unstyled hidden-link" href={link.href}>
           {link.name}
         </a>
       </td>
