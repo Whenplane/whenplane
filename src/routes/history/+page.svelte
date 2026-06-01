@@ -113,11 +113,13 @@
         </SegmentedControl>
     </div>
 
-    <div class="inline-flex flex-wrap justify-center"
-         class:thumbnail-inline={view === "0"}
-         class:thumbnail-list={view === "1"}
-         class:old-layout={view === "2"}
-         class:thumbnailless-inline={view === "3"}
+    <div class={[
+      "inline-flex flex-wrap justify-center",
+      view === "0" && "thumbnail-inline",
+      view === "1" && "thumbnail-list inline-block!",
+      view === "2" && "old-layout inline-block!",
+      view === "3" && "thumbnailless-inline",
+    ]}
     >
         {#each shows as show, i (show.name)}
             <HistoricalShow {show} withThumbnail={Number(view) < 2} lazyLoadThumbnail={i > 10} lazyLoadGroup={Math.floor(i/6) + (1000 * pageIndex)} alternateStartTimes={data.alternateStartTimes}/>
