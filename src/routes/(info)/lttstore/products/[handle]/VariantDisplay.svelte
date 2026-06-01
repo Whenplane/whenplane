@@ -24,12 +24,14 @@
         {@const variant = variants.find(v => v.featured_media) ?? variants[0]}
         {@const inStock = !!variants.find(v => v.available)}
         {@const tag = `#${option.name.toLowerCase()}_${value.toLowerCase()}`}
+        {@const lowerOptionName = option.name.toLowerCase()}
         {@const image = product.media.find(m => m.alt?.includes(tag)) ??
           (
             variant?.featured_media &&
             product.media.find(m => m.id === variant.featured_media!.id)!
           ) ??
-          (option.name.toLowerCase().includes("color") && vi === 0 && product.media[0]) // If only one (or first) color option and it wasnt featured, just use the first image
+          // If only one (or first) color/design option and it wasnt featured, just use the first image
+          (lowerOptionName.includes("color") || lowerOptionName.includes("design") && vi === 0 && product.media[0])
         }
         <div class={[
         "card px-2 py-1 inline-flex m-1 flex-col",
