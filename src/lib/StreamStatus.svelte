@@ -29,19 +29,21 @@
 
 <div class="logo-cloud grid-cols-1 md:grid-cols-3! gap-1" style="display: grid;">
 	<a class="logo-item rounded-s-2xl" href="https://www.twitch.tv/linustech" target="_blank" rel="noopener">
-		<span>
+		<div class="h-min mr-2.5">
 			{#if page.url.searchParams.has('boca')}
 				<img
 					class="absolute z-0 rounded-lg"
 					style="margin-left: 1px; height: 26px; width: 30px;"
 					src="/secret/boca-cropped.jpg"
+					alt=""
+					aria-hidden="true"
 				/>
 			{/if}
-			<span class="inline-block relative z-10">
+			<div class="inline-block relative z-10 -mb-1">
 				<Twitch />
-			</span>
-		</span>
-		<span>
+			</div>
+		</div>
+		<span class="inline-block">
 			Twitch<br />
 			<span class="status opacity-50" class:wan={data.liveStatus.twitch.isWAN}>
 				{#if data.liveStatus.twitch.isLive}
@@ -57,7 +59,7 @@
 		</span>
 	</a>
 	<a class="logo-item" href="/youtube-redirect" target="_blank">
-		<span>
+		<div class="mr-1.25">
 			{#if page.url.searchParams.has('boca')}
 				<img
 					class="absolute z-10 rounded-md opacity-50"
@@ -65,13 +67,13 @@
 					src="/secret/boca-cropped.jpg"
 				/>
 			{/if}
-			<span class="inline-block relative z-0">
+			<div class="inline-block relative z-0">
 				<Youtube />
-			</span>
-		</span>
-		<span>
+			</div>
+		</div>
+		<div class="inline-block">
 			Youtube<br />
-			<span
+			<div
 				class="status opacity-50"
 				class:wan={data.liveStatus.youtube?.isWAN && data.liveStatus.youtube?.isLive}
 				class:upcoming={data.liveStatus.youtube?.upcoming}
@@ -87,7 +89,7 @@
 						{@const scheduled = new Date(data.liveStatus.youtube.scheduledStart)}
 						(scheduled:
 						<span
-							class="inline-block min-w-[65px]"
+							class="inline-block min-w-16.25"
 							title="Scheduled for {scheduled.toLocaleDateString(getDateFormatLocale(), {
 								dateStyle: 'medium'
 							})}, {scheduled.toLocaleTimeString(undefined, {
@@ -103,8 +105,8 @@
 				{:else}
 					(offline)
 				{/if}
-			</span>
-		</span>
+			</div>
+		</div>
 	</a>
 	<a
 		class="logo-item rounded-e-2xl"
@@ -112,19 +114,21 @@
 		target="_blank"
 		rel="noopener"
 	>
-		<span>
+		<div class="mr-2">
 			{#if page.url.searchParams.has('boca')}
 				<img
 					class="absolute z-0 rounded-full"
 					style="margin-left: 2px; margin-top: 4px; height: 26px; width: 26px;"
 					src="/secret/boca-cropped.jpg"
+					alt=""
+					aria-hidden="true"
 				/>
 			{/if}
 			<div class="inline-block relative z-10">
 				<Floatplane />
 			</div>
-		</span>
-		<span>
+		</div>
+		<span class="inline-block">
 			Floatplane<br />
 			<span
 				class="status opacity-50"
@@ -160,12 +164,12 @@
 	}
 
 	.logo-item {
-		padding: 1.5em 2em;
+		@apply flex justify-center items-center;
+		padding: 1.5em 1.5em;
 		background-color: rgba(26, 28, 38, 70%);
-		color: rgb(255, 255, 255);
+		color: white;
 		width: 100%;
 		max-width: 300px;
-		text-align: center;
 	}
 	.logo-item:hover {
 		text-decoration: inherit;
