@@ -42,19 +42,21 @@
               {@const preview = (dev ? 'https://whenplane.com' : '') +
                 `/cdn-cgi/image/fit=scale-down,height=384,metadata=copyright,q=80,sqc=65,format=auto,${image.src.includes("jpg") && !product.title.toLowerCase().includes("desk") ? "segment=foreground," : ""}onerror=redirect/` +
                 `https://img-proxy.whenplane.com/d-img/${product.handle}-${image.id}-${await sha256(image.src).then(r => r.substring(0, 5))}`}
-              <a href={image.src} class="no-underline! text-center h-full flex justify-center items-center">
-                <img
-                  src={preview}
-                  class="product-image inline-block w-35 h-full object-cover"
-                  alt={image.alt}
-                  title={image.alt}
-                  width={image.width}
-                  height={image.height}
-                  loading="lazy"
-                  fetchpriority="low"
-                  decoding="async"
-                />
-              </a>
+              {#key product}
+                <a href={image.src} class="no-underline! text-center h-full flex justify-center items-center">
+                  <img
+                    src={preview}
+                    class="product-image inline-block w-35 h-full object-cover"
+                    alt={image.alt}
+                    title={image.alt}
+                    width={image.width}
+                    height={image.height}
+                    loading="lazy"
+                    fetchpriority="low"
+                    decoding="async"
+                  />
+                </a>
+              {/key}
             {:else}
               {@const otherOptionVariants = product.variants.filter(v => v.options[option.position-1] !== value && v.featured_media)}
               {#if otherOptionVariants.length > 0}
