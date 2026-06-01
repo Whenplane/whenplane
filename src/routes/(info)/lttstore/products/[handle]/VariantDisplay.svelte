@@ -75,7 +75,7 @@
               {/if}
             {/if}
           {/if}
-          <a href={variant?.id ? "https://www.lttstore.com/products/{product.handle}?variant={variant?.id}" : undefined} class="hidden-link block w-full mt-auto" class:opacity-60={!inStock}>
+          <a href={variant?.id ? `https://www.lttstore.com/products/${product.handle}?variant=${variant?.id}` : undefined} class="hidden-link block w-full mt-auto" class:opacity-60={!inStock}>
             {#if value === "Default Title"}
               {meta.shortTitle ?? product.title}
             {:else}
