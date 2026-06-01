@@ -19,7 +19,7 @@
   {/if}
   <div class="overflow-x-auto pr-64 edge-fade">
     <div class="flex w-fit">
-      {#each option.values as value}
+      {#each option.values as value, vi}
         {@const variants = product.variants.filter(v => v.options[option.position-1] === value)}
         {@const variant = variants.find(v => v.featured_media) ?? variants[0]}
         {@const inStock = !!variants.find(v => v.available)}
@@ -29,7 +29,7 @@
             variant.featured_media &&
             product.media.find(m => m.id === variant.featured_media!.id)!
           ) ??
-          (option.name.toLowerCase().includes("color") && option.values.length === 1 && product.media[0]) // If only one color option and it wasnt marked, just use the first image
+          (option.name.toLowerCase().includes("color") && vi === 0 && product.media[0]) // If only one (or first) color option and it wasnt featured, just use the first image
         }
         <div class={[
         "card px-2 py-1 inline-flex m-1 flex-col",
