@@ -5,8 +5,10 @@
 	import { slide } from 'svelte/transition';
 	import { typed } from '$lib';
 	import {popup} from "$lib/replacements/popup.ts";
+		import { onMount } from "svelte";
+	// import { dev } from "$app/environment";
 
-		let {
+	let {
 		floatplane = typed<FpEndpointResponse | undefined>(),
 		hasDone = typed<boolean>(false)
 	} = $props();
@@ -14,12 +16,19 @@
 	// the thumbnail age cutoff where the thumbnail wont be shown at all. currently 3 hours
 	const ageCutoff = 24 * 60 * 60e3;
 
-	const day = new Date().getUTCDay();
-	const dayIsCloseEnough = day === 5 || day === 6;
+	let day = $state(new Date().getUTCDay());
+	let dayIsCloseEnough = $derived(day === 5 || day === 6);
+	onMount(() => {
+		let i = setInterval(() => {
+			day = new Date().getUTCDay();
+		}, 12 * 60 * 60e3);
+
+		return () => clearInterval(i);
+	})
 	// $: console.log("imminentbox show: ", (!hasDone) + " && " + (!$floatplaneState?.live) +" && "+ "((" +dayIsCloseEnough +" && "+ ($floatplaneState?.imminence) +" === 3)"+ /*|| dev*/")")
 </script>
 
-{#if floatplane && !floatplane?.isLive && floatplane?.isWAN && dayIsCloseEnough && (floatplane?.isThumbnailNew || floatplane?.thumbnailAge < ageCutoff) && !hasDone /*|| dev*/}
+{#if floatplane && !floatplane?.isLive && floatplane?.isWAN && (dayIsCloseEnough || floatplane?.title?.includes("WAN")) && (floatplane?.isThumbnailNew || floatplane?.thumbnailAge < ageCutoff) && !hasDone /*|| dev*/}
 	<div
 		class="card border-2 p-2 border-green-600! bg-green-600/20! block relative pb-0 mobile-add-padding"
 		transition:slide={{ duration: 1.5e3 }}
