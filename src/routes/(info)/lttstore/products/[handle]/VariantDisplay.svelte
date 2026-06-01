@@ -21,6 +21,7 @@
     <div class="flex w-fit">
       {#each option.values as value, vi}
         {@const variants = product.variants.filter(v => v.options[option.position-1] === value)}
+        {@const otherOptionVariants = product.variants.filter(v => v.options[option.position-1] !== value && v.featured_media)}
         {@const variant = variants.find(v => v.featured_media) ?? variants[0]}
         {@const inStock = !!variants.find(v => v.available)}
         {@const tag = `#${option.name.toLowerCase()}_${value.toLowerCase()}`}
@@ -31,7 +32,7 @@
             product.media.find(m => m.id === variant.featured_media!.id)!
           ) ??
           // If only one (or first) color/design option and it wasnt featured, just use the first image
-          ((lowerOptionName.includes("color") || lowerOptionName.includes("design")) && vi === 0 && product.media[0])
+          ((lowerOptionName.includes("color") || lowerOptionName.includes("design")) && (option.values.length === 1 || (vi === 0 && otherOptionVariants.length > 0)) && product.media[0])
         }
         <div class={[
         "card px-2 py-1 inline-flex m-1 flex-col",
@@ -60,7 +61,6 @@
                 </a>
               {/key}
             {:else}
-              {@const otherOptionVariants = product.variants.filter(v => v.options[option.position-1] !== value && v.featured_media)}
               {#if otherOptionVariants.length > 0}
                 <div class="flex justify-center items-center h-full w-full opacity-40 text-xs">
                   No Image
