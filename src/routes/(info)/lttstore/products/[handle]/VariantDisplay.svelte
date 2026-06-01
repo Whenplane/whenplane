@@ -37,7 +37,7 @@
           !noImages.includes(option.name) ? "w-35" : "max-w-full"
         )
       ]}>
-          {#if !noImages.includes(option.name)}
+          {#if !noImages.includes(option.name) || value.includes("oz")}
             {#if image}
               {@const preview = (dev ? 'https://whenplane.com' : '') +
                 `/cdn-cgi/image/fit=scale-down,height=384,metadata=copyright,q=80,sqc=65,format=auto,${image.src.includes("jpg") ? "segment=foreground," : ""}onerror=redirect/` +
