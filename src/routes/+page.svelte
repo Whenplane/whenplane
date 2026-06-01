@@ -296,8 +296,8 @@
 
 		<div class="text-center lateness-stats">
 			{#if averageLateness || dev}
-				<span class="card px-4 py-2 mb-4 inline-block lateness">
-					<h3 class="no-header-margin">Average lateness</h3>
+				<div class="card px-4 py-2 mb-4 inline-block lateness">
+					<h3 class="no-header-margin text-2xl!">Average lateness</h3>
 					<span class="opacity-75 text-90 relative bottom-1">from the last 5 shows</span>
 					<br>
 					{averageLateness} <Late/>
@@ -310,11 +310,11 @@
 							Think of standard deviation as a measure that tells you how much individual values in a set typically differ from the average of that set. If the standard deviation is small, it means most values are close to the average. If it's large, it means values are more spread out from the average, indicating greater variability in the data. Essentially, standard deviation gives you an idea of how consistent or varied the values are in relation to the average.
 						</ToolTip>
 					{/if}
-				</span>
+				</div>
 			{/if}
 			{#if medianLateness || dev}
-				<span class="card px-4 py-2 mb-4 inline-block lateness">
-					<h3 class="no-header-margin">Median lateness</h3>
+				<div class="card px-4 py-2 mb-4 inline-block lateness">
+					<h3 class="no-header-margin text-2xl!">Median lateness</h3>
 					<span class="opacity-75 text-90 relative bottom-1">from the last 5 shows</span>
 					<br>
 					{medianLateness} <Late/>
@@ -324,7 +324,7 @@
 							 
 						</span>
 					{/if}
-				</span>
+				</div>
 			{/if}
 			<br>
 			{#if !isFrame}
