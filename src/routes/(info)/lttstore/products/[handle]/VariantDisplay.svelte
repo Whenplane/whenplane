@@ -10,6 +10,7 @@
     stock: StockCounts,
     meta: ProductsTableRow
   } = $props();
+  let lowerProductTitle = $derived(product.title.toLowerCase());
 </script>
 
 <h2>Options / Variants</h2>
@@ -33,7 +34,11 @@
           ) ??
           // If only one (or first) color/design option and it wasnt featured, just use the first image
           (
-            (lowerOptionName.includes("color") || lowerOptionName.includes("design")) &&
+            (
+              lowerOptionName.includes("color") ||
+              lowerOptionName.includes("design") ||
+              lowerProductTitle.includes("ptm7950")
+            ) &&
             (
               option.values.length === 1 ||
               (vi === 0 && otherOptionVariants.length > 0)
@@ -50,7 +55,7 @@
           {#if !noImages.includes(option.name) || value.includes("oz") || value.includes("mm") || value.includes("-pack")}
             {#if image}
               {@const preview = (dev ? 'https://whenplane.com' : '') +
-                `/cdn-cgi/image/fit=scale-down,height=384,metadata=copyright,q=80,sqc=65,format=auto,${image.src.includes("jpg") && !product.title.toLowerCase().includes("desk") ? "segment=foreground," : ""}onerror=redirect/` +
+                `/cdn-cgi/image/fit=scale-down,height=384,metadata=copyright,q=80,sqc=65,format=auto,${image.src.includes("jpg") && !lowerProductTitle.includes("desk") ? "segment=foreground," : ""}onerror=redirect/` +
                 `https://img-proxy.whenplane.com/d-img/${product.handle}-${image.id}-${await sha256(image.src).then(r => r.substring(0, 5))}`}
               {#key product}
                 <a href={image.src} class="no-underline! text-center h-full flex justify-center items-center">
