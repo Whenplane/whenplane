@@ -2,8 +2,6 @@
     let pageIndex = 0;
 </script>
 <script lang="ts">
-    import { run } from 'svelte/legacy';
-
     import HistoricalShow from "$lib/history/HistoricalShow.svelte";
     import { browser, dev } from "$app/environment";
     import HistoryRecords from "$lib/history/HistoryRecords.svelte";
@@ -32,7 +30,7 @@
     let view = $state((data.history.viewType ?? 0)+"");
 
     let first = $state(true);
-    run(() => {
+    $effect(() => {
         if(first) {
             first = false;
         } else if(browser) {
@@ -76,15 +74,15 @@
 
     <br>
 
-    <a href="/search" class="btn preset-tonal-primary border border-primary-500">
+    <a href="/search" class="btn preset-tonal-primary border border-primary-500 text-white rounded-2xl">
         <Search/>
          
         Search for Shows
     </a><br>
 
     <br>
-    <div class="flex flex-col items-center gap-4">
-        <SegmentedControl value={view} onValueChange={(details) => (view = details.value)} name="justify">
+    <div class="flex flex-col items-center gap-4 mb-2">
+        <SegmentedControl value={view} onValueChange={(details) => (view = details.value ?? "0")} name="justify">
             <SegmentedControl.Control>
                 <SegmentedControl.Indicator />
                 <SegmentedControl.Item value="0">
@@ -114,9 +112,8 @@
             </SegmentedControl.Control>
         </SegmentedControl>
     </div>
-    <br>
 
-    <div class="inline-block"
+    <div class="inline-flex flex-wrap justify-center"
          class:thumbnail-inline={view === "0"}
          class:thumbnail-list={view === "1"}
          class:old-layout={view === "2"}
@@ -140,7 +137,7 @@
 
             <LazyLoad>
                 {#each countTo(20) as i}
-                    <LoadingHistoricalShow withThumbnail={view < 2}/>
+                    <LoadingHistoricalShow withThumbnail={Number(view) < 2}/>
                 {/each}
             </LazyLoad>
 

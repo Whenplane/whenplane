@@ -87,7 +87,7 @@
 <svelte:element
 	this={href ? 'a' : 'div'}
 	class:card={!onlyTimes}
-	class="inline-block limit p-3 m-2 hidden-link relative"
+	class="inline-flex flex-col limit p-3 m-2 hidden-link relative"
 	{href}
 	id={show.name}
 	class:highlight={!onlyTimes && page.url.hash === '#' + show.name}
@@ -156,21 +156,26 @@
 				{/if}
 			</div>
 		{/if}
-		<h3>{showDate.toLocaleDateString(getDateFormatLocale())}</h3>
+		<h3 class="mb-0!">
+			{showDate.toLocaleDateString(getDateFormatLocale())}
+		</h3>
 		{#if !(withThumbnail && thumbnail) && show.metadata?.isCurrentlyLive}
 			<div class="inline-block absolute top-3 right-3">
 				<Live />
 			</div>
 		{/if}
-		{#if show.metadata.title}
-			<h4>{show.metadata.title}</h4>
-		{/if}
+		<div class="grow flex min-h-10 items-center justify-center">
+			{#if show.metadata.title}
+				<h4>{show.metadata.title}</h4>
+			{/if}
+		</div>
 	{/if}
 	<span class="hidden">name date (for debugging purposes): {show.name}</span>
 	<hr />
-	<div class="inline-block mr-2">
-		<h4>Pre Show</h4>
-		<span class="time">
+	<div>
+		<div class="inline-block mr-2">
+			<h4>Pre Show</h4>
+			<span class="time">
 			{#if preShowStart}
 				{preShowStart.toLocaleTimeString(undefined, {
 					timeStyle: 'short',
@@ -180,8 +185,8 @@
 				<span class="opacity-50"> N/A </span>
 			{/if}
 		</span>
-		-
-		<span class="time">
+			-
+			<span class="time">
 			{#if mainShowStart}
 				{mainShowStart.toLocaleTimeString(undefined, {
 					timeStyle: 'short',
@@ -191,16 +196,16 @@
 				<span class="opacity-50"> N/A </span>
 			{/if}
 		</span>
-		<br />
-		{#if preShowLength}
-			{preShowLength}
-		{:else}
-			<span class="opacity-50"> N/A </span>
-		{/if}
-	</div>
-	<div class="inline-block ml-2">
-		<h4>Main Show</h4>
-		<span class="time">
+			<br />
+			{#if preShowLength}
+				{preShowLength}
+			{:else}
+				<span class="opacity-50"> N/A </span>
+			{/if}
+		</div>
+		<div class="inline-block ml-2">
+			<h4>Main Show</h4>
+			<span class="time">
 			{#if mainShowStart}
 				{mainShowStart.toLocaleTimeString(undefined, {
 					timeStyle: 'short',
@@ -210,20 +215,21 @@
 				<span class="opacity-50"> N/A </span>
 			{/if}
 		</span>
-		-
-		<span class="time">
+			-
+			<span class="time">
 			{#if showEnd}
 				{showEnd.toLocaleTimeString(undefined, { timeStyle: 'short', hour12: getTimePreference() })}
 			{:else}
 				<span class="opacity-50"> N/A </span>
 			{/if}
 		</span>
-		<br />
-		{#if mainShowLength}
-			{mainShowLength}
-		{:else}
-			<span class="opacity-50"> N/A </span>
-		{/if}
+			<br />
+			{#if mainShowLength}
+				{mainShowLength}
+			{:else}
+				<span class="opacity-50"> N/A </span>
+			{/if}
+		</div>
 	</div>
 	<hr />
 	{#if onTime && onTimeDistance}
@@ -246,6 +252,7 @@
 </svelte:element>
 
 <style>
+	@reference "#app.css";
 	.thumbnail-space {
 		width: min(28.5rem, 95vw);
 		aspect-ratio: 16 / 9;
@@ -254,9 +261,9 @@
 
 	img,
 	.fake-img {
+		@apply rounded-base;
 		width: min(28.5em, 95vw);
 		object-fit: cover;
-		border-radius: var(--theme-rounded-base);
 		aspect-ratio: 16 / 9;
 	}
 
