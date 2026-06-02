@@ -164,7 +164,7 @@
 	}
 
 	.logo-item {
-		@apply flex justify-center items-center;
+		@apply flex justify-center items-center max-md:rounded-2xl;
 		padding: 1.5em 1.5em;
 		background-color: rgba(26, 28, 38, 70%);
 		color: white;
