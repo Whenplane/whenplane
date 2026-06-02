@@ -25,6 +25,7 @@
 	let shuttingDown = false;
 	let first = true;
 	let lastInvalidate = 0;
+  let pendingInvalidation = false;
   let reconnectTimeout: NodeJS.Timeout | undefined;
 	function createWebSocket() {
 		webSocket = new WebSocket(
@@ -81,8 +82,12 @@
 			}
 
 			if (invalidate) {
-				lastInvalidate = Date.now();
-				await invalidateAll();
+				if(!document.hidden) {
+          lastInvalidate = Date.now();
+          await invalidateAll();
+        } else {
+          pendingInvalidation = true;
+        }
 			}
 		};
 	}
@@ -126,3 +131,10 @@
 		}
 	});
 </script>
+<svelte:window on:visibilitychange={() => {
+  if(!document.hidden && pendingInvalidation) {
+    pendingInvalidation = false;
+    lastInvalidate = Date.now();
+    invalidateAll();
+  }
+}}/>
