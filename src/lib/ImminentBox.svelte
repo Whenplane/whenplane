@@ -1,11 +1,11 @@
 <script lang="ts">
-		import Info from '$lib/svg/Info.svelte';
+	import Info from '$lib/svg/Info.svelte';
 	import type { FpEndpointResponse } from '../routes/api/(live-statuses)/floatplane/+server.ts';
 	import { timeString } from '$lib/timeUtils.ts';
 	import { slide } from 'svelte/transition';
 	import { typed } from '$lib';
 	import {popup} from "$lib/replacements/popup.ts";
-		import { onMount } from "svelte";
+	import { onMount } from "svelte";
 	// import { dev } from "$app/environment";
 
 	let {
@@ -67,7 +67,7 @@
 {/if}
 
 <div
-	class="card p-4 whitespace-nowrap shadow-x1 z-10 font-normal absolute"
+	class="card p-4 whitespace-nowrap shadow-x1 z-10 font-normal fixed"
 	data-popup="imminent-thumbnail"
 	style="margin-top: 0; opacity: 0; pointer-events: none;"
 >
