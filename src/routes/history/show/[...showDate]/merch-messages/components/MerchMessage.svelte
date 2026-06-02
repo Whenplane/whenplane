@@ -104,15 +104,17 @@
 	</div>
 	<div class="w-full message-image shrink-0 self-center">
 		<a href={imageUrl} aria-label="View Message Screenshot">
-			<img
-				class="w-full"
-				src={imageUrl}
-				width="1000"
-				height="200"
-				loading="lazy"
-				alt=""
-				aria-hidden="true"
-			/>
+			{#key message}
+				<img
+					class="w-full"
+					src={imageUrl}
+					width="1000"
+					height="200"
+					loading="lazy"
+					alt=""
+					aria-hidden="true"
+				/>
+			{/key}
 		</a>
 	</div>
 </div>
