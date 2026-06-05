@@ -291,7 +291,7 @@
 			{#if averageLateness || dev}
 				<span class="card px-4 py-2 mb-4 inline-block lateness">
 					<h3 class="no-header-margin">Average lateness</h3>
-					<span class="opacity-75 text-90 relative bottom-1">from the last 5 shows</span>
+					<span class="opacity-75 text-90 relative bottom-1">from the last {data.pastShowsForLatenesses ?? 6} shows</span>
 					<br>
 					{averageLateness} <Late/>
 					{#if latenessStandardDeviation}
@@ -308,7 +308,7 @@
 			{#if medianLateness || dev}
 				<span class="card px-4 py-2 mb-4 inline-block lateness">
 					<h3 class="no-header-margin">Median lateness</h3>
-					<span class="opacity-75 text-90 relative bottom-1">from the last 5 shows</span>
+					<span class="opacity-75 text-90 relative bottom-1">from the last {data.pastShowsForLatenesses ?? 6} shows</span>
 					<br>
 					{medianLateness} <Late/>
 					{#if latenessStandardDeviation}
@@ -488,7 +488,7 @@
 	.alwaysFlex {
 		display: flex;
 	}
-	
+
 	@media (min-height: 790px) {
 		.container:not(.too-short) {
 			padding: 0;

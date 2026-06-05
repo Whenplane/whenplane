@@ -114,6 +114,7 @@ export const load = (async ({fetch, params, url}) => {
         averageLateness: latenesses?.averageLateness,
         latenessStandardDeviation: latenesses?.latenessStandardDeviation,
         medianLateness: latenesses?.medianLateness,
+        pastShowsForLatenesses: latenesses?.pastShowsForLatenesses,
         notablePeople: liveStatus?.notablePeople,
         specialStream: liveStatus?.specialStream,
         lastNewsPost,

@@ -154,12 +154,13 @@
                             <LoadingRecord>
                                 Median lateness
                             </LoadingRecord>
-                        {:then latenesses}
+                        {:then lss}
+							{@const latenesses = lss as Latenesses}
                             {#if latenesses.averageLateness || dev}
                                 <Record record={latenesses.averageLateness} late={true} color={false}>
                                     Average lateness
                                     <svelte:fragment slot="description">
-                                        <span class="opacity-75 text-90 relative bottom-1">from the last 5 shows</span>
+                                        <span class="opacity-75 text-90 relative bottom-1">from the last {latenesses.pastShowsForLatenesses ?? 6} shows</span>
                                     </svelte:fragment>
                                 </Record>
                             {/if}
@@ -167,7 +168,7 @@
                                 <Record record={latenesses.medianLateness} late={true} color={false}>
                                     Median lateness
                                     <svelte:fragment slot="description">
-                                        <span class="opacity-75 text-90 relative bottom-1">from the last 5 shows</span>
+                                        <span class="opacity-75 text-90 relative bottom-1">from the last {latenesses.pastShowsForLatenesses ?? 6} shows</span>
                                     </svelte:fragment>
                                 </Record>
                             {/if}
