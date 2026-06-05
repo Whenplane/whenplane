@@ -38,21 +38,24 @@
 	class:opacity-50={!available}
 >
 	{#if product.featured_image}
-		<img
-			src={imageSrc}
-			class="product-image rounded-xl h-47"
-			alt={title}
-			loading={lazyLoadImage ? 'lazy' : undefined}
-			decoding="async"
-			onerror={() => {
+		{#key imageReload}
+			<img
+				src={imageSrc}
+				class="product-image rounded-xl h-47"
+				alt={title}
+				loading={lazyLoadImage ? 'lazy' : undefined}
+				decoding="async"
+				onerror={() => {
 				let delay = Math.pow(2, imageReload) - 1;
 				if(delay === 0) {
 					imageReload++;
 				} else {
-					setTimeout(() => imageReload++, delay);
+					console.debug("Retrying image, attempt number " + (imageReload + 1) + ` with a delay of ${delay}s`);
+					setTimeout(() => imageReload++, delay * 1e3);
 				}
 			}}
-		/>
+			/>
+		{/key}
 	{:else}
 		No featured image
 	{/if}
