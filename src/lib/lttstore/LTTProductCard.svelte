@@ -22,6 +22,7 @@
 	let goneInHours = $derived((stock?.total ?? -1) / (purchasesPerHour ?? -1));
 
 	let handle = $derived(productRedirects[product.handle] ?? product.handle);
+	let imageReload = $state(0)
 	let imageSrc = $derived(
 			(dev ? 'https://whenplane.com' : '') +
 			'/cdn-cgi/image/anim=false,fit=scale-down,width=528,metadata=copyright,q=60,sqc=50,format=auto/' +
@@ -43,6 +44,14 @@
 			alt={title}
 			loading={lazyLoadImage ? 'lazy' : undefined}
 			decoding="async"
+			onerror={() => {
+				let delay = Math.pow(2, imageReload) - 1;
+				if(delay === 0) {
+					imageReload++;
+				} else {
+					setTimeout(() => imageReload++, delay);
+				}
+			}}
 		/>
 	{:else}
 		No featured image
