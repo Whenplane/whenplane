@@ -52,10 +52,8 @@ How late do you think the show will be?
 	</div>
 </div>
 
-<div data-popup="latenessVotingInfo">
-	<div class="card p-4 whitespace-nowrap shadow-x1 z-10 font-normal">
-		Lateness voting starts every Friday at midnight UTC, and runs until the show starts.
-	</div>
+<div data-popup="latenessVotingInfo" class="card p-4 whitespace-nowrap shadow-x1 z-10 font-normal fixed" style="margin-top: 0; opacity: 0; pointer-events: none;">
+	Lateness voting starts every Friday at midnight UTC, and runs until the show starts.
 </div>
 <br />
 
