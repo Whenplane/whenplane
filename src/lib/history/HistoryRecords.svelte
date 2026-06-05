@@ -9,6 +9,7 @@
 	import GraphUp from 'svelte-bootstrap-icons/lib/GraphUp.svelte';
 	import { page } from '$app/state';
 	import ChevronDown from 'svelte-bootstrap-icons/lib/ChevronDown.svelte';
+	import type { Latenesses } from "../../routes/api/latenesses/+server.ts";
 
 	let { records = $bindable(), data } = $props();
 
@@ -141,12 +142,13 @@
 						{#await latenessesFetching}
 							<LoadingRecord>Average lateness</LoadingRecord>
 							<LoadingRecord>Median lateness</LoadingRecord>
-						{:then latenesses}
+						{:then lss}
+							{@const latenesses = lss as Latenesses}
 							{#if latenesses.averageLateness || dev}
 								<Record record={latenesses.averageLateness} late={true} color={false}>
 									Average lateness
 									{#snippet description()}
-										<span class="opacity-75 text-90 relative bottom-1">from the last 5 shows</span>
+										<span class="opacity-75 text-90 relative bottom-1">from the last {latenesses.pastShowsForLatenesses ?? 6} shows</span>
 									{/snippet}
 								</Record>
 							{/if}
@@ -154,7 +156,7 @@
 								<Record record={latenesses.medianLateness} late={true} color={false}>
 									Median lateness
 									{#snippet description()}
-										<span class="opacity-75 text-90 relative bottom-1">from the last 5 shows</span>
+										<span class="opacity-75 text-90 relative bottom-1">from the last {latenesses.pastShowsForLatenesses ?? 6} shows</span>
 									{/snippet}
 								</Record>
 							{/if}

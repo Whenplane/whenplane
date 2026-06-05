@@ -51,11 +51,13 @@ export const GET = (async ({platform, url}) => {
   const averageLateness = meta.get("averageLateness", {type: 'json'}) as Promise<number>;
   const latenessStandardDeviation = meta.get("latenessStandardDeviation", {type: 'json'}) as Promise<number>;
   const medianLateness = meta.get("medianLateness", {type: 'json'}) as Promise<number>;
+  const pastShowsForLatenesses = meta.get("pastShowsForLatenesses", {type: 'json'}) as Promise<number>;
 
   const response: Latenesses = {
     averageLateness: await averageLateness,
     latenessStandardDeviation: await latenessStandardDeviation,
-    medianLateness: await medianLateness
+    medianLateness: await medianLateness,
+    pastShowsForLatenesses: await pastShowsForLatenesses
   }
 
   cache = {
@@ -84,5 +86,6 @@ function respond(response: Latenesses, cache_time: number) {
 export type Latenesses = {
   averageLateness?: number,
   latenessStandardDeviation?: number,
-  medianLateness?: number
+  medianLateness?: number,
+  pastShowsForLatenesses?: number
 }

@@ -298,7 +298,7 @@
 			{#if averageLateness || dev}
 				<div class="card px-4 py-2 mb-4 inline-block lateness">
 					<h3 class="no-header-margin text-2xl!">Average lateness</h3>
-					<span class="opacity-75 text-90 relative bottom-1">from the last 5 shows</span>
+					<span class="opacity-75 text-90 relative bottom-1">from the last {data.pastShowsForLatenesses ?? 6} shows</span>
 					<br>
 					{averageLateness} <Late/>
 					{#if latenessStandardDeviation}
@@ -315,7 +315,7 @@
 			{#if medianLateness || dev}
 				<div class="card px-4 py-2 mb-4 inline-block lateness">
 					<h3 class="no-header-margin text-2xl!">Median lateness</h3>
-					<span class="opacity-75 text-90 relative bottom-1">from the last 5 shows</span>
+					<span class="opacity-75 text-90 relative bottom-1">from the last {data.pastShowsForLatenesses ?? 6} shows</span>
 					<br>
 					{medianLateness} <Late/>
 					{#if latenessStandardDeviation}
