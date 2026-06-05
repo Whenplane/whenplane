@@ -448,6 +448,10 @@
                                   <td>{variant.sku}</td>
                                 </tr>
                                 <tr>
+                                  <td>ID</td>
+                                  <td>{variant.id}</td>
+                                </tr>
+                                <tr>
                                   <td>In stock?</td>
                                   <td>{variant.available}</td>
                                 </tr>
