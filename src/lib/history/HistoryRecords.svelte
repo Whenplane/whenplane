@@ -154,8 +154,7 @@
                             <LoadingRecord>
                                 Median lateness
                             </LoadingRecord>
-                        {:then lss}
-							{@const latenesses = lss as Latenesses}
+                        {:then latenesses}
                             {#if latenesses.averageLateness || dev}
                                 <Record record={latenesses.averageLateness} late={true} color={false}>
                                     Average lateness
