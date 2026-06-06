@@ -35,8 +35,8 @@
 			: preShowLength !== null
 				? (floatplaneSeconds ?? seconds) - Math.floor(preShowLength / 1e3) +
 					((source === 'floatplane-live')
-					? 0
-					: 250)
+					? 250
+					: 0)
 				: null
 	);
 </script>
