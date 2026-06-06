@@ -46,11 +46,11 @@
 				loading={lazyLoadImage ? 'lazy' : undefined}
 				decoding="async"
 				onerror={() => {
-				let delay = Math.pow(2, imageReload) - 1;
+				let delay = (Math.pow(2, imageReload) - 1) + (3 * Math.random());
 				if(delay === 0) {
 					imageReload++;
 				} else {
-					console.debug("Retrying image, attempt number " + (imageReload + 1) + ` with a delay of ${delay}s`);
+					console.debug("Retrying image, attempt number " + (imageReload + 1) + ` with a delay of ${delay.toFixed(2)}s`);
 					setTimeout(() => imageReload++, delay * 1e3);
 				}
 			}}
