@@ -4,7 +4,7 @@ import {env} from "$env/dynamic/private";
 import { dev, version } from "$app/environment";
 import { isNearWan } from "$lib/timeUtils.ts";
 import type { GetStreamsResponse } from "ts-twitch-api";
-import { retryD1, type TwitchToken } from "$lib/utils.ts";
+import { retry, retryD1, type TwitchToken } from "$lib/utils.ts";
 import type { DurableObjectNamespace } from "@cloudflare/workers-types";
 import {notablePeople as people} from "./notable-people";
 import { twitchTokenCache } from "$lib/stores.ts";
@@ -172,20 +172,23 @@ export const GET = (async ({platform, url, request}) => {
     promises.push((async () => {
       const name = people[channel];
 
-      const twitchResponse = await fetch(
-        "https://api.twitch.tv/helix/streams?user_login=" + channel,
-        {
-          headers: {
-            "Client-ID": env.TWITCH_CLIENT_ID ?? "",
-            "Authorization": "Bearer " + twitchTokenCache.token.token,
-            "referer": "whenplane.com",
-            "x-whenplane-version": version,
-            "user-agent": "Whenplane/" + version
+      const { twitchResponse, twitchJSON } = await retry(async () => {
+        const twitchResponse = await fetch(
+          "https://api.twitch.tv/helix/streams?user_login=" + channel,
+          {
+            headers: {
+              "Client-ID": env.TWITCH_CLIENT_ID,
+              "Authorization": "Bearer " + twitchTokenCache.token.token,
+              "referer": "whenplane.com",
+              "x-whenplane-version": version,
+              "user-agent": "Whenplane/" + version
+            }
           }
-        }
-      )
+        );
+        const twitchJSON = await twitchResponse.json();
 
-      const twitchJSON: GetStreamsResponse & {message?: string} = await twitchResponse.json();
+        return {twitchResponse, twitchJSON};
+      });
 
       if(twitchJSON.message) console.warn("Got message in twitch response for " + channel + ": ", twitchJSON.message)
 

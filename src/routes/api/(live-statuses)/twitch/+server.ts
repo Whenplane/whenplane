@@ -5,7 +5,7 @@ import { dev, version } from "$app/environment";
 import { getClosestWan, getUTCDate, isNearWan } from "$lib/timeUtils";
 import type { DurableObjectNamespace } from "@cloudflare/workers-types";
 import type { GetStreamsResponse } from "ts-twitch-api";
-import { newResponse, type TwitchToken } from "$lib/utils.ts";
+import { newResponse, retry, type TwitchToken } from "$lib/utils.ts";
 import { twitchTokenCache } from "$lib/stores.ts";
 import { log } from "$lib/server/server-utils.ts";
 import type { AlternateTimeRow } from "../../alternateStartTimes/+server.ts";
@@ -136,21 +136,23 @@ export const GET = (async ({platform, url, fetch}) => {
 
     // console.debug(3)
 
-    const twitchResponse = await fetch(
-        "https://api.twitch.tv/helix/streams?user_login=linustech",
-        {
-            headers: {
-                "Client-ID": env.TWITCH_CLIENT_ID,
-                "Authorization": "Bearer " + twitchTokenCache.token.token,
-                "referer": "whenplane.com",
-                "x-whenplane-version": version,
-                "user-agent": "Whenplane/" + version
-            }
-        }
-    )
+    const { twitchResponse, twitchJSON } = await retry(async () => {
+        const twitchResponse = await fetch(
+          "https://api.twitch.tv/helix/streams?user_login=linustech",
+          {
+              headers: {
+                  "Client-ID": env.TWITCH_CLIENT_ID,
+                  "Authorization": "Bearer " + twitchTokenCache.token.token,
+                  "referer": "whenplane.com",
+                  "x-whenplane-version": version,
+                  "user-agent": "Whenplane/" + version
+              }
+          }
+        );
+        const twitchJSON = await twitchResponse.json();
 
-    const twitchJSON = await twitchResponse.json();
-
+        return {twitchResponse, twitchJSON};
+    });
     // console.debug(4)
 
     if(twitchJSON.message) {
