@@ -93,7 +93,11 @@
                 {#if stock}
                   {@const variantTitles = variants.map(v => v.title)}
                   {@const total = Object.entries(stock).reduce((acc, [k, v]) => variantTitles.includes(k) ? acc + (v ?? 0) : acc, 0)}
-                  {commas(total)} in stock
+                  {#if total !== 0}
+                    {commas(total)} in stock
+                  {:else}
+                    In Stock
+                  {/if}
                 {:else}
                   In stock
                 {/if}
