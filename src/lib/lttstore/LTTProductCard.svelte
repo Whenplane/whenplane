@@ -1,7 +1,6 @@
 <script lang="ts">
 	import type { ShopifyProduct, StockCounts } from '$lib/lttstore/lttstore_types.ts';
 	import Price from '$lib/lttstore/Price.svelte';
-	import LargerLazyLoad from '$lib/LargerLazyLoad.svelte';
 	import { productRedirects } from '$lib/lttstore/product_redirects.ts';
 	import { typed } from '$lib';
 	import { dev } from "$app/environment";

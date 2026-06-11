@@ -1,8 +1,6 @@
 <script>
-    import { run } from 'svelte/legacy';
-
     import {fade} from "svelte/transition";
-    import { Switch } from "@skeletonlabs/skeleton-svelte";
+    import Switch from "$lib/replacements/Switch.svelte";
     import {browser} from "$app/environment";
     import { page } from "$app/state";
     import { getCookie, setCookie } from "$lib/cookieUtils";
@@ -12,43 +10,33 @@
     let scrollY = $state(0);
 
     let noSpecialLateText = $state(browser ? localStorage.getItem("no-special-late-text") === "true" : false);
-    run(() => {
-        if(browser) localStorage.setItem("no-special-late-text", noSpecialLateText + "");
-    });
+    $effect(() => localStorage.setItem("no-special-late-text", noSpecialLateText + ""))
 
     let disableBlurHash = $state(browser ? !(localStorage.getItem("disableBlurHash") !== "true") : false)
-    run(() => {
-        if(browser) localStorage.setItem("disableBlurHash", disableBlurHash + "");
-    });
+    $effect(() => localStorage.setItem("disableBlurHash", disableBlurHash + ""));
 
     let disableNotableStreams = $state(browser ? !(getCookie("disableNotableStreams") !== "true") : !(page.params.__c__disableNotableStreams !== "true"))
-    run(() => {
-        if(browser) setCookie("disableNotableStreams", disableNotableStreams + "");
-    });
+    $effect(() => setCookie("disableNotableStreams", disableNotableStreams + ""));
 
     let timeFormat = $state(browser ? localStorage.getItem("timeFormat") ?? "detect" : undefined);
-    run(() => {
-        if(browser) {
-            if(timeFormat && timeFormat !== "detect") {
-                localStorage.setItem("timeFormat", timeFormat);
-            } else {
-                console.debug("Removing timeFormat");
-                localStorage.removeItem("timeFormat");
-            }
+    $effect(() => {
+        if(timeFormat && timeFormat !== "detect") {
+            localStorage.setItem("timeFormat", timeFormat);
+        } else {
+            console.debug("Removing timeFormat");
+            localStorage.removeItem("timeFormat");
         }
-    });
+    })
 
     let dateFormat = $state(browser ? localStorage.getItem("dateFormat") ?? "detect" : undefined);
-    run(() => {
-        if(browser) {
-            if(dateFormat && dateFormat !== "detect") {
-                localStorage.setItem("dateFormat", dateFormat);
-            } else {
-                console.debug("Removing dateFormat");
-                localStorage.removeItem("dateFormat");
-            }
+    $effect(() => {
+        if(dateFormat && dateFormat !== "detect") {
+            localStorage.setItem("dateFormat", dateFormat);
+        } else {
+            console.debug("Removing dateFormat");
+            localStorage.removeItem("dateFormat");
         }
-    });
+    })
 
 
     const supportedLocales = browser ? getSupportedLocales() : [];
@@ -172,17 +160,17 @@
             {/if}
         </div>
 
-        <Switch active="bg-primary-500" size="sm" bind:checked={noSpecialLateText} name="noSpecialLateText">
+        <Switch bind:checked={noSpecialLateText} disabled={!browser}>
             Disable special "late" text
         </Switch>
         <br>
 
-        <Switch active="bg-primary-500" size="sm" bind:checked={disableBlurHash} name="disableBlurHash">
+        <Switch bind:checked={disableBlurHash} disabled={!browser}>
             Disable "blur-sm" on loading images
         </Switch>
         <br>
 
-        <Switch active="bg-primary-500" size="sm" bind:checked={disableNotableStreams} name="disableNotableStreams">
+        <Switch bind:checked={disableNotableStreams} disabled={!browser}>
             Disable "notable" stream (e.g. Elijah, Dan, Luke) boxes
         </Switch>
         <br>
