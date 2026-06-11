@@ -71,7 +71,9 @@
 		bind:this={canvas}
 	></canvas>
 {/if}
-<img src={imageURL} alt="" aria-hidden="true" />
+{#if imageURL}
+	<img src={imageURL} alt="" aria-hidden="true" />
+{/if}
 
 <style>
 	img {
