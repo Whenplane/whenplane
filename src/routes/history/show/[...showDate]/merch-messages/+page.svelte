@@ -1,6 +1,6 @@
 <script lang="ts">
-  import { getClosestWan, getTimeUntil, timeString } from "$lib/timeUtils.ts";
-  import { commas, type MMJobData, truncateText } from "$lib/utils.ts";
+  import { getClosestWan, getTimeUntil } from "$lib/timeUtils.ts";
+  import { commas, type MMJobData } from "$lib/utils.ts";
   import { getDateFormatLocale } from "$lib/prefUtils.ts";
   import { page } from "$app/state";
   import MerchMessage from "./components/MerchMessage.svelte";

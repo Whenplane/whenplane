@@ -44,7 +44,7 @@
 <div
 	class="card card-hover relative p-4 my-3 mx-2 flex overflow-hidden text-left main-div"
 	class:ml-6={message.type === 'reply'}
-	class:!bg-surface-900={message.type === 'reply'}
+	class:bg-gray-950!={message.type === 'reply'}
 	id={message.id}
 	class:hashHighlight={page.url.hash === '#' + message.id}
 >
@@ -57,7 +57,9 @@
 							<PersonX />
 						</figure>
 					{:else}
-						<Avatar width="w-10" initials={message.name.charAt(0)} />
+						<Avatar class="w-10 h-10">
+							<Avatar.Fallback>{message.name.charAt(0)}</Avatar.Fallback>
+						</Avatar>
 					{/if}
 				</div>
 				 

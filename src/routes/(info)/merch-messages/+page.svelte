@@ -58,7 +58,17 @@
     {@const thumbnails = data.showThumbnails[show.showId]}
     {@const thumbnail = thumbnails?.maxres ?? thumbnails?.standard ?? thumbnails?.high ?? thumbnails?.medium ?? thumbnails?.default}
     <a class="card flex hidden-link p-2 my-1 relative" href="/history/show/{show.showId}/merch-messages">
-      <img class="thumbnail" src={thumbnail?.url} alt="Thumbnail" aria-hidden="true" loading="lazy" width={thumbnail?.width} height={thumbnail?.height}>
+      <div class="overflow-hidden rounded-lg">
+        <img
+          class="thumbnail"
+          src={thumbnail?.url}
+          alt="Thumbnail"
+          aria-hidden="true"
+          loading="lazy"
+          width={thumbnail?.width}
+          height={thumbnail?.height}
+        >
+      </div>
       <div class="self-center px-4">
         <span class="font-bold text-lg">
           {show.title}
@@ -68,13 +78,13 @@
           {#if show.messageCount}
             {commas(show.messageCount)} messages
           {:else}
-             
+            &nbsp;
           {/if}
           <br>
           {#if show.replyCount}
             {commas(show.replyCount)} replies
           {:else}
-             
+            &nbsp;
           {/if}
         </span>
       </div>
