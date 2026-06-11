@@ -1,6 +1,28 @@
+<script lang="ts" module>
+	import { browser } from "$app/environment";
+
+	let decodeWorker: Worker;
+	let resolveFunctions: {[key: string]: (data: any) => void} = {};
+	if(browser) {
+		decodeWorker = new Worker(new URL('./blurHashWorker.ts', import.meta.url));
+		decodeWorker.onmessage = (m: MessageEvent<{id: string, data: any}>) => {
+			resolveFunctions[m.data.id]?.(m.data.data);
+			delete resolveFunctions[m.data.id];
+		}
+	}
+
+	function decode(hash: string, w: number, h: number) {
+		const id = Date.now().toString(36) + "-" + crypto.randomUUID();
+		decodeWorker.postMessage({ id, hash, w, h });
+		return new Promise<Uint8ClampedArray>((resolve) => {
+			resolveFunctions[id] = (result: ArrayBufferLike) => {
+				resolve(new Uint8ClampedArray(result))
+			};
+		})
+	}
+</script>
 <script lang="ts">
 	import type { BlurHash } from '$lib/utils.ts';
-	import { decodeBlurHash as decode } from 'fast-blurhash';
 	import { onMount } from 'svelte';
 	import { typed } from '$lib';
 
@@ -18,7 +40,7 @@
 			console.warn("Missing canvas! Unable to render blurhash!");
 			return;
 		}
-		const pixels = decode(
+		const pixels = await decode(
 			blurhash.hash,
 			blurhash.w / resolutionDecreaser,
 			blurhash.h / resolutionDecreaser
