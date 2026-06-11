@@ -1,5 +1,5 @@
 <script lang="ts" module>
-    let pageIndex = 0;
+    let pageIndex = $state(0);
 </script>
 <script lang="ts">
     import HistoricalShow from "$lib/history/HistoricalShow.svelte";
@@ -18,6 +18,8 @@
     import LoadingHistoricalShow from "$lib/history/LoadingHistoricalShow.svelte";
     import LazyLoad from "@dimfeld/svelte-lazyload";
     import { page } from "$app/state";
+    import { onMount } from "svelte";
+    import { scrollY, innerHeight } from 'svelte/reactivity/window';
 
     let { data } = $props();
 
@@ -37,27 +39,26 @@
             setCookie("historyViewType", view+"");
         }
     });
+    let laterPages: Promise<HistoricalEntry[]>[] = $state([]);
 
-    let fetched: number[] = [];
-
+    let lastNewPage = 0;
     function loadNextYear() {
-        if(fetched.includes(nextYear)) {
-            console.warn("Already fetched " + nextYear + ", ignoring duplicate.");
-            return;
-        }
-        fetched.push(nextYear);
-        console.debug("Fetching", nextYear)
-        fetch("/api/history/year/" + nextYear)
-          .then(r => r.json() as Promise<HistoricalEntry[]>)
-          .then(newShows => {
-              const fetchedYear = Number(newShows[0]?.name.split("/")[0]);
-              console.debug("Adding " + newShows.length + " shows from " + fetchedYear)
-              fetched.push(fetchedYear);
-              shows.push(...newShows);
-              shows = shows;
-              nextYear--;
-          })
+        if(Date.now() - lastNewPage < 500) return;
+        lastNewPage = Date.now();
+        if(nextYear < 2012) return;
+        const yearToFetch = nextYear--;
+        console.debug("Fetching", yearToFetch)
+        laterPages.push(
+          fetch("/api/history/year/" + yearToFetch)
+            .then(r => r.json() as Promise<HistoricalEntry[]>)
+        )
     }
+    $effect(() => console.debug({nextYear}))
+
+    let mounted = $state(false);
+    onMount(() => {
+        mounted = true;
+    })
 
     if(browser) pageIndex++;
 </script>
@@ -121,54 +122,51 @@
       view === "3" && "thumbnailless-inline",
     ]}
     >
+        {#snippet showComponent(show: HistoricalEntry, i: number)}
+            <HistoricalShow {show} withThumbnail={Number(view) < 2} lazyLoadThumbnail={i > 10} lazyLoadGroup={Math.floor(i/8) + (1000 * pageIndex)} alternateStartTimes={data.alternateStartTimes}/>
+        {/snippet}
         {#each shows as show, i (show.name)}
-            <HistoricalShow {show} withThumbnail={Number(view) < 2} lazyLoadThumbnail={i > 10} lazyLoadGroup={Math.floor(i/6) + (1000 * pageIndex)} alternateStartTimes={data.alternateStartTimes}/>
+            {@render showComponent(show, i)}
             {#if i === 50}
                 <LinusFace/>
             {/if}
+        {/each}
+        {#each laterPages as page, pi (pi)}
+            {#await page}
+                {#each countTo(52) as _}
+                    <LoadingHistoricalShow withThumbnail={Number(view) < 2}/>
+                {/each}
+            {:then year}
+                {#each year as show, si (show.name)}
+                    {@render showComponent(show, (pi * 52) + si)}
+                {/each}
+            {/await}
         {/each}
 
         {#if nextYear >= 2012}
             <div style="height: 0; display: inline-block;">
                 <div class="relative pointer-events-none" style="bottom: 50em">
-                    {#key shows}
-                        <LazyLoad on:visible={loadNextYear} height="50em"/>
-                    {/key}
+                    {#if mounted}
+                        {#key laterPages.length}
+                            <LazyLoad on:visible={loadNextYear} height="50em"/>
+                        {/key}
+                    {/if}
                 </div>
             </div>
 
-            <LazyLoad>
-                {#each countTo(20) as i}
-                    <LoadingHistoricalShow withThumbnail={Number(view) < 2}/>
-                {/each}
-            </LazyLoad>
-
-            <div style="height: 0; display: inline-block;">
-                <div class="relative pointer-events-none" style="bottom: 50em">
-                    {#key shows}
-                        <LazyLoad on:visible={loadNextYear} height="50em"/>
-                    {/key}
-                </div>
-            </div>
+            {#each countTo(20) as _}
+                <LoadingHistoricalShow withThumbnail={Number(view) < 2}/>
+            {/each}
         {:else}
-            <br>
-            <br>
-            <br>
-            <span class="opacity-50 thats-all">
+            <div class="w-full mt-32 mb-64 opacity-50">
                 <h2>That's it!</h2>
                 You've reached the very beginning.<br>
-            </span>
+            </div>
         {/if}
-        <br>
-        <br>
-        <br>
     </div>
 </div>
 
 <style>
-    .thats-all {
-        padding-bottom: 20vh;
-    }
 
     :global(.old-layout > a) {
         display: block;

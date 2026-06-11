@@ -116,13 +116,12 @@
 									alt={thumbnail.text ?? ''}
 									title={thumbnail.text ?? ''}
 									onload={() => (thumbnailLoaded = true)}
+									loading="lazy"
 								/>
 							</div>
-							{#if !thumbnailLoaded && browser && localStorage.getItem('disableBlurHash') !== 'true'}
+							{#if !thumbnailLoaded && browser && localStorage.getItem('disableBlurHash') !== 'true' && thumbnail.blurhash}
 								<div class="absolute top-0 left-0 rounded-sm" out:fade|global={{ duration: 400 }}>
-									{#if thumbnail.blurhash}
-										<BlurHash blurhash={thumbnail.blurhash} />
-									{/if}
+									<BlurHash blurhash={thumbnail.blurhash} />
 								</div>
 							{/if}
 						{/if}
