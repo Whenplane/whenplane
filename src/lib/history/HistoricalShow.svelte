@@ -6,6 +6,7 @@
 	const lazyLoadGroups: { [key: number]: Writable<{ thumbnailLoaded?: boolean }> } = {};
 </script>
 
+<!-- svelte-ignore state_referenced_locally -->
 <script lang="ts">
 	import { getClosestWan, getTimeUntil, timeString } from '../timeUtils';
 	import Late from '../Late.svelte';

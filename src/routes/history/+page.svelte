@@ -19,7 +19,6 @@
     import LazyLoad from "@dimfeld/svelte-lazyload";
     import { page } from "$app/state";
     import { onMount } from "svelte";
-    import { scrollY, innerHeight } from 'svelte/reactivity/window';
 
     let { data } = $props();
 
@@ -138,7 +137,7 @@
                 {/each}
             {:then year}
                 {#each year as show, si (show.name)}
-                    {@render showComponent(show, (pi * 52) + si)}
+                    {@render showComponent(show, shows.length + (pi * 52) + si)}
                 {/each}
             {/await}
         {/each}
