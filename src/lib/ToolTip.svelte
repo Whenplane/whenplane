@@ -1,14 +1,13 @@
 <script lang="ts">
-		import type { Placement } from '@floating-ui/dom';
 		import Info from '$lib/svg/Info.svelte';
 		import { typed } from '$lib';
-		import {popup} from "$lib/replacements/popup.ts";
+		import { popup, type Placement, type PopupSettings } from "$lib/replacements/popup.ts";
 
 		let {
 			id = typed<string>('default'),
 			placement = typed<Placement>('top'),
 			popupClasses = typed<string>(''),
-			event = typed<'hover' | 'click' | 'hover-click' | 'focus' | 'focus-click'>('hover'),
+			event = typed<PopupSettings["event"]>('hover'),
 			icon = typed<import('svelte').Snippet>(),
 			children = typed<import('svelte').Snippet>(),
 			content = typed<import('svelte').Snippet>()
@@ -31,11 +30,11 @@
 	{#if icon}
 		{@render icon()}
 	{:else}
-		<Info classes="inline-block!" />
+		<Info />
 	{/if}
 </div>
 
-<div class={'card p-4 shadow-x1 z-10 fixed font-normal inline-block ' + popupClasses} data-popup={id} style="opacity: 0; pointer-events: none;">
+<div class={'card p-4 shadow-x1 z-10 absolute font-normal inline-block ' + popupClasses} data-popup={id} style="opacity: 0; pointer-events: none;">
 	{@render children?.()}
 	{@render content?.()}
 </div>

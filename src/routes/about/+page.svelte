@@ -175,9 +175,9 @@
         </Switch>
         <br>
         <br>
-        <label class="py-1">
+        <label class="block py-1">
             <span>Date Format:</span>
-            <select class="input w-44 p-1 px-2" bind:value={dateFormat}>
+            <select class="input w-44 p-1 px-2 inline-block bg-surface-900" bind:value={dateFormat}>
                 <optgroup label="Common formats">
                     <option value="detect">auto</option>
                     <option value="en-US">US (mm/dd/yyyy)</option>
@@ -198,9 +198,9 @@
                 It will not effect anything else.
             </ToolTip>
         </label>
-        <label class="py-1">
+        <label class="block py-1">
             <span>Time Format:</span>
-            <select class="input w-44 p-1 px-2" bind:value={timeFormat}>
+            <select class="input w-44 p-1 px-2 inline-block bg-surface-900" bind:value={timeFormat}>
                 <option value="detect">auto</option>
                 <option value="12h">12 hour (AM/PM)</option>
                 <option value="24h">24 hour</option>

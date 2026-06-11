@@ -246,8 +246,8 @@ export function popup(triggerNode: HTMLElement, args: PopupSettings) {
 // Popup Types
 
 /** Placement https://floating-ui.com/docs/computePosition#placement */
-type Direction = 'top' | 'bottom' | 'left' | 'right';
-type Placement = Direction | `${Direction}-start` | `${Direction}-end`;
+export type Direction = 'top' | 'bottom' | 'left' | 'right';
+export type Placement = Direction | `${Direction}-start` | `${Direction}-end`;
 
 // Options & Middleware
 export interface Middleware {
