@@ -40,8 +40,16 @@
     });
     let laterPages: Promise<HistoricalEntry[]>[] = $state([]);
 
+    let scrollCounter = $state(0);
+    let scrollCounterTimeout: number | undefined = undefined;
+    function incrementScrollCounter() {
+        if(scrollCounterTimeout) clearTimeout(scrollCounterTimeout);
+        scrollCounterTimeout = setTimeout(() => scrollCounter++, 10) as unknown as number;
+    }
+
     let lastNewPage = 0;
     function loadNextYear() {
+        incrementScrollCounter();
         if(Date.now() - lastNewPage < 500) return;
         lastNewPage = Date.now();
         if(nextYear < 2012) return;
@@ -143,19 +151,24 @@
         {/each}
 
         {#if nextYear >= 2012}
-            <div style="height: 0; display: inline-block;">
-                <div class="relative pointer-events-none" style="bottom: 50em">
+            <div class="h-0 w-full inline-block">
+                <div class="relative pointer-events-none text-center" style="bottom: 100dvh">
                     {#if mounted}
                         {#key laterPages.length}
-                            <LazyLoad on:visible={loadNextYear} height="50em"/>
+                            {#key scrollCounter}
+                                <LazyLoad on:visible={loadNextYear} height="100dvh" class="w-4 mx-auto"/>
+                            {/key}
                         {/key}
                     {/if}
                 </div>
             </div>
-
-            {#each countTo(20) as _}
-                <LoadingHistoricalShow withThumbnail={Number(view) < 2}/>
-            {/each}
+            <div class="mt-32 mb-32 w-full">
+                If you can see this text, something is wrong. Try clicking the below button.
+                <br>
+                <button class="btn preset-tonal-primary border border-primary-500 text-white" onclick={loadNextYear}>
+                    Load next Shows
+                </button>
+            </div>
         {:else}
             <div class="w-full mt-32 mb-64 opacity-50">
                 <h2>That's it!</h2>
