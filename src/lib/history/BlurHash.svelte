@@ -7,12 +7,17 @@
 	let { blurhash = typed<BlurHash>() } = $props();
 
 	let needsCanvas = $state(true);
-	let canvas: HTMLCanvasElement = $state();
-	let imageURL: string = $state();
+	let canvas: HTMLCanvasElement | undefined = $state();
+	let imageURL: string | undefined = $state();
 
-	const resolutionDecreaser = blurhash.w > 1000 ? 20 : 1;
+	// svelte-ignore state_referenced_locally
+		const resolutionDecreaser = blurhash.w > 1000 ? 20 : 1;
 
-	onMount(() => {
+	onMount(async () => {
+		if(!canvas) {
+			console.warn("Missing canvas! Unable to render blurhash!");
+			return;
+		}
 		const pixels = decode(
 			blurhash.hash,
 			blurhash.w / resolutionDecreaser,
@@ -44,7 +49,7 @@
 		bind:this={canvas}
 	></canvas>
 {/if}
-<img src={imageURL} />
+<img src={imageURL} alt="" aria-hidden="true" />
 
 <style>
 	img {
