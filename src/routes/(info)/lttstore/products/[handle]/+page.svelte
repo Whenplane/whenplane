@@ -717,8 +717,9 @@
               <br>
               <br>
               {#if goneInHours > 0 && (currentStock?.total ?? -1) > 0 && (currentStock?.total ?? -1) <= 500000 && typeof data.product?.purchasesPerHour === "number" && data.product?.purchasesPerHour >= 0 && !(data.product?.purchasesPerHour === 0 && (currentStock?.total ?? -1) < 0)}
+                {@const roundedUnits = Math.round(nonZeroPurchasesPerHour * 100)/100}
                 <h2>Time remaining until out of stock</h2>
-                If this product keeps selling at {Math.round(nonZeroPurchasesPerHour * 100)/100} units per hour, it could be gone in
+                If this product keeps selling at {roundedUnits} unit{roundedUnits === 1 ? "" : "s"} per hour, it could be gone in
                 {#if goneInHours < 48}
                   {#if goneInHours <= 1}
                     less than an hour
@@ -733,7 +734,8 @@
                 {#each variantsGoneIn as variantGoneIn}
                   {@const goneInHours = variantGoneIn.goneIn}
                   {#if typeof variantGoneIn.salesPerHour === "number" && variantGoneIn.salesPerHour >= 0 && variantGoneIn.currentStock > 0}
-                    If <b>{variantGoneIn.name}</b> keeps selling at {Math.round(variantGoneIn.salesPerHour * 100)/100} units per hour,
+                    {@const roundedUnits = Math.round(variantGoneIn.salesPerHour * 100)/100}
+                    If <b>{variantGoneIn.name}</b> keeps selling at {roundedUnits} unit{roundedUnits === 1 ? "" : "s"} per hour,
                     it could be gone in
                     {#if goneInHours < 48}
                       {#if goneInHours <= 1}
