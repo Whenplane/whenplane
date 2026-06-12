@@ -12,7 +12,10 @@
 	}
 
 	function decode(hash: string, w: number, h: number) {
-		const id = Date.now().toString(36) + "-" + crypto.randomUUID();
+		let id = Date.now().toString(36) + "-" + crypto.randomUUID();
+		while(resolveFunctions[id] !== undefined) {
+			id = Date.now().toString(36) + "-" + crypto.randomUUID();
+		}
 		decodeWorker.postMessage({ id, hash, w, h });
 		return new Promise<Uint8ClampedArray>((resolve) => {
 			resolveFunctions[id] = (result: ArrayBufferLike) => {
@@ -45,6 +48,7 @@
 			blurhash.w / resolutionDecreaser,
 			blurhash.h / resolutionDecreaser
 		);
+		if(!canvas) return;
 		const ctx = canvas.getContext('2d');
 		if (!ctx) {
 			console.error('Failed to load canvas context!');
