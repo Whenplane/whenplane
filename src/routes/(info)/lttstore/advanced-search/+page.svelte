@@ -6,9 +6,9 @@
   import { page } from "$app/state";
   import ToolTip from "$lib/ToolTip.svelte";
   import CircleProgress from "$lib/replacements/CircleProgress.svelte";
-  import { dev } from "$app/environment";
   import { onMount } from "svelte";
   import { goto } from "$app/navigation";
+  import {flip} from "svelte/animate";
 
   const searchClient = new SearchClient({
     'nodes': [{
@@ -268,7 +268,7 @@
     {#if searchResults && searchResults.hits}
       {#each searchResults.hits as hit (hit.document.id)}
         {@const product = JSON.parse(hit.document.product)}
-        <div class="inline-block">
+        <div class="inline-block" animate:flip={{ duration: 200 }}>
           <LTTProductCard product={product} shortTitle={product.shortTitle} available={hit.document.available}/>
         </div>
       {/each}
