@@ -1,5 +1,4 @@
 <script lang="ts">
-  import { run } from 'svelte/legacy';
 
   import LTTProductCard from "$lib/lttstore/LTTProductCard.svelte";
   import { page } from "$app/state";
@@ -8,16 +7,9 @@
   import {slide, fade} from "svelte/transition";
   import { Progress } from "@skeletonlabs/skeleton-svelte";
   import { invalidateAll } from "$app/navigation";
-  import { SearchClient } from "typesense";
-  import type { SearchResponse } from "typesense/lib/Typesense/Documents";
-  import type { ProductSearchIndex } from "$lib/lttstore/lttstore_types.ts";
-  import sanitizeHtml from "sanitize-html";
-  import DateStamp from "$lib/DateStamp.svelte";
   import RelativeDate from "$lib/RelativeDate.svelte";
 
   let { data } = $props();
-
-  let waiting = $state(false);
 
   let loading = $state(false);
   async function reload() {
@@ -107,24 +99,27 @@
     <div class="opacity-80 pl-2">
       From the past few hours
     </div>
-    {#each data.popularProducts as product (product.id)}
-      <div class="inline-block" animate:flip={{ duration: 200 }}>
-        <LTTProductCard
-          product={JSON.parse(product.product)}
-          shortTitle={product.shortTitle}
-        >
-          {#snippet detail()}
-            <div class="opacity-80 text-xs">
-              {#if product.purchasesPerHour && product.purchasesPerHour > 0}
-                {product.purchasesPerHour.toFixed(2)} sph
-              {/if}
-            </div>
-          {/snippet}
-        </LTTProductCard>
-      </div>
-    {:else}
-      No products are being tracked yet!
-    {/each}
+    <!-- text-clear is to hide the ellipsis from line-clamp -->
+    <div class="overflow-hidden max-md:line-clamp-5 max-lg:line-clamp-3 lg:line-clamp-2 text-clear">
+      {#each data.popularProducts as product (product.id)}
+        <div class="inline-block text-white text-base" animate:flip={{ duration: 200 }}>
+          <LTTProductCard
+            product={JSON.parse(product.product)}
+            shortTitle={product.shortTitle}
+          >
+            {#snippet detail()}
+              <div class="opacity-80 text-xs">
+                {#if product.purchasesPerHour && product.purchasesPerHour > 0}
+                  {product.purchasesPerHour.toFixed(2)} sph
+                {/if}
+              </div>
+            {/snippet}
+          </LTTProductCard>
+        </div>
+      {:else}
+        No products are being tracked yet!
+      {/each}
+    </div>
     <br>
     <br>
   {/if}
@@ -216,5 +211,10 @@
   .link-header > a {
     margin-left: 0.5rem;
     margin-right: 0.5rem;
+  }
+
+  .text-clear {
+      color: rgba(0, 0, 0, 0);
+      font-size: 0;
   }
 </style>
