@@ -140,6 +140,9 @@
 			{
 				label: "Time",
 				value: timeFormat,
+				min: (typeof historyDays === "number" && Math.round((stockAsOf/1e3) - (historyDays * 24 * 60 * 60))) || undefined,
+				max: Math.round((stockAsOf/1e3)),
+				auto: false
 			},
 			...(onlyTotal ? ["total"] : (
 				filter ? Object.keys(someStock).filter(k => k.includes(filter!)) :
