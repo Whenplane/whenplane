@@ -95,7 +95,7 @@ export const load = (async ({platform, params, url}) => {
           product.id,
           handle,
           // go 3 hours past the actual cutoff, so we hopefully have a line to draw from the past
-          Date.now() - ((historyDays as number) * 24 * 60 * 60e3) - (3 * 60 * 60e3)
+          Date.now() - ((historyDays as number) * 24 * 60 * 60e3) - (12 * 60 * 60e3)
         )
         .all<StockHistoryTableRow>()
         .then(r => r.results)
