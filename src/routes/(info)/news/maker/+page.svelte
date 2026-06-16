@@ -58,7 +58,7 @@
 
 
 <div class="text-center">
-  <input type="text" bind:value={title} placeholder="Title">
+  <input type="text" bind:value={title} placeholder="Title" class="input w-96 mx-auto">
   <br>
   <button class="timestamp" class:copied={timestampCopied} onclick={copyTimestamp}>
     {timestamp}
@@ -67,8 +67,8 @@
 <br>
 
 <div class="wrapper">
-  <textarea bind:value={content} placeholder="Content goes here"></textarea>
-  <div class="preview">
+  <textarea bind:value={content} placeholder="Content goes here" class="input"></textarea>
+  <div class="preview rounded-md">
     <h2>{title}​</h2>
     ​
     {@html sanitizeHtml(content, newsSanitizeSettings)}
