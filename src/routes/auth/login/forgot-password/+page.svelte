@@ -1,26 +1,26 @@
-<script>
+<script lang="ts">
   import {enhance} from "$app/forms";
   import { fade } from "svelte/transition";
   import Turnstile from "$lib/Turnstile.svelte";
-  import { ProgressRadial } from "@skeletonlabs/skeleton";
-  import {page} from "$app/stores";
+  import { Progress } from "@skeletonlabs/skeleton-svelte";
+  import {page} from "$app/state";
   import { dev } from "$app/environment";
 
-  export let form;
+  let { form } = $props();
 
-  let email = form?.email ?? "";
+  let email = $state(form?.email ?? "");
 
-  let turnstileCompleted = false;
-  let turnstileCounter = 0;
+  let turnstileCompleted = $state(false);
+  let turnstileCounter = $state(0);
 
-  let loading = false;
+  let loading = $state(false);
 
 </script>
 
 <div class="text-center">
   <h1>Password Reset</h1>
-  {#if $page.url.searchParams.has("expiredToken")}
-    <span class="text-primary-500-400-token">
+  {#if page.url.searchParams.has("expiredToken")}
+    <span class="text-primary-600-400">
         That password reset link expired. Please request a new one below.
     </span>
     <br>
@@ -63,24 +63,24 @@
       {/key}
 
       {#if form?.invalidEmail}
-        <span class="text-primary-500-400-token">
+        <span class="text-primary-600-400">
           Please enter a valid email address.
         </span>
         <br>
       {/if}
 
       {#if form?.ratelimited}
-        <span class="text-primary-500-400-token">
+        <span class="text-primary-600-400">
           You are sending password reset requests too quickly. Wait a minute and try again.
         </span>
       {/if}
 
 
       <br>
-      <button class="btn variant-glass-primary" disabled={!turnstileCompleted || !email}>Reset Password</button>
+      <button class="btn preset-tonal-primary" disabled={!turnstileCompleted || !email}>Reset Password</button>
       {#if loading}
         <li class="crumb" transition:fade|global={{duration: 100}}>
-          <ProgressRadial width="w-6" stroke={250} value={loading ? undefined : 100}/>
+          <Progress width="w-6" stroke={250} value={loading ? undefined : 100}/>
         </li>
       {/if}
     </form>

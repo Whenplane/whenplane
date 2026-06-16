@@ -1,56 +1,65 @@
 <script lang="ts">
+	import type { ProductDetailModule } from '$lib/lttstore/lttstore_types.ts';
+	import TextDiff from '$lib/lttstore/diff/TextDiff.svelte';
+	import { typed } from '$lib';
 
-  import * as Diff from "diff"
-  import { escapeHtml } from "$lib/utils.ts";
-  import type { ProductDetailModule, ProductVariant } from "$lib/lttstore/lttstore_types.ts";
-  import { getVariantFieldName } from "$lib/lttstore/field_names.ts";
-  import TextDiff from "$lib/lttstore/diff/TextDiff.svelte";
+	let {
+		before = typed<string>(),
+		after = typed<string>(),
+		displaying = typed<'before' | 'after'>()
+	} = $props();
 
-  export let before: string;
-  export let after: string;
+	let parsedBefore = $derived(
+		(JSON.parse(before) as ProductDetailModule[]).map((m) => {
+			return {
+				...m,
+				content: m.content.replaceAll('\n', '<br>\n')
+			};
+		})
+	);
+	let parsedAfter = $derived(
+		(JSON.parse(after) as ProductDetailModule[]).map((m) => {
+			return {
+				...m,
+				content: m.content.replaceAll('\n', '<br>\n')
+			};
+		})
+	);
 
-  $: parsedBefore = (JSON.parse(before) as ProductDetailModule[]).map(m => {
-    return {
-      ...m,
-      content: m.content.replaceAll("\n", "<br>\n"),
-    }
-  });
-  $: parsedAfter = (JSON.parse(after) as ProductDetailModule[]).map(m => {
-    return {
-      ...m,
-      content: m.content.replaceAll("\n", "<br>\n"),
-    }
-  });
+	// Add missing modules to parsedBefore for display
+	let filledParsedBefore = $derived.by(() => {
+		const result = [...parsedBefore];
+		for (let detailModule of parsedAfter) {
+			if (!result.find((m) => m.title === detailModule.title)) {
+				result.push({
+					title: detailModule.title,
+					content: ''
+				});
+			}
+		}
+		return result;
+	});
 
-  $: {
-    for (let detailModule of parsedAfter) {
-      if(!parsedBefore.find(m => m.title === detailModule.title)) {
-        parsedBefore.push({
-          title: detailModule.title,
-          content: ""
-        })
-      }
-    }
-  }
-
-  export let displaying: "before" | "after";
-
-  let changedModules: string[] = [];
-  $: {
-    changedModules = [];
-    for (let detailModule of parsedBefore) {
-      const beforeContent = detailModule.content;
-      const afterContent = parsedAfter.find(m => m.title === detailModule.title)?.content ?? "";
-      if(beforeContent != afterContent) {
-        changedModules.push(detailModule.title);
-      }
-    }
-  }
+	let changedModules: string[] = $derived.by(() => {
+		const changed: string[] = [];
+		for (let detailModule of filledParsedBefore) {
+			const beforeContent = detailModule.content;
+			const afterContent = parsedAfter.find((m) => m.title === detailModule.title)?.content ?? '';
+			if (beforeContent != afterContent) {
+				changed.push(detailModule.title);
+			}
+		}
+		return changed;
+	});
 </script>
-{#each parsedBefore.filter(m => changedModules.includes(m.title)) as module}
-  <b>{module.title}</b><br>
-  <div class="card p-2">
-    <TextDiff before={JSON.stringify(module.content)} after={JSON.stringify(parsedAfter.find(m => m.title === module.title)?.content ?? "")} {displaying} diffType="words"/>
-  </div>
-  <br>
+
+{#each filledParsedBefore.filter((m) => changedModules.includes(m.title)) as module}
+	<b>{module.title}</b><br />
+	<TextDiff
+		before={JSON.stringify(module.content)}
+		after={JSON.stringify(parsedAfter.find((m) => m.title === module.title)?.content ?? '')}
+		{displaying}
+		diffType="words"
+	/>
+	<br />
 {/each}

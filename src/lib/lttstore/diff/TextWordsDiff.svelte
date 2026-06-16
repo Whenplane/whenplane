@@ -1,12 +1,14 @@
 <!-- The same as TextDiff, but default to word diff instead of char diff -->
 <script lang="ts">
-  import TextDiff from "$lib/lttstore/diff/TextDiff.svelte";
+	import TextDiff from '$lib/lttstore/diff/TextDiff.svelte';
+	import { typed } from '$lib';
 
-  export let before: string;
-  export let after: string;
-
-  export let displaying: "before" | "after";
-  export let diffType: "chars" | "words" = "words";
+	let {
+		before = typed<string>(),
+		after = typed<string>(),
+		displaying = typed<'before' | 'after'>(),
+		diffType = typed<'chars' | 'words'>('words')
+	} = $props();
 </script>
 
-<TextDiff {before} {after} {displaying} {diffType}/>
+<TextDiff {before} {after} {displaying} {diffType} />

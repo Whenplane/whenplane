@@ -1,17 +1,17 @@
 <script lang="ts">
 
   import { onMount } from "svelte";
-  import { page } from "\$app/stores";
+  import { page } from "$app/state";
 
-  let d: HTMLDivElement;
+  let d: HTMLDivElement = $state();
 
   onMount(() => {
     const iframe = document.createElement("iframe");
     iframe.style.backgroundColor = "transparent";
     iframe.allowTransparency = "true";
-    if($page.url.searchParams.has("time")) iframe.classList.add("testframe");
+    if(page.url.searchParams.has("time")) iframe.classList.add("testframe");
 
-    iframe.src = $page.url.searchParams.has("time") ? "/ltt-time?frame" : "/?frame"
+    iframe.src = page.url.searchParams.has("time") ? "/ltt-time?frame" : "/?frame"
 
     d.appendChild(iframe)
   })

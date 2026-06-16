@@ -2,7 +2,7 @@
 
   import FollowerGraph from "./FollowerGraph.svelte";
 
-  export let data;
+  let { data } = $props();
 
 </script>
 

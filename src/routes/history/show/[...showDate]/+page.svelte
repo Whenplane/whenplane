@@ -1,11 +1,13 @@
 <script lang="ts">
+    import { run } from 'svelte/legacy';
+
     import HistoricalShow from "$lib/history/HistoricalShow.svelte";
     import { colonTimeString, getClosestWan, timeString } from "$lib/timeUtils";
     import Floatplane from "$lib/svg/Floatplane.svelte";
     import Youtube from "$lib/svg/Youtube.svelte";
     import {getTimeUntil} from "$lib/timeUtils";
     import { browser, dev } from "$app/environment";
-    import { page } from "$app/stores";
+    import { page } from "$app/state";
     import type { WanDb_Topic } from "$lib/wdb_types.ts";
     import SubTopics from "$lib/subcomponents/SubTopics.svelte";
     import { fade } from "svelte/transition";
@@ -13,10 +15,10 @@
     import { getDateFormatLocale } from "$lib/prefUtils.ts";
     import { truncateText } from "$lib/utils.js";
     import { getCookie, setCookie } from "$lib/cookieUtils.ts";
-    import { SlideToggle } from "@skeletonlabs/skeleton";
+    import { Switch } from "@skeletonlabs/skeleton-svelte";
     import Incomplete from "$lib/merch-messages/Incomplete.svelte";
 
-    export let data;
+    let { data } = $props();
 
     const thumbnail = data.value?.snippet?.thumbnails?.maxres ??
         data.value?.snippet?.thumbnails?.standard ??
@@ -34,14 +36,14 @@
 
     const backHash =  `?to=${showDate.getUTCFullYear()}#` + data.name;
 
-    let onTimeUntil = data.metadata.mainShowStart ? getTimeUntil(showDate, new Date(data.metadata.mainShowStart).getTime()) : null;
+    let onTimeUntil = $state(data.metadata.mainShowStart ? getTimeUntil(showDate, new Date(data.metadata.mainShowStart).getTime()) : null);
 
     const preShowLength = preShowStart && mainShowStart ?
       getTimeUntil(mainShowStart as Date, (preShowStart as Date).getTime()).distance/1e3 :
       null;
 
-    let timestampPlatform: string | null;
-    timestampPlatform = (browser ? getCookie("timestampPlatform") : $page.params.__c__timestampPlatform) ?? "youtube"; // seperate so it doesnt try to react
+    let timestampPlatform: string | null = $state();
+    timestampPlatform = (browser ? getCookie("timestampPlatform") : page.params.__c__timestampPlatform) ?? "youtube"; // seperate so it doesnt try to react
 
     function toggleTimestampPlatform() {
         const before = getCookie("timestampPlatform");
@@ -53,14 +55,16 @@
         setCookie("timestampPlatform", timestampPlatform)
     }
 
-    let onTimeString: string;
-    $: if(onTimeUntil) onTimeString = onTimeUntil.distance < 5 * 60e3 ? "on time!" : (onTimeUntil.late ? onTimeUntil.string + "late" : onTimeUntil.string + "early!");
+    let onTimeString: string = $state();
+    run(() => {
+        if(onTimeUntil) onTimeString = onTimeUntil.distance < 5 * 60e3 ? "on time!" : (onTimeUntil.late ? onTimeUntil.string + "late" : onTimeUntil.string + "early!");
+    });
 
 
-    $: description = "WAN show from " + showDate.toLocaleDateString(undefined, {dateStyle: 'long'}) +
+    let description = $derived("WAN show from " + showDate.toLocaleDateString(undefined, {dateStyle: 'long'}) +
       (data.metadata.title ? " titled '" + truncateText(data.metadata.title.trim(), 65) + "'" : "") + ". " +
       (onTimeString ? 'It was ' + onTimeString.trim() : '') +
-      ((mainShowStart instanceof Date && showEnd instanceof Date) || data.metadata.mainShowLength ? (onTimeString ? ", and" : "It") + " was live for " + timeString(data.metadata.mainShowLength ?? (showEnd?.getTime() - mainShowStart?.getTime()))?.trim() + "." : ".");
+      ((mainShowStart instanceof Date && showEnd instanceof Date) || data.metadata.mainShowLength ? (onTimeString ? ", and" : "It") + " was live for " + timeString(data.metadata.mainShowLength ?? (showEnd?.getTime() - mainShowStart?.getTime()))?.trim() + "." : "."));
 </script>
 <svelte:head>
     <title>{data.metadata.title ?? ""}{data.metadata.title ? " - " : ""} {showDate.toLocaleDateString(undefined, {dateStyle: 'long'})}</title>
@@ -82,10 +86,10 @@
 
 
 <ol class="breadcrumb pt-2 pl-2">
-    <li class="crumb"><a class="anchor hover-underline" href="/">{$page.url.hostname === "whenwan.show" ? "whenwan.show" : "Whenplane"}</a></li>
-    <li class="crumb-separator" aria-hidden="true">&rsaquo;</li>
+    <li class="crumb"><a class="anchor hover-underline" href="/">{page.url.hostname === "whenwan.show" ? "whenwan.show" : "Whenplane"}</a></li>
+    <li class="crumb-separator" aria-hidden="true">›</li>
     <li class="crumb"><a class="anchor hover-underline" href="/history">History</a></li>
-    <li class="crumb-separator" aria-hidden="true">&rsaquo;</li>
+    <li class="crumb-separator" aria-hidden="true">›</li>
     <li class="crumb"><a class="anchor hover-underline" href="/history{backHash}">{showDate.toLocaleDateString(getDateFormatLocale())}</a></li>
 </ol>
 
@@ -169,7 +173,7 @@
                 Provided by <a href="/noki">NoKi</a>
                 <div class="flex justify-center items-center mt-2">
                     <Youtube/>
-                    <SlideToggle checked={timestampPlatform === "floatplane"} on:change={toggleTimestampPlatform}/>
+                    <Switch checked={timestampPlatform === "floatplane"} on:change={toggleTimestampPlatform}/>
                     <Floatplane/>
                 </div>
                 <div in:fade={{duration: 100}} class="text-left inline-block mx-auto">
@@ -177,7 +181,7 @@
                         {#each timestamps as timestamp, i}
                             {@const youtubeId = data.value?.vods?.youtube}
                             {@const floatplaneId = data.value?.vods?.floatplane}
-                            <li class="!mt-0 !mb-0 !p-0" id="timestamp-{youtubeId}.{timestamp.time}" class:highlighted={$page.url.hash === "#timestamp-" + youtubeId + "." + timestamp.time}>
+                            <li class="mt-0! mb-0! p-0!" id="timestamp-{youtubeId}.{timestamp.time}" class:highlighted={page.url.hash === "#timestamp-" + youtubeId + "." + timestamp.time}>
                                 <a
                                   class="hidden-link"
                                   href={
@@ -216,6 +220,8 @@
 {/if}
 
 <style>
+    @reference "#app.css";
+
     .big-wrapper {
         margin-top: 2em;
     }

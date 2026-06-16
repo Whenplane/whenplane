@@ -2,6 +2,7 @@ import { error, json, type RequestHandler } from "@sveltejs/kit";
 import { dev } from "$app/environment";
 import { createTables } from "../../../../(info)/lttstore/createTables.ts";
 import type { ProductsTableRow } from "$lib/lttstore/lttstore_types.ts";
+import { retryD1 } from "$lib/utils.ts";
 
 
 export const GET = (async ({platform, params}) => {
@@ -12,9 +13,11 @@ export const GET = (async ({platform, params}) => {
 
   const handle = params.handle;
 
-  const product = await db.prepare("select * from products where handle = ?")
-    .bind(handle)
-    .first<ProductsTableRow>();
+  const product = await retryD1(() =>
+    db.prepare("select * from products where handle = ?")
+      .bind(handle)
+      .first<ProductsTableRow>()
+  );
 
   if(!product) {
     throw error(404, "Product not found")

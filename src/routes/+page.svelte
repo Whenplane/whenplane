@@ -1,15 +1,14 @@
 <script lang="ts">
-	import { getNextWAN, isNearWan, timeString } from "$lib/timeUtils";
+	import { getNextWAN, timeString } from "$lib/timeUtils";
 	import ShowCountdown, {mainLate} from "$lib/ShowCountdown.svelte";
 	import StreamStatus from "$lib/StreamStatus.svelte";
 	import {invalidateAll} from "$app/navigation";
 	import {onMount} from "svelte";
 	import Late from "$lib/Late.svelte";
-	import {page} from "$app/stores";
-	import {fade} from "svelte/transition";
+	import {page} from "$app/state";
 	import { browser, dev } from "$app/environment";
 	import LatenessVoting from "$lib/LatenessVoting.svelte";
-	import { Accordion, AccordionItem } from "@skeletonlabs/skeleton";
+	import { Accordion } from "@skeletonlabs/skeleton-svelte";
 	import ImminentBox from "$lib/ImminentBox.svelte";
 	import LTTTime from "$lib/LTTTime.svelte";
 	import SpecialStream from "$lib/SpecialStream.svelte";
@@ -22,34 +21,36 @@
 	import { getCookie } from "$lib/cookieUtils.ts";
 	import Socket from "$lib/Socket.svelte";
 	import CaretDownFill from "svelte-bootstrap-icons/lib/CaretDownFill.svelte";
-	import {popup} from "@skeletonlabs/skeleton";
 	import { getDateFormatLocale, getTimePreference } from "$lib/prefUtils.ts";
 	import MoreLinks from "$lib/MoreLinks.svelte";
 	import CurrentTitle from "$lib/CurrentTitle.svelte";
+	import {popup} from "$lib/replacements/popup.ts";
+	import ChevronDown from "svelte-bootstrap-icons/lib/ChevronDown.svelte";
 
-	export let data;
+	let { data } = $props();
 
-	let isAfterStartTime: boolean | undefined;
-	let isLate: boolean | undefined;
+	let isAfterStartTime: boolean | undefined = $state();
+	let isLate: boolean | undefined = $derived(isAfterStartTime && !data.isPreShow && !data.isMainShow);
 
-	$: isLate = isAfterStartTime && !data.isPreShow && !data.isMainShow;
+	
 
-	$: isFrame = $page.url.searchParams.has("frame");
+	let isFrame = $derived(page.url.searchParams.has("frame"));
 
 	const myDomains = [
 		"whenplane.com",
 		"whenwan.show",
 		"whenplane.pages.dev",
 		"when.show",
+		"svelte-5.whenplane.com",
 		"localhost"
 	]
 
 	const reloadNumber = data.liveStatus?.reloadNumber;
-	$: {
+	$effect(() => {
 		if(data.liveStatus && data.liveStatus?.reloadNumber != reloadNumber) {
 			location.href = "";
 		}
-	}
+	})
 
 	let outerContainer: HTMLDivElement;
 	let mainContainer: HTMLDivElement;
@@ -85,7 +86,7 @@
 		nowish = new Date();
 	}
 
-	let nowish = new Date();
+	let nowish = $state(new Date());
 
 	// Periodically invalidate the data so that SvelteKit goes and fetches it again for us
 	function startInvalidationInterval() {
@@ -113,28 +114,34 @@
 	if(browser) checkHeight();
 
 
-	$: averageLateness = data.averageLateness ? timeString(Math.abs(data.averageLateness)) : undefined;
-	$: latenessStandardDeviation = data.latenessStandardDeviation ? timeString(Math.abs(data.latenessStandardDeviation)) : undefined;
-	$: medianLateness = data.medianLateness ? timeString(Math.abs(data.medianLateness)) : undefined;
+	let averageLateness = $derived(data.averageLateness ? timeString(Math.abs(data.averageLateness)) : undefined);
+	let latenessStandardDeviation = $derived(data.latenessStandardDeviation ? timeString(Math.abs(data.latenessStandardDeviation)) : undefined);
+	let medianLateness = $derived(data.medianLateness ? timeString(Math.abs(data.medianLateness)) : undefined);
 
 
-	$: if(dev) console.log({data});
+	if(dev) {
+		$effect(() => {
+			console.log({data});
+		})
+	}
 
 
 	// remove ?attempt after 500 error
-	if(browser && $page.url.searchParams.has("attempt")) {
+	if(browser && page.url.searchParams.has("attempt")) {
 		const newURL = new URL(location.href);
 		newURL.searchParams.delete("attempt");
 		window.history.replaceState({}, document.title, "/" + (newURL.searchParams.size > 0 ? "?" + newURL.searchParams.toString() : ""));
 	}
 
-	let addSpace = false;
+	let addSpace = $state(false);
 	function checkHeight() {
 		if(!browser || !mainContainer) return;
-		if(mainContainer.scrollHeight > window.innerHeight-50) {
+		const spacerHeight = addSpace ? 64 : 0;
+		const threshold = addSpace ? 80 : 50;
+		if(mainContainer.scrollHeight - spacerHeight > window.innerHeight - threshold) {
 			outerContainer.classList.remove("items-center")
 			outerContainer.classList.add("too-short")
-			addSpace = true // So that there is some space at the bottom when scrolling. for some stupid reason padding doesnt work here
+			addSpace = true
 			if(dev) console.debug("too short")
 		} else {
 			outerContainer.classList.add("items-center")
@@ -150,17 +157,17 @@
 		}
 	}
 
-	const disableNotableStreams = browser ? !(getCookie("disableNotableStreams") !== "true") : !($page.params.__c__disableNotableStreams !== "true");
+	const disableNotableStreams = browser ? !(getCookie("disableNotableStreams") !== "true") : !(page.params.__c__disableNotableStreams !== "true");
 
 	const description = "Is The WAN Show late? Yes. How late is The WAN Show? Probably very! See a countdown to when WAN is supposed to start, as well as how late it's been before.";
 
 </script>
 <svelte:window
-		on:focus={onFocus}
-		on:visibilitychange={onFocus}
+		onfocus={onFocus}
+		onvisibilitychange={onFocus}
 />
 <svelte:head>
-	<title>When is the WAN Show?  {$page.url.hostname === "whenwan.show" ? "whenwan.show" : "Whenplane"}</title>
+	<title>When is the WAN Show?  {page.url.hostname === "whenwan.show" ? "whenwan.show" : "Whenplane"}</title>
 	<meta name="description" content={description}/>
 	<link rel="canonical" href="https://whenplane.com/"/>
 </svelte:head>
@@ -182,29 +189,29 @@
 {#if !isFrame}
 	<NewsAnnouncer/>
 
-	<span class="clear inline-block absolute pointer-events-none" style="z-index: -5;">
+	<div class="clear inline-block absolute pointer-events-none max-w-dvw overflow-hidden" style="z-index: -5;">
 		{description}
 		When is wan? Who is wan? Why is wan? Who knows!
 		When is WAN show? The WAN show is <i>supposed</i> to start at 4:30 PM PT.
 		Despite the scheduled start time, the show is almost always between 1 and 3 hours late.
 		This time is also known as "Linus Standard Time". Thanks, LTT.
-	</span>
+	</div>
 {/if}
 
 <div class="container h-full mx-auto justify-center items-center" bind:this={outerContainer} class:alwaysFlex={isFrame}>
 	<div class="space-y-3 inner" bind:this={mainContainer}>
-		{#if !$page.data.isBot} <!-- so the imminent box stops showing up in search results -->
+		{#if !page.data.isBot} <!-- so the imminent box stops showing up in search results -->
 			<ImminentBox floatplane={data.liveStatus?.floatplane} hasDone={data.hasDone}/>
 		{/if}
 		<div class="text-center">
 			<CurrentTitle liveStatus={data.liveStatus}/>
-			{#if data.specialStream && !$page.data.isBot}
+			{#if data.specialStream && !page.data.isBot}
 				{#key data.specialStream}
 					<SpecialStream {data}/>
 				{/key}
 				<br>
 			{/if}
-			<div class="card p-4 whitespace-nowrap shadow-x1 z-10 font-normal" data-popup="estimated-special-stream-start" style="margin-top: 0;">
+			<div class="card p-4 whitespace-nowrap shadow-x1 z-10 font-normal fixed" data-popup="estimated-special-stream-start" style="margin-top: 0; opacity: 0; pointer-events: none;">
 				Often, LTT does not announce streams, they just go live.<br>
 				So the only way we know that a stream is happening is when they upload a title, description, and thumbnail.<br>
 				This usually happens a few hours before the stream starts, and a guess is made at the start time.<br>
@@ -255,10 +262,10 @@
 				{#if !isAfterStartTime && !data.isMainShow}
 					Next WAN:
 					{getNextWAN(undefined, undefined, data.alternateStartTimes)
-						.toLocaleDateString(getDateFormatLocale(), {timeZone: $page.params.__timezone, dateStyle: "long"})}
+						.toLocaleDateString(getDateFormatLocale(), {timeZone: page.params.__timezone, dateStyle: "long"})}
 					at
 					{getNextWAN(undefined, undefined, data.alternateStartTimes)
-						.toLocaleTimeString(undefined, {hour12: getTimePreference(), timeZone: $page.params.__timezone, timeStyle: "short"})}
+						.toLocaleTimeString(undefined, {hour12: getTimePreference(), timeZone: page.params.__timezone, timeStyle: "short"})}
 				{:else if isLate}
 					It usually <i>actually</i> starts roughly 1 or 2 hours late.
 				{:else if (data.isMainShow && data.mainShowStarted) || data.isPreShow}
@@ -270,13 +277,13 @@
 						Started
 					{/if}
 					at
-					{new Date(data.mainShowStarted ?? data.preShowStarted ?? data.liveStatus.floatplane.started).toLocaleTimeString(undefined, {hour12: getTimePreference(), timeZone: $page.params.__timezone})}
+					{new Date(data.mainShowStarted ?? data.preShowStarted ?? data.liveStatus.floatplane.started).toLocaleTimeString(undefined, {hour12: getTimePreference(), timeZone: page.params.__timezone})}
 				{/if}
 			</div>
 		</div>
 
 
-		<div class="mx-4 !mt-2">
+		<div class="mx-4 mt-2!">
 			{#if data.liveStatus}
 				<StreamStatus {data}/>
 			{:else}
@@ -289,42 +296,42 @@
 
 		<div class="text-center lateness-stats">
 			{#if averageLateness || dev}
-				<span class="card px-4 py-2 mb-4 inline-block lateness">
-					<h3 class="no-header-margin">Average lateness</h3>
+				<div class="card px-4 py-2 mb-4 inline-block lateness">
+					<h3 class="no-header-margin text-2xl!">Average lateness</h3>
 					<span class="opacity-75 text-90 relative bottom-1">from the last {data.pastShowsForLatenesses ?? 6} shows</span>
 					<br>
 					{averageLateness} <Late/>
 					{#if latenessStandardDeviation}
 						<br>
 						<span class="smaller">
-							&plusmn; {latenessStandardDeviation}
+							± {latenessStandardDeviation}
 						</span>
 						<ToolTip id="stdDev">
 							Think of standard deviation as a measure that tells you how much individual values in a set typically differ from the average of that set. If the standard deviation is small, it means most values are close to the average. If it's large, it means values are more spread out from the average, indicating greater variability in the data. Essentially, standard deviation gives you an idea of how consistent or varied the values are in relation to the average.
 						</ToolTip>
 					{/if}
-				</span>
+				</div>
 			{/if}
 			{#if medianLateness || dev}
-				<span class="card px-4 py-2 mb-4 inline-block lateness">
-					<h3 class="no-header-margin">Median lateness</h3>
+				<div class="card px-4 py-2 mb-4 inline-block lateness">
+					<h3 class="no-header-margin text-2xl!">Median lateness</h3>
 					<span class="opacity-75 text-90 relative bottom-1">from the last {data.pastShowsForLatenesses ?? 6} shows</span>
 					<br>
 					{medianLateness} <Late/>
 					{#if latenessStandardDeviation}
 						<br>
 						<span class="smaller">
-							&nbsp;
+							 
 						</span>
 					{/if}
-				</span>
+				</div>
 			{/if}
 			<br>
 			{#if !isFrame}
-				<a href="/history" class="btn variant-ghost-surface">
+				<a href="/history" class="btn preset-tonal-surface border border-surface-500 bg-surface-900/60 rounded-xl">
 					History
 				</a>
-				<button class="btn variant-ghost-surface" use:popup={{
+				<button class="btn preset-tonal-surface border border-surface-500 bg-surface-900/60 rounded-xl" use:popup={{
 					event: 'click',
 					target: 'moreDropdown',
 					placement: 'bottom'
@@ -332,16 +339,16 @@
 					<span class="capitalize">More</span>
 					<span><CaretDownFill/></span>
 				</button>
-				<div class="card w-58 !shadow-2xl overflow-hidden z-20 !bg-surface-500" data-popup="moreDropdown">
+				<div class="card w-58 shadow-2xl! overflow-hidden z-20 bg-surface-700/90! absolute backdrop-blur-[5px]" data-popup="moreDropdown" style="opacity: 0; pointer-events: none; display: none;">
 					<MoreLinks/>
 
-					<div class="arrow bg-surface-400-500-token" />
+					<div class="arrow bg-surface-700/90"></div>
 				</div>
 				<br>
 				<br>
 			{/if}
 			<!--{#if nowish.getTime() < 1710572400000}
-				<a href="https://www.twitch.tv/bocabola" target="_blank" rel="noopener" class="!no-underline">
+				<a href="https://www.twitch.tv/bocabola" target="_blank" rel="noopener" class="no-underline!">
 					Elijah (BocaBola) will be streaming during After Dark and after WAN Show!
 				</a>
 			{/if}-->
@@ -349,7 +356,7 @@
 
 
 		{#if (data.isThereWan?.text || data.isThereWan?.image) && !data.isBot}
-			<div class="card border-2 p-2 !border-amber-600 !bg-opacity-20 !bg-amber-600 block text-center limit mx-auto">
+			<div class="card border-2 p-2 border-amber-600! bg-amber-600/21! block text-center limit mx-auto">
 				{#if data.isThereWan?.text}
 					{@html sanitizeHtml(data.isThereWan?.text, newsSanitizeSettings)}
 				{/if}
@@ -380,21 +387,24 @@
 			started: "2024-02-08T22:45:02.407Z"
 		}}/>-->
 
-		{#if !$page.data.isBot && (nowish.getUTCDay() === 5 || nowish.getUTCDay() === 6 /*|| dev*/) && !data.hasDone && ($page.url.searchParams.has("showLatenessVoting") ? $page.url.searchParams.get("showLatenessVoting") === "true" : !isFrame)}
-			<div>
-				<Accordion padding="pb-2 px-4">
-					<AccordionItem open>
-						<svelte:fragment slot="summary">
+		{#if !page.data.isBot && (nowish.getUTCDay() === 5 || nowish.getUTCDay() === 6 /*|| dev*/) && !data.hasDone && (page.url.searchParams.has("showLatenessVoting") ? page.url.searchParams.get("showLatenessVoting") === "true" : !isFrame)}
+			<div class="pb-2 px-4">
+				<Accordion collapsible value={['1']}>
+					<Accordion.Item value="1">
+						<Accordion.ItemTrigger class="font-bold flex items-center justify-between gap-2">
 							<h3 class="inline">Lateness Voting</h3>
-						</svelte:fragment>
-						<svelte:fragment slot="content">
+							<Accordion.ItemIndicator class="group">
+								<ChevronDown class="h-5 w-5 transition group-data-[state=open]:rotate-180" />
+							</Accordion.ItemIndicator>
+						</Accordion.ItemTrigger>
+						<Accordion.ItemContent>
 							{#if data.liveStatus}
 								<LatenessVoting {mainLate}/>
 							{:else}
 								<span class="opacity-75">Lateness voting not available while offline.</span>
 							{/if}
-						</svelte:fragment>
-					</AccordionItem>
+						</Accordion.ItemContent>
+					</Accordion.Item>
 				</Accordion>
 			</div>
 		{/if}
@@ -413,7 +423,7 @@
 		</span>
 	</div>
 {:else}
-	<div class="absolute bottom-0 right-0 p-2">
+	<div class="absolute bottom-0 right-0 p-2 max-md:hidden">
 		<a href="/about">About</a>
 	</div>
 {/if}
@@ -425,7 +435,7 @@
 {/if}
 
 
-{#if $page.url.hostname.includes("wheniswan.pages.dev")}
+{#if page.url.hostname.includes("wheniswan.pages.dev")}
 	<div class="fixed bottom-0 w-screen text-center">
 		<div class="card inline-block p-2 mt-2">
 			This site has a proper domain now!
@@ -438,7 +448,7 @@
 	</div>
 {/if}
 
-{#if !myDomains.includes($page.url.hostname.replaceAll("www.", "")) && !$page.url.hostname.endsWith("wheniswan.pages.dev")}
+{#if !myDomains.includes(page.url.hostname.replaceAll("www.", "")) && !page.url.hostname.endsWith("whenplane.pages.dev")}
 	<div class="fixed top-0 w-screen text-center">
 		<div class="card inline-block p-2 mt-2 px-3" style="font-size: 0.75em; background-color: rgba(21, 23, 31, 0.3) !important;">
 			You are using an unofficial domain. Whenplane cannot guarantee that this domain doesnt modify the site in any way.
@@ -469,7 +479,6 @@
 
 	.container {
 		padding: 5em 1em 1em;
-		transition: padding 0.4s;
 	}
 
 	.lateness-stats {
@@ -477,7 +486,7 @@
 	}
 
 	@media (max-height: 790px) {
-		.inner:not(>.alwaysFlex) {
+		.container:not(.alwaysFlex) .inner {
 			padding-bottom: 5em;
 		}
 	}
@@ -488,13 +497,14 @@
 	.alwaysFlex {
 		display: flex;
 	}
+	
+	.container {
+		display: flex;
+	}
 
 	@media (min-height: 790px) {
 		.container:not(.too-short) {
 			padding: 0;
-		}
-		.container {
-			display: flex;
 		}
 	}
 

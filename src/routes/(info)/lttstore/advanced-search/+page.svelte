@@ -1,12 +1,14 @@
 <script lang="ts">
-
   import type { SearchResponse } from "typesense/lib/Typesense/Documents";
   import type { ProductSearchIndex } from "$lib/lttstore/lttstore_types.ts";
   import { SearchClient } from "typesense";
   import LTTProductCard from "$lib/lttstore/LTTProductCard.svelte";
-  import { ProgressRadial } from "@skeletonlabs/skeleton";
-  import { page } from "$app/stores";
+  import { page } from "$app/state";
   import ToolTip from "$lib/ToolTip.svelte";
+  import CircleProgress from "$lib/replacements/CircleProgress.svelte";
+  import { onMount } from "svelte";
+  import { goto } from "$app/navigation";
+  import {flip} from "svelte/animate";
 
   const searchClient = new SearchClient({
     'nodes': [{
@@ -19,68 +21,35 @@
     'connectionTimeoutSeconds': 10
   });
 
-  let sortBy = "_text_match(buckets: 10):desc,purchasesPerDay:desc";
-  $: {
-    sortBy;
-    throttleSearch();
-  }
+  let sortBy = $state("_text_match(buckets: 10):desc,purchasesPerDay:desc");
 
-  let onlyShowAvailable = false;
-  let onlyShowInStock = false;
+  let onlyShowAvailable = $state(false);
+  let onlyShowInStock = $state(false);
 
   const minPrice = 0;
   const maxPrice = 59999 + 1
 
-  let filterMinPrice = minPrice;
-  let filterMaxPrice = maxPrice;
+  let filterMinPriceString = $state(minPrice + "");
+  let filterMaxPriceString = $state(maxPrice + "");
 
-  let filterMinPriceString = filterMinPrice + "";
-  $: filterMinPrice = Number(filterMinPriceString);
-  let filterMaxPriceString = filterMaxPrice + "";
-  $: filterMaxPrice = Number(filterMaxPriceString);
+  let filterMinPrice = $derived(Number(filterMinPriceString));
+  let filterMaxPrice = $derived(Number(filterMaxPriceString));
 
-  $: searchParams = {
-    filterMinPrice,
-    filterMaxPrice,
-    sortBy,
-    onlyShowAvailable,
-    onlyShowInStock
-  }
   const productTypeFilters = new Set();
 
 
-  let waiting = false;
-  let searchPromise: Promise<SearchResponse<ProductSearchIndex> | undefined> | undefined;
-  let searchResults: SearchResponse<ProductSearchIndex> | undefined;
+  let waiting = $state(false);
+  let searchPromise: Promise<SearchResponse<ProductSearchIndex> | undefined> | undefined = $state();
+  let searchResults: SearchResponse<ProductSearchIndex> | undefined = $state();
   let networkError = false;
 
-  let searchText = "";
-  $: {
-    searchParams;
-    searchText;
-    throttleSearch();
-  }
+  let searchText = $state(page.url.searchParams.get("q") || "");
 
-  let productCategories: {count: number, highlighted: string, value: string}[] | undefined;
-  $: productCategories = productTypeFilters.size === 0 ? searchResults?.facet_counts?.[1].counts : productCategories;
-
-  function throttleSearch() {
-    let tmpText = searchText+"";
-    waiting = true;
-    const thisSearchFilters = JSON.stringify(searchParams)
-    const thisProductTypeFilters = JSON.stringify([...productTypeFilters]);
-    greyResults = true;
-    setTimeout(() => {
-      if(searchText === tmpText && thisSearchFilters === JSON.stringify(searchParams) && thisProductTypeFilters === JSON.stringify([...productTypeFilters])) {
-        waiting = false;
-        search(searchText);
-      }
-    }, 50)
-  }
+  let productCategories: {count: number, highlighted: string, value: string}[] | undefined = $state();
 
   const resultsPerPage = 100;
 
-  let greyResults = false;
+  let greyResults = $state(false);
 
   function search(text: string, page?: number) {
     const thisSearchFilters = JSON.stringify(searchParams);
@@ -119,6 +88,68 @@
       })
   }
 
+  let searchParams = $derived({
+    filterMinPrice,
+    filterMaxPrice,
+    sortBy,
+    onlyShowAvailable,
+    onlyShowInStock
+  });
+
+  $effect(() => {
+    sortBy;
+    throttleSearch();
+  });
+  $effect(() => {
+    searchParams;
+    searchText;
+    throttleSearch();
+  });
+  $effect(() => {
+    if(productTypeFilters.size === 0) {
+      productCategories = searchResults?.facet_counts?.[1].counts;
+    }
+  });
+  $effect(() => {
+    if(searchText === "") throttleSearch();
+  })
+
+  let currentTimeout: number | undefined = undefined;
+  let urlTimeout: number | undefined = undefined;
+  function throttleSearch() {
+    const tmpText = searchText+"";
+    waiting = true;
+    const thisSearchFilters = JSON.stringify(searchParams)
+    const thisProductTypeFilters = JSON.stringify([...productTypeFilters]);
+    greyResults = true;
+    if(currentTimeout) clearTimeout(currentTimeout);
+    currentTimeout = setTimeout(() => {
+      if(searchText === tmpText && thisSearchFilters === JSON.stringify(searchParams) && thisProductTypeFilters === JSON.stringify([...productTypeFilters])) {
+        waiting = false;
+        search(searchText);
+        if(urlTimeout) clearTimeout(urlTimeout);
+        urlTimeout = setTimeout(() => {
+          if(searchText === tmpText && thisSearchFilters === JSON.stringify(searchParams) && thisProductTypeFilters === JSON.stringify([...productTypeFilters])) {
+            const url = new URL(window.location.href);
+            if(searchText) {
+              url.searchParams.set("q", searchText);
+            } else {
+              url.searchParams.delete("q");
+            }
+            if(url.toString() !== window.location.href) {
+              // window.history.replaceState({}, "", url.toString());
+              goto(url.toString(), { noScroll: true, replaceState: false, keepFocus: true } )
+            }
+          }
+        }, 500) as unknown as number;
+      }
+    }, 50) as unknown as number
+  }
+
+  let mounted = $state(false);
+  onMount(() => {
+    mounted = true;
+  })
 </script>
 
 <svelte:head>
@@ -126,23 +157,28 @@
 </svelte:head>
 
 <ol class="breadcrumb pt-2 pl-2">
-  <li class="crumb"><a class="anchor hover-underline" href="/">{$page.url.hostname === "whenwan.show" ? "whenwan.show" : "Whenplane"}</a></li>
-  <li class="crumb-separator" aria-hidden="true">&rsaquo;</li>
+  <li class="crumb"><a class="anchor hover-underline" href="/">{page.url.hostname === "whenwan.show" ? "whenwan.show" : "Whenplane"}</a></li>
+  <li class="crumb-separator" aria-hidden="true">›</li>
   <li class="crumb"><a class="anchor hover-underline" href="/lttstore">LTT Store Watcher</a></li>
-  <li class="crumb-separator" aria-hidden="true">&rsaquo;</li>
+  <li class="crumb-separator" aria-hidden="true">›</li>
   <li class="crumb">Advanced Search</li>
 </ol>
 
 <div class="relative limit mx-auto p-2 pt-16">
-  <input placeholder="Search for products" bind:value={searchText} class="input w-64 p-2 pl-4">
-  {#await searchPromise}
-    {#if !waiting}
-      <ProgressRadial class="inline-block" width="w-6" stroke={250}/>
+  <input placeholder="Search for products" bind:value={searchText} class="input w-64 p-1 pl-4 inline-block">
+  <div class="inline-block relative pl-1">
+    {#await searchPromise}
+      {#if !waiting && mounted}
+        <CircleProgress class="inline-block absolute" size="6"/>
+      {/if}
+    {/await}
+    {#if waiting || !mounted}
+      <CircleProgress class="inline-block absolute" size={6}/>
     {/if}
-  {/await}
-  {#if waiting}
-    <ProgressRadial class="inline-block" width="w-6" stroke={250}/>
-  {/if}
+    <span class="opacity-0">
+      .
+    </span>
+  </div>
   <div class="inline-flex min-[650px]:absolute right-0 pr-2 pt-2">
     <select class="input inline-block" bind:value={sortBy}>
       <option value="_text_match(buckets: 10):desc,purchasesPerDay:desc">Purchases Per Day (descending)</option>
@@ -168,12 +204,12 @@
   <div class="search-params pr-4 text-left">
     <b class="text-xl">Filters</b><br>
     <br>
-    <label>
-      <input class="input" type="checkbox" bind:checked={onlyShowAvailable}>
+    <label class="block">
+      <input class="input inline-block" type="checkbox" bind:checked={onlyShowAvailable}>
       <span>Only show available products</span>
     </label>
-    <label class="pt-2">
-      <input class="input" type="checkbox" bind:checked={onlyShowInStock}>
+    <label class="pt-2 block">
+      <input class="input inline-block" type="checkbox" bind:checked={onlyShowInStock}>
       <span>Only show in-stock products</span>
     </label>
     <br>
@@ -181,16 +217,23 @@
     <br>
     <b>Price</b><br>
     <br>
-    <label>
+    <label class="block">
       <span>Min</span><br>
-      <input class="inline-block input w-full" type="range" min={minPrice} max={filterMaxPrice-1} bind:value={filterMinPriceString} step="100"/><br>
-      {filterMinPrice/100}
+      <input class="inline-block input w-full" type="range" min={minPrice} max={filterMaxPrice-1} bind:value={filterMinPriceString} step="100"/>
+      ${filterMinPrice/100}
     </label>
     <br>
-    <label>
+    <label class="block">
       <span>Max</span><br>
-      <input class="inline-block input w-full" type="range" min={(Math.round((filterMinPrice / 100) * 100) + 100)} max={maxPrice} bind:value={filterMaxPriceString} step="100"/><br>
-      {filterMaxPrice/100}
+      <input
+        class="inline-block input w-full"
+        type="range"
+        min={(Math.round((filterMinPrice / 100) * 100) + 100)}
+        max={maxPrice}
+        bind:value={filterMaxPriceString}
+        step="100"
+      />
+      ${filterMaxPrice/100}
     </label>
     <br>
     <hr>
@@ -199,9 +242,9 @@
     <br>
     {#if searchResults && productCategories}
       {#each productCategories as category (category.value)}
-        <label>
-          <input class="input" type="checkbox" on:change={e => {
-            const checked = (e.target)?.checked;
+        <label class="block">
+          <input class="input inline-block" type="checkbox" onchange={e => {
+            const checked = (e.target as HTMLInputElement)?.checked;
 
             if(checked) {
               productTypeFilters.add(category.value)
@@ -212,7 +255,10 @@
 
           }}>
           <span>
-            {category.value} <span class="chip variant-ghost-primary py-0.5 px-1.5 rounded-lg">{category.count}</span>
+            {category.value}
+            <span class="chip preset-tonal-primary border border-primary-500 py-0.5 px-1.5 rounded-lg text-white">
+              {category.count}
+            </span>
           </span>
         </label>
       {/each}
@@ -222,8 +268,8 @@
     {#if searchResults && searchResults.hits}
       {#each searchResults.hits as hit (hit.document.id)}
         {@const product = JSON.parse(hit.document.product)}
-        <div class="inline-block">
-          <LTTProductCard product={product} available={hit.document.available}/>
+        <div class="inline-block" animate:flip={{ duration: 200 }}>
+          <LTTProductCard product={product} shortTitle={product.shortTitle} available={hit.document.available}/>
         </div>
       {/each}
       <br>
@@ -236,6 +282,8 @@
 
 
 <style>
+    @reference "#app.css";
+
     .container {
         @apply p-2 pt-8 w-screen mx-auto;
     }

@@ -7,6 +7,7 @@ const field_names: {[key: string]: string} = {
   "available": "Published",
   "productDiscount": "Product Discount",
 
+  "product.title": "Product Title",
   "product.description": "Product Description",
   "product.available": "In stock?",
   "product.variants": "Variant Metadata",
@@ -14,6 +15,7 @@ const field_names: {[key: string]: string} = {
   "product.published_at": "Published",
   "product.type": "Product Type",
   "product.featured_image": "Featured Image",
+  "product.tags": "Product Tags",
 
   "collection-updated_at": "Updated Timestamp",
   "collection-products": "Products",

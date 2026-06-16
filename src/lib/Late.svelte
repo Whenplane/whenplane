@@ -1,4 +1,4 @@
-<script context="module" lang="ts">
+<script module lang="ts">
     import {get, writable} from "svelte/store";
     import {browser} from "$app/environment";
 
@@ -41,6 +41,6 @@
         current.set(alternates[Math.floor(Math.random() * alternates.length)]);
     }
 </script>
-<span on:click={newPhrase}>
+<span onclick={newPhrase}>
     {$current}
 </span>

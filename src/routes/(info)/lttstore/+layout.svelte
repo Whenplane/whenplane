@@ -1,37 +1,62 @@
 <script lang="ts">
+
   import { setCookie } from "$lib/cookieUtils";
-  import { invalidateAll } from "$app/navigation";
+  import { invalidateAll, onNavigate } from "$app/navigation";
   import ExclamationTriangle from "svelte-bootstrap-icons/lib/ExclamationTriangle.svelte";
-  import { modalStore, popup } from "@skeletonlabs/skeleton";
   import {fade} from "svelte/transition"
   import ProductSearchModal from "./ProductSearchModal.svelte";
-  import DateStamp from "$lib/DateStamp.svelte";
+  import {popup} from "$lib/replacements/popup.ts";
+  import type { MouseEventHandler } from "svelte/elements";
+  import { setContext } from "svelte";
 
-  export let data;
+  let { data, children } = $props();
 
-  let selectedCurrency = data.currency;
-  $: if(selectedCurrency != data.currency) {
-    setCookie("currency", selectedCurrency);
-    invalidateAll();
-  }
+  let selectedCurrency = $state(data.currency);
+  $effect(() => {
+    if(selectedCurrency != data.currency) {
+      setCookie("currency", selectedCurrency);
+      invalidateAll();
+    }
+  });
+  onNavigate(() => {
+    if(searchOpen) searchOpen = false;
+  })
+  $effect(() => console.debug({searchOpen}))
+
+  let searchOpen = $state(false);
+
+  setContext("lttstore-search-modal", () => searchOpen = true)
 
   function keypress(event: KeyboardEvent) {
     if(event.key === "P" && document.activeElement?.tagName !== "INPUT") {
-      modalStore.trigger({
-        type: 'component',
-        component: {
-          ref: ProductSearchModal
-        }
-      })
+      searchOpen = true;
+    }
+    if(searchOpen && event.key === "Escape") {
+      searchOpen = false;
     }
   }
 
+  let quickSearchSpanner: HTMLDivElement | undefined = $state();
+  const bgClick: MouseEventHandler<HTMLDivElement> = e => {
+    console.log(e.target, e.currentTarget);
+    if(e.target === e.currentTarget || e.target === quickSearchSpanner) searchOpen = false;
+  }
+
 </script>
-<svelte:window on:keyup={keypress}/>
+<svelte:window onkeyup={keypress}/>
+
+{#if searchOpen}
+  <div class="bg-surface-900/80 fixed top-0 left-0 right-0 bottom-0 z-999" onclick={bgClick}>
+    <div class="w-full h-full flex justify-center items-center" bind:this={quickSearchSpanner}>
+      <ProductSearchModal/>
+    </div>
+  </div>
+{/if}
+
 <div class="float-right pr-5 h-0">
   <div class="inline-block">
     {#if selectedCurrency !== "USD"}
-      <span class="[&>*]:pointer-events-none" use:popup={{
+      <span class="*:pointer-events-none" use:popup={{
         event: "hover",
         target: "currency-warning",
         placement: 'bottom'
@@ -46,7 +71,7 @@
     </select>
   </div>
 </div>
-<slot/>
+{@render children?.()}
 <br>
 <div class="p-4">
   Images and products from <a href="https://www.lttstore.com/?ref=whenplane.com" class="anchor">lttstore.com</a><br>
@@ -62,9 +87,9 @@
     used to charge you if you were to purchase.<br>
     (although it will probably be close)<br>
     <br>
-    The Whenplane LTTStore watcher gathers data from the US store, which charges only in USD. Prices on the global store <br>
+    The Whenplane LTTStore watcher gathers data from the US store, which charges only in USD. Prices on the global store are not currently taken into account.<br>
     <br>
-    1 USD &asymp; {data.exchangeRates.rates[selectedCurrency]} {selectedCurrency}
+    1 USD ≈ {data.exchangeRates.rates[selectedCurrency]} {selectedCurrency}
   </p>
-  <div class="arrow variant-filled-surface" />
+  <div class="arrow preset-filled-surface-500"></div>
 </div>

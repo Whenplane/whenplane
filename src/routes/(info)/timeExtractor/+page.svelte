@@ -1,10 +1,12 @@
-<script>
+<script lang="ts">
+  import { run } from 'svelte/legacy';
+
   import { invalidateAll } from "$app/navigation";
   import { onDestroy } from "svelte";
   import HistoricalShow from "$lib/history/HistoricalShow.svelte";
   import {enhance} from "$app/forms";
 
-  export let data;
+  let { data } = $props();
 
   let invalidationInterval;
 
@@ -13,25 +15,12 @@
     "..",
     "..."
   ];
-  let doti = 0;
-  $: dot = dots[doti];
+  let doti = $state(0);
 
-  let images = [];
-  $: {
-    if(data.image?.length && data.show) {
-      images = [];
-      for (let i = 1; i <= data.image.length; i++) {
-        images.push(i);
-      }
-    } else {
-      images = [];
-    }
-  }
+  let images = $state([]);
 
-  let imageOutdated = false;
+  let imageOutdated = $state(false);
 
-  $: checkImage(data);
-  $: console.log({data})
   function checkImage() {
     clearInterval(invalidationInterval);
     if(!data.image || (data.image.verifyText && !data.image.text)) {
@@ -49,6 +38,23 @@
   onDestroy(() => {
     clearInterval(invalidationInterval);
   })
+  let dot = $derived(dots[doti]);
+  run(() => {
+    if(data.image?.length && data.show) {
+      images = [];
+      for (let i = 1; i <= data.image.length; i++) {
+        images.push(i);
+      }
+    } else {
+      images = [];
+    }
+  });
+  run(() => {
+    checkImage(data);
+  });
+  run(() => {
+    console.log({data})
+  });
 </script>
 <div class="limit mx-auto">
   {#if data.done}
@@ -74,10 +80,10 @@
         };
       }}>
         {#if data.image.promptText}
-          <button class="btn variant-ghost-success w-5/12" formaction="?/hasTime">
+          <button class="btn preset-tonal-success border border-success-500 w-5/12" formaction="?/hasTime">
             Has time
           </button>
-          <button class="btn variant-ghost-error w-5/12" formaction="?/noTime">
+          <button class="btn preset-tonal-error border border-error-500 w-5/12" formaction="?/noTime">
             No time
           </button>
         {/if}
@@ -91,24 +97,24 @@
           {/if}
           <br>
 
-          <button class="btn variant-ghost-success w-5/12" formaction="?/correctTime" disabled={typeof data.image.text !== "string"} >
+          <button class="btn preset-tonal-success border border-success-500 w-5/12" formaction="?/correctTime" disabled={typeof data.image.text !== "string"} >
             Correct Time
           </button>
           {#key data.image.text}
             <input class="text input w-3/12 p-2" disabled={typeof data.image.text !== "string"} name="adjustedTime" value={data.image.text ?? ""}>
           {/key}
-          <button class="btn variant-ghost-error w-2/12" formaction="?/adjustTime">
+          <button class="btn preset-tonal-error border border-error-500 w-2/12" formaction="?/adjustTime">
             Modify Time
           </button>
         {/if}
-        <button formaction="?/skipShow" class="btn variant-ghost-warning w-6/12 mx-auto">Skip Show</button>
+        <button formaction="?/skipShow" class="btn preset-tonal-warning border border-warning-500 w-6/12 mx-auto">Skip Show</button>
 
         <br>
         <br>
         <br>
         {#if data.image && data.show}
           {#each images as imageNum}
-            <button formaction="?/selectImage&amp;image={imageNum}">
+            <button formaction="?/selectImage&image={imageNum}">
 
               <img
                 src="/time-extracting/{data.show.metadata.vods.youtube}/screenshots/img{imageNum}.jpg"
@@ -122,7 +128,7 @@
           {/each}
           <br>
           <br>
-          <button formaction="?/skipShow" class="btn variant-ghost-warning w-6/12 mx-auto">Skip Show</button>
+          <button formaction="?/skipShow" class="btn preset-tonal-warning border border-warning-500 w-6/12 mx-auto">Skip Show</button>
           <br>
           <br>
         {/if}

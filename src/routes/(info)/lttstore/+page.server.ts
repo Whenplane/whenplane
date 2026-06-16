@@ -15,7 +15,7 @@ export const load = (async ({platform}) => {
   const oneWeekAgo = Date.now() - (7 * 24 * 60 * 60e3);
 
   const popularProducts = retryD1(() =>
-    db.prepare("select * from products where stockChecked > ? and purchasesPerHour > 0 and stock is not null and json_extract(stock, '$.total') is not null order by purchasesPerHour DESC limit 11")
+    db.prepare("select * from products where stockChecked > ? and purchasesPerHour > 0 and stock is not null and json_extract(stock, '$.total') is not null order by purchasesPerHour DESC limit 14")
       .bind(Math.max(oneWeekAgo, 1745474690241))
       .all<ProductsTableRow>()
       .then(r => r.results)
@@ -29,7 +29,7 @@ export const load = (async ({platform}) => {
   );
 
   const onSale = retryD1(() =>
-    db.prepare("select * from products where currentPrice < regularPrice and json_extract(stock, '$.total') > 0 and handle not like '%bundle%' and title not like '%bundle%' and available=1 order by currentPrice ASC limit 10")
+    db.prepare("select * from products where currentPrice < regularPrice and json_extract(product, '$.available') = 1 and handle not like '%bundle%' and handle not like '%-solution' and title not like '%bundle%' and available=1 order by currentPrice ASC limit 50")
       .all<ProductsTableRow>()
       .then(r => r.results)
   );

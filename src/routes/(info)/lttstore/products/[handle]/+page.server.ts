@@ -70,23 +70,32 @@ export const load = (async ({platform, params, url}) => {
     }
   }
 
+  const firstSeenDistance = Date.now() - product.firstSeen;
+  if(firstSeenDistance < 2 * DAY) {
+    defaultHistoryDays = 1;
+  }
+
+
   let historyDays: number | string = Number(url.searchParams.get("historyDays") ?? defaultHistoryDays);
+  const stockAsOf = Date.now();
 
   let stockHistory: Promise<StockHistoryTableRow[]>;
   if((url.searchParams.get("historyDays") ?? defaultHistoryDays) === "all") {
     historyDays = "all";
     stockHistory = retryD1(() =>
-      db.prepare("select timestamp,stock from stock_history where handle = ? order by timestamp")
-        .bind(handle)
+      db.prepare("select timestamp,stock from stock_history where (id = ? or handle = ?) and store = 0 order by timestamp")
+        .bind(product.id, handle)
         .all<StockHistoryTableRow>()
         .then(r => r.results)
     );
   } else {
     stockHistory = retryD1(() =>
-      db.prepare("select timestamp,stock from stock_history where id = ? and timestamp > ? order by timestamp")
+      db.prepare("select timestamp,stock from stock_history where (id = ? or handle = ?) and store = 0 and timestamp > ? order by timestamp")
         .bind(
           product.id,
-          Date.now() - ((historyDays as number) * 24 * 60 * 60e3)
+          handle,
+          // go 3 hours past the actual cutoff, so we hopefully have a line to draw from the past
+          Date.now() - ((historyDays as number) * 24 * 60 * 60e3) - (12 * 60 * 60e3)
         )
         .all<StockHistoryTableRow>()
         .then(r => r.results)
@@ -110,8 +119,10 @@ export const load = (async ({platform, params, url}) => {
   return {
     product,
     historyDays,
+    defaultHistoryDays,
     stockHistory: await stockHistory,
     changeHistory,
     similarProducts,
+    stockAsOf
   }
 }) satisfies PageServerLoad

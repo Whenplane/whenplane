@@ -1,16 +1,18 @@
 <script>
+  import { run } from 'svelte/legacy';
+
 
   import { browser } from "$app/environment";
   import { onMount } from "svelte";
 
 
-  let min = browser ? randomString() : "";
-  let max = "";
+  let min = $state(browser ? randomString() : "");
+  let max = $state("");
 
-  let repeat = false;
+  let repeat = $state(false);
 
 
-  let string = "...";
+  let string = $state("...");
   if(browser) newString();
 
   function randomString() {
@@ -36,7 +38,9 @@
     }, 5)
     return () => clearInterval(i);
   })
-  $: console.log({ repeat })
+  run(() => {
+    console.log({ repeat })
+  });
 
 </script>
 
@@ -50,7 +54,7 @@
   max: <code>{max}</code>
   <br>
   <br>
-  <button on:click={newString}>Randomize</button><br>
+  <button onclick={newString}>Randomize</button><br>
   <label>
     <input type="checkbox" bind:checked={repeat}>
     Constantly generate new.

@@ -1,26 +1,34 @@
 <script lang="ts">
+  import { run } from 'svelte/legacy';
+
   import {timeString} from "$lib/timeUtils.ts";
 
-  let frames = 250;
-  let secondsPerFrame: number | undefined = 30;
-  let currentFrame = 0;
-  let totalTime: number | undefined = undefined;
+  let frames = $state(250);
+  let secondsPerFrame: number | undefined = $state(30);
+  let currentFrame = $state(0);
+  let totalTime: number | undefined = $state(undefined);
 
-  let useTotalTime = false;
+  let useTotalTime = $state(false);
 
-  $: if(useTotalTime) {
-    secondsPerFrame = undefined;
-    totalTime = 60 * 60;
-  } else {
-    totalTime = undefined;
-    secondsPerFrame = 30;
-  }
-  $: console.log({useTotalTime})
-  $: console.log({totalTime})
+  run(() => {
+    if(useTotalTime) {
+      secondsPerFrame = undefined;
+      totalTime = 60 * 60;
+    } else {
+      totalTime = undefined;
+      secondsPerFrame = 30;
+    }
+  });
+  run(() => {
+    console.log({useTotalTime})
+  });
+  run(() => {
+    console.log({totalTime})
+  });
 
-  $: timePerFrame = totalTime ? totalTime/currentFrame : undefined;
+  let timePerFrame = $derived(totalTime ? totalTime/currentFrame : undefined);
 
-  $: secondsLeft = (frames-currentFrame) * (secondsPerFrame ?? timePerFrame ?? 0);
+  let secondsLeft = $derived((frames-currentFrame) * (secondsPerFrame ?? timePerFrame ?? 0));
 </script>
 
 <div class="container mx-auto pt-24">

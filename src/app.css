@@ -1,10 +1,76 @@
+@import 'tailwindcss';
+
+@import "@skeletonlabs/skeleton";
+@import '@skeletonlabs/skeleton-svelte';
+@import "@skeletonlabs/skeleton/themes/crimson";
+
+/*@source '../node_modules/.pnpm/@skeletonlabs+skeleton@2.11.0_svelte@5.49.1/node_modules/@skeletonlabs/skeleton/dist!**!*.{html,js,svelte,ts}';*/
+
+@custom-variant dark (&:where(.dark, .dark *));
+
+/*
+  The default border color has changed to `currentcolor` in Tailwind CSS v4,
+  so we've added these compatibility styles to make sure everything still
+  looks the same as it did with Tailwind CSS v3.
+
+  If we ever want to remove these styles, we need to add an explicit border
+  color utility to any element that depends on these defaults.
+*/
+@layer base {
+  *,
+  ::after,
+  ::before,
+  ::backdrop,
+  ::file-selector-button {
+    border-color: var(--color-gray-200, currentcolor);
+  }
+}
+
+@layer utilities {
+}
+
 /*place global styles here */
-html, body { @apply h-full; }
+html, body {
+    @apply h-full;
+    font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+}
 
 
 .boca-theme body {
     background-image: url('/secret/boca-cropped.jpg');
     background-size: 100vw 100vh;
+}
+
+hr:not(.divider) {
+    border-color: var(--color-surface-600);
+}
+
+h1 {
+    @apply h1;
+}
+h2 {
+    @apply h2;
+}
+h3 {
+    @apply h3;
+}
+h4 {
+    @apply h5;
+}
+
+@utility /* this has to have @utility so that it can be used in @apply */
+cool-border {
+    border: 1px solid rgba(255, 255, 255, 0.14);
+}
+
+.bordered-accordion-content {
+    @apply cool-border mx-1.5 -mt-2 py-2;
+    border-top: none;
+    border-radius: 0 0 10px 10px;
+}
+
+a:not(.btn) {
+    @apply anchor;
 }
 
 .limit {
@@ -90,4 +156,42 @@ ol.normal-list {
 
 .background-none {
     background: transparent none !important;
+}
+
+.card {
+    @apply bg-surface-900;
+    --tw-ring-offset-shadow: var(--tw-ring-inset) 0 0 0 var(--tw-ring-offset-width) var(--tw-ring-offset-color);
+    --tw-ring-shadow: var(--tw-ring-inset) 0 0 0 calc(1px + var(--tw-ring-offset-width)) var(--tw-ring-color);
+    box-shadow: var(--tw-ring-offset-shadow),var(--tw-ring-shadow),var(--tw-shadow, 0 0 #0000);
+    --tw-ring-inset: inset;
+    --tw-ring-color: rgb(250 250 250 / .05);
+    /*background-color: rgb(var(--color-surface-800));*/
+    /*border-radius: var(--theme-rounded-container);*/
+}
+
+.breadcrumb {
+    overflow-x: auto;
+    scrollbar-width: none;
+    display: flex;
+    width: 100%;
+    align-items: center;
+}
+.breadcrumb li {
+    display: block;
+}
+
+.dark .crumb-separator {
+    @apply text-surface-300;
+}
+.breadcrumb > :not([hidden]) {
+    @apply mr-3;
+}
+
+.edge-fade {
+    --mask: linear-gradient(to right,
+    rgba(0,0,0, 1) 0,   rgba(0,0,0, 1) 90%,
+    rgba(0,0,0, 0) 100%, rgba(0,0,0, 0) 0
+    ) 100% 50% / 100% 100% repeat-x;
+    -webkit-mask: var(--mask);
+    mask: var(--mask);
 }

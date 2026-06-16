@@ -1,16 +1,19 @@
 <script lang="ts">
-  import type { HistoricalEntry, YoutubeThumbnail } from "$lib/utils.ts";
+  import type { HistoricalEntry } from "$lib/utils.ts";
+  import { typed } from "$lib";
 
-  export let show: HistoricalEntry;
-  export let i = 0;
+  let {
+    show = typed<HistoricalEntry>(),
+    i = typed<number>(0)
+  } = $props();
 
-  $: thumbnails = show.metadata?.thumbnails ?? show.metadata?.snippet?.thumbnails ?? show.value?.snippet?.thumbnails;
-  $: thumbnail = thumbnails?.maxres ??
+  let thumbnails = $derived(show.metadata?.thumbnails ?? show.metadata?.snippet?.thumbnails ?? show.value?.snippet?.thumbnails);
+  let thumbnail = $derived(thumbnails?.maxres ??
     thumbnails?.standard ??
     thumbnails?.high ??
     thumbnails?.medium ??
     thumbnails?.default ??
-    {url: 'https://i.ytimg.com/vi/' + show.metadata.vods?.youtube + '/maxresdefault.jpg', generated: true}
+    {url: 'https://i.ytimg.com/vi/' + show.metadata.vods?.youtube + '/maxresdefault.jpg', generated: true})
 
   /*if((thumbnail as YoutubeThumbnail & {generated?: true}).generated) {
     console.warn("Generated link for", show)

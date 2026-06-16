@@ -1,7 +1,7 @@
 <script lang="ts">
   import { SearchClient } from "typesense";
   import { onMount } from "svelte";
-  import { ProgressRadial } from "@skeletonlabs/skeleton";
+  import { Progress } from "@skeletonlabs/skeleton-svelte";
   import type { CombinedSearchResult } from "$lib/search/search_types.ts";
   import type { SearchResponse } from "typesense/lib/Typesense/Documents";
   import { getDateFormatLocale } from "$lib/prefUtils.ts";
@@ -28,10 +28,10 @@
     isUpToDate: boolean;
   }
 
-  let lastTitle: Promise<IndexUpdate | null> = new Promise(() => {});
-  let lastTopic: Promise<IndexUpdate | null> = new Promise(() => {});
-  let lastTranscript: Promise<IndexUpdate | null> = new Promise(() => {});
-  let lastMerchMessage: Promise<IndexUpdate | null> = new Promise(() => {});
+  let lastTitle: Promise<IndexUpdate | null> = $state(new Promise(() => {}));
+  let lastTopic: Promise<IndexUpdate | null> = $state(new Promise(() => {}));
+  let lastTranscript: Promise<IndexUpdate | null> = $state(new Promise(() => {}));
+  let lastMerchMessage: Promise<IndexUpdate | null> = $state(new Promise(() => {}));
 
   function formatDate(date: number) {
     const s = date+"";
@@ -81,7 +81,7 @@ These dates show the latest data that the search index has.<br>
 
 Last title indexed:
 {#await lastTitle}
-  <ProgressRadial class="inline-block" width="w-6" stroke={250}/>
+  <Progress class="inline-block" width="w-6" stroke={250}/>
 {:then d}
   {#if !d}
     <OutdatedNotice/> <span class="opacity-60">none?</span>
@@ -99,7 +99,7 @@ Last title indexed:
 
 Last topic indexed:
 {#await lastTopic}
-  <ProgressRadial class="inline-block" width="w-6" stroke={250}/>
+  <Progress class="inline-block" width="w-6" stroke={250}/>
 {:then d}
   {#if !d}
     <OutdatedNotice/> <span class="opacity-60">none?</span>
@@ -117,7 +117,7 @@ Last topic indexed:
 
 Last transcript indexed:
 {#await lastTranscript}
-  <ProgressRadial class="inline-block" width="w-6" stroke={250}/>
+  <Progress class="inline-block" width="w-6" stroke={250}/>
 {:then d}
   {#if !d}
     <OutdatedNotice/> <span class="opacity-60">none?</span>
@@ -135,7 +135,7 @@ Last transcript indexed:
 
 Last merch message indexed:
 {#await lastMerchMessage}
-  <ProgressRadial class="inline-block" width="w-6" stroke={250}/>
+  <Progress class="inline-block" width="w-6" stroke={250}/>
 {:then d}
   {#if !d}
     <OutdatedNotice/> <span class="opacity-60">none?</span>

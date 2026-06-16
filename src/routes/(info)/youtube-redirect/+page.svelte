@@ -1,19 +1,21 @@
 <script lang="ts">
+  import { run } from 'svelte/legacy';
+
 
   import { onMount } from "svelte";
   import { invalidateAll } from "$app/navigation";
   import { browser } from "$app/environment";
-  import { SlideToggle } from "@skeletonlabs/skeleton";
-  import { page } from "$app/stores";
+  import { Switch } from "@skeletonlabs/skeleton-svelte";
+  import { page } from "$app/state";
 
   import { getTimePreference } from "$lib/prefUtils.ts";
 
-  export let data;
+  let { data } = $props();
 
   let sendNotification = browser ? (localStorage.ytrNotif === "true") : false;
-  let errorText = "";
+  let errorText = $state("");
 
-  let sendNotificationToggle = sendNotification;
+  let sendNotificationToggle = $state(sendNotification);
 
   async function toggleNotifications() {
     if(sendNotification) {
@@ -35,7 +37,7 @@
     localStorage.setItem("ytrNotif", sendNotification+"");
   }
 
-  let lastCheck = new Date();
+  let lastCheck = $state(new Date());
 
   onMount(() => {
     let i = setInterval(() => {
@@ -45,25 +47,27 @@
     return () => clearInterval(i);
   });
 
-  $: if(data.youtube.videoId && browser) {
+  run(() => {
+    if(data.youtube.videoId && browser) {
 
-    new Notification("WAN is starting!", {
-      body: "A Youtube page for today's WAN show is now available and is being opened.",
-      icon: "/wan.webp"
-    });
+      new Notification("WAN is starting!", {
+        body: "A Youtube page for today's WAN show is now available and is being opened.",
+        icon: "/wan.webp"
+      });
 
-    location.href = "https://youtube.com/watch?v=" + data.youtube.videoId + "&ref=whenplane.com";
-  }
+      location.href = "https://youtube.com/watch?v=" + data.youtube.videoId + "&ref=whenplane.com";
+    }
+  });
 </script>
 <svelte:head>
   <title>🔴 Youtube Auto-redirector</title>
   <meta name="description" content="This page will automatically redirect you to the youtube live page for the WAN show as soon as it is available.">
-  <link rel="canonical" href="https://whenplane.com{$page.url.pathname}"/>
+  <link rel="canonical" href="https://whenplane.com{page.url.pathname}"/>
 </svelte:head>
 
 <ol class="breadcrumb pt-2 pl-2">
-  <li class="crumb"><a class="anchor hover-underline" href="/">{$page.url.hostname === "whenwan.show" ? "whenwan.show" : "Whenplane"}</a></li>
-  <li class="crumb-separator" aria-hidden="true">&rsaquo;</li>
+  <li class="crumb"><a class="anchor hover-underline" href="/">{page.url.hostname === "whenwan.show" ? "whenwan.show" : "Whenplane"}</a></li>
+  <li class="crumb-separator" aria-hidden="true">›</li>
   <li class="crumb">Automatic Youtube Redirector</li>
 </ol>
 <br>
@@ -92,7 +96,7 @@
       </span>
     {/if}
     <br>
-    <SlideToggle name="ytrNotifToggle" bind:checked={sendNotificationToggle} on:change={toggleNotifications}/>
+    <Switch name="ytrNotifToggle" bind:checked={sendNotificationToggle} on:change={toggleNotifications}/>
   {/if}
   <br>
 <!--  <pre>{JSON.stringify(data, undefined, '\t')}</pre>-->

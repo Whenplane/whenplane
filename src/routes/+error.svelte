@@ -1,17 +1,17 @@
 <script lang="ts">
-    import { page } from "$app/stores";
+    import { page } from "$app/state";
     import { browser, building } from "$app/environment";
 
     let alt = "\"This is Awkward\" - Thumbnail from March 12th, 2021"
 
-    let attempt = !building ? Number($page.url.searchParams.get("attempt") ?? 0) : 0;
+    let attempt = !building ? Number(page.url.searchParams.get("attempt") ?? 0) : 0;
 
     const reloadPages = [
       "/",
       "/boca-marathon"
     ]
 
-    if(browser && $page.status === 500 && reloadPages.includes($page.url.pathname)) {
+    if(browser && page.status === 500 && reloadPages.includes(page.url.pathname)) {
         checkForReload();
     }
 
@@ -43,9 +43,9 @@
     <a href="/history/show/2021/03/12" class="inline-block">
         <img src="/this_is_awkward.webp" {alt} title={alt}/>
     </a>
-    <h1>{$page.status}</h1>
-    {$page.error?.message}
-    {#if $page.url.pathname !== "/"}
+    <h1>{page.status}</h1>
+    {page.error?.message}
+    {#if page.url.pathname !== "/"}
         <br>
         <br>
         <br>

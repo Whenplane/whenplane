@@ -1,28 +1,32 @@
 <script lang="ts">
+  import { run } from 'svelte/legacy';
+
   import sanitizeHtml from "sanitize-html";
   import { newsSanitizeSettings } from "$lib/news/news";
   import { onMount } from "svelte";
   import { invalidateAll } from "$app/navigation";
-  import { page } from "$app/stores";
+  import { page } from "$app/state";
   import {timeString} from "$lib/timeUtils";
   import DateStamp from "$lib/DateStamp.svelte";
   import { browser } from "$app/environment";
 
   import { getTimePreference } from "$lib/prefUtils";
 
-  export let data;
+  let { data } = $props();
 
-  $: titleParts = data.floatplane?.title?.split(" - ");
-  $: thumbnailChangedDate = new Date(data.floatplane?.thumbnailFirstSeen);
-  $: titleChangedDate = new Date(data.floatplane?.titleFirstSeen);
-  $: descriptionChangedDate = new Date(data.floatplane?.descriptionFirstSeen);
-  $: liveStatusChangedDate = new Date(data.floatplane?.started ?? data.floatplane?.lastLive)
+  let titleParts = $derived(data.floatplane?.title?.split(" - "));
+  let thumbnailChangedDate = $derived(new Date(data.floatplane?.thumbnailFirstSeen));
+  let titleChangedDate = $derived(new Date(data.floatplane?.titleFirstSeen));
+  let descriptionChangedDate = $derived(new Date(data.floatplane?.descriptionFirstSeen));
+  let liveStatusChangedDate = $derived(new Date(data.floatplane?.started ?? data.floatplane?.lastLive))
   let initialLiveStatusChangedDate = new Date(data.floatplane?.started ?? data.floatplane?.lastLive)
-  $: console.debug({data})
+  run(() => {
+    console.debug({data})
+  });
 
-  let lastInvalidate = 0;
+  let lastInvalidate = $state(0);
 
-  let liveStatusChangeTime = "";
+  let liveStatusChangeTime = $state("");
 
   onMount(() => {
     let i = setInterval(() => {
@@ -56,7 +60,7 @@
   <title>Floatplane Watcher</title>
 </svelte:head>
 
-<svelte:window on:focus={() => {
+<svelte:window onfocus={() => {
   if(Date.now() - lastInvalidate > 5e3) {
     invalidateAll();
     lastInvalidate = Date.now();
@@ -64,8 +68,8 @@
 }}/>
 
 <ol class="breadcrumb pt-2 pl-2">
-  <li class="crumb"><a class="anchor hover-underline" href="/">{$page.url.hostname === "whenwan.show" ? "whenwan.show" : "Whenplane"}</a></li>
-  <li class="crumb-separator" aria-hidden="true">&rsaquo;</li>
+  <li class="crumb"><a class="anchor hover-underline" href="/">{page.url.hostname === "whenwan.show" ? "whenwan.show" : "Whenplane"}</a></li>
+  <li class="crumb-separator" aria-hidden="true">›</li>
   <li class="crumb">Floatplane Watcher</li>
 </ol>
 
@@ -170,22 +174,24 @@
 </div>
 
 <style>
-  .out {
-      border-radius: 5px;
-      border: solid 1px rgba(255, 255, 255, 0.1);
-  }
+    @reference "#app.css";
 
-  img {
-      border-radius: 5px;
-  }
+    .out {
+        border-radius: 5px;
+        border: solid 1px rgba(255, 255, 255, 0.1);
+    }
 
-  .green {
-      color: lawngreen;
-  }
+    img {
+        border-radius: 5px;
+    }
 
-  .card-title {
-      @apply px-2 py-1;
-      display: block;
-      border-bottom: solid 1px rgba(255, 255, 255, 0.1);
-  }
+    .green {
+        color: lawngreen;
+    }
+
+    .card-title {
+        @apply px-2 py-1;
+        display: block;
+        border-bottom: solid 1px rgba(255, 255, 255, 0.1);
+    }
 </style>

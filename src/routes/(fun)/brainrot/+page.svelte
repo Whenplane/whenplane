@@ -17,10 +17,10 @@
     }
   }).then(v => {v.unshift({name: aiName, lang: "en"} as unknown as SpeechSynthesisVoice); return v;});
 
-  let langFilter = "en";
-  let localOnly = false;
-  let text = "The quick brown fox jumps over the lazy dog.";
-  let audio: string | undefined = undefined
+  let langFilter = $state("en");
+  let localOnly = $state(false);
+  let text = $state("The quick brown fox jumps over the lazy dog.");
+  let audio: string | undefined = $state(undefined)
 
   allVoicesObtained.then(voices => console.debug("All voices:", voices));
 
@@ -76,7 +76,7 @@
     <input type="checkbox" bind:checked={localOnly}/>
     <br>
     {#each voices.filter(v => v.lang.startsWith(langFilter) && (localOnly ? v.localService : true)).sort((a, b) => a.name.localeCompare(b.name)) as voice}
-      <button on:click={() => speak(voice.name)}>
+      <button onclick={() => speak(voice.name)}>
         {voice.name}
       </button>
       <br>

@@ -1,15 +1,16 @@
 <script lang="ts">
-  import TextWordsDiff from "$lib/lttstore/diff/TextWordsDiff.svelte";
+	import TextWordsDiff from '$lib/lttstore/diff/TextWordsDiff.svelte';
+	import { typed } from '$lib';
 
-  export let before: string;
-  export let after: string;
-
-  $: parsedBefore = JSON.parse(before);
-  $: parsedAfter = JSON.parse(after);
-
-  $: formatBefore = JSON.stringify(new Date(parsedBefore).toLocaleString());
-  $: formatAfter = JSON.stringify(new Date(parsedAfter).toLocaleString());
-
-  export let displaying: "before" | "after";
+	let {
+		before = typed<string>(),
+		after = typed<string>(),
+		displaying = typed<'before' | 'after'>()
+	} = $props();
+	let parsedBefore = $derived(JSON.parse(before));
+	let parsedAfter = $derived(JSON.parse(after));
+	let formatBefore = $derived(JSON.stringify(new Date(parsedBefore).toLocaleString()));
+	let formatAfter = $derived(JSON.stringify(new Date(parsedAfter).toLocaleString()));
 </script>
-<TextWordsDiff before={formatBefore} after={formatAfter} {displaying}/>
+
+<TextWordsDiff before={formatBefore} after={formatAfter} {displaying} />

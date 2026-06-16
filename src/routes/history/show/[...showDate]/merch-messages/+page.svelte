@@ -1,8 +1,8 @@
 <script lang="ts">
-  import { getClosestWan, getTimeUntil, timeString } from "$lib/timeUtils.ts";
-  import { commas, type MMJobData, truncateText } from "$lib/utils.ts";
+  import { getClosestWan, getTimeUntil } from "$lib/timeUtils.ts";
+  import { commas, type MMJobData } from "$lib/utils.ts";
   import { getDateFormatLocale } from "$lib/prefUtils.ts";
-  import { page } from "$app/stores";
+  import { page } from "$app/state";
   import MerchMessage from "./components/MerchMessage.svelte";
   import Incomplete from "$lib/merch-messages/Incomplete.svelte";
   import { invalidateAll } from "$app/navigation";
@@ -12,12 +12,12 @@
   import { slide } from "svelte/transition";
   import ToolTip from "$lib/ToolTip.svelte";
 
-  export let data;
+  let { data } = $props();
 
-  let lastData: MMJobData;
+  let lastData: MMJobData = $state();
 
   onMount(() => {
-    if(dev && $page.params.videoId === "test") {
+    if(dev && page.params.videoId === "test") {
       setTimeout(() => {
         lastData = {
           videoId: "7LGuglDdliw",
@@ -52,14 +52,14 @@
     getTimeUntil(showEnd as Date, (mainShowStart as Date).getTime()).distance :
     null;
 
-  $: biggestTimestamp = data.messages.reduce((a, b) => Math.max(a, b.timestamp), 0);
+  let biggestTimestamp = $derived(data.messages.reduce((a, b) => Math.max(a, b.timestamp), 0));
   const latestJobId = data.messages.map(m => m.jobId).sort().reverse()[0];
 </script>
 
 <svelte:head>
   <title>Merch Messages from {data.metadata.title ?? ""}{data.metadata.title ? " - " : ""}WAN Show {showDate.toLocaleDateString(undefined, {dateStyle: 'long'})} - Whenplane</title>
   <meta name="description" content="Whenplane found {commas(data.mmShow.messageCount)} merch messages and {commas(data.mmShow.replyCount)} replies from this show.">
-  <link rel="canonical" href="https://whenplane.com{$page.url.pathname}"/>
+  <link rel="canonical" href="https://whenplane.com{page.url.pathname}"/>
   {#if thumbnail}
     <meta property="og:image" content={thumbnail.url}>
   {/if}
@@ -72,12 +72,12 @@
 {/if}
 
 <ol class="breadcrumb pt-2 pl-2">
-  <li class="crumb"><a class="anchor hover-underline" href="/">{$page.url.hostname === "whenwan.show" ? "whenwan.show" : "Whenplane"}</a></li>
-  <li class="crumb-separator" aria-hidden="true">&rsaquo;</li>
+  <li class="crumb"><a class="anchor hover-underline" href="/">{page.url.hostname === "whenwan.show" ? "whenwan.show" : "Whenplane"}</a></li>
+  <li class="crumb-separator" aria-hidden="true">›</li>
   <li class="crumb"><a class="anchor hover-underline" href="/history">History</a></li>
-  <li class="crumb-separator" aria-hidden="true">&rsaquo;</li>
+  <li class="crumb-separator" aria-hidden="true">›</li>
   <li class="crumb"><a class="anchor hover-underline" href="/history/show/{data.name}">{showDate.toLocaleDateString(getDateFormatLocale())}</a></li>
-  <li class="crumb-separator" aria-hidden="true">&rsaquo;</li>
+  <li class="crumb-separator" aria-hidden="true">›</li>
   <li class="crumb">Merch Messages</li>
 </ol>
 
@@ -118,7 +118,7 @@
 
         </ToolTip>
         <br>
-        <progress value={percent} max={1} style="width: calc(100% - 5em);"/>
+        <progress value={percent} max={1} style="width: calc(100% - 5em);"></progress>
         {(percent * 100).toFixed(2)}%
       </div>
     </div>

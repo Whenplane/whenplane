@@ -1,15 +1,17 @@
 <script lang="ts">
-
   import { SearchClient } from "typesense";
   import type { ProductSearchIndex } from "$lib/lttstore/lttstore_types.ts";
   import type { SearchResponse } from "typesense/lib/Typesense/Documents";
-  import { modalStore, ProgressRadial } from "@skeletonlabs/skeleton";
   import sanitizeHtml from "sanitize-html";
   import {flip} from "svelte/animate";
   import {slide} from "svelte/transition";
   import { goto } from "$app/navigation";
-  import { navigating } from "$app/stores";
+  import { navigating } from "$app/state";
   import { dev } from "$app/environment";
+  import CircleProgress from "$lib/replacements/CircleProgress.svelte";
+  import type { MouseEventHandler } from "svelte/elements";
+  import { sha256 } from "$lib/utils.ts";
+  import { onMount } from "svelte";
 
   const searchClient = new SearchClient({
     'nodes': [{
@@ -23,9 +25,9 @@
   });
 
   let waiting = false;
-  let searchPromise: Promise<SearchResponse<ProductSearchIndex> | undefined> | undefined;
-  let searchResults: SearchResponse<ProductSearchIndex> | undefined;
-  let networkError = false;
+  let searchPromise: Promise<SearchResponse<ProductSearchIndex> | undefined> | undefined = $state();
+  let searchResults: SearchResponse<ProductSearchIndex> | undefined = $state();
+  let networkError = $state(false);
 
   function keyPress(event: KeyboardEvent) {
     if(dev) console.debug(event.key)
@@ -46,11 +48,8 @@
     }
   }
 
-  let searchText = /*dev ? "screwdriver" :*/ "";
-  let cursor = 0;
-  $: {
-    search(searchText);
-  }
+  let searchText = /*dev ? "screwdriver" :*/ $state("");
+  let cursor = $state(0);
 
   function search(text: string) {
     if(!text) {
@@ -84,19 +83,34 @@
   }
 
 
-  $: if($navigating) modalStore.close(); // close search modal when we navigate
 
+
+  $effect(() => {
+    search(searchText);
+  });
+
+  let input = $state<HTMLInputElement>();
+  onMount(() => {
+    input?.focus()
+  })
 </script>
 
 <div class="s-container p-4 absolute">
-  <input class="input px-2 pl-4 py-0.5" autofocus placeholder="Find a product" bind:value={searchText} on:keydown={keyPress}>
+  <input
+    class="input block px-2 pl-4 py-0.5 bg-surface-800/85 rounded-2xl border border-surface-500"
+    autofocus
+    placeholder="Find a product"
+    bind:value={searchText}
+    onkeydown={keyPress}
+    bind:this={input}
+  >
   <div class="inline-block absolute top-4 right-8">
     {#if waiting}
-      <ProgressRadial class="inline-block" width="w-6" stroke={250}/>
+      <CircleProgress class="inline-block" width="w-6"/>
     {/if}
     {#await searchPromise}
       {#if !waiting}
-        <ProgressRadial class="inline-block" width="w-6" stroke={250}/>
+        <CircleProgress class="inline-block" width="w-6"/>
       {/if}
     {/await}
   </div>
@@ -107,12 +121,15 @@
         {@const descriptionSnippet = result.highlight?.description?.snippet?.replaceAll("</p>", "\n")}
         {@const openingIndex = descriptionSnippet?.indexOf("<")}
         {@const closingIndex = descriptionSnippet?.indexOf(">")}
+        {@const imgPreview = (dev ? 'https://whenplane.com' : '') +
+          '/cdn-cgi/image/fit=scale-down,height=96,metadata=copyright,q=60,sqc=50,format=auto/' +
+          `https://img-proxy.whenplane.com/img/${productData.handle}-${await sha256(productData.featured_image).then(r => r.substring(0, 5))}`}
         <a class="block card p-2 m-1 truncate rounded-xl" class:selected={cursor === i} href="/lttstore/products/{result.document.handle}" animate:flip={{ duration: 50 }} transition:slide>
-          <img src={productData.featured_image ?? productData.images[0]} class="inline-block h-8 w-8 rounded-md">
+          <img src={imgPreview} class="inline-block h-8 w-8 rounded-md" loading="lazy">
           <span class="result-highlight" class:line-through={!(result.document.available ?? true)}>
-          {@html sanitizeHtml(result.highlight?.title?.snippet ?? result.document.title, {allowedTags: ["mark"]})}
-        </span>
-          &nbsp;
+            {@html sanitizeHtml(result.highlight?.title?.snippet ?? result.document.title, {allowedTags: ["mark"]})}
+          </span>
+           
           <span class="opacity-70 max-w-full truncate result-highlight">
           <!--{descriptionSnippet}-->
             {@html
@@ -130,8 +147,7 @@
                   ) ??
                 productData.description,
                 {allowedTags: ["mark"]}
-              )
-            }
+              )}
         </span>
           <br>
         </a>
@@ -153,8 +169,17 @@
 
 <style>
   input {
-      max-width: 100%;
+      width: 100%;
+      font-size: 100%;
+  }
 
+  a {
+      color: inherit;
+  }
+
+  a:hover {
+      text-decoration: none !important;
+      filter: brightness(1.15);
   }
 
   .results {
@@ -164,8 +189,10 @@
   .s-container {
       overflow: hidden;
       overflow-y: auto;
-      max-width: 60vw;
-      max-height: 90vh;
+      width: 100%;
+      max-width: 1000px;
+      max-height: 95vh;
+
       font-size: 2.5rem;
   }
 

@@ -2,21 +2,21 @@
   import { onMount } from "svelte";
   import { invalidateAll } from "$app/navigation";
   import { timeString } from "$lib/timeUtils.ts";
-  import { page } from "$app/stores";
-  import { ProgressRadial } from "@skeletonlabs/skeleton";
+  import { page } from "$app/state";
+  import { Progress } from "@skeletonlabs/skeleton-svelte";
 
-  export let data;
+  let { data } = $props();
 
-  $: liveStatusChangedDate = new Date(data.floatplane?.started ?? data.floatplane?.lastLive)
+  let liveStatusChangedDate = $derived(new Date(data.floatplane?.started ?? data.floatplane?.lastLive))
   let initialLiveStatusChangedDate = new Date(data.floatplane?.started ?? data.floatplane?.lastLive)
 
 
-  let liveStatusChangeTime = "";
+  let liveStatusChangeTime = $state("");
   let distance = 0;
   let lastInvalidate = Date.now();
   let tries = 0;
 
-  $: isDataOutdated = data.floatplane?.isLive !== ($page.url.searchParams.has("live") ? $page.url.searchParams.get("live") === "true" : data.floatplane?.isLive);
+  let isDataOutdated = $derived(data.floatplane?.isLive !== (page.url.searchParams.has("live") ? page.url.searchParams.get("live") === "true" : data.floatplane?.isLive));
 
   let intervalCounter = 0;
 
@@ -82,7 +82,7 @@
     </span>
       {#if isDataOutdated}
         <div class="absolute top-0.5 left-6">
-          <ProgressRadial class="inline-block" width="w-5" stroke={250}/>
+          <Progress class="inline-block" width="w-5" stroke={250}/>
         </div>
       {/if}
     </div>

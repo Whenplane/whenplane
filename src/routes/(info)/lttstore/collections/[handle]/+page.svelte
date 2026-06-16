@@ -1,34 +1,34 @@
 <script lang="ts">
   import sanitizeHtml from "sanitize-html";
-  import { page } from "$app/stores";
+  import { page } from "$app/state";
   import { countTo, truncateText } from "$lib/utils.ts";
-  import { Accordion, AccordionItem } from "@skeletonlabs/skeleton";
+  import { Accordion } from "@skeletonlabs/skeleton-svelte";
   import { getFieldName } from "$lib/lttstore/field_names.ts";
   import { getDiffComponent } from "$lib/lttstore/field_components.ts";
   import DateStamp from "$lib/DateStamp.svelte";
 
-  export let data;
+  let { data } = $props();
 
-  $: products = JSON.parse(data.collection.products);
-  $: image = data.collection.image ? JSON.parse(data.collection.image) : data.collection.image
+  let products = $derived(JSON.parse(data.collection.products));
+  let image = $derived(data.collection.image ? JSON.parse(data.collection.image) : data.collection.image)
 
-  let hideUpdated = true;
+  let hideUpdated = $state(true);
 </script>
 
 <svelte:head>
-  <title>{data.collection.title} - Whenplane</title>
+  <title>{data.collection.title} Collection - Whenplane LTTStore Watcher</title>
   {#if data.collection.description}
     <meta name="description" content={truncateText(sanitizeHtml(data.collection.description, {allowedTags: []}), 200)}/>
   {/if}
 </svelte:head>
 
 <ol class="breadcrumb pt-2 pl-2">
-  <li class="crumb"><a class="anchor hover-underline" href="/">{$page.url.hostname === "whenwan.show" ? "whenwan.show" : "Whenplane"}</a></li>
-  <li class="crumb-separator" aria-hidden="true">&rsaquo;</li>
+  <li class="crumb"><a class="anchor hover-underline" href="/">{page.url.hostname === "whenwan.show" ? "whenwan.show" : "Whenplane"}</a></li>
+  <li class="crumb-separator" aria-hidden="true">›</li>
   <li class="crumb"><a class="anchor hover-underline" href="/lttstore">LTT Store Watcher</a></li>
-  <li class="crumb-separator" aria-hidden="true">&rsaquo;</li>
+  <li class="crumb-separator" aria-hidden="true">›</li>
   <li class="crumb"><a class="anchor hover-underline" href="/lttstore/collections">Collections</a></li>
-  <li class="crumb-separator" aria-hidden="true">&rsaquo;</li>
+  <li class="crumb-separator" aria-hidden="true">›</li>
   <li class="crumb">{data.collection.title}</li>
 </ol>
 
@@ -51,26 +51,30 @@
   <br>
   <br>
   <Accordion>
-    <AccordionItem>
-      <svelte:fragment slot="summary">Products</svelte:fragment>
-      <svelte:fragment slot="content">
-        <div class="accordion-outline p-2">
-          {#if data.collection.reportedCount !== products.length}
-            <small>
-              Note: These are only the products that are published.
-              We are not able to see the unpublished products in this collection,
-              we only know that there are {data.collection.reportedCount - products.length} of them.
-            </small>
-          {/if}
-          <div>
-            {#each products as product}
-              <a href="/lttstore/products/{product.handle}">{product.title}</a><br>
-            {/each}
+    <Accordion.Item>
+      {#snippet summary()}
+            Products
+          {/snippet}
+      {#snippet content()}
+          
+          <div class="accordion-outline p-2">
+            {#if data.collection.reportedCount !== products.length}
+              <small>
+                Note: These are only the products that are published.
+                We are not able to see the unpublished products in this collection,
+                we only know that there are {data.collection.reportedCount - products.length} of them.
+              </small>
+            {/if}
+            <div>
+              {#each products as product}
+                <a href="/lttstore/products/{product.handle}">{product.title}</a><br>
+              {/each}
+            </div>
           </div>
-        </div>
 
-      </svelte:fragment>
-    </AccordionItem>
+        
+          {/snippet}
+    </Accordion.Item>
   </Accordion>
   <br>
   <br>
@@ -85,7 +89,7 @@
 <div class="p-2">
   {#await data.changes}
     <div class="table-container rounded-md">
-      <table class="table table-hover rounded-md">
+      <table class="table  rounded-md">
         <thead>
         <tr>
           <th>What changed</th>
@@ -107,7 +111,7 @@
         {#if false}
           <tfoot>
           <tr style="text-transform: initial !important;">
-            <td class="!p-2 opacity-70" colspan="3">Changes before <DateStamp epochSeconds={1727147700}/> are not available</td>
+            <td class="p-2! opacity-70" colspan="3">Changes before <DateStamp epochSeconds={1727147700}/> are not available</td>
           </tr>
           </tfoot>
         {/if}
@@ -115,7 +119,7 @@
     </div>
   {:then changeHistory}
     <div class="table-container rounded-md">
-      <table class="table table-hover rounded-md">
+      <table class="table  rounded-md">
         <thead>
         <tr>
           <th>What changed</th>
@@ -127,17 +131,19 @@
         <tbody>
         {#each hideUpdated ? changeHistory.filter(c => c.field !== "updated_at") : changeHistory as change (change.timestamp+"."+change.field)}
           {@const field = "collection-" + change.field}
+          {@const SvelteComponent = getDiffComponent(field)}
+          {@const SvelteComponent_1 = getDiffComponent(field)}
           <tr>
             <td>{getFieldName(field)}</td>
             <td><DateStamp epochSeconds={change.timestamp/1e3}/></td>
-            <td><svelte:component this={getDiffComponent(field)} before={change.old} after={change.new} displaying="before"/></td>
-            <td><svelte:component this={getDiffComponent(field)} before={change.old} after={change.new} displaying="after"/></td>
+            <td><SvelteComponent before={change.old} after={change.new} displaying="before"/></td>
+            <td><SvelteComponent_1 before={change.old} after={change.new} displaying="after"/></td>
           </tr>
         {/each}
         </tbody>
         <tfoot>
           <tr style="text-transform: initial !important;">
-            <td class="!p-2 opacity-70" colspan="3">Changes before <DateStamp epochSeconds={1732525260}/> are not available</td>
+            <td class="p-2! opacity-70" colspan="3">Changes before <DateStamp epochSeconds={1732525260}/> are not available</td>
           </tr>
         </tfoot>
       </table>

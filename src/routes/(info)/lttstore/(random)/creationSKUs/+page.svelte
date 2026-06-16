@@ -1,5 +1,5 @@
 <script lang="ts">
-  export let data;
+  let { data } = $props();
 </script>
 
 <div class="p-2">
@@ -7,7 +7,7 @@
     {@const meta = JSON.parse(product.product)}
     <a href="/lttstore/products/{product.handle}">{product.title}</a> -
     {#each meta.variants as variant}
-      {variant.sku}&nbsp;
+      {variant.sku} 
     {/each}
     <br>
   {/each}

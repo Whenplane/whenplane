@@ -17,6 +17,7 @@ export const load = (async ({platform, url}) => {
       case "purchasesPerDay":
         sortColumn = "purchasesPerDay";
         break;
+      case "stockChecked":
       case "updated":
       case "stockUpdate":
         sortColumn = "stockChecked";
@@ -31,7 +32,9 @@ export const load = (async ({platform, url}) => {
   }
 
   const allProducts = retryD1(() =>
-    db.prepare("select handle,id,available,json_remove(json_remove(json_remove(json_remove(product, '$.media'), '$.images'), '$.variants'), '$.description') as product from products order by " + sortColumn + " DESC")
+    // a bunch of stuff removed that isnt needed for the products page
+    // ordered by available second to put items currently on lttstore above ones that arent
+    db.prepare("select handle,shortTitle,id,available,purchasesPerDay,purchasesPerHour,metadataUpdate,stockChecked,lastRestock,json_remove(json_remove(json_remove(json_remove(product, '$.media'), '$.images'), '$.variants'), '$.description') as product from products order by " + sortColumn + " DESC, available DESC")
       .all<ProductsTableRow>()
       .then(r => r.results)
   );

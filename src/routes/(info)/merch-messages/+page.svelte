@@ -1,10 +1,10 @@
 <script lang="ts">
-  import { page } from "$app/stores";
+  import { page } from "$app/state";
 	import ClockHistory from "svelte-bootstrap-icons/lib/ClockHistory.svelte";
   import { commas } from "$lib/utils.ts";
   import { getClosestWan } from "$lib/timeUtils.ts";
 
-  export let data;
+  let { data } = $props();
 
 </script>
 <svelte:head>
@@ -19,8 +19,8 @@
 </span>
 
 <ol class="breadcrumb pt-2 pl-2">
-  <li class="crumb"><a class="anchor hover-underline" href="/">{$page.url.hostname === "whenwan.show" ? "whenwan.show" : "Whenplane"}</a></li>
-  <li class="crumb-separator" aria-hidden="true">&rsaquo;</li>
+  <li class="crumb"><a class="anchor hover-underline" href="/">{page.url.hostname === "whenwan.show" ? "whenwan.show" : "Whenplane"}</a></li>
+  <li class="crumb-separator" aria-hidden="true">›</li>
   <li class="crumb">Merch Messages</li>
 </ol>
 
@@ -58,7 +58,17 @@
     {@const thumbnails = data.showThumbnails[show.showId]}
     {@const thumbnail = thumbnails?.maxres ?? thumbnails?.standard ?? thumbnails?.high ?? thumbnails?.medium ?? thumbnails?.default}
     <a class="card flex hidden-link p-2 my-1 relative" href="/history/show/{show.showId}/merch-messages">
-      <img class="thumbnail" src={thumbnail?.url} alt="Thumbnail" aria-hidden="true" loading="lazy" width={thumbnail?.width} height={thumbnail?.height}>
+      <div class="overflow-hidden rounded-lg">
+        <img
+          class="thumbnail"
+          src={thumbnail?.url}
+          alt="Thumbnail"
+          aria-hidden="true"
+          loading="lazy"
+          width={thumbnail?.width}
+          height={thumbnail?.height}
+        >
+      </div>
       <div class="self-center px-4">
         <span class="font-bold text-lg">
           {show.title}

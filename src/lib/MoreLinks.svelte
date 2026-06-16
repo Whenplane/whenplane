@@ -58,20 +58,22 @@
   ]
 </script>
 <table class="w-58">
+  <tbody>
   {#each links as link}
     <tr>
       <td>
-        <a class="unstyled hidden-link bg-surface-500" href={link.href}>
-          <svelte:component width="20" height="20" this={link.icon}/>
+        <a class="unstyled hidden-link" href={link.href}>
+          <link.icon width="20" height="20"/>
         </a>
       </td>
       <td>
-        <a class="unstyled hidden-link bg-surface-500" href={link.href}>
+        <a class="unstyled hidden-link" href={link.href}>
           {link.name}
         </a>
       </td>
     </tr>
   {/each}
+  </tbody>
 </table>
 
 <style>

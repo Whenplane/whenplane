@@ -122,8 +122,13 @@ export const actions = {
     await db.prepare("insert into sessions (sessionID, username, expires) values (?, ?, ?)")
       .bind(newSessionID + (user["2fa"] ? ":verifying" : ""), user.username, expires.getTime()).run();
 
-    const secure = dev ? false : undefined;
-    cookies.set("session", newSessionID, {path: '/', expires: expires, secure});
+    cookies.set("session", newSessionID, {
+      path: '/',
+      expires: expires,
+      secure: !dev,
+      httpOnly: true,
+      sameSite: "lax"
+    });
 
     throw redirect(302, (user["2fa"] ? "/auth/login/2fa" : "/auth"));
   }),

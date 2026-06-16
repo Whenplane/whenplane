@@ -1,34 +1,47 @@
 <script lang="ts">
+	import type { ProductOption } from '$lib/lttstore/lttstore_types.ts';
+	import TextDiff from '$lib/lttstore/diff/TextDiff.svelte';
+	import { typed } from '$lib';
 
-  import * as Diff from "diff"
-  import { escapeHtml } from "$lib/utils.ts";
-  import type { ProductDetailModule, ProductOption, ProductVariant } from "$lib/lttstore/lttstore_types.ts";
-  import { getVariantFieldName } from "$lib/lttstore/field_names.ts";
-  import TextDiff from "$lib/lttstore/diff/TextDiff.svelte";
+	let {
+		before = typed<string>(),
+		after = typed<string>(),
+		displaying = typed<'before' | 'after'>()
+	} = $props();
 
-  export let before: string;
-  export let after: string;
+	let parsedBefore = $derived(JSON.parse(before) as ProductOption[]);
+	let parsedAfter = $derived(JSON.parse(after) as ProductOption[]);
 
-  $: parsedBefore = JSON.parse(before) as ProductOption[];
-  $: parsedAfter = JSON.parse(after) as ProductOption[];
-
-  export let displaying: "before" | "after";
-
-  let changedOptions: string[] = [];
-  $: {
-    changedOptions = [];
-    for (let beforeOption of parsedBefore) {
-      const afterOption = parsedAfter.find(m => m.name === beforeOption.name);
-      if(JSON.stringify(beforeOption) != JSON.stringify(afterOption)) {
-        changedOptions.push(beforeOption.name);
-      }
-    }
-  }
+	let changedOptions: string[] = $derived.by(() => {
+		const changed: string[] = [];
+		for (let beforeOption of parsedBefore) {
+			const afterOption = parsedAfter.find((m) => m.name === beforeOption.name);
+			if (JSON.stringify(beforeOption) != JSON.stringify(afterOption)) {
+				changed.push(beforeOption.name);
+			}
+		}
+		return changed;
+	});
 </script>
-{#each parsedBefore.filter(m => changedOptions.includes(m.name)) as option}
-  <b>{option.name}</b><br>
-  <div class="card p-2">
-    <TextDiff before={JSON.stringify(option.values.join("<br>\n") + "<br>\n")} after={JSON.stringify(parsedAfter.find(m => m.name === option.name)?.values.join("<br>\n") + "<br>\n")} {displaying} diffType="lines"/>
-  </div>
-  <br>
+
+{#each parsedBefore.filter((m) => changedOptions.includes(m.name)) as option}
+	{@const before = option.values.join('\n')}
+	{@const after = parsedAfter
+		.find((m) => m.name === option.name)
+		?.values
+		.join('\n')}
+	<b>{option.name}</b>
+	{#if after === undefined && displaying === 'after'}
+		<span class="opacity-30">&mdash;</span>
+		<span class="text-red-500">Removed</span>
+	{:else}
+		<br />
+		<TextDiff
+			before={JSON.stringify(before)}
+			after={JSON.stringify(after ?? "")}
+			{displaying}
+			diffType="lines"
+		/>
+	{/if}
+	<br />
 {/each}

@@ -15,7 +15,7 @@ export const GET = (async ({platform, params}) => {
   // Look up its handle and redirect if it is.
   const handleNumber = Number(handle);
   if(!Number.isNaN(handleNumber)) {
-    const productFromId = await db.prepare("select id,handle,title from products where id = ?")
+    const productFromId = await db.prepare("select id,handle,title,shortTitle from products where id = ?")
       .bind(handleNumber)
       .first<{id: number, handle: string, title: string}>();
     if(productFromId) {
@@ -23,7 +23,7 @@ export const GET = (async ({platform, params}) => {
     }
   }
 
-  const productFromHandle = await db.prepare("select id,handle,title from products where handle = ?")
+  const productFromHandle = await db.prepare("select id,handle,title,shortTitle from products where handle = ?")
     .bind(handle)
     .first<{id: number, handle: string, title: string}>();
   if(productFromHandle) {

@@ -1,17 +1,20 @@
 <script lang="ts">
-  import { page } from "$app/stores";
+  import { page } from "$app/state";
   import sanitizeHtml from "sanitize-html";
   import { onMount } from "svelte";
   import { newsSanitizeSettings } from "$lib/news/news.ts";
   import { truncateText } from "$lib/utils.ts";
-  import {toastStore, clipboard} from "@skeletonlabs/skeleton";
+  import {Toast, createToaster} from "@skeletonlabs/skeleton-svelte";
+  import {clipboard} from "$lib/replacements/clipboard.ts";
 
-  let title = "";
-  $: url = truncateText(title.replace(/[^A-Za-z0-9- ]+/g, "").replace(/\s\s+/g, ' ').replaceAll(" ", "-").toLowerCase(), 50, false)
-  let content: string;
-  let timestamp: string;
+  const toaster = createToaster();
 
-  let timestampCopied: boolean;
+  let title = $state("");
+  let url = $derived(truncateText(title.replace(/[^A-Za-z0-9- ]+/g, "").replace(/\s\s+/g, ' ').replaceAll(" ", "-").toLowerCase(), 50, false))
+  let content: string = $state("");
+  let timestamp: string = $state(Date.now()+"");
+
+  let timestampCopied: boolean = $state(false);
   let timestampCopying = false;
 
   function updateTimestamp() {
@@ -45,10 +48,10 @@
 </svelte:head>
 
 <ol class="breadcrumb pt-2 pl-2">
-  <li class="crumb"><a class="anchor hover-underline" href="/">{$page.url.hostname === "whenwan.show" ? "whenwan.show" : "Whenplane"}</a></li>
-  <li class="crumb-separator" aria-hidden="true">&rsaquo;</li>
+  <li class="crumb"><a class="anchor hover-underline" href="/">{page.url.hostname === "whenwan.show" ? "whenwan.show" : "Whenplane"}</a></li>
+  <li class="crumb-separator" aria-hidden="true">›</li>
   <li class="crumb"><a class="anchor hover-underline" href="/news">News</a></li>
-  <li class="crumb-separator" aria-hidden="true">&rsaquo;</li>
+  <li class="crumb-separator" aria-hidden="true">›</li>
   <li class="crumb">Maker</li>
 </ol>
 <br>
@@ -57,7 +60,7 @@
 <div class="text-center">
   <input type="text" bind:value={title} placeholder="Title">
   <br>
-  <button class="timestamp" class:copied={timestampCopied} on:click={copyTimestamp}>
+  <button class="timestamp" class:copied={timestampCopied} onclick={copyTimestamp}>
     {timestamp}
   </button>
 </div>
@@ -66,17 +69,17 @@
 <div class="wrapper">
   <textarea bind:value={content} placeholder="Content goes here"></textarea>
   <div class="preview">
-    <h2>{title}&ZeroWidthSpace;</h2>
-    &ZeroWidthSpace;
+    <h2>{title}​</h2>
+    ​
     {@html sanitizeHtml(content, newsSanitizeSettings)}
   </div>
 </div>
 <br>
 
 
-<button use:clipboard={url} on:click={() => {
-        toastStore.trigger({
-            message: "Copied to Clipboard!"
+<button use:clipboard={url} onclick={() => {
+        toaster.info({
+          description: "Copied to clipboard!"
         })
     }}>
   {url}
@@ -84,7 +87,22 @@
 <br>
 
 
+<Toast.Group {toaster}>
+  {#snippet children(toast)}
+    <Toast {toast}>
+      <Toast.Message>
+        <Toast.Title>{toast.title}</Toast.Title>
+        <Toast.Description>{toast.description}</Toast.Description>
+      </Toast.Message>
+      <Toast.CloseTrigger />
+    </Toast>
+  {/snippet}
+</Toast.Group>
+
+
 <style>
+    @reference "#app.css";
+
     textarea, input {
         background-color: rgba(0, 0, 0, 0.1);
     }
@@ -111,14 +129,12 @@
         height: 85vh;
 
         text-align: left;
-        padding: 0.25em;
-
         position: relative;
         bottom: 0.25em;
         margin-left: 0.25rem;
 
         overflow-y: auto;
-        padding-bottom: 5em;
+        padding: 0.25em 0.25em 5em;
     }
 
     .copied {

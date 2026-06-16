@@ -122,9 +122,9 @@ export type ProductVariant = {
    * If this is not null, then this is the "original" price and the regular price property is the discount price
    */
   compare_at_price?: number | null,
-  inventory_management: "shopify",
+  inventory_management?: "shopify",
   barcode: string,
-  quantity_rule: {
+  quantity_rule?: {
     min: number,
     max: number | null,
     increment: number
@@ -135,9 +135,9 @@ export type ProductVariant = {
     position: number,
     preview_image: ProductImage
   }
-  quantity_price_breaks: unknown[],
-  requires_selling_plan: boolean,
-  selling_plan_allocations: unknown[]
+  quantity_price_breaks?: unknown[],
+  requires_selling_plan?: boolean,
+  selling_plan_allocations?: unknown[]
 }
 
 export type LegacyProductVariant = {
@@ -170,8 +170,17 @@ export type ProductOptionCombination = {
 }
 
 export type StockCounts = {
-  [name: string]: number
+  [name: string]: number | null
 } & {total?: number}
+
+export type CollectionInventory = {
+  totalPages: number,
+  variants: CollectionInventoryVariant[]
+}
+export type CollectionInventoryVariant = {
+  id: string,
+  qty: number | any
+}
 
 export type CartAddErrorResponse = {
   status: number,
@@ -184,6 +193,7 @@ export type ProductsTableRow = {
   handle: string,
   id: number,
   title: string,
+  shortTitle: string | null,
   product: string,
   stock: string,
   stockChecked: number,
@@ -197,12 +207,14 @@ export type ProductsTableRow = {
   available: boolean,
   backorderAlerts: string,
   productDetailModules: string,
-  productDiscount: string
+  productDiscount: string,
+  differences: number
 }
 export type ParsedProductsTableRow = {
   handle: string,
   id: number,
   title: string,
+  shortTitle: string | null,
   product: ShopifyProduct,
   stock?: StockCounts,
   stockChecked?: number,
@@ -228,9 +240,22 @@ export type SimilarProductsTableRow = {
 
 export type StockHistoryTableRow = {
   handle: string,
+  store: number,
   id: number,
   timestamp: number,
   stock: string
+}
+export type ParsedStockHistoryTableRow = {
+  handle: string,
+  store: number,
+  id: number,
+  timestamp: number,
+  stock: StockCounts
+}
+
+export const Store = {
+  US: 0,
+  GLOBAL: 1
 }
 
 export type BackorderAlerts = {
@@ -299,4 +324,10 @@ export type CollectionDbRow = {
   reportedCount: number,
   products: string,
   available: boolean
+}
+
+export type StockTotalsRow = {
+  timestamp: number,
+  store: number,
+  total: number
 }

@@ -1,7 +1,7 @@
 <script lang="ts">
   import SubscriberGraph from "./SubscriberGraph.svelte";
 
-  export let data;
+  let { data } = $props();
 </script>
 
 <SubscriberGraph subHistory={data.subHistory}/>

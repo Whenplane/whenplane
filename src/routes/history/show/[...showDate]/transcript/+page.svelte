@@ -1,22 +1,22 @@
 <script lang="ts">
   import { escapeHtml, truncateText } from "$lib/utils.ts";
   import { getClosestWan } from "$lib/timeUtils.ts";
-  import { page } from "$app/stores";
+  import { page } from "$app/state";
   import { browser } from "$app/environment";
   import { onMount } from "svelte";
   import { getDateFormatLocale } from "$lib/prefUtils.ts";
-  import { ProgressRadial } from "@skeletonlabs/skeleton";
+  import { Progress } from "@skeletonlabs/skeleton-svelte";
 
-  export let data;
+  let { data } = $props();
 
-  let text = "";
-  let textOnly = "";
+  let text = $state("");
+  let textOnly = $state("");
   let matchIndex = -1;
-  let done = false;
+  let done = $state(false);
   function parseText() {
     text = "";
     textOnly = "";
-    const find = $page.url.searchParams.get("find")
+    const find = page.url.searchParams.get("find")
     const matchLength = find?.length ?? 0;
     let startedMatch = false;
     let endedMatch = true;
@@ -66,7 +66,7 @@
   if(!browser) parseText();
   onMount(() => {
     parseText();
-    if($page.url.searchParams.has("find") && matchIndex !== -1) parseText();
+    if(page.url.searchParams.has("find") && matchIndex !== -1) parseText();
   })
 
   const thumbnail = data.value?.snippet?.thumbnails?.maxres ??
@@ -87,7 +87,7 @@
 <svelte:head>
   <title>Transcript of {data.metadata.title ?? ""}{data.metadata.title ? " - " : ""}WAN Show {showDate.toLocaleDateString(undefined, {dateStyle: 'long'})}</title>
   <meta name="description" content="{truncateText(textOnly, 500)}">
-  <link rel="canonical" href="https://whenplane.com{$page.url.pathname}"/>
+  <link rel="canonical" href="https://whenplane.com{page.url.pathname}"/>
   {#if thumbnail}
     <meta property="og:image" content={thumbnail.url}>
   {/if}
@@ -100,12 +100,12 @@
 {/if}
 
 <ol class="breadcrumb pt-2 pl-2">
-  <li class="crumb"><a class="anchor hover-underline" href="/">{$page.url.hostname === "whenwan.show" ? "whenwan.show" : "Whenplane"}</a></li>
-  <li class="crumb-separator" aria-hidden="true">&rsaquo;</li>
+  <li class="crumb"><a class="anchor hover-underline" href="/">{page.url.hostname === "whenwan.show" ? "whenwan.show" : "Whenplane"}</a></li>
+  <li class="crumb-separator" aria-hidden="true">›</li>
   <li class="crumb"><a class="anchor hover-underline" href="/history">History</a></li>
-  <li class="crumb-separator" aria-hidden="true">&rsaquo;</li>
+  <li class="crumb-separator" aria-hidden="true">›</li>
   <li class="crumb"><a class="anchor hover-underline" href="/history/show/{data.name}">{showDate.toLocaleDateString(getDateFormatLocale())}</a></li>
-  <li class="crumb-separator" aria-hidden="true">&rsaquo;</li>
+  <li class="crumb-separator" aria-hidden="true">›</li>
   <li class="crumb">Transcript</li>
 </ol>
 
@@ -126,10 +126,10 @@
     <div class="text-left">
       These transcripts are taken from YouTube's auto-generated subtitles,
       so they might not be perfectly accurate. They are accurate enough to be useful in most cases though.<br>
-      {#if $page.url.searchParams.has("find") && !done}
+      {#if page.url.searchParams.has("find") && !done}
         <br>
         <div class="bg-amber-600 rounded-md p-2">
-          <ProgressRadial width="w-6" stroke={250} class="inline-block align-bottom"/>
+          <Progress width="w-6" stroke={250} class="inline-block align-bottom"/>
           Finding the text you clicked on. This might take a second...
         </div>
 
@@ -150,6 +150,8 @@
 </div>
 
 <style>
+    @reference "#app.css";
+
     .thumbnail {
         height: min(15em, 50vw);
         @apply mx-auto;

@@ -1,5 +1,7 @@
 <script lang="ts">
-  import { page } from "$app/stores";
+  import { run } from 'svelte/legacy';
+
+  import { page } from "$app/state";
   import { resultsPerPage } from "./search.ts";
   import MiniShow from "$lib/history/MiniShow.svelte";
   import sanitizeHtml from "sanitize-html";
@@ -9,29 +11,27 @@
   import { setCookie, strip } from "$lib/cookieUtils.ts";
   import LastUpdate from "./indexUpdateStatus/LastUpdate.svelte";
   import { truncateText } from "$lib/utils.ts";
+  import Turnstile from "$lib/Turnstile.svelte";
 
-  let sp = $page.url.searchParams;
-  $: sp = $page.url.searchParams
+  let sp = $state(page.url.searchParams);
 
-  let q = sp.get("q");
-  $: q = sp.get("q")
+  let q = $state(sp.get("q"));
 
-  export let data;
+  let { data } = $props();
 
-  let searchForm: HTMLFormElement;
+  let searchForm: HTMLFormElement = $state();
 
   let defaultTitle = true;
   let defaultTopics = true;
   let defaultTranscripts = true;
   let defaultMerchMessages = false;
 
-  let searchTitle = defaultTitle;
-  let searchTopics = defaultTopics;
-  let searchTranscripts = defaultTranscripts;
-  let searchMerchMessages = defaultMerchMessages;
-  let keyword = false;
+  let searchTitle = $state(defaultTitle);
+  let searchTopics = $state(defaultTopics);
+  let searchTranscripts = $state(defaultTranscripts);
+  let searchMerchMessages = $state(defaultMerchMessages);
+  let keyword = $state(false);
 
-  $: updateDefaults(q);
   updateDefaults(q);
   function updateDefaults(q: string | null) {
     if(browser && !q) {
@@ -69,7 +69,6 @@
     }
   }
 
-  $: if(q) update(sp);
 
   function update(sp: URLSearchParams) {
     searchTitle = (sp.get("title")) === "on";
@@ -79,26 +78,42 @@
     keyword = (sp.get("keyword")) === "on";
   }
 
-  $: searchSort = sp.get("sort") ?? "default";
-  $: before = sp.get("before");
-  $: after = sp.get("after");
 
-  $: console.debug({searchTitle, searchTopics, searchTranscripts, searchMerchMessages})
 
-  $: moreOptionsUsed = (!before ? 0 : 1) + (!after ? 0 : 1) + (keyword ? 1 : 0);
 
-  $: highlightVisibility = data.settings?.highlightVisibility === "true";
 
-  let first = true;
-  $: if(!q && browser && !first) {
-    localStorage.setItem("searchTitle", searchTitle+"");
-    localStorage.setItem("searchTopics", searchTopics+"");
-    localStorage.setItem("searchTranscripts", searchTranscripts+"");
-    localStorage.setItem("searchMerchMessages", searchMerchMessages+"");
-  } else if(!q && browser) first = false;
+  let first = $state(true);
 
   const description = "Find things that happened during The WAN Show. The WAN Show Search was made to make it much easier to find moments that happened during the WAN show. It includes useful features such as date filtering, multiple sorting options, and filtering based on result type. You can search through Topics/Timestamps (courtesy of Noki aka \"Timestamp Guy\"), transcripts, show titles, and optionally even Merch Messages.";
 
+  run(() => {
+    sp = page.url.searchParams
+  });
+  run(() => {
+    q = sp.get("q")
+  });
+  run(() => {
+    updateDefaults(q);
+  });
+  run(() => {
+    if(q) update(sp);
+  });
+  let searchSort = $derived(sp.get("sort") ?? "default");
+  let before = $derived(sp.get("before"));
+  let after = $derived(sp.get("after"));
+  run(() => {
+    console.debug({searchTitle, searchTopics, searchTranscripts, searchMerchMessages})
+  });
+  let moreOptionsUsed = $derived((!before ? 0 : 1) + (!after ? 0 : 1) + (keyword ? 1 : 0));
+  let highlightVisibility = $derived(data.settings?.highlightVisibility === "true");
+  run(() => {
+    if(!q && browser && !first) {
+      localStorage.setItem("searchTitle", searchTitle+"");
+      localStorage.setItem("searchTopics", searchTopics+"");
+      localStorage.setItem("searchTranscripts", searchTranscripts+"");
+      localStorage.setItem("searchMerchMessages", searchMerchMessages+"");
+    } else if(!q && browser) first = false;
+  });
 </script>
 
 <svelte:head>
@@ -110,7 +125,7 @@
   {:else}
     <title>WAN Show Search - Whenplane</title>
     <meta name="description" content={truncateText(description, 159)}>
-    <link rel="canonical" href="https://whenplane.com{$page.url.pathname}"/>
+    <link rel="canonical" href="https://whenplane.com{page.url.pathname}"/>
   {/if}
 </svelte:head>
 
@@ -122,11 +137,11 @@
 
 {#if !q}
   <ol class="breadcrumb pt-2 pl-2">
-    <li class="crumb"><a class="anchor hover-underline" href="/">{$page.url.hostname === "whenwan.show" ? "whenwan.show" : "Whenplane"}</a></li>
-    <li class="crumb-separator" aria-hidden="true">&rsaquo;</li>
+    <li class="crumb"><a class="anchor hover-underline" href="/">{page.url.hostname === "whenwan.show" ? "whenwan.show" : "Whenplane"}</a></li>
+    <li class="crumb-separator" aria-hidden="true">›</li>
     {#if q}
       <li class="crumb"><a class="anchor hover-underline" href="/search">Search</a></li>
-      <li class="crumb-separator" aria-hidden="true">&rsaquo;</li>
+      <li class="crumb-separator" aria-hidden="true">›</li>
       <li class="crumb">{q}</li>
     {:else}
       <li class="crumb">WAN Show Search</li>
@@ -146,24 +161,24 @@
     <input type="search" placeholder="Search" name="q" class="input search-box-top-bar p-2 pl-4" value={q}>
     <div class="inline-block pl-2">
       <label class="inline-block px-2">
-        <input type="checkbox" class="checkbox" name="title" bind:checked={searchTitle} on:change={() => searchForm.submit()}>
+        <input type="checkbox" class="checkbox" name="title" bind:checked={searchTitle} onchange={() => searchForm.submit()}>
         <span>Titles</span>
       </label>
       <label class="inline-block px-2">
-        <input type="checkbox" class="checkbox" name="topics" bind:checked={searchTopics} on:change={() => searchForm.submit()}>
+        <input type="checkbox" class="checkbox" name="topics" bind:checked={searchTopics} onchange={() => searchForm.submit()}>
         <span>Topics</span>
       </label>
       <label class="inline-block px-2">
-        <input type="checkbox" class="checkbox" name="transcripts" bind:checked={searchTranscripts} on:change={() => searchForm.submit()}>
+        <input type="checkbox" class="checkbox" name="transcripts" bind:checked={searchTranscripts} onchange={() => searchForm.submit()}>
         <span>Transcripts</span>
       </label>
       <label class="inline-block px-2">
-        <input type="checkbox" class="checkbox" name="merch-messages" bind:checked={searchMerchMessages} on:change={() => searchForm.submit()}>
+        <input type="checkbox" class="checkbox" name="merch-messages" bind:checked={searchMerchMessages} onchange={() => searchForm.submit()}>
         <span>Merch Messages</span>
       </label>
       <label class="inline-block px-2">
         <span>Sort</span>
-        <select class="input w-36" name="sort" bind:value={searchSort} on:change={() => searchForm.submit()}>
+        <select class="input w-36" name="sort" bind:value={searchSort} onchange={() => searchForm.submit()}>
           <option value="default" selected>Default (Show Date & Type & Relevance)</option>
           <option value="showDate">Show Date & Relevance (newest first)</option>
           <option value="showDateOldest">Show Date & Relevance (oldest first)</option>
@@ -173,39 +188,43 @@
       </label>
 
       <ToolTip placement="bottom" event="click" id="more-search-params">
-        <svelte:fragment slot="icon">
-            <span class="btn variant-filled-surface cursor-pointer">
-              More
-              {#if moreOptionsUsed > 0}
-                <span class="badge-icon variant-filled-warning ml-2">
-                  {moreOptionsUsed}
-                </span>
-              {/if}
-            </span>
-        </svelte:fragment>
-        <svelte:fragment slot="content">
-          <label>
-            <span>Before</span>
-            <input type="date" name="before" class="input" bind:value={before} on:change={() => searchForm.submit()}>
-          </label>
-          <br>
-          <label>
-            <span>After</span>
-            <input type="date" name="after" class="input" bind:value={after} on:change={() => searchForm.submit()}>
-          </label>
-          <br>
-          <label>
-            <input type="checkbox" class="checkbox" name="keyword" bind:checked={keyword} on:change={() => searchForm.submit()}>
-            <span>
-              Basic Key Word Search
-              <ToolTip id="keyword-search-info">
-                By default, Whenplane uses embeddings to search by both meaning and key words.
-                This helps find more results even if you dont remember the exact words used.
-                You can go back to basic keyword search by checking this box.
-              </ToolTip>
-            </span>
-          </label>
-        </svelte:fragment>
+        {#snippet icon()}
+              
+              <span class="btn preset-filled-surface-500 cursor-pointer">
+                More
+                {#if moreOptionsUsed > 0}
+                  <span class="badge-icon preset-filled-warning-500 ml-2">
+                    {moreOptionsUsed}
+                  </span>
+                {/if}
+              </span>
+          
+              {/snippet}
+        {#snippet content()}
+              
+            <label>
+              <span>Before</span>
+              <input type="date" name="before" class="input" bind:value={before} onchange={() => searchForm.submit()}>
+            </label>
+            <br>
+            <label>
+              <span>After</span>
+              <input type="date" name="after" class="input" bind:value={after} onchange={() => searchForm.submit()}>
+            </label>
+            <br>
+            <label>
+              <input type="checkbox" class="checkbox" name="keyword" bind:checked={keyword} onchange={() => searchForm.submit()}>
+              <span>
+                Basic Key Word Search
+                <ToolTip id="keyword-search-info">
+                  By default, Whenplane uses embeddings to search by both meaning and key words.
+                  This helps find more results even if you dont remember the exact words used.
+                  You can go back to basic keyword search by checking this box.
+                </ToolTip>
+              </span>
+            </label>
+          
+              {/snippet}
       </ToolTip>
 
     </div>
@@ -218,21 +237,25 @@
       </span>
       <span class="float-right">
         <ToolTip placement="bottom" event="click" id="search-settings">
-          <svelte:fragment slot="icon">
-            <span class="btn variant-filled-surface cursor-pointer">
-              Settings
-            </span>
-          </svelte:fragment>
-          <svelte:fragment slot="content">
-            <label>
-              <input type="checkbox" class="checkbox" on:change={e => {
+          {#snippet icon()}
+                  
+              <span class="btn preset-filled-surface-500 cursor-pointer">
+                Settings
+              </span>
+            
+                  {/snippet}
+          {#snippet content()}
+                  
+              <label>
+                <input type="checkbox" class="checkbox" onchange={e => {
                 const checked = e.target?.checked;
                 setCookie("searchHighlightVisibility", checked);
                 highlightVisibility = checked;
               }}>
-              <span>Enhanced keyword match visibility</span>
-            </label>
-          </svelte:fragment>
+                <span>Enhanced keyword match visibility</span>
+              </label>
+            
+                  {/snippet}
         </ToolTip>
       </span>
     </div>
@@ -347,6 +370,8 @@
           </label>
         </div>
 
+        <Turnstile siteKey="0x4AAAAAAAxkT_jDLpLOTZfP" appearance="interaction-only"/>
+
       </form>
 
       <span class="block text-sm opacity-60">
@@ -354,62 +379,68 @@
       </span>
 
       <ToolTip placement="bottom" event="click" id="last-update-info">
-        <svelte:fragment slot="icon">
-            <span class="btn btn-sm variant-filled-surface cursor-pointer">
-              Last Update Info
-            </span>
-        </svelte:fragment>
-        <svelte:fragment slot="content">
-          <LastUpdate/>
-        </svelte:fragment>
+        {#snippet icon()}
+              
+              <span class="btn btn-sm preset-filled-surface-500 cursor-pointer">
+                Last Update Info
+              </span>
+          
+              {/snippet}
+        {#snippet content()}
+              
+            <LastUpdate/>
+          
+              {/snippet}
       </ToolTip>
     </div>
   </div>
 {/if}
 
 <style>
-  .h-almost-full {
-      height: 90vh;
-  }
-  .search-logo {
-      max-height: 15em;
-      width: auto;
-      @apply p-2;
-  }
-  .search-logo-small {
-      max-height: 5em;
-      width: auto;
-  }
+    @reference "#app.css";
+
+    .h-almost-full {
+        height: 90vh;
+    }
+    .search-logo {
+        max-height: 15em;
+        width: auto;
+        @apply p-2;
+    }
+    .search-logo-small {
+        max-height: 5em;
+        width: auto;
+    }
 
 
-  .search-box {
-      width: min(550px, 90vw);
-  }
-  .search-box-top-bar {
-      width: calc(95vw - 800px - 13em);
-  }
-  @media (max-width: 1400px) {
-      .search-box-top-bar {
-          width: 90vw;
-      }
-      .logo-container {
-          @apply block text-center;
-      }
-  }
+    .search-box {
+        width: min(550px, 90vw);
+    }
+    .search-box-top-bar {
+        width: calc(95vw - 800px - 13em);
+    }
+    @media (max-width: 1400px) {
+        .search-box-top-bar {
+            width: 90vw;
+        }
+        .logo-container {
+            @apply block text-center;
+        }
+    }
 
-  .result-title {
-      font-size: 1.5em;
-      /*font-weight: bold;*/
-  }
+    .result-title {
+        font-size: 1.5em;
+        /*font-weight: bold;*/
+    }
 
-  .result-highlight > :global(mark) {
-      /*background-color: rgb(var(--color-primary-500) / 0.4);*/
-      background-color: inherit;
-      color: inherit;
-      font-weight: bold;
-      @apply brightness-200;
-  }
-  .result-highlight.result-visibility-highlight > :global(mark) {
-      color: rgb(var(--color-primary-500))
-  }
+    .result-highlight > :global(mark) {
+        /*background-color: rgb(var(--color-primary-500) / 0.4);*/
+        background-color: inherit;
+        color: inherit;
+        font-weight: bold;
+        @apply brightness-200;
+    }
+    .result-highlight.result-visibility-highlight > :global(mark) {
+        color: rgb(var(--color-primary-500))
+    }
 </style>

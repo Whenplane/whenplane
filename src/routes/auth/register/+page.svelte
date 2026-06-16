@@ -1,17 +1,17 @@
 <script lang="ts">
   import { enhance } from '$app/forms';
   import Turnstile from "$lib/Turnstile.svelte";
-  import { ProgressRadial } from "@skeletonlabs/skeleton";
+  import { Progress } from "@skeletonlabs/skeleton-svelte";
   import { fade } from 'svelte/transition';
-  export let form;
+  let { form } = $props();
 
-  let firstPassword: string;
-  let secondPassword: string;
+  let firstPassword: string = $state();
+  let secondPassword: string = $state();
 
-  let turnstileCompleted = false;
-  let turnstileCounter = 0;
+  let turnstileCompleted = $state(false);
+  let turnstileCounter = $state(0);
 
-  let loading = false;
+  let loading = $state(false);
 </script>
 <div class="text-center">
   <h1>Register</h1>
@@ -52,37 +52,37 @@
       <br>
 
       {#if form?.passwordsDontMatch || firstPassword !== secondPassword}
-        <span class="text-primary-500-400-token">
+        <span class="text-primary-600-400">
           Please make sure that both password fields match.
         </span>
         <br>
       {/if}
       {#if form?.missing}
-        <span class="text-primary-500-400-token">
+        <span class="text-primary-600-400">
           Please fill in all fields
         </span>
         <br>
       {/if}
       {#if form?.usernameLength}
-        <span class="text-primary-500-400-token">
+        <span class="text-primary-600-400">
           Please make sure that your username is between 3 and 16 characters long.
         </span>
         <br>
       {/if}
       {#if form?.passwordLength}
-        <span class="text-primary-500-400-token">
+        <span class="text-primary-600-400">
           Please make sure that your password is <i>at least</i> 10 characters long.
         </span>
         <br>
       {/if}
       {#if form?.invalidEmail}
-        <span class="text-primary-500-400-token">
+        <span class="text-primary-600-400">
           Please enter a valid email address.
         </span>
         <br>
       {/if}
       {#if form?.restrictedEmail}
-        <span class="text-primary-500-400-token">
+        <span class="text-primary-600-400">
           <b>This email address is restricted!</b><br>
           If this really is your address, please reach out to
           <a href="mailto:support@whenplane.com">support@whenplane.com</a>, or use another email address.<br>
@@ -91,18 +91,18 @@
         <br>
       {/if}
       {#if form?.message}
-        <span class="text-primary-500-400-token">
+        <span class="text-primary-600-400">
           {form.message}
         </span>
       {/if}
       {#if form?.ratelimited}
-        <span class="text-primary-500-400-token">
+        <span class="text-primary-600-400">
           You are trying to register too fast. Wait a minute and try again.
         </span>
       {/if}
 
       {#if form?.existingEmail || form?.existingUsername}
-        <span class="text-primary-500-400-token">
+        <span class="text-primary-600-400">
           There is already an account registered for that {form?.existingEmail ? "email address" : "username"}! If you forgot your password,
           please <a href="/auth/login/forgot-password">reset it</a>.
         </span>
@@ -111,10 +111,10 @@
 
 
       <br>
-      <button class="btn variant-glass-primary" disabled={firstPassword !== secondPassword || !turnstileCompleted}>Register</button>
+      <button class="btn preset-tonal-primary" disabled={firstPassword !== secondPassword || !turnstileCompleted}>Register</button>
       {#if loading}
         <li class="crumb" transition:fade|global={{duration: 100}}>
-          <ProgressRadial width="w-6" stroke={250} value={loading ? undefined : 100}/>
+          <Progress width="w-6" stroke={250} value={loading ? undefined : 100}/>
         </li>
       {/if}
     </form>

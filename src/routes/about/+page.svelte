@@ -1,56 +1,56 @@
 <script>
     import {fade} from "svelte/transition";
-    import {SlideToggle} from "@skeletonlabs/skeleton";
+    import Switch from "$lib/replacements/Switch.svelte";
     import {browser} from "$app/environment";
-    import { page } from "$app/stores";
+    import { page } from "$app/state";
     import { getCookie, setCookie } from "$lib/cookieUtils";
     import { getSupportedLocales } from "$lib/utils";
     import ToolTip from "$lib/ToolTip.svelte";
 
-    let scrollY = 0;
+    let scrollY = $state(0);
 
-    let noSpecialLateText = browser ? localStorage.getItem("no-special-late-text") === "true" : false;
-    $: if(browser) localStorage.setItem("no-special-late-text", noSpecialLateText + "");
+    let noSpecialLateText = $state(browser ? localStorage.getItem("no-special-late-text") === "true" : false);
+    $effect(() => localStorage.setItem("no-special-late-text", noSpecialLateText + ""))
 
-    let disableBlurHash = browser ? !(localStorage.getItem("disableBlurHash") !== "true") : false
-    $: if(browser) localStorage.setItem("disableBlurHash", disableBlurHash + "");
+    let disableBlurHash = $state(browser ? !(localStorage.getItem("disableBlurHash") !== "true") : false)
+    $effect(() => localStorage.setItem("disableBlurHash", disableBlurHash + ""));
 
-    let disableNotableStreams = browser ? !(getCookie("disableNotableStreams") !== "true") : !($page.params.__c__disableNotableStreams !== "true")
-    $: if(browser) setCookie("disableNotableStreams", disableNotableStreams + "");
+    let disableNotableStreams = $state(browser ? !(getCookie("disableNotableStreams") !== "true") : !(page.params.__c__disableNotableStreams !== "true"))
+    $effect(() => setCookie("disableNotableStreams", disableNotableStreams + ""));
 
-    let timeFormat = browser ? localStorage.getItem("timeFormat") ?? "detect" : undefined;
-    $: if(browser) {
+    let timeFormat = $state(browser ? localStorage.getItem("timeFormat") ?? "detect" : undefined);
+    $effect(() => {
         if(timeFormat && timeFormat !== "detect") {
             localStorage.setItem("timeFormat", timeFormat);
         } else {
             console.debug("Removing timeFormat");
             localStorage.removeItem("timeFormat");
         }
-    }
+    })
 
-    let dateFormat = browser ? localStorage.getItem("dateFormat") ?? "detect" : undefined;
-    $: if(browser) {
+    let dateFormat = $state(browser ? localStorage.getItem("dateFormat") ?? "detect" : undefined);
+    $effect(() => {
         if(dateFormat && dateFormat !== "detect") {
             localStorage.setItem("dateFormat", dateFormat);
         } else {
             console.debug("Removing dateFormat");
             localStorage.removeItem("dateFormat");
         }
-    }
+    })
 
 
     const supportedLocales = browser ? getSupportedLocales() : [];
 
-    console.log({disableNotableStreams, server: $page.params.__c__disableNotableStreams, client: browser ? getCookie("disableNotableStreams") : undefined})
+    console.log({disableNotableStreams, server: page.params.__c__disableNotableStreams, client: browser ? getCookie("disableNotableStreams") : undefined})
 
 </script>
 <svelte:window bind:scrollY/>
 <svelte:head>
-    <title>About {$page.url.hostname === "whenwan.show" ? "whenwan.show" : "Whenplane"}</title>
+    <title>About {page.url.hostname === "whenwan.show" ? "whenwan.show" : "Whenplane"}</title>
 </svelte:head>
 <ol class="breadcrumb pt-2 pl-2">
-    <li class="crumb"><a class="anchor hover-underline" href="/">{$page.url.hostname === "whenwan.show" ? "whenwan.show" : "Whenplane"}</a></li>
-    <li class="crumb-separator" aria-hidden="true">&rsaquo;</li>
+    <li class="crumb"><a class="anchor hover-underline" href="/">{page.url.hostname === "whenwan.show" ? "whenwan.show" : "Whenplane"}</a></li>
+    <li class="crumb-separator" aria-hidden="true">›</li>
     <li class="crumb">About & Preferences</li>
 </ol>
 <div class="container mx-auto items-center limit mt-16">
@@ -102,7 +102,7 @@
                 <br>
                 Also, here is a rant from dan about what time things are supposed to happen<br>
                 <small>(from <a href="https://www.floatplane.com/post/x5S8KYg9Uv">this FPX</a> @ 26:44)</small><br>
-                <div class="video inline-block overflow-hidden aspect-[16/9]">
+                <div class="video inline-block overflow-hidden aspect-video">
                     <video controls width="1280" height="720" style="height: 10em; width: auto;">
                         <source src="https://files.ajg0702.us/dan-wan-time.mp4" type="video/mp4">
                     </video>
@@ -132,10 +132,10 @@
             <br>
 
             <div class="flex">
-                <a class="btn variant-ghost-secondary" href="https://discord.gg/PmN9AJh6KR">
+                <a class="btn preset-tonal-secondary border border-secondary-500" href="https://discord.gg/PmN9AJh6KR">
                     <img src="/discord-logo-white.svg" style="height: 1.5em;">
                 </a>
-                <a class="inline-block btn variant-ghost-primary ml-auto" href="https://about.ajg0702.us" target="_blank" rel="noopener">
+                <a class="inline-block btn preset-tonal-primary border border-primary-500 ml-auto" href="https://about.ajg0702.us" target="_blank" rel="noopener">
                     Made by aj
                 </a>
             </div>
@@ -156,28 +156,28 @@
                     (scroll)
                 </span>
             {:else}
-                &#8203;
+                ​
             {/if}
         </div>
 
-        <SlideToggle active="bg-primary-500" size="sm" bind:checked={noSpecialLateText} name="noSpecialLateText">
+        <Switch bind:checked={noSpecialLateText} disabled={!browser}>
             Disable special "late" text
-        </SlideToggle>
+        </Switch>
         <br>
 
-        <SlideToggle active="bg-primary-500" size="sm" bind:checked={disableBlurHash} name="disableBlurHash">
-            Disable "blur" on loading images
-        </SlideToggle>
+        <Switch bind:checked={disableBlurHash} disabled={!browser}>
+            Disable "blur-sm" on loading images
+        </Switch>
         <br>
 
-        <SlideToggle active="bg-primary-500" size="sm" bind:checked={disableNotableStreams} name="disableNotableStreams">
+        <Switch bind:checked={disableNotableStreams} disabled={!browser}>
             Disable "notable" stream (e.g. Elijah, Dan, Luke) boxes
-        </SlideToggle>
+        </Switch>
         <br>
         <br>
-        <label class="py-1">
+        <label class="block py-1">
             <span>Date Format:</span>
-            <select class="input w-44 p-1 px-2" bind:value={dateFormat}>
+            <select class="input w-44 p-1 px-2 inline-block bg-surface-900" bind:value={dateFormat}>
                 <optgroup label="Common formats">
                     <option value="detect">auto</option>
                     <option value="en-US">US (mm/dd/yyyy)</option>
@@ -198,9 +198,9 @@
                 It will not effect anything else.
             </ToolTip>
         </label>
-        <label class="py-1">
+        <label class="block py-1">
             <span>Time Format:</span>
-            <select class="input w-44 p-1 px-2" bind:value={timeFormat}>
+            <select class="input w-44 p-1 px-2 inline-block bg-surface-900" bind:value={timeFormat}>
                 <option value="detect">auto</option>
                 <option value="12h">12 hour (AM/PM)</option>
                 <option value="24h">24 hour</option>

@@ -7,13 +7,13 @@
   import { PUBLIC_VAPID_KEY } from "$env/static/public"
   import { onMount } from "svelte";
   import NotificationSettings from "$lib/notifications/NotificationSettings.svelte";
-  import { page } from "$app/stores";
+  import { page } from "$app/state";
 
   import ExclamationTriangleFill from "svelte-bootstrap-icons/lib/ExclamationTriangleFill.svelte";
 
   // eslint-disable-next-line @typescript-eslint/no-empty-function
-  let pushSubscription = new Promise(() => {});
-  let givenUp = false;
+  let pushSubscription = $state(new Promise(() => {}));
+  let givenUp = $state(false);
 
   onMount(() => {
     let tries = 0;
@@ -30,9 +30,9 @@
     set()
   })
 
-  let notificationPromptOpen = false;
+  let notificationPromptOpen = $state(false);
 
-  let subscribeError = "";
+  let subscribeError = $state("");
 
 
   async function subscribe() {
@@ -102,11 +102,11 @@
 </script>
 
 <svelte:head>
-  <title>Push Notification Settings - {$page.url.hostname === "whenwan.show" ? "whenwan.show" : "Whenplane"}</title>
+  <title>Push Notification Settings - {page.url.hostname === "whenwan.show" ? "whenwan.show" : "Whenplane"}</title>
 </svelte:head>
 
 {#if notificationPromptOpen}
-  <button class="dark-background absolute top-0 left-0 w-screen h-screen flex items-center justify-items-center" on:click={() => notificationPromptOpen = false}>
+  <button class="dark-background absolute top-0 left-0 w-screen h-screen flex items-center justify-items-center" onclick={() => notificationPromptOpen = false}>
     <span class="self-center justify-self-center mx-auto">
       Click "Allow" to enable notifications
     </span>
@@ -115,8 +115,8 @@
 
 
 <ol class="breadcrumb pt-2 pl-2">
-  <li class="crumb"><a class="anchor hover-underline" href="/">{$page.url.hostname === "whenwan.show" ? "whenwan.show" : "Whenplane"}</a></li>
-  <li class="crumb-separator" aria-hidden="true">&rsaquo;</li>
+  <li class="crumb"><a class="anchor hover-underline" href="/">{page.url.hostname === "whenwan.show" ? "whenwan.show" : "Whenplane"}</a></li>
+  <li class="crumb-separator" aria-hidden="true">›</li>
   <li class="crumb">Push Notification Settings</li>
 </ol>
 
@@ -132,7 +132,7 @@
   <br>
   {#if iOS}
     <div class="ios-alert mt-5">
-      <aside class="alert variant-ghost-warning">
+      <aside class="alert preset-tonal-warning border border-warning-500">
         <div><ExclamationTriangleFill/></div>
         <div class="alert-message">
           <h3 class="h3">Extra steps are required!</h3>
@@ -146,7 +146,7 @@
   {/if}
   {#if brave}
     <div class="mt-5">
-      <aside class="alert variant-ghost-warning">
+      <aside class="alert preset-tonal-warning border border-warning-500">
         <div><ExclamationTriangleFill/></div>
         <div class="alert-message">
           <h3 class="h3">Extra steps are required!</h3>
@@ -193,7 +193,7 @@
       <br>
       <br>
       <br>
-      <button class="btn variant-ghost-error" on:click={unsubscribe}>
+      <button class="btn preset-tonal-error border border-error-500" onclick={unsubscribe}>
         Unsubscribe from all
       </button>
     {:else}
@@ -213,7 +213,7 @@
           Your browser does not appear to support notifications.
         </span>
       {/if}
-      <button class="btn variant-ghost-success" on:click={subscribe}>
+      <button class="btn preset-tonal-success border border-success-500" onclick={subscribe}>
         Subscribe
       </button>
     {/if}

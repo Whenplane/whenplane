@@ -7,9 +7,9 @@
   import SearchAd from "$lib/ads/SearchAd.svelte";
 
   const count = 2
-  export const choice = dev ? 3 : random(0, count+1, true);
+  export const choice = dev ? 3 : random(-3, count+1, true);
 </script>
-{#if choice === 0}
+{#if choice <= 0}
   <!-- no ad -->
 {:else if choice === 1}
   <ExtensionAd/>

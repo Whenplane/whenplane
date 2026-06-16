@@ -31,7 +31,7 @@ export const GET = (async ({platform}) => {
   let i = 0;
   for (const product of data.products) {
     console.log("Inserting (" + ++i + "/" + data.products.length + ") " + product.title);
-    await db.prepare("insert or replace into products(handle, id, title, product, stock, stockChecked, metadataUpdate, lastRestock, purchasesPerHour, purchasesPerDay, regularPrice, currentPrice, firstSeen, available, backorderAlerts, productDetailModules, productDiscount) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)")
+    await db.prepare("insert or replace into products(handle, id, title, product, stock, stockChecked, metadataUpdate, lastRestock, purchasesPerHour, purchasesPerDay, regularPrice, currentPrice, firstSeen, available, backorderAlerts, productDetailModules, productDiscount, differences) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)")
       .bind(
         product.handle,
         product.id,
@@ -49,7 +49,8 @@ export const GET = (async ({platform}) => {
         product.available,
         product.backorderAlerts,
         product.productDetailModules,
-        product.productDiscount
+        product.productDiscount,
+        product.differences
       )
       .run();
   }
@@ -91,12 +92,13 @@ export const GET = (async ({platform}) => {
   for (const stock of data.screwdriverStocks) {
     i++;
     if(i % 10 === 0) console.log("Inserting " + i + "/" + data.screwdriverStocks.length + " screwdriver stock history");
-    await db.prepare("insert or replace into stock_history(handle, id, timestamp, stock) values (?, ?, ?, ?)")
+    await db.prepare("insert or replace into stock_history(handle, id, timestamp, stock, store) values (?, ?, ?, ?, ?)")
       .bind(
         stock.handle,
         stock.id,
         stock.timestamp,
-        stock.stock
+        stock.stock,
+        stock.store
       )
       .run();
   }
