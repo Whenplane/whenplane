@@ -1,6 +1,7 @@
 <script lang="ts">
 	import { getVariantFieldName } from '$lib/lttstore/field_names.ts';
 	import { typed } from '$lib';
+  import { page } from "$app/state";
 
 	let {
 		before = typed<string>(),
@@ -27,7 +28,7 @@
 					"<span style='background-color: rgba(0, 255, 0, 0.2)' class='opacity-40 pl-1'></span><br>";
 			} else {
 				html +=
-					"<a href='/lttstore/products/" +
+					`<a href='/lttstore/${page.params.store}/products/` +
 					addedProduct.handle +
 					"' class='hidden-link' style='background-color: rgba(0, 255, 0, 0.2)'>" +
 					'Added ' +
@@ -46,7 +47,7 @@
 					if (!removed.includes(beforeProduct.title)) {
 						if (displaying === 'after') {
 							html +=
-								"<a href='/lttstore/products/" +
+								`<a href='/lttstore/${page.params.store}/products/` +
 								beforeProduct.handle +
 								"' class='hidden-link' style='background-color: rgba(255, 0, 0, 0.2)'>" +
 								'Removed ' +
@@ -67,7 +68,7 @@
 								const afterSubValue = (afterValue as { [key: string]: any })?.[subKey];
 								if (JSON.stringify(beforeSubValue) === JSON.stringify(afterSubValue)) continue;
 								html +=
-									"<a href='/lttstore/products/" +
+									`<a href='/lttstore/${page.params.store}/products/` +
 									beforeProduct.handle +
 									"' class='hidden-link'>" +
 									beforeProduct.title +
@@ -84,7 +85,7 @@
 							}
 						} else {
 							html +=
-								"<a href='/lttstore/products/" +
+								`<a href='/lttstore/${page.params.store}/products/` +
 								beforeProduct.handle +
 								"' class='hidden-link'>" +
 								beforeProduct.title +

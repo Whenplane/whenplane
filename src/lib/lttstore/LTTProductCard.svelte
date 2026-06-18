@@ -6,6 +6,7 @@
 	import { dev } from "$app/environment";
 	import { sha256 } from "$lib/utils.ts";
 	import type { Snippet } from "svelte";
+	import { page } from "$app/state";
 
 	let {
 		product = typed<ShopifyProduct>(),
@@ -33,7 +34,7 @@
 
 <a
 	class="card inline-block p-2 m-1 w-48 align-top h-full"
-	href="/lttstore/products/{handle}"
+	href="/lttstore/{page.params.store}/products/{handle}"
 	class:opacity-50={!available}
 >
 	{#if product.featured_image}

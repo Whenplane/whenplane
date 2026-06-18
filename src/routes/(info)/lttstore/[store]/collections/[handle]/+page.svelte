@@ -67,7 +67,7 @@
             {/if}
             <div>
               {#each products as product}
-                <a href="/lttstore/products/{product.handle}">{product.title}</a><br>
+                <a href="/lttstore/{page.params.store}/products/{product.handle}">{product.title}</a><br>
               {/each}
             </div>
           </div>

@@ -4,12 +4,12 @@
   import { Progress } from "@skeletonlabs/skeleton-svelte";
 
 
-  let promise: Promise<{message?: string, success?: true, allowBypass?: boolean}> = $state();
+  let promise: Promise<{message?: string, success?: true, allowBypass?: boolean}> | undefined = $state();
   let status = $state({done: true});
 
   function request() {
     const thisStatus = {done: false}
-    promise = fetch(`/lttstore/products/${page.params.handle}/requestUpdate`, {
+    promise = fetch(`/lttstore/${page.params.store}/products/${page.params.handle}/requestUpdate`, {
       method: "POST",
       headers: {
         "Accept": "application/json"

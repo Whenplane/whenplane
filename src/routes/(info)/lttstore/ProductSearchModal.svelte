@@ -6,7 +6,7 @@
   import {flip} from "svelte/animate";
   import {slide} from "svelte/transition";
   import { goto } from "$app/navigation";
-  import { navigating } from "$app/state";
+  import { navigating, page } from "$app/state";
   import { dev } from "$app/environment";
   import CircleProgress from "$lib/replacements/CircleProgress.svelte";
   import type { MouseEventHandler } from "svelte/elements";
@@ -34,7 +34,7 @@
 
     if(searchResults?.hits && searchResults.hits.length > 0) {
       if(event.key === "Enter") {
-        goto("/lttstore/products/" + searchResults.hits[cursor].document.handle)
+        goto(`/lttstore/${page.params.store}/products/` + searchResults.hits[cursor].document.handle)
       }
 
       if(event.key === "ArrowUp") {
@@ -124,7 +124,7 @@
         {@const imgPreview = (dev ? 'https://whenplane.com' : '') +
           '/cdn-cgi/image/fit=scale-down,height=96,metadata=copyright,q=60,sqc=50,format=auto/' +
           `https://img-proxy.whenplane.com/img/${productData.handle}-${await sha256(productData.featured_image).then(r => r.substring(0, 5))}`}
-        <a class="block card p-2 m-1 truncate rounded-xl" class:selected={cursor === i} href="/lttstore/products/{result.document.handle}" animate:flip={{ duration: 50 }} transition:slide>
+        <a class="block card p-2 m-1 truncate rounded-xl" class:selected={cursor === i} href="/lttstore/{page.params.store}/products/{result.document.handle}" animate:flip={{ duration: 50 }} transition:slide>
           <img src={imgPreview} class="inline-block h-8 w-8 rounded-md" loading="lazy">
           <span class="result-highlight" class:line-through={!(result.document.available ?? true)}>
             {@html sanitizeHtml(result.highlight?.title?.snippet ?? result.document.title, {allowedTags: ["mark"]})}

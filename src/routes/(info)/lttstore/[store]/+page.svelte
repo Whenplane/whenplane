@@ -47,9 +47,9 @@
   <h1 class="text-center mb-2">LTTStore Watcher</h1>
 
   <div class="flex justify-between link-header mx-auto">
-    <a href="/lttstore/products" class="btn preset-tonal-primary">All Products</a>
-    <a href="/lttstore/archive" class="btn preset-tonal-primary">Product Archive</a>
-    <a href="/lttstore/collections" class="btn preset-tonal-primary">Collections</a>
+    <a href="/lttstore/{page.params.store}/products" class="btn preset-tonal-primary">All Products</a>
+    <a href="/lttstore/{page.params.store}/archive" class="btn preset-tonal-primary">Product Archive</a>
+    <a href="/lttstore/{page.params.store}/collections" class="btn preset-tonal-primary">Collections</a>
   </div>
   <br>
   <br>
@@ -57,7 +57,7 @@
   <button class="input w-64 p-1 mx-2 pl-4 text-left inline-block bg-surface-900 text-white/40" onclick={() => openSearch()}>
     Search for products
   </button>
-  <a href="/lttstore/advanced-search">Advanced Search</a>
+  <a href="/lttstore/{page.params.store}/advanced-search">Advanced Search</a>
   <br>
   <br>
 
@@ -191,7 +191,7 @@
 
   <br>
   <br>
-  <a href="/lttstore/products" class="btn preset-filled-secondary-500">All products</a><br>
+  <a href="/lttstore/{page.params.store}/products" class="btn preset-filled-secondary-500">All products</a><br>
   <br>
   <br>
   Join the <a data-sveltekit-reload href="/discord">discord</a> where there is a channel that can alert you to useful info! (e.g. new products, sales, restocks)

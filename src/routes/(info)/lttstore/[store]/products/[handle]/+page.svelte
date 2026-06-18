@@ -121,7 +121,7 @@
   <li class="crumb-separator" aria-hidden="true">›</li>
   <li class="crumb"><a class="anchor hover-underline" href="/lttstore">LTT Store Watcher</a></li>
   <li class="crumb-separator" aria-hidden="true">›</li>
-  <li class="crumb"><a class="anchor hover-underline" href="/lttstore/products">Products</a></li>
+  <li class="crumb"><a class="anchor hover-underline" href="/lttstore/{page.params.store}/products">Products</a></li>
   <li class="crumb-separator" aria-hidden="true">›</li>
   <li class="crumb">{data.product.shortTitle ?? data.product.title}</li>
 </ol>
