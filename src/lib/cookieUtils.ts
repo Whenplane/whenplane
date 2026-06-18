@@ -16,7 +16,7 @@ export function setCookie(cookieName: string, cookieValue: string, daysTilExpiry
  * @param cookieName the name of the cookie
  * @returns {string|undefined} The cookie value
  */
-export function getCookie(cookieName: string) {
+export function getCookie(cookieName: string): string | undefined {
   const name = cookieName + "=";
   const ca = document.cookie.split(';');
   for(let i = 0; i < ca.length; i++) {
@@ -30,6 +30,16 @@ export function getCookie(cookieName: string) {
   }
   return undefined;
 }
+
+export function deleteCookie(name: string, path = "/", domain?: string) {
+  if(getCookie(name)) {
+    document.cookie = name + "=" +
+      ((path) ? ";path="+path:"") +
+      ((domain)?";domain="+domain:"") +
+      ";expires=Thu, 01 Jan 1970 01:00:00 GMT";
+  }
+}
+
 
 
 export function strip(s: string) {

@@ -1,11 +1,10 @@
 <script lang="ts">
 
-  import { setCookie } from "$lib/cookieUtils";
+  import { deleteCookie, setCookie } from "$lib/cookieUtils";
   import { invalidateAll, onNavigate } from "$app/navigation";
   import ExclamationTriangle from "svelte-bootstrap-icons/lib/ExclamationTriangle.svelte";
   import {fade} from "svelte/transition"
   import ProductSearchModal from "../ProductSearchModal.svelte";
-  import {popup} from "$lib/replacements/popup.ts";
   import type { MouseEventHandler } from "svelte/elements";
   import { setContext } from "svelte";
   import { dev } from "$app/environment";
@@ -16,7 +15,11 @@
   let selectedCurrency = $state(data.currency);
   $effect(() => {
     if(selectedCurrency != data.currency) {
-      setCookie("currency", selectedCurrency);
+      if(selectedCurrency === data.store.defaultCurrency) {
+        deleteCookie("currency");
+      } else {
+        setCookie("currency", selectedCurrency);
+      }
       invalidateAll();
     }
   });
