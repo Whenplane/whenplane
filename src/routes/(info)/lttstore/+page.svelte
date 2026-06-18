@@ -7,11 +7,11 @@
     <h1>Please select a store</h1>
     <div class="flex justify-center items-center gap-4 flex-wrap">
       <a href="/lttstore/us">
-        <img class="max-w-64 w-[95dvw] aspect-19/10 object-fill" src={USFlag} alt="US" />
+        <img class="max-w-75 w-[95dvw] aspect-19/10 object-fill" src={USFlag} alt="US" />
         United Sates
       </a>
       <a href="/lttstore/global">
-        <div class="max-w-64 w-[95dvw]">
+        <div class="max-w-75 w-[95dvw]">
           <Global/>
         </div>
         Global
