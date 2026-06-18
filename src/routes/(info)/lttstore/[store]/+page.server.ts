@@ -1,7 +1,7 @@
 import { error } from "@sveltejs/kit";
 import type { PageServerLoad } from "./$types";
 import { dev } from "$app/environment";
-import { type ProductsTableRow, storeIdFromName } from "$lib/lttstore/lttstore_types.ts";
+import { type ProductsTableRow, Store, storeIdFromName } from "$lib/lttstore/lttstore_types.ts";
 import { createTables } from "../createTables.ts";
 import { retryD1 } from "$lib/utils.ts";
 
@@ -37,16 +37,18 @@ export const load = (async ({platform, params}) => {
       .then(r => r.results)
   );
 
+  const sixDaysAgo = Date.now() - (6 * 24 * 60 * 60e3);
+
   const recentRestocks = retryD1(() =>
     db.prepare("select * from products where store = ? and lastRestock > ? order by lastRestock DESC limit 30")
-      .bind(store, Date.now() - (6 * 24 * 60 * 60e3))
+      .bind(store, sixDaysAgo)
       .all<ProductsTableRow>()
       .then(r => r.results)
   );
 
   let newProducts = await retryD1(() =>
     db.prepare("select * from products where store = ? and firstSeen > ? order by firstSeen DESC limit 50")
-      .bind(store, Date.now() - (6 * 24 * 60 * 60e3))
+      .bind(store, store === Store.US ? sixDaysAgo : Math.max(sixDaysAgo, 1781787820145))
       .all<ProductsTableRow>()
       .then(r => r.results)
   );
