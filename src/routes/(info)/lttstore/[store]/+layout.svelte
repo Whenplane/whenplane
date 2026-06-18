@@ -4,7 +4,7 @@
   import { invalidateAll, onNavigate } from "$app/navigation";
   import ExclamationTriangle from "svelte-bootstrap-icons/lib/ExclamationTriangle.svelte";
   import {fade} from "svelte/transition"
-  import ProductSearchModal from "./ProductSearchModal.svelte";
+  import ProductSearchModal from "../ProductSearchModal.svelte";
   import {popup} from "$lib/replacements/popup.ts";
   import type { MouseEventHandler } from "svelte/elements";
   import { setContext } from "svelte";
