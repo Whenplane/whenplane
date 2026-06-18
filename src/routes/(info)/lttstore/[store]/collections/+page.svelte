@@ -30,26 +30,26 @@
         {@const image = collection.image ? JSON.parse(collection.image) : collection.image}
         <tr>
           <td style="width: 5em;">
-            <a href="/lttstore/collections/{collection.handle}" class="hidden-link">
+            <a href="/lttstore/{page.params.store}/collections/{collection.handle}" class="hidden-link">
               {#if image}
                 <img src={image.src} alt={image.alt} style="width: 5em;" class="rounded-xs"/>
               {/if}
             </a>
           </td>
           <td class="px-1">
-            <a href="/lttstore/collections/{collection.handle}" class="hidden-link">
+            <a href="/lttstore/{page.params.store}/collections/{collection.handle}" class="hidden-link">
               {collection.title}
             </a>
           </td>
           <td class="px-1">
-            <a href="/lttstore/collections/{collection.handle}" class="hidden-link">
+            <a href="/lttstore/{page.params.store}/collections/{collection.handle}" class="hidden-link">
               <span class="opacity-60">
                 Updated <DateStamp epochSeconds={collection.updated_at / 1e3}/>
               </span>
             </a>
           </td>
           <td class="px-1">
-            <a href="/lttstore/collections/{collection.handle}" class="hidden-link">
+            <a href="/lttstore/{page.params.store}/collections/{collection.handle}" class="hidden-link">
               <span class="opacity-65">
                 {collection.observedCount} / {collection.reportedCount} products
               </span>

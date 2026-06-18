@@ -2,6 +2,7 @@
   import type { ProductsTableRow, ShopifyProduct, StockCounts } from "$lib/lttstore/lttstore_types.js";
   import { dev } from "$app/environment";
   import { commas, sha256 } from "$lib/utils.js";
+  import { page } from "$app/state";
 
   const noImages = ["Size", "Inseam", "Waist size", "Length", "Title"];
 
@@ -80,7 +81,7 @@
               {/if}
             {/if}
           {/if}
-          <a href={variant?.id ? `https://www.lttstore.com/products/${product.handle}?variant=${variant?.id}` : undefined} class="hidden-link block w-full mt-auto" class:opacity-60={!inStock}>
+          <a href={variant?.id ? `https://${page.data.store.subdomain}.lttstore.com/products/${product.handle}?variant=${variant?.id}` : undefined} class="hidden-link block w-full mt-auto" class:opacity-60={!inStock}>
             {#if value === "Default Title"}
               {meta.shortTitle ?? product.title}
             {:else}

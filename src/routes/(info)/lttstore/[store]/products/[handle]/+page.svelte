@@ -182,7 +182,7 @@
   {/if}
   <br>
   <br>
-  <a href="https://www.lttstore.com/products/{data.product?.handle}" class:!line-through={!data.product.available}>
+  <a href="https://{data.store.subdomain}.lttstore.com/products/{data.product?.handle}" class:!line-through={!data.product.available}>
     View or Buy on lttstore.com
   </a>
   {#if !data.product.available}

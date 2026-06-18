@@ -6,8 +6,9 @@
   import { getFieldName } from "$lib/lttstore/field_names.js";
   import { getDiffComponent } from "$lib/lttstore/field_components.js";
   import DateStamp from "$lib/DateStamp.svelte";
+  import type {PageProps} from "./$types";
 
-  let { data } = $props();
+  let { data }: PageProps = $props();
 
   let products = $derived(JSON.parse(data.collection.products));
   let image = $derived(data.collection.image ? JSON.parse(data.collection.image) : data.collection.image)
@@ -27,7 +28,7 @@
   <li class="crumb-separator" aria-hidden="true">›</li>
   <li class="crumb"><a class="anchor hover-underline" href="/lttstore/{page.params.store}">LTT Store Watcher ({data.store.storeName})</a></li>
   <li class="crumb-separator" aria-hidden="true">›</li>
-  <li class="crumb"><a class="anchor hover-underline" href="/lttstore/collections">Collections</a></li>
+  <li class="crumb"><a class="anchor hover-underline" href="/lttstore/{page.params.store}/collections">Collections</a></li>
   <li class="crumb-separator" aria-hidden="true">›</li>
   <li class="crumb">{data.collection.title}</li>
 </ol>
@@ -42,7 +43,7 @@
   <h1>{data.collection.title}</h1>
   {@html sanitizeHtml(data.collection.description ?? "")}
   <br>
-  <a href="https://www.lttstore.com/collections/{data.collection.handle}">View on LTTStore</a><br>
+  <a href="https://{data.store.subdomain}.lttstore.com/collections/{data.collection.handle}">View on LTTStore</a><br>
   <br>
   This collection has {data.collection.reportedCount} product{data.collection.reportedCount === 1 ? "" : "s"} in it{data.collection.reportedCount === products.length ? "." : ","}
   {#if data.collection.reportedCount !== products.length}
