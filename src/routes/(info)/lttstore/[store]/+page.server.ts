@@ -46,9 +46,10 @@ export const load = (async ({platform, params}) => {
       .then(r => r.results)
   );
 
+  const newThreshold = store === Store.US ? sixDaysAgo : Math.max(sixDaysAgo, 1781787820145);
   let newProducts = await retryD1(() =>
-    db.prepare("select * from products where store = ? and firstSeen > ? order by firstSeen DESC limit 50")
-      .bind(store, store === Store.US ? sixDaysAgo : Math.max(sixDaysAgo, 1781787820145))
+    db.prepare("select * from products where store = ? and (firstSeen > ? or unixepoch(json_extract(product, '$.published_at')) > ?) order by firstSeen DESC limit 50")
+      .bind(store, newThreshold, Math.floor(sixDaysAgo/1e3))
       .all<ProductsTableRow>()
       .then(r => r.results)
   );
