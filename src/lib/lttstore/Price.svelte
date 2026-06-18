@@ -19,7 +19,7 @@
 
 	let exchangeRates: LatestExchangeRate = $derived(page.data.exchangeRates);
 
-	let convertedPrice = $derived(convert ? price * exchangeRates.rates[currency] : price);
+	let convertedPrice = $derived(typeof convert === "undefined" || convert ? price * exchangeRates.rates[currency] : price);
 </script>
 
 {symbol}{(Math.round(convertedPrice * 100) / 100).toLocaleString(undefined, { minimumFractionDigits: 2 })}
