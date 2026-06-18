@@ -7,6 +7,8 @@
 	import { sha256 } from "$lib/utils.ts";
 	import type { Snippet } from "svelte";
 	import { page } from "$app/state";
+	import USSmall from "../../routes/(info)/lttstore/flags/us-small.webp"
+	import Global from "../../routes/(info)/lttstore/flags/Global.svelte";
 
 	let {
 		product = typed<ShopifyProduct>(),
@@ -40,10 +42,22 @@
 </script>
 
 <a
-	class="card inline-block p-2 m-1 w-48 align-top h-full"
+	class="card inline-block p-2 m-1 w-48 align-top h-full relative"
 	href="/lttstore/{storeUrl}/products/{handle}"
 	class:opacity-50={!available}
 >
+	{#if typeof store !== "undefined" && page.data.store.id !== store}
+		<div class="absolute top-0 right-0">
+			{#if store === Store.US}
+				{@const title = "On the US store"}
+				<img class="w-6 aspect-19/10 object-fill" alt={title} {title} src={USSmall}/>
+			{:else}
+				<div class="w-6" title="On the Global store">
+					<Global/>
+				</div>
+			{/if}
+		</div>
+	{/if}
 	{#if product.featured_image}
 		{#key imageReload}
 			<img
