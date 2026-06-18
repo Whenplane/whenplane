@@ -8,6 +8,7 @@
   import { Progress } from "@skeletonlabs/skeleton-svelte";
   import { invalidateAll } from "$app/navigation";
   import RelativeDate from "$lib/RelativeDate.svelte";
+  import { Store } from "$lib/lttstore/lttstore_types.ts";
 
   let { data } = $props();
 
@@ -33,7 +34,7 @@
 <ol class="breadcrumb pt-2 pl-2">
   <li class="crumb"><a class="anchor hover-underline" href="/">{page.url.hostname === "whenwan.show" ? "whenwan.show" : "Whenplane"}</a></li>
   <li class="crumb-separator" aria-hidden="true">›</li>
-  <li class="crumb" onclick={reload}>LTT Store Watcher</li>
+  <li class="crumb" onclick={reload}>LTT Store Watcher ({data.store.storeName})</li>
   {#if loading}
     <li class="crumb" transition:fade|global={{duration: 100}}>
       <Progress width="w-6" stroke={250} value={loading ? undefined : 100}/>
@@ -44,12 +45,17 @@
 
 <div class="container mx-auto pt-8 mb-96 px-2">
 
-  <h1 class="text-center mb-2">LTTStore Watcher</h1>
+  <h1 class="text-center mb-2">{data.store.storeName} LTTStore Watcher</h1>
 
   <div class="flex justify-between link-header mx-auto">
     <a href="/lttstore/{page.params.store}/products" class="btn preset-tonal-primary">All Products</a>
     <a href="/lttstore/{page.params.store}/archive" class="btn preset-tonal-primary">Product Archive</a>
     <a href="/lttstore/{page.params.store}/collections" class="btn preset-tonal-primary">Collections</a>
+    {#if data.store.id === Store.US}
+      <a href="/lttstore/global" class="btn preset-tonal-primary">Global Store Watcher</a>
+    {:else}
+      <a href="/lttstore/us" class="btn preset-tonal-primary">US Store Watcher</a>
+    {/if}
   </div>
   <br>
   <br>
