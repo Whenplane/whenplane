@@ -5,7 +5,7 @@
 <div class="min-h-dvh flex justify-center items-center text-center px-4">
   <div>
     <h1>Please select a store</h1>
-    <div class="flex justify-center items-center gap-2 flex-wrap">
+    <div class="flex justify-center items-center gap-4 flex-wrap">
       <a href="/lttstore/us">
         <img class="max-w-64 w-[95dvw] aspect-19/10 object-fill" src={USFlag} alt="US" />
         United Sates
@@ -19,3 +19,9 @@
     </div>
   </div>
 </div>
+<style>
+    @reference "#app.css";
+    a {
+        @apply text-inherit card;
+    }
+</style>
