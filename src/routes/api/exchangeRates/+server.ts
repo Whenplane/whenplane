@@ -1,5 +1,5 @@
 import { error, json, type RequestHandler } from "@sveltejs/kit";
-import { newResponse } from "$lib/utils.ts";
+import { newResponse, retry } from "$lib/utils.ts";
 import type { LatestExchangeRate } from "./exchangeRateAPITypes.ts";
 import { dev } from "$app/environment";
 import { createMFResponse } from "$lib/server/MfResponseConverter";
@@ -13,19 +13,28 @@ const setOrder = [
   "EUR"
 ];
 
-let memCache: LatestExchangeRate;
-let memCacheLastFetch = 0;
+let memCache: {[currency: string]: LatestExchangeRate} = {};
+let memCacheLastFetch: {[currency: string]: number} = {};
 
-export const GET = (async ({platform, fetch, locals}) => {
+export const GET = (async ({platform, fetch, locals, url}) => {
   if(!platform?.caches) throw error(503, "Missing cache!");
 
-  if(memCacheLastFetch > 0 && memCache && Date.now() <= memCache.time_next_update_unix*1e3 && Date.now() - memCacheLastFetch < 24 * 60 * 60e3) {
-    return json(memCache);
+  const currency = url.searchParams.get("currency")?.toUpperCase() ?? "USD";
+  if(!["USD", "CAD"].includes(currency)) {
+    throw error(400, "Only CAD or USD can be requested. Please use https://www.exchangerate-api.com/docs/free directly if you want others!")
+  }
+
+  if(
+    memCacheLastFetch[currency] && memCache[currency] &&
+    Date.now() <= memCache[currency].time_next_update_unix*1e3 &&
+    Date.now() - memCacheLastFetch[currency] < 24 * 60 * 60e3
+  ) {
+    return json(memCache[currency]);
   }
 
   const cacheStart = Date.now();
 
-  const cfCache = await platform.caches.open("whenplane:exchangeRates");
+  const cfCache = await platform.caches.open("whenplane:exchangeRates:" + currency);
 
   const cacheMatch = await cfCache.match(cacheURL) as Response | undefined;
   if(cacheMatch && !dev) {
@@ -40,10 +49,10 @@ export const GET = (async ({platform, fetch, locals}) => {
       if((cacheMatchData.time_next_update_unix * 1e3) - responseGenerated.getTime() > 0) {
         const clonedResponse = cacheMatch.clone().json();
         platform.context?.waitUntil(async () => {
-          memCache = await clonedResponse;
-          memCacheLastFetch = responseGenerated.getTime();
+          memCache[currency] = await clonedResponse;
+          memCacheLastFetch[currency] = responseGenerated.getTime();
         })
-        console.log("Responding with cached response! (exchangeRates)");
+        console.log(`Responding with cached ${currency} response! (exchangeRates)`);
         locals.addTiming({id: "cf-cache", duration: Date.now() - cacheStart})
         return newResponse(cacheMatch, (headers) => {
           headers.set("x-whenplane-cf-cached", "true");
@@ -56,8 +65,10 @@ export const GET = (async ({platform, fetch, locals}) => {
   locals.addTiming({id: "cf-cache", duration: Date.now() - cacheStart})
 
 
-  const response: LatestExchangeRate = await fetch("https://open.er-api.com/v6/latest/USD")
-    .then(response => response.json())
+  const response: LatestExchangeRate = await retry(() =>
+    fetch("https://open.er-api.com/v6/latest/" + currency)
+      .then(response => response.json())
+  )
     .catch(() => {
       return {
         result: "success",
@@ -101,8 +112,8 @@ export const GET = (async ({platform, fetch, locals}) => {
     }
   });
 
-  memCache = response;
-  memCacheLastFetch = Date.now();
+  memCache[currency] = response;
+  memCacheLastFetch[currency] = Date.now();
 
   platform?.context?.waitUntil(cfCache.put(cacheURL, await createMFResponse(jsonResponse.clone()) as Response))
 

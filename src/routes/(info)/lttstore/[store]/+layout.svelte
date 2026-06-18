@@ -9,6 +9,7 @@
   import type { MouseEventHandler } from "svelte/elements";
   import { setContext } from "svelte";
   import { dev } from "$app/environment";
+  import ToolTip from "$lib/ToolTip.svelte";
 
   let { data, children } = $props();
 
@@ -47,7 +48,8 @@
 <svelte:window onkeyup={keypress}/>
 
 {#if searchOpen}
-  <div class="bg-surface-900/80 fixed top-0 left-0 right-0 bottom-0 z-999" onclick={bgClick}>
+  <!-- svelte-ignore a11y_click_events_have_key_events -->
+  <div class="bg-surface-900/80 fixed top-0 left-0 right-0 bottom-0 z-999" onclick={bgClick} role="alertdialog" tabindex="0">
     <div class="w-full h-full flex justify-center items-center" bind:this={quickSearchSpanner}>
       <ProductSearchModal/>
     </div>
@@ -56,17 +58,26 @@
 
 <div class="float-right pr-5 h-0">
   <div class="inline-block">
-    {#if selectedCurrency !== "USD"}
-      <span class="*:pointer-events-none" use:popup={{
-        event: "hover",
-        target: "currency-warning",
-        placement: 'bottom'
-      }} transition:fade|global={{duration: 150}}>
-        <ExclamationTriangle class="inline-block text-yellow-300 h-7 w-7"/>
-      </span>
+    {#if selectedCurrency !== data.store.defaultCurrency}
+      <div class="inline-block" transition:fade|global={{duration: 150}}>
+        <ToolTip id="currency-mismatch">
+          {#snippet icon()}
+            <ExclamationTriangle class="inline-block text-yellow-300 h-[1.5em] aspect-square w-auto align-bottom" width="512" height="512"/>
+          {/snippet}
+          This currency conversion is only an estimate.<br>
+          Conversion rates are only updated once per day,<br>
+          and will probably <b>not</b> reflect the exact rate<br>
+          used to charge you if you were to purchase.<br>
+          (although it will probably be close)<br>
+          <br>
+          {data.store.storeName} LTTStore only charges in {data.store.defaultCurrency}.
+          <br>
+          1 {data.store.defaultCurrency} ≈ {data.exchangeRates.rates[selectedCurrency]} {selectedCurrency}
+      </ToolTip>
+      </div>
     {/if}
-    <select class="select w-20 p-1 pl-2 mt-8 sm:mt-1" bind:value={selectedCurrency}>
-      {#each Object.entries(data.exchangeRates.rates) as [code, exchange] (code)}
+    <select class="select w-20 p-1 pl-2 mt-8 sm:mt-1 inline-block" bind:value={selectedCurrency}>
+      {#each Object.keys(data.exchangeRates.rates) as code (code)}
         <option>{code}</option>
       {/each}
     </select>
@@ -85,18 +96,4 @@
   <span class="text-sm opacity-60">
     Whenplane and the Whenplane LTTStore Watcher is not affiliated with or endorsed by Linus Media Group.
   </span>
-</div>
-<div class="card py-2 px-4" data-popup="currency-warning">
-  <p>
-    This currency conversion is only an estimate.<br>
-    Conversion rates are only updated once per day,<br>
-    and will probably <b>not</b> reflect the exact rate<br>
-    used to charge you if you were to purchase.<br>
-    (although it will probably be close)<br>
-    <br>
-    The Whenplane LTTStore watcher gathers data from the US store, which charges only in USD. Prices on the global store are not currently taken into account.<br>
-    <br>
-    1 USD ≈ {data.exchangeRates.rates[selectedCurrency]} {selectedCurrency}
-  </p>
-  <div class="arrow preset-filled-surface-500"></div>
 </div>

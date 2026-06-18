@@ -1,5 +1,5 @@
 import { redirect } from "@sveltejs/kit";
-import { getStoreMetadata, storeIdFromName } from "$lib/lttstore/lttstore_types.ts";
+import { getStoreMetadata, Store, storeIdFromName } from "$lib/lttstore/lttstore_types.ts";
 
 
 export const load = (async ({params, url, fetch, cookies}) => {
@@ -14,12 +14,15 @@ export const load = (async ({params, url, fetch, cookies}) => {
     }
   }
 
+  const defaultCurrency = storeId === Store.US ? "USD" : "CAD";
+
   return {
-    exchangeRates: await fetch("/api/exchangeRates").then(r => r.json()),
-    currency: cookies.get("currency") ?? "USD",
+    exchangeRates: await fetch("/api/exchangeRates?currency=" + defaultCurrency).then(r => r.json()),
+    currency: cookies.get("currency") ?? defaultCurrency,
     store: {
       id: storeId,
-      ...getStoreMetadata(storeId)
+      ...getStoreMetadata(storeId),
+      defaultCurrency
     }
   }
 })
