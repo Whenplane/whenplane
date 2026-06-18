@@ -2,7 +2,7 @@
 	"name": "whenplane",
 	"version": "0.0.1",
 	"private": true,
-	"packageManager": "pnpm@9.12.2",
+	"packageManager": "pnpm@11.7.0",
 	"scripts": {
 		"dev": "vite dev",
 		"build": "vite build",
