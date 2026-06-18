@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { type ShopifyProduct, type StockCounts, Store } from "$lib/lttstore/lttstore_types.ts";
+	import { getStoreMetadata, type ShopifyProduct, type StockCounts, Store } from "$lib/lttstore/lttstore_types.ts";
 	import Price from '$lib/lttstore/Price.svelte';
 	import { productRedirects } from '$lib/lttstore/product_redirects.ts';
 	import { typed } from '$lib';
@@ -30,12 +30,18 @@
 			`https://img-proxy.whenplane.com/img/${product.handle}-${await sha256(product.featured_image).then(r => r.substring(0, 5))}`
 		);
 
-	const title = $derived(shortTitle ?? product.title);
+	let title = $derived(shortTitle ?? product.title);
+
+	let storeUrl = $derived(
+		typeof store === "undefined" || page.data.store.id === store
+			? page.params.store
+			: getStoreMetadata(store).storeName.toLowerCase()
+	)
 </script>
 
 <a
 	class="card inline-block p-2 m-1 w-48 align-top h-full"
-	href="/lttstore/{page.params.store}/products/{handle}"
+	href="/lttstore/{storeUrl}/products/{handle}"
 	class:opacity-50={!available}
 >
 	{#if product.featured_image}
