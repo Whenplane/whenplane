@@ -582,7 +582,7 @@
                     {:then similarProducts}
                       {#each similarProducts?.similar as similar (similar.id)}
                         {@const product = similar.metadata.product}
-                        <LTTProductCard {product} shortTitle={product.shortTitle} available={similar.metadata.available} store={similar.store}/>
+                        <LTTProductCard {product} shortTitle={product.shortTitle} available={similar.metadata.available} store={similar.metadata.store}/>
                       {/each}
                     {/await}
                   </div>
