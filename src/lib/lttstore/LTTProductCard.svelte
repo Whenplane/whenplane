@@ -1,5 +1,5 @@
 <script lang="ts">
-	import type { ShopifyProduct, StockCounts } from '$lib/lttstore/lttstore_types.ts';
+	import { type ShopifyProduct, type StockCounts, Store } from "$lib/lttstore/lttstore_types.ts";
 	import Price from '$lib/lttstore/Price.svelte';
 	import { productRedirects } from '$lib/lttstore/product_redirects.ts';
 	import { typed } from '$lib';
@@ -16,7 +16,8 @@
 		goneIn = typed<boolean>(false),
 		available = typed<boolean>(true),
 		lazyLoadImage = typed<boolean>(false),
-		detail = typed<Snippet | undefined>()
+		detail = typed<Snippet | undefined>(),
+		store = typed<number | undefined>()
 	} = $props();
 
 	let goneInHours = $derived((stock?.total ?? -1) / (purchasesPerHour ?? -1));
@@ -63,14 +64,16 @@
 		{title}
 	</div>
 	{#if product.price}
+		{@const convert = typeof store === "undefined" || page.data.store.id === store}
+		{@const currency = page.data.store.id === store && (store === Store.US ? "USD" : "CAD")}
 		<br />
 		{#if !product.compare_at_price || product.price === product.compare_at_price}
-			<Price price={product.price / 100} />
+			<Price price={product.price / 100} {convert} {currency}/>
 		{:else}
 			<span class="old-price">
-				<Price price={product.compare_at_price / 100} />
+				<Price price={product.compare_at_price / 100} {convert} {currency}/>
 			</span>
-			<Price price={product.price / 100} />
+			<Price price={product.price / 100} {convert} {currency}/>
 		{/if}
 	{/if}
 	{#if goneIn && stock && goneInHours < 10 && goneInHours >= 0}
