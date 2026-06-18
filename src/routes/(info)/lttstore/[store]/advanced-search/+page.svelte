@@ -1,6 +1,6 @@
 <script lang="ts">
   import type { SearchResponse } from "typesense/lib/Typesense/Documents";
-  import type { ProductSearchIndex } from "$lib/lttstore/lttstore_types.ts";
+  import type { ProductSearchIndex } from "$lib/lttstore/lttstore_types.js";
   import { SearchClient } from "typesense";
   import LTTProductCard from "$lib/lttstore/LTTProductCard.svelte";
   import { page } from "$app/state";

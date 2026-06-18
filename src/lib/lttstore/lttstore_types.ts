@@ -192,6 +192,7 @@ export type CartAddErrorResponse = {
 export type ProductsTableRow = {
   handle: string,
   id: number,
+  store: number,
   title: string,
   shortTitle: string | null,
   product: string,
@@ -258,6 +259,32 @@ export const Store = {
   GLOBAL: 1
 }
 
+export function getStoreMetadata(store: number) {
+  let subdomain: string;
+  let storeName: string;
+
+  if(store === Store.US) {
+    subdomain = "www";
+    storeName = "US";
+  } else if(store === Store.GLOBAL) {
+    subdomain = "global";
+    storeName = "Global"
+  } else {
+    console.warn(`Unknown store ${store}! Defaulting to US.`);
+    subdomain = "www";
+    storeName = `unknown(${store})`;
+  }
+
+  return { storeName, subdomain };
+}
+
+export function storeIdFromName(name: string) {
+  const lowerName = name.toLowerCase();
+  if(lowerName === "us") return 0;
+  if(lowerName === "global") return 1;
+  return -1;
+}
+
 export type BackorderAlerts = {
   /** The key is the variant id, the value is the message */
   [variant_id: string]: string
@@ -278,6 +305,7 @@ export type ProductDetailModule = {
 export type ProductSearchIndex = {
   id: string,
   handle: string,
+  store: number
   title: string,
   product: string,
   description: string,
@@ -314,6 +342,7 @@ export type CollectionImage = {
 }
 
 export type CollectionDbRow = {
+  store: number,
   id: number,
   title: string,
   handle: string,

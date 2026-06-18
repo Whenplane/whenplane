@@ -1,14 +1,14 @@
 import { error, redirect } from "@sveltejs/kit";
 import type { PageServerLoad } from "./$types";
 import { dev } from "$app/environment";
-import type {
-  ProductsTableRow,
-  ShopifyProduct,
-  SimilarProductsTableRow,
-  StockHistoryTableRow
+import {
+  type ProductsTableRow,
+  type ShopifyProduct,
+  type SimilarProductsTableRow,
+  type StockHistoryTableRow, storeIdFromName
 } from "$lib/lttstore/lttstore_types.ts";
 
-import { createTables } from "../../createTables.ts";
+import { createTables } from "../../../createTables.ts";
 import { retryD1 } from "$lib/utils.ts";
 import { productRedirects } from "$lib/lttstore/product_redirects.ts";
 
@@ -23,13 +23,15 @@ export const load = (async ({platform, params, url}) => {
 
   const handle = params.handle;
 
+  const store = storeIdFromName(params.store);
+
   // if the "handle" parameter is a number, then it's probably actually an id.
   // Look up its handle and redirect if it is.
   const handleNumber = Number(handle);
   if(!Number.isNaN(handleNumber)) {
     const productHandle = await retryD1(() =>
-      db.prepare("select handle from products where id = ?")
-      .bind(handleNumber)
+      db.prepare("select handle from products where id = ? and store = ?")
+      .bind(handleNumber, store)
       .first<{handle: string}>()
       .then(r => r?.handle)
     );
@@ -37,8 +39,8 @@ export const load = (async ({platform, params, url}) => {
   }
 
   const product = await retryD1(() =>
-    db.prepare("select * from products where handle = ?")
-      .bind(handle)
+    db.prepare("select * from products where handle = ? and store = ?")
+      .bind(handle, store)
       .first<ProductsTableRow>()
   );
 
@@ -83,19 +85,20 @@ export const load = (async ({platform, params, url}) => {
   if((url.searchParams.get("historyDays") ?? defaultHistoryDays) === "all") {
     historyDays = "all";
     stockHistory = retryD1(() =>
-      db.prepare("select timestamp,stock from stock_history where (id = ? or handle = ?) and store = 0 order by timestamp")
-        .bind(product.id, handle)
+      db.prepare("select timestamp,stock from stock_history where (id = ? or handle = ?) and store = ? order by timestamp")
+        .bind(product.id, handle, store)
         .all<StockHistoryTableRow>()
         .then(r => r.results)
     );
   } else {
     stockHistory = retryD1(() =>
-      db.prepare("select timestamp,stock from stock_history where (id = ? or handle = ?) and store = 0 and timestamp > ? order by timestamp")
+      db.prepare("select timestamp,stock from stock_history where (id = ? or handle = ?) and store = ? and timestamp > ? order by timestamp")
         .bind(
           product.id,
           handle,
-          // go 3 hours past the actual cutoff, so we hopefully have a line to draw from the past
-          Date.now() - ((historyDays as number) * 24 * 60 * 60e3) - (12 * 60 * 60e3)
+          store,
+          // go 12 hours past the actual cutoff, so we hopefully have a line to draw from the past
+          Date.now() - ((historyDays as number) * 24 * 60 * 60e3) - (12 * 60 * 60e3),
         )
         .all<StockHistoryTableRow>()
         .then(r => r.results)
@@ -103,15 +106,15 @@ export const load = (async ({platform, params, url}) => {
   }
 
   const changeHistory = retryD1(() =>
-    db.prepare("select * from change_history where id = ? order by timestamp desc")
-      .bind(product.id)
+    db.prepare("select * from change_history where id = ? and store = ? order by timestamp desc")
+      .bind(product.id, store)
       .all<{id: number, timestamp: number, field: string, old: string, new: string}>()
       .then(r => r.results)
   );
 
   const similarProducts = retryD1(() =>
-    db.prepare("select * from similar_products where id = ?")
-      .bind(product.id)
+    db.prepare("select * from similar_products where id = ? and store = ?")
+      .bind(product.id, store)
       .first<SimilarProductsTableRow>()
       .then(r => r ? {timestamp: r.timestamp, similar: JSON.parse(r.similar).filter((p: ShopifyProduct) => p.id != product.id)} : r)
   );

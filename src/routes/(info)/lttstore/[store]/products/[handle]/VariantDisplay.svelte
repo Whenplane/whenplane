@@ -1,7 +1,7 @@
 <script lang="ts">
-  import type { ProductsTableRow, ShopifyProduct, StockCounts } from "$lib/lttstore/lttstore_types.ts";
+  import type { ProductsTableRow, ShopifyProduct, StockCounts } from "$lib/lttstore/lttstore_types.js";
   import { dev } from "$app/environment";
-  import { commas, sha256 } from "$lib/utils.ts";
+  import { commas, sha256 } from "$lib/utils.js";
 
   const noImages = ["Size", "Inseam", "Waist size", "Length", "Title"];
 

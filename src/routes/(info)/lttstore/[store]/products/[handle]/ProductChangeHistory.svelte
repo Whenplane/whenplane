@@ -1,13 +1,13 @@
 <script lang="ts">
-  import { getDiffComponent } from "$lib/lttstore/field_components.ts";
-  import { getFieldName } from "$lib/lttstore/field_names.ts";
+  import { getDiffComponent } from "$lib/lttstore/field_components.js";
+  import { getFieldName } from "$lib/lttstore/field_names.js";
   import { typed } from "$lib";
   import DateStamp from "$lib/DateStamp.svelte";
-  import type { ProductsTableRow } from "$lib/lttstore/lttstore_types.ts";
+  import type { ProductsTableRow } from "$lib/lttstore/lttstore_types.js";
   import { onDestroy, onMount } from "svelte";
   import { dev } from "$app/environment";
   import LazyLoad from "@dimfeld/svelte-lazyload";
-  import { countTo } from "$lib/utils.ts";
+  import { countTo } from "$lib/utils.js";
   import { page } from "$app/state";
 
   let {

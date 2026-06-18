@@ -1,10 +1,10 @@
 <script lang="ts">
   import sanitizeHtml from "sanitize-html";
   import { page } from "$app/state";
-  import { countTo, truncateText } from "$lib/utils.ts";
+  import { countTo, truncateText } from "$lib/utils.js";
   import { Accordion } from "@skeletonlabs/skeleton-svelte";
-  import { getFieldName } from "$lib/lttstore/field_names.ts";
-  import { getDiffComponent } from "$lib/lttstore/field_components.ts";
+  import { getFieldName } from "$lib/lttstore/field_names.js";
+  import { getDiffComponent } from "$lib/lttstore/field_components.js";
   import DateStamp from "$lib/DateStamp.svelte";
 
   let { data } = $props();

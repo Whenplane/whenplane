@@ -4,15 +4,15 @@
     ProductDetailModule,
     ShopifyProduct,
     StockCounts
-  } from "$lib/lttstore/lttstore_types.ts";
+  } from "$lib/lttstore/lttstore_types.js";
   import { page } from "$app/state";
   import ProductStockHistoryGraph from "$lib/lttstore/product/ProductStockHistoryGraph.svelte";
   import DateStamp from "$lib/DateStamp.svelte";
-  import { commas, sha256, truncateText } from "$lib/utils.ts";
+  import { commas, sha256, truncateText } from "$lib/utils.js";
   import { Accordion } from "@skeletonlabs/skeleton-svelte";
   import sanitizeHtml from "sanitize-html";
   import { newsSanitizeSettings } from "$lib/news/news";
-  import { goto, invalidateAll } from "$app/navigation";
+  import { goto } from "$app/navigation";
   import Price from "$lib/lttstore/Price.svelte";
   import { dev } from "$app/environment";
   import ProductUpdateRequestButton from "$lib/lttstore/product/ProductUpdateRequestButton.svelte";

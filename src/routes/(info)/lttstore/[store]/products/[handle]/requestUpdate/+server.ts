@@ -1,6 +1,7 @@
 import { error } from "@sveltejs/kit";
 import type {RequestHandler} from "./$types";
 import { newResponse } from "$lib/utils.ts";
+import { storeIdFromName } from "$lib/lttstore/lttstore_types.ts";
 
 export const POST = (async ({platform, params, cookies}) => {
 
@@ -18,6 +19,7 @@ export const POST = (async ({platform, params, cookies}) => {
 
   const searchParams = new URLSearchParams();
   searchParams.set("handle", params.handle);
+  searchParams.set("store", storeIdFromName(params.store)+"");
   if(session) searchParams.set("session", session);
 
   return newResponse(await stub.fetch("https://UPD_REQ_DO/?" + searchParams)

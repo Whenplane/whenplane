@@ -7,7 +7,7 @@
   const SvelteComponent = $derived(getDiffComponent(data.change.field));
 </script>
 
-<div class="table-container rounded-md" id="change">
+<div class="table-container rounded-md bg-surface-900" id="change">
   <table class="table  rounded-md">
     <thead>
     <tr>

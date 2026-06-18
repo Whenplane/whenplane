@@ -1,6 +1,5 @@
 import { error, json } from "@sveltejs/kit";
 import type { RequestHandler } from "./$types";
-import { isNearWan } from "$lib/timeUtils.ts";
 import { newResponse, retry } from "$lib/utils.ts";
 
 export const GET = (async ({params, platform}) => {
