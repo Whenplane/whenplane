@@ -8,6 +8,7 @@
   import {popup} from "$lib/replacements/popup.ts";
   import type { MouseEventHandler } from "svelte/elements";
   import { setContext } from "svelte";
+  import { dev } from "$app/environment";
 
   let { data, children } = $props();
 
@@ -71,10 +72,12 @@
     </select>
   </div>
 </div>
-<div class="card border-2 mt-1 p-2 border-amber-600! bg-amber-600/21! limit-large mx-auto">
-  I am currently working on migrating the LTTStore watcher database to support tracking both the US store and the Global store.
-  During this time, this site will probably be very broken, and possibly display incorrect data.
-</div>
+{#if !dev}
+  <div class="card border-2 mt-1 p-2 border-amber-600! bg-amber-600/21! limit-large mx-auto">
+    I am currently working on migrating the LTTStore watcher database to support tracking both the US store and the Global store.
+    During this time, this site will probably be very broken, and possibly display incorrect data.
+  </div>
+{/if}
 {@render children?.()}
 <br>
 <div class="p-4">
