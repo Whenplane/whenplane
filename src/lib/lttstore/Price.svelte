@@ -1,10 +1,10 @@
 <script lang="ts">
 	import { page } from '$app/state';
-	import {Currencies} from 'currencies-map/dist/module';
+	import { Currencies } from 'currencies-map';
 	import type { LatestExchangeRate } from '../../routes/api/exchangeRates/exchangeRateAPITypes.ts';
 	import { typed } from '$lib';
 
-	let { usd = typed<number>() } = $props();
+	let { price = typed<number>() } = $props();
 
 	let currency: string = $derived(page.data.currency);
 
@@ -12,7 +12,7 @@
 
 	let exchangeRates: LatestExchangeRate = $derived(page.data.exchangeRates);
 
-	let convertedPrice = $derived(usd * exchangeRates.rates[currency]);
+	let convertedPrice = $derived(price * exchangeRates.rates[currency]);
 </script>
 
 {symbol}{(Math.round(convertedPrice * 100) / 100).toLocaleString(undefined, { minimumFractionDigits: 2 })}

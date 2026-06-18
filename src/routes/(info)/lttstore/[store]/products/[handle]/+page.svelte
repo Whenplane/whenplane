@@ -165,12 +165,12 @@
     No featured image
   {/if}-->
   {#if (!productInfo.compare_at_price || productInfo.price === productInfo.compare_at_price) && typeof productInfo.price === "number"}
-    <Price usd={productInfo.price/100}/>
+    <Price price={productInfo.price/100}/>
   {:else if typeof productInfo.price === "number" && productInfo.compare_at_price}
     <span class="old-price">
-      <Price usd={productInfo.compare_at_price/100}/>
+      <Price price={productInfo.compare_at_price/100}/>
     </span>
-    <Price usd={productInfo.price/100}/>
+    <Price price={productInfo.price/100}/>
   {/if}
   <br>
   <br>
@@ -307,11 +307,11 @@
                     </tr>
                     <tr>
                       <td>Regular Price</td>
-                      <td><Price usd={data.product.regularPrice/100}/></td>
+                      <td><Price price={data.product.regularPrice/100}/></td>
                     </tr>
                     <tr>
                       <td>Current Price</td>
-                      <td><Price usd={data.product.currentPrice/100}/></td>
+                      <td><Price price={data.product.currentPrice/100}/></td>
                     </tr>
                     <tr>
                       <td>First Seen</td>
@@ -391,13 +391,13 @@
                     </tr>
                     <tr>
                       <td>Price</td>
-                      <td><Price usd={productInfo.price/100}/></td>
+                      <td><Price price={productInfo.price/100}/></td>
                     </tr>
                     <tr>
                       <td>Compare Price</td>
                       <td>
                         {#if productInfo.compare_at_price}
-                          <Price usd={productInfo.compare_at_price/100}/>
+                          <Price price={productInfo.compare_at_price/100}/>
                         {:else}
                           <span class="opacity-70">[none]</span>
                         {/if}
@@ -467,13 +467,13 @@
                                 </tr>
                                 <tr>
                                   <td>Price</td>
-                                  <td><Price usd={variant.price/100}/></td>
+                                  <td><Price price={variant.price/100}/></td>
                                 </tr>
                                 <tr>
                                   <td>Compare at price</td>
                                   <td>
                                     {#if variant.compare_at_price}
-                                      <Price usd={(variant.compare_at_price)/100}/>
+                                      <Price price={(variant.compare_at_price)/100}/>
                                     {:else}
                                       <span class="opacity-70">[none]</span>
                                     {/if}

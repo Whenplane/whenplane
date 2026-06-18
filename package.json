@@ -67,7 +67,7 @@
 		"apexcharts": "^3.42.0",
 		"bcryptjs": "^2.4.3",
 		"blurhash": "^2.0.5",
-		"currencies-map": "^3.3.5",
+		"currencies-map": "3.3.4",
 		"diff": "^7.0.0",
 		"eslint-plugin-svelte": "^3.15.2",
 		"fast-blurhash": "^1.1.2",

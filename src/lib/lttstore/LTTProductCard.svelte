@@ -65,12 +65,12 @@
 	{#if product.price}
 		<br />
 		{#if !product.compare_at_price || product.price === product.compare_at_price}
-			<Price usd={product.price / 100} />
+			<Price price={product.price / 100} />
 		{:else}
 			<span class="old-price">
-				<Price usd={product.compare_at_price / 100} />
+				<Price price={product.compare_at_price / 100} />
 			</span>
-			<Price usd={product.price / 100} />
+			<Price price={product.price / 100} />
 		{/if}
 	{/if}
 	{#if goneIn && stock && goneInHours < 10 && goneInHours >= 0}
