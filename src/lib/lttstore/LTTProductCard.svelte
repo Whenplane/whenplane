@@ -47,7 +47,7 @@
 	class:opacity-50={!available}
 >
 	{#if typeof store !== "undefined" && page.data.store.id !== store}
-		<div class="absolute top-2 right-2 opacity-80 hover:opacity-100">
+		<div class="absolute top-2 right-2 opacity-50 hover:opacity-100">
 			{#if store === Store.US}
 				{@const title = "On the US store"}
 				<img class="w-10 aspect-19/10 object-fill" alt={title} {title} src={USSmall}/>
