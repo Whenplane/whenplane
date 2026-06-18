@@ -71,7 +71,7 @@
 	</div>
 	{#if product.price}
 		{@const convert = typeof store === "undefined" || page.data.store.id === store}
-		{@const currency = page.data.store.id === store && (store === Store.US ? "USD" : "CAD")}
+		{@const currency = typeof store !== "undefined" && page.data.store.id !== store && (store === Store.US ? "USD" : "CAD")}
 		<br />
 		{#if !product.compare_at_price || product.price === product.compare_at_price}
 			<Price price={product.price / 100} {convert} {currency}/>
