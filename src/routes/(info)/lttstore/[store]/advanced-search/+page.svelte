@@ -9,6 +9,9 @@
   import { onMount } from "svelte";
   import { goto } from "$app/navigation";
   import {flip} from "svelte/animate";
+  import type {PageProps} from "./$types";
+
+  let { data }: PageProps = $props();
 
   const searchClient = new SearchClient({
     'nodes': [{
@@ -159,7 +162,7 @@
 <ol class="breadcrumb pt-2 pl-2">
   <li class="crumb"><a class="anchor hover-underline" href="/">{page.url.hostname === "whenwan.show" ? "whenwan.show" : "Whenplane"}</a></li>
   <li class="crumb-separator" aria-hidden="true">›</li>
-  <li class="crumb"><a class="anchor hover-underline" href="/lttstore">LTT Store Watcher</a></li>
+  <li class="crumb"><a class="anchor hover-underline" href="/lttstore/{page.params.store}">LTT Store Watcher ({data.store.storeName})</a></li>
   <li class="crumb-separator" aria-hidden="true">›</li>
   <li class="crumb">Advanced Search</li>
 </ol>
