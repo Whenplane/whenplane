@@ -26,6 +26,7 @@
 	import CurrentTitle from "$lib/CurrentTitle.svelte";
 	import {popup} from "$lib/replacements/popup.ts";
 	import ChevronDown from "svelte-bootstrap-icons/lib/ChevronDown.svelte";
+	import {slide} from "svelte/transition";
 
 	let { data } = $props();
 
@@ -388,20 +389,26 @@
 
 		{#if !page.data.isBot && (nowish.getUTCDay() === 5 || nowish.getUTCDay() === 6 /*|| dev*/) && !data.hasDone && (page.url.searchParams.has("showLatenessVoting") ? page.url.searchParams.get("showLatenessVoting") === "true" : !isFrame)}
 			<div class="pb-2 px-4">
-				<Accordion collapsible value={['1']}>
+				<Accordion collapsible defaultValue={['1']}>
 					<Accordion.Item value="1">
 						<Accordion.ItemTrigger class="font-bold flex items-center justify-between gap-2">
-							<h3 class="inline">Lateness Voting</h3>
+							<h3 class="inline text-2xl! no-header-margin">Lateness Voting</h3>
 							<Accordion.ItemIndicator class="group">
 								<ChevronDown class="h-5 w-5 transition group-data-[state=open]:rotate-180" />
 							</Accordion.ItemIndicator>
 						</Accordion.ItemTrigger>
 						<Accordion.ItemContent>
-							{#if data.liveStatus}
-								<LatenessVoting {mainLate}/>
-							{:else}
-								<span class="opacity-75">Lateness voting not available while offline.</span>
-							{/if}
+							{#snippet element(attributes)}
+								{#if !attributes.hidden}
+									<div transition:slide={{duration: 500}}>
+										{#if data.liveStatus}
+											<LatenessVoting {mainLate}/>
+										{:else}
+											<span class="opacity-75">Lateness voting not available while offline.</span>
+										{/if}
+									</div>
+								{/if}
+							{/snippet}
 						</Accordion.ItemContent>
 					</Accordion.Item>
 				</Accordion>
