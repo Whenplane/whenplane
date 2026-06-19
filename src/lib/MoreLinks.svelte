@@ -57,52 +57,35 @@
     }
   ]
 </script>
-<table class="w-58">
-  <tbody>
+<div class="table w-58">
   {#each links as link}
-    <tr>
-      <td>
-        <a class="unstyled hidden-link" href={link.href}>
-          <link.icon width="20" height="20"/>
-        </a>
-      </td>
-      <td>
-        <a class="unstyled hidden-link" href={link.href}>
-          {link.name}
-        </a>
-      </td>
-    </tr>
+    <a class="table-row unstyled hidden-link" href={link.href}>
+      <div class="table-cell pl-4 pr-1.5 align-middle">
+        <link.icon width="20" height="20"/>
+      </div>
+      <div class="table-cell text-left">
+        {link.name}
+      </div>
+    </a>
   {/each}
-  </tbody>
-</table>
+</div>
 
 <style>
-    td > a {
-        display: block;
-        padding: 0.5rem 0.25rem;
-    }
+    @reference "#app.css";
 
-    tr:hover {
+    a:hover {
         --tw-brightness: brightness(1.15);
         filter: var(--tw-blur) var(--tw-brightness) var(--tw-contrast) var(--tw-grayscale) var(--tw-hue-rotate) var(--tw-invert) var(--tw-saturate) var(--tw-sepia) var(--tw-drop-shadow);
     }
 
-    td {
-        padding: 0;
+
+    .table-cell {
+        @apply py-2;
         font-size: 1rem;
     }
 
-    td:nth-child(1) {
-        text-align: center;
-    }
-    td:nth-child(1) > a {
-        padding-left: 1rem;
-    }
 
-    td:nth-child(2) {
-        text-align: left;
-    }
-    td:nth-child(2) > a {
-        padding-right: 0.75rem;
+    .table-row:nth-child(1) {
+        text-align: center;
     }
 </style>

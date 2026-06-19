@@ -1,1 +1,1 @@
-<img src="/Discord-Symbol-White.svg" alt="">
+<img src="/Discord-Symbol-White.svg" alt="" width="21" height="21">
