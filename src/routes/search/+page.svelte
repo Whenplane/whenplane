@@ -189,17 +189,15 @@
 
       <ToolTip placement="bottom" event="click" id="more-search-params">
         {#snippet icon()}
-              
-              <span class="btn preset-filled-surface-500 cursor-pointer">
+              <button class="btn preset-filled-surface-500 cursor-pointer">
                 More
                 {#if moreOptionsUsed > 0}
                   <span class="badge-icon preset-filled-warning-500 ml-2">
                     {moreOptionsUsed}
                   </span>
                 {/if}
-              </span>
-          
-              {/snippet}
+              </button>
+        {/snippet}
         {#snippet content()}
               
             <label>
@@ -224,7 +222,7 @@
               </span>
             </label>
           
-              {/snippet}
+        {/snippet}
       </ToolTip>
 
     </div>
@@ -239,11 +237,11 @@
         <ToolTip placement="bottom" event="click" id="search-settings">
           {#snippet icon()}
                   
-              <span class="btn preset-filled-surface-500 cursor-pointer">
+              <button class="btn preset-filled-surface-500 cursor-pointer">
                 Settings
-              </span>
+              </button>
             
-                  {/snippet}
+          {/snippet}
           {#snippet content()}
                   
               <label>
@@ -255,7 +253,7 @@
                 <span>Enhanced keyword match visibility</span>
               </label>
             
-                  {/snippet}
+          {/snippet}
         </ToolTip>
       </span>
     </div>
