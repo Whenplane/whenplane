@@ -1,6 +1,7 @@
 <script lang="ts">
   import LTTProductCard from "$lib/lttstore/LTTProductCard.svelte";
   import { page } from "$app/state";
+  import RelativeDate from "$lib/RelativeDate.svelte";
 
   let { data } = $props();
 </script>
@@ -27,7 +28,16 @@
   <br>
   <div class="p-2">
     {#each data.products as product (product.id)}
-      <LTTProductCard product={JSON.parse(product.product)} shortTitle={product.shortTitle}/>
+      <LTTProductCard product={JSON.parse(product.product)} shortTitle={product.shortTitle}>
+        {#snippet detail()}
+          {@const seen = product.metadataUpdate ?? product.stockChecked}
+          {#if seen}
+            <div class="opacity-80 text-xs">
+              Last seen <RelativeDate epochSeconds={seen / 1e3}/>
+            </div>
+          {/if}
+        {/snippet}
+      </LTTProductCard>
     {/each}
   </div>
 </div>
