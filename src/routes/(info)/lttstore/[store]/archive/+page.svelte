@@ -5,7 +5,7 @@
   let { data } = $props();
 </script>
 <svelte:head>
-  <title>LTTStore Product Archive - Whenplane</title>
+  <title>LTTStore {data.store.storeName} Product Archive - Whenplane</title>
   <meta name="description" content="These products are no longer on lttstore. They are preserved here for archival purposes."/>
 </svelte:head>
 
@@ -19,7 +19,7 @@
 
 <div class="p-2 mt-8 mb-32">
   <div class="p-2 limit mx-auto">
-    <h1>LTTStore Product Archive</h1>
+    <h1>LTTStore {data.store.storeName} Product Archive</h1>
     <br>
     These products are no longer on lttstore. They are preserved here for archival purposes.<br>
     Currently this archive only goes back to June 2024, but I plan to go back further in the future.

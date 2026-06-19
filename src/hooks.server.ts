@@ -167,11 +167,20 @@ export const handle: Handle = async ({ event, resolve }) => {
         console.warn("Missing platform or platform.cf!")
     }
 
-    if(event.url.pathname.startsWith("/lttstore/products/")) {
-        const newUrl = new URL(event.url);
-        newUrl.pathname = newUrl.pathname
-          .replace(/^\/lttstore\/products\//, "/lttstore/us/products/");
-        throw redirect(301, newUrl);
+    const storeRedirectPaths = [
+      "products",
+      "collections",
+      "archive",
+      "advanced-search"
+    ]
+
+    for (let storeRedirectPath of storeRedirectPaths) {
+        if(event.url.pathname.startsWith("/lttstore/" + storeRedirectPath)) {
+            const newUrl = new URL(event.url);
+            newUrl.pathname = newUrl.pathname
+              .replace(new RegExp("^\/lttstore\/" + storeRedirectPath), "/lttstore/us/" + storeRedirectPath);
+            throw redirect(301, newUrl);
+        }
     }
 
     const resolveStart = Date.now();

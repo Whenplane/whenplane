@@ -6,7 +6,7 @@
 </script>
 
 <svelte:head>
-  <title>LTTStore Collections - Whenplane</title>
+  <title>LTTStore {data.store.storeName} Collections - Whenplane</title>
   <meta name="description" content="This is a list of all the collections that are on lttstore. Click one to see more details."/>
 </svelte:head>
 
@@ -20,8 +20,8 @@
 
 <div class="p-2">
   <div class="limit mx-auto">
-    <h1>LTTStore Collections</h1>
-    This is a list of all the collections that are on lttstore. Click one to see more details.<br>
+    <h1>LTTStore {data.store.storeName} Collections</h1>
+    This is a list of all the collections that are on {data.store.storeName} lttstore. Click one to see more details.<br>
     <br>
   </div>
   <table class="mx-auto">
