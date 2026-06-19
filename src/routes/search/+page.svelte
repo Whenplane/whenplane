@@ -381,9 +381,9 @@
       <ToolTip placement="bottom" event="click" id="last-update-info">
         {#snippet icon()}
               
-              <span class="btn btn-sm preset-filled-surface-500 cursor-pointer">
+              <button class="btn btn-sm preset-filled-surface-500 cursor-pointer">
                 Last Update Info
-              </span>
+              </button>
           
               {/snippet}
         {#snippet content()}
