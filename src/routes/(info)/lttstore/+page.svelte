@@ -40,7 +40,4 @@
     a {
         @apply block text-inherit;
     }
-    p {
-        @apply my-1.5;
-    }
 </style>

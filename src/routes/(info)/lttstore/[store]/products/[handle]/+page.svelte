@@ -553,18 +553,44 @@
             Similar Products
             &nbsp;
             <ToolTip id="similar-products">
-              Whenplane uses an AI embedding model to determine products that are similar to each other.<br>
-              The product description is used for comparison, so products with similar descriptions will show as similar to each other.<br>
-              These similar products were last updated
-              {#await data.similarProducts}
-                <div class="inline-block w-32 placeholder animate-pulse align-bottom rounded-md"></div>
-              {:then similarProducts}
-                {#if similarProducts}
-                  <DateStamp epochSeconds={similarProducts.timestamp/1e3}/>
-                {/if}
-              {/await}
-              <br>
-              Similar products are updated roughly every 7 days.
+              <div class="max-w-lg">
+                <p>
+                  Whenplane uses a ML embedding model to determine products that are similar to each other.
+                </p>
+                <p>
+                  The product title and description description is used for comparison,
+                  so products with similar concepts in their titles/descriptions will show as similar to each other.
+                </p>
+                <p>
+                  Similar products are calculated across both stores,
+                  so the #1 most similar product is usually the same product but on the other store.
+                  However, only the top 5 similar products from the other store are shown.
+                </p>
+                <p>
+                  Similar products from the other store are marked with the flag of the other store.
+                </p>
+                <hr class="my-4 -mx-1.5">
+                <p>
+                  These similar products were last updated
+                  {#await data.similarProducts}
+                    <span class="inline-block w-32 placeholder animate-pulse align-bottom rounded-md"></span>.
+                  {:then similarProducts}
+                    {#if similarProducts}
+                      <DateStamp epochSeconds={similarProducts.timestamp/1e3}/>.
+                    {/if}
+                  {/await}
+                </p>
+                <hr class="my-4 -mx-1.5">
+                <p>
+                  Similar products are updated opn a rolling 7-day schedule.
+                </p>
+                <p class="text-xs">
+                  The oldest similar products sections are updated every night,
+                  but only enough for it to go through all products in 7 days
+                  (which with {data.similarBatch?.products ?? "?"} total products
+                  works out to {data.similarBatch?.batchSize ?? "?"} products per day)
+                </p>
+              </div>
             </ToolTip>
           </span>
           <Accordion.ItemIndicator class="group">

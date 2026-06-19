@@ -195,3 +195,7 @@ ol.normal-list {
     -webkit-mask: var(--mask);
     mask: var(--mask);
 }
+
+p {
+    @apply my-1.5;
+}

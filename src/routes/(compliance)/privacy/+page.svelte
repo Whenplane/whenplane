@@ -80,10 +80,3 @@
 
   Effective Date: {new Date(1701500392264).toLocaleDateString(undefined, {dateStyle: "medium"})}
 </div>
-
-<style>
-  p {
-      margin-top: 0.25em;
-      margin-bottom: 0.25em;
-  }
-</style>
