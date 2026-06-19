@@ -20,13 +20,11 @@
 	import NotablePersonLive from "$lib/NotablePersonLive.svelte";
 	import { getCookie } from "$lib/cookieUtils.ts";
 	import Socket from "$lib/Socket.svelte";
-	import CaretDownFill from "svelte-bootstrap-icons/lib/CaretDownFill.svelte";
 	import { getDateFormatLocale, getTimePreference } from "$lib/prefUtils.ts";
-	import MoreLinks from "$lib/MoreLinks.svelte";
 	import CurrentTitle from "$lib/CurrentTitle.svelte";
-	import {popup} from "$lib/replacements/popup.ts";
 	import ChevronDown from "svelte-bootstrap-icons/lib/ChevronDown.svelte";
 	import {slide} from "svelte/transition";
+	import MoreDropdown from "./MoreDropdown.svelte";
 
 	let { data } = $props();
 
@@ -86,8 +84,6 @@
 
 		nowish = new Date();
 	}
-
-	let moreDropdownOpen = $state(false);
 
 	let nowish = $state(new Date());
 
@@ -334,25 +330,7 @@
 				<a href="/history" class="btn preset-tonal-surface border border-surface-500 bg-surface-900/60 rounded-xl">
 					History
 				</a>
-				<button class="btn preset-tonal-surface border border-surface-500 bg-surface-900/60 rounded-xl" use:popup={{
-					event: 'click',
-					target: 'moreDropdown',
-					placement: 'bottom',
-					state: (s) => moreDropdownOpen = s.state
-				}}>
-					<span class="capitalize">More</span>
-					<span class:rotate-180={moreDropdownOpen} class="transition-transform duration-175">
-						<CaretDownFill/>
-					</span>
-				</button>
-				<div class="card w-58 shadow-2xl! overflow-hidden z-20 bg-surface-700/75! absolute backdrop-blur-[5px] transition-opacity duration-250" data-popup="moreDropdown" style="opacity: 0; pointer-events: none; display: none;">
-					{#if moreDropdownOpen}
-						<div transition:slide={{duration: 150}}>
-							<MoreLinks/>
-						</div>
-					{/if}
-					<div class="arrow bg-surface-700/90"></div>
-				</div>
+				<MoreDropdown/>
 				<br>
 				<br>
 			{/if}
