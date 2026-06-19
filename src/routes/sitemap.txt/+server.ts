@@ -17,7 +17,6 @@ export const GET = (async ({platform, fetch, url}) => {
       "/about",
       "/ltt-time",
       "/lttstore",
-      "/lttstore/archive",
       "/extension",
       "/notifications",
     ]
@@ -40,14 +39,22 @@ export const GET = (async ({platform, fetch, url}) => {
         ))
     )
 
-    urls.push(
-      ...(await fetch("/api/lttstore/allHandles")
-        .then(r => r.json())
-        .then((r: string[]) =>
-          r
-            .map(h => "/lttstore/products/" + h)
-        ))
-    )
+    for (const store of ["us", "global"]) {
+      urls.push(
+        `/lttstore/${store}`,
+        `/lttstore/${store}/archive`,
+        `/lttstore/${store}/collections`,
+        `/lttstore/${store}/products`,
+      )
+      urls.push(
+        ...(await fetch(`/api/lttstore/${store}/allHandles`)
+          .then(r => r.json())
+          .then((r: string[]) =>
+            r
+              .map(h => `/lttstore/${store}/products/` + h)
+          ))
+      )
+    }
 
     urls.push(
       ...(await fetch("/api/news/allSlugs")
@@ -62,7 +69,6 @@ export const GET = (async ({platform, fetch, url}) => {
     urls.push(...[
       "/lttstore/advanced-search",
       "/floatplane",
-      "/lttstore/products",
       "/youtube-redirect",
       "/history/graph",
       "/history/graph/lateness",
