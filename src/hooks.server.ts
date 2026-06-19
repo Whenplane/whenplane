@@ -183,6 +183,13 @@ export const handle: Handle = async ({ event, resolve }) => {
         }
     }
 
+    if(event.url.pathname.startsWith("/lttstore/tempGlobal")) {
+        const newUrl = new URL(event.url);
+        newUrl.pathname = newUrl.pathname
+          .replace(new RegExp("^\/lttstore\/tempGlobal"), "/lttstore/global/products");
+        throw redirect(301, newUrl);
+    }
+
     const resolveStart = Date.now();
     const response = await resolve(
       event,
