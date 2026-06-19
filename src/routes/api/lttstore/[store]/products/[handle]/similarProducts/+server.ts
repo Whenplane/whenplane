@@ -1,7 +1,8 @@
 import { error, json } from "@sveltejs/kit";
 import { dev } from "$app/environment";
-import { createTables } from "../../../../../(info)/lttstore/createTables.ts";
+import { createTables } from "../../../../../../(info)/lttstore/createTables.ts";
 import type {RequestHandler} from "./$types";
+import { storeIdFromName } from "$lib/lttstore/lttstore_types.ts";
 
 
 export const GET = (async ({params, platform}) => {
@@ -10,8 +11,10 @@ export const GET = (async ({params, platform}) => {
 
   if(dev) await createTables(db);
 
-  const changeHistory = await db.prepare("select * from similar_products where handle = ?")
-    .bind(params.handle)
+  const store = storeIdFromName(params.store);
+
+  const changeHistory = await db.prepare("select * from similar_products where store = ? and handle = ?")
+    .bind(store, params.handle)
     .first<{similar: string}>()
     .then(r => r?.similar)
     .then(r => r ? JSON.parse(r) : r)
