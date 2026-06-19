@@ -345,7 +345,7 @@
 						<CaretDownFill/>
 					</span>
 				</button>
-				<div class="card w-58 overflow-hidden shadow-2xl! overflow-hidden z-20 bg-surface-700/75! absolute backdrop-blur-[5px] transition-opacity duration-250" data-popup="moreDropdown" style="opacity: 0; pointer-events: none; display: none;">
+				<div class="card w-58 shadow-2xl! overflow-hidden z-20 bg-surface-700/75! absolute backdrop-blur-[5px] transition-opacity duration-250" data-popup="moreDropdown" style="opacity: 0; pointer-events: none; display: none;">
 					{#if moreDropdownOpen}
 						<div transition:slide={{duration: 150}}>
 							<MoreLinks/>
