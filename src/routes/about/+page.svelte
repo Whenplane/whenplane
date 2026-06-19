@@ -38,6 +38,8 @@
         }
     })
 
+    let dateClicked = $state(false);
+
 
     const supportedLocales = browser ? getSupportedLocales() : [];
 
@@ -177,7 +179,11 @@
         <br>
         <label class="block py-1">
             <span>Date Format:</span>
-            <select class="input w-44 p-1 px-2 inline-block bg-surface-900" bind:value={dateFormat}>
+            <select
+              class="input w-44 p-1 px-2 inline-block bg-surface-900"
+              bind:value={dateFormat}
+              onfocus={() => {if(!dateClicked) dateClicked = true}}
+            >
                 <optgroup label="Common formats">
                     <option value="detect">auto</option>
                     <option value="en-US">US (mm/dd/yyyy)</option>
@@ -185,9 +191,13 @@
                     <option value="de">DE (dd.mm.yyyy)</option>
                 </optgroup>
                 <optgroup label="All locales">
-                    {#each supportedLocales as locale}
-                        <option value={locale}>{locale}</option>
-                    {/each}
+                    {#if dateClicked}
+                        {#each supportedLocales as locale (locale)}
+                            <option value={locale}>{locale}</option>
+                        {/each}
+                    {:else}
+                        <option disabled>Loading...</option>
+                    {/if}
                 </optgroup>
             </select>
             <ToolTip id="date-locale-info">
