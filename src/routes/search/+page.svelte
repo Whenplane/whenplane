@@ -158,7 +158,7 @@
     </a>
   </div>
   <form method="GET" class="inline-block pl-4 text-center" bind:this={searchForm}>
-    <input type="search" placeholder="Search" name="q" class="input search-box-top-bar p-2 pl-4" value={q}>
+    <input type="search" placeholder="Search" name="q" class="input inline-block search-box-top-bar p-2 pl-4" value={q}>
     <div class="inline-block pl-2">
       <label class="inline-block px-2">
         <input type="checkbox" class="checkbox" name="title" bind:checked={searchTitle} onchange={() => searchForm.submit()}>
@@ -178,7 +178,7 @@
       </label>
       <label class="inline-block px-2">
         <span>Sort</span>
-        <select class="input w-36" name="sort" bind:value={searchSort} onchange={() => searchForm.submit()}>
+        <select class="input w-64" name="sort" bind:value={searchSort} onchange={() => searchForm.submit()}>
           <option value="default" selected>Default (Show Date & Type & Relevance)</option>
           <option value="showDate">Show Date & Relevance (newest first)</option>
           <option value="showDateOldest">Show Date & Relevance (oldest first)</option>
@@ -347,7 +347,7 @@
       <enhanced:img src="./wan_show_search.png" class="search-logo mx-auto" alt="The WAN Show Search" title="The WAN Show Search" sizes="min(1330px, 38em)" />
       <br>
       <form method="GET">
-        <input type="search" placeholder="Search" name="q" class="input search-box p-2 pl-4" autofocus><br>
+        <input type="search" placeholder="Search" name="q" class="input inline-block search-box p-2 pl-4" autofocus><br>
         <div class="py-4">
           Search:
           <label class="inline-block px-2">
@@ -415,7 +415,7 @@
         width: min(550px, 90vw);
     }
     .search-box-top-bar {
-        width: calc(95vw - 800px - 13em);
+        width: calc(95vw - 800px - 15em);
     }
     @media (max-width: 1400px) {
         .search-box-top-bar {
