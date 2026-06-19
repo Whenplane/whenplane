@@ -1,4 +1,4 @@
-import { error, type Handle, type HandleFetch, type HandleServerError } from "@sveltejs/kit";
+import { error, type Handle, type HandleFetch, type HandleServerError, redirect } from "@sveltejs/kit";
 import { building, dev } from "$app/environment";
 import { random, sha1 } from "$lib/utils.ts";
 import type {
@@ -165,6 +165,13 @@ export const handle: Handle = async ({ event, resolve }) => {
         event.platform?.context?.waitUntil(report(event.platform.cf))
     } else if(!dev && !building) {
         console.warn("Missing platform or platform.cf!")
+    }
+
+    if(event.url.pathname.startsWith("/lttstore/products/")) {
+        const newUrl = new URL(event.url);
+        newUrl.pathname = newUrl.pathname
+          .replace(/^\/lttstore\/products\//, "/lttstore/us/products/");
+        throw redirect(301, newUrl);
     }
 
     const resolveStart = Date.now();
