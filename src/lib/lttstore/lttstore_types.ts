@@ -232,6 +232,7 @@ export type ParsedProductsTableRow = {
 }
 
 export type SimilarProductsTableRow = {
+  store: number,
   id: number,
   hash: string,
   handle: string,
