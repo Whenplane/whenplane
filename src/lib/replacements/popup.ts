@@ -112,14 +112,16 @@ export function popup(triggerNode: HTMLElement, args: PopupSettings) {
     if (!elemPopup) return;
     // Set transition duration
     const cssTransitionDuration = parseFloat(window.getComputedStyle(elemPopup).transitionDuration.replace('s', '')) * 1000;
+    // Set open state to off
+    popupState.open = false;
+    // Return the current state
+    if (args.state) args.state({ state: popupState.open });
+    // Update the DOM
+    elemPopup.style.opacity = '0';
+    elemPopup.style.pointerEvents = 'none';
+    // Update the DOM
     setTimeout(() => {
-      // Set open state to off
-      popupState.open = false;
-      // Return the current state
-      if (args.state) args.state({ state: popupState.open });
-      // Update the DOM
-      elemPopup.style.opacity = '0';
-      elemPopup.style.pointerEvents = 'none';
+
       elemPopup.style.display = 'none';
       // disable popup interactions
       elemPopup.setAttribute('inert', '');
