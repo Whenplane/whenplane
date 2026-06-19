@@ -59,7 +59,7 @@
 </script>
 <div class="table w-58">
   {#each links as link}
-    <a class="table-row unstyled hidden-link" href={link.href}>
+    <a class="table-row unstyled hidden-link hover:bg-white/5 focus:bg-white/5 transition-colors duration-100" href={link.href}>
       <div class="table-cell pl-4 pr-1.5 align-middle">
         <link.icon width="20" height="20"/>
       </div>
@@ -72,12 +72,6 @@
 
 <style>
     @reference "#app.css";
-
-    a:hover {
-        --tw-brightness: brightness(1.15);
-        filter: var(--tw-blur) var(--tw-brightness) var(--tw-contrast) var(--tw-grayscale) var(--tw-hue-rotate) var(--tw-invert) var(--tw-saturate) var(--tw-sepia) var(--tw-drop-shadow);
-    }
-
 
     .table-cell {
         @apply py-2;
