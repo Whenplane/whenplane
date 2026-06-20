@@ -1,34 +1,27 @@
 <script lang="ts">
-  import { run } from 'svelte/legacy';
 
   import { browser } from "$app/environment";
   import { getPushSubscription, lang } from "$lib/notifications/notificationUtils";
   import type { NotificationRows } from "../../routes/api/push/settings/+server.js";
-  import { Switch, Progress } from "@skeletonlabs/skeleton-svelte";
+  import Switch from "$lib/replacements/Switch.svelte"
   import { beforeNavigate } from "$app/navigation";
-  import {} from "@skeletonlabs/skeleton-svelte";
   import type { D1Result } from "@cloudflare/workers-types";
   import { sha256 } from "$lib/utils.ts";
+  import CircleProgress from "$lib/replacements/CircleProgress.svelte";
 
   // eslint-disable-next-line @typescript-eslint/no-empty-function
   let settingsFetch: Promise<NotificationRows> = browser ? fetchSettings() : new Promise(() => {});
   let savingSettings: Promise<D1Result | undefined> = $state(Promise.resolve(undefined));
 
-  let knownSettings: NotificationRows = $state();
-  let stagedSettings: NotificationRows = $state();
-
-  run(() => {
-    console.log(JSON.stringify(knownSettings));
-    console.log(JSON.stringify(stagedSettings));
-    console.log(JSON.stringify(stagedSettings) === JSON.stringify(knownSettings))
-  });
+  let knownSettings: NotificationRows | undefined = $state();
+  let stagedSettings: NotificationRows | undefined = $state();
 
   const disabled = [
     "other_streams_imminent",
     "dan_stream",
   ]
 
-  let hash: string = $state();
+  let hash: string | undefined = $state();
   async function fetchSettings() {
     const sub = await getPushSubscription();
     if(!sub) {
@@ -149,7 +142,7 @@
 
   {#await savingSettings}
     <span class="relative inline-block h-0">
-      <Progress width="w-10 inline-block absolute top-3 left-2" fill="fill-on-primary-token"/>
+      <CircleProgress width="w-10 inline-block absolute top-3 left-2" fill="fill-on-primary-token"/>
     </span>
   {/await}
 {/await}
