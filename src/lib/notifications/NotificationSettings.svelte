@@ -87,29 +87,31 @@
 <!--  <pre>{JSON.stringify(stagedSettings, null, '\t')}</pre>-->
 
   <div class="card p-3">
-    {#each Object.keys(stagedSettings).filter(n => n !== "endpoint_hash" && !disabled.includes(n)) as settingName, i}
-      {@const display = lang[settingName]}
-      {#if display}
-        {#if i !== 0}
-          <br>
-        {/if}
-        <Switch
-          name={settingName}
-          active="bg-primary-500"
-          size="sm"
-          checked={stagedSettings[settingName] === 1}
-          on:change={e => {
-            stagedSettings[settingName] = e.target?.checked ? 1 : 0;
+    {#if stagedSettings}
+      {#each Object.keys(stagedSettings).filter(n => n !== "endpoint_hash" && !disabled.includes(n)) as settingName, i}
+        {@const display = lang[settingName]}
+        {#if display}
+          {#if i !== 0}
+            <br>
+          {/if}
+          <Switch
+            name={settingName}
+            active="bg-primary-500"
+            size="sm"
+            checked={stagedSettings[settingName] === 1}
+            onCheckedChange={checked => {
+            stagedSettings[settingName] = checked ? 1 : 0;
             stagedSettings = stagedSettings;
           }}
-        >
-          <b>{display.name}</b><br>
-          {display.description}
-        </Switch>
+          >
+            <b>{display.name}</b><br>
+            {display.description}
+          </Switch>
 
-        <br>
-      {/if}
-    {/each}
+          <br>
+        {/if}
+      {/each}
+    {/if}
 
     {#if disabled}
       <br>

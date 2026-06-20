@@ -5,16 +5,21 @@
   let {
     checked = $bindable(),
     children,
-    disabled = false
+    disabled = false,
+    onCheckedChange
   }: {
     checked: boolean;
     children: Snippet;
-    disabled: boolean
+    disabled: boolean;
+    onCheckedChange: (checked: boolean) => void | undefined;
   } = $props();
 
 </script>
 
-<Switch {checked} onCheckedChange={(details) => (checked = details.checked)} {disabled}>
+<Switch {checked} onCheckedChange={(details) => {
+  checked = details.checked;
+  if(onCheckedChange) onCheckedChange(details.checked);
+}} {disabled}>
   <Switch.Control>
     <Switch.Thumb />
   </Switch.Control>
