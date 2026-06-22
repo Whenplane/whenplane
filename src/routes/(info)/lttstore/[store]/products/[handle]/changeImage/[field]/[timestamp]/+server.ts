@@ -12,7 +12,7 @@ export const GET = (async ({params, platform}) => {
 
   if(!platform?.caches) throw error(503, "Cache not available");
 
-  const cacheKey = `${productId}/${field}/${timestamp}`;
+  const cacheKey = `${params.store}/${productId}/${field}/${timestamp}`;
   const cacheUrl = "http://changeImageCache/" + cacheKey;
 
   const cfCache = await platform.caches.open("whenplane:changeImages");
@@ -55,7 +55,7 @@ export const GET = (async ({params, platform}) => {
     const id = object.idFromName("yuh");
     const stub = object.get(id, {locationHint: "wnam"});
 
-    return await stub.fetch(`http://screenshot/?productId=${productId}&timestamp=${timestamp}&field=${field}`);
+    return await stub.fetch(`http://screenshot/?store=${params.store}&productId=${productId}&timestamp=${timestamp}&field=${field}`);
   })
 
   if(!response.ok) {
@@ -76,7 +76,7 @@ export const GET = (async ({params, platform}) => {
       expires,
       generated: Date.now()
     },
-    expiration: Math.ceil(expires / 1e3) // cache for 2 weeks
+    expiration: Math.ceil(expires / 1e3)
   }))
 
   platform.context?.waitUntil(cfCache.put(cacheUrl, respond(image, type, {"x-response-generated": Date.now()+""})))
