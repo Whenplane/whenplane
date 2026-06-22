@@ -24,21 +24,21 @@
 
 	let goneInHours = $derived((stock?.total ?? -1) / (purchasesPerHour ?? -1));
 
-	let handle = $derived(productRedirects[product.handle] ?? product.handle);
-	let imageReload = $state(0)
-	let imageSrc = $derived(
-			(dev ? 'https://whenplane.com' : '') +
-			'/cdn-cgi/image/anim=false,fit=scale-down,width=528,metadata=copyright,q=60,sqc=30,format=auto/' +
-			`https://img-proxy.whenplane.com/img/${page.params.store}/${product.handle}-${await sha256(product.featured_image).then(r => r.substring(0, 5))}`
-		);
-
-	let title = $derived(shortTitle ?? product.title);
-
 	let storeUrl = $derived(
 		typeof store === "undefined" || page.data.store.id === store
 			? page.params.store
 			: getStoreMetadata(store).storeName.toLowerCase()
 	)
+
+	let handle = $derived(productRedirects[product.handle] ?? product.handle);
+	let imageReload = $state(0)
+	let imageSrc = $derived(
+			(dev ? 'https://whenplane.com' : '') +
+			'/cdn-cgi/image/anim=false,fit=scale-down,width=528,metadata=copyright,q=60,sqc=30,format=auto/' +
+			`https://img-proxy.whenplane.com/img/${storeUrl}/${product.handle}-${await sha256(product.featured_image).then(r => r.substring(0, 5))}`
+		);
+
+	let title = $derived(shortTitle ?? product.title);
 </script>
 
 <a
