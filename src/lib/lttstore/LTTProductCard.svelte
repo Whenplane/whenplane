@@ -28,7 +28,7 @@
 	let imageReload = $state(0)
 	let imageSrc = $derived(
 			(dev ? 'https://whenplane.com' : '') +
-			'/cdn-cgi/image/anim=false,fit=scale-down,width=528,metadata=copyright,q=60,sqc=50,format=auto/' +
+			'/cdn-cgi/image/anim=false,fit=scale-down,width=528,metadata=copyright,q=60,sqc=30,format=auto/' +
 			`https://img-proxy.whenplane.com/img/${product.handle}-${await sha256(product.featured_image).then(r => r.substring(0, 5))}`
 		);
 

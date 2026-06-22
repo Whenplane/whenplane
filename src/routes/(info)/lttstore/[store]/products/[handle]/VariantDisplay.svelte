@@ -56,7 +56,7 @@
           {#if !noImages.includes(option.name) || value.includes("oz") || value.includes("mm") || value.includes("-pack")}
             {#if image}
               {@const preview = (dev ? 'https://whenplane.com' : '') +
-                `/cdn-cgi/image/fit=scale-down,height=384,metadata=copyright,q=80,sqc=65,format=auto,${image.src.includes("jpg") && !lowerProductTitle.includes("desk") ? "segment=foreground," : ""}onerror=redirect/` +
+                `/cdn-cgi/image/fit=scale-down,height=384,metadata=copyright,q=80,sqc=50,format=auto,${image.src.includes("jpg") && !lowerProductTitle.includes("desk") ? "segment=foreground," : ""}onerror=redirect/` +
                 `https://img-proxy.whenplane.com/d-img/${product.handle}-${image.id}-${await sha256(image.src).then(r => r.substring(0, 5))}`}
               {#key image.src}
                 <a href={image.src} class="no-underline! text-center h-full flex justify-center items-center">
