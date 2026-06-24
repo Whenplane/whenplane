@@ -9,6 +9,27 @@ export const GET = (async ({platform}) => {
     throw error(403);
   }
 
+  const changeHistory = (async () => {
+    const textEncoder = new TextEncoder();
+    let offset = 0;
+    const perPage = 100;
+    let lastRows = 0;
+    let changeHistoryRows = [];
+    do {
+      const newRows = await db.prepare("select * from change_history where id = 6649895092327 or timestamp > ? limit ? offset ?")
+        .bind(
+          Date.now() - (90 * 24 * 60 * 60e3), // only get non-screwdriver from the past 90 days
+          perPage,
+          offset
+        )
+        .all()
+        .then(r => r.results);
+      changeHistoryRows.push(...newRows);
+      lastRows = newRows.length
+    } while(lastRows >= perPage && textEncoder.encode(JSON.stringify(changeHistoryRows)).length < 50_000_000);
+    return changeHistoryRows;
+  })();
+
   const products = db.prepare("select * from products")
     .all()
     .then(r => r.results)
@@ -30,15 +51,6 @@ export const GET = (async ({platform}) => {
     .all()
     .then(r => r.results)
     .finally(() => console.log("screwdriverStocks query finished"))
-
-  // const waterBottleChanges = db.prepare("select * from change_history where id = 7117650296935")
-  const changeHistory = db.prepare("select * from change_history where id = 6649895092327 or timestamp > ? limit 1000")
-    .bind(Date.now() - (14 * 24 * 60 * 60e3)) // only get non-screwdriver from the past 14 days
-    .all()
-    .then(r => {
-      console.log("changeHistory query finished with", r.results.length, "results")
-      return r.results
-    })
 
   const similarProducts = db.prepare("select * from similar_products")
     .all()
