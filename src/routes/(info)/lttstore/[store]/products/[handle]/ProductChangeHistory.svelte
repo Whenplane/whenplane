@@ -52,10 +52,10 @@
     if(loadInterval) return;
     if(changeHistory !== null) {
       console.debug("Starting loading of diffs");
-      loadTo++;
+      loadTo += 2;
       loadInterval = setInterval(() => {
         if(loadTo < changeHistory.length - 1) {
-          loadTo++;
+          loadTo += 5;
         } else {
           clearInterval(loadInterval);
           loadInterval = undefined;
@@ -63,8 +63,6 @@
       }, 75);
     }
   }
-
-  let table: HTMLTableElement | undefined = $state();
 
   onMount(() => {
     // for some reason page.url doesnt have the hash on initial load
@@ -89,7 +87,7 @@
 
 <LazyLoad on:visible={startLoading}/>
 <div class="table-container rounded-md">
-  <table class="table rounded-md w-full table-fixed" bind:this={table}>
+  <table class="table rounded-md w-full table-fixed">
     <thead>
     <tr>
       <th>What changed</th>

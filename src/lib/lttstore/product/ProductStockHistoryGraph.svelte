@@ -1,6 +1,7 @@
 <script module lang="ts">
 	import uPlot from "uplot";
-	import { getTimePreference } from '$lib/prefUtils.ts';
+	import { getTimePreference } from "$lib/prefUtils.ts";
+
 	const isNum = Number.isFinite;
 	export const stockGaps: uPlot.Series.GapsRefiner = (u: uPlot, sidx: number, idx0: number, idx1: number, nullGaps: uPlot.Series.Gaps) => {
 		let xData = u.data[0];
@@ -95,7 +96,7 @@
 
 	let data = $derived.by(() => {
 		const filteredKeys = filter ? Object.keys(someStock).filter(k => k.includes(filter!)) : Object.keys(someStock);
-		const d = [
+		return [
 			[
 				...(historyDays === "all" ? [] : [Math.round((Date.now() - (historyDays * 24 * 60 * 60e3)) / 1e3)]),
 				...stockHistory.map((h: StockHistoryTableRow) => Math.round(h.timestamp / 1e3)),
@@ -111,8 +112,6 @@
 					null
 				])
 		];
-		console.debug({d})
-		return d;
 	});
 
 	let width = $derived(wrapperDiv?.clientWidth ?? 1490);

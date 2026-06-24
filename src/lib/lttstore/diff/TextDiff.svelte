@@ -1,13 +1,48 @@
+<script lang="ts" module>
+  import { browser } from "$app/environment";
+  import { wait } from "$lib/utils.ts";
+  import DiffWorker from "./diffWorker.ts?worker"
+
+  let diffWorker: Worker;
+  let resolveFunctions: {[key: string]: (data: string) => void} = {};
+  if(browser) {
+    diffWorker = new DiffWorker();
+    diffWorker.onmessage = (m: MessageEvent<{id: string, html: string}>) => {
+      resolveFunctions[m.data.id]?.(m.data.html);
+      delete resolveFunctions[m.data.id];
+    }
+  }
+
+  async function diff(diffType: DiffType, parsedBefore: string, parsedAfter: string, displaying: 'before' | 'after') {
+    let id: string;
+    do {
+      id = Date.now().toString(36) + "-" + crypto.randomUUID();
+    } while(resolveFunctions[id] !== undefined);
+
+    // If diffWorker isn't set up yet, wait for it
+    while(typeof diffWorker?.onmessage === "undefined") {
+      await wait(Math.floor(50 + (50 * Math.random())));
+    }
+
+    diffWorker.postMessage({ id, diffType, parsedBefore, parsedAfter, displaying });
+    return new Promise<string>((resolve) => {
+      resolveFunctions[id] = (result: string) => {
+        console.log("Got diff result:", result);
+        resolve(result)
+      };
+    })
+  }
+
+  export type DiffType = 'chars' | 'words' | 'lines';
+</script>
 <script lang="ts">
-  import * as Diff from 'diff';
-	import { escapeHtml } from '$lib/utils.ts';
 	import { typed } from '$lib';
 
 	let {
 		before = typed<string>(),
 		after = typed<string>(),
 		displaying = typed<'before' | 'after'>(),
-		diffType = $bindable<'chars' | 'words' | 'lines'>('chars'),
+		diffType = $bindable<DiffType>('chars'),
     card = typed<boolean>(true)
 	} = $props();
 
@@ -34,68 +69,21 @@
     }
   });
 
-  let forcedDiffType: 'chars' | 'words' | 'lines' | undefined = $derived.by(() => {
+  let forcedDiffType: DiffType | undefined = $derived.by(() => {
     if(typeof parsedBefore === "boolean" && typeof parsedAfter === "boolean") return "words";
     return undefined;
   });
 
-  let html: string = $derived.by(() => {
-    let html = '';
-    let diff;
-    switch (forcedDiffType ?? diffType) {
-      case 'lines':
-        diff = Diff.diffLines(parsedBefore + '', parsedAfter + '');
-        break;
-      case 'words':
-        diff = Diff.diffWords(parsedBefore + '', parsedAfter + '', { ignoreWhitespace: true });
-        break;
-      case 'chars':
-      default:
-        diff = Diff.diffChars(parsedBefore + '', parsedAfter + '');
-    }
-    diff.forEach((part) => {
-      const color = part.added ? 'green' : part.removed ? 'red' : false;
-
-      const text = escapeHtml(part.value);
-
-      if (!color) {
-        html += text;
-      } else {
-        if (
-          (color === 'green' && displaying === 'after') ||
-          (color === 'red' && displaying === 'before')
-        ) {
-          html += "<span style='color:" + color + "'>" + text + '</span>';
-        } else {
-          html += "<span style='background-color:" + color + "' class='opacity-40 pl-1'></span>";
-        }
-      }
-    });
-
-    if (diff.length === 0) {
-      // if diff checking fails, just display the text
-      console.debug('Diff did not return anything! Falling back to displaying text');
-      html = escapeHtml(
-        '' +
-        (displaying === 'after'
-          ? typeof parsedAfter === 'string'
-            ? parsedAfter
-            : JSON.stringify(parsedAfter)
-          : typeof parsedBefore === 'string'
-            ? parsedBefore
-            : JSON.stringify(parsedBefore))
-      );
-    }
-
-    html = html
-      .replaceAll('&lt;br&gt;', "&lt;br&gt;\n")
-      .replaceAll("\n", '<br>')
-    ;
-    return html;
-  })
+  let html: Promise<string> = $derived(
+    diff(forcedDiffType ?? diffType as DiffType, parsedBefore, parsedAfter, displaying)
+  )
 
 </script>
 
 <div class={card ? "card p-2 overflow-x-auto max-w-full" : ""}>
-  {@html html}
+  {#await html}
+    <span class="placeholder animate-pulse w-32 inline-block"></span>
+  {:then h}
+    {@html h}
+  {/await}
 </div>
