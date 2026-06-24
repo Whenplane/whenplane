@@ -361,3 +361,12 @@ export type StockTotalsRow = {
   store: number,
   total: number
 }
+
+export type ChangeHistoryTableRow = {
+  store: number,
+  id: number,
+  timestamp: number,
+  field: string,
+  old: string,
+  new: string
+}

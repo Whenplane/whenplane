@@ -25,7 +25,7 @@
 	let goneInHours = $derived((stock?.total ?? -1) / (purchasesPerHour ?? -1));
 
 	let storeUrl = $derived(
-		typeof store === "undefined" || page.data.store.id === store
+		typeof store === "undefined" || page.data?.store?.id === store
 			? page.params.store
 			: getStoreMetadata(store).storeName.toLowerCase()
 	)
@@ -46,7 +46,7 @@
 	href="/lttstore/{storeUrl}/products/{handle}"
 	class:opacity-50={!available}
 >
-	{#if typeof store !== "undefined" && page.data.store.id !== store}
+	{#if typeof store !== "undefined" && page.data?.store?.id !== store}
 		<div class="absolute top-2 right-2 opacity-50 hover:opacity-100">
 			{#if store === Store.US}
 				{@const title = "On the US store"}
@@ -84,8 +84,8 @@
 		{title}
 	</div>
 	{#if product.price}
-		{@const convert = typeof store === "undefined" || page.data.store.id === store}
-		{@const currency = typeof store !== "undefined" && page.data.store.id !== store && (store === Store.US ? "USD" : "CAD")}
+		{@const convert = typeof store === "undefined" || page.data?.store?.id === store}
+		{@const currency = typeof store !== "undefined" && page.data?.store?.id !== store && (store === Store.US ? "USD" : "CAD")}
 		<br />
 		{#if !product.compare_at_price || product.price === product.compare_at_price}
 			<Price price={product.price / 100} {convert} {currency}/>

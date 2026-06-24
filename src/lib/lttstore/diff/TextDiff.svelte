@@ -27,7 +27,6 @@
     diffWorker.postMessage({ id, diffType, parsedBefore, parsedAfter, displaying });
     return new Promise<string>((resolve) => {
       resolveFunctions[id] = (result: string) => {
-        console.log("Got diff result:", result);
         resolve(result)
       };
     })

@@ -9,13 +9,14 @@ import {
 } from "$lib/lttstore/lttstore_types.ts";
 
 import { createTables } from "../../../createTables.ts";
-import { retryD1 } from "$lib/utils.ts";
+import { retry, retryD1 } from "$lib/utils.ts";
 import { productRedirects } from "$lib/lttstore/product_redirects.ts";
+import { page } from "$app/state";
 
 const DAY = 24 * 60 * 60e3;
 
 
-export const load = (async ({platform, params, url}) => {
+export const load = (async ({platform, params, url, fetch}) => {
   const db = platform?.env?.LTTSTORE_DB.withSession();
   if(!db) throw error(503, "DB unavailable!");
 
@@ -105,11 +106,9 @@ export const load = (async ({platform, params, url}) => {
     );
   }
 
-  const changeHistory = retryD1(() =>
-    db.prepare("select * from change_history where id = ? and store = ? order by timestamp desc")
-      .bind(product.id, store)
-      .all<{id: number, timestamp: number, field: string, old: string, new: string}>()
-      .then(r => r.results)
+  const initialChangeHistory = retry(() =>
+    fetch(`/api/lttstore/${params.store}/products/${product.handle}/changeHistory?offset=0&perPage=10`)
+      .then(r => r.json())
   );
 
   const similarProducts = retryD1(() =>
@@ -124,7 +123,7 @@ export const load = (async ({platform, params, url}) => {
     historyDays,
     defaultHistoryDays,
     stockHistory: await stockHistory,
-    changeHistory,
+    initialChangeHistory,
     similarProducts,
     stockAsOf
   }
