@@ -1,9 +1,8 @@
 <script lang="ts">
   import { getDiffComponent } from "$lib/lttstore/field_components.js";
   import { getFieldName } from "$lib/lttstore/field_names.js";
-  import { typed } from "$lib";
   import DateStamp from "$lib/DateStamp.svelte";
-  import type { ProductsTableRow } from "$lib/lttstore/lttstore_types.js";
+  import { type ProductsTableRow, Store } from "$lib/lttstore/lttstore_types.js";
   import { onDestroy, onMount } from "svelte";
   import { dev } from "$app/environment";
   import LazyLoad from "@dimfeld/svelte-lazyload";
@@ -11,18 +10,22 @@
   import { page } from "$app/state";
 
   let {
-    changeHistory = typed<{
+    changeHistory,
+    product,
+  }: {
+    changeHistory: {
       id: number
       timestamp: number
       field: string
       old: string
       new: string
-    }[]>(),
-    product = typed<ProductsTableRow>(),
+    }[],
+    product: ProductsTableRow
   } = $props();
 
   let loadTo = $state(0);
 
+  // svelte-ignore state_referenced_locally
   if(dev && changeHistory !== null) {
     $effect.pre(() => {
       let occurrences: {[key: string]: number} = {};
@@ -65,12 +68,11 @@
   }
 
   onMount(() => {
-    // for some reason page.url doesnt have the hash on initial load
+    // for some reason page.url doesn't have the hash on initial load
     if(location.href.includes("#change-") && changeHistory !== null) {
       startLoading();
       const hash = new URL(location.href).hash;
       const match = document.getElementById(hash.substring(1));
-      console.log({match, hash});
       match?.scrollIntoView?.({behavior: "smooth", block: "center"});
       setTimeout(() => {
         match?.scrollIntoView?.({block: "center"});
@@ -129,10 +131,17 @@
         {/each}
       {/if}
     </tbody>
-    {#if product.firstSeen < 1727147700624}
+    {#if page.data.store.id === Store.US && product.firstSeen < 1727147700624}
       <tfoot>
       <tr class="text-center">
         <td class="p-2! opacity-70" colspan="4">Changes before <DateStamp epochSeconds={1727147700}/> are not available</td>
+      </tr>
+      </tfoot>
+    {/if}
+    {#if page.data.store.id === Store.GLOBAL && product.firstSeen < 1781787820145}
+      <tfoot>
+      <tr class="text-center">
+        <td class="p-2! opacity-70" colspan="4">Changes before <DateStamp epochSeconds={1781787820}/> are not available</td>
       </tr>
       </tfoot>
     {/if}
