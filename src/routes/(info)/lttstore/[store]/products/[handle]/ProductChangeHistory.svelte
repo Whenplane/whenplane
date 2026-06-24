@@ -89,7 +89,7 @@
     }
   }
 
-  let mounted = false;
+  let mounted = $state(false);
 
   onMount(() => {
     mounted = true;
@@ -113,7 +113,9 @@
 
 </script>
 
-<LazyLoad on:visible={startLoading}/>
+{#if mounted}
+  <LazyLoad on:visible={startLoading}/>
+{/if}
 <div class="table-container rounded-md">
   <table class="table rounded-md w-full table-fixed">
     <thead>
