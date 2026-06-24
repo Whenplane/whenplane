@@ -117,6 +117,8 @@ export const load = (async ({platform, params, url, fetch}) => {
       );
       perPage--;
     } while(textEncoder.encode(JSON.stringify(response)).length > 1_000_000);
+    // dynamic number of changeHistory entries in initial reply, to make sure we stay below 2mb google page limit
+    // (streamed data counts towards the size limit)
     return response;
   })();
 
