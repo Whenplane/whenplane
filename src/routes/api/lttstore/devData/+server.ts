@@ -32,7 +32,7 @@ export const GET = (async ({platform}) => {
     .finally(() => console.log("screwdriverStocks query finished"))
 
   // const waterBottleChanges = db.prepare("select * from change_history where id = 7117650296935")
-  const changeHistory = db.prepare("select * from change_history where id = 6649895092327 or timestamp > ? limit 1300")
+  const changeHistory = db.prepare("select * from change_history where id = 6649895092327 or timestamp > ? limit 1000")
     .bind(Date.now() - (14 * 24 * 60 * 60e3)) // only get non-screwdriver from the past 14 days
     .all()
     .then(r => {
