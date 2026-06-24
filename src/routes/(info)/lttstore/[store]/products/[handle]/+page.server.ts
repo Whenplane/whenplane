@@ -106,10 +106,19 @@ export const load = (async ({platform, params, url, fetch}) => {
     );
   }
 
-  const initialChangeHistory = retry(() =>
-    fetch(`/api/lttstore/${params.store}/products/${product.handle}/changeHistory?offset=0&perPage=10`)
-      .then(r => r.json())
-  );
+  const initialChangeHistory = (async () => {
+    const textEncoder = new TextEncoder();
+    let perPage = 15;
+    let response;
+    do {
+      response = await retry(() =>
+        fetch(`/api/lttstore/${params.store}/products/${product.handle}/changeHistory?offset=0&perPage=${perPage}`)
+          .then(r => r.json())
+      );
+      perPage--;
+    } while(textEncoder.encode(JSON.stringify(response)).length > 1_000_000);
+    return response;
+  })();
 
   const similarProducts = retryD1(() =>
     db.prepare("select * from similar_products where id = ? and store = ?")
