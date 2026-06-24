@@ -11,7 +11,7 @@ export function calcDiff(diffType: DiffType, parsedBefore: string, parsedAfter: 
   if(format === "html") {
     const config: UserConfig = {
       tag_wrap: 70,
-      content_wrap: 70
+      content_wrap: 60
     }
     parsedBefore = prettify(parsedBefore, config);
     parsedAfter = prettify(parsedAfter, config);
