@@ -46,7 +46,7 @@ export const GET = (async ({fetch, params, platform, url}) => {
       perPage,
       hasNextPage,
       nextOffset,
-      hint: url.searchParams.has("offset") || !hasNextPage
+      hint: url.searchParams.has("offset") || url.searchParams.has("perPage") || !hasNextPage
         ? undefined
         : `Add ?offset=${nextOffset} to the url to get the next page. ` +
         `Then keep using nextOffset to get the next page until hasNextPage is false ` +
