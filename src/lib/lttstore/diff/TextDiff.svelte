@@ -37,6 +37,8 @@
 </script>
 <script lang="ts">
 	import { typed } from '$lib';
+  import { page } from "$app/state";
+  import { calcDiff } from "$lib/lttstore/diff/diffWork.ts";
 
 	let {
 		before = typed<string>(),
@@ -81,9 +83,13 @@
 </script>
 
 <div class={card ? "card p-2 overflow-x-auto max-w-full" : ""}>
-  {#await html}
-    <span class="placeholder animate-pulse w-32 inline-block"></span>
-  {:then h}
-    {@html h}
-  {/await}
+  {#if page.url.pathname.includes("changeImage")}
+    {@html calcDiff(forcedDiffType ?? diffType as DiffType, parsedBefore, parsedAfter, displaying)}
+  {:else}
+    {#await html}
+      <span class="placeholder animate-pulse w-32 inline-block"></span>
+    {:then h}
+      {@html h}
+    {/await}
+  {/if}
 </div>
