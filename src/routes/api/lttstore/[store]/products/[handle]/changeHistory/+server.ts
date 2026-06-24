@@ -4,7 +4,6 @@ import { createTables } from "../../../../../../(info)/lttstore/createTables.ts"
 import type {RequestHandler} from "./$types";
 import { storeIdFromName } from "$lib/lttstore/lttstore_types.ts";
 
-const PAGE_SIZE = 100;
 
 export const GET = (async ({fetch, params, platform, url}) => {
   const db = platform?.env?.LTTSTORE_DB.withSession();
@@ -19,6 +18,9 @@ export const GET = (async ({fetch, params, platform, url}) => {
 
   const store = storeIdFromName(params.store);
 
+  const perPage = Number(url.searchParams.get("perPage") ?? 100);
+  if(isNaN(perPage) || perPage > 100) throw error(400, "Invalid perPage! Must be a number <= 100");
+
   const offset = Number(url.searchParams.get("offset") ?? 0);
   if(isNaN(offset)) throw error(400, "Invalid offset! Must be a number");
 
@@ -27,21 +29,21 @@ export const GET = (async ({fetch, params, platform, url}) => {
     .bind(
       store,
       brief.id,
-      PAGE_SIZE + 1, // pre-fetch 1 extra to see if there is more than the current page
+      perPage + 1, // pre-fetch 1 extra to see if there is more than the current page
       offset
     )
     .all<{id: number, timestamp: number, field: string, old: string, new: string}>()
     .then(r => r.results)
 
-  const hasNextPage = results.length > PAGE_SIZE;
-  const changeHistory = hasNextPage ? results.slice(0, PAGE_SIZE) : results;
+  const hasNextPage = results.length > perPage;
+  const changeHistory = hasNextPage ? results.slice(0, perPage) : results;
 
-  const nextOffset = hasNextPage ? offset + PAGE_SIZE : undefined;
+  const nextOffset = hasNextPage ? offset + perPage : undefined;
 
   return json({
     changeHistory,
     page: {
-      perPage: PAGE_SIZE,
+      perPage,
       hasNextPage,
       nextOffset,
       hint: url.searchParams.has("offset") || !hasNextPage
