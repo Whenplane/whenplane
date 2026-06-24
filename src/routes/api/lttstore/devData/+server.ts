@@ -26,7 +26,7 @@ export const GET = (async ({platform}) => {
         .then(r => r.results);
       changeHistoryRows.push(...newRows);
       lastRows = newRows.length
-    } while(lastRows >= perPage && textEncoder.encode(JSON.stringify(changeHistoryRows)).length < 50_000_000);
+    } while(lastRows >= perPage && textEncoder.encode(JSON.stringify(changeHistoryRows)).length < 10_000_000);
     return changeHistoryRows;
   })();
 
