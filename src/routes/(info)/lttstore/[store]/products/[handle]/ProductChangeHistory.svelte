@@ -126,8 +126,7 @@
     </thead>
     <tbody>
     {#each changeHistory as change, i (change.timestamp + change.field)}
-      {@const BeforeComponent = getDiffComponent(change.field)}
-      {@const AfterComponent = getDiffComponent(change.field)}
+      {@const DiffComponent = getDiffComponent(change.field)}
       <tr class="align-top" id="change-{change.field}-{change.timestamp}" class:hashHighlight={page.url.hash === `#change-${change.field}-${change.timestamp}`}>
         <td>{getFieldName(change.field)}</td>
         <td>
@@ -136,8 +135,8 @@
           </a>
         </td>
         {#if i <= loadTo}
-          <td><BeforeComponent before={change.old} after={change.new} displaying="before"/></td>
-          <td><AfterComponent before={change.old} after={change.new} displaying="after"/></td>
+          <td><DiffComponent before={change.old} after={change.new} displaying="before"/></td>
+          <td><DiffComponent before={change.old} after={change.new} displaying="after"/></td>
         {:else}
           <td><div class="placeholder animate-pulse"></div></td>
           <td><div class="placeholder animate-pulse"></div></td>

@@ -11,7 +11,6 @@ import {
 import { createTables } from "../../../createTables.ts";
 import { retry, retryD1 } from "$lib/utils.ts";
 import { productRedirects } from "$lib/lttstore/product_redirects.ts";
-import { page } from "$app/state";
 
 const DAY = 24 * 60 * 60e3;
 
