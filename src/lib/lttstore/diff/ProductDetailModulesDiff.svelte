@@ -1,7 +1,7 @@
 <script lang="ts">
 	import type { ProductDetailModule } from '$lib/lttstore/lttstore_types.ts';
-	import TextDiff from '$lib/lttstore/diff/TextDiff.svelte';
 	import { typed } from '$lib';
+	import HTMLDiff from "$lib/lttstore/diff/HTMLDiff.svelte";
 
 	let {
 		before = typed<string>(),
@@ -55,11 +55,10 @@
 
 {#each filledParsedBefore.filter((m) => changedModules.includes(m.title)) as module}
 	<b>{module.title}</b><br />
-	<TextDiff
+	<HTMLDiff
 		before={JSON.stringify(module.content)}
 		after={JSON.stringify(parsedAfter.find((m) => m.title === module.title)?.content ?? '')}
 		{displaying}
-		diffType="words"
 	/>
 	<br />
 {/each}

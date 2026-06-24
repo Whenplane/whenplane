@@ -6,6 +6,7 @@ import OptionsDiff from "$lib/lttstore/diff/OptionsDiff.svelte";
 import DateDiff from "$lib/lttstore/diff/DateDiff.svelte";
 import TextDiff from "$lib/lttstore/diff/TextDiff.svelte";
 import CollectionProductsDiff from "$lib/lttstore/diff/CollectionProductsDiff.svelte";
+import HTMLDiff from "$lib/lttstore/diff/HTMLDiff.svelte";
 
 export function getDiffComponent(field: string) {
   if (field.startsWith("collection-")) {
@@ -26,7 +27,7 @@ export function getDiffComponent(field: string) {
     return ProductDetailModulesDiff;
   }
   if (field === "product.description" || field === "productDiscount") {
-   return TextWordsDiff;
+   return HTMLDiff;
   }
   if (field === "product.options") {
     return OptionsDiff;

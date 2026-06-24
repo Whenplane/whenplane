@@ -13,7 +13,7 @@
     }
   }
 
-  async function diff(diffType: DiffType, parsedBefore: string, parsedAfter: string, displaying: 'before' | 'after') {
+  async function diff(diffType: DiffType, parsedBefore: string, parsedAfter: string, displaying: 'before' | 'after', format: string | undefined) {
     let id: string;
     do {
       id = Date.now().toString(36) + "-" + crypto.randomUUID();
@@ -24,7 +24,7 @@
       await wait(Math.floor(50 + (50 * Math.random())));
     }
 
-    diffWorker.postMessage({ id, diffType, parsedBefore, parsedAfter, displaying });
+    diffWorker.postMessage({ id, diffType, parsedBefore, parsedAfter, displaying, format });
     return new Promise<string>((resolve) => {
       resolveFunctions[id] = (result: string) => {
         resolve(result)
@@ -44,7 +44,8 @@
 		after = typed<string>(),
 		displaying = typed<'before' | 'after'>(),
 		diffType = $bindable<DiffType>('chars'),
-    card = typed<boolean>(true)
+    card = typed<boolean>(true),
+    format = typed<string | undefined>(),
 	} = $props();
 
 	let parsedBefore = $derived.by(() => {
@@ -70,20 +71,28 @@
     }
   });
 
+  let chosenFormat = $derived.by(() => {
+    if(format) return format;
+
+  })
+
   let forcedDiffType: DiffType | undefined = $derived.by(() => {
     if(typeof parsedBefore === "boolean" && typeof parsedAfter === "boolean") return "words";
     return undefined;
   });
 
   let html: Promise<string> = $derived(
-    diff(forcedDiffType ?? diffType as DiffType, parsedBefore, parsedAfter, displaying)
+    diff(forcedDiffType ?? diffType as DiffType, parsedBefore, parsedAfter, displaying, chosenFormat)
   )
 
 </script>
 
-<div class={card ? "card p-2 overflow-x-auto max-w-full" : ""}>
+<div class={[
+  "whitespace-pre",
+  card && "card p-2 overflow-x-auto max-w-full"
+]}>
   {#if page.url.pathname.includes("changeImage")}
-    {@html calcDiff(forcedDiffType ?? diffType as DiffType, parsedBefore, parsedAfter, displaying)}
+    {@html calcDiff(forcedDiffType ?? diffType as DiffType, parsedBefore, parsedAfter, displaying, chosenFormat)}
   {:else}
     {#await html}
       <span class="placeholder animate-pulse w-32 inline-block"></span>

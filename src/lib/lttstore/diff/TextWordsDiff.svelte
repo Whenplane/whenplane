@@ -7,8 +7,9 @@
 		before = typed<string>(),
 		after = typed<string>(),
 		displaying = typed<'before' | 'after'>(),
-		diffType = typed<'chars' | 'words'>('words')
+		diffType = typed<'chars' | 'words'>('words'),
+    format = typed<string | undefined>()
 	} = $props();
 </script>
 
-<TextDiff {before} {after} {displaying} {diffType} />
+<TextDiff {before} {after} {displaying} {diffType} {format}/>

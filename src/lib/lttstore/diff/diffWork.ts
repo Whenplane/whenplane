@@ -1,21 +1,31 @@
 import type { DiffType } from "$lib/lttstore/diff/TextDiff.svelte";
 import { escapeHtml } from "$lib/utils.ts";
 import * as Diff from 'diff';
+import { prettify, type UserConfig } from "htmlfy";
 
-
-export function calcDiff(diffType: DiffType, parsedBefore: string, parsedAfter: string, displaying: 'before' | 'after') {
+export function calcDiff(diffType: DiffType, parsedBefore: string, parsedAfter: string, displaying: 'before' | 'after', format: string | undefined) {
   let html = '';
   let diff;
+  parsedBefore = parsedBefore + '';
+  parsedAfter = parsedAfter + '';
+  if(format === "html") {
+    const config: UserConfig = {
+      tag_wrap: 70,
+      content_wrap: 73
+    }
+    parsedBefore = prettify(parsedBefore, config);
+    parsedAfter = prettify(parsedAfter, config);
+  }
   switch (diffType) {
     case 'lines':
-      diff = Diff.diffLines(parsedBefore + '', parsedAfter + '');
+      diff = Diff.diffLines(parsedBefore, parsedAfter);
       break;
     case 'words':
-      diff = Diff.diffWords(parsedBefore + '', parsedAfter + '', { ignoreWhitespace: true });
+      diff = Diff.diffWords(parsedBefore, parsedAfter, { ignoreWhitespace: true });
       break;
     case 'chars':
     default:
-      diff = Diff.diffChars(parsedBefore + '', parsedAfter + '');
+      diff = Diff.diffChars(parsedBefore, parsedAfter);
   }
   diff.forEach((part) => {
     const color = part.added ? 'green' : part.removed ? 'red' : false;
@@ -51,9 +61,5 @@ export function calcDiff(diffType: DiffType, parsedBefore: string, parsedAfter: 
     );
   }
 
-  html = html
-    .replaceAll('&lt;br&gt;', "&lt;br&gt;\n")
-    .replaceAll("\n", '<br>')
-  ;
   return html;
 }

@@ -44,6 +44,9 @@ importers:
       hi-base32:
         specifier: ^0.5.1
         version: 0.5.1
+      htmlfy:
+        specifier: ^1.0.2
+        version: 1.0.2
       luxon:
         specifier: ^3.3.0
         version: 3.3.0
@@ -2085,6 +2088,9 @@ packages:
 
   hi-base32@0.5.1:
     resolution: {integrity: sha512-EmBBpvdYh/4XxsnUybsPag6VikPYnN30td+vQk+GI3qpahVEG9+gTkG0aXVxTjBqQ5T6ijbWIu77O+C5WFWsnA==}
+
+  htmlfy@1.0.2:
+    resolution: {integrity: sha512-k7+pU010ukWx20twulTLtjM1TVazuQipwWFEZdDJiNTYHg8Xy0eBthGaPjZA2lcvKgk0p05GkhAWqNuBWj1gng==}
 
   htmlparser2@8.0.2:
     resolution: {integrity: sha512-GYdjWKDkbRLkZ5geuHs5NY1puJ+PXwP7+fHPRz06Eirsb9ugf6d8kkXav6ADhcODhFFPMIXyxkxSuMf3D6NCFA==}
@@ -4911,6 +4917,8 @@ snapshots:
   graceful-fs@4.2.11: {}
 
   hi-base32@0.5.1: {}
+
+  htmlfy@1.0.2: {}
 
   htmlparser2@8.0.2:
     dependencies:
