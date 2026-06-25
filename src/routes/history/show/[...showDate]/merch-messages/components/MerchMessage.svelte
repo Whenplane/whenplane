@@ -1,7 +1,6 @@
 <script lang="ts">
-	import type { MMV2CondensedTableRow, MMV2TableRow } from "$lib/merch-messages/mm-types.ts";
+	import type { MMV2CondensedTableRow } from "$lib/merch-messages/mm-types.ts";
 	import { Avatar } from '@skeletonlabs/skeleton-svelte';
-	import ReplyFill from 'svelte-bootstrap-icons/lib/ReplyFill.svelte';
 	import { page } from '$app/state';
 	import { colonTimeString } from '$lib/timeUtils.ts';
 	import { typed } from '$lib';
@@ -68,7 +67,7 @@
 				 
 				<span>{message.name}</span>
 			{:else}
-				<ReplyFill class="size-5 m-2" />
+				<span class="r"></span>
 				 
 				<div>
 					<span class="op-8">Reply to</span>
@@ -154,6 +153,14 @@
 
 	.mm-links > a > span {
 		@apply inline-block bg-current mask-alpha -mr-0.5;
+	}
+
+	span.r {
+		@apply size-5 m-2;
+		background-color: currentColor;
+		height: 1.25em;
+		width: 1.25em;
+		mask: var(--ri) center / contain no-repeat;
 	}
 
 	.px {

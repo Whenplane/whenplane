@@ -14,6 +14,7 @@
   import floatplane from '$lib/svg/floatplane.svg?no-inline';
   import youtube from '$lib/svg/youtube.svg?no-inline';
   import personx from '$lib/svg/personx.svg?no-inline';
+  import replyFill from '$lib/svg/replyFill.svg?no-inline';
 
   let { data } = $props();
 
@@ -129,11 +130,14 @@
   {/if}
 </div>
 
-{#if dev} <pre class="pre max-h-dvh">{JSON.stringify(data, undefined, '\t')}</pre> {/if}
+<!--{#if dev} <pre class="pre max-h-dvh">{JSON.stringify(data, undefined, '\t')}</pre> {/if}-->
 
 <br>
 
-<div class="limit-xl mx-auto text-right pb-64" style="--yti: url({youtube}); --fpi: url({floatplane}); --pxi: url({personx})">
+<div
+  class="limit-xl mx-auto text-right pb-64"
+  style="--yti: url({youtube}); --fpi: url({floatplane}); --pxi: url({personx}); --ri: url({replyFill});"
+>
   {#each data.messages as message, i}
     <div class:opacity-40={data.mmShow.status === "inprogress" && latestJob !== message.job}>
       <MerchMessage
