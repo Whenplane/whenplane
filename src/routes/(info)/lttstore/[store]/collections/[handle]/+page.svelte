@@ -7,6 +7,7 @@
   import { getDiffComponent } from "$lib/lttstore/field_components.js";
   import DateStamp from "$lib/DateStamp.svelte";
   import type {PageProps} from "./$types";
+  import { Store } from "$lib/lttstore/lttstore_types.ts";
 
   let { data }: PageProps = $props();
 
@@ -109,13 +110,6 @@
           </tr>
         {/each}
         </tbody>
-        {#if false}
-          <tfoot>
-          <tr style="text-transform: initial !important;">
-            <td class="p-2! opacity-70" colspan="3">Changes before <DateStamp epochSeconds={1727147700}/> are not available</td>
-          </tr>
-          </tfoot>
-        {/if}
       </table>
     </div>
   {:then changeHistory}
@@ -144,7 +138,9 @@
         </tbody>
         <tfoot>
           <tr style="text-transform: initial !important;">
-            <td class="p-2! opacity-70" colspan="3">Changes before <DateStamp epochSeconds={1732525260}/> are not available</td>
+            <td class="p-2! opacity-70" colspan="3">
+              Changes before <DateStamp epochSeconds={data.store.id === Store.US ? 1732525260 : 1781787820}/> are not available
+            </td>
           </tr>
         </tfoot>
       </table>
