@@ -138,7 +138,7 @@
         </tbody>
         <tfoot>
           <tr style="text-transform: initial !important;">
-            <td class="p-2! opacity-70" colspan="3">
+            <td class="p-2! opacity-70" colspan="4">
               Changes before <DateStamp epochSeconds={data.store.id === Store.US ? 1732525260 : 1781787820}/> are not available
             </td>
           </tr>
