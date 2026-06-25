@@ -1,7 +1,7 @@
 import type { DiffType } from "$lib/lttstore/diff/TextDiff.svelte";
 import { escapeHtml } from "$lib/utils.ts";
 import * as Diff from 'diff';
-import { prettify, type UserConfig } from "htmlfy";
+import { formatHtmlForDiff } from "$lib/lttstore/diff/htmlFormatter.ts";
 
 export function calcDiff(diffType: DiffType, parsedBefore: string, parsedAfter: string, displaying: 'before' | 'after', format: string | undefined) {
   let html = '';
@@ -9,12 +9,8 @@ export function calcDiff(diffType: DiffType, parsedBefore: string, parsedAfter: 
   parsedBefore = parsedBefore + '';
   parsedAfter = parsedAfter + '';
   if(format === "html") {
-    const config: UserConfig = {
-      tag_wrap: 70,
-      content_wrap: 60
-    }
-    parsedBefore = prettify(parsedBefore, config);
-    parsedAfter = prettify(parsedAfter, config);
+    parsedBefore = formatHtmlForDiff(parsedBefore);
+    parsedAfter = formatHtmlForDiff(parsedAfter);
   }
   switch (diffType) {
     case 'lines':
