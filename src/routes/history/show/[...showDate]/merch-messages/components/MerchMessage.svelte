@@ -46,15 +46,15 @@
 	class:hashHighlight={page.url.hash === '#' + message.id}
 >
 	<div class="mm-text">
-		<div class="flex items-center">
+		<div>
 			{#if message.type === 'message'}
 				<div aria-hidden="true">
 					{#if message.name === 'Anonymous'}
 						<figure>
-							<PersonX />
+							<span class="px"></span>
 						</figure>
 					{:else}
-						<Avatar class="w-10 h-10">
+						<Avatar class="size-10">
 							<Avatar.Fallback>{message.name.charAt(0)}</Avatar.Fallback>
 						</Avatar>
 					{/if}
@@ -62,7 +62,7 @@
 				 
 				<span>{message.name}</span>
 			{:else}
-				<ReplyFill class="w-5 h-5 m-2" />
+				<ReplyFill class="size-5 m-2" />
 				 
 				<div>
 					<span class="op-8">Reply to</span>
@@ -71,7 +71,7 @@
 			{/if}
 		</div>
 
-		<div class="mm-msg">
+		<div>
 			{message.text}
 		</div>
 
@@ -80,27 +80,19 @@
 				<a
 					href="https://floatplane.com/post/{floatplaneId}?t={floatplaneSeconds}"
 					rel="noopener"
-					class="mm-link-btn"
 					aria-label="Jump to message in Floatplane VOD"
 				>
-					<span
-						class="mm-ts-link fp"
-						aria-hidden="true"
-					></span>
+					<span class="fp" aria-hidden="true"></span>
 					{colonTimeString(floatplaneSeconds)}
 				</a>
 			{/if}
 			{#if youtubeSeconds != null && youtubeSeconds >= 0}
 				<a
-					href="https://youtube.com/watch?v={youtubeId}&t={youtubeSeconds}"
+					href="https://youtu.be/{youtubeId}?t={youtubeSeconds}"
 					rel="noopener"
-					class="mm-link-btn"
 					aria-label="Jump to message in YouTube VOD"
 				>
-					<span
-						class="mm-ts-link yt"
-						aria-hidden="true"
-					></span>
+					<span class="yt" aria-hidden="true"></span>
 					{colonTimeString(youtubeSeconds)}
 				</a>
 			{/if}
@@ -110,7 +102,6 @@
 		<a href={imageUrl} aria-label="View Message Screenshot">
 			{#key message}
 				<img
-					class="w-full"
 					src={imageUrl}
 					width="1000"
 					height="200"
@@ -138,28 +129,40 @@
 		@apply flex-1 grid grid-cols-[1fr_auto] items-center gap-y-2;
 	}
 
-	.mm-msg {
+	.mm-text > :nth-child(1) {
+		@apply flex items-center;
+	}
+
+	.mm-text > :nth-child(2) {
 		@apply opacity-70 ml-4 pr-4 col-span-2;
 	}
+
 
 	.mm-links {
 		@apply row-start-1 col-start-2 justify-self-end md:pr-4 text-sm flex items-center gap-1;
 	}
 
-	.mm-link-btn {
+	.mm-links > a {
 		@apply btn btn-sm preset-tonal-surface border border-surface-500 py-1 px-1.5;
 	}
 
-	.mm-ts-link {
+	.mm-links > a > span {
 		@apply inline-block bg-current mask-alpha -mr-0.5;
 	}
 
-	.mm-ts-link.fp {
+	.px {
+		background-color: currentColor;
+		height: 1.25em;
+		width: 1.25em;
+		mask: var(--pxi) center / contain no-repeat;
+	}
+
+	.fp {
 		height: 1.6em;
 		width: 1.6em;
 		mask: var(--fpi) center / contain no-repeat;
 	}
-	.mm-ts-link.yt {
+	.yt {
 		height: 1.6em;
 		width: 2em;
 		mask: var(--yti) center / contain no-repeat;
@@ -171,6 +174,10 @@
 
 	.mm-img {
 		@apply w-full mt-2 shrink-0 self-center;
+	}
+
+	img {
+		@apply w-full;
 	}
 
 	figure {

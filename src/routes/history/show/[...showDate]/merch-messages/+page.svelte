@@ -13,6 +13,7 @@
   import ToolTip from "$lib/ToolTip.svelte";
   import floatplane from '$lib/svg/floatplane.svg?no-inline';
   import youtube from '$lib/svg/youtube.svg?no-inline';
+  import personx from '$lib/svg/personx.svg?no-inline';
 
   let { data } = $props();
 
@@ -130,7 +131,7 @@
 
 <br>
 
-<div class="limit-xl mx-auto text-right pb-64" style="--yti: url({youtube}); --fpi: url({floatplane});">
+<div class="limit-xl mx-auto text-right pb-64" style="--yti: url({youtube}); --fpi: url({floatplane}); --pxi: url({personx})">
   {#each data.messages as message}
     <div class:opacity-40={latestJobId !== message.jobId}>
       <MerchMessage {message} youtubeId={data.metadata?.vods?.youtube} floatplaneId={data.metadata?.vods?.floatplane} source={data.mmShow.vodSource} preShowLength={preShowLength}/>
