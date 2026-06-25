@@ -27,12 +27,27 @@ export const load = (async ({platform, fetch}) => {
   for (const show of shows) {
     const year = show.showId.split("/")[0];
     thumbnailPromises.push((async () => {
-      if(years[year] === undefined) {
+      if(typeof years[year] === "undefined") {
         years[year] = fetch("/api/history/year/" + year)
-          .then(r => r.json())
+          .then(async (r) => {
+            const j = await r.json();
+            console.debug(`Got ${j.length} shows for ${year}`);
+            return j;
+          })
       }
       const yearList = await years[year];
-      return [show.showId, yearList.find((r) => r.name === show.showId)?.metadata?.thumbnails!];
+
+      let thumbnails = yearList
+        .find((r) => r.name === show.showId)
+        ?.metadata?.thumbnails;
+
+      if(!thumbnails) {
+        thumbnails = await fetch("/api/history/show/" + show.showId)
+          .then(r => r.json())
+          .then(showMeta => showMeta?.value?.thumbnails ?? showMeta?.value?.snippet?.thumbnails)
+      }
+
+      return [show.showId, thumbnails!];
     })())
     if(show.messageCount !== null && show.replyCount !== null) continue;
     if(show.status !== "complete") continue;
@@ -72,16 +87,8 @@ export const load = (async ({platform, fetch}) => {
     })
   });
 
-  const videoReleaseDates = Object.fromEntries(shows.map(v => {
-    return [
-      v.showId,
-      v.releaseDate
-    ]
-  }))
-
   return {
     shows,
-    videoReleaseDates,
     showThumbnails: await Promise.all(thumbnailPromises)
       .then(r => Object.fromEntries(r)),
     alternateStartTimes: await alternateStartTimesP

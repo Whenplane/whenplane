@@ -3,6 +3,7 @@
 	import ClockHistory from "svelte-bootstrap-icons/lib/ClockHistory.svelte";
   import { commas } from "$lib/utils.ts";
   import { getClosestWan } from "$lib/timeUtils.ts";
+  import { dev } from "$app/environment";
 
   let { data } = $props();
 
@@ -23,6 +24,8 @@
   <li class="crumb-separator" aria-hidden="true">›</li>
   <li class="crumb">Merch Messages</li>
 </ol>
+
+{#if dev} <pre class="pre max-h-dvh">{JSON.stringify(data.showThumbnails, undefined, '\t')}</pre> {/if}
 
 <div class="limit mx-auto p-2">
   <h1>Merch Message Index</h1>
