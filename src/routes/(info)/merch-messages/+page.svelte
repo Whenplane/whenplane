@@ -1,7 +1,7 @@
 <script lang="ts">
   import { page } from "$app/state";
 	import ClockHistory from "svelte-bootstrap-icons/lib/ClockHistory.svelte";
-  import { commas } from "$lib/utils.ts";
+  import { commas, type YoutubeThumbnails } from "$lib/utils.ts";
   import { getClosestWan } from "$lib/timeUtils.ts";
   import { dev } from "$app/environment";
 
@@ -24,8 +24,6 @@
   <li class="crumb-separator" aria-hidden="true">›</li>
   <li class="crumb">Merch Messages</li>
 </ol>
-
-{#if dev} <pre class="pre max-h-dvh">{JSON.stringify(data.showThumbnails, undefined, '\t')}</pre> {/if}
 
 <div class="limit mx-auto p-2">
   <h1>Merch Message Index</h1>
@@ -56,21 +54,31 @@
   <br>
 
 
-  {#each data.shows as show}
+  {#each data.shows as show, i}
     {@const showDate = getClosestWan(new Date(show.releaseDate), data.alternateStartTimes)}
-    {@const thumbnails = data.showThumbnails[show.showId]}
-    {@const thumbnail = thumbnails?.maxres ?? thumbnails?.standard ?? thumbnails?.high ?? thumbnails?.medium ?? thumbnails?.default}
     <a class="card flex hidden-link p-2 my-1 relative" href="/history/show/{show.showId}/merch-messages">
-      <div class="overflow-hidden rounded-lg">
-        <img
-          class="thumbnail"
-          src={thumbnail?.url}
-          alt="Thumbnail"
-          aria-hidden="true"
-          loading="lazy"
-          width={thumbnail?.width}
-          height={thumbnail?.height}
-        >
+      <div class="overflow-hidden rounded-lg thumbnail relative">
+        <div class="w-full h-full placeholder animate-pulse absolute z-0"></div>
+        {#snippet tImg(thumbnails: YoutubeThumbnails)}
+          {@const thumbnail = thumbnails?.maxres ?? thumbnails?.standard ?? thumbnails?.high ?? thumbnails?.medium ?? thumbnails?.default}
+          <img
+            class="thumbnail absolute z-10"
+            src={thumbnail?.url}
+            alt=""
+            aria-hidden="true"
+            loading="lazy"
+            width={thumbnail?.width}
+            height={thumbnail?.height}
+          >
+        {/snippet}
+        {#if i < 10}
+          {@render tImg(data.first10thumbs[show.showId])}
+        {:else}
+          {#await data.showThumbnails[show.showId]}
+          {:then thumbnails}
+            {@render tImg(thumbnails)}
+          {/await}
+        {/if}
       </div>
       <div class="self-center px-4">
         <span class="font-bold text-lg">

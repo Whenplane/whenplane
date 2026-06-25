@@ -1,5 +1,5 @@
 import { error } from "@sveltejs/kit";
-import { type HistoricalEntry, retryD1, type YoutubeThumbnails } from "$lib/utils.ts";
+import { type HistoricalEntry, retryD1, type YoutubeThumbnail, type YoutubeThumbnails } from "$lib/utils.ts";
 import type { MMShow } from "$lib/merch-messages/mm-types.ts";
 import type { PageServerLoad } from "./$types";
 import type { AlternateTimeRow } from "../../api/alternateStartTimes/+server.ts";
@@ -22,11 +22,11 @@ export const load = (async ({platform, fetch}) => {
 
   const years: {[year: string]: Promise<HistoricalEntry[]>} = {};
 
-  const thumbnailPromises: Promise<[string, YoutubeThumbnails]>[] = [];
+  const thumbnailPromises: [string, Promise<YoutubeThumbnails>][] = [];
   const countingPromises: Promise<[string, number, number]>[] = [];
   for (const show of shows) {
     const year = show.showId.split("/")[0];
-    thumbnailPromises.push((async () => {
+    thumbnailPromises.push([show.showId, (async () => {
       if(typeof years[year] === "undefined") {
         years[year] = fetch("/api/history/year/" + year)
           .then(async (r) => {
@@ -47,8 +47,8 @@ export const load = (async ({platform, fetch}) => {
           .then(showMeta => showMeta?.value?.thumbnails ?? showMeta?.value?.snippet?.thumbnails)
       }
 
-      return [show.showId, thumbnails!];
-    })())
+      return thumbnails!;
+    })()])
     if(show.messageCount !== null && show.replyCount !== null) continue;
     if(show.status !== "complete") continue;
     console.log("Adding message count for", show)
@@ -87,10 +87,20 @@ export const load = (async ({platform, fetch}) => {
     })
   });
 
+  // wait for the first 10 shows to finish fetching its thumbnail before we send the response
+  const first10thumbs: {[show: string]: YoutubeThumbnails} = Object.fromEntries(
+    await Promise.all(
+      thumbnailPromises.splice(0, 10)
+        .map(async ([k, v]) => [k, await v])
+    )
+  );
+
+
+
   return {
     shows,
-    showThumbnails: await Promise.all(thumbnailPromises)
-      .then(r => Object.fromEntries(r)),
+    first10thumbs,
+    showThumbnails: Object.fromEntries(thumbnailPromises),
     alternateStartTimes: await alternateStartTimesP
   };
 
