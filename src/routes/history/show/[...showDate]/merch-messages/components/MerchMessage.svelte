@@ -42,18 +42,17 @@
 </script>
 
 <div
-	class="card card-hover relative p-4 my-3 mx-2 flex overflow-hidden text-left main-div"
-	class:ml-6={message.type === 'reply'}
-	class:bg-gray-950!={message.type === 'reply'}
+	class="mm-card"
+	class:reply={message.type === 'reply'}
 	id={message.id}
 	class:hashHighlight={page.url.hash === '#' + message.id}
 >
-	<div class="flex-1 grid grid-cols-[1fr_auto] items-center gap-y-2">
+	<div class="mm-text">
 		<div class="flex items-center">
 			{#if message.type === 'message'}
 				<div aria-hidden="true">
 					{#if message.name === 'Anonymous'}
-						<figure class="avatar">
+						<figure>
 							<PersonX />
 						</figure>
 					{:else}
@@ -68,26 +67,26 @@
 				<ReplyFill class="w-5 h-5 m-2" />
 				 
 				<div>
-					<span class="opacity-80">Reply to</span>
+					<span class="op-8">Reply to</span>
 					{message.name}
 				</div>
 			{/if}
 		</div>
 
-		<div class="opacity-70 ml-4 pr-4 col-span-2">
+		<div class="mm-msg">
 			{message.text}
 		</div>
 
-		<div class="row-start-1 col-start-2 justify-self-end md:pr-4 text-sm flex items-center gap-1">
+		<div class="mm-links">
 			{#if floatplaneSeconds != null && floatplaneId}
 				<a
 					href="https://floatplane.com/post/{floatplaneId}?t={floatplaneSeconds}"
 					rel="noopener"
-					class="btn btn-sm preset-tonal-surface border border-surface-500 py-1 px-1.5"
+					class="mm-link-btn"
 					aria-label="Jump to message in Floatplane VOD"
 				>
 					<span
-						class="inline-block bg-current mask-alpha -mr-0.5"
+						class="mm-ts-link"
 						style="height: 1.6em; width: 1.6em; mask: url({floatplane}) center / contain no-repeat;"
 						aria-hidden="true"
 					></span>
@@ -98,11 +97,11 @@
 				<a
 					href="https://youtube.com/watch?v={youtubeId}&t={youtubeSeconds}"
 					rel="noopener"
-					class="btn btn-sm preset-tonal-surface border border-surface-500 py-1 px-1.5"
+					class="mm-link-btn"
 					aria-label="Jump to message in YouTube VOD"
 				>
 					<span
-						class="inline-block bg-current mask-alpha -mr-1"
+						class="mm-ts-link"
 						style="height: 1.6em; width: 2em; mask: url({youtube}) center / contain no-repeat;"
 						aria-hidden="true"
 					></span>
@@ -111,7 +110,7 @@
 			{/if}
 		</div>
 	</div>
-	<div class="w-full message-image shrink-0 self-center">
+	<div class="mm-img">
 		<a href={imageUrl} aria-label="View Message Screenshot">
 			{#key message}
 				<img
@@ -131,23 +130,53 @@
 <style>
 	@reference "#app.css";
 
-	figure.avatar {
+	.reply {
+		@apply ml-6 bg-gray-950!;
+	}
+
+	.mm-card {
+		@apply card card-hover relative p-4 my-3 mx-2 flex flex-col overflow-hidden text-left;
+	}
+
+	.mm-text {
+		@apply flex-1 grid grid-cols-[1fr_auto] items-center gap-y-2;
+	}
+
+	.mm-msg {
+		@apply opacity-70 ml-4 pr-4 col-span-2;
+	}
+
+	.mm-links {
+		@apply row-start-1 col-start-2 justify-self-end md:pr-4 text-sm flex items-center gap-1;
+	}
+
+	.mm-link-btn {
+		@apply btn btn-sm preset-tonal-surface border border-surface-500 py-1 px-1.5;
+	}
+
+	.mm-ts-link {
+		@apply inline-block bg-current mask-alpha -mr-0.5;
+	}
+
+	.op-8 {
+		@apply opacity-80;
+	}
+
+	.mm-img {
+		@apply w-full mt-2 shrink-0 self-center;
+	}
+
+	figure {
 		@apply w-10 bg-surface-500 rounded-full flex aspect-square text-surface-50 font-semibold justify-center items-center overflow-hidden isolate;
 	}
 
-	.message-image {
-		@apply mt-2;
-	}
-	.main-div {
-		flex-direction: column;
-	}
 	@media (width >= 48rem) {
-		.message-image {
+		.mm-img {
 			width: 28rem;
 			margin: 0;
 		}
-		.main-div {
-			flex-direction: row;
+		.mm-card {
+			@apply flex-row;
 		}
 	}
 
