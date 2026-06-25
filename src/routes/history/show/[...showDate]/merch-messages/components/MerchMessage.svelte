@@ -5,8 +5,8 @@
 	import ReplyFill from 'svelte-bootstrap-icons/lib/ReplyFill.svelte';
 	import { page } from '$app/state';
 	import { colonTimeString } from '$lib/timeUtils.ts';
-	import Youtube from '$lib/svg/Youtube.svelte';
-	import Floatplane from '$lib/svg/Floatplane.svelte';
+	import floatplane from '$lib/svg/floatplane.svg?no-inline';
+	import youtube from '$lib/svg/youtube.svg?no-inline';
 	import { typed } from '$lib';
 
 	let {
@@ -86,9 +86,11 @@
 					class="btn btn-sm preset-tonal-surface border border-surface-500 py-1 px-1.5"
 					aria-label="Jump to message in Floatplane VOD"
 				>
-					<div class="inline-block pr-0.5" aria-hidden="true">
-						<Floatplane height="1.6em" />
-					</div>
+					<span
+						class="inline-block bg-current mask-alpha -mr-0.5"
+						style="height: 1.6em; width: 1.6em; mask: url({floatplane}) center / contain no-repeat;"
+						aria-hidden="true"
+					></span>
 					{colonTimeString(floatplaneSeconds)}
 				</a>
 			{/if}
@@ -99,9 +101,11 @@
 					class="btn btn-sm preset-tonal-surface border border-surface-500 py-1 px-1.5"
 					aria-label="Jump to message in YouTube VOD"
 				>
-					<span aria-hidden="true">
-						<Youtube height={1.75} />
-					</span>
+					<span
+						class="inline-block bg-current mask-alpha -mr-1"
+						style="height: 1.6em; width: 2em; mask: url({youtube}) center / contain no-repeat;"
+						aria-hidden="true"
+					></span>
 					{colonTimeString(youtubeSeconds)}
 				</a>
 			{/if}
