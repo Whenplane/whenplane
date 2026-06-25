@@ -5,6 +5,7 @@
 	import { colonTimeString } from '$lib/timeUtils.ts';
 	import { typed } from '$lib';
 	import { onMount } from "svelte";
+	import { fade } from "svelte/transition";
 
 	let {
 		message = typed<MMV2CondensedTableRow>(),
@@ -80,28 +81,30 @@
 			{message.text}
 		</div>
 
-		<div class="mm-links">
-			{#if floatplaneSeconds != null && floatplaneId}
-				<a
-					href="//floatplane.com/post/{floatplaneId}?t={floatplaneSeconds}"
-					rel="noopener"
-					aria-label={i < 10 || mounted ? "Jump to in Floatplane VOD" : undefined}
-				>
-					<span class="fp" aria-hidden={i < 100 || mounted ? "true" : undefined}></span>
-					{colonTimeString(floatplaneSeconds)}
-				</a>
-			{/if}
-			{#if youtubeSeconds != null && youtubeSeconds >= 0}
-				<a
-					href="//youtu.be/{youtubeId}?t={youtubeSeconds}"
-					rel="noopener"
-					aria-label={i < 10 || mounted ? "Jump to in YouTube VOD" : undefined}
-				>
-					<span class="yt" aria-hidden={i < 100 || mounted ? "true" : undefined}></span>
-					{colonTimeString(youtubeSeconds)}
-				</a>
-			{/if}
-		</div>
+		{#if i < 250 || mounted}
+			<div class="mm-links" in:fade>
+				{#if floatplaneSeconds != null && floatplaneId}
+					<a
+						href="//floatplane.com/post/{floatplaneId}?t={floatplaneSeconds}"
+						rel="noopener"
+						aria-label={i < 10 || mounted ? "Jump to in Floatplane VOD" : undefined}
+					>
+						<span class="fp" aria-hidden={i < 100 || mounted ? "true" : undefined}></span>
+						{colonTimeString(floatplaneSeconds)}
+					</a>
+				{/if}
+				{#if youtubeSeconds != null && youtubeSeconds >= 0}
+					<a
+						href="//youtu.be/{youtubeId}?t={youtubeSeconds}"
+						rel="noopener"
+						aria-label={i < 10 || mounted ? "Jump to in YouTube VOD" : undefined}
+					>
+						<span class="yt" aria-hidden={i < 100 || mounted ? "true" : undefined}></span>
+						{colonTimeString(youtubeSeconds)}
+					</a>
+				{/if}
+			</div>
+		{/if}
 	</div>
 	<div class="mm-img">
 		<a href={mounted ? imageUrl : undefined} aria-label={i < 10 || mounted ? "View Message Screenshot" : undefined}>
