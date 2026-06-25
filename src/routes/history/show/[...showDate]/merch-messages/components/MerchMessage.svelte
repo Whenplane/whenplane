@@ -131,7 +131,7 @@
 	@reference "#app.css";
 
 	.reply {
-		@apply ml-6 bg-gray-950!;
+		@apply ml-6! bg-gray-950!;
 	}
 
 	.mm-card {
