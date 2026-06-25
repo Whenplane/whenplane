@@ -609,6 +609,8 @@
                       {#each similarProducts?.similar as similar (similar.id)}
                         {@const product = similar.metadata.product}
                         <LTTProductCard {product} shortTitle={product.shortTitle} available={similar.metadata.available} store={similar.metadata.store}/>
+                      {:else}
+                        No similar products yet! Check back later.
                       {/each}
                     {/await}
                   </div>
