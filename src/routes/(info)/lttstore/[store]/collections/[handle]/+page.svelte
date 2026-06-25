@@ -96,8 +96,8 @@
         <tr>
           <th>What changed</th>
           <td>Change seen</td>
-          <th>Before</th>
-          <th>After</th>
+          <th class="w-[42%]">Before</th>
+          <th class="w-[42%]">After</th>
         </tr>
         </thead>
         <tbody>
