@@ -38,20 +38,21 @@
 
 <ul class="normal-list ml-4">
 	{#each firstFew as topic}
+		{@const floatplaneLink = floatplane && preShowLength}
 		<li
 			id="timestamp-{youtubeId}.{topic.time}"
 			class:highlighted={page.url.hash === '#timestamp-' + youtubeId + '.' + topic.time}
 		>
 			<a
 				class="hidden-link"
-				href={floatplane && preShowLength
+				href={floatplaneLink
 					? `https://www.floatplane.com/post/${floatplaneId}?t=${topic.time + preShowLength}`
 					: `https://youtube.com/watch?v=${youtubeId}&t=${topic.time}`}
 				target="_blank"
-				rel="noopener"
+				rel="noopener{floatplaneLink ? ' nofollow' : ''}"
 			>
 				<span class="opacity-70">
-					{#if floatplane && preShowLength}
+					{#if floatplaneLink}
 						{colonTimeString(topic.time + preShowLength)}
 					{:else}
 						{topic.timeString}
@@ -68,6 +69,7 @@
 		</button>
 	{:else if expanded && rest}
 		{#each rest as topic}
+			{@const floatplaneLink = floatplane && preShowLength}
 			<li
 				in:slide|global={{ easing: quintOut }}
 				id="timestamp-{youtubeId}.{topic.time}"
@@ -78,7 +80,7 @@
 					href={floatplane && preShowLength
 						? `https://www.floatplane.com/post/${floatplaneId}?t=${topic.time + preShowLength}`
 						: `https://youtube.com/watch?v=${youtubeId}&t=${topic.time}`}
-					rel="noopener"
+					rel="noopener{floatplaneLink ? ' nofollow' : ''}"
 				>
 					<span class="opacity-70">
 						{#if floatplane && preShowLength}
