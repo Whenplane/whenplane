@@ -19,8 +19,8 @@ export const load = (async ({platform, params, parent}) => {
     throw error(404, "Merch Messages not found (or not processed yet)")
   }
 
-  const types = {message: "m", reply: "r"};
-  const positions = {TOP: "t", BOTTOM: "b"}
+  const types = {message: 0, reply: 1};
+  const positions = {TOP: 0, BOTTOM: 1}
 
   const messages = (await retryD1(() =>
     db.prepare("select floor(timestamp) as timestamp,type,name,text,jobId from merch_messages_v2 where show = ? order by timestamp ASC")
@@ -29,10 +29,14 @@ export const load = (async ({platform, params, parent}) => {
       .then(r => r.results)
   ))
     .map(m => ({
+      t: m.timestamp,
       ...m,
-      jobId: m.jobId && m.jobId.split("_")[0]?.substring(5),
+      timestamp: undefined,
+      jobId: undefined,
+      job: (show.status === "inprogress" && m.jobId && m.jobId.split("_")[0]?.substring(2)) || undefined,
       type: types[m.type] ?? m.type,
-      position: positions[m.position] ?? m.position
+      position: undefined,
+      pos: positions[m.position] ?? m.position
     } as unknown as MMV2CondensedTableRow));
 
   return { mmShow: show, messages}

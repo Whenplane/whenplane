@@ -55,8 +55,8 @@
     getTimeUntil(showEnd as Date, (mainShowStart as Date).getTime()).distance :
     null;
 
-  let biggestTimestamp = $derived(data.messages.reduce((a, b) => Math.max(a, b.timestamp), 0));
-  const latestJobId = $derived(data.messages.map(m => m.jobId).sort().reverse()[0]);
+  let biggestTimestamp = $derived(data.messages.reduce((a, b) => Math.max(a, b.t), 0));
+  const latestJob = $derived(data.messages.map(m => m.job).sort().reverse()[0]);
 </script>
 
 <svelte:head>
@@ -134,9 +134,17 @@
 <br>
 
 <div class="limit-xl mx-auto text-right pb-64" style="--yti: url({youtube}); --fpi: url({floatplane}); --pxi: url({personx})">
-  {#each data.messages as message}
-    <div class:opacity-40={latestJobId !== message.jobId}>
-      <MerchMessage {message} show={data.mmShow.showId} youtubeId={data.metadata?.vods?.youtube} floatplaneId={data.metadata?.vods?.floatplane} source={data.mmShow.vodSource} preShowLength={preShowLength}/>
+  {#each data.messages as message, i}
+    <div class:opacity-40={data.mmShow.status === "inprogress" && latestJob !== message.job}>
+      <MerchMessage
+        {message}
+        show={data.mmShow.showId}
+        youtubeId={data.metadata?.vods?.youtube}
+        floatplaneId={data.metadata?.vods?.floatplane}
+        source={data.mmShow.vodSource}
+        preShowLength={preShowLength}
+        {i}
+      />
     </div>
   {/each}
 </div>

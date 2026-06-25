@@ -1,6 +1,6 @@
 import type { LayoutServerLoad } from "./$types";
 import { error, redirect } from "@sveltejs/kit";
-import type { HistoricalEntry } from "$lib/utils.ts";
+import type { HistoricalEntry, YoutubeThumbnail } from "$lib/utils.ts";
 import { version } from "$app/environment";
 import type { AlternateTimeRow } from "../../../api/alternateStartTimes/+server.ts";
 
@@ -41,6 +41,13 @@ export const load: LayoutServerLoad = async ({platform, params, url, fetch}) => 
       Object.entries(data.value.snippet.thumbnails)
         .filter(([k, v]) => k === "maxres")
     )
+  }
+
+  if(data.metadata.thumbnails) {
+    for (let thumbnail of Object.keys(data.metadata.thumbnails)) {
+      delete (data.metadata.thumbnails as {[k: string]: YoutubeThumbnail})
+        [thumbnail].blurhash;
+    }
   }
 
   if(showResponse.status != 200) {

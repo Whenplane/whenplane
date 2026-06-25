@@ -14,7 +14,8 @@ const config = {
 	compilerOptions: {
 		experimental: {
 			async: true
-		}
+		},
+		cssHash: ({filename, hash, css}) => `s-${hash(filename ?? css)}`
 	},
 
 	kit: {

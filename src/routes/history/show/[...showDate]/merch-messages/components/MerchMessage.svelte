@@ -5,6 +5,7 @@
 	import { page } from '$app/state';
 	import { colonTimeString } from '$lib/timeUtils.ts';
 	import { typed } from '$lib';
+	import { onMount } from "svelte";
 
 	let {
 		message = typed<MMV2CondensedTableRow>(),
@@ -12,11 +13,12 @@
 		youtubeId = typed<string | undefined>(),
 		floatplaneId = typed<string | undefined>(),
 		source = typed<'youtube' | 'floatplane' | 'floatplane-live'>(),
-		preShowLength = typed<number | null>()
+		preShowLength = typed<number | null>(),
+		i = typed<number>()
 	} = $props();
 
-	const seconds = $derived(Math.floor(message.timestamp));
-	const imageUrl = $derived(`https://merch-message-images.whenplane.com/${show}/images/${seconds}.jpg`);
+	const seconds = $derived(Math.floor(message.t));
+	const imageUrl = $derived(`//merch-message-images.whenplane.com/${show}/images/${seconds}.jpg`);
 
 	const floatplaneSeconds = $derived(
 		source.startsWith('floatplane')
@@ -37,17 +39,21 @@
 					: 0)
 				: null
 	);
+
+	let mounted = $state(false);
+	onMount(() => setTimeout(() => mounted = true, 1))
+
 </script>
 
 <div
 	class="mm-card"
-	class:reply={message.type === 'r'}
+	class:reply={message.type === 1}
 	id={message.id ?? `${show}-${seconds}`}
 	class:hashHighlight={page.url.hash === '#' + message.id}
 >
 	<div class="mm-text">
 		<div>
-			{#if message.type === 'm'}
+			{#if message.type === 0}
 				<div aria-hidden="true">
 					{#if message.name === 'Anonymous'}
 						<figure>
@@ -78,36 +84,36 @@
 		<div class="mm-links">
 			{#if floatplaneSeconds != null && floatplaneId}
 				<a
-					href="https://floatplane.com/post/{floatplaneId}?t={floatplaneSeconds}"
+					href="//floatplane.com/post/{floatplaneId}?t={floatplaneSeconds}"
 					rel="noopener"
-					aria-label="Jump to message in Floatplane VOD"
+					aria-label={i < 10 || mounted ? "Jump to in Floatplane VOD" : undefined}
 				>
-					<span class="fp" aria-hidden="true"></span>
+					<span class="fp" aria-hidden={i < 100 || mounted ? "true" : undefined}></span>
 					{colonTimeString(floatplaneSeconds)}
 				</a>
 			{/if}
 			{#if youtubeSeconds != null && youtubeSeconds >= 0}
 				<a
-					href="https://youtu.be/{youtubeId}?t={youtubeSeconds}"
+					href="//youtu.be/{youtubeId}?t={youtubeSeconds}"
 					rel="noopener"
-					aria-label="Jump to message in YouTube VOD"
+					aria-label={i < 10 || mounted ? "Jump to in YouTube VOD" : undefined}
 				>
-					<span class="yt" aria-hidden="true"></span>
+					<span class="yt" aria-hidden={i < 100 || mounted ? "true" : undefined}></span>
 					{colonTimeString(youtubeSeconds)}
 				</a>
 			{/if}
 		</div>
 	</div>
 	<div class="mm-img">
-		<a href={imageUrl} aria-label="View Message Screenshot">
+		<a href={mounted ? imageUrl : undefined} aria-label={i < 10 || mounted ? "View Message Screenshot" : undefined}>
 			{#key message}
 				<img
 					src={imageUrl}
 					width="1000"
 					height="200"
 					loading="lazy"
-					alt=""
-					aria-hidden="true"
+					alt={i < 100 || mounted ? "" : undefined}
+					aria-hidden={i < 50 || mounted ? "true" : undefined}
 				/>
 			{/key}
 		</a>

@@ -22,12 +22,12 @@ export type MMV2TableRow = {
 export type MMV2CondensedTableRow = {
   id?: string,
   show?: string,
-  timestamp: number,
-  type: "m" | "r",
+  t: number,
+  type: 0 | 1,
   name: string,
   text: string,
-  jobId: string,
-  position?: "t" | "b"
+  job: string,
+  pos?: 0 | 1
 }
 
 export type MMShow = {
