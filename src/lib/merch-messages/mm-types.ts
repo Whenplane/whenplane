@@ -19,6 +19,16 @@ export type MMV2TableRow = {
   jobId: string,
   position: "TOP" | "BOTTOM"
 }
+export type MMV2CondensedTableRow = {
+  id?: string,
+  show?: string,
+  timestamp: number,
+  type: "m" | "r",
+  name: string,
+  text: string,
+  jobId: string,
+  position?: "t" | "b"
+}
 
 export type MMShow = {
   showId: string,

@@ -1,22 +1,22 @@
 <script lang="ts">
-	import type { MMV2TableRow } from '$lib/merch-messages/mm-types.ts';
+	import type { MMV2CondensedTableRow, MMV2TableRow } from "$lib/merch-messages/mm-types.ts";
 	import { Avatar } from '@skeletonlabs/skeleton-svelte';
-	import PersonX from 'svelte-bootstrap-icons/lib/PersonX.svelte';
 	import ReplyFill from 'svelte-bootstrap-icons/lib/ReplyFill.svelte';
 	import { page } from '$app/state';
 	import { colonTimeString } from '$lib/timeUtils.ts';
 	import { typed } from '$lib';
 
 	let {
-		message = typed<MMV2TableRow>(),
+		message = typed<MMV2CondensedTableRow>(),
+		show = typed<string>(),
 		youtubeId = typed<string | undefined>(),
 		floatplaneId = typed<string | undefined>(),
 		source = typed<'youtube' | 'floatplane' | 'floatplane-live'>(),
 		preShowLength = typed<number | null>()
 	} = $props();
 
-	const seconds = Math.floor(message.timestamp);
-	const imageUrl = `https://merch-message-images.whenplane.com/${message.show}/images/${seconds}.jpg`;
+	const seconds = $derived(Math.floor(message.timestamp));
+	const imageUrl = $derived(`https://merch-message-images.whenplane.com/${show}/images/${seconds}.jpg`);
 
 	const floatplaneSeconds = $derived(
 		source.startsWith('floatplane')
@@ -41,13 +41,13 @@
 
 <div
 	class="mm-card"
-	class:reply={message.type === 'reply'}
-	id={message.id}
+	class:reply={message.type === 'r'}
+	id={message.id ?? `${show}-${seconds}`}
 	class:hashHighlight={page.url.hash === '#' + message.id}
 >
 	<div class="mm-text">
 		<div>
-			{#if message.type === 'message'}
+			{#if message.type === 'm'}
 				<div aria-hidden="true">
 					{#if message.name === 'Anonymous'}
 						<figure>

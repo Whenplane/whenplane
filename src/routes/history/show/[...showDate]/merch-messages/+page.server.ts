@@ -1,6 +1,6 @@
 import { error } from "@sveltejs/kit";
 import { retryD1 } from "$lib/utils.ts";
-import type { MMShow, MMV2TableRow } from "$lib/merch-messages/mm-types.ts";
+import type { MMShow, MMV2CondensedTableRow, MMV2TableRow } from "$lib/merch-messages/mm-types.ts";
 import type { PageServerLoad } from "./$types";
 
 export const load = (async ({platform, params, parent}) => {
@@ -19,12 +19,21 @@ export const load = (async ({platform, params, parent}) => {
     throw error(404, "Merch Messages not found (or not processed yet)")
   }
 
-  const messages = await retryD1(() =>
-    db.prepare("select * from merch_messages_v2 where show=? order by timestamp ASC")
+  const types = {message: "m", reply: "r"};
+  const positions = {TOP: "t", BOTTOM: "b"}
+
+  const messages = (await retryD1(() =>
+    db.prepare("select floor(timestamp) as timestamp,type,name,text,jobId from merch_messages_v2 where show = ? order by timestamp ASC")
       .bind(data.name)
       .all<MMV2TableRow>()
       .then(r => r.results)
-  );
+  ))
+    .map(m => ({
+      ...m,
+      jobId: m.jobId && m.jobId.split("_")[0]?.substring(5),
+      type: types[m.type] ?? m.type,
+      position: positions[m.position] ?? m.position
+    } as unknown as MMV2CondensedTableRow));
 
   return { mmShow: show, messages}
 

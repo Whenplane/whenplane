@@ -25,19 +25,30 @@ export const load: LayoutServerLoad = async ({platform, params, url, fetch}) => 
     }
   );
 
+  const alternateStartTimes = fetch("/api/alternateStartTimes?v=" + version)
+    .then(r => r.json() as Promise<AlternateTimeRow[]>);
+
   const showResponse = await showResponsePromise;
 
   const data = await showResponse.json() as HistoricalEntry & {message?: string};
+
+  delete data.value?.thumbnails;
+  delete data.value?.snippet?.description;
+  delete data.value?.snippet?.tags;
+  delete data.value?.snippet?.localized;
+  if(data.value?.snippet?.thumbnails.maxres) {
+    data.value.snippet.thumbnails = Object.fromEntries(
+      Object.entries(data.value.snippet.thumbnails)
+        .filter(([k, v]) => k === "maxres")
+    )
+  }
 
   if(showResponse.status != 200) {
     throw error(showResponse.status, data.message || showResponse.statusText);
   }
 
-  const alternateStartTimes = await fetch("/api/alternateStartTimes?v=" + version)
-    .then(r => r.json() as Promise<AlternateTimeRow[]>);
-
   return {
     ...data,
-    alternateStartTimes
+    alternateStartTimes: await alternateStartTimes
   };
 };

@@ -56,7 +56,7 @@
     null;
 
   let biggestTimestamp = $derived(data.messages.reduce((a, b) => Math.max(a, b.timestamp), 0));
-  const latestJobId = data.messages.map(m => m.jobId).sort().reverse()[0];
+  const latestJobId = $derived(data.messages.map(m => m.jobId).sort().reverse()[0]);
 </script>
 
 <svelte:head>
@@ -129,12 +129,14 @@
   {/if}
 </div>
 
+{#if dev} <pre class="pre max-h-dvh">{JSON.stringify(data, undefined, '\t')}</pre> {/if}
+
 <br>
 
 <div class="limit-xl mx-auto text-right pb-64" style="--yti: url({youtube}); --fpi: url({floatplane}); --pxi: url({personx})">
   {#each data.messages as message}
     <div class:opacity-40={latestJobId !== message.jobId}>
-      <MerchMessage {message} youtubeId={data.metadata?.vods?.youtube} floatplaneId={data.metadata?.vods?.floatplane} source={data.mmShow.vodSource} preShowLength={preShowLength}/>
+      <MerchMessage {message} show={data.mmShow.showId} youtubeId={data.metadata?.vods?.youtube} floatplaneId={data.metadata?.vods?.floatplane} source={data.mmShow.vodSource} preShowLength={preShowLength}/>
     </div>
   {/each}
 </div>
