@@ -20,14 +20,20 @@ export const load = (async ({platform, fetch}) => {
       .then(r => r.results)
   );
 
+  const years: {[year: string]: Promise<HistoricalEntry[]>} = {};
+
   const thumbnailPromises: Promise<[string, YoutubeThumbnails]>[] = [];
   const countingPromises: Promise<[string, number, number]>[] = [];
   for (const show of shows) {
-    thumbnailPromises.push(
-      fetch("/api/history/show/" + show.showId)
-        .then(r => r.json())
-        .then(showMeta => [show.showId, showMeta?.value?.thumbnails ?? showMeta?.value?.snippet?.thumbnails])
-    )
+    const year = show.showId.split("/")[0];
+    thumbnailPromises.push((async () => {
+      if(years[year] === undefined) {
+        years[year] = fetch("/api/history/year/" + year)
+          .then(r => r.json())
+      }
+      const yearList = await years[year];
+      return [show.showId, yearList.find((r) => r.name === show.showId)?.metadata?.thumbnails!];
+    })())
     if(show.messageCount !== null && show.replyCount !== null) continue;
     if(show.status !== "complete") continue;
     console.log("Adding message count for", show)
