@@ -155,14 +155,14 @@
       </tr>
     {/each}
     </tbody>
-    {#if page.data.store.id === Store.US && product.firstSeen < 1727147700624}
+    {#if page.data.store?.id === Store.US && product.firstSeen < 1727147700624}
       <tfoot>
       <tr class="text-center">
         <td class="p-2! opacity-70" colspan="4">Changes before <DateStamp epochSeconds={1727147700}/> are not available</td>
       </tr>
       </tfoot>
     {/if}
-    {#if page.data.store.id === Store.GLOBAL && product.firstSeen < 1781787820145}
+    {#if page.data.store?.id === Store.GLOBAL && product.firstSeen < 1781787820145}
       <tfoot>
       <tr class="text-center">
         <td class="p-2! opacity-70" colspan="4">Changes before <DateStamp epochSeconds={1781787820}/> are not available</td>
