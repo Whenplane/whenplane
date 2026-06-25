@@ -66,7 +66,6 @@
         let nextOffset = initialChangeHistory?.page.nextOffset ?? 0;
         while(hasNext && typeof nextOffset === "number") {
           if(!mounted) break;
-          console.log(page.params.store)
           const response = await retry(() =>
             fetch(`/api/lttstore/${page.params.store}/products/${product.handle}/changeHistory?offset=${nextOffset}`)
               .then(r => r.json())
