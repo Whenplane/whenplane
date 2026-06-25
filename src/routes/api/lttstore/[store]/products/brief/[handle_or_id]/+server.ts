@@ -3,6 +3,7 @@ import { dev } from "$app/environment";
 import { createTables } from "../../../../../../(info)/lttstore/createTables.ts";
 import type {RequestHandler} from "./$types";
 import { storeIdFromName } from "$lib/lttstore/lttstore_types.ts";
+import { retryD1 } from "$lib/utils.ts";
 
 export const GET = (async ({platform, params}) => {
   const db = platform?.env?.LTTSTORE_DB.withSession();
@@ -17,17 +18,21 @@ export const GET = (async ({platform, params}) => {
   // Look up its handle and redirect if it is.
   const handleNumber = Number(handle);
   if(!Number.isNaN(handleNumber)) {
-    const productFromId = await db.prepare("select id,handle,title,shortTitle from products where store = ? and id = ?")
-      .bind(store, handleNumber)
-      .first<{id: number, handle: string, title: string}>();
+    const productFromId = await retryD1(() =>
+      db.prepare("select id,handle,title,shortTitle from products where store = ? and id = ?")
+        .bind(store, handleNumber)
+        .first<{id: number, handle: string, title: string}>()
+    );
     if(productFromId) {
       return json(productFromId);
     }
   }
 
-  const productFromHandle = await db.prepare("select id,handle,title,shortTitle from products where store = ? and handle = ?")
-    .bind(store, handle)
-    .first<{id: number, handle: string, title: string}>();
+  const productFromHandle = await retryD1(() =>
+    db.prepare("select id,handle,title,shortTitle from products where store = ? and handle = ?")
+      .bind(store, handle)
+      .first<{id: number, handle: string, title: string}>()
+  );
   if(productFromHandle) {
     return json(productFromHandle);
   }
