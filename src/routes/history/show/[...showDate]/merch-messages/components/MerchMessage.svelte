@@ -5,8 +5,6 @@
 	import ReplyFill from 'svelte-bootstrap-icons/lib/ReplyFill.svelte';
 	import { page } from '$app/state';
 	import { colonTimeString } from '$lib/timeUtils.ts';
-	import floatplane from '$lib/svg/floatplane.svg?no-inline';
-	import youtube from '$lib/svg/youtube.svg?no-inline';
 	import { typed } from '$lib';
 
 	let {
@@ -86,8 +84,7 @@
 					aria-label="Jump to message in Floatplane VOD"
 				>
 					<span
-						class="mm-ts-link"
-						style="height: 1.6em; width: 1.6em; mask: url({floatplane}) center / contain no-repeat;"
+						class="mm-ts-link fp"
 						aria-hidden="true"
 					></span>
 					{colonTimeString(floatplaneSeconds)}
@@ -101,8 +98,7 @@
 					aria-label="Jump to message in YouTube VOD"
 				>
 					<span
-						class="mm-ts-link"
-						style="height: 1.6em; width: 2em; mask: url({youtube}) center / contain no-repeat;"
+						class="mm-ts-link yt"
 						aria-hidden="true"
 					></span>
 					{colonTimeString(youtubeSeconds)}
@@ -156,6 +152,17 @@
 
 	.mm-ts-link {
 		@apply inline-block bg-current mask-alpha -mr-0.5;
+	}
+
+	.mm-ts-link.fp {
+		height: 1.6em;
+		width: 1.6em;
+		mask: var(--fpi) center / contain no-repeat;
+	}
+	.mm-ts-link.yt {
+		height: 1.6em;
+		width: 2em;
+		mask: var(--yti) center / contain no-repeat;
 	}
 
 	.op-8 {

@@ -11,10 +11,12 @@
   import { dev } from "$app/environment";
   import { slide } from "svelte/transition";
   import ToolTip from "$lib/ToolTip.svelte";
+  import floatplane from '$lib/svg/floatplane.svg?no-inline';
+  import youtube from '$lib/svg/youtube.svg?no-inline';
 
   let { data } = $props();
 
-  let lastData: MMJobData = $state();
+  let lastData: MMJobData | undefined = $state();
 
   onMount(() => {
     if(dev && page.params.videoId === "test") {
@@ -128,7 +130,7 @@
 
 <br>
 
-<div class="limit-xl mx-auto text-right pb-64">
+<div class="limit-xl mx-auto text-right pb-64" style="--yti: url({youtube}); --fpi: url({floatplane});">
   {#each data.messages as message}
     <div class:opacity-40={latestJobId !== message.jobId}>
       <MerchMessage {message} youtubeId={data.metadata?.vods?.youtube} floatplaneId={data.metadata?.vods?.floatplane} source={data.mmShow.vodSource} preShowLength={preShowLength}/>
