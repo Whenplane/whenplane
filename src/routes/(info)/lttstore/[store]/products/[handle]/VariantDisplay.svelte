@@ -81,7 +81,12 @@
               {/if}
             {/if}
           {/if}
-          <a href={variant?.id ? `https://${page.data.store.subdomain}.lttstore.com/products/${product.handle}?variant=${variant?.id}` : undefined} class="hidden-link block w-full mt-auto" class:opacity-60={!inStock}>
+          <a
+            href={variant?.id ? `https://${page.data.store.subdomain}.lttstore.com/products/${product.handle}?variant=${variant?.id}` : undefined}
+            class="hidden-link block w-full mt-auto"
+            class:opacity-60={!inStock}
+            rel={page.data?.product?.available ? undefined : "nofollow"}
+          >
             {#if value === "Default Title"}
               {meta.shortTitle ?? product.title}
             {:else}
