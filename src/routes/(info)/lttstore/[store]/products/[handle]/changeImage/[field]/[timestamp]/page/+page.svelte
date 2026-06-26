@@ -17,7 +17,7 @@
     </tr>
     </thead>
     <tbody>
-    <tr class="text-wrap!">
+    <tr class="text-wrap! align-top">
       <td>{getFieldName(data.change.field)}</td>
       <td>
         <SvelteComponent before={data.change.old} after={data.change.new} displaying="before"/>
