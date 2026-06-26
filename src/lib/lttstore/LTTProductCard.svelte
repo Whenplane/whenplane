@@ -11,7 +11,7 @@
 	import Global from "../../routes/(info)/lttstore/flags/Global.svelte";
 
 	let {
-		product = typed<ShopifyProduct>(),
+		product = typed<ShopifyProduct & {image?: string}>(),
 		shortTitle = typed<string | null>(),
 		stock = typed<StockCounts | undefined>(),
 		purchasesPerHour = typed<number | undefined>(),
@@ -35,14 +35,14 @@
 	let imageSrc = $derived(
 			(dev ? 'https://whenplane.com' : '') +
 			'/cdn-cgi/image/anim=false,fit=scale-down,width=528,metadata=copyright,q=60,sqc=30,format=auto/' +
-			`https://img-proxy.whenplane.com/img/${storeUrl}/${product.handle}-${await sha256(product.featured_image).then(r => r.substring(0, 5))}`
+			`https://img-proxy.whenplane.com/img/${storeUrl}/${product.handle}-${await sha256(product.featured_image ?? product.image).then(r => r.substring(0, 5))}`
 		);
 
 	let title = $derived(shortTitle ?? product.title);
 </script>
 
 <a
-	class="card inline-block p-2 m-1 w-48 align-top h-full relative"
+	class="card inline-flex flex-col p-2 m-1 w-48 align-top relative"
 	href="/lttstore/{storeUrl}/products/{handle}"
 	class:opacity-50={!available}
 >
@@ -58,7 +58,7 @@
 			{/if}
 		</div>
 	{/if}
-	{#if product.featured_image}
+	{#if product.featured_image ?? product.image}
 		{#key imageReload}
 			<img
 				src={imageSrc}
@@ -80,28 +80,32 @@
 	{:else}
 		No featured image
 	{/if}
-	<div class="inline-block title" class:line-through={!available}>
-		{title}
-	</div>
-	{#if product.price}
-		{@const convert = typeof store === "undefined" || page.data?.store?.id === store}
-		{@const currency = typeof store !== "undefined" && page.data?.store?.id !== store && (store === Store.US ? "USD" : "CAD")}
-		<br />
-		{#if !product.compare_at_price || product.price === product.compare_at_price}
-			<Price price={product.price / 100} {convert} {currency}/>
-		{:else}
+	<div class="grow flex items-center">
+		<div>
+			<div class="inline-block" class:line-through={!available}>
+				{title}
+			</div>
+			{#if product.price}
+				{@const convert = typeof store === "undefined" || page.data?.store?.id === store}
+				{@const currency = typeof store !== "undefined" && page.data?.store?.id !== store && (store === Store.US ? "USD" : "CAD")}
+				<br />
+				{#if !product.compare_at_price || product.price === product.compare_at_price}
+					<Price price={product.price / 100} {convert} {currency}/>
+				{:else}
 			<span class="old-price">
 				<Price price={product.compare_at_price / 100} {convert} {currency}/>
 			</span>
-			<Price price={product.price / 100} {convert} {currency}/>
-		{/if}
-	{/if}
-	{#if goneIn && stock && goneInHours < 10 && goneInHours >= 0}
-		<div class="opacity-80">
-			Could be gone in {Math.round(goneInHours)}h
+					<Price price={product.price / 100} {convert} {currency}/>
+				{/if}
+			{/if}
+			{#if goneIn && stock && goneInHours < 10 && goneInHours >= 0}
+				<div class="opacity-80">
+					Could be gone in {Math.round(goneInHours)}h
+				</div>
+			{/if}
+			{@render detail?.()}
 		</div>
-	{/if}
-	{@render detail?.()}
+	</div>
 </a>
 
 <style>
@@ -109,9 +113,6 @@
 		aspect-ratio: 1 / 1;
 		object-fit: cover;
 		/*border-radius: 12px;*/
-	}
-	.title {
-		min-height: 3em;
 	}
 
 	.old-price {

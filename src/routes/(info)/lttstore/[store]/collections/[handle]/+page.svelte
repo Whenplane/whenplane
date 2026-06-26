@@ -10,6 +10,7 @@
   import { Store } from "$lib/lttstore/lttstore_types.ts";
   import ChevronDown from "svelte-bootstrap-icons/lib/ChevronDown.svelte";
 	import { slide } from "svelte/transition";
+  import LTTProductCard from "$lib/lttstore/LTTProductCard.svelte";
 
   let { data }: PageProps = $props();
 
@@ -54,6 +55,8 @@
   {/if}
   <br>
   <br>
+</div>
+<div class="mx-auto p-2">
   <Accordion collapsible defaultValue={['1']}>
     <Accordion.Item value="1">
       <Accordion.ItemTrigger class="font-bold flex items-center justify-between gap-2 cool-border">
@@ -68,15 +71,15 @@
             <div transition:slide={{duration: 500}}>
               <div class="bordered-accordion-content p-2">
                 {#if data.collection.reportedCount !== products.length}
-                  <small>
+                  <small class="block mb-2">
                     Note: These are only the products that are published.
                     We are not able to see the unpublished products in this collection,
                     we only know that there are {data.collection.reportedCount - products.length} of them.
                   </small>
                 {/if}
-                <div>
+                <div class="flex flex-wrap justify-center">
                   {#each products as product}
-                    <a href="/lttstore/{page.params.store}/products/{product.handle}">{product.title}</a><br>
+                    <LTTProductCard {product}/>
                   {/each}
                 </div>
               </div>
@@ -88,6 +91,8 @@
   </Accordion>
   <br>
   <br>
+</div>
+<div class="limit mx-auto p-2">
   <h2>Changes</h2>
   <label>
     <input class="checkbox" type="checkbox" bind:checked={hideUpdated}/>
