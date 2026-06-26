@@ -131,7 +131,7 @@
         left: 0;
         width: var(--lh);
         background-color: currentColor;
-        opacity: 0.3;
+        opacity: 0.25;
         mask: var(--wrap-icon) repeat-y top / var(--lh) var(--lh);
         -webkit-mask: var(--wrap-icon) repeat-y top / var(--lh) var(--lh);
     }
