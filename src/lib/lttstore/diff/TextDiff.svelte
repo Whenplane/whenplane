@@ -2,6 +2,7 @@
   import { browser } from "$app/environment";
   import { wait } from "$lib/utils.ts";
   import DiffWorker from "./diffWorker.ts?worker"
+  import wrapArrow from "$lib/svg/arrow-left-down.svg?url&no-inline"
 
   let diffWorker: Worker;
   let resolveFunctions: {[key: string]: (data: string) => void} = {};
@@ -85,14 +86,24 @@
     diff(forcedDiffType ?? diffType as DiffType, parsedBefore, parsedAfter, displaying, chosenFormat)
   )
 
+  let isChangeImage = $derived(page.url.pathname.includes("changeImage"));
 </script>
 
-<div class={[
-  "whitespace-pre",
-  card && "card p-2 overflow-x-auto max-w-full"
-]}>
+<div
+  class={[
+    !isChangeImage && "whitespace-pre",
+    isChangeImage && "whitespace-pre-wrap",
+    card && "card p-2 max-w-full",
+    card && !isChangeImage && "overflow-x-auto",
+    card && isChangeImage && "text-wrap! overflow-x-hidden"
+  ]}
+  style={card && isChangeImage ? `--wrap-icon: url(${wrapArrow})` : undefined}
+>
   {#if page.url.pathname.includes("changeImage")}
-    {@html calcDiff(forcedDiffType ?? diffType as DiffType, parsedBefore, parsedAfter, displaying, chosenFormat)}
+    {@const h = calcDiff(forcedDiffType ?? diffType as DiffType, parsedBefore, parsedAfter, displaying, chosenFormat)}
+    {#each h.split(/\n|<br\s*\/?>/i).filter(line => line.trim() !== "") as line}
+      <div class="wrap-icon">{@html line}</div>
+    {/each}
   {:else}
     {#await html}
       <span class="placeholder animate-pulse w-32 inline-block"></span>
@@ -101,3 +112,32 @@
     {/await}
   {/if}
 </div>
+<style>
+    @reference "#app.css";
+
+    .wrap-icon {
+        --lh: 1.5em;
+        position: relative;
+        overflow: hidden;        /* clips the icon on non-wrapped lines */
+        padding-left: var(--lh);
+        text-indent: calc(-1 * var(--lh));     /* pulls first line back to the left edge */
+        line-height: var(--lh);
+    }
+    .wrap-icon::before {
+        content: "";
+        position: absolute;
+        top: var(--lh);
+        bottom: 0;
+        left: 0;
+        width: var(--lh);
+        background-color: currentColor;
+        opacity: 0.3;
+        mask: var(--wrap-icon) repeat-y top / var(--lh) var(--lh);
+        -webkit-mask: var(--wrap-icon) repeat-y top / var(--lh) var(--lh);
+    }
+    /*.wrap-icon {
+        padding-left: 1.5em;
+        text-indent: -1.5em;
+        background: var(--wrap-icon) no-repeat 0 1.6em;
+    }*/
+</style>

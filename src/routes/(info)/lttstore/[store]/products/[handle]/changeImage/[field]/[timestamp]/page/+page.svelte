@@ -8,16 +8,16 @@
 </script>
 
 <div class="table-container rounded-md bg-surface-900" id="change">
-  <table class="table  rounded-md">
+  <table class="table rounded-md w-screen table-fixed">
     <thead>
     <tr>
       <th>What changed</th>
-      <th class="w-[42%]">Before</th>
-      <th class="w-[42%]">After</th>
+      <th class="w-[46%]">Before</th>
+      <th class="w-[46%]">After</th>
     </tr>
     </thead>
     <tbody>
-    <tr id="change" class="text-wrap!">
+    <tr class="text-wrap!">
       <td>{getFieldName(data.change.field)}</td>
       <td>
         <SvelteComponent before={data.change.old} after={data.change.new} displaying="before"/>
@@ -33,6 +33,5 @@
 <style>
   #change {
       width: fit-content;
-      max-width: 90vw;
   }
 </style>
