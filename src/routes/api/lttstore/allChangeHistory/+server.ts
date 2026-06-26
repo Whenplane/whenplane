@@ -1,34 +1,25 @@
 import { error, json } from "@sveltejs/kit";
 import { dev } from "$app/environment";
-import { createTables } from "../../../../../../(info)/lttstore/createTables.ts";
 import type {RequestHandler} from "./$types";
-import { type ChangeHistoryTableRow, storeIdFromName } from "$lib/lttstore/lttstore_types.ts";
+import { createTables } from "../../../(info)/lttstore/createTables.ts";
+import type { ChangeHistoryTableRow } from "$lib/lttstore/lttstore_types.ts";
 
 
-export const GET = (async ({fetch, params, platform, url}) => {
+export const GET = (async ({platform, url}) => {
   const db = platform?.env?.LTTSTORE_DB.withSession();
   if(!db) throw error(503, "DB unavailable!");
 
   if(dev) await createTables(db);
 
-  const brief: {id: number, handle: string, title: string} | undefined = await fetch(`/api/lttstore/${params.store}/products/brief/${params.handle}`)
-    .then(r => r.ok ? r.json() : undefined);
-
-  if(!brief) throw error(404, 'Product not found (this could also be an internal error)');
-
-  const store = storeIdFromName(params.store);
-
   const perPage = Number(url.searchParams.get("perPage") ?? 100);
-  if(isNaN(perPage) || perPage > 100) throw error(400, "Invalid perPage! Must be a number <= 100");
+  if(isNaN(perPage) || perPage > 500) throw error(400, "Invalid perPage! Must be a number <= 500");
 
   const offset = Number(url.searchParams.get("offset") ?? 0);
   if(isNaN(offset)) throw error(400, "Invalid offset! Must be a number");
 
   const results = await db
-    .prepare("select * from change_history where store = ? and id = ? order by timestamp desc limit ? offset ?")
+    .prepare("select * from change_history order by timestamp desc limit ? offset ?")
     .bind(
-      store,
-      brief.id,
       perPage + 1, // pre-fetch 1 extra to see if there is more than the current page
       offset
     )

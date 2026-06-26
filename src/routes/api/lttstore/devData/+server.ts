@@ -9,27 +9,6 @@ export const GET = (async ({platform}) => {
     throw error(403);
   }
 
-  const changeHistory = (async () => {
-    const textEncoder = new TextEncoder();
-    let offset = 0;
-    const perPage = 100;
-    let lastRows = 0;
-    let changeHistoryRows = [];
-    do {
-      const newRows = await db.prepare("select * from change_history where id = 6649895092327 or timestamp > ? order by timestamp desc limit ? offset ?")
-        .bind(
-          Date.now() - (90 * 24 * 60 * 60e3), // only get non-screwdriver from the past 90 days
-          perPage,
-          offset
-        )
-        .all()
-        .then(r => r.results);
-      changeHistoryRows.push(...newRows);
-      lastRows = newRows.length
-    } while(lastRows >= perPage && textEncoder.encode(JSON.stringify(changeHistoryRows)).length < 10_000_000);
-    return changeHistoryRows;
-  })();
-
   const products = db.prepare("select * from products")
     .all()
     .then(r => r.results)
@@ -60,7 +39,6 @@ export const GET = (async ({platform}) => {
   return json({
     products: await products,
     screwdriverStocks: await screwdriverStocks,
-    changeHistory: await changeHistory,
     collections: await collections,
     collectionChanges: await collectionChanges,
     similarProducts: await similarProducts
