@@ -101,7 +101,7 @@
         </tr>
         </thead>
         <tbody>
-        {#each countTo(20) as change}
+        {#each countTo(20) as _}
           <tr>
             <td><div class="placeholder animate-pulse w-32"></div></td>
             <td><div class="placeholder animate-pulse w-16"></div></td>
