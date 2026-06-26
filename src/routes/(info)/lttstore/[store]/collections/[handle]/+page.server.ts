@@ -24,7 +24,24 @@ export const load = (async ({platform, params}) => {
       .then(r => r.results)
   );
 
+  const shortTitles = Object.fromEntries(
+    (await retryD1(() =>
+      db.prepare("select id,shortTitle from products where store = ? and id in (SELECT value FROM json_each(?)) and shortTitle is not null")
+        .bind(
+          store,
+          JSON.stringify(
+            JSON.parse(collection.products)
+              .map((p: {id: number}) => p.id)
+          )
+        )
+        .all<{id: number, shortTitle: string | null}>()
+        .then(r => r.results)
+    ))
+      .map(r => [r.id, r.shortTitle])
+  );
+
   return {
+    shortTitles,
     collection,
     changes
   }

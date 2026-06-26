@@ -79,7 +79,7 @@
                 {/if}
                 <div class="flex flex-wrap justify-center">
                   {#each products as product}
-                    <LTTProductCard {product}/>
+                    <LTTProductCard {product} shortTitle={data.shortTitles[product.id]} />
                   {/each}
                 </div>
               </div>
@@ -162,12 +162,6 @@
 </div>
 
 <style>
-  .accordion-outline {
-      border: 1px solid rgba(255, 255, 255, 0.2);
-      border-top: none;
-      border-radius: 0 0 12px 12px;
-  }
-
   .thumbnail-backdrop {
       position: absolute;
       top: 0;
