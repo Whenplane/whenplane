@@ -12,17 +12,17 @@
     <thead>
     <tr>
       <th>What changed</th>
-      <th class="max-w-[46%]">Before</th>
-      <th class="max-w-[46%]">After</th>
+      <th>Before</th>
+      <th>After</th>
     </tr>
     </thead>
     <tbody>
     <tr class="align-top">
       <td>{getFieldName(data.change.field)}</td>
-      <td>
+      <td class="max-w-[46vw]">
         <SvelteComponent before={data.change.old} after={data.change.new} displaying="before"/>
       </td>
-      <td>
+      <td class="max-w-[46vw]">
         <SvelteComponent before={data.change.old} after={data.change.new} displaying="after"/>
       </td>
     </tr>
