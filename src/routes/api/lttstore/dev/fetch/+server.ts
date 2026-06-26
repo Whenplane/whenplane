@@ -1,12 +1,14 @@
 import { error, json } from "@sveltejs/kit";
 import { dev } from "$app/environment";
 import type {
+  ChangeHistoryTableRow,
   CollectionDbRow,
   ProductsTableRow, SimilarProductsTableRow,
   StockHistoryTableRow
 } from "$lib/lttstore/lttstore_types.ts";
 import { createTables } from "../../../../(info)/lttstore/createTables.ts";
 import type {RequestHandler} from "./$types";
+import { commas, retry } from "$lib/utils.ts";
 
 
 export const GET = (async ({platform}) => {
@@ -20,8 +22,7 @@ export const GET = (async ({platform}) => {
     products: ProductsTableRow[],
     collections: CollectionDbRow[]
     screwdriverStocks: StockHistoryTableRow[],
-    changeHistory: {store: number, id: number, timestamp: number, field: string, old: string, new: string}[],
-    collectionChanges: {store: number, id: number, timestamp: number, field: string, old: string, new: string}[],
+    collectionChanges: ChangeHistoryTableRow[],
     similarProducts: SimilarProductsTableRow[]
   } = await fetch("https://whenplane.com/api/lttstore/devData")
     .then(res => res.json());
@@ -107,10 +108,34 @@ export const GET = (async ({platform}) => {
       .run();
   }
 
+  console.log("Fetching allChangeHistory");
+  const changeHistoryStart = Date.now();
+  let changeHistory: ChangeHistoryTableRow[] = [];
+  let nextOffset: number | undefined = 0;
+  let hasNextPage = true;
+  do {
+    const {changeHistory: newChangeHistory, page} = await retry(() =>
+      fetch(`https://whenplane.com/api/lttstore/allChangeHistory?perPage=500&offset=${nextOffset}`)
+        .then(r => {
+          if(!r.ok) throw new Error(`Got ${r.status} ${r.statusText} from allChangeHistory endpoint`);
+          return r.json() as Promise<{changeHistory: ChangeHistoryTableRow[], page: {perPage: number, hasNextPage: boolean, nextOffset: number | undefined}}>;
+        })
+    );
+    nextOffset = page.nextOffset;
+    hasNextPage = page.hasNextPage;
+    changeHistory.push(...newChangeHistory);
+    const last = newChangeHistory.pop();
+
+    // Stop once we pass 90 days ago
+    if(!last || Date.now() - last.timestamp > 90 * 24 * 60 * 60e3) break;
+  } while(hasNextPage && nextOffset !== undefined);
+
+  console.log(`Fetched ${commas(changeHistory.length)} change history entries in ${commas(Date.now() - changeHistoryStart)}ms`)
+
   i = 0;
-  for (const change of data.changeHistory) {
+  for (const change of changeHistory) {
     i++;
-    if(i % 10 === 0) console.log("Inserting " + i + "/" + data.changeHistory.length + " change history");
+    if(i % 10 === 0) console.log("Inserting " + i + "/" + changeHistory.length + " change history");
     await db.prepare("insert or replace into change_history(store, id, timestamp, field, old, new) values (?, ?, ?, ?, ?, ?)")
       .bind(
         change.store,
