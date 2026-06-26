@@ -8,6 +8,8 @@
   import DateStamp from "$lib/DateStamp.svelte";
   import type {PageProps} from "./$types";
   import { Store } from "$lib/lttstore/lttstore_types.ts";
+  import ChevronDown from "svelte-bootstrap-icons/lib/ChevronDown.svelte";
+	import { slide } from "svelte/transition";
 
   let { data }: PageProps = $props();
 
@@ -52,30 +54,36 @@
   {/if}
   <br>
   <br>
-  <Accordion>
-    <Accordion.Item>
-      {#snippet summary()}
-            Products
-          {/snippet}
-      {#snippet content()}
-          
-          <div class="accordion-outline p-2">
-            {#if data.collection.reportedCount !== products.length}
-              <small>
-                Note: These are only the products that are published.
-                We are not able to see the unpublished products in this collection,
-                we only know that there are {data.collection.reportedCount - products.length} of them.
-              </small>
-            {/if}
-            <div>
-              {#each products as product}
-                <a href="/lttstore/{page.params.store}/products/{product.handle}">{product.title}</a><br>
-              {/each}
+  <Accordion collapsible defaultValue={['1']}>
+    <Accordion.Item value="1">
+      <Accordion.ItemTrigger class="font-bold flex items-center justify-between gap-2 cool-border">
+        Products
+        <Accordion.ItemIndicator class="group">
+          <ChevronDown class="h-5 w-5 transition group-data-[state=open]:rotate-180 duration-400" />
+        </Accordion.ItemIndicator>
+      </Accordion.ItemTrigger>
+      <Accordion.ItemContent>
+        {#snippet element(attributes)}
+          {#if !attributes.hidden}
+            <div transition:slide={{duration: 500}}>
+              <div class="bordered-accordion-content p-2">
+                {#if data.collection.reportedCount !== products.length}
+                  <small>
+                    Note: These are only the products that are published.
+                    We are not able to see the unpublished products in this collection,
+                    we only know that there are {data.collection.reportedCount - products.length} of them.
+                  </small>
+                {/if}
+                <div>
+                  {#each products as product}
+                    <a href="/lttstore/{page.params.store}/products/{product.handle}">{product.title}</a><br>
+                  {/each}
+                </div>
+              </div>
             </div>
-          </div>
-
-        
-          {/snippet}
+          {/if}
+        {/snippet}
+      </Accordion.ItemContent>
     </Accordion.Item>
   </Accordion>
   <br>
