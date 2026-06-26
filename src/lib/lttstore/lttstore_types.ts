@@ -209,7 +209,8 @@ export type ProductsTableRow = {
   backorderAlerts: string,
   productDetailModules: string,
   productDiscount: string,
-  differences: number
+  differences: number,
+  lastUpdateStart: number | null
 }
 export type ParsedProductsTableRow = {
   handle: string,
