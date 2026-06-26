@@ -12,15 +12,19 @@
     <thead>
     <tr>
       <th>What changed</th>
-      <th>Before</th>
-      <th>After</th>
+      <th class="w-[42%]">Before</th>
+      <th class="w-[42%]">After</th>
     </tr>
     </thead>
     <tbody>
-    <tr id="change">
+    <tr id="change" class="text-wrap!">
       <td>{getFieldName(data.change.field)}</td>
-      <td><SvelteComponent before={data.change.old} after={data.change.new} displaying="before"/></td>
-      <td><SvelteComponent before={data.change.old} after={data.change.new} displaying="after"/></td>
+      <td>
+        <SvelteComponent before={data.change.old} after={data.change.new} displaying="before"/>
+      </td>
+      <td>
+        <SvelteComponent before={data.change.old} after={data.change.new} displaying="after"/>
+      </td>
     </tr>
     </tbody>
   </table>
