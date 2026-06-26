@@ -62,7 +62,7 @@
         {#snippet tImg(thumbnails: YoutubeThumbnails)}
           {@const thumbnail = thumbnails?.maxres ?? thumbnails?.standard ?? thumbnails?.high ?? thumbnails?.medium ?? thumbnails?.default}
           <img
-            class="thumbnail absolute z-10"
+            class="thumbnail absolute z-10 rounded-lg"
             src={thumbnail?.url}
             alt=""
             aria-hidden="true"
@@ -122,7 +122,6 @@
         width: min(12em, 20vw);
         height: auto;
         object-fit: cover;
-        border-radius: var(--theme-rounded-base);
         aspect-ratio: 16 / 9;
     }
 </style>
