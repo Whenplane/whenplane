@@ -40,7 +40,7 @@ export function calcDiff(diffType: DiffType, parsedBefore: string, parsedAfter: 
           .map((line) => "<span style='color:" + color + "'>" + line + "</span>")
           .join("\n");
       } else {
-        html += "<span style='background-color:" + color + "' class='opacity-40 pl-1'></span>";
+        html += "<span style='background-color:" + color + "' class='opacity-40 pl-0.5'></span>";
       }
     }
   });
