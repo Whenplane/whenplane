@@ -607,18 +607,19 @@
               <div class="bordered-accordion-content px-2" transition:slide>
                 {#key data}
                   <div class="overflow-y-visible overflow-x-auto pr-64 edge-fade pb-3" style="text-wrap: nowrap;">
-                    {#await data.similarProducts}
-                      ...
-                    {:then similarProducts}
-                      <div class="inline-flex h-78">
+                    <div class="inline-flex h-78">
+                      {#await data.similarProducts}
+                        ...
+                      {:then similarProducts}
+
                         {#each similarProducts?.similar as similar (similar.id)}
                           {@const product = similar.metadata.product}
                           <LTTProductCard {product} shortTitle={product.shortTitle} available={similar.metadata.available} store={similar.metadata.store}/>
                         {:else}
                           No similar products yet! Check back later.
                         {/each}
-                      </div>
-                    {/await}
+                      {/await}
+                    </div>
                   </div>
                 {/key}
               </div>
