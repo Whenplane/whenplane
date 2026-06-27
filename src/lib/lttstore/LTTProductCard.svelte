@@ -19,7 +19,9 @@
 		available = typed<boolean>(true),
 		lazyLoadImage = typed<boolean>(false),
 		detail = typed<Snippet | undefined>(),
-		store = typed<number | undefined>()
+		store = typed<number | undefined>(),
+		classes = typed<string | undefined>(),
+		style = typed<string | undefined>(),
 	} = $props();
 
 	let goneInHours = $derived((stock?.total ?? -1) / (purchasesPerHour ?? -1));
@@ -42,7 +44,8 @@
 </script>
 
 <a
-	class="card inline-flex flex-col p-2 m-1 w-48 align-top relative"
+	class="card inline-flex flex-col p-2 m-1 w-48 align-top relative {classes ?? ""}"
+	{style}
 	href="/lttstore/{storeUrl}/products/{handle}"
 	class:opacity-50={!available}
 >
@@ -81,31 +84,30 @@
 		No featured image
 	{/if}
 	<div class="grow flex items-center">
-		<div>
-			<div class="inline-block" class:line-through={!available}>
-				{title}
-			</div>
-			{#if product.price}
-				{@const convert = typeof store === "undefined" || page.data?.store?.id === store}
-				{@const currency = typeof store !== "undefined" && page.data?.store?.id !== store && (store === Store.US ? "USD" : "CAD")}
-				<br />
-				{#if !product.compare_at_price || product.price === product.compare_at_price}
-					<Price price={product.price / 100} {convert} {currency}/>
-				{:else}
-			<span class="old-price">
-				<Price price={product.compare_at_price / 100} {convert} {currency}/>
-			</span>
-					<Price price={product.price / 100} {convert} {currency}/>
-				{/if}
-			{/if}
-			{#if goneIn && stock && goneInHours < 10 && goneInHours >= 0}
-				<div class="opacity-80">
-					Could be gone in {Math.round(goneInHours)}h
-				</div>
-			{/if}
-			{@render detail?.()}
+		<div class="inline-block" class:line-through={!available}>
+			{title}
 		</div>
 	</div>
+	<div>
+		{#if product.price}
+			{@const convert = typeof store === "undefined" || page.data?.store?.id === store}
+			{@const currency = typeof store !== "undefined" && page.data?.store?.id !== store && (store === Store.US ? "USD" : "CAD")}
+			{#if !product.compare_at_price || product.price === product.compare_at_price}
+				<Price price={product.price / 100} {convert} {currency}/>
+			{:else}
+				<span class="old-price">
+					<Price price={product.compare_at_price / 100} {convert} {currency}/>
+				</span>
+				<Price price={product.price / 100} {convert} {currency}/>
+			{/if}
+		{/if}
+	</div>
+	{#if goneIn && stock && goneInHours < 10 && goneInHours >= 0}
+		<div class="opacity-80">
+			Could be gone in {Math.round(goneInHours)}h
+		</div>
+	{/if}
+	{@render detail?.()}
 </a>
 
 <style>

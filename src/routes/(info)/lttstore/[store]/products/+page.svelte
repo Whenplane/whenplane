@@ -66,59 +66,61 @@
       <option value="restocked">recently restocked</option>
     </select>
   </div>
-  {#each data.allProducts as product, i (product.id)}
-    <div class="inline-block" animate:flip={{ duration: 200 }}>
-      <LTTProductCard
-        product={JSON.parse(product.product)}
-        shortTitle={product.shortTitle}
-        available={product.available}
-        lazyLoadImage={i > 10}
-      >
-        {#snippet detail()}
-          <div class="opacity-80 text-xs">
-            {#if data.sortColumn === "purchasesPerDay"}
-              {#if product.purchasesPerDay !== -1}
-                {product.purchasesPerDay?.toFixed(2) ?? "??"}
-              {:else}
-                ??
+  <div class="flex flex-wrap">
+    {#each data.allProducts as product, i (product.id)}
+      <div class="inline-flex" animate:flip={{ duration: 200 }}>
+        <LTTProductCard
+          product={JSON.parse(product.product)}
+          shortTitle={product.shortTitle}
+          available={product.available}
+          lazyLoadImage={i > 10}
+        >
+          {#snippet detail()}
+            <div class="opacity-80 text-xs">
+              {#if data.sortColumn === "purchasesPerDay"}
+                {#if product.purchasesPerDay !== -1}
+                  {product.purchasesPerDay?.toFixed(2) ?? "??"}
+                {:else}
+                  ??
+                {/if}
+                spd
+              {:else if data.sortColumn === "purchasesPerHour"}
+                {#if product.purchasesPerHour !== -1}
+                  {product.purchasesPerHour?.toFixed(2) ?? "??"}
+                {:else}
+                  ??
+                {/if}
+                sph
+              {:else if data.sortColumn === "metadataUpdate"}
+                Meta updated
+                {#if product.metadataUpdate && product.metadataUpdate > 0}
+                  <DateStamp epochSeconds={product.metadataUpdate / 1e3} />
+                {:else}
+                  N/A
+                {/if}
+              {:else if data.sortColumn === "stockChecked"}
+                Stock checked
+                {#if product.stockChecked && product.stockChecked > 0}
+                  <DateStamp epochSeconds={product.stockChecked / 1e3} />
+                {:else}
+                  N/A
+                {/if}
+              {:else if data.sortColumn === "lastRestock"}
+                Restocked
+                {#if product.lastRestock && product.lastRestock > 0}
+                  <DateStamp epochSeconds={product.lastRestock / 1e3} />
+                {:else}
+                  N/A
+                {/if}
               {/if}
-              spd
-            {:else if data.sortColumn === "purchasesPerHour"}
-              {#if product.purchasesPerHour !== -1}
-                {product.purchasesPerHour?.toFixed(2) ?? "??"}
-              {:else}
-                ??
-              {/if}
-              sph
-            {:else if data.sortColumn === "metadataUpdate"}
-              Meta updated
-              {#if product.metadataUpdate && product.metadataUpdate > 0}
-                <DateStamp epochSeconds={product.metadataUpdate / 1e3} />
-              {:else}
-                N/A
-              {/if}
-            {:else if data.sortColumn === "stockChecked"}
-              Stock checked
-              {#if product.stockChecked && product.stockChecked > 0}
-                <DateStamp epochSeconds={product.stockChecked / 1e3} />
-              {:else}
-                N/A
-              {/if}
-            {:else if data.sortColumn === "lastRestock"}
-              Restocked
-              {#if product.lastRestock && product.lastRestock > 0}
-                <DateStamp epochSeconds={product.lastRestock / 1e3} />
-              {:else}
-                N/A
-              {/if}
-            {/if}
-          </div>
-        {/snippet}
-      </LTTProductCard>
-    </div>
-  {:else}
-    No products are being tracked yet!
-  {/each}
+            </div>
+          {/snippet}
+        </LTTProductCard>
+      </div>
+    {:else}
+      No products are being tracked yet!
+    {/each}
+  </div>
 </div>
 {#if dev}
   <pre>{JSON.stringify(data, undefined, '\t')}</pre>

@@ -606,16 +606,18 @@
             {#if !attributes.hidden}
               <div class="bordered-accordion-content px-2" transition:slide>
                 {#key data}
-                  <div class="min-h-[298px] overflow-y-visible overflow-x-auto pr-64 edge-fade" style="text-wrap: nowrap;">
+                  <div class="overflow-y-visible overflow-x-auto pr-64 edge-fade pb-3" style="text-wrap: nowrap;">
                     {#await data.similarProducts}
                       ...
                     {:then similarProducts}
-                      {#each similarProducts?.similar as similar (similar.id)}
-                        {@const product = similar.metadata.product}
-                        <LTTProductCard {product} shortTitle={product.shortTitle} available={similar.metadata.available} store={similar.metadata.store}/>
-                      {:else}
-                        No similar products yet! Check back later.
-                      {/each}
+                      <div class="inline-flex h-78">
+                        {#each similarProducts?.similar as similar (similar.id)}
+                          {@const product = similar.metadata.product}
+                          <LTTProductCard {product} shortTitle={product.shortTitle} available={similar.metadata.available} store={similar.metadata.store}/>
+                        {:else}
+                          No similar products yet! Check back later.
+                        {/each}
+                      </div>
                     {/await}
                   </div>
                 {/key}

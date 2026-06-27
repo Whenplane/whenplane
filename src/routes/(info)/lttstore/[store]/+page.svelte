@@ -73,29 +73,31 @@
     <div class="opacity-80 pl-2">
       These products are new or returning.
     </div>
-    {#each data.newProducts as product}
-      {@const productData = JSON.parse(product.product)}
-      <LTTProductCard
-        product={productData}
-        shortTitle={product.shortTitle}
-        goneIn={true}
-        stock={JSON.parse(product.stock)}
-        purchasesPerHour={product.purchasesPerHour}
-        available={product.available}
-      >
-        {#snippet detail()}
-          {@const publishedTime = new Date(productData.published_at).getTime()}
-          <div class="opacity-80 text-xs">
-            {#if product.firstSeen < publishedTime}
-              Re-Published
-            {:else}
-              Published
-            {/if}
-            <RelativeDate epochSeconds={publishedTime / 1e3} />
-          </div>
-        {/snippet}
-      </LTTProductCard>
-    {/each}
+    <div class="flex flex-wrap">
+      {#each data.newProducts as product}
+        {@const productData = JSON.parse(product.product)}
+        <LTTProductCard
+          product={productData}
+          shortTitle={product.shortTitle}
+          goneIn={true}
+          stock={JSON.parse(product.stock)}
+          purchasesPerHour={product.purchasesPerHour}
+          available={product.available}
+        >
+          {#snippet detail()}
+            {@const publishedTime = new Date(productData.published_at).getTime()}
+            <div class="opacity-80 text-xs">
+              {#if product.firstSeen < publishedTime}
+                Re-Published
+              {:else}
+                Published
+              {/if}
+              <RelativeDate epochSeconds={publishedTime / 1e3} />
+            </div>
+          {/snippet}
+        </LTTProductCard>
+      {/each}
+    </div>
     <br>
     <br>
   {/if}
@@ -106,22 +108,26 @@
       From the past few hours
     </div>
     <!-- text-clear is to hide the ellipsis from line-clamp -->
-    <div class="overflow-hidden max-md:line-clamp-5 max-lg:line-clamp-3 lg:line-clamp-2 text-clear">
+    <div class={[
+      "grid auto-rows-[0] grid-cols-[repeat(auto-fill,minmax(calc(var(--spacing)*48),max-content))]",
+      "lg:grid-rows-[repeat(2,auto)] max-lg:grid-rows-[repeat(3,auto)] max-md:grid-rows-[repeat(5,auto)]",
+      "overflow-hidden text-clear"
+    ]}>
       {#each data.popularProducts as product (product.id)}
-        <div class="inline-block text-white text-base" animate:flip={{ duration: 200 }}>
-          <LTTProductCard
-            product={JSON.parse(product.product)}
-            shortTitle={product.shortTitle}
-          >
-            {#snippet detail()}
-              <div class="opacity-80 text-xs">
-                {#if product.purchasesPerHour && product.purchasesPerHour > 0}
-                  {product.purchasesPerHour.toFixed(2)} sph
-                {/if}
-              </div>
-            {/snippet}
-          </LTTProductCard>
-        </div>
+        <LTTProductCard
+          product={JSON.parse(product.product)}
+          shortTitle={product.shortTitle}
+          classes="text-white! text-base!"
+          style="color: var(--base-font-color-dark)"
+        >
+          {#snippet detail()}
+            <div class="opacity-80 text-xs">
+              {#if product.purchasesPerHour && product.purchasesPerHour > 0}
+                {product.purchasesPerHour.toFixed(2)} sph
+              {/if}
+            </div>
+          {/snippet}
+        </LTTProductCard>
       {:else}
         No products are being tracked yet!
       {/each}
@@ -139,9 +145,11 @@
         <div class="opacity-80 pl-2">
           These products are currently on sale. (excludes items that are out of stock)
         </div>
-        {#each onSale as product}
-          <LTTProductCard product={JSON.parse(product.product)} shortTitle={product.shortTitle} goneIn={true} stock={JSON.parse(product.stock)} purchasesPerHour={product.purchasesPerHour} available={product.available}/>
-        {/each}
+        <div class="flex flex-wrap">
+          {#each onSale as product}
+            <LTTProductCard product={JSON.parse(product.product)} shortTitle={product.shortTitle} goneIn={true} stock={JSON.parse(product.stock)} purchasesPerHour={product.purchasesPerHour} available={product.available}/>
+          {/each}
+        </div>
         <br>
         <br>
       </div>
@@ -157,9 +165,11 @@
         <div class="opacity-80 pl-2">
           These items are low in stock and selling fast enough to possibly run out of stock soon.
         </div>
-        {#each lowStock as product}
-          <LTTProductCard product={JSON.parse(product.product)} shortTitle={product.shortTitle} goneIn={true} stock={JSON.parse(product.stock)} purchasesPerHour={product.purchasesPerHour} available={product.available}/>
-        {/each}
+        <div class="flex flex-wrap">
+          {#each lowStock as product}
+            <LTTProductCard product={JSON.parse(product.product)} shortTitle={product.shortTitle} goneIn={true} stock={JSON.parse(product.stock)} purchasesPerHour={product.purchasesPerHour} available={product.available}/>
+          {/each}
+        </div>
         <br>
         <br>
       </div>
@@ -175,20 +185,22 @@
         <div class="opacity-80 pl-2">
           These items have been restocked in the past 6 days.
         </div>
-        {#each recentRestocks as product}
-          <LTTProductCard
-            product={JSON.parse(product.product)}
-            shortTitle={product.shortTitle}
-            purchasesPerHour={product.purchasesPerHour}
-            available={product.available}
-          >
-            {#snippet detail()}
-              <div class="opacity-80 text-xs">
-                Restocked <RelativeDate epochSeconds={product.lastRestock / 1e3} />
-              </div>
-            {/snippet}
-          </LTTProductCard>
-        {/each}
+        <div class="flex flex-wrap">
+          {#each recentRestocks as product}
+            <LTTProductCard
+              product={JSON.parse(product.product)}
+              shortTitle={product.shortTitle}
+              purchasesPerHour={product.purchasesPerHour}
+              available={product.available}
+            >
+              {#snippet detail()}
+                <div class="opacity-80 text-xs">
+                  Restocked <RelativeDate epochSeconds={product.lastRestock / 1e3} />
+                </div>
+              {/snippet}
+            </LTTProductCard>
+          {/each}
+        </div>
         <br>
         <br>
       </div>

@@ -269,12 +269,14 @@
   </div>
   <div class="search-results" class:opacity-60={greyResults}>
     {#if searchResults && searchResults.hits}
-      {#each searchResults.hits as hit (hit.document.id)}
-        {@const product = JSON.parse(hit.document.product)}
-        <div class="inline-block" animate:flip={{ duration: 200 }}>
-          <LTTProductCard product={product} shortTitle={product.shortTitle} available={hit.document.available}/>
-        </div>
-      {/each}
+      <div class="flex flex-wrap">
+        {#each searchResults.hits as hit (hit.document.id)}
+          {@const product = JSON.parse(hit.document.product)}
+          <div class="inline-flex" animate:flip={{ duration: 200 }}>
+            <LTTProductCard product={product} shortTitle={product.shortTitle} available={hit.document.available}/>
+          </div>
+        {/each}
+      </div>
       <br>
       {#if searchResults.hits.length === resultsPerPage}
         {searchResults.found - resultsPerPage} more results hidden. Please narrow your search query.<br>

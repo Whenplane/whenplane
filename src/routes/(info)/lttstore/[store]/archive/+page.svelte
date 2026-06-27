@@ -26,7 +26,7 @@
     Currently this archive only goes back to June 2024, but I plan to go back further in the future.
   </div>
   <br>
-  <div class="p-2">
+  <div class="p-2 flex flex-wrap">
     {#each data.products as product (product.id)}
       <LTTProductCard product={JSON.parse(product.product)} shortTitle={product.shortTitle}>
         {#snippet detail()}
