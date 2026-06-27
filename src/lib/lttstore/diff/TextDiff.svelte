@@ -101,9 +101,12 @@
 >
   {#if page.url.pathname.includes("changeImage")}
     {@const h = calcDiff(forcedDiffType ?? diffType as DiffType, parsedBefore, parsedAfter, displaying, chosenFormat)}
-    {#each h.split(/\n|<br\s*\/?>/i).filter(line => line.trim() !== "") as line}
-      <div class="wrap-icon">{@html line}</div>
-    {/each}
+    {@html h
+      .split(/\n|<br\s*\/?>/i)
+      .filter(line => line.trim() !== "")
+      .map(l => `<div class="wrap-icon">${l}</div>`)
+      .join("")
+    }
   {:else}
     {#await html}
       <span class="placeholder animate-pulse w-32 inline-block"></span>
@@ -115,7 +118,7 @@
 <style>
     @reference "#app.css";
 
-    .wrap-icon {
+    :global(.wrap-icon) {
         --lh: 1.5em;
         position: relative;
         overflow: hidden;        /* clips the icon on non-wrapped lines */
@@ -123,7 +126,7 @@
         text-indent: calc(-1 * var(--lh));     /* pulls first line back to the left edge */
         line-height: var(--lh);
     }
-    .wrap-icon::before {
+    :global(.wrap-icon::before) {
         content: "";
         position: absolute;
         top: var(--lh);

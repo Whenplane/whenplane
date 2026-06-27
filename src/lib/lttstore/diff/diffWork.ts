@@ -35,7 +35,10 @@ export function calcDiff(diffType: DiffType, parsedBefore: string, parsedAfter: 
         (color === 'green' && displaying === 'after') ||
         (color === 'red' && displaying === 'before')
       ) {
-        html += "<span style='color:" + color + "'>" + text + '</span>';
+        html += text
+          .split("\n")
+          .map((line) => "<span style='color:" + color + "'>" + line + "</span>")
+          .join("\n");
       } else {
         html += "<span style='background-color:" + color + "' class='opacity-40 pl-1'></span>";
       }
