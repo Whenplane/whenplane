@@ -16,22 +16,24 @@ export const load = (async ({platform, params}) => {
 
   const oneWeekAgo = Date.now() - (7 * 24 * 60 * 60e3);
 
+  const trimmedProductRows = "handle,shortTitle,id,available,purchasesPerDay,purchasesPerHour,metadataUpdate,stockChecked,lastRestock,stock,json_remove(json_remove(json_remove(json_remove(product, '$.media'), '$.images'), '$.variants'), '$.description') as product";
+
   const popularProducts = retryD1(() =>
-    db.prepare("select * from products where store = ? and stockChecked > ? and purchasesPerHour > 0 and stock is not null and json_extract(stock, '$.total') is not null order by purchasesPerHour DESC limit 14")
+    db.prepare(`select ${trimmedProductRows} from products where store = ? and stockChecked > ? and purchasesPerHour > 0 and stock is not null and json_extract(stock, '$.total') is not null order by purchasesPerHour DESC limit 14`)
       .bind(store, Math.max(oneWeekAgo, 1745474690241))
       .all<ProductsTableRow>()
       .then(r => r.results)
   );
 
   const lowStock = retryD1(() =>
-    db.prepare("select * from products where store = ? and json_extract(stock, '$.total') > 0 and purchasesPerHour > 0 and json_extract(stock, '$.total')/purchasesPerHour < 24 and stockChecked > ? order by json_extract(stock, '$.total')/purchasesPerHour ASC limit 10")
+    db.prepare(`select ${trimmedProductRows} from products where store = ? and json_extract(stock, '$.total') > 0 and purchasesPerHour > 0 and json_extract(stock, '$.total')/purchasesPerHour < 24 and stockChecked > ? order by json_extract(stock, '$.total')/purchasesPerHour ASC limit 10`)
       .bind(store, oneWeekAgo)
       .all<ProductsTableRow>()
       .then(r => r.results)
   );
 
   const onSale = retryD1(() =>
-    db.prepare("select * from products where store = ? and currentPrice < regularPrice and json_extract(product, '$.available') = 1 and handle not like '%bundle%' and handle not like '%-solution' and title not like '%bundle%' and available=1 order by currentPrice ASC limit 50")
+    db.prepare(`select ${trimmedProductRows} from products where store = ? and currentPrice < regularPrice and json_extract(product, '$.available') = 1 and handle not like '%bundle%' and handle not like '%-solution' and title not like '%bundle%' and available=1 order by currentPrice ASC limit 50`)
       .bind(store)
       .all<ProductsTableRow>()
       .then(r => r.results)
@@ -40,7 +42,7 @@ export const load = (async ({platform, params}) => {
   const sixDaysAgo = Date.now() - (6 * 24 * 60 * 60e3);
 
   const recentRestocks = retryD1(() =>
-    db.prepare("select * from products where store = ? and lastRestock > ? order by lastRestock DESC limit 30")
+    db.prepare(`select ${trimmedProductRows} from products where store = ? and lastRestock > ? order by lastRestock DESC limit 30`)
       .bind(store, sixDaysAgo)
       .all<ProductsTableRow>()
       .then(r => r.results)
@@ -48,7 +50,7 @@ export const load = (async ({platform, params}) => {
 
   const newThreshold = store === Store.US ? sixDaysAgo : Math.max(sixDaysAgo, 1781787820145);
   let newProducts = await retryD1(() =>
-    db.prepare("select * from products where store = ? and (firstSeen > ? or unixepoch(json_extract(product, '$.published_at')) > ?) order by firstSeen DESC limit 50")
+    db.prepare(`select ${trimmedProductRows} from products where store = ? and (firstSeen > ? or unixepoch(json_extract(product, '$.published_at')) > ?) order by firstSeen DESC limit 50`)
       .bind(store, newThreshold, Math.floor(sixDaysAgo/1e3))
       .all<ProductsTableRow>()
       .then(r => r.results)
