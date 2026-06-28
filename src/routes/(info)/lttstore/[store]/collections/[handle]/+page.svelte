@@ -75,8 +75,8 @@
                   </small>
                 {/if}
                 <div class="flex flex-wrap justify-center">
-                  {#each products as product}
-                    <LTTProductCard {product} shortTitle={data.shortTitles[product.id]} />
+                  {#each products as product, i}
+                    <LTTProductCard {product} shortTitle={data.shortTitles[product.id]} lazyLoadImage={i > 10} />
                   {/each}
                 </div>
               </div>
