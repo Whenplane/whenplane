@@ -67,6 +67,7 @@
     })
   }
   let loadInterval: NodeJS.Timer | undefined;
+  let finishedLoading = false;
 
   // limits the number of changes loaded at once to reduce cpu usage spike
   function startLoading() {
@@ -93,15 +94,20 @@
           nextOffset = response.page.nextOffset;
           hasNext = response.page.hasNextPage;
           changeHistory.push(...response.changeHistory);
-          await wait(800); // to prevent rate limiting
+          if(!differences || differences / 100 >= 14) {
+            await wait(800); // to prevent rate limiting
+          }
         }
+        finishedLoading = true;
       })();
       console.debug("Starting loading of diffs");
       loadTo += 5;
       loadInterval = setInterval(() => {
-        if(loadTo < (differences || Math.max(150, changeHistory.length)) - 1) {
+        if(!finishedLoading && loadTo > changeHistory.length) return;
+        if(loadTo < (differences || changeHistory.length) - 1) {
           loadTo += 10;
-        } else {
+        } else if(differences || finishedLoading) {
+          console.debug("Finished loading diffs after " + loadTo)
           clearInterval(loadInterval);
           loadInterval = undefined;
         }
