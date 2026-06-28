@@ -19,12 +19,6 @@ export const GET = (async ({platform}) => {
     .then(r => r.results)
     .finally(() => console.log("collections query finished"))
 
-  const collectionChanges = db.prepare("select * from collection_changes where timestamp > ? and (field is not \"updated_at\" or timestamp > ?) order by timestamp desc limit 1200")
-    .bind(Date.now() - (14 * 24 * 60 * 60e3), Date.now() - (6 * 60 * 60e3)) // only get updated_at entries from the past 6h, others only from the past 14d
-    .all()
-    .then(r => r.results)
-    .finally(() => console.log("collectionChanges query finished"))
-
   const screwdriverStocks = db.prepare("select * from stock_history where id = 6649895092327 and timestamp > ?")
     .bind(Date.now() - (6 * 30 * 24 * 60 * 60e3))
     .all()
@@ -40,7 +34,6 @@ export const GET = (async ({platform}) => {
     products: await products,
     screwdriverStocks: await screwdriverStocks,
     collections: await collections,
-    collectionChanges: await collectionChanges,
     similarProducts: await similarProducts
   })
 
