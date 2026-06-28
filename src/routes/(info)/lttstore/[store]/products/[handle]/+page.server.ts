@@ -5,15 +5,27 @@ import {
   type ProductsTableRow,
   type ShopifyProduct,
   type SimilarProductsTableRow,
-  type StockHistoryTableRow, storeIdFromName
+  type StockHistoryTableRow, Store, storeIdFromName
 } from "$lib/lttstore/lttstore_types.ts";
 
 import { createTables } from "../../../createTables.ts";
 import { retry, retryD1 } from "$lib/utils.ts";
 import { productRedirects } from "$lib/lttstore/product_redirects.ts";
+import type { D1Database, D1DatabaseSession } from "@cloudflare/workers-types";
+import id = $props.id;
 
 const DAY = 24 * 60 * 60e3;
 
+
+async function idRedirect(db: D1DatabaseSession, store: number, id: number) {
+  const productHandle = await retryD1(() =>
+    db.prepare("select handle from products where id = ? and store = ?")
+      .bind(id, store)
+      .first<{handle: string}>()
+      .then(r => r?.handle)
+  );
+  if(productHandle) throw redirect(301, productHandle)
+}
 
 export const load = (async ({platform, params, url, fetch}) => {
   const db = platform?.env?.LTTSTORE_DB.withSession();
@@ -29,13 +41,7 @@ export const load = (async ({platform, params, url, fetch}) => {
   // Look up its handle and redirect if it is.
   const handleNumber = Number(handle);
   if(!Number.isNaN(handleNumber)) {
-    const productHandle = await retryD1(() =>
-      db.prepare("select handle from products where id = ? and store = ?")
-      .bind(handleNumber, store)
-      .first<{handle: string}>()
-      .then(r => r?.handle)
-    );
-    if(productHandle) throw redirect(301, productHandle)
+    await idRedirect(db, store, handleNumber);
   }
 
   const product = await retryD1(() =>
@@ -45,10 +51,18 @@ export const load = (async ({platform, params, url, fetch}) => {
   );
 
   if(product == null) {
-    const to = productRedirects[handle];
+    const to = store === Store.US ? productRedirects[handle] : undefined;
     if(to) {
       throw redirect(301, to);
     } else {
+      const handleRedirect = await retryD1(() =>
+        db.prepare("select product from old_handles where store = ? and handle = ?")
+          .bind(store, handle)
+          .first<{product: number}>()
+      )
+      if(handleRedirect?.product) {
+        await idRedirect(db, store, handleRedirect?.product);
+      }
       throw error(404, "Product not found!");
     }
   }

@@ -17,7 +17,10 @@ export async function createTables(DB: D1Database | D1DatabaseSession) {
     DB.prepare("create table if not exists similar_products (store integer, id integer, handle TEXT, hash TEXT, timestamp integer, similar TEXT)")
       .run(),
     DB.prepare("create table if not exists stock_totals (timestamp integer, store integer, total integer)")
-      .run()
+      .run(),
+
+    DB.prepare("create table if not exists old_handles (store integer, handle text, product integer)")
+      .run(),
   ]);
 
   await Promise.all([
@@ -62,6 +65,8 @@ export async function createTables(DB: D1Database | D1DatabaseSession) {
     DB.prepare("create unique index if not exists collection_changes_unique on collection_changes(store, id, timestamp, field)")
       .run(),
     DB.prepare("create unique index if not exists stock_totals_unique on stock_totals(timestamp, store)")
+      .run(),
+    DB.prepare("create unique index if not exists old_handles_unique on old_handles(store, handle)")
       .run(),
   ]);
 
