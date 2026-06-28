@@ -18,9 +18,9 @@
 
 	let html: string = $derived.by(() => {
 		let html = '';
-		const beforeTitles = parsedBefore.map((p) => p.title);
+		const beforeIds = parsedBefore.map((p) => p.id);
 		let removed: string[] = [];
-		const added = parsedAfter.filter((p) => !beforeTitles.includes(p.title));
+		const added = parsedAfter.filter((p) => !beforeIds.includes(p.id));
 		// console.debug({ before, after, parsedBefore, parsedAfter });
 		for (let addedProduct of added) {
 			if (displaying === 'before') {
@@ -38,13 +38,13 @@
 		}
 		for (let i = 0; i < parsedBefore.length; i++) {
 			const beforeProduct = parsedBefore[i];
-			const afterProduct = parsedAfter.find((v) => v.title === beforeProduct.title);
+			const afterProduct = parsedAfter.find((v) => v.id === beforeProduct.id);
 			for (let beforeEntry of Object.entries(beforeProduct)) {
 				const key = beforeEntry[0];
 				const beforeValue = beforeEntry[1];
 				const afterValue = (afterProduct as { [key: string]: any })?.[key];
 				if (['null', 'undefined'].includes(typeof afterValue)) {
-					if (!removed.includes(beforeProduct.title)) {
+					if (!removed.includes(beforeProduct.id)) {
 						if (displaying === 'after') {
 							html +=
 								`<a href='/lttstore/${page.params.store}/products/` +
@@ -57,7 +57,7 @@
 							html +=
 								"<span style='background-color: rgba(255, 0, 0, 0.2)' class='opacity-40 pl-1'></span><br>";
 						}
-						removed.push(beforeProduct.title);
+						removed.push(beforeProduct.id);
 					}
 				} else {
 					if (JSON.stringify(beforeValue) !== JSON.stringify(afterValue)) {
