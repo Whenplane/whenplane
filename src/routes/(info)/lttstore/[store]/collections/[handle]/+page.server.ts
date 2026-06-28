@@ -19,7 +19,7 @@ export const load = (async ({platform, params, fetch}) => {
 
   const initialChangeHistory = (async () => {
     const textEncoder = new TextEncoder();
-    let perPage = 15;
+    let perPage = 30;
     let response;
     do {
       response = await retry(() =>
