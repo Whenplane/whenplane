@@ -1,9 +1,9 @@
 import { error } from "@sveltejs/kit";
 import { type CollectionDbRow, storeIdFromName } from "$lib/lttstore/lttstore_types.ts";
 import type {PageServerLoad} from "./$types";
-import { retryD1 } from "$lib/utils.ts";
+import { retry, retryD1 } from "$lib/utils.ts";
 
-export const load = (async ({platform, params}) => {
+export const load = (async ({platform, params, fetch}) => {
   const db = platform?.env?.LTTSTORE_DB.withSession();
   if(!db) throw error(503, "DB unavailable!");
 
@@ -17,12 +17,21 @@ export const load = (async ({platform, params}) => {
 
   if(collection === null) return error(404, "Collection not found");
 
-  const changes = retryD1(() =>
-    db.prepare("select * from collection_changes where id = ? and store = ? order by timestamp DESC")
-      .bind(collection.id, store)
-      .all<{id: number, timestamp: number, field: string, old: string, new: string}>()
-      .then(r => r.results)
-  );
+  const initialChangeHistory = (async () => {
+    const textEncoder = new TextEncoder();
+    let perPage = 15;
+    let response;
+    do {
+      response = await retry(() =>
+        fetch(`/api/lttstore/${params.store}/collections/${collection.id}/changeHistory?offset=0&perPage=${perPage}`)
+          .then(r => r.json())
+      );
+      perPage--;
+    } while(textEncoder.encode(JSON.stringify(response)).length > 1_000_000);
+    // dynamic number of changeHistory entries in initial reply, to make sure we stay below 2mb google page limit
+    // (streamed data counts towards the size limit)
+    return response;
+  })();
 
   const shortTitles = Object.fromEntries(
     (await retryD1(() =>
@@ -43,7 +52,7 @@ export const load = (async ({platform, params}) => {
   return {
     shortTitles,
     collection,
-    changes
+    initialChangeHistory
   }
 
 }) satisfies PageServerLoad

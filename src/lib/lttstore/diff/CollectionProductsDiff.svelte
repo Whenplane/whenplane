@@ -21,7 +21,7 @@
 		const beforeTitles = parsedBefore.map((p) => p.title);
 		let removed: string[] = [];
 		const added = parsedAfter.filter((p) => !beforeTitles.includes(p.title));
-		console.debug({ before, after, parsedBefore, parsedAfter });
+		// console.debug({ before, after, parsedBefore, parsedAfter });
 		for (let addedProduct of added) {
 			if (displaying === 'before') {
 				html +=

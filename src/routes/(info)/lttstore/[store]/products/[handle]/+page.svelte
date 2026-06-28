@@ -23,7 +23,7 @@
   import LTTProductCard from "$lib/lttstore/LTTProductCard.svelte";
   import ToolTip from "$lib/ToolTip.svelte";
   import { sum } from "$lib/lttstore";
-  import ProductChangeHistory from "./ProductChangeHistory.svelte";
+  import ChangeHistory from "$lib/lttstore/ChangeHistory.svelte";
   import LazyLoad from "@dimfeld/svelte-lazyload";
   import {slide} from "svelte/transition";
   import VariantDisplay from "./VariantDisplay.svelte";
@@ -809,9 +809,18 @@
             <div transition:slide class="bordered-accordion-content px-2">
               <h2 id="change-history">Change history</h2>
               {#await data.initialChangeHistory}
-                <ProductChangeHistory product={data.product}/>
+                <ChangeHistory
+                  handle={productInfo.handle}
+                  firstSeen={data.product.firstSeen}
+                  differences={data.product.differences}
+                />
               {:then changeHistory}
-                <ProductChangeHistory initialChangeHistory={changeHistory} product={data.product}/>
+                <ChangeHistory
+                  initialChangeHistory={changeHistory}
+                  handle={productInfo.handle}
+                  firstSeen={data.product.firstSeen}
+                  differences={data.product.differences}
+                />
               {/await}
             </div>
           {/if}

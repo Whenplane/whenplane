@@ -1,16 +1,13 @@
 <script lang="ts">
   import sanitizeHtml from "sanitize-html";
   import { page } from "$app/state";
-  import { countTo, truncateText } from "$lib/utils.js";
+  import { truncateText } from "$lib/utils.js";
   import { Accordion } from "@skeletonlabs/skeleton-svelte";
-  import { getFieldName } from "$lib/lttstore/field_names.js";
-  import { getDiffComponent } from "$lib/lttstore/field_components.js";
-  import DateStamp from "$lib/DateStamp.svelte";
   import type {PageProps} from "./$types";
-  import { Store } from "$lib/lttstore/lttstore_types.ts";
   import ChevronDown from "svelte-bootstrap-icons/lib/ChevronDown.svelte";
 	import { slide } from "svelte/transition";
   import LTTProductCard from "$lib/lttstore/LTTProductCard.svelte";
+  import ChangeHistory from "$lib/lttstore/ChangeHistory.svelte";
 
   let { data }: PageProps = $props();
 
@@ -102,62 +99,21 @@
   </label>
 </div>
 <div class="p-2">
-  {#await data.changes}
-    <div class="table-container rounded-md">
-      <table class="table  rounded-md">
-        <thead>
-        <tr>
-          <th>What changed</th>
-          <td>Change seen</td>
-          <th class="w-[42%]">Before</th>
-          <th class="w-[42%]">After</th>
-        </tr>
-        </thead>
-        <tbody>
-        {#each countTo(20) as _}
-          <tr>
-            <td><div class="placeholder animate-pulse w-32"></div></td>
-            <td><div class="placeholder animate-pulse w-16"></div></td>
-            <td><div class="placeholder animate-pulse w-64"></div></td>
-            <td><div class="placeholder animate-pulse w-64"></div></td>
-          </tr>
-        {/each}
-        </tbody>
-      </table>
-    </div>
+  {#await data.initialChangeHistory}
+    <ChangeHistory
+      id={data.collection.id}
+      firstSeen={new Date(data.collection.published_at).getTime()}
+      differences={20}
+      collection={true}
+    />
   {:then changeHistory}
-    <div class="table-container rounded-md">
-      <table class="table  rounded-md">
-        <thead>
-        <tr>
-          <th>What changed</th>
-          <td>Change seen</td>
-          <th>Before</th>
-          <th>After</th>
-        </tr>
-        </thead>
-        <tbody>
-        {#each hideUpdated ? changeHistory.filter(c => c.field !== "updated_at") : changeHistory as change (change.timestamp+"."+change.field)}
-          {@const field = "collection-" + change.field}
-          {@const SvelteComponent = getDiffComponent(field)}
-          {@const SvelteComponent_1 = getDiffComponent(field)}
-          <tr>
-            <td>{getFieldName(field)}</td>
-            <td><DateStamp epochSeconds={change.timestamp/1e3}/></td>
-            <td><SvelteComponent before={change.old} after={change.new} displaying="before"/></td>
-            <td><SvelteComponent_1 before={change.old} after={change.new} displaying="after"/></td>
-          </tr>
-        {/each}
-        </tbody>
-        <tfoot>
-          <tr style="text-transform: initial !important;">
-            <td class="p-2! opacity-70" colspan="4">
-              Changes before <DateStamp epochSeconds={data.store.id === Store.US ? 1732525260 : 1781787820}/> are not available
-            </td>
-          </tr>
-        </tfoot>
-      </table>
-    </div>
+    <ChangeHistory
+      initialChangeHistory={changeHistory}
+      id={data.collection.id}
+      firstSeen={new Date(data.collection.published_at).getTime()}
+      collection={true}
+      {hideUpdated}
+    />
   {/await}
 </div>
 
