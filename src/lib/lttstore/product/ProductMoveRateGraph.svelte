@@ -210,7 +210,7 @@
 	});
 </script>
 
-<div style="min-height: 69vh w-full max-w-full" bind:this={wrapperDiv}>
+<div class="w-full aspect-2/1.25 flex items-center"  bind:this={wrapperDiv}>
 	{#if mounted}
 		<div in:fade>
 			<UplotSvelte {data} {options} onCreate={() => {}} onDelete={() => {}}/>
