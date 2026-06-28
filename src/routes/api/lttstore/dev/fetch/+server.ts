@@ -8,7 +8,7 @@ import type {
 } from "$lib/lttstore/lttstore_types.ts";
 import { createTables } from "../../../../(info)/lttstore/createTables.ts";
 import type {RequestHandler} from "./$types";
-import { commas, retry } from "$lib/utils.ts";
+import { chunkArray, commas, retry, wait } from "$lib/utils.ts";
 
 
 export const GET = (async ({platform}) => {
@@ -22,7 +22,6 @@ export const GET = (async ({platform}) => {
     products: ProductsTableRow[],
     collections: CollectionDbRow[]
     screwdriverStocks: StockHistoryTableRow[],
-    collectionChanges: ChangeHistoryTableRow[],
     similarProducts: SimilarProductsTableRow[]
   } = await fetch("https://whenplane.com/api/lttstore/devData")
     .then(res => res.json());
@@ -132,39 +131,84 @@ export const GET = (async ({platform}) => {
     if(!last || Date.now() - last.timestamp > 90 * 24 * 60 * 60e3) break;
   } while(hasNextPage && nextOffset !== undefined);
 
-  console.log(`Fetched ${commas(changeHistory.length)} change history entries in ${commas(Date.now() - changeHistoryStart)}ms`)
+  console.log(`Fetched ${commas(changeHistory.length)} change history entries in ${commas(Date.now() - changeHistoryStart)}ms`);
 
-  i = 0;
-  for (const change of changeHistory) {
-    i++;
-    if(i % 10 === 0) console.log("Inserting " + i + "/" + changeHistory.length + " change history");
-    await db.prepare("insert or replace into change_history(store, id, timestamp, field, old, new) values (?, ?, ?, ?, ?, ?)")
-      .bind(
-        change.store,
-        change.id,
-        change.timestamp,
-        change.field,
-        change.old,
-        change.new
-      )
-      .run();
-  }
+  const collectionChangeHistoryP = (async () => {
+    console.log("Fetching allCollectionChangeHistory");
+    const collectionChangeHistoryStart = Date.now();
+    let collectionChangeHistory: ChangeHistoryTableRow[] = [];
+    let nextOffset: number | undefined = 0;
+    let hasNextPage = true;
+    do {
+      const {changeHistory: newChangeHistory, page} = await retry(() =>
+        fetch(`https://whenplane.com/api/lttstore/allCollectionChangeHistory?perPage=500&offset=${nextOffset}`)
+          .then(r => {
+            if(!r.ok) throw new Error(`Got ${r.status} ${r.statusText} from allCollectionChangeHistory endpoint`);
+            return r.json() as Promise<{changeHistory: ChangeHistoryTableRow[], page: {perPage: number, hasNextPage: boolean, nextOffset: number | undefined}}>;
+          })
+      );
+      nextOffset = page.nextOffset;
+      hasNextPage = page.hasNextPage;
+      collectionChangeHistory.push(...newChangeHistory);
+      const last = newChangeHistory.pop();
 
-  i = 0;
-  for (const change of data.collectionChanges) {
-    i++;
-    if(i % 10 === 0) console.log("Inserting " + i + "/" + data.collectionChanges.length + " collection change history");
-    await db.prepare("insert or replace into collection_changes(store, id, timestamp, field, old, new) values (?, ?, ?, ?, ?, ?)")
-      .bind(
-        change.store,
-        change.id,
-        change.timestamp,
-        change.field,
-        change.old,
-        change.new
-      )
-      .run();
-  }
+      // Stop once we pass 90 days ago
+      if(!last || Date.now() - last.timestamp > 90 * 24 * 60 * 60e3) break;
+
+      await wait(1e3);
+    } while(hasNextPage && nextOffset !== undefined);
+
+    console.log(`Fetched ${commas(collectionChangeHistory.length)} change history entries in ${commas(Date.now() - collectionChangeHistoryStart)}ms`);
+    return collectionChangeHistory;
+  })()
+
+  await (async () => {
+    let i = 0;
+    const chunks = chunkArray(changeHistory, 5);
+    for (let chunk of chunks) {
+      await Promise.all(chunk.map(change =>
+        db.prepare("insert or replace into change_history(store, id, timestamp, field, old, new) values (?, ?, ?, ?, ?, ?)")
+          .bind(
+            change.store,
+            change.id,
+            change.timestamp,
+            change.field,
+            change.old,
+            change.new
+          )
+          .run()
+          .then(() => {
+            i++;
+            if(i % 50 === 0) console.log("Inserted " + i + "/" + changeHistory.length + " product change history");
+          })
+      ))
+    }
+  })()
+
+  const collectionChangeHistory = await collectionChangeHistoryP;
+
+  await (async () => {
+    let i = 0;
+    const chunks = chunkArray(collectionChangeHistory, 5);
+    for (let chunk of chunks) {
+      await Promise.all(chunk.map(change =>
+        db.prepare("insert or replace into collection_changes(store, id, timestamp, field, old, new) values (?, ?, ?, ?, ?, ?)")
+          .bind(
+            change.store,
+            change.id,
+            change.timestamp,
+            change.field,
+            change.old,
+            change.new
+          )
+          .run()
+          .then(() => {
+            i++;
+            if(i % 50 === 0) console.log("Inserted " + i + "/" + collectionChangeHistory.length + " collection change history");
+          })
+      ))
+    }
+  })()
 
   console.log("Done!")
   return json({
