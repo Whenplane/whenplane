@@ -86,6 +86,7 @@
               .then(async (r) => {
                 if(r.status === 429) {
                   await wait(11e3);
+                  throw new Error("Ratelimited")
                 } else {
                   return r.json();
                 }
@@ -94,7 +95,7 @@
           nextOffset = response.page.nextOffset;
           hasNext = response.page.hasNextPage;
           changeHistory.push(...response.changeHistory);
-          if(!differences || differences / 100 >= 14) {
+          if(!differences || (differences / 100) >= 14) {
             await wait(800); // to prevent rate limiting
           }
         }
