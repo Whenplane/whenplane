@@ -82,11 +82,18 @@
           if(!mounted) break;
           const response = await retry(() =>
             fetch(`/api/lttstore/${page.params.store}/${collection ? "collections" : "products"}/${id ?? handle}/changeHistory?offset=${nextOffset}`)
-              .then(r => r.json())
+              .then(async (r) => {
+                if(r.status === 429) {
+                  await wait(11e3);
+                } else {
+                  return r.json();
+                }
+              })
           );
           nextOffset = response.page.nextOffset;
           hasNext = response.page.hasNextPage;
           changeHistory.push(...response.changeHistory);
+          await wait(800); // to prevent rate limiting
         }
       })();
       console.debug("Starting loading of diffs");
