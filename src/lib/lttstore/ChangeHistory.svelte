@@ -99,7 +99,7 @@
       console.debug("Starting loading of diffs");
       loadTo += 5;
       loadInterval = setInterval(() => {
-        if(loadTo < (differences || 100) - 1) {
+        if(loadTo < (differences || Math.max(150, changeHistory.length)) - 1) {
           loadTo += 10;
         } else {
           clearInterval(loadInterval);
