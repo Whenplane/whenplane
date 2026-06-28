@@ -811,15 +811,15 @@
               {#await data.initialChangeHistory}
                 <ChangeHistory
                   handle={productInfo.handle}
-                  firstSeen={data.product.firstSeen}
-                  differences={data.product.differences}
+                  firstSeen={data.product?.firstSeen}
+                  differences={data.product?.differences}
                 />
               {:then changeHistory}
                 <ChangeHistory
                   initialChangeHistory={changeHistory}
                   handle={productInfo.handle}
-                  firstSeen={data.product.firstSeen}
-                  differences={data.product.differences}
+                  firstSeen={data.product?.firstSeen}
+                  differences={data.product?.differences}
                 />
               {/await}
             </div>
