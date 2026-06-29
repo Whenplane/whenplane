@@ -12,7 +12,7 @@ export const load = (async ({platform, params}) => {
   const store = storeIdFromName(params.store);
 
   const products = await retryD1(() =>
-    db.prepare("select handle,shortTitle,id,available,metadataUpdate,stockChecked,json_remove(json_remove(json_remove(json_remove(product, '$.media'), '$.images'), '$.variants'), '$.description') as product from products where available = 0 and store = ? order by json_extract(product, '$.created_at') ASC")
+    db.prepare("select handle,shortTitle,id,available,metadataUpdate,stockChecked,json_remove(json_remove(json_remove(json_remove(product, '$.media'), '$.images'), '$.variants'), '$.description') as product from products where available = 0 and store = ? order by MAX(stockChecked, metadataUpdate) ASC")
       .bind(store)
       .all<ProductsTableRow>()
       .then(r => r.results)

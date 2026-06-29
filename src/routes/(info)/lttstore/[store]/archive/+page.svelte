@@ -27,13 +27,13 @@
   </div>
   <br>
   <div class="p-2 flex flex-wrap">
-    {#each data.products as product (product.id)}
-      <LTTProductCard product={JSON.parse(product.product)} shortTitle={product.shortTitle}>
+    {#each data.products as product, i (product.id)}
+      <LTTProductCard product={JSON.parse(product.product)} shortTitle={product.shortTitle} lazyLoadImage={i > 10}>
         {#snippet detail()}
-          {@const seen = product.metadataUpdate ?? product.stockChecked}
+          {@const seen = Math.max(product.metadataUpdate, product.stockChecked)}
           {#if seen}
             <div class="opacity-80 text-xs">
-              Last seen <RelativeDate epochSeconds={seen / 1e3}/>
+              Last seen <RelativeDate epochSeconds={seen / 1e3}/><br>
             </div>
           {/if}
         {/snippet}
