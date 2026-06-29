@@ -15,13 +15,21 @@
   let image = $derived(data.collection.image ? JSON.parse(data.collection.image) : data.collection.image)
 
   let hideUpdated = $state(true);
+
+  let truncatedDescription = $derived(truncateText(sanitizeHtml(data.collection.description ?? "", {allowedTags: []}), 159));
 </script>
 
 <svelte:head>
   <title>{data.collection.title} Collection - Whenplane LTTStore Watcher</title>
   {#if data.collection.description}
-    <meta name="description" content={truncateText(sanitizeHtml(data.collection.description, {allowedTags: []}), 200)}/>
+    <meta name="description" content={truncatedDescription}/>
   {/if}
+  <meta property="og:type" content="website">
+  <meta property="og:title" content={data.collection.title}>
+  <meta property="og:description" content={truncatedDescription}>
+  <meta property="og:site_name" content="Whenplane LTTStore Watcher ({data.store.storeName})">
+  <meta property="og:url" content="https://whenplane.com/lttstore/{data.store.storeName.toLowerCase()}/collections/{data.collection.handle}">
+  <meta property="og:locale" content="en_US">
 </svelte:head>
 
 <ol class="breadcrumb pt-2 pl-2">
