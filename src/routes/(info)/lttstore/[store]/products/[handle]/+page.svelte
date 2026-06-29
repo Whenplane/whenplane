@@ -114,6 +114,12 @@
       // });
     }
   });
+
+  let detectedDescription = $derived(productInfo.description ?? productDetailModules?.[0]?.content ?? "")
+  let truncatedDescription = $derived(
+    (detectedDescription ? "Description from LTTStore: " : "") +
+    truncateText(sanitizeHtml(detectedDescription, {allowedTags: []}), 132)
+  )
 </script>
 
 <ol class="breadcrumb pt-2 pl-2">
@@ -128,10 +134,16 @@
 
 <svelte:head>
   <title>{data.product.shortTitle ?? data.product.title} - Whenplane LTTStore Watcher</title>
-  <meta name="description" content={truncateText(sanitizeHtml(productInfo.description ?? productDetailModules?.[0]?.content ?? "", {allowedTags: []}), 159)}>
+  <meta name="description" content={truncatedDescription}>
   {#if productInfo.featured_image}
     <meta property="og:image" content={productInfo.featured_image}>
   {/if}
+  <meta property="og:type" content="product">
+  <meta property="og:title" content={data.product.shortTitle ?? data.product.title}>
+  <meta property="og:description" content={truncatedDescription}>
+  <meta property="og:site_name" content="Whenplane LTTStore Watcher ({data.store.storeName})">
+  <meta property="og:url" content="https://whenplane.com/lttstore/{data.store.storeName.toLowerCase()}/products/{data.product.handle}">
+  <meta property="og:locale" content="en_US">
 </svelte:head>
 
 <div class="container mx-auto p-2 pt-8 mb-64">
