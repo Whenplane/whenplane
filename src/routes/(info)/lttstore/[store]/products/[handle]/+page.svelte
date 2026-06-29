@@ -1,9 +1,9 @@
 <script lang="ts">
-  import type {
-    BackorderAlerts,
-    ProductDetailModule,
-    ShopifyProduct,
-    StockCounts
+  import {
+    type BackorderAlerts,
+    type ProductDetailModule,
+    type ShopifyProduct,
+    type StockCounts, Store
   } from "$lib/lttstore/lttstore_types.js";
   import { page } from "$app/state";
   import ProductStockHistoryGraph from "$lib/lttstore/product/ProductStockHistoryGraph.svelte";
@@ -144,6 +144,8 @@
   <meta property="og:site_name" content="Whenplane LTTStore Watcher ({data.store.storeName})">
   <meta property="og:url" content="https://whenplane.com/lttstore/{data.store.storeName.toLowerCase()}/products/{data.product.handle}">
   <meta property="og:locale" content="en_US">
+  <meta property="product:price:amount" content={(productInfo.price/100)+""}>
+  <meta property="product:price:currency" content={data.store.id === Store.US ? "USD" : "CAD"}>
 </svelte:head>
 
 <div class="container mx-auto p-2 pt-8 mb-64">
