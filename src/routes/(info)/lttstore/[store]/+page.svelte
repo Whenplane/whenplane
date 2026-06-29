@@ -55,7 +55,7 @@
 
   <h1 class="text-center mb-2">{data.store.storeName} LTTStore Watcher</h1>
 
-  <div class="flex justify-between link-header mx-auto">
+  <div class="flex flex-wrap md:justify-between max-md:justify-around link-header mx-auto max-w-dvw *:my-0.5">
     <a href="/lttstore/{page.params.store}/products" class="btn preset-tonal-primary">All Products</a>
     <a href="/lttstore/{page.params.store}/archive" class="btn preset-tonal-primary">Product Archive</a>
     <a href="/lttstore/{page.params.store}/collections" class="btn preset-tonal-primary">Collections</a>
