@@ -118,7 +118,7 @@
   let detectedDescription = $derived(productInfo.description ?? productDetailModules?.[0]?.content ?? "")
   let truncatedDescription = $derived(
     (detectedDescription ? "Description from LTTStore: " : "") +
-    truncateText(sanitizeHtml(detectedDescription, {allowedTags: []}), 132)
+    truncateText(sanitizeHtml(detectedDescription.replaceAll("\n", " "), {allowedTags: []}), 132)
   )
 </script>
 
