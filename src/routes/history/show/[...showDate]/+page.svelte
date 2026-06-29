@@ -116,14 +116,24 @@
     {/if}
 
     {#if data.metadata.vods?.floatplane}
-        <a href="https://www.floatplane.com/post/{data.metadata.vods.floatplane}" target="_blank" rel="noopener nofollow">
-            <Floatplane/> VOD on Floatplane
+        <a href="https://www.floatplane.com/post/{data.metadata.vods.floatplane}" target="_blank" rel="noopener nofollow" class="inline-flex items-center">
+            <div aria-hidden="true">
+                <Floatplane/>
+            </div>
+            <span class="ml-1">
+                VOD on Floatplane
+            </span>
         </a>
     {/if}
     <br>
     {#if data.metadata.vods?.youtube}
-        <a href="https://youtube.com/watch?v={data.metadata.vods.youtube}" target="_blank" rel="noopener">
-            <Youtube/> VOD on Youtube
+        <a href="https://youtube.com/watch?v={data.metadata.vods.youtube}" target="_blank" rel="noopener" class="inline-flex items-center">
+            <div aria-hidden="true">
+                <Youtube/>
+            </div>
+            <span>
+                VOD on Youtube
+            </span>
         </a>
     {/if}
     <br>
