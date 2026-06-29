@@ -25,10 +25,18 @@
   });
 
   const openSearch = getContext<() => void>("lttstore-search-modal");
+
+  const description = "The Whenplane LTT Store Watcher watches for changes on LTTStore, and records them. When products are removed from LTTStore, Whenplane provides an archive of them. You can also see how much stock they have of an item.";
 </script>
 <svelte:head>
-  <title>LTTStore Watcher - Whenplane</title>
-  <meta name="description" content="The Whenplane LTT Store Watcher watches for changes on LTTStore, and records them. You can also see how much stock they have of an item." />
+  <title>LTTStore Watcher ({data.store.storeName}) - Whenplane</title>
+  <meta name="description" content={description}>
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="LTTStore Watcher ({data.store.storeName})">
+  <meta property="og:description" content={description}>
+  <meta property="og:site_name" content="Whenplane LTTStore Watcher ({data.store.storeName})">
+  <meta property="og:url" content="https://whenplane.com/lttstore/{data.store.storeName.toLowerCase()}">
+  <meta property="og:locale" content="en_US">
 </svelte:head>
 
 <ol class="breadcrumb pt-2 pl-2">
