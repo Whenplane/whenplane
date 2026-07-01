@@ -21,7 +21,7 @@
     }],
     // this api key only has access to search, don't worry
     'apiKey': "swyHTJhzz7MQIxDjBqE2dpOCM6DIU10P",
-    'connectionTimeoutSeconds': 10
+    'connectionTimeoutSeconds': 10,
   });
 
   let waiting = false;
@@ -61,12 +61,15 @@
       .search({
         q: text,
         query_by: "title,handle,description",
-        query_by_weights: "4,2,0",
+        query_by_weights: "100,1,0",
         text_match_type: "max_weight",
         filter_by: "store:=" + page.data.store.id,
-        sort_by: "_text_match(bucket_size: 5):desc,purchasesPerDay:desc",
+        sort_by: "_text_match(bucket_size: 2):desc,purchasesPerDay:desc",
         page: 1,
-        per_page: 20
+        per_page: 20,
+        prioritize_num_matching_fields: false,
+        drop_tokens_threshold: 0,
+        prioritize_exact_match: true
       }, {cacheSearchResultsForSeconds: 60})
       .then(r => {
         if(r.request_params.q === searchText) {
