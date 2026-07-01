@@ -65,7 +65,7 @@
         text_match_type: "max_weight",
         sort_by: sortBy,
         facet_by: "currentPrice,productType",
-        filter_by: "currentPrice:>=" + filterMinPrice + " && currentPrice:<=" + filterMaxPrice +
+        filter_by: `store := ${data.store.id} && currentPrice:>= ${filterMinPrice} && currentPrice:<= ${filterMaxPrice}` +
           (productTypeFilters.size > 0 ?" && productType:=[" + [...productTypeFilters].map(t => "`" + t + "`").join(",") + "]" : "") +
           (onlyShowAvailable ? " && available:=true" : "") +
           (onlyShowInStock ? " && totalStock:>0" : ""),
