@@ -117,7 +117,7 @@
   <div class="results">
     {#if searchResults && searchResults.hits}
       {#each searchResults.hits as result, i (result.document.id)}
-        {@const productData = JSON.parse(result.document.product)}
+        {@const productData = result.document.product}
         {@const descriptionSnippet = result.highlight?.description?.snippet?.replaceAll("</p>", "\n")}
         {@const openingIndex = descriptionSnippet?.indexOf("<")}
         {@const closingIndex = descriptionSnippet?.indexOf(">")}

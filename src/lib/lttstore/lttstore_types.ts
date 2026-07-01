@@ -200,6 +200,11 @@ export type ProductsTableRow = {
   stockChecked: number,
   metadataUpdate: number,
   lastRestock: number,
+  /**
+   * Where stock jumps down by a large amount, very unlikely for it to be sales.
+   * They seem to do this occasionally, my guess is to make sure the Shopify stock counts line up with the real stock counts.
+   */
+  lastStockAdjustment: number,
   purchasesPerHour: number,
   purchasesPerDay: number,
   regularPrice: number,
@@ -309,7 +314,7 @@ export type ProductSearchIndex = {
   handle: string,
   store: number
   title: string,
-  product: string,
+  product: ShopifyProduct,
   description: string,
   productType: string,
   tags: string[],
