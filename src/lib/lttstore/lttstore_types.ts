@@ -326,7 +326,8 @@ export type ProductSearchIndex = {
   regularPrice: number,
   currentPrice: number,
   firstSeen: number,
-  available: boolean
+  available: boolean,
+  shortTitle: string | null
 }
 
 

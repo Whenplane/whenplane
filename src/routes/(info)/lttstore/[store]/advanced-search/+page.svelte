@@ -271,9 +271,9 @@
     {#if searchResults && searchResults.hits}
       <div class="flex flex-wrap">
         {#each searchResults.hits as hit (hit.document.id)}
-          {@const product = JSON.parse(hit.document.product)}
+          {@const product = hit.document.product}
           <div class="inline-flex" animate:flip={{ duration: 200 }}>
-            <LTTProductCard product={product} shortTitle={product.shortTitle} available={hit.document.available}/>
+            <LTTProductCard {product} shortTitle={hit.document.shortTitle} available={hit.document.available}/>
           </div>
         {/each}
       </div>
