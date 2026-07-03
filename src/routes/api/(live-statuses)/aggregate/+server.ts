@@ -4,7 +4,7 @@ import type { IsThereWanResponse } from "../isThereWan/+server";
 import type { TwitchResponse } from "../twitch/+server";
 import type { YoutubeResponse } from "../youtube/+server";
 import type { LatenessVotingOption } from "$lib/voting.ts";
-import type { SpecialStream } from "$lib/utils.ts";
+import { retry, type SpecialStream } from "$lib/utils.ts";
 import type { NotablePeopleResponse, NotablePeopleShortResponse } from "../notable-streams/+server.ts";
 import type { FpEndpointResponse } from "../floatplane/+server.ts";
 import { notablePeople } from "../notable-streams/notable-people.ts";
@@ -31,15 +31,17 @@ export const GET = (async ({url, fetch, locals, platform}) => {
     let votesTime: number | undefined;
     const votes = (async () => {
         const start = Date.now();
-        const response = await fetch("/api/latenessVoting/votes?fast=" + (fast && !isNextFast))
-          .then(async (r) => {
-              const text = await r.text();
-              try {
-                  return JSON.parse(text);
-              } catch(e: any) {
-                  throw new Error("Error while fetching votes: " + e.message + ": " + text, { cause: e })
-              }
-          })
+        const response = await retry(() =>
+          fetch("/api/latenessVoting/votes?fast=" + (fast && !isNextFast))
+            .then(async (r) => {
+                const text = await r.text();
+                try {
+                    return JSON.parse(text);
+                } catch(e: any) {
+                    throw new Error("Error while fetching votes: " + e.message + ": " + text, { cause: e })
+                }
+            })
+        )
         votesTime = Date.now() - start;
         return response;
     })();
