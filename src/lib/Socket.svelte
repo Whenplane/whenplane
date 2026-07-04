@@ -29,7 +29,8 @@
   let reconnectTimeout: NodeJS.Timeout | undefined;
 	function createWebSocket() {
 		webSocket = new WebSocket(
-			'wss://sockets.whenplane.com/socket?events=' + encodeURIComponent(events.join(','))
+			// 'wss://sockets.whenplane.com/socket?events=' + encodeURIComponent(events.join(','))
+			'wss://whenplane-websocket.ajg.workers.dev/socket?events=' + encodeURIComponent(events.join(','))
 		);
 
 		webSocket.onopen = async () => {
