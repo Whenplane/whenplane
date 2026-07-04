@@ -118,7 +118,8 @@ export const load = (async ({fetch, params, url}) => {
         notablePeople: liveStatus?.notablePeople,
         specialStream: liveStatus?.specialStream,
         lastNewsPost,
-        useWebSocket: !url.searchParams.has("poll") && !dev,
+        // useWebSocket: !url.searchParams.has("poll") && !dev,
+        useWebSocket: url.searchParams.has("ws"),
         alternateStartTimes,
         isBot: /bot|googlebot|crawler|spider|robot|crawling/i
           .test(browser ? navigator?.userAgent : (params as RouteParams & {__h__userAgent: string}).__h__userAgent),
