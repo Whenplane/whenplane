@@ -27,34 +27,51 @@ export const GET = (async ({platform}) => {
 
   // short dc cache to limit updates from instances in the same dc
   if(cache && cachedTimesResponse) {
-    const cached = new Date(cachedTimesResponse.headers.get("x-cached") ?? 0).getTime()
+    const cached = new Date(cachedTimesResponse.headers.get("x-cached") ?? 0).getTime();
+    // set these even if its old, that way we can return it below if we get a d1 error
+    localFetched = cached;
+    localCache = await cachedTimesResponse.json();
     if(Date.now() - cached < 30e3) {
-      localFetched =
-      localCache = await cachedTimesResponse.json();
       return json(localCache);
     }
   }
 
   if(dev) await _createTables(db);
 
-  const alternateTimes = await retryD1(() =>
-    db.prepare("select * from alternate_times")
-      .all<AlternateTimeRow>()
-      .then(r =>
-        r.results // sets days to undefined if null
-          .map(t => ({...t, days: t.days ?? undefined}))
-      )
-  );
+  try {
 
-  localFetched = Date.now();
-  localCache = alternateTimes;
-  platform?.context?.waitUntil(cache?.put(cacheUrl, await createMFResponse(json(alternateTimes, {headers: {"x-cached": new Date().toISOString()}}))));
+    const alternateTimes = await retryD1(() =>
+      db.prepare("select * from alternate_times")
+        .all<AlternateTimeRow>()
+        .then(r =>
+          r.results // sets days to undefined if null
+            .map(t => ({...t, days: t.days ?? undefined}))
+        )
+    );
 
-  return json(alternateTimes, {
-    headers: {
-      "cache-control": "max-age=30, public",
+    localFetched = Date.now();
+    localCache = alternateTimes;
+    platform?.context?.waitUntil(cache?.put(cacheUrl, await createMFResponse(json(alternateTimes, {headers: {"x-cached": new Date().toISOString()}}))));
+
+    return json(alternateTimes, {
+      headers: {
+        "cache-control": "max-age=30, public",
+      }
+    });
+
+  } catch(e) {
+    // return cached value (if possible) when d1 errors
+    if(localCache) {
+      return json(localCache, {
+        headers: {
+          "cache-control": "max-age=30, public",
+        }
+      });
     }
-  });
+
+    // throw the error if we have no cached value
+    throw e;
+  }
 
 }) satisfies RequestHandler;
 
