@@ -58,7 +58,7 @@ export const GET = (async ({platform}) => {
 
     return json(alternateTimes, {
       headers: {
-        "cache-control": "max-age=30, public",
+        "cache-control": `max-age=${30 * 60}, public`,
       }
     });
 
@@ -67,7 +67,7 @@ export const GET = (async ({platform}) => {
     if(localCache) {
       return json(localCache, {
         headers: {
-          "cache-control": "max-age=30, public",
+          "cache-control": `max-age=${30 * 60}, public`,
         }
       });
     }
