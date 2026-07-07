@@ -47,9 +47,15 @@ export const actions = {
   })
 } satisfies Actions;
 
+let first = true;
 async function vote(id: string, vote: string, db: D1Database | D1DatabaseSession) {
+  if(first) {
+    first = false;
+    await db.prepare("create unique index if not exists lateness_votes_id on lateness_votes(id)")
+      .run()
+  }
   await retryD1(() =>
-    db.prepare("insert into lateness_votes (id, timestamp, vote) values (?, ?, ?)")
+    db.prepare("insert or replace into lateness_votes (id, timestamp, vote) values (?, ?, ?)")
       .bind(id, Date.now(), vote)
       .run()
   );
