@@ -12,6 +12,8 @@ const names = options.map(o => o.name);
 // cache for (just under) 5 seconds to reduce requests to d1
 const cache_time = 4750;
 
+let first = true;
+
 export const GET = (async ({platform, url, cookies}) => {
 
   const fast = url.searchParams.get("fast") === "true";
@@ -34,6 +36,12 @@ export const GET = (async ({platform, url, cookies}) => {
     // }
     // latenessVotesCache.lastData = voteTotals;
     // return json(voteTotals);
+  }
+
+  if(first) {
+    first = false;
+    await db.prepare("create index if not exists lateness_votes_timestamp on lateness_votes(timestamp)")
+      .run();
   }
 
   const utcDay = new Date().getUTCDay();
