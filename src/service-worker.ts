@@ -135,3 +135,10 @@ sw.addEventListener("push", (event) => {
     })
   )
 });
+
+sw.addEventListener("notificationclick", (event) => {
+  event.notification.close();
+  if(event.notification.tag.startsWith("elijah_stream")) {
+    if (sw.clients.openWindow) sw.clients.openWindow("https://www.twitch.tv/bocabola").then();
+  }
+})
