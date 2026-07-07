@@ -133,7 +133,15 @@ const messages: {[key: string]: PushMessage} = {
     data: {
       title: "Elijah (BocaBola) is streaming on Twitch!",
       body: "\"{title}\"",
-      tag: "elijah_stream-" + getUTCDate().replaceAll("/", "-")
+      tag: "elijah_stream-" + getUTCDate().replaceAll("/", "-"),
+      actions: [
+        {
+          action: "go-to-twitch",
+          title: "Go to BocaBola on Twitch",
+          navigate: "https://www.twitch.tv/bocabola"
+        }
+      ],
+      navigate: "https://www.twitch.tv/bocabola"
     },
     options: {
       ttl: 60,
