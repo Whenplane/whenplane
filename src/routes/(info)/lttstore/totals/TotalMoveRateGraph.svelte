@@ -64,6 +64,7 @@
               const stockDiff = previousStock - currentStock;
               const rate = stockDiff / (timeDiff / (60 * 60e3));
               if(rate < 0) return null;
+              if(rate > 1_000_000) return null;
               return rate;
             } else {
               return null;
