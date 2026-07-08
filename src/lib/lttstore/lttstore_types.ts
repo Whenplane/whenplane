@@ -215,7 +215,8 @@ export type ProductsTableRow = {
   productDetailModules: string,
   productDiscount: string,
   differences: number,
-  lastUpdateStart: number | null
+  lastUpdateStart: number | null,
+  collections: string | null
 }
 export type ParsedProductsTableRow = {
   handle: string,
@@ -234,7 +235,8 @@ export type ParsedProductsTableRow = {
   available: boolean,
   backorderAlerts: BackorderAlerts,
   productDetailModules: ProductDetailModule[],
-  productDiscount: string[]
+  productDiscount: string[],
+  collections: number[] | null
 }
 
 export type SimilarProductsTableRow = {

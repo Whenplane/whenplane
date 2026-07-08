@@ -12,7 +12,6 @@ import { createTables } from "../../../createTables.ts";
 import { retry, retryD1 } from "$lib/utils.ts";
 import { productRedirects } from "$lib/lttstore/product_redirects.ts";
 import type { D1Database, D1DatabaseSession } from "@cloudflare/workers-types";
-import id = $props.id;
 
 const DAY = 24 * 60 * 60e3;
 
@@ -135,6 +134,19 @@ export const load = (async ({platform, params, url, fetch}) => {
     return response;
   })();
 
+  const collections = product.collections !== null
+    ? retryD1(() =>
+      db.prepare("select c.id, c.handle, c.title from json_each(?) as j join collections c on c.store = ? and c.id = j.value order by c.reportedCount ASC")
+        .bind(
+          product.collections,
+          store,
+        )
+        .all<{id: number, handle: string, title: string}>()
+        .then(r => r.results)
+    )
+    : [];
+
+
   const similarProducts = retryD1(() =>
     db.prepare("select * from similar_products where id = ? and store = ?")
       .bind(product.id, store)
@@ -149,6 +161,7 @@ export const load = (async ({platform, params, url, fetch}) => {
     stockHistory: await stockHistory,
     initialChangeHistory,
     similarProducts,
-    stockAsOf
+    stockAsOf,
+    collections
   }
 }) satisfies PageServerLoad

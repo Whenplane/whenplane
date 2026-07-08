@@ -27,8 +27,9 @@
   import LazyLoad from "@dimfeld/svelte-lazyload";
   import {slide} from "svelte/transition";
   import VariantDisplay from "./VariantDisplay.svelte";
+	import type { PageProps } from "./$types";
 
-  let { data } = $props();
+  let { data }: PageProps = $props();
 
   let chartUpdateNumber = $state(1);
 
@@ -356,6 +357,47 @@
                         {/if}
                       </td>
                     </tr>
+                  <tr>
+                    <td class="align-top">
+                      Collections
+                      <ToolTip id="product-collections">
+                        <p>
+                          The collections that Whenplane noticed this product was in, as of the last metadata update.
+                        </p>
+                        <p>
+                          Whenplane uses its own collection cache for this, so newly-published products may not show as being in any collections on their first metadata update.
+                          They should show up once Whenplane's collection cache gets updated (within 20-40 minutes during the day)
+                        </p>
+                        <p>
+                          Additionally, we can only get the collections for a product when that product is currently published on LTTStore.
+                          Products that were tracked and removed before this was added will never have any info here unless LTTStore publishes them again.
+                        </p>
+                      </ToolTip>
+                    </td>
+                    <td>
+                      <ul>
+                        {#await data.collections}
+                          {#each JSON.parse(data.product.collections+"")?.length ?? [] as _}
+                            <li>
+                              <div class="inline-block w-36 placeholder animate-pulse"></div>
+                            </li>
+                          {:else}
+                            <span class="opacity-70 -ml-6">[none]</span>
+                          {/each}
+                        {:then collections}
+                          {#each collections ?? [] as collection}
+                            <li>
+                              <a href="/lttstore/{page.params.store}/collections/{collection.handle}">
+                                {collection.title}
+                              </a>
+                            </li>
+                          {:else}
+                            <span class="opacity-70 -ml-6">[none]</span>
+                          {/each}
+                        {/await}
+                      </ul>
+                    </td>
+                  </tr>
                   </tbody>
                 </table>
                 <br>

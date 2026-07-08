@@ -32,7 +32,7 @@ export const GET = (async ({platform}) => {
   for (const product of data.products) {
     console.log("Inserting (" + ++i + "/" + data.products.length + ") " + product.title);
     await db
-      .prepare("insert or replace into products(store, handle, id, title, product, stock, stockChecked, metadataUpdate, lastRestock, purchasesPerHour, purchasesPerDay, regularPrice, currentPrice, firstSeen, available, backorderAlerts, productDetailModules, productDiscount, differences, shortTitle) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)")
+      .prepare("insert or replace into products(store, handle, id, title, product, stock, stockChecked, metadataUpdate, lastRestock, purchasesPerHour, purchasesPerDay, regularPrice, currentPrice, firstSeen, available, backorderAlerts, productDetailModules, productDiscount, differences, shortTitle, collections) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)")
       .bind(
         product.store,
         product.handle,
@@ -53,7 +53,8 @@ export const GET = (async ({platform}) => {
         product.productDetailModules,
         product.productDiscount,
         product.differences,
-        product.shortTitle
+        product.shortTitle,
+        product.collections
       )
       .run();
   }
