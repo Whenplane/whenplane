@@ -105,6 +105,7 @@
         .map((k, i) => ({
           show: true,
           gaps: stockGaps,
+          spanGaps: true,
           paths: uPlot.paths.spline?.(),
           label: storeNames[k] ?? k,
           value: (_, rawValue: number | null) => rawValue === null ? "" : commas(Math.round(rawValue * 100) / 100)! + " sph",
