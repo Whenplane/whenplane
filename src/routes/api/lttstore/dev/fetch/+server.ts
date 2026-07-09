@@ -138,17 +138,21 @@ export const GET = (async ({platform}) => {
     console.log("Fetching allCollectionChangeHistory");
     const collectionChangeHistoryStart = Date.now();
     let collectionChangeHistory: ChangeHistoryTableRow[] = [];
-    let nextOffset: number | undefined = 0;
+    let cursor: string | null | undefined = null;
     let hasNextPage = true;
     do {
+      const url = new URL("https://whenplane.com/api/lttstore/allCollectionChangeHistory?perPage=500");
+      if(cursor) {
+        url.searchParams.set("cursor", cursor);
+      }
       const {changeHistory: newChangeHistory, page} = await retry(() =>
-        fetch(`https://whenplane.com/api/lttstore/allCollectionChangeHistory?perPage=500&offset=${nextOffset}`)
+        fetch(url)
           .then(r => {
             if(!r.ok) throw new Error(`Got ${r.status} ${r.statusText} from allCollectionChangeHistory endpoint`);
-            return r.json() as Promise<{changeHistory: ChangeHistoryTableRow[], page: {perPage: number, hasNextPage: boolean, nextOffset: number | undefined}}>;
+            return r.json() as Promise<{changeHistory: ChangeHistoryTableRow[], page: {perPage: number, hasNextPage: boolean, cursor: string | undefined}}>;
           })
       );
-      nextOffset = page.nextOffset;
+      cursor = page.cursor;
       hasNextPage = page.hasNextPage;
       collectionChangeHistory.push(...newChangeHistory);
       const last = newChangeHistory.pop();
@@ -157,7 +161,7 @@ export const GET = (async ({platform}) => {
       if(!last || Date.now() - last.timestamp > 90 * 24 * 60 * 60e3) break;
 
       await wait(1e3);
-    } while(hasNextPage && nextOffset !== undefined);
+    } while(hasNextPage && cursor);
 
     console.log(`Fetched ${commas(collectionChangeHistory.length)} change history entries in ${commas(Date.now() - collectionChangeHistoryStart)}ms`);
     return collectionChangeHistory;
