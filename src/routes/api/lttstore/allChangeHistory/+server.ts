@@ -31,30 +31,30 @@ export const GET = (async ({platform, url}) => {
   const results = await retryD1(() =>
     (cursor == null)
       ? db
-        .prepare("select rowid,* from change_history order by timestamp desc, rowid desc limit ?")
+        .prepare("select * from change_history order by timestamp desc, change_id desc limit ?")
         .bind(
           perPage + 1, // pre-fetch 1 extra to see if there is more than the current page
         )
-        .all<ChangeHistoryTableRow & {rowid: number}>()
+        .all<ChangeHistoryTableRow & {change_id: number}>()
         .then(r => r.results)
       : db
-        .prepare("select rowid,* from change_history where (timestamp, rowid) < (?, ?) order by timestamp desc, rowid desc limit ?")
+        .prepare("select * from change_history where (timestamp, change_id) < (?, ?) order by timestamp desc, change_id desc limit ?")
         .bind(
           cursorTimestamp,
           cursorRow,
           perPage + 1, // pre-fetch 1 extra to see if there is more than the current page
         )
-        .all<ChangeHistoryTableRow & {rowid: number}>()
+        .all<ChangeHistoryTableRow & {change_id: number}>()
         .then(r => r.results)
   );
 
   const hasNextPage = results.length > perPage;
   const nextCursor = hasNextPage
-    ? btoa(`${results[perPage - 1].timestamp}|${results[perPage - 1].rowid}`)
+    ? btoa(`${results[perPage - 1].timestamp}|${results[perPage - 1].change_id}`)
       .replaceAll("=", "")
     : undefined;
   const changeHistory = (hasNextPage ? results.slice(0, perPage) : results)
-    .map(r => ({...r, rowid: undefined}));
+    .map(r => ({...r, change_id: undefined}));
 
 
   return json({
