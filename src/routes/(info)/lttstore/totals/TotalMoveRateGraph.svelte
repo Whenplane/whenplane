@@ -24,8 +24,15 @@
 
   let wrapperDiv = $state<HTMLDivElement>();
 
-  let stockHistory = $derived(stockHistoryRaw.filter((t, i) => {
-    const previousTime = stockHistoryRaw[i-1]?.timestamp ?? 0;
+  let stockHistory = $derived(stockHistoryRaw.filter((t, i, a) => {
+    let previousTime = 0;
+    for (let j = i-1; j > 0; j--) {
+      const previous = a[j];
+      if(previous.store !== t.store) continue;
+      if(!previous.total) continue;
+      previousTime = previous.timestamp;
+      break;
+    }
     return t.timestamp - previousTime > 28 * 60e3;
   }));
   let stores = $derived([...new Set(stockHistory.map(s => s.store))]);
