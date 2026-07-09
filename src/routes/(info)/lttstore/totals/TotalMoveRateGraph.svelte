@@ -25,6 +25,7 @@
   let wrapperDiv = $state<HTMLDivElement>();
 
   let stockHistory = $derived(stockHistoryRaw.filter((t, i, a) => {
+    if(t.timestamp > 1783559340000) return true; // don't filter after we started to do server-side filtering
     let previousTime = 0;
     let previousStock = 0;
     for (let j = i-1; j > 0; j--) {
