@@ -65,7 +65,7 @@ export const GET = (async ({platform, url}) => {
       cursor: nextCursor,
       hint: url.searchParams.has("cursor") || url.searchParams.has("perPage") || !hasNextPage
         ? undefined
-        : `Add ?cursor=${nextCursor} to the url to get the next page. ` +
+        : `Add ?cursor=${encodeURIComponent(nextCursor!)} to the url to get the next page. ` +
         `Then keep using the returned cursor to get the next page until hasNextPage is false ` +
         `(where cursor would also be undefined)`
     }

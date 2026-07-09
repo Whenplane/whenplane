@@ -23,7 +23,7 @@
       changeHistory: ChangeHistoryTableRow[];
       page: {
         hasNextPage: boolean;
-        nextOffset: number;
+        cursor: string;
       }
     },
     handle?: string,
@@ -78,11 +78,13 @@
           await wait(100);
         }
         let hasNext = initialChangeHistory?.page.hasNextPage;
-        let nextOffset = initialChangeHistory?.page.nextOffset ?? 0;
-        while(hasNext && typeof nextOffset === "number") {
+        let cursor = initialChangeHistory?.page.cursor;
+        while(hasNext && cursor) {
           if(!mounted) break;
+          const url = new URL(`/api/lttstore/${page.params.store}/${collection ? "collections" : "products"}/${id ?? handle}/changeHistory`);
+          if(cursor) url.searchParams.set("cursor", cursor);
           const response = await retry(() =>
-            fetch(`/api/lttstore/${page.params.store}/${collection ? "collections" : "products"}/${id ?? handle}/changeHistory?offset=${nextOffset}`)
+            fetch(url)
               .then(async (r) => {
                 if(r.status === 429) {
                   await wait(11e3);
@@ -92,10 +94,10 @@
                 }
               })
           );
-          nextOffset = response.page.nextOffset;
+          cursor = response.page.cursor;
           hasNext = response.page.hasNextPage;
           changeHistory.push(...response.changeHistory);
-          if(!differences || (differences / 100) >= 14) {
+          if(!differences || (differences / (response.page?.perPage ?? 100)) >= 14) {
             await wait(800); // to prevent rate limiting
           }
         }

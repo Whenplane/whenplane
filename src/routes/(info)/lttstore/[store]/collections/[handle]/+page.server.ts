@@ -23,7 +23,7 @@ export const load = (async ({platform, params, fetch}) => {
     let response;
     do {
       response = await retry(() =>
-        fetch(`/api/lttstore/${params.store}/collections/${collection.id}/changeHistory?offset=0&perPage=${perPage}`)
+        fetch(`/api/lttstore/${params.store}/collections/${collection.id}/changeHistory?perPage=${perPage}`)
           .then(r => r.json())
       );
       perPage--;
