@@ -28,7 +28,7 @@ export const GET = (async ({platform, url}) => {
   }
 
 
-  const results = await retryD1(() =>
+  const response = await retryD1(() =>
     (cursor == null)
       ? db
         .prepare("select * from change_history order by timestamp desc, change_id desc limit ?")
@@ -36,7 +36,6 @@ export const GET = (async ({platform, url}) => {
           perPage + 1, // pre-fetch 1 extra to see if there is more than the current page
         )
         .all<ChangeHistoryTableRow & {change_id: number}>()
-        .then(r => r.results)
       : db
         .prepare("select * from change_history where (timestamp, change_id) < (?, ?) order by timestamp desc, change_id desc limit ?")
         .bind(
@@ -45,8 +44,8 @@ export const GET = (async ({platform, url}) => {
           perPage + 1, // pre-fetch 1 extra to see if there is more than the current page
         )
         .all<ChangeHistoryTableRow & {change_id: number}>()
-        .then(r => r.results)
   );
+  const results = response.results;
 
   const hasNextPage = results.length > perPage;
   const nextCursor = hasNextPage
@@ -68,6 +67,10 @@ export const GET = (async ({platform, url}) => {
         : `Add ?cursor=${encodeURIComponent(nextCursor!)} to the url to get the next page. ` +
         `Then keep using the returned cursor to get the next page until hasNextPage is false ` +
         `(where cursor would also be undefined)`
+    }
+  }, {
+    headers: {
+      "x-rows-read": response.meta.rows_read+""
     }
   });
 }) satisfies RequestHandler
