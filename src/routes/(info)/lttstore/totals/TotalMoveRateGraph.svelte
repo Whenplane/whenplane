@@ -26,14 +26,18 @@
 
   let stockHistory = $derived(stockHistoryRaw.filter((t, i, a) => {
     let previousTime = 0;
+    let previousStock = 0;
     for (let j = i-1; j > 0; j--) {
       const previous = a[j];
       if(previous.store !== t.store) continue;
       if(!previous.total) continue;
       previousTime = previous.timestamp;
+      previousStock = previous.total;
       break;
     }
-    return t.timestamp - previousTime > 28 * 60e3;
+    const timeDifference = t.timestamp - previousTime;
+    const stockDifference = t.total - previousStock;
+    return (timeDifference > 58 * 60e3) || (timeDifference > 28 * 60e3 && stockDifference !== 0);
   }));
   let stores = $derived([...new Set(stockHistory.map(s => s.store))]);
   let perStoreTotals = $derived(Object.fromEntries(stores.map(s => [s, stockHistory.filter(h => h.store === s)])));
