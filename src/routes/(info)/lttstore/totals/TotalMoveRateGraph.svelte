@@ -11,7 +11,7 @@
   import { browser } from "$app/environment";
 
   let {
-    stockHistory,
+    stockHistory: stockHistoryRaw,
     chartUpdateNumber = typed<number>(1),
     historyDays = typed<number | "all">("all"),
     stockAsOf = typed<number>(Date.now())
@@ -24,6 +24,10 @@
 
   let wrapperDiv = $state<HTMLDivElement>();
 
+  let stockHistory = $derived(stockHistoryRaw.filter((t, i, a) => {
+    const previousTime = a[i-1]?.timestamp ?? 0;
+    return t.timestamp - previousTime > 28 * 60e3;
+  }));
   let stores = $derived([...new Set(stockHistory.map(s => s.store))]);
   let perStoreTotals = $derived(Object.fromEntries(stores.map(s => [s, stockHistory.filter(h => h.store === s)])));
 
