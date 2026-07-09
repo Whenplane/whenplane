@@ -113,24 +113,26 @@ export const GET = (async ({platform}) => {
   console.log("Fetching allChangeHistory");
   const changeHistoryStart = Date.now();
   let changeHistory: ChangeHistoryTableRow[] = [];
-  let nextOffset: number | undefined = 0;
+  let cursor: string | undefined = undefined;
   let hasNextPage = true;
   do {
+    const url = new URL("https://whenplane.com/api/lttstore/allChangeHistory?perPage=500");
+    if(cursor) url.searchParams.set("cursor", cursor);
     const {changeHistory: newChangeHistory, page} = await retry(() =>
-      fetch(`https://whenplane.com/api/lttstore/allChangeHistory?perPage=500&offset=${nextOffset}`)
+      fetch(url)
         .then(r => {
           if(!r.ok) throw new Error(`Got ${r.status} ${r.statusText} from allChangeHistory endpoint`);
-          return r.json() as Promise<{changeHistory: ChangeHistoryTableRow[], page: {perPage: number, hasNextPage: boolean, nextOffset: number | undefined}}>;
+          return r.json() as Promise<{changeHistory: ChangeHistoryTableRow[], page: {perPage: number, hasNextPage: boolean, cursor: string | undefined}}>;
         })
     );
-    nextOffset = page.nextOffset;
+    cursor = page.cursor;
     hasNextPage = page.hasNextPage;
     changeHistory.push(...newChangeHistory);
     const last = newChangeHistory.pop();
 
     // Stop once we pass 90 days ago
     if(!last || Date.now() - last.timestamp > 90 * 24 * 60 * 60e3) break;
-  } while(hasNextPage && nextOffset !== undefined);
+  } while(hasNextPage && cursor);
 
   console.log(`Fetched ${commas(changeHistory.length)} change history entries in ${commas(Date.now() - changeHistoryStart)}ms`);
 
@@ -142,9 +144,7 @@ export const GET = (async ({platform}) => {
     let hasNextPage = true;
     do {
       const url = new URL("https://whenplane.com/api/lttstore/allCollectionChangeHistory?perPage=500");
-      if(cursor) {
-        url.searchParams.set("cursor", cursor);
-      }
+      if(cursor) url.searchParams.set("cursor", cursor);
       const {changeHistory: newChangeHistory, page} = await retry(() =>
         fetch(url)
           .then(r => {
