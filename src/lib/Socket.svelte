@@ -6,6 +6,7 @@
 	import type { MMJobData } from '$lib/utils.ts';
 	import { isNearWan } from '$lib/timeUtils.ts';
 	import { typed } from '$lib';
+  import { page } from "$app/state";
 
 	let {
 		events = typed<string[]>(),
@@ -83,7 +84,7 @@
 			}
 
 			if (invalidate) {
-				if(!document.hidden) {
+				if(!document.hidden || page.url.searchParams.has("frame")) {
           lastInvalidate = Date.now();
           await invalidateAll();
         } else {
