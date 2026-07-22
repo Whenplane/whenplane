@@ -21,7 +21,7 @@ export const GET = (async ({platform}) => {
   if(Date.now() - localFetched < cache_time && localCache !== undefined) {
     return json(localCache, {
       headers: {
-        "cache-control": "max-age=30, public",
+        "cache-control": `public, max-age=${Math.floor(cache_time / 1e3)}`,
       }
     });
   }
@@ -35,7 +35,11 @@ export const GET = (async ({platform}) => {
     localFetched = cached;
     localCache = await cachedTimesResponse.json();
     if(Date.now() - cached < cache_time) {
-      return json(localCache);
+      return json(localCache, {
+        headers: {
+          "cache-control": `public, max-age=${Math.floor(cache_time / 1e3)}`,
+        }
+      });
     }
   }
 
@@ -58,7 +62,7 @@ export const GET = (async ({platform}) => {
 
     return json(alternateTimes, {
       headers: {
-        "cache-control": `max-age=${30 * 60}, public`,
+        "cache-control": `public, max-age=${Math.floor(cache_time / 1e3)}`,
       }
     });
 
@@ -67,7 +71,7 @@ export const GET = (async ({platform}) => {
     if(localCache) {
       return json(localCache, {
         headers: {
-          "cache-control": `max-age=${30 * 60}, public`,
+          "cache-control": `public, max-age=${Math.floor(cache_time / 1e3)}`,
         }
       });
     }
