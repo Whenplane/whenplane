@@ -77,8 +77,8 @@ export const GET = (async ({fetch}) => {
       link: `https://whenplane.com/history/show/${show.name}`,
       guid: `https://whenplane.com/history/show/${show.name}`,
       published,
-      date: published,
-      description: "WAN show from " + published.toLocaleDateString(undefined, {dateStyle: 'long', timeZone: "Etc/GMT+7"}) + ". "
+      date: showEnd ?? published, // this is used as the last updated date, so use the show end time
+      description: "WAN show from " + published.toLocaleDateString(undefined, {dateStyle: 'long', timeZone: "Etc/GMT+7"}) + ". " +
         (onTimeString ? 'It was ' + onTimeString.trim() : '') +
         ((mainShowStart instanceof Date && showEnd instanceof Date) || show.metadata.mainShowLength
           ? (onTimeString ? ", and" : "It") +
