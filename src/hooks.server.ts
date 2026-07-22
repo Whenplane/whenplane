@@ -8,6 +8,7 @@ import type {
 import type { TimingEntry } from "./app";
 import { report } from "$lib/server/instance-analytics.ts";
 import { env } from "$env/dynamic/private";
+import { isNearWan } from "$lib/timeUtils.ts";
 
 const reportedIds: {[key: string]: number} = {};
 
@@ -247,7 +248,7 @@ export const handle: Handle = async ({ event, resolve }) => {
     }
 
     if(event.url.pathname === "/") {
-        response.headers.set("Cache-Control", "no-store, max-age=0");
+        response.headers.set("Cache-Control", `public, max-age=${isNearWan() ? 4 : 30}`);
     }
 
     return response;
