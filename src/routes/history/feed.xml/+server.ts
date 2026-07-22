@@ -67,6 +67,8 @@ export const GET = (async ({fetch}) => {
     const mainShowStart = (show.metadata.mainShowStart && new Date(show.metadata.mainShowStart)) || undefined;
     const showEnd = (show.metadata.showEnd && new Date(show.metadata.showEnd)) || undefined
 
+    const thumbnails = show.metadata.thumbnails ?? show.metadata.snippet?.thumbnails;
+
     feed.addItem({
       title: `${show.metadata.title ?? show.metadata.snippet?.title}`,
       id: `show/${show.name}`,
@@ -85,7 +87,9 @@ export const GET = (async ({fetch}) => {
               (showEnd && mainShowStart && (showEnd?.getTime() - mainShowStart?.getTime()))
             )?.trim() + "."
           : "."
-        )
+        ),
+      image: thumbnails?.maxres ?? thumbnails?.standard ?? thumbnails?.high ?? thumbnails?.medium ?? thumbnails?.default,
+
     })
   }
 
