@@ -78,8 +78,7 @@ export const GET = (async ({fetch}) => {
       guid: `https://whenplane.com/history/show/${show.name}`,
       published,
       date: published,
-      description: "WAN show from " + published.toLocaleDateString(undefined, {dateStyle: 'long', timeZone: "Etc/GMT+7"}) +
-        (show.metadata.title ? " titled \"" + truncateText(show.metadata.title.trim(), 65) + "\"" : "") + ". " +
+      description: "WAN show from " + published.toLocaleDateString(undefined, {dateStyle: 'long', timeZone: "Etc/GMT+7"}) + ". "
         (onTimeString ? 'It was ' + onTimeString.trim() : '') +
         ((mainShowStart instanceof Date && showEnd instanceof Date) || show.metadata.mainShowLength
           ? (onTimeString ? ", and" : "It") +
