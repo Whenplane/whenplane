@@ -110,7 +110,8 @@ export const GET = (async ({fetch}) => {
     )
     : (12 * 60 * 60);
 
-  feed.options.ttl = cacheSeconds;
+  // don't let feed's ttl be bigger than 24h, because it gets cached by Cloudflare
+  feed.options.ttl = Math.min(24 * 60 * 60, cacheSeconds);
 
 
   return text(feed.rss2(), {
