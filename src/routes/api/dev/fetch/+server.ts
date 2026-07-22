@@ -1,7 +1,7 @@
 import type {RequestHandler} from "@sveltejs/kit";
 import {dev} from "$app/environment";
 import {error, json} from "@sveltejs/kit";
-import type {HistoricalEntry} from "$lib/utils";
+import { type HistoricalEntry, wait } from "$lib/utils";
 import type {KVNamespace} from "@cloudflare/workers-types"
 
 /**
@@ -27,14 +27,33 @@ async function putHistory(history: KVNamespace) {
         .then(r => r.json()) as HistoricalEntry[];
 
 
+    let rl = 0;
     for (const show of prodData) {
-        const response = await fetch("https://whenplane.pages.dev/api/history/show/" + show.name);
-        if(response.status != 200) {
-            console.warn("Skipping '" + show.name + "' due to " + response.status + " " + response.statusText);
-            continue;
+        let rlIncreased = false;
+        while(true) {
+            const response = await fetch("https://whenplane.pages.dev/api/history/show/" + show.name, {
+                headers: {
+                    "User-Agent": "Whenplane-local-dev"
+                }
+            });
+            if(response.status != 200) {
+                if(response.status == 429) {
+                    console.warn("Ratelimited! Sleeping for 10s");
+                    await wait(10e3);
+                    if(!rlIncreased) {
+                        rl++;
+                        rlIncreased = true;
+                    }
+                    continue;
+                }
+                console.warn("Skipping '" + show.name + "' due to " + response.status + " " + response.statusText);
+                break;
+            }
+            const data = await response.json();
+            await history.put(show.name, JSON.stringify(data.value), {metadata: data.metadata});
+            await wait(500 + (100 * rl)); // prevent rate limiting
+            break;
         }
-        const data = await response.json();
-        await history.put(show.name, JSON.stringify(data.value), {metadata: data.metadata})
     }
 }
 
