@@ -68,6 +68,8 @@ export const GET = (async ({fetch}) => {
     const showEnd = (show.metadata.showEnd && new Date(show.metadata.showEnd)) || undefined
 
     const thumbnails = show.metadata.thumbnails ?? show.metadata.snippet?.thumbnails;
+    const thumbnail = thumbnails?.maxres ?? thumbnails?.standard ?? thumbnails?.high ?? thumbnails?.medium ?? thumbnails?.default;
+    if(thumbnail) delete thumbnail.blurhash;
 
     feed.addItem({
       title: `${show.metadata.title ?? show.metadata.snippet?.title}`,
@@ -88,7 +90,7 @@ export const GET = (async ({fetch}) => {
             )?.trim() + "."
           : "."
         ),
-      image: thumbnails?.maxres ?? thumbnails?.standard ?? thumbnails?.high ?? thumbnails?.medium ?? thumbnails?.default,
+      image: thumbnail,
 
     })
   }
