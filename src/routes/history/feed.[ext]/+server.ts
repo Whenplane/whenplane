@@ -1,4 +1,4 @@
-import { type RequestHandler, text } from "@sveltejs/kit";
+import { error, redirect, type RequestHandler, text } from "@sveltejs/kit";
 import { Feed } from "feed";
 import { type HistoricalEntry, truncateText } from "$lib/utils.ts";
 import {
@@ -7,13 +7,16 @@ import {
   getNextWANLuxon,
   getTimeUntil,
   getUTCDate,
-  isWrongOffset,
   timeString
 } from "$lib/timeUtils.ts";
 import { version } from "$app/environment";
 import type { AlternateTimeRow } from "../../api/alternateStartTimes/+server.ts";
 
-export const GET = (async ({fetch}) => {
+export const GET = (async ({fetch, url, params}) => {
+
+  if(!["atom", "json", "rss", "xml"].includes(params.ext!)) {
+    throw error(404)
+  }
 
   const now = new Date();
 
@@ -33,7 +36,11 @@ export const GET = (async ({fetch}) => {
     image: "https://whenplane.com/wan-ios-logo.png",
     favicon: "https://whenplane.com/wan-ios-logo.png",
     generator: "Whenplane",
-    feed: "https://whenplane.com/history/feed.xml",
+    feedLinks: {
+      atom: "https://whenplane.com/history/feed.atom",
+      rss: "https://whenplane.com/history/feed.rss",
+      json: "https://whenplane.com/history/feed.json",
+    },
     ttl: 12 * 60 * 60 // 12 hours
   });
 
@@ -73,7 +80,7 @@ export const GET = (async ({fetch}) => {
 
     feed.addItem({
       title: `${show.metadata.title ?? show.metadata.snippet?.title}`,
-      id: `show/${show.name}`,
+      id: `https://whenplane.com/history/show/${show.name}`,
       link: `https://whenplane.com/history/show/${show.name}`,
       guid: `https://whenplane.com/history/show/${show.name}`,
       published,
@@ -112,12 +119,30 @@ export const GET = (async ({fetch}) => {
   // don't let feed's ttl be bigger than 24h, because it gets cached by Cloudflare
   feed.options.ttl = Math.min(24 * 60 * 60, cacheSeconds);
 
+  const plain = url.searchParams.has("plain");
 
-  return text(feed.rss2(), {
-    headers: {
-      "content-type": "application/rss+xml",
-      "cache-control": `public, max-age=${cacheSeconds}`,
-    }
-  })
-
+  if(params.ext === "atom") {
+    return text(feed.atom1(), {
+      headers: {
+        "content-type": `application/${plain ? "" : "atom+"}xml`,
+        "cache-control": `public, max-age=${cacheSeconds}`,
+      }
+    })
+  } else if(params.ext === "json") {
+    return text(feed.json1(), {
+      headers: {
+        "content-type": `application/${plain ? "" : "feed+"}json`,
+        "cache-control": `public, max-age=${cacheSeconds}`,
+      }
+    })
+  } else if(["rss", "xml"].includes(params.ext!)) {
+    return text(feed.rss2(), {
+      headers: {
+        "content-type": `application/${plain ? "" : "rss+"}xml`,
+        "cache-control": `public, max-age=${cacheSeconds}`,
+      }
+    })
+  } else {
+    throw new Error(`Unknown extension ${params.ext} somehow got past the initial check!`)
+  }
 }) satisfies RequestHandler
