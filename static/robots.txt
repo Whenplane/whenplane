@@ -1,3 +1,7 @@
 User-agent: *
 Disallow: /cdn-cgi/
 Crawl-delay: 60
+
+User-agent: Googlebot
+Crawl-delay: 1
+Disallow: /cdn-cgi/
