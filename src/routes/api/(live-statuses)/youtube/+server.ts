@@ -40,7 +40,14 @@ export const GET = (async ({platform, locals, url, fetch}) => {
         cache.value &&
         fetchDistance < cacheTime
     ) {
-        return json({...cache.value, cached: true, fetchDistance});
+        return json(
+          {...cache.value, cached: true, fetchDistance},
+          {
+            headers: {
+                "cache-control": `public, max-age=${Math.floor(cacheTime / 1e3)}`
+            }
+          }
+        );
     }
 
     let cCache: Cache | undefined = undefined;
@@ -53,7 +60,10 @@ export const GET = (async ({platform, locals, url, fetch}) => {
         if(cacheMatch) {
             const fetched = cacheMatch.headers.get("x-fetched")
             if(fetched && Date.now() - new Date(fetched).getTime() < cacheTime) {
-                return newResponse(cacheMatch);
+                return newResponse(cacheMatch, h => {
+                    h.set("cache-control", `public, max-age=${Math.floor(cacheTime / 1e3)}`)
+                    return h;
+                });
             }
         }
     } else {
@@ -173,7 +183,11 @@ export const GET = (async ({platform, locals, url, fetch}) => {
 
     cache.value = result;
     if(cCache && cacheRequest) platform.context.waitUntil(cCache.put(cacheRequest, json(result, {headers: {"x-fetched": new Date().toISOString()}})));
-    return json(result);
+    return json(result, {
+        headers: {
+            "cache-control": `public, max-age=${Math.floor(cacheTime / 1e3)}`
+        }
+    });
 
 }) satisfies RequestHandler;
 
