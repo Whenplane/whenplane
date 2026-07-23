@@ -77,11 +77,11 @@
         while(page.params.store === undefined) {
           await wait(100);
         }
-        let hasNext = initialChangeHistory?.page.hasNextPage;
-        let cursor = initialChangeHistory?.page.cursor;
+        let hasNext = initialChangeHistory?.page?.hasNextPage;
+        let cursor = initialChangeHistory?.page?.cursor;
         while(hasNext && cursor) {
           if(!mounted) break;
-          const url = new URL(`/api/lttstore/${page.params.store}/${collection ? "collections" : "products"}/${id ?? handle}/changeHistory`);
+          const url = new URL(`/api/lttstore/${page.params.store}/${collection ? "collections" : "products"}/${id ?? handle}/changeHistory`, page.url);
           if(cursor) url.searchParams.set("cursor", cursor);
           const response = await retry(() =>
             fetch(url)
