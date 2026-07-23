@@ -5,7 +5,7 @@ import { browser } from "$app/environment";
 
 export const load = (async ({fetch}) => {
   const fast = (!browser || (location && location.pathname !== "/youtube-redirect"));
-  const youtubeData = await fetch("/api/youtube?fast=" + fast + "&d=" + Date.now())
+  const youtubeData = await fetch("/api/youtube?fast=" + fast)
     .then(r => r.json() as Promise<YoutubeResponse>);
 
   if(youtubeData.videoId && !browser) {

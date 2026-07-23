@@ -7,7 +7,7 @@ export const load = (async ({fetch}) => {
   const fast = (!browser || (location && location.pathname !== "/floatplane"));
 
   return {
-    floatplane: await fetch("/api/floatplane?fast=" + fast + "&description=true&d=" + Date.now())
+    floatplane: await fetch("/api/floatplane?fast=" + fast + "&description=true")
       .then(r => r.json())
       .catch(e => {
         console.error(e);

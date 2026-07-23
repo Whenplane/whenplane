@@ -6,7 +6,7 @@ export const load = (async ({fetch}) => {
 
 
   return {
-    floatplane: await fetch("/api/floatplane?fast=false&description=false&d=" + Date.now())
+    floatplane: await fetch("/api/floatplane?fast=false&description=false")
       .then(r => r.json())
       .catch(e => {
         console.error(e);
