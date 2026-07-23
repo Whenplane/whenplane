@@ -77,7 +77,7 @@ function respond(response: Latenesses, cache_time: number) {
   const maxAge = Math.ceil(cache_time / 1e3);
   return json(response, {
     headers: {
-      "Cache-Control": `public max-age=${maxAge} s-maxage=${maxAge} must-revalidate`,
+      "Cache-Control": `public, max-age=${maxAge}, must-revalidate`,
       "x-response-generated": new Date().toISOString()
     }
   });
