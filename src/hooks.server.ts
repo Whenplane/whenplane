@@ -250,6 +250,9 @@ export const handle: Handle = async ({ event, resolve }) => {
     if(event.url.pathname === "/") {
         response.headers.set("Cache-Control", `public, max-age=${isNearWan() ? 4 : 30}`);
     }
+    if(event.url.pathname === "/floatplane") {
+        response.headers.set("Cache-Control", `public, max-age=${isNearWan() ? 4 : 60 * 60}`);
+    }
 
     return response;
 }
