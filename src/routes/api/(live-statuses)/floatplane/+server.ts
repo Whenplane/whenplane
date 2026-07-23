@@ -55,6 +55,10 @@ export const GET = (async ({fetch, url, platform, locals}) => {
         ...cache.lastData,
         description: withDescription ? cache.lastData?.description : undefined,
         isWAN: cache.lastData?.title?.toLowerCase().includes(" wan ")
+      }, {
+        headers: {
+          "cache-control": `public, max-age=${Math.floor(realCacheTime / 1e3)}`
+        }
       });
     }
 
@@ -76,7 +80,11 @@ export const GET = (async ({fetch, url, platform, locals}) => {
               lastFetch: cachedTime.getTime(),
               lastData: data
             };
-            return json(data);
+            return json(data, {
+              headers: {
+                "cache-control": `public, max-age=${Math.floor(realCacheTime / 1e3)}`
+              }
+            });
           }
         }
       } else {
@@ -158,6 +166,10 @@ export const GET = (async ({fetch, url, platform, locals}) => {
       ...data,
       description: withDescription ? data.description : undefined,
       isWAN: data.title?.toLowerCase().includes(" wan ")
+    }, {
+      headers: {
+        "cache-control": `public, max-age=${Math.floor(realCacheTime / 1e3)}`
+      }
     });
 
 
