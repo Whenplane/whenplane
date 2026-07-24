@@ -78,7 +78,7 @@
   <br>
   You must keep this page open. It will replace this tab.<br>
   <br>
-  <a href="https://www.youtube.com/linustechtips/streams">Go to the LTT stream list instead</a><br>
+  <a href="https://www.youtube.com/@WANShowYT/streams">Go to the @WANShowYT stream list instead</a><br>
   <br>
   <br>
   <span class="opacity-70">
