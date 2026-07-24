@@ -49,6 +49,7 @@ export const GET = (async ({fetch, url, platform, locals}) => {
     const realCacheTime = fast ? fast_cache_time : cache_time;
 
     if(Date.now() - cache.lastFetch < realCacheTime && cache.lastData) {
+      const timeUntilNextExpiry = Math.max(0, (cache.lastFetch + realCacheTime) - Date.now());
       return json({
         cached: true,
         lastFetch: cache.lastFetch,
@@ -57,7 +58,7 @@ export const GET = (async ({fetch, url, platform, locals}) => {
         isWAN: cache.lastData?.title?.toLowerCase().includes(" wan ")
       }, {
         headers: {
-          "cache-control": `public, max-age=${Math.floor(realCacheTime / 1e3)}`
+          "cache-control": `public, max-age=${Math.floor(timeUntilNextExpiry / 1e3)}`
         }
       });
     }
@@ -80,9 +81,10 @@ export const GET = (async ({fetch, url, platform, locals}) => {
               lastFetch: cachedTime.getTime(),
               lastData: data
             };
+            const timeUntilNextExpiry = Math.max(0, (cachedTime.getTime() + realCacheTime) - Date.now());
             return json(data, {
               headers: {
-                "cache-control": `public, max-age=${Math.floor(realCacheTime / 1e3)}`
+                "cache-control": `public, max-age=${Math.floor(timeUntilNextExpiry / 1e3)}`
               }
             });
           }
