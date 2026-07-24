@@ -5,7 +5,7 @@
 
 const sw = self as unknown as ServiceWorkerGlobalScope;
 
-import { build, files, prerendered, version } from "$service-worker";
+import { build, files, prerendered } from "$service-worker";
 
 // const CACHE_PREFIX = "cache-"
 const CACHE = "cache";
@@ -20,15 +20,19 @@ const cacheablePages = [
   "/extension"
 ]
 
-const ASSETS = [
-  ...build, // the app itself
-  ...files,  // everything in `static`
-  ...prerendered,
-].filter((a) => !dontCache.includes(a));
+const ASSETS = [...new Set(
+  [
+    ...build, // /_app
+    ...files,  // everything in `static`
+    ...prerendered,
+  ].filter((a) => !dontCache.includes(a))
+)];
 
-const ALL_ASSETS = [
-  ...ASSETS,
-  ...cacheablePages
+const ALL_ASSETS = [...
+  new Set([
+    ...ASSETS,
+    ...cacheablePages
+  ])
 ]
 
 
@@ -37,16 +41,7 @@ sw.addEventListener('install', (event) => {
   async function addFilesToCache() {
 
     const cache = await caches.open(CACHE);
-    await cache.addAll(ASSETS);
-
-    // remove old keys
-    const oldKeys = await cache.keys()
-      .then(ks => ks.filter(k => !ALL_ASSETS.includes(new URL(k.url).pathname)));
-
-
-    for (const oldKey of oldKeys) {
-      await caches.delete(oldKey.url);
-    }
+    await Promise.allSettled(ALL_ASSETS.map(a => cache.add(a)))
 
   }
 
@@ -61,20 +56,24 @@ sw.addEventListener('fetch', (event) => {
 
   async function respond() {
     const cache = caches.open(CACHE);
+    const is_cached = ASSETS.includes(url.pathname);
 
-    const cacheStart = Date.now();
-    // `build`/`files` can always be served from the cache
-    const browserCache: Promise<Response> = ASSETS.includes(url.pathname) ?
+    const fromCache = () =>
       cache.then(async c => {
         const match = await c.match(event.request);
         if(!match) throw new Error("No match");
         return match;
-      }) :
+      });
+
+    const cacheStart = Date.now();
+    // `build`/`files` can always be served from the cache
+    const browserCache: Promise<Response> = is_cached ?
+      fromCache() :
       Promise.reject();
 
     browserCache.then(() => {
       console.debug("Fetching", url.pathname, "from cache took", (Date.now() - cacheStart) + "ms.")
-    })
+    }).catch(() => {});
 
     const doFetch = (async () => {
       const response = await fetch(event.request, { signal: AbortSignal.timeout(3000) });
@@ -86,7 +85,8 @@ sw.addEventListener('fetch', (event) => {
       }
 
       // Assets should already be cached so this *shouldn't* happen, but we're here so why not
-      if (response.status === 200) {
+      // Skips build files because those are immutable and will never change
+      if (response.status === 200 && !build.includes(url.pathname)) {
         event.waitUntil(cache.then(c => c.put(event.request, response.clone())));
       }
 
@@ -94,26 +94,39 @@ sw.addEventListener('fetch', (event) => {
       return response;
     })()
 
-    return await Promise.any([browserCache, doFetch]) as Response;
+    // we race the fetch and the cache, because sometimes the cache can be much slower than fetching it fresh
+    return await Promise.any([browserCache, doFetch])
+      .catch(async e => { // fetching failed, try getting from cache if we haven't tried already
+        // if is_cached is true, we already tried and errored with the local cache
+        if (is_cached) throw e;
+        console.warn("Fetch error, trying from cache", e);
+        try {
+          return await fromCache();
+        } catch (_) {
+          // throws the actual fetch error instead of the generic "no match" error
+          throw e;
+        }
+      });
   }
 
   if(ALL_ASSETS.includes(url.pathname)) event.respondWith(respond());
 });
 
+// Wait for this sw to be active before we delete old cached files.
+// Otherwise, when we were doing it in install before,
+// a new version would delete files that were still being used by an old version!
 sw.addEventListener('activate', (event) => {
-  // Remove previous cached data from disk
-  async function deleteOldCaches() {
-    const cacheNames = await caches.keys();
-    if(!cacheNames.includes(CACHE)) {
-      console.log("Current cache not in cache list! Skipping old cache deletion.");
-      return;
-    }
-    for (const key of cacheNames) {
-      if (key !== CACHE) await caches.delete(key);
-    }
-  }
+  event.waitUntil((async () => {
+    const cache = await caches.open(CACHE);
 
-  event.waitUntil(deleteOldCaches());
+    // remove old keys
+    const oldKeys = await cache.keys()
+      .then(ks => ks.filter(k => !ALL_ASSETS.includes(new URL(k.url).pathname)));
+
+    for (const oldKey of oldKeys) {
+      await cache.delete(oldKey);
+    }
+  })())
 });
 
 
@@ -139,6 +152,6 @@ sw.addEventListener("push", (event) => {
 sw.addEventListener("notificationclick", (event) => {
   event.notification.close();
   if(event.notification.tag.startsWith("elijah_stream")) {
-    if (sw.clients.openWindow) sw.clients.openWindow("https://www.twitch.tv/bocabola").then();
+    if (sw.clients.openWindow) event.waitUntil(sw.clients.openWindow("https://www.twitch.tv/bocabola"))
   }
 })
