@@ -40,11 +40,12 @@ export const GET = (async ({platform, locals, url, fetch}) => {
         cache.value &&
         fetchDistance < cacheTime
     ) {
+        const timeUntilNextExpiry = Math.max(0, (cache.lastFetch + cacheTime) - Date.now());
         return json(
           {...cache.value, cached: true, fetchDistance},
           {
             headers: {
-                "cache-control": `public, max-age=${Math.floor(cacheTime / 1e3)}`
+                "cache-control": `public, max-age=${Math.floor(timeUntilNextExpiry / 1e3)}`
             }
           }
         );
@@ -59,9 +60,11 @@ export const GET = (async ({platform, locals, url, fetch}) => {
 
         if(cacheMatch) {
             const fetched = cacheMatch.headers.get("x-fetched")
-            if(fetched && Date.now() - new Date(fetched).getTime() < cacheTime) {
+            const fetchedTime = fetched ? new Date(fetched).getTime() : 0;
+            if(fetched && Date.now() - fetchedTime < cacheTime) {
+                const timeUntilNextExpiry = Math.max(0, (fetchedTime + cacheTime) - Date.now());
                 return newResponse(cacheMatch, h => {
-                    h.set("cache-control", `public, max-age=${Math.floor(cacheTime / 1e3)}`)
+                    h.set("cache-control", `public, max-age=${Math.floor(timeUntilNextExpiry / 1e3)}`)
                     return h;
                 });
             }
