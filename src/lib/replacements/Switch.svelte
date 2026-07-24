@@ -9,9 +9,9 @@
     onCheckedChange
   }: {
     checked: boolean;
-    children: Snippet;
-    disabled: boolean;
-    onCheckedChange: (checked: boolean) => void | undefined;
+    children?: Snippet;
+    disabled?: boolean;
+    onCheckedChange: ((checked: boolean) => any) | (() => any);
   } = $props();
 
 </script>

@@ -5,7 +5,7 @@
   import { onMount } from "svelte";
   import { invalidateAll } from "$app/navigation";
   import { browser } from "$app/environment";
-  import { Switch } from "@skeletonlabs/skeleton-svelte";
+  import Switch from "$lib/replacements/Switch.svelte";
   import { page } from "$app/state";
 
   import { getTimePreference } from "$lib/prefUtils.ts";
@@ -96,7 +96,7 @@
       </span>
     {/if}
     <br>
-    <Switch name="ytrNotifToggle" bind:checked={sendNotificationToggle} on:change={toggleNotifications}/>
+    <Switch bind:checked={sendNotificationToggle} onCheckedChange={toggleNotifications}/>
   {/if}
   <br>
 <!--  <pre>{JSON.stringify(data, undefined, '\t')}</pre>-->

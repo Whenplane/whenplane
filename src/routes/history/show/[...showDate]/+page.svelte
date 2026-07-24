@@ -8,14 +8,13 @@
     import {getTimeUntil} from "$lib/timeUtils";
     import { browser, dev } from "$app/environment";
     import { page } from "$app/state";
-    import type { WanDb_Topic } from "$lib/wdb_types.ts";
     import SubTopics from "$lib/subcomponents/SubTopics.svelte";
     import { fade } from "svelte/transition";
 
     import { getDateFormatLocale } from "$lib/prefUtils.ts";
     import { truncateText } from "$lib/utils.js";
     import { getCookie, setCookie } from "$lib/cookieUtils.ts";
-    import { Switch } from "@skeletonlabs/skeleton-svelte";
+    import Switch from "$lib/replacements/Switch.svelte";
     import Incomplete from "$lib/merch-messages/Incomplete.svelte";
 
     let { data } = $props();
@@ -183,7 +182,7 @@
                 Provided by <a href="/noki">NoKi</a>
                 <div class="flex justify-center items-center mt-2">
                     <Youtube/>
-                    <Switch checked={timestampPlatform === "floatplane"} on:change={toggleTimestampPlatform}/>
+                    <Switch checked={timestampPlatform === "floatplane"} onCheckedChange={toggleTimestampPlatform}/>
                     <Floatplane/>
                 </div>
                 <div in:fade={{duration: 100}} class="text-left inline-block mx-auto">
