@@ -16,10 +16,6 @@ export default defineConfig({
 		include: ['src/**/*.{test,spec}.{js,ts}']
 	},
 	build: {
-		sourcemap: true,
-		cssMinify: "lightningcss",
-	},
-	css: {
-		transformer: 'lightningcss'
+		sourcemap: true
 	}
 });
