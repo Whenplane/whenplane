@@ -18,7 +18,6 @@ export default defineConfig({
 	build: {
 		sourcemap: true,
 		cssMinify: "lightningcss",
-		chunkImportMap: true
 	},
 	css: {
 		transformer: 'lightningcss'
