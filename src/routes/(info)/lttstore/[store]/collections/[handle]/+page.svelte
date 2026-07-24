@@ -8,6 +8,8 @@
 	import { slide } from "svelte/transition";
   import LTTProductCard from "$lib/lttstore/LTTProductCard.svelte";
   import ChangeHistory from "$lib/lttstore/ChangeHistory.svelte";
+  import DateStamp from "$lib/DateStamp.svelte";
+  import ToolTip from "$lib/ToolTip.svelte";
 
   let { data }: PageProps = $props();
 
@@ -94,6 +96,118 @@
       </Accordion.ItemContent>
     </Accordion.Item>
   </Accordion>
+  <br>
+  <br>
+  <div class="max-w-3xl my-4">
+    <Accordion class="mx-4" collapsible>
+      <Accordion.Item value="metadata">
+        <Accordion.ItemTrigger class="font-bold flex items-center justify-between gap-2 cool-border">
+          Collection Metadata
+          <Accordion.ItemIndicator class="group">
+            <ChevronDown class="h-5 w-5 transition group-data-[state=open]:rotate-180" />
+          </Accordion.ItemIndicator>
+        </Accordion.ItemTrigger>
+        <Accordion.ItemContent>
+          {#snippet element(attributes)}
+            {#if !attributes.hidden}
+              <div class="bordered-accordion-content px-2" transition:slide>
+                <h2>Whenplane Metadata</h2>
+                <table class="padded-table">
+                  <thead></thead>
+                  <tbody>
+                  <tr>
+                    <td>On lttstore?</td>
+                    <td>{data.collection.available ? "yes" : "no"}</td>
+                  </tr>
+                  <tr>
+                    <td class="pr-8">
+                      Observed products
+                      <ToolTip id="collection-observed-products-count">
+                        <p>
+                          This is the number of products that Whenplane was able to see in this collection the last we checked.
+                          This means that it only includes published/public products.
+                        </p>
+                        <p>
+                          LTTStore also reports the total number of all products (including unpublished products) which is shown in the LTTStore metadata below, or above the products list at the top of this page.
+                        </p>
+                      </ToolTip>
+                    </td>
+                    <td>{products.length}</td>
+                  </tr>
+                  </tbody>
+                </table>
+                <br>
+                <h2>LTTStore Metadata</h2>
+                <table class="padded-table">
+                  <thead></thead>
+                  <tbody>
+                  <tr>
+                    <td>ID</td>
+                    <td>{data.collection.id}</td>
+                  </tr>
+                  <tr>
+                    <td>Title</td>
+                    <td>{data.collection.title}</td>
+                  </tr>
+                  <tr>
+                    <td>Handle</td>
+                    <td>{data.collection.handle}</td>
+                  </tr>
+                  <tr>
+                    <td class="pr-8">Publication Date</td>
+                    <td><DateStamp epochSeconds={new Date(data.collection.published_at).getTime() / 1e3}/></td>
+                  </tr>
+                  <tr>
+                    <td class="pr-8">
+                      Updated Timestamp
+                      <ToolTip id="collection-updated">
+                        <p>
+                          Lttstore collections have an <code>updated_at</code> field that seems to change very often.
+                        </p>
+                        <p>
+                          My guess is that it changes whenever <i>any</i> tiny thing about <i>any</i> products in the collection changes.
+                        </p>
+                      </ToolTip>
+                    </td>
+                    <td><DateStamp epochSeconds={new Date(data.collection.published_at).getTime() / 1e3}/></td>
+                  </tr>
+                  <tr>
+                    <td>Description</td>
+                    <td>
+                      <span class="opacity-70">
+                        {#if data.collection.description?.trim()}
+                          [description is shown above, below the collection title at the top of the page]
+                        {:else}
+                          {#if data.collection.description?.trim() === ""}
+                            [blank]
+                          {:else}
+                            [none]
+                          {/if}
+                        {/if}
+                      </span>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>
+                      Products Count
+                      <ToolTip id="collection-products-count">
+                        <p>
+                          The number of products that LTTStore says are in this collection.
+                          This appears to include unpublished products.
+                        </p>
+                      </ToolTip>
+                    </td>
+                    <td>{data.collection.reportedCount}</td>
+                  </tr>
+                  </tbody>
+                </table>
+              </div>
+            {/if}
+          {/snippet}
+        </Accordion.ItemContent>
+      </Accordion.Item>
+    </Accordion>
+  </div>
   <br>
   <br>
 </div>
