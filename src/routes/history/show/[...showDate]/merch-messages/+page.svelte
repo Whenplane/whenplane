@@ -88,8 +88,7 @@
 {#if data.mmShow.status === "inprogress"}
   <Socket events={["mm_progress-" + data.mmShow.showId]} on:data={d => {
     lastData = d.detail.data.job;
-    invalidateAll().then();
-  }} invalidate={false}/>
+  }} invalidate={true}/>
 {/if}
 
 <div class="limit mx-auto px-2">
