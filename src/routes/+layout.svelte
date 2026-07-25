@@ -73,7 +73,7 @@
 		getClockOffset()
 			.then(offset => {
 				console.debug(`Calculated clock offset of ${commas(offset)}ms from the server (only accurate to the second)`)
-				clockOffset = offset;
+				clockOffset = Math.abs(offset);
 			})
 	}
 </script>
