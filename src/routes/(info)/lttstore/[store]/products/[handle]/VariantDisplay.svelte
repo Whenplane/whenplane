@@ -3,6 +3,7 @@
   import { dev } from "$app/environment";
   import { commas, sha256 } from "$lib/utils.js";
   import { page } from "$app/state";
+  import Price from "$lib/lttstore/Price.svelte";
 
   const noImages = ["Size", "Inseam", "Waist size", "Length", "Title"];
 
@@ -16,6 +17,15 @@
 
 <h2>Options / Variants</h2>
 {#each product.options as option}
+  {@const showPrice = (() => {
+    for (let variant of product.variants.filter(v => option.values.includes(v.options[option.position-1]))) {
+      if(
+        variant.price !== product.price ||
+        (variant.compare_at_price && product.compare_at_price && variant.compare_at_price !== product.compare_at_price && variant.compare_at_price !== variant.price)
+      ) return true;
+    }
+    return false;
+  })()}
   {#if option.name !== "Title" || product.options.length > 1}
     <h3>{option.name}</h3>
   {/if}
@@ -91,6 +101,11 @@
               {meta.shortTitle ?? product.title}
             {:else}
               {value}
+            {/if}
+            {#if showPrice && variant}
+              <div class="text-xs opacity-85">
+                <Price price={variant.price/100}/>
+              </div>
             {/if}
             <div class="text-xs opacity-70">
               {#if !inStock}
