@@ -8,6 +8,8 @@
 		currentPage = typed<number>(40036)
 	} = $props();
 
+	const rel = "nofollow";
+
 	let distance = $derived(Math.abs(currentPage - totalPages));
 
 	function getPageLink(pageNumber: number) {
@@ -19,15 +21,15 @@
 
 {#if currentPage > 1}
 	{#if currentPage > 4}
-		<a href={getPageLink(1)}>{1}</a>
-		<a href={getPageLink(2)}>{2}</a>
-		<a href={getPageLink(3)}>{3}</a>
+		<a href={getPageLink(1)} {rel}>{1}</a>
+		<a href={getPageLink(2)} {rel}>{2}</a>
+		<a href={getPageLink(3)} {rel}>{3}</a>
 		..
-		<a href={getPageLink(currentPage - 2)}>{currentPage - 2}</a>
-		<a href={getPageLink(currentPage - 1)}>{currentPage - 1}</a>
+		<a href={getPageLink(currentPage - 2)} {rel}>{currentPage - 2}</a>
+		<a href={getPageLink(currentPage - 1)} {rel}>{currentPage - 1}</a>
 	{:else if currentPage > 0}
 		{#each countTo(1, currentPage - 1) as i}
-			<a href={getPageLink(i)}>{i}</a>
+			<a href={getPageLink(i)} {rel}>{i}</a>
 			<!-- this has to be here, otherwise there is no space between the numbers -->
 			<span> </span>
 		{/each}
@@ -42,17 +44,17 @@
 
 {#if currentPage < totalPages}
 	{#if distance > 4}
-		<a href={getPageLink(currentPage + 1)}>{currentPage + 1}</a>
-		<a href={getPageLink(currentPage + 2)}>{currentPage + 2}</a>
+		<a href={getPageLink(currentPage + 1)} {rel}>{currentPage + 1}</a>
+		<a href={getPageLink(currentPage + 2)} {rel}>{currentPage + 2}</a>
 		..
 	{:else if distance > 0}
 		{#each countTo(currentPage + 1, totalPages - 1) as i}
-			<a href={getPageLink(i)}>{i}</a>
+			<a href={getPageLink(i)} {rel}>{i}</a>
 			<!-- this has to be here, otherwise there is no space between the numbers -->
 			<span> </span>
 		{/each}
 	{/if}
-	<a href={getPageLink(totalPages)}>{totalPages}</a>
+	<a href={getPageLink(totalPages)} {rel}>{totalPages}</a>
 {/if}
 
 <style>
