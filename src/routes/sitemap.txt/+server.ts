@@ -85,7 +85,12 @@ export const GET = (async ({platform, fetch, url}) => {
   return text(
     urls
       .map(u => url.origin + u)
-      .join("\n")
+      .join("\n"),
+    {
+      headers: {
+        "cache-control": "public, max-age=86400"
+      }
+    }
   );
 
 }) satisfies RequestHandler;
