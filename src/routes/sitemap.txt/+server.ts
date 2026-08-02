@@ -1,6 +1,7 @@
 import { text, type RequestHandler } from "@sveltejs/kit";
 import type { HistoricalEntry } from "$lib/utils.ts";
 import { dev } from "$app/environment";
+import { isNearWan } from "$lib/timeUtils.ts";
 
 let urls: string[] = [];
 let lastURLsRefresh = 0;
@@ -88,7 +89,7 @@ export const GET = (async ({platform, fetch, url}) => {
       .join("\n"),
     {
       headers: {
-        "cache-control": "public, max-age=86400"
+        "cache-control": "public, max-age=" + (isNearWan() ? 7200 : 86400)
       }
     }
   );
