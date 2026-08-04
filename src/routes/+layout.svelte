@@ -69,7 +69,7 @@
 
 	let clockOffset: number | null = $state(null);
 	let clockOffsetOpen = $state(true);
-	if(browser) {
+	if(browser && !/bot|googlebot|crawler|spider|robot|crawling/i.test(navigator.userAgent)) {
 		getClockOffset()
 			.then(offset => {
 				console.debug(`Calculated clock offset of ${commas(offset)}ms from the server (only accurate to the second)`)
