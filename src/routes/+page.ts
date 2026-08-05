@@ -78,21 +78,23 @@ export const load = (async ({fetch, params, url}) => {
 
     if(liveStatus && overwriteData.data) {
 
-        console.debug("Before overwrite", JSON.parse(JSON.stringify(liveStatus)), "with", JSON.parse(JSON.stringify(overwriteData)));
+        if(Date.now() - overwriteData.lastMessage > 15e3) {
+            overwriteData.data = undefined
+        } else {
+            console.debug("Before overwrite", JSON.parse(JSON.stringify(liveStatus)), "with", JSON.parse(JSON.stringify(overwriteData)));
 
-        liveStatus.youtube = {...liveStatus.youtube, ...overwriteData.data.youtube};
-        liveStatus.twitch = {...liveStatus.twitch, ...overwriteData.data.twitch};
-        liveStatus.specialStream = overwriteData.data.specialStream ?? liveStatus.specialStream;
-        liveStatus.floatplane = {...liveStatus.floatplane, ...overwriteData.data.floatplane };
-        liveStatus.notablePeople = Object.values(liveStatus.notablePeople).some(n => n.isLive) ? liveStatus.notablePeople : overwriteData.data.notablePeople;
-        liveStatus.hasDone = overwriteData.data.hasDone;
-        liveStatus.isThereWan = overwriteData.data.isThereWan;
-        liveStatus.votes = overwriteData.data.votes ?? liveStatus.votes;
-        liveStatus.reloadNumber = Math.max(overwriteData.data.reloadNumber, liveStatus.reloadNumber);
+            liveStatus.youtube = {...liveStatus.youtube, ...overwriteData.data.youtube};
+            liveStatus.twitch = {...liveStatus.twitch, ...overwriteData.data.twitch};
+            liveStatus.specialStream = overwriteData.data.specialStream ?? liveStatus.specialStream;
+            liveStatus.floatplane = {...liveStatus.floatplane, ...overwriteData.data.floatplane };
+            liveStatus.notablePeople = Object.values(liveStatus.notablePeople).some(n => n.isLive) ? liveStatus.notablePeople : overwriteData.data.notablePeople;
+            liveStatus.hasDone = overwriteData.data.hasDone;
+            liveStatus.isThereWan = overwriteData.data.isThereWan;
+            liveStatus.votes = overwriteData.data.votes ?? liveStatus.votes;
+            liveStatus.reloadNumber = Math.max(overwriteData.data.reloadNumber, liveStatus.reloadNumber);
 
-        console.debug("After overwrite", JSON.parse(JSON.stringify(liveStatus)));
-
-        overwriteData.data = undefined;
+            console.debug("After overwrite", JSON.parse(JSON.stringify(liveStatus)));
+        }
     }
 
 
