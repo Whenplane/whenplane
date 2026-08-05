@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { getNextWAN, timeString } from "$lib/timeUtils";
+	import { getNextWAN, isNearWan, timeString } from "$lib/timeUtils";
 	import ShowCountdown, {mainLate} from "$lib/ShowCountdown.svelte";
 	import StreamStatus from "$lib/StreamStatus.svelte";
 	import {invalidateAll} from "$app/navigation";
@@ -25,6 +25,7 @@
 	import ChevronDown from "svelte-bootstrap-icons/lib/ChevronDown.svelte";
 	import {slide} from "svelte/transition";
 	import MoreDropdown from "./MoreDropdown.svelte";
+	import { overwriteData } from "$lib/stores.ts";
 
 	let { data } = $props();
 
@@ -70,12 +71,12 @@
 
 		const isAwayFromWan = day < 5 || (data.hasDone && !(data.liveStatus?.twitch?.isWAN && data.liveStatus?.twitch?.isLive))
 		// update less often when far away from wan time (but bypass if last update was more than a minute ago)
-		if(isAwayFromWan && i++ % 6 === 0 && Date.now() - lastInvalidation < 60e3) {
+		if(isAwayFromWan && i++ % 6 !== 0 && Date.now() - lastInvalidation < 60e3) {
 			return;
 		}
 
 		// When using a websocket (and is online), don't do a full update more than once every 5 minutes
-		if(data.useWebSocket && data.liveStatus && Date.now() - lastInvalidation < 5 * 60e3) {
+		if(data.useWebSocket && data.liveStatus && Date.now() - lastInvalidation < 5 * 60e3 && Date.now() - overwriteData.lastMessage < (isNearWan() ? 20e3 : 45e3 )) {
 			return;
 		}
 

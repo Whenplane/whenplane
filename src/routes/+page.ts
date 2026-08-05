@@ -78,7 +78,7 @@ export const load = (async ({fetch, params, url}) => {
 
     if(liveStatus && overwriteData.data) {
 
-        if(Date.now() - overwriteData.lastMessage > 15e3) {
+        if(Date.now() - overwriteData.lastData > 20e3) {
             overwriteData.data = undefined
         } else {
             console.debug("Before overwrite", JSON.parse(JSON.stringify(liveStatus)), "with", JSON.parse(JSON.stringify(overwriteData)));

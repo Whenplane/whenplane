@@ -71,6 +71,7 @@
 			console.debug('[whenplane:ws] Received data:', data);
 
 			overwriteData.lastMessage = Date.now();
+			overwriteData.lastData = Date.now();
 			if (typeof data === 'string') {
 				const newData = JSON.parse(data);
 				// dont invalidate if the new data is exactly the same as the old data
