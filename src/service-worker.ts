@@ -76,7 +76,7 @@ sw.addEventListener('fetch', (event) => {
     }).catch(() => {});
 
     const doFetch = (async () => {
-      const response = await fetch(event.request, { signal: AbortSignal.timeout(3000) });
+      const response = await fetch(event.request, { signal: is_cached ? undefined : AbortSignal.timeout(3000) });
 
       // if we're offline, fetch can return a value that is not a Response
       // instead of throwing - and we can't pass this non-Response to respondWith
