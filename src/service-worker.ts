@@ -76,7 +76,9 @@ sw.addEventListener('fetch', (event) => {
     }).catch(() => {});
 
     const doFetch = (async () => {
-      const response = await fetch(event.request, { signal: is_cached ? undefined : AbortSignal.timeout(3000) });
+      const response =
+        (await event.preloadResponse) ??
+        (await fetch(event.request, { signal: is_cached ? undefined : AbortSignal.timeout(3000) }));
 
       // if we're offline, fetch can return a value that is not a Response
       // instead of throwing - and we can't pass this non-Response to respondWith
@@ -117,6 +119,7 @@ sw.addEventListener('fetch', (event) => {
 // a new version would delete files that were still being used by an old version!
 sw.addEventListener('activate', (event) => {
   event.waitUntil((async () => {
+    if (sw.registration.navigationPreload) await sw.registration.navigationPreload.enable();
     const cache = await caches.open(CACHE);
 
     // remove old keys
