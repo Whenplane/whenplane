@@ -3,6 +3,8 @@
 /// <reference lib="esnext" />
 /// <reference lib="webworker" />
 
+import { wait } from "./lib/utils";
+
 const sw = self as unknown as ServiceWorkerGlobalScope;
 
 import { build, files, prerendered } from "$service-worker";
@@ -89,7 +91,11 @@ sw.addEventListener('fetch', (event) => {
       // Assets should already be cached so this *shouldn't* happen, but we're here so why not
       // Skips build files because those are immutable and will never change
       if (response.status === 200 && !build.includes(url.pathname)) {
-        event.waitUntil(cachePromise.then(c => c.put(event.request, response.clone())));
+        event.waitUntil((async () => {
+          // waits up to a second before writing, to try to prioritize the reads
+          await wait(500 + (500 * Math.random()));
+          await (await cachePromise).put(event.request, response.clone());
+        })());
       }
 
       // Between app updates, a fetch from the server may return 404 due to changed filename hashes.
