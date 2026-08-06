@@ -92,6 +92,12 @@ sw.addEventListener('fetch', (event) => {
         event.waitUntil(cachePromise.then(c => c.put(event.request, response.clone())));
       }
 
+      // Between app updates, a fetch from the server may return 404 due to changed filename hashes.
+      // In this situation, we can only use the browser's cache.
+      if(response.status === 404 && build.includes(url.pathname)) {
+        throw new Error("Not found");
+      }
+
       console.debug("Not serving from cache", url.pathname);
       return response;
     })()
