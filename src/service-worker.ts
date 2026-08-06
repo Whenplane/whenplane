@@ -35,12 +35,13 @@ const ALL_ASSETS = [...
   ])
 ]
 
+const cachePromise = caches.open(CACHE);
 
 sw.addEventListener('install', (event) => {
   // Create a new cache and add all files to it
   async function addFilesToCache() {
 
-    const cache = await caches.open(CACHE);
+    const cache = await cachePromise;
     await Promise.allSettled(ALL_ASSETS.map(a => cache.add(a)))
 
   }
@@ -55,11 +56,10 @@ sw.addEventListener('fetch', (event) => {
   const url = new URL(event.request.url);
 
   async function respond() {
-    const cache = caches.open(CACHE);
     const is_cached = ASSETS.includes(url.pathname);
 
     const fromCache = () =>
-      cache.then(async c => {
+      cachePromise.then(async c => {
         const match = await c.match(event.request);
         if(!match) throw new Error("No match");
         return match;
@@ -89,7 +89,7 @@ sw.addEventListener('fetch', (event) => {
       // Assets should already be cached so this *shouldn't* happen, but we're here so why not
       // Skips build files because those are immutable and will never change
       if (response.status === 200 && !build.includes(url.pathname)) {
-        event.waitUntil(cache.then(c => c.put(event.request, response.clone())));
+        event.waitUntil(cachePromise.then(c => c.put(event.request, response.clone())));
       }
 
       console.debug("Not serving from cache", url.pathname);
@@ -120,7 +120,7 @@ sw.addEventListener('fetch', (event) => {
 sw.addEventListener('activate', (event) => {
   event.waitUntil((async () => {
     if (sw.registration.navigationPreload) await sw.registration.navigationPreload.enable();
-    const cache = await caches.open(CACHE);
+    const cache = await cachePromise;
 
     // remove old keys
     const oldKeys = await cache.keys()
