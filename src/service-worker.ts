@@ -78,8 +78,10 @@ sw.addEventListener('fetch', (event) => {
     }).catch(() => {});
 
     const doFetch = (async () => {
+      const preloaded = await event.preloadResponse;
+      if(preloaded) console.log("Using pre-loaded response for", url.pathname)
       const response =
-        (await event.preloadResponse) ??
+        preloaded ??
         (await fetch(event.request, { signal: is_cached ? undefined : AbortSignal.timeout(3000) }));
 
       // if we're offline, fetch can return a value that is not a Response
@@ -132,6 +134,7 @@ sw.addEventListener('fetch', (event) => {
 sw.addEventListener('activate', (event) => {
   event.waitUntil((async () => {
     if (sw.registration.navigationPreload) await sw.registration.navigationPreload.enable();
+    console.debug("navigationPreload enabled:", await sw.registration.navigationPreload?.getState());
     const cache = await cachePromise;
 
     // remove old keys
