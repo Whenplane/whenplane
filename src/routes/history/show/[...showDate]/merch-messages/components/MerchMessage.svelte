@@ -23,7 +23,7 @@
 	const floatplaneSeconds = $derived(
 		source.startsWith('floatplane')
 			? source === 'floatplane-live'
-				? seconds + 50
+				? seconds + 140
 				: seconds
 			: preShowLength !== null
 				? seconds + Math.floor(preShowLength / 1e3)
