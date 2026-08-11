@@ -31,6 +31,7 @@
 	function createWebSocket() {
     if(webSocket) {
       try {
+        webSocket.onclose = () => {};
         webSocket.close();
       } catch(_) {}
     }
