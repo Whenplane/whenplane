@@ -55,7 +55,7 @@
     const retry = (e: CloseEvent | Event) => {
       if (shuttingDown) return;
 
-      const delay = Math.min(Math.pow(2, ++reconnectAttempt) - 1, 30);
+      const delay = Math.min(Math.pow(2, ++reconnectAttempt) - 1, 60);
       if (delay > 2)
         console.debug('[whenplane:ws] WebSocket closed, reconnecting in', delay, 'seconds');
 
