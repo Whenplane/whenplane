@@ -32,6 +32,10 @@ export const load: LayoutServerLoad = async ({platform, params, url, fetch}) => 
 
   const data = await showResponse.json() as HistoricalEntry & {message?: string};
 
+  if(showResponse.status != 200) {
+    throw error(showResponse.status, data.message || showResponse.statusText);
+  }
+
   delete data.value?.thumbnails;
   delete data.value?.snippet?.description;
   delete data.value?.snippet?.tags;
@@ -48,10 +52,6 @@ export const load: LayoutServerLoad = async ({platform, params, url, fetch}) => 
       delete (data.metadata.thumbnails as {[k: string]: YoutubeThumbnail})
         [thumbnail].blurhash;
     }
-  }
-
-  if(showResponse.status != 200) {
-    throw error(showResponse.status, data.message || showResponse.statusText);
   }
 
   return {
