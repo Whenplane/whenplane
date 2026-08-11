@@ -29,6 +29,11 @@
   let pendingInvalidation = false;
   let reconnectTimeout: NodeJS.Timeout | undefined;
 	function createWebSocket() {
+    if(webSocket) {
+      try {
+        webSocket.close();
+      } catch(_) {}
+    }
 		webSocket = new WebSocket(
 			'wss://sockets.whenplane.com/socket?events=' + encodeURIComponent(events.join(','))
 			// 'wss://whenplane-websocket.ajg.workers.dev/socket?events=' + encodeURIComponent(events.join(','))
@@ -46,18 +51,27 @@
 			reconnectAttempt = 0;
 		};
 
-		webSocket.onclose = (e) => {
-			if (shuttingDown) return;
+    const retry = (e: CloseEvent | Event) => {
+      if (shuttingDown) return;
 
-			const delay = Math.min(Math.pow(2, ++reconnectAttempt) - 1, 30);
-			if (delay > 2)
-				console.debug('[whenplane:ws] WebSocket closed, reconnecting in', delay, 'seconds');
+      const delay = Math.min(Math.pow(2, ++reconnectAttempt) - 1, 30);
+      if (delay > 2)
+        console.debug('[whenplane:ws] WebSocket closed, reconnecting in', delay, 'seconds');
 
-			reconnectTimeout = setTimeout(() => {
-				console.debug('[whenplane:ws] Reconnecting websocket due to disconnection: ', e.code, e.reason);
-				createWebSocket();
-			}, delay * 1e3);
-		};
+      if(reconnectTimeout) clearTimeout(reconnectTimeout);
+      reconnectTimeout = setTimeout(() => {
+        console.debug('[whenplane:ws] Reconnecting websocket due to disconnection: ',
+          (e.type === "CloseEvent"
+            ? (e as CloseEvent).code + " " + (e as CloseEvent).reason
+            : e
+          )
+        );
+        createWebSocket();
+      }, delay * 1e3);
+    };
+
+		webSocket.onclose = retry;
+    webSocket.onerror = retry;
 
 		webSocket.onmessage = async (e) => {
 			// for ping messages, only record that we got a message.
