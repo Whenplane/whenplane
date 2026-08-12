@@ -32,6 +32,7 @@
     if(webSocket) {
       try {
         webSocket.onclose = () => {};
+        webSocket.onerror = () => {};
         webSocket.close();
       } catch(_) {}
     }
