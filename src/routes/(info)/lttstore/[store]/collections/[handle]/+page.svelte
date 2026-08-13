@@ -169,7 +169,7 @@
                         </p>
                       </ToolTip>
                     </td>
-                    <td><DateStamp epochSeconds={new Date(data.collection.published_at).getTime() / 1e3}/></td>
+                    <td><DateStamp epochSeconds={new Date(data.collection.updated_at).getTime() / 1e3}/></td>
                   </tr>
                   <tr>
                     <td>Description</td>
