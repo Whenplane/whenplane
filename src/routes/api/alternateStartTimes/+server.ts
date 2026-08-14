@@ -26,7 +26,7 @@ export const GET = (async ({platform}) => {
     });
   }
 
-  const cache = await platform?.caches?.open("alternate-start-times");
+  const cache = await platform?.caches?.open("alternate-start-times-1");
   const cachedTimesResponse = await cache?.match(cacheUrl);
 
   if(cache && cachedTimesResponse) {
