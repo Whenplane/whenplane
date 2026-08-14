@@ -72,8 +72,8 @@
 	if(browser && !/bot|googlebot|crawler|spider|robot|crawling/i.test(navigator.userAgent)) {
 		getClockOffset()
 			.then(offset => {
-				console.debug(`Calculated clock offset of ${commas(offset)}ms from the server (only accurate to the second)`)
-				clockOffset = Math.abs(offset);
+				console.debug(`Calculated clock offset of ${commas(offset)}ms from the server`)
+				if(offset != null) clockOffset = Math.abs(offset);
 			})
 	}
 </script>

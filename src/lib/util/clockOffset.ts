@@ -5,16 +5,17 @@ export async function getClockOffset(maxSamples = 5) {
 
   for (let i = 0; offsets.length < maxSamples && i < (maxSamples*2); i++) {
     const t0 = Date.now();
-    const res = await fetch('/_app/version.json', {
+    const res = await fetch('https://whenplane.com/_app/version.json', {
       cache: 'no-store',
       headers: { 'Cache-Control': 'no-cache' }
     });
     const t1 = Date.now();
 
     const dateHeader = res.headers.get('Date');
-    if (!dateHeader) continue;
+    const timeHeader = res.headers.get("x-time-ms");
+    if (!dateHeader && !timeHeader) continue;
 
-    const serverTimeMs = Date.parse(dateHeader);
+    const serverTimeMs = timeHeader ? Number(timeHeader) : Date.parse(dateHeader!);
     const roundTrip = t1 - t0;
     const offset = serverTimeMs - (t0 + roundTrip / 2);
 
