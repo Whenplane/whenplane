@@ -6,7 +6,9 @@ export async function getClockOffset(maxSamples = 5) {
   for (let i = 0; offsets.length < maxSamples && i < (maxSamples*2); i++) {
     const t0 = Date.now();
     const res = await fetch('https://whenplane.com/_app/version.json', {
-      cache: 'no-store',
+      // if this is used, then options requests are sent for every request on alt domains, increasing latency
+      // it also reduces latency slightly (at least on ff) by using 304 not modified responses
+      // cache: 'no-store',
       headers: { 'Cache-Control': 'no-cache' }
     });
     const t1 = Date.now();
