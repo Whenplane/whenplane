@@ -4,6 +4,9 @@ export async function getClockOffset(maxSamples = 5) {
   const offsets = [];
 
   for (let i = 0; offsets.length < maxSamples && i < (maxSamples*2); i++) {
+    // Delayed requests to measure over more time instead of one-after-the-other
+    await wait(500);
+
     const t0 = Date.now();
     const res = await fetch('https://whenplane.com/_app/version.json', {
       // if this is used, then options requests are sent for every request on alt domains, increasing latency
@@ -23,9 +26,6 @@ export async function getClockOffset(maxSamples = 5) {
 
     // Reject samples with excessive RTT
     if (roundTrip < 5000) offsets.push(offset);
-
-    // Delayed requests to measure over more time instead of one-after-the-other
-    await wait(500);
   }
 
   if (offsets.length === 0) return null;
