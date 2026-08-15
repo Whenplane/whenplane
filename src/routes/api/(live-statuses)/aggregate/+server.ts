@@ -140,7 +140,7 @@ export const GET = (async ({url, fetch, locals, platform}) => {
 
 
             if(objectBinding) {
-                const objectId = objectBinding.idFromName("a");
+                const objectId = objectBinding.idFromName("b;");
                 const object = objectBinding.get(objectId);
 
                 platform?.context?.waitUntil(object.fetch("https://DO/sendData?event=aggregate", {
