@@ -8,11 +8,11 @@ export const GET = (async ({fetch}) => {
 
 
   const data: SpecialStream | false = /*Date.now() > 1742608091103 ?*/ {
-    title: "Scrapyard Wars Director Commentary (with participants)",
-    thumbnail: "https://pbs.floatplane.com/stream_thumbnails/5c13f3c006f1be15e08e05c0/597734054596050_1757436155287.jpeg",
+    title: "Linus Birthday - Gaming and Hangout stream",
+    thumbnail: "https://pbs.floatplane.com/video_thumbnails/384YVelujQ/558142588026480_1787161714850.jpeg",
 
-    start: "2025-09-09T17:00:00Z",
-    startIsEstimated: true,
+    start: "2026-08-20T22:30:00Z",
+    startIsEstimated: false,
 
     onFloatplane: true,
 
