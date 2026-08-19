@@ -207,7 +207,7 @@
 			<CurrentTitle liveStatus={data.liveStatus}/>
 			{#if data.specialStream && !page.data.isBot}
 				{#key data.specialStream}
-					<SpecialStream {data}/>
+					<SpecialStream {data} specialStreamData={data.specialStream}/>
 				{/key}
 				<br>
 			{/if}
