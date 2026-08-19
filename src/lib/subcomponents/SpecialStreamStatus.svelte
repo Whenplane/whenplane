@@ -10,8 +10,8 @@
 		specialStreamData = typed<SpecialStream>()
 	} = $props();
 
-	let isOn = $derived(specialStreamData['on' + capitalize(service)] ?? false);
-	let note = $derived(specialStreamData[service + 'Notes']);
+	let isOn = $derived(specialStreamData?.['on' + capitalize(service)] ?? false);
+	let note = $derived(specialStreamData?.[service + 'Notes']);
 </script>
 
 {#if isOn && !note}

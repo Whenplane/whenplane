@@ -1,6 +1,4 @@
 <script lang="ts">
-	import { run } from 'svelte/legacy';
-
 	import type { SpecialStream } from '$lib/utils.ts';
 	import SpecialStreamStatus from '$lib/subcomponents/SpecialStreamStatus.svelte';
 	import { onMount } from 'svelte';
@@ -22,13 +20,13 @@
 	let live = $derived(data.liveStatus.floatplane?.isLive && !data.liveStatus.floatplane?.isWAN);
 
 	let thumbnailStyle = $derived(
-		specialStreamData.thumbnail
+		specialStreamData?.thumbnail
 			? `background: linear-gradient(rgba(21,23,31,.75), rgba(21,23,31,.75)), url(${JSON.stringify(specialStreamData.thumbnail)});`
 			: ''
 	);
 
 	function updateCountdown() {
-		if (!specialStreamData.start || !startTime) {
+		if (!specialStreamData?.start || !startTime) {
 			if (countdownString) {
 				countdownString = undefined;
 			}
@@ -53,7 +51,7 @@
 	<div class="p-2 px-3 relative z-2">
 		<h2>Special Stream</h2>
 		<span class="title">
-			"{specialStreamData.title}"
+			"{specialStreamData?.title}"
 		</span><br />
 
 		<table class="mx-auto my-1">
@@ -83,7 +81,7 @@
 					{/if}
 				{/if}
 			</h3>
-			{#if countdownString && !live && specialStreamData.startIsEstimated}
+			{#if countdownString && !live && specialStreamData?.startIsEstimated}
 				<div class="text-center text-xs">
 					estimated
 					<div
