@@ -20,7 +20,11 @@ export const newsSanitizeSettings: IOptions = {
   },
   allowedStyles: {
     "*": {
-      "text-decoration": [/^(( )?(none|underline|overline|line-through|blink|solid|double|dotted|dashed|wavy)){1,3}$/i]
+      "text-decoration": [/^(( )?(none|underline|overline|line-through|blink|solid|double|dotted|dashed|wavy)){1,3}$/i],
+      "width": [/^\d+(px|em|rem|%)?$/i],
+      "height": [/^\d+(px|em|rem|%)?$/i],
+      "max-width": [/^\d+(px|em|rem|%)?$/i],
+      "max-height": [/^\d+(px|em|rem|%)?$/i]
     }
   },
   allowedClasses: {"*": false}
