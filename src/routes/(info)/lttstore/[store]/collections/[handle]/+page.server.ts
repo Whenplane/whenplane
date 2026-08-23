@@ -10,7 +10,7 @@ export const load = (async ({platform, params, fetch}) => {
   const store = storeIdFromName(params.store);
 
   const collection = await retryD1(() =>
-    db.prepare("select * from collections where handle = ? and store = ?")
+    db.prepare("select * from collections where handle = ? and store = ? order by updated_at DESC")
       .bind(params.handle, store)
       .first<CollectionDbRow>()
   )
