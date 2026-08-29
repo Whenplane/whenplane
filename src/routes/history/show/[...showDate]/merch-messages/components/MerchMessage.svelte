@@ -35,7 +35,7 @@
 			: preShowLength !== null
 				? (floatplaneSeconds ?? seconds) - Math.floor(preShowLength / 1e3) +
 					((source === 'floatplane-live')
-					? 250
+					? 30
 					: 0)
 				: null
 	);
@@ -93,14 +93,14 @@
 						{colonTimeString(floatplaneSeconds)}
 					</a>
 				{/if}
-				{#if youtubeSeconds != null && youtubeSeconds >= 0}
+				{#if youtubeSeconds != null && youtubeSeconds >= -4}
 					<a
 						href="//youtu.be/{youtubeId}?t={youtubeSeconds}"
 						rel="noopener"
 						aria-label={i < 10 || mounted ? "Jump to in YouTube VOD" : undefined}
 					>
 						<span class="yt" aria-hidden={i < 100 || mounted ? "true" : undefined}></span>
-						{colonTimeString(youtubeSeconds)}
+						{colonTimeString(Math.max(0, youtubeSeconds))}
 					</a>
 				{/if}
 			</div>

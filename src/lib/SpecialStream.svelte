@@ -96,6 +96,11 @@
 					</div>
 				</div>
 			{/if}
+			{#if !live && !specialStreamData?.startIsEstimated}
+				<div class="text-xs">
+
+				</div>
+			{/if}
 		{/if}
 	</div>
 </div>
