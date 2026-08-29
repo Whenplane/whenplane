@@ -33,10 +33,7 @@
 		source === 'youtube'
 			? seconds
 			: preShowLength !== null
-				? (floatplaneSeconds ?? seconds) - Math.floor(preShowLength / 1e3) +
-					((source === 'floatplane-live')
-					? 30
-					: 0)
+				? (floatplaneSeconds ?? seconds) - Math.floor(preShowLength / 1e3)
 				: null
 	);
 
