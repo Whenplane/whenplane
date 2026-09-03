@@ -55,5 +55,12 @@ export const GET = (async ({fetch, request}) => {
 
   lastRequests[ip ?? "dev"] = Date.now();
 
-  return text(getNextWAN(undefined, undefined, alternateStartTimes, hasDone).toISOString());
+  return text(
+    getNextWAN(undefined, undefined, alternateStartTimes, hasDone).toISOString(),
+    {
+      headers: {
+        "cache-control": "public, max-age=86400"
+      }
+    }
+  );
 }) satisfies RequestHandler;
