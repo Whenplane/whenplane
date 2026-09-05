@@ -253,6 +253,12 @@ export const handle: Handle = async ({ event, resolve }) => {
     if(event.url.pathname === "/floatplane") {
         response.headers.set("Cache-Control", `public, max-age=${isNearWan() ? 4 : 60 * 60}`);
     }
+    if(event.url.pathname === "/floatplane/liveStatusFrame") {
+        response.headers.set("Cache-Control", `public, max-age=${isNearWan() ? 4 : 30}`);
+    }
+    if(event.url.pathname.startsWith("/history/show/") && event.url.pathname.endsWith("/frame")) {
+        response.headers.set("Cache-Control", `public, max-age=${isNearWan() ? 30 : 30 * 60}`);
+    }
 
     return response;
 }
