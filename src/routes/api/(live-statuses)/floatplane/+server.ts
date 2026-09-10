@@ -19,6 +19,11 @@ let lastOtherStreamNotifSend = 0;
 
 export const GET = (async ({fetch, url, platform, locals}) => {
 
+  for (let key of url.searchParams.keys()) {
+    if(["fast", "description"].includes(key)) continue;
+    throw error(403, "Please don't use cache busting! The only allowed query params are `fast` and `description`")
+  }
+
   /*if(dev) return json({
     "cached": true,
     "lastFetch": 1754079914988,
