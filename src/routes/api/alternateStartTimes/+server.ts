@@ -5,7 +5,7 @@ import { dev } from "$app/environment";
 import { createMFResponse } from "$lib/server/MfResponseConverter.ts";
 import { isNearWan } from "$lib/timeUtils.ts";
 
-const cacheUrl = new URL("http://alternate-start-times").toString();
+const cacheUrl = new URL("http://alternate-start-times-1").toString();
 
 let localFetched = 0;
 let localCache: AlternateTimeRow[] | undefined = undefined;
@@ -26,7 +26,7 @@ export const GET = (async ({platform}) => {
     });
   }
 
-  const cache = await platform?.caches?.open("alternate-start-times-1");
+  const cache = await platform?.caches?.open("alternate-start-times");
   const cachedTimesResponse = await cache?.match(cacheUrl);
 
   if(cache && cachedTimesResponse) {
