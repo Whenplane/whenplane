@@ -8,18 +8,18 @@ export const GET = (async ({fetch}) => {
 
 
   const data: SpecialStream | false = /*Date.now() > 1742608091103 ?*/ {
-    title: "Linus Birthday - Gaming and Hangout stream",
-    thumbnail: "https://pbs.floatplane.com/stream_thumbnails/5c13f3c006f1be15e08e05c0/672546646881484_1787262367632.jpeg",
+    title: "ASUS 20th Aniversary PC Building Stream",
+    thumbnail: "https://pbs.floatplane.com/picture_thumbnails/IK3uapplEG/655578947774702_1789679535747.jpeg",
 
-    start: "2026-08-20T22:30:00Z",
+    start: "2026-09-18T20:00:00Z",
     startIsEstimated: false,
 
     onFloatplane: true,
 
-    onTwitch: false,
+    onTwitch: true,
     // twitchNotes: "first half",
 
-    onYoutube: false
+    onYoutube: true
   } //: false as SpecialStream | false;
 
   if(!data) {
