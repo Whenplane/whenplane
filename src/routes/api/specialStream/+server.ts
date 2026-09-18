@@ -9,7 +9,7 @@ export const GET = (async ({fetch}) => {
 
   const data: SpecialStream | false = /*Date.now() > 1742608091103 ?*/ {
     title: "ASUS 20th Aniversary PC Building Stream",
-    thumbnail: "https://pbs.floatplane.com/picture_thumbnails/IK3uapplEG/655578947774702_1789679535747.jpeg",
+    thumbnail: "https://pbs.floatplane.com/stream_thumbnails/5c13f3c006f1be15e08e05c0/261544042074342_1789763330371.jpeg",
 
     start: "2026-09-18T20:00:00Z",
     startIsEstimated: false,
