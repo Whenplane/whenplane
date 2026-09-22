@@ -41,7 +41,7 @@
         {@const image = product.media.find(m => m.alt?.includes(tag)) ??
           (
             variant?.featured_media &&
-            product.media.find(m => m.id === variant.featured_media!.id)!
+            product.media?.find(m => m.id === variant.featured_media!.id)!
           ) ??
           // If only one (or first) color/design option and it wasnt featured, just use the first image
           (
@@ -54,7 +54,7 @@
               option.values.length === 1 ||
               (vi === 0 && otherOptionVariants.length > 0)
             ) &&
-            product.media[0]
+            product.media?.[0]
           )
         }
         <div class={[
