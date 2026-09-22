@@ -326,11 +326,11 @@
                     </tr>
                     <tr>
                       <td>Regular Price</td>
-                      <td><Price price={data.product.regularPrice/100}/></td>
+                      <td><Price price={data.product.regularPrice/100} convert={false} currency={data.store.defaultCurrency}/></td>
                     </tr>
                     <tr>
                       <td>Current Price</td>
-                      <td><Price price={data.product.currentPrice/100}/></td>
+                      <td><Price price={data.product.currentPrice/100} convert={false} currency={data.store.defaultCurrency}/></td>
                     </tr>
                     <tr>
                       <td>First Seen</td>
