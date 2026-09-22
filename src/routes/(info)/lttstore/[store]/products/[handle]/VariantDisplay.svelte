@@ -38,7 +38,7 @@
         {@const inStock = !!variants.find(v => v.available)}
         {@const tag = `#${option.name.toLowerCase()}_${value.toLowerCase()}`}
         {@const lowerOptionName = option.name.toLowerCase()}
-        {@const image = product.media.find(m => m.alt?.includes(tag)) ??
+        {@const image = product.media?.find(m => m.alt?.includes(tag)) ??
           (
             variant?.featured_media &&
             product.media?.find(m => m.id === variant.featured_media!.id)!
