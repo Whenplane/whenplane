@@ -158,7 +158,7 @@ export const load = (async ({platform, params, url, fetch}) => {
     product,
     historyDays,
     defaultHistoryDays,
-    stockHistory: await stockHistory,
+    stockHistory,
     initialChangeHistory,
     similarProducts,
     stockAsOf,
