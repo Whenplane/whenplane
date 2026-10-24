@@ -110,9 +110,9 @@
 
 	async function pollStatus() {
 		try {
-			const status: AggregateResponse = await fetch("/api/aggregate?fast=false").then((r) =>
-				r.json()
-			);
+			const response = await fetch("/api/aggregate?fast=false");
+			if (!response.ok) throw new Error("Status fetch failed: " + response.status);
+			const status: AggregateResponse = await response.json();
 
 			lastUpdate = Date.now();
 			processSignals(extractSignals(status));
@@ -331,6 +331,7 @@
 	<Socket
 		events={["aggregate"]}
 		invalidate={false}
+		autoInvalidateAfterNoData={true}
 		on:data={(e) => handleWsMessage(e.detail.data)}
 	/>
 {/if}
@@ -355,7 +356,7 @@
 	<h1>WAN Alarm</h1>
 
 	<p>
-		Set off a loud alarm in your browser when something happens with the WAN Show.<br />
+		Set off a loud alarm in your browser when something happens with the WAN Show.<br>
 		Pick what event should set it off, then arm the alarm and keep this page open.
 	</p>
 	<p class="opacity-75 pt-2">
@@ -366,9 +367,9 @@
 		If you want push notifications, head to the <a href="/notifications">notifications page</a>.
 	</p>
 
-	<br />
+	<br>
 	<hr />
-	<br />
+	<br>
 
 	<h2>Set off the alarm when...</h2>
 
@@ -397,16 +398,16 @@
 					{#if option.id === "thumbnail"}
 						<span class="smaller opacity-75">(default)</span>
 					{/if}
-					<br />
+					<br>
 					<span class="opacity-75">{option.description}</span>
 				</span>
 			</label>
 		{/each}
 	</div>
 
-	<br />
+	<br>
 	<hr />
-	<br />
+	<br>
 
 	<div class="text-center">
 		{#if armed}
@@ -421,6 +422,12 @@
 				<br>
 				Watching for: <b>{selectedOption?.name}</b>
 			</div>
+			{#if signals[trigger]}
+				<div class="smaller opacity-75 mt-1">
+					Heads up: that's already the case right now, so the alarm will only fire if it
+					happens again
+				</div>
+			{/if}
 		{:else}
 			<button
 				class="btn preset-filled-success border border-success-500 text-lg px-6 py-3"
@@ -450,9 +457,9 @@
 		</div>
 	</div>
 
-	<br />
+	<br>
 	<hr />
-	<br />
+	<br>
 
 	<h2>Currently watching</h2>
 
@@ -478,8 +485,10 @@
 					{#if signals.thumbnail}
 						<b class="text-warning-400">uploaded</b>
 						{#if thumbnailAgeDisplay}(uploaded {thumbnailAgeDisplay} ago){/if}
+					{:else if thumbnailAgeDisplay}
+						<span class="opacity-75">last updated {thumbnailAgeDisplay} ago</span>
 					{:else}
-						<span class="opacity-75">from {thumbnailAgeDisplay} ago</span>
+						<span class="opacity-75">no new thumbnail</span>
 					{/if}
 				</div>
 				<div class="flex items-center gap-2">
@@ -522,7 +531,7 @@
 			})}
 			({Math.floor((nowTick - lastUpdate) / 1e3)}s ago)
 			{#if staleConnection}
-				<br />
+				<br>
 				<span class="text-warning-400">
 					Unable to reach Whenplane. Alarms/updates may be delayed.
 					The alarm will still fire as soon as a connection succeeds.
@@ -531,17 +540,18 @@
 		</div>
 	</div>
 
-	<br />
+	<br>
 	<hr />
-	<br />
+	<br>
 
 	<div class="opacity-75 smaller max-w-2xl mx-auto">
 		Notes:
 		<ul class="list-disc list-inside">
+			<li>Keep this tab open and your device unmuted</li>
 			<li>
-				Keep this tab open and your device unmuted
+				Desktop or laptop recommended, phones/tablets might unload the page after the screen
+				locks.
 			</li>
-			<li>Desktop or laptop recommended, phones/tablets might unload the page after the screen locks.</li>
 			<li>Reloading or navigating away disarms the alarm. You will need to arm it again.</li>
 			<li>While armed, the page keeps your screen awake (if your browser supports it).</li>
 			<li>
