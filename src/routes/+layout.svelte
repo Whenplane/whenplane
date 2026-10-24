@@ -62,6 +62,7 @@
 		'/youtube-redirect',
 		'/about',
 		'/notifications',
+		'/alarm',
 		'/boca-marathon',
 		'/merch-messages',
 		'/search'
