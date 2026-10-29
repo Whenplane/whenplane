@@ -126,9 +126,10 @@
         {@const descriptionSnippet = result.highlight?.description?.snippet?.replaceAll("</p>", "\n")}
         {@const openingIndex = descriptionSnippet?.indexOf("<")}
         {@const closingIndex = descriptionSnippet?.indexOf(">")}
-        {@const imgPreview = (dev ? 'https://whenplane.com' : '') +
-          '/cdn-cgi/image/fit=scale-down,height=96,metadata=copyright,q=60,sqc=20,format=auto/' +
-          `https://img-proxy.whenplane.com/img/${page.params.store}/${productData.handle}-${await sha256(productData.featured_image).then(r => r.substring(0, 5))}`}
+        {@const imgPreview =
+          // (dev ? 'https://whenplane.com' : '') +
+          // '/cdn-cgi/image/fit=scale-down,height=96,metadata=copyright,q=60,sqc=20,format=auto/' +
+          `https://img-proxy.whenplane.com/img/${page.params.store}/${productData.handle}-${await sha256(productData.featured_image).then(r => r.substring(0, 5))}?f=auto&h=96`}
         <a class="block card p-2 m-1 truncate rounded-xl" class:selected={cursor === i} href="/lttstore/{page.params.store}/products/{result.document.handle}" animate:flip={{ duration: 50 }} transition:slide>
           <img src={imgPreview} class="inline-block h-8 w-8 rounded-md object-fill" loading="lazy" alt="">
           <span class="result-highlight" class:line-through={!(result.document.available ?? true)}>
