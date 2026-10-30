@@ -8,18 +8,18 @@ export const GET = (async ({fetch}) => {
 
 
   const data: SpecialStream | false = /*Date.now() > 1742608091103 ?*/ {
-    title: "ASUS 20th Aniversary PC Building Stream",
-    thumbnail: "https://pbs.floatplane.com/stream_thumbnails/5c13f3c006f1be15e08e05c0/261544042074342_1789763330371.jpeg",
+    title: "Ranking Candys and Carving Pumpkins - Halloween Stream 2026",
+    thumbnail: "https://pbs.floatplane.com/stream_thumbnails/5c13f3c006f1be15e08e05c0/587468024406119_1793382141344.jpeg",
 
-    start: "2026-09-18T20:00:00Z",
+    start: "2026-10-30T11:00:00-07:00",
     startIsEstimated: false,
 
     onFloatplane: true,
 
-    onTwitch: true,
+    onTwitch: false,
     // twitchNotes: "first half",
 
-    onYoutube: true
+    onYoutube: false
   } //: false as SpecialStream | false;
 
   if(!data) {
