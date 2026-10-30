@@ -375,6 +375,7 @@ export type MainLate = {
 
 export type SpecialStream = {
     title: string,
+    subtitle?: string,
     thumbnail?: string,
 
     start?: string,
