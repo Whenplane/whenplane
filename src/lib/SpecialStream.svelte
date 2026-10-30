@@ -50,9 +50,13 @@
 <div class="card inline-block countdown-box text-left m-2 wrapper" style={thumbnailStyle}>
 	<div class="p-2 px-3 relative z-2">
 		<h2>Special Stream</h2>
-		<span class="title">
-			"{specialStreamData?.title}"
-		</span><br />
+		<div class="title text-center">
+			"{specialStreamData?.title} FP Exclusive"
+			{#if specialStreamData?.subtitle}
+				<br>
+				{specialStreamData.subtitle}
+			{/if}
+		</div><br />
 
 		<table class="mx-auto my-1">
 			<tbody>

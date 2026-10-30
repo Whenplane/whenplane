@@ -8,7 +8,8 @@ export const GET = (async ({fetch}) => {
 
 
   const data: SpecialStream | false = /*Date.now() > 1742608091103 ?*/ {
-    title: "Ranking Candys and Carving Pumpkins - Halloween Stream 2026",
+    title: "Ranking Candy and Carving Pumpkins",
+    subtitle: "Halloween Stream 2026",
     thumbnail: "https://pbs.floatplane.com/stream_thumbnails/5c13f3c006f1be15e08e05c0/587468024406119_1793382141344.jpeg",
 
     start: "2026-10-30T11:00:00-07:00",
