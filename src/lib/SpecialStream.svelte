@@ -51,7 +51,7 @@
 	<div class="p-2 px-3 relative z-2">
 		<h2>Special Stream</h2>
 		<div class="title text-center">
-			"{specialStreamData?.title} FP Exclusive"
+			"{specialStreamData?.title}"
 			{#if specialStreamData?.subtitle}
 				<br>
 				{specialStreamData.subtitle}
