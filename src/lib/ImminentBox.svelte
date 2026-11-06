@@ -28,7 +28,7 @@
 	// $: console.log("imminentbox show: ", (!hasDone) + " && " + (!$floatplaneState?.live) +" && "+ "((" +dayIsCloseEnough +" && "+ ($floatplaneState?.imminence) +" === 3)"+ /*|| dev*/")")
 </script>
 
-{#if floatplane && !floatplane?.isLive && floatplane?.isWAN && (dayIsCloseEnough || floatplane?.title?.includes("WAN")) && (floatplane?.isThumbnailNew || floatplane?.thumbnailAge < ageCutoff) && !hasDone /*|| dev*/}
+{#if floatplane && !floatplane?.isLive && floatplane?.isWAN && (dayIsCloseEnough || floatplane?.title?.includes("WAN")) && (floatplane?.isThumbnailNew || floatplane?.thumbnailAge < ageCutoff) && !hasDone && !floatplane.thumbnailUsed /*|| dev*/}
 	<div
 		class="card border-2 p-2 border-green-600! bg-green-600/20! block relative pb-0 mobile-add-padding"
 		transition:slide={{ duration: 1.5e3 }}

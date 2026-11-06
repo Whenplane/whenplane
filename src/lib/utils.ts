@@ -424,6 +424,7 @@ export type FpLiveStatusResponse = {
     titleFirstSeen: string,
     thumbnail: string,
     thumbnailAge: number,
+    thumbnailUsed?: boolean,
     thumbnailFirstSeen: string,
     description?: string,
     descriptionFirstSeen?: string,
