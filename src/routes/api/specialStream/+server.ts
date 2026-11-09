@@ -8,9 +8,9 @@ export const GET = (async ({fetch}) => {
 
 
   const data: SpecialStream | false = /*Date.now() > 1742608091103 ?*/ {
-    title: "Playing Magic the Gathering!",
-    subtitle: "David Week",
-    thumbnail: "https://pbs.floatplane.com/stream_thumbnails/5c13f3c006f1be15e08e05c0/276960418346392_1793985667736.jpeg",
+    title: "10 Year Floatplane Anniversary",
+    // subtitle: "David Week",
+    // thumbnail: "https://pbs.floatplane.com/stream_thumbnails/5c13f3c006f1be15e08e05c0/276960418346392_1793985667736.jpeg",
 
     start: "2026-11-06T11:00:00-07:00",
     startIsEstimated: false,
