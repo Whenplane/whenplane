@@ -10,7 +10,7 @@ export const GET = (async ({fetch}) => {
   const data: SpecialStream | false = /*Date.now() > 1742608091103 ?*/ {
     title: "10 Year Floatplane Anniversary Stream",
     // subtitle: "David Week",
-    // thumbnail: "https://pbs.floatplane.com/stream_thumbnails/5c13f3c006f1be15e08e05c0/276960418346392_1793985667736.jpeg",
+    thumbnail: "https://pbs.floatplane.com/stream_thumbnails/5c13f3c006f1be15e08e05c0/543077325934758_1794249022046.jpeg",
 
     start: "2026-11-09T11:00:00-07:00",
     startIsEstimated: false,
