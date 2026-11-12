@@ -44,7 +44,7 @@ export const load = (async ({platform, params, url, fetch}) => {
   }
 
   const product = await retryD1(() =>
-    db.prepare("select * from products where handle = ? and store = ? order by metadataUpdated DESC")
+    db.prepare("select * from products where handle = ? and store = ? order by metadataUpdate DESC")
       .bind(handle, store)
       .first<ProductsTableRow>()
   );
