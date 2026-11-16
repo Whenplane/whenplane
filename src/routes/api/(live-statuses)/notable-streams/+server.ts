@@ -336,6 +336,7 @@ function makeShortResponses(responses: Responses, url: URL): ShortResponses {
   const shortResponses: ShortResponses = {};
 
   for (const channel of Object.keys(people)) {
+    if(channel === "bocabola") continue;
     const response = responses[channel];
     const name = people[channel];
 
