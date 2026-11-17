@@ -55,6 +55,7 @@ export function shouldRetryD1(err: Error, nextAttempt: number) {
       (errMsg.includes("error code: 500") && errMsg.includes("is not valid JSON")) ||
       errMsg === "D1_ERROR: Failed to parse body as JSON, got: error code: 500" ||
       errMsg.includes("Requests queued for too long") ||
+      errMsg.includes("load on D1") ||
       errMsg.includes("D1_ERROR: internal error;");
 
     return nextAttempt <= 7 && isRetryableError;
