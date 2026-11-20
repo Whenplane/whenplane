@@ -170,6 +170,10 @@ card {
     /*border-radius: var(--theme-rounded-container);*/
 }
 
+body:where(.black, .black *) {
+    background-color: black !important;
+}
+
 .breadcrumb {
     overflow-x: auto;
     scrollbar-width: none;

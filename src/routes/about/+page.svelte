@@ -18,6 +18,16 @@
     let disableNotableStreams = $state(browser ? !(getCookie("disableNotableStreams") !== "true") : !(page.params.__c__disableNotableStreams !== "true"))
     $effect(() => setCookie("disableNotableStreams", disableNotableStreams + ""));
 
+    let trueDark = $state(browser ? !(localStorage.getItem("true-dark") !== "true") : false)
+    $effect(() => {
+        localStorage.setItem("true-dark", trueDark + "");
+        if(trueDark) {
+            document.body.classList.add("black");
+        } else {
+            document.body.classList.remove("black");
+        }
+    });
+
     let timeFormat = $state(browser ? localStorage.getItem("timeFormat") ?? "detect" : undefined);
     $effect(() => {
         if(timeFormat && timeFormat !== "detect") {
@@ -174,6 +184,11 @@
 
         <Switch bind:checked={disableNotableStreams} disabled={!browser}>
             Disable "notable" stream (e.g. Elijah, Dan, Luke) boxes
+        </Switch>
+        <br>
+
+        <Switch bind:checked={trueDark} disabled={!browser}>
+            Enable "True Dark" Mode (uses black instead of dark blue for the background, experimental)
         </Switch>
         <br>
         <br>
